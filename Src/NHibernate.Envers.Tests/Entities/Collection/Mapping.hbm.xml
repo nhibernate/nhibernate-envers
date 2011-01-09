@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Entities.Collection">
+  <class name="StringSetEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <set name="Strings" table="StringSetStrings">
+      <key column ="StringSetEntityId" />
+      <element column="string" type="string" />
+    </set>
+  </class>
+
+  <class name="StringListEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <list name="Strings" table="StringListStrings">
+      <key column ="StringListEntityId" />
+      <index type="Byte" column="stringIndex"/>
+      <element column="string" type="string" />
+    </list>
+  </class>
+
+  <class name="StringMapEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <map name="Strings" table="StringMapStrings">
+      <key column ="StringListEntityId" />
+      <index type="string" column="stringKey"/>
+      <element column="string" type="string" />
+    </map>
+  </class>
+
+  <class name="EnumSetEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <set name="Enums1">
+      <key column="enums1" />
+      <element column="enum1" />
+    </set>
+    <set name="Enums2">
+      <key column="enums2" />
+      <element column="enum2" />
+    </set>
+  </class>
+</hibernate-mapping>

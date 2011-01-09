@@ -1,0 +1,25 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.HashCode">
+
+  <class name="WikiPage">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Title" />
+    <property name="Content" />
+    <set name="Images">
+      <key column="page"/>
+      <one-to-many class="WikiImage"/>
+    </set>
+  </class>
+
+  <class name="WikiImage">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Name"/>
+  </class>
+</hibernate-mapping>
+
+

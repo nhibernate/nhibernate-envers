@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Naming">
+	<class name="NamingTestEntity1" table="naming_test_entity_1">
+		<id name="Id" column="nte_id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data" column="nte_data" />
+	</class>
+
+	<class name="JoinNamingRefEdEntity">
+		<id name="Id" column="jnree_id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data"/>
+		<bag name="Reffering" inverse="true">
+			<key column="jnree_column_reference" />
+			<one-to-many class ="JoinNamingRefIngEntity" />
+		</bag>
+	</class>
+
+	<class name="JoinNamingRefIngEntity">
+		<id name="Id" column="jnrie_id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data" />
+		<many-to-one name="Reference"
+								class="JoinNamingRefEdEntity" 
+								column="jnree_column_reference" />
+	</class>
+
+	<class name="DetachedNamingTestEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<set name="Collection" table="UNI_NAMING_TEST">
+			<key column="ID_1"/>
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true" column="ID_2"/>
+		</set>
+	</class>
+
+	<class name="VersionsJoinTableTestEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<set name="Collection">
+			<key column="VJT_ID"/>
+			<one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</set>
+	</class>
+
+	<class name="VersionsJoinTableRangeComponentTestEntity" table="COMPONENT_TEST_ENTITY">
+		<id name="Id" column="ID">
+			<generator class="identity"/>
+		</id>
+		<component name="Component1">
+			<bag name="Range" fetch="subselect" cascade="all-delete-orphan">
+				<key column="VJTRCTE_ID" update="false" />
+				<one-to-many class="VersionsJoinTableRangeTestEntity"/>
+			</bag>
+		</component>
+		<component name="Component2">
+  		<bag name="Range" fetch="subselect" cascade="all-delete-orphan">
+				<key column="VJTRCTE2_ID" update="false" />
+				<one-to-many class="VersionsJoinTableRangeTestAlternateEntity" />
+			</bag>
+		</component>
+		<component name="Component3">
+			<property name="Str1" column="STR1"/>
+			<property name="Str2" column="STR2"/>
+		</component>
+	</class>
+
+  <class name="VersionsJoinTableRangeTestAlternateEntity" table="RANGE_TEST_ALTERNATE_ENTITY">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="GenericValue" />
+		<property name="AlternativeValue" />
+	</class>
+	<class name="VersionsJoinTableRangeTestEntity" table="RANGE_TEST_ENTITY">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="GenericValue" />
+    <property name="Value" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34BA8295-3EBE-47B0-ABBF-0A7E9A8E6B35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernate.Envers", "NHibernate.Envers\NHibernate.Envers.csproj", "{16492F52-0C2E-4847-9CBF-696907808FD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernate.Envers.Tests", "NHibernate.Envers.Tests\NHibernate.Envers.Tests.csproj", "{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16492F52-0C2E-4847-9CBF-696907808FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16492F52-0C2E-4847-9CBF-696907808FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16492F52-0C2E-4847-9CBF-696907808FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16492F52-0C2E-4847-9CBF-696907808FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Interfaces.Components">
+
+  <class name="ComponentTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <component name="Comp1" class="Component1">
+      <property name="Data"/>
+    </component>    
+  </class>
+</hibernate-mapping>
+

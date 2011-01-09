@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.ManyToMany.SameTable">
+	<class name="ParentEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<bag name="Children1" table="children" lazy="true" where ="child1_id is not null">
+			<key column="parent_id" />
+			<many-to-many class="Child1Entity" column="child1_id" />
+		</bag>
+
+		<bag name="Children2" table="children" lazy="true" where ="child2_id is not null" >
+			<key column="parent_id" />
+			<many-to-many class="Child2Entity" column="child2_id"/>
+		</bag>
+	</class>
+
+	<class name="Child1Entity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<bag name="Parents" table="children" lazy="true" where ="child1_id is not null">
+			<key column="child1_id"/>
+			<many-to-many class="ParentEntity" column="parent_id"/>
+		</bag>
+	</class>
+
+	<class name="Child2Entity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<bag name="Parents" table="children" lazy="true" where ="child2_id is not null">
+			<key column="child2_id"/>
+			<many-to-many class="ParentEntity" column="parent_id"/>
+		</bag>
+	</class>
+</hibernate-mapping>

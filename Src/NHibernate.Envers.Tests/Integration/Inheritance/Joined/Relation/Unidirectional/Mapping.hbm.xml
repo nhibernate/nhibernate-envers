@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidirectional">
+
+  <class name="AbstractSetEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <set name="Entities">
+      <key column="fkId" />
+      <one-to-many class="AbstractContainedEntity"/>
+    </set>
+    <joined-subclass name="SetEntity" >
+      <key column="Id"/>
+    </joined-subclass>
+  </class>
+
+  <class name="AbstractContainedEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <joined-subclass name="ContainedEntity" >
+      <key column="Id"/>
+    </joined-subclass>
+  </class>
+</hibernate-mapping>
+

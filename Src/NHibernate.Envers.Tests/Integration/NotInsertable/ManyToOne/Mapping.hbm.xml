@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne">
+
+  <class name="ManyToOneNotInsertableEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Number" column="number" />
+    <many-to-one name="Type" column="number" insert="false" update="false" />
+  </class>
+
+  <class name="NotInsertableEntityType">
+    <id name="TypeId">
+      <generator class="assigned"/>
+    </id>
+    <property name="Type"/>
+  </class>
+</hibernate-mapping>
+

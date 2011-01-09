@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Integration.AccessType">
+
+  <class name="FieldAccessEntity">
+    <id name="id" access="field">
+      <generator class="native"/>
+    </id>
+    <property name="data" access="field"/>
+  </class>
+
+  <class name="PropertyAccessEntity">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Data"/>
+  </class>
+
+  <class name="Country">
+    <id name="Code" access="field.camelcase-underscore">
+      <generator class="assigned"/>
+    </id>
+    <property name="Name" access="field.camelcase-underscore"/>
+  </class>
+
+  <class name="MixedAccessEntity">
+    <id name="id" access="field">
+      <generator class="native"/>
+    </id>
+    <property name="Data"/>
+  </class>
+
+  <class name="NoSetterEntity">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Data" access="nosetter.camelcase"/>
+  </class>
+</hibernate-mapping>

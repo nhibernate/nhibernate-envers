@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{16492F52-0C2E-4847-9CBF-696907808FD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NHibernate.Envers</RootNamespace>
+    <AssemblyName>NHibernate.Envers</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\nhibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\Misc\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\nhibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuditedAttribute.cs" />
+    <Compile Include="AuditJoinTableAttribute.cs" />
+    <Compile Include="AuditMappedByAttribute.cs" />
+    <Compile Include="AuditOverrideAttribute.cs" />
+    <Compile Include="AuditOverridesAttribute.cs" />
+    <Compile Include="AuditReaderFactory.cs" />
+    <Compile Include="AuditTableAttribute.cs" />
+    <Compile Include="ColumnAttribute.cs" />
+    <Compile Include="Compatibility\Attributes\MapKeyAttribute.cs" />
+    <Compile Include="Compatibility\Attributes\VersionAttribute.cs" />
+    <Compile Include="Compatibility\ISortedSet.cs" />
+    <Compile Include="Compatibility\LongType.cs" />
+    <Compile Include="Configuration\AuditConfiguration.cs" />
+    <Compile Include="Configuration\AuditEntitiesConfiguration.cs" />
+    <Compile Include="Configuration\ClassesAuditingData.cs" />
+    <Compile Include="Configuration\EntitiesConfigurator.cs" />
+    <Compile Include="Configuration\GlobalConfiguration.cs" />
+    <Compile Include="Configuration\Metadata\AuditEntityNameRegister.cs" />
+    <Compile Include="Configuration\Metadata\AuditMetadataGenerator.cs" />
+    <Compile Include="Configuration\Metadata\AuditTableData.cs" />
+    <Compile Include="Configuration\Metadata\BasicMetadataGenerator.cs" />
+    <Compile Include="Configuration\Metadata\CollectionMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\CollectionMetadataGenerator.cs" />
+    <Compile Include="Configuration\Metadata\ComponentMetadataGenerator.cs" />
+    <Compile Include="Configuration\Metadata\EntityXmlMappingData.cs" />
+    <Compile Include="Configuration\Metadata\IdMetadataGenerator.cs" />
+    <Compile Include="Configuration\Metadata\InheritanceType.cs" />
+    <Compile Include="Configuration\Metadata\MetadataTools.cs" />
+    <Compile Include="Configuration\Metadata\Reader\AnnotationsMetadataReader.cs" />
+    <Compile Include="Configuration\Metadata\Reader\AuditedPropertiesReader.cs" />
+    <Compile Include="Configuration\Metadata\Reader\ClassAuditingData.cs" />
+    <Compile Include="Configuration\Metadata\Reader\ComponentAuditingData.cs" />
+    <Compile Include="Configuration\Metadata\Reader\IAuditedPropertiesHolder.cs" />
+    <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
+    <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
+    <Compile Include="Configuration\Metadata\Reader\PropertyAuditingData.cs" />
+    <Compile Include="Configuration\Metadata\ToOneRelationMetadataGenerator.cs" />
+    <Compile Include="Configuration\NhConfigurationExtension.cs" />
+    <Compile Include="Configuration\PersistentClassGraphDefiner.cs" />
+    <Compile Include="Configuration\RevisionInfoConfiguration.cs" />
+    <Compile Include="DefaultAuditJoinTableAttribute.cs" />
+    <Compile Include="DefaultAuditTableAttribute.cs" />
+    <Compile Include="DefaultRevisionEntity.cs" />
+    <Compile Include="Entities\EntitiesConfigurations.cs" />
+    <Compile Include="Entities\EntityConfiguration.cs" />
+    <Compile Include="Entities\EntityInstantiator.cs" />
+    <Compile Include="Entities\IdMappingData.cs" />
+    <Compile Include="Entities\Mapper\ComponentPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\ICompositeMapperBuilder.cs" />
+    <Compile Include="Entities\Mapper\Id\AbstractCompositeIdMapper.cs" />
+    <Compile Include="Entities\Mapper\Id\AbstractIdMapper.cs" />
+    <Compile Include="Entities\Mapper\Id\EmbeddedIdMapper.cs" />
+    <Compile Include="Entities\Mapper\Id\IIdMapper.cs" />
+    <Compile Include="Entities\Mapper\Id\ISimpleIdMapperBuilder.cs" />
+    <Compile Include="Entities\Mapper\Id\MultipleIdMapper.cs" />
+    <Compile Include="Entities\Mapper\Id\QueryParameterData.cs" />
+    <Compile Include="Entities\Mapper\Id\SingleIdMapper.cs" />
+    <Compile Include="Entities\Mapper\IExtendedPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\IPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\ISimpleMapperBuilder.cs" />
+    <Compile Include="Entities\Mapper\MultiPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\PersistentCollectionChangeData.cs" />
+    <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\AbstractDelegateSessionImplementor.cs" />
+    <Compile Include="Entities\Mapper\Relation\BagCollectionMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\BagCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\SetCollectionMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\CommonCollectionMapperData.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\IMiddleComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleDummyComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleMapKeyIdComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleMapKeyPropertyComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleRelatedComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleSimpleComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleStraightComponentMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\AbstractCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SetCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\IInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\ListCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\MapCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\CollectionProxy.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\ListProxy.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\MapProxy.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\SetProxy.cs" />
+    <Compile Include="Entities\Mapper\Relation\ListCollectionMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\MapCollectionMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\MiddleComponentData.cs" />
+    <Compile Include="Entities\Mapper\Relation\MiddleIdData.cs" />
+    <Compile Include="Entities\Mapper\Relation\OneToOneNotOwningMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\IRelationQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\OneAuditEntityQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\OneEntityQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\QueryGeneratorTools.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\ThreeEntityQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\TwoEntityOneAuditedQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\TwoEntityQueryGenerator.cs" />
+    <Compile Include="Entities\Mapper\Relation\ToOneDelegateSessionImplementor.cs" />
+    <Compile Include="Entities\Mapper\Relation\ToOneIdMapper.cs" />
+    <Compile Include="Entities\Mapper\SinglePropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\SubclassPropertyMapper.cs" />
+    <Compile Include="Entities\PropertyData.cs" />
+    <Compile Include="Entities\RelationDescription.cs" />
+    <Compile Include="Entities\RelationType.cs" />
+    <Compile Include="Entities\RevisionTypeType.cs" />
+    <Compile Include="Event\AuditEventListener.cs" />
+    <Compile Include="Exceptions\AuditException.cs" />
+    <Compile Include="Exceptions\NotAuditedException.cs" />
+    <Compile Include="Exceptions\RevisionDoesNotExistException.cs" />
+    <Compile Include="IAuditReader.cs" />
+    <Compile Include="JoinColumnAttribute.cs" />
+    <Compile Include="ModificationStore.cs" />
+    <Compile Include="NotAuditedAttribute.cs" />
+    <Compile Include="Query\AuditEntity.cs" />
+    <Compile Include="Query\AuditQueryCreator.cs" />
+    <Compile Include="Query\Criteria\AggregatedAuditExpression.cs" />
+    <Compile Include="Query\Criteria\AuditConjunction.cs" />
+    <Compile Include="Query\Criteria\AuditDisjunction.cs" />
+    <Compile Include="Query\Criteria\AuditId.cs" />
+    <Compile Include="Query\Criteria\AuditProperty.cs" />
+    <Compile Include="Query\Criteria\AuditRelatedId.cs" />
+    <Compile Include="Query\Criteria\BetweenAuditExpression.cs" />
+    <Compile Include="Query\Criteria\CriteriaTools.cs" />
+    <Compile Include="Query\Criteria\IAuditCriterion.cs" />
+    <Compile Include="Query\Criteria\IdentifierEqAuditExpression.cs" />
+    <Compile Include="Query\Criteria\IExtendableCriterion.cs" />
+    <Compile Include="Query\Criteria\InAuditExpression.cs" />
+    <Compile Include="Query\Criteria\LogicalAuditExpression.cs" />
+    <Compile Include="Query\Criteria\NotAuditExpression.cs" />
+    <Compile Include="Query\Criteria\NotNullAuditExpression.cs" />
+    <Compile Include="Query\Criteria\NullAuditExpression.cs" />
+    <Compile Include="Query\Criteria\PropertyAuditExpression.cs" />
+    <Compile Include="Query\Criteria\RelatedAuditExpression.cs" />
+    <Compile Include="Query\Criteria\SimpleAuditExpression.cs" />
+    <Compile Include="Query\IAuditQuery.cs" />
+    <Compile Include="Query\Impl\AbstractAuditQuery.cs" />
+    <Compile Include="Query\Impl\EntitiesAtRevisionQuery.cs" />
+    <Compile Include="Query\Impl\RevisionsOfEntityQuery.cs" />
+    <Compile Include="Query\Order\IAuditOrder.cs" />
+    <Compile Include="Query\Order\PropertyAuditOrder.cs" />
+    <Compile Include="Query\Projection\IAuditProjection.cs" />
+    <Compile Include="Query\Projection\PropertyAuditProjection.cs" />
+    <Compile Include="Query\Property\EntityPropertyName.cs" />
+    <Compile Include="Query\Property\IPropertyNameGetter.cs" />
+    <Compile Include="Query\Property\OriginalIdPropertyName.cs" />
+    <Compile Include="Query\Property\RevisionNumberPropertyName.cs" />
+    <Compile Include="Query\Property\RevisionPropertyPropertyName.cs" />
+    <Compile Include="Query\Property\RevisionTypePropertyName.cs" />
+    <Compile Include="Query\QueryBuilder.cs" />
+    <Compile Include="Reader\AuditReader.cs" />
+    <Compile Include="Reader\FirstLevelCache.cs" />
+    <Compile Include="Reader\IAuditReaderImplementor.cs" />
+    <Compile Include="Reader\IFirstLevelCache.cs" />
+    <Compile Include="RelationTargetAuditMode.cs" />
+    <Compile Include="RevisionDelegate.cs" />
+    <Compile Include="RevisionEntityAttribute.cs" />
+    <Compile Include="RevisionInfo\DefaultRevisionInfoGenerator.cs" />
+    <Compile Include="RevisionInfo\IRevisionInfoGenerator.cs" />
+    <Compile Include="RevisionInfo\RevisionInfoNumberReader.cs" />
+    <Compile Include="RevisionInfo\RevisionInfoQueryCreator.cs" />
+    <Compile Include="RevisionNumberAttribute.cs" />
+    <Compile Include="RevisionTimestampAttribute.cs" />
+    <Compile Include="RevisionType.cs" />
+    <Compile Include="SecondaryAuditTableAttribute.cs" />
+    <Compile Include="SecondaryAuditTablesAttribute.cs" />
+    <Compile Include="Synchronization\AuditSync.cs" />
+    <Compile Include="Synchronization\AuditSyncManager.cs" />
+    <Compile Include="Synchronization\Work\AbstractAuditWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\AddWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\CollectionChangeWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\DelWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\FakeBidirectionalRelationWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\IAuditWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\IWorkUnitMergeDispatcher.cs" />
+    <Compile Include="Synchronization\Work\IWorkUnitMergeVisitor.cs" />
+    <Compile Include="Synchronization\Work\ModWorkUnit.cs" />
+    <Compile Include="Synchronization\Work\PersistentCollectionChangeWorkUnit.cs" />
+    <Compile Include="Tools\ArgumentsTools.cs" />
+    <Compile Include="Tools\ArraysTools.cs" />
+    <Compile Include="Tools\CollectionWrapper.cs" />
+    <Compile Include="Tools\DictionaryComparer.cs" />
+    <Compile Include="Tools\DictionaryWrapper.cs" />
+    <Compile Include="Tools\EmptyDictionary.cs" />
+    <Compile Include="Tools\EnumeratorOfDictionariesWrapper.cs" />
+    <Compile Include="Tools\EnumeratorWrapper.cs" />
+    <Compile Include="Tools\Graph\GraphTopologicalSort.cs" />
+    <Compile Include="Tools\Graph\IGraphDefiner.cs" />
+    <Compile Include="Tools\Graph\TopologicalSort.cs" />
+    <Compile Include="Tools\Graph\Vertex.cs" />
+    <Compile Include="Tools\IPair.cs" />
+    <Compile Include="Tools\ListOfDictionariesWrapper.cs" />
+    <Compile Include="Tools\ListWrapper.cs" />
+    <Compile Include="Tools\MappingTools.cs" />
+    <Compile Include="Tools\MutableBoolean.cs" />
+    <Compile Include="Tools\MutableInteger.cs" />
+    <Compile Include="Tools\Pair.cs" />
+    <Compile Include="Tools\Query\Parameters.cs" />
+    <Compile Include="Tools\Reflection\ReflectionTools.cs" />
+    <Compile Include="Tools\StringTools.cs" />
+    <Compile Include="Tools\Toolz.cs" />
+    <Compile Include="Tools\Triple.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

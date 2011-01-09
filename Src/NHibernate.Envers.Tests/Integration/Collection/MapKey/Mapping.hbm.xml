@@ -1,0 +1,29 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Collection.MapKey">
+	<class name="ComponentMapKeyEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="IdMap" table="ComponentIdMap">
+			<key column="compMapKeyEntityId"/>
+
+			<composite-index class="NHibernate.Envers.Tests.Entities.Components.Component1">
+				<key-property name="Str1"/>
+				<key-property name="Str2"/>
+			</composite-index>
+			<many-to-many class="NHibernate.Envers.Tests.Entities.Components.ComponentTestEntity" />
+		</map>
+	</class>
+
+	<class name="IdMapKeyEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="IdMap" table="IdIdMap">
+			<key column="compMapKeyEntityId"/>
+			<map-key type="int" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+		</map>
+	</class>
+</hibernate-mapping>

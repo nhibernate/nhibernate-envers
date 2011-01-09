@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Inheritance.Entities">
+
+  <class name="ReferencedToParentEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <set name="Referencing" inverse="true">
+      <key column="refId"/>
+      <one-to-many class ="ParentIngEntity"/>
+    </set>
+  </class>
+
+  <class name="ParentIngEntity" discriminator-value="1">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <discriminator column="discriminator" type="int"/>
+    <property name="Data"/>
+    <many-to-one name="Referenced" column="refId" />
+
+    <subclass name="ChildNotIngEntity" discriminator-value="2">
+      <property name="Number"/>
+    </subclass>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities">
+	<class name="IntTestEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Number"/>
+	</class>
+
+	<class name="StrTestEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str"/>
+	</class>
+
+	<class name="UnversionedEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1"/>
+		<property name="Str2"/>
+	</class>
+
+	<class name="UnversionedStrTestEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str"/>
+	</class>
+</hibernate-mapping>

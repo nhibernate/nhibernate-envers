@@ -1,0 +1,35 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Integration.Basic">
+  <class name="BasicTestEntity1">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Str1"/>
+    <property name="Long1"/>
+  </class>
+
+  <class name="BasicTestEntity2">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Str1"/>
+    <property name="Str2"/>
+  </class>
+
+  <class name="BasicTestEntity3">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Str1"/>
+    <property name="Str2"/>
+  </class>
+
+  <class name="BasicTestEntity4">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <property name="Str1"/>
+    <property name="Str2"/>
+  </class>
+</hibernate-mapping>

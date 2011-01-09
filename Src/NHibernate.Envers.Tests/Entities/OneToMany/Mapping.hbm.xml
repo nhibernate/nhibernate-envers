@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Entities.OneToMany">
+  <class name="SetRefEdEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <set name="Reffering" inverse="true">
+      <key column ="Reference" />
+      <one-to-many class="SetRefIngEntity" />
+    </set>
+  </class>
+
+  <class name="SetRefIngEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Reference"
+                 class="SetRefEdEntity" />
+  </class>
+
+</hibernate-mapping>

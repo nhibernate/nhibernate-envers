@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Naming.Ids">
+
+  <class name="JoinEmbIdNamingRefEdEntity">
+    <composite-id name="Id">
+      <key-property name="X" column="XX"/>
+      <key-property name="Y" column="YY"/>
+    </composite-id>
+    <property name="Data" />
+    <bag name="Reffering" inverse="true">
+      <key column="refId">
+        <column name="XX_Reference" />
+        <column name="YY_Reference" />
+      </key>
+      <one-to-many class="JoinEmbIdNamingRefIngEntity" />
+    </bag>
+  </class>
+
+  <class name="JoinEmbIdNamingRefIngEntity">
+    <composite-id name="Id">
+      <key-property name="X" column="XX"/>
+      <key-property name="Y" column="YY"/>
+    </composite-id>
+    <property name="Data" />
+    <many-to-one name="Reference">
+      <column name="XX_Reference" />
+      <column name="YY_Reference" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>
+
+

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.ManyToMany">
+	<class name="SetOwningEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<set name="References" table="linkTableSet">
+			<key column="owningId" />
+			<many-to-many class="SetOwnedEntity" column="ownedId" />
+		</set>
+	</class>
+
+	<class name="SetOwnedEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data"/>
+		<set name="Referencing" table="linkTableSet" inverse="true">
+			<key column="ownedId" />
+			<many-to-many class="SetOwningEntity"  column="owningId"/>
+		</set>
+	</class>
+
+	<class name="ListOwningEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<bag name="References" table="linkTableList">
+			<key column="owningId" />
+			<many-to-many class="ListOwnedEntity" column="ownedId" />
+		</bag>
+	</class>
+	
+	<class name="ListOwnedEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data"/>
+		<bag name="Referencing" table="linkTableList" inverse="true">
+			<key column="ownedId" />
+			<many-to-many class="ListOwningEntity"  column="owningId"/>
+		</bag>
+	</class>
+
+	<class name="MapOwningEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<map name="References" table="linkTableMap">
+			<key column="owningId" />
+			<index type="string" column="theKey" />
+			<many-to-many class="MapOwnedEntity" column="ownedId"/>
+		</map>
+	</class>
+
+	<class name="MapOwnedEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data"/>
+		<set name="Referencing" inverse="true" table="linkTableMap" >
+			<key column="ownedId" />
+			<many-to-many class="MapOwningEntity" column="owningId" />
+		</set>
+	</class>
+
+	<class name="WhereJoinTableEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data"/>
+		<bag name="References1" table="linkTableWhere"  where="ownedId &lt; 20" >
+			<key column="owningId" />
+			<many-to-many class="IntNoAutoIdTestEntity" column="ownedId" />
+		</bag>
+		<bag name="References2" table="linkTableWhere" where="ownedId &gt;= 20" >
+			<key column="owningId" />
+			<many-to-many class="IntNoAutoIdTestEntity" column="ownedId" />
+		</bag>
+	</class>
+
+	<class name="IntNoAutoIdTestEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Number"/>
+	</class>
+</hibernate-mapping>
+

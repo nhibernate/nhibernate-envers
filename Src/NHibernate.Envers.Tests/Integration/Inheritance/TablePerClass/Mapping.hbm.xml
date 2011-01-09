@@ -1,0 +1,15 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Inheritance.Entities">
+
+  <class name="ParentEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+
+    <union-subclass name="ChildEntity">
+      <property name="Number" />
+    </union-subclass>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NHibernate.Envers.Tests</RootNamespace>
+    <AssemblyName>NHibernate.Envers.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\Misc\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\nhibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\Misc\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\nhibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\lib\nhibernate\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Collection\EnumSetEntity.cs" />
+    <Compile Include="Entities\Collection\StringListEntity.cs" />
+    <Compile Include="Entities\Collection\StringMapEntity.cs" />
+    <Compile Include="Entities\Collection\StringSetEntity.cs" />
+    <Compile Include="Entities\Components\Component1.cs" />
+    <Compile Include="Entities\Components\Component2.cs" />
+    <Compile Include="Entities\Components\ComponentSetTestEntity.cs" />
+    <Compile Include="Entities\Components\ComponentTestEntity.cs" />
+    <Compile Include="Entities\Components\Relations\ManyToOneComponent.cs" />
+    <Compile Include="Entities\Components\Relations\ManyToOneComponentTestEntity.cs" />
+    <Compile Include="Entities\Components\Relations\NotAuditedManyToOneComponent.cs" />
+    <Compile Include="Entities\Components\Relations\NotAuditedManyToOneComponentTestEntity.cs" />
+    <Compile Include="Entities\Components\Relations\OneToManyComponent.cs" />
+    <Compile Include="Entities\Components\Relations\OneToManyComponentTestEntity.cs" />
+    <Compile Include="Entities\CustomType\Component.cs" />
+    <Compile Include="Entities\CustomType\CompositeCustomTypeEntity.cs" />
+    <Compile Include="Entities\CustomType\CompositeTestUserType.cs" />
+    <Compile Include="Entities\CustomType\ParametrizedCustomTypeEntity.cs" />
+    <Compile Include="Entities\CustomType\ParametrizedTestUserType.cs" />
+    <Compile Include="Entities\Ids\EmbId.cs" />
+    <Compile Include="Entities\Ids\EmbIdTestEntity.cs" />
+    <Compile Include="Entities\Ids\MulId.cs" />
+    <Compile Include="Entities\Ids\MulIdTestEntity.cs" />
+    <Compile Include="Entities\ManyToMany\IntNoAutoIdTestEntity.cs" />
+    <Compile Include="Entities\IntTestEntity.cs" />
+    <Compile Include="Entities\ManyToMany\BiOwned\ListBiOwning1Entity.cs" />
+    <Compile Include="Entities\ManyToMany\BiOwned\ListBiOwning2Entity.cs" />
+    <Compile Include="Entities\ManyToMany\ListOwnedEntity.cs" />
+    <Compile Include="Entities\ManyToMany\ListOwningEntity.cs" />
+    <Compile Include="Entities\ManyToMany\MapOwnedEntity.cs" />
+    <Compile Include="Entities\ManyToMany\MapOwningEntity.cs" />
+    <Compile Include="Entities\ManyToMany\SameTable\Child1Entity.cs" />
+    <Compile Include="Entities\ManyToMany\SameTable\Child2Entity.cs" />
+    <Compile Include="Entities\ManyToMany\SameTable\ParentEntity.cs" />
+    <Compile Include="Entities\ManyToMany\SetOwnedEntity.cs" />
+    <Compile Include="Entities\ManyToMany\SetOwningEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\ListUniEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\M2MTargetNotAuditedEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\MapUniEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\SetUniEntity.cs" />
+    <Compile Include="Entities\ManyToMany\WhereJoinTableEntity.cs" />
+    <Compile Include="Entities\ManyToOne\UniDirectional\TargetNotAuditedEntity.cs" />
+    <Compile Include="Entities\OneToMany\SetRefEdEntity.cs" />
+    <Compile Include="Entities\OneToMany\SetRefIngEntity.cs" />
+    <Compile Include="Entities\StrTestEntity.cs" />
+    <Compile Include="Entities\UnversionedEntity.cs" />
+    <Compile Include="Entities\UnversionedStrTestEntity.cs" />
+    <Compile Include="Integration\AccessType\FieldAccessTest.cs" />
+    <Compile Include="Integration\AccessType\ImmutableClassAccessTest.cs" />
+    <Compile Include="Integration\AccessType\MixedAccessTest.cs" />
+    <Compile Include="Integration\AccessType\Model.cs" />
+    <Compile Include="Integration\AccessType\NoSetterTest.cs" />
+    <Compile Include="Integration\AccessType\PropertyAccessTest.cs" />
+    <Compile Include="Integration\Basic\DeleteTest.cs" />
+    <Compile Include="Integration\Basic\GlobalVersionedTest.cs" />
+    <Compile Include="Integration\Basic\ManyOperationsInTransactionTest.cs" />
+    <Compile Include="Integration\Basic\Model.cs" />
+    <Compile Include="Integration\Basic\NonVersionedTest.cs" />
+    <Compile Include="Integration\Basic\NullPropertiesTest.cs" />
+    <Compile Include="Integration\Basic\SimpleTest.cs" />
+    <Compile Include="Integration\Basic\SingleOperationInTransactionTest.cs" />
+    <Compile Include="Integration\Basic\UnversionedPropertiesChangeTest.cs" />
+    <Compile Include="Integration\Basic\UnversionedPropertyTest.cs" />
+    <Compile Include="Integration\Cache\OneToManyCacheTest.cs" />
+    <Compile Include="Integration\Cache\OneToOneCacheTest.cs" />
+    <Compile Include="Integration\Cache\QueryCacheTest.cs" />
+    <Compile Include="Integration\Collection\EnumSetTest.cs" />
+    <Compile Include="Integration\Collection\MapKey\ComponentMapKeyTest.cs" />
+    <Compile Include="Integration\Collection\MapKey\ComponentMapKeyEntity.cs" />
+    <Compile Include="Integration\Collection\MapKey\IdMapKeyEntity.cs" />
+    <Compile Include="Integration\Collection\MapKey\IdMapKeyTest.cs" />
+    <Compile Include="Integration\Collection\StringListTest.cs" />
+    <Compile Include="Integration\Collection\StringMapTest.cs" />
+    <Compile Include="Integration\Collection\StringSetTest.cs" />
+    <Compile Include="Integration\Components\Collections\CollectionOfComponentsTest.cs" />
+    <Compile Include="Integration\Components\ComponentsTest.cs" />
+    <Compile Include="Integration\Components\Relations\ManyToOneInComponentTest.cs" />
+    <Compile Include="Integration\Components\Relations\NotAuditedManyToOneInComponentTest.cs" />
+    <Compile Include="Integration\Components\Relations\OneToManyInComponentTest.cs" />
+    <Compile Include="Integration\CustomType\CompositeCustomTest.cs" />
+    <Compile Include="Integration\CustomType\ParametrizedCustomTest.cs" />
+    <Compile Include="Integration\Data\DateTest.cs" />
+    <Compile Include="Integration\Data\DateTestEntity.cs" />
+    <Compile Include="Integration\Data\EnumTest.cs" />
+    <Compile Include="Integration\Data\EnumTestEntity.cs" />
+    <Compile Include="Integration\Data\LobsTest.cs" />
+    <Compile Include="Integration\Data\LobTestEntity.cs" />
+    <Compile Include="Integration\Data\SerializableTest.cs" />
+    <Compile Include="Integration\Data\SerializableTestEntity.cs" />
+    <Compile Include="Integration\Data\SerObj.cs" />
+    <Compile Include="Integration\Flush\DoubleFlushAddDelTest.cs" />
+    <Compile Include="Integration\Flush\DoubleFlushAddModTest.cs" />
+    <Compile Include="Integration\Flush\DoubleFlushModDelTest.cs" />
+    <Compile Include="Integration\Flush\DoubleFlushModModTest.cs" />
+    <Compile Include="Integration\Flush\ManualFlushTest.cs" />
+    <Compile Include="Integration\HashCode\ChangingHashcodeTest.cs" />
+    <Compile Include="Integration\HashCode\WikiImage.cs" />
+    <Compile Include="Integration\HashCode\WikiPage.cs" />
+    <Compile Include="Integration\Ids\CompositeIdTest.cs" />
+    <Compile Include="Integration\Inheritance\Joined\ChildAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ChildEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\ChildNullAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ChildIngEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\ChildRelation\ChildReferencingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ParentNotIngEntity.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ReferencedToChildEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\EmptyChild\EmptyChildAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\EmptyChildEntity.cs" />
+    <Compile Include="Integration\Inheritance\Entities\Address.cs" />
+    <Compile Include="Integration\Inheritance\Entities\Contact.cs" />
+    <Compile Include="Integration\Inheritance\Joined\NotOwnedRelation\NotOwnBidirectionalTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\PersonalContact.cs" />
+    <Compile Include="Integration\Inheritance\Joined\ParentAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ParentEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\PrimaryKeyJoin\ChildPrimaryKeyJoinAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ChildPrimaryKeyJoinEntity.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ChildNotIngEntity.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ParentIngEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\PolymorphicCollectionTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\ReferencedToParentEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\AbstractContainedEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\AbstractSetEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\ContainedEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\SetEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\UnidirectionalDoubleAbstractTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\ChildAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\ChildRelation\ChildReferencingTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\NotOwnedRelation\NotOwnBidirectionalTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\ParentAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\Relation\PolymorphicCollectionTest.cs" />
+    <Compile Include="Integration\Inheritance\TablePerClass\ChildAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\TablePerClass\ChildRelation\ChildReferencingTest.cs" />
+    <Compile Include="Integration\Inheritance\TablePerClass\NotOwnedRelation\NotOwnBidirectionalTest.cs" />
+    <Compile Include="Integration\Inheritance\TablePerClass\ParentAuditingTest.cs" />
+    <Compile Include="Integration\Inheritance\TablePerClass\Relation\PolymorphicCollectionTest.cs" />
+    <Compile Include="Integration\Interfaces\Components\Component1.cs" />
+    <Compile Include="Integration\Interfaces\Components\ComponentTestEntity.cs" />
+    <Compile Include="Integration\Interfaces\Components\IComponent.cs" />
+    <Compile Include="Integration\Interfaces\Components\InterfacesComponentsTest.cs" />
+    <Compile Include="Integration\Interfaces\Relation\InterfacesRelationTest.cs" />
+    <Compile Include="Integration\Interfaces\Relation\ISetRefEdEntity.cs" />
+    <Compile Include="Integration\Interfaces\Relation\SetRefEdEntity.cs" />
+    <Compile Include="Integration\Interfaces\Relation\SetRefIngEntity.cs" />
+    <Compile Include="Integration\ManyToMany\BasicListTest.cs" />
+    <Compile Include="Integration\ManyToMany\BasicMapTest.cs" />
+    <Compile Include="Integration\ManyToMany\BasicSetTest.cs" />
+    <Compile Include="Integration\ManyToMany\BasicWhereJoinTableTest.cs" />
+    <Compile Include="Integration\ManyToMany\BiOwned\BasicBiOwnedTest.cs" />
+    <Compile Include="Integration\ManyToMany\SameTable\BasicSameTableTest.cs" />
+    <Compile Include="Integration\ManyToMany\Ternary\TernaryMapEntity.cs" />
+    <Compile Include="Integration\ManyToMany\Ternary\TernaryMapFlushTest.cs" />
+    <Compile Include="Integration\ManyToMany\Ternary\TernaryMapTest.cs" />
+    <Compile Include="Integration\ManyToMany\UniDirectional\BasicUniListTest.cs" />
+    <Compile Include="Integration\ManyToMany\UniDirectional\BasicUniMapTest.cs" />
+    <Compile Include="Integration\ManyToMany\UniDirectional\BasicUniSetTest.cs" />
+    <Compile Include="Integration\ManyToMany\UniDirectional\M2MRelationNotAuditedTargetTest.cs" />
+    <Compile Include="Integration\ManyToOne\UniDirectional\RelationNotAuditedTargetTest.cs" />
+    <Compile Include="Integration\Naming\BasicNamingTest.cs" />
+    <Compile Include="Integration\Naming\DetachedNamingTestEntity.cs" />
+    <Compile Include="Integration\Naming\Ids\EmbIdNaming.cs" />
+    <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingRefEdEntity.cs" />
+    <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingRefIngEntity.cs" />
+    <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingTest.cs" />
+    <Compile Include="Integration\Naming\Ids\JoinMulIdNamingTest.cs" />
+    <Compile Include="Integration\Naming\JoinNamingRefEdEntity.cs" />
+    <Compile Include="Integration\Naming\JoinNamingRefIngEntity.cs" />
+    <Compile Include="Integration\Naming\JoinNamingTest.cs" />
+    <Compile Include="Integration\Naming\NamingTestEntity1.cs" />
+    <Compile Include="Integration\Naming\OneToManyUniDirectionalNamingTest.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableNamingTest.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeComponent.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeComponentNamingTest.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeComponentTestEntity.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeTestAlternateEntity.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeTestEntity.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableRangeTestEntityBaseClass.cs" />
+    <Compile Include="Integration\Naming\VersionsJoinTableTestEntity.cs" />
+    <Compile Include="Integration\NotInsertable\ManyToOne\ManyToOneNotInsertableEntity.cs" />
+    <Compile Include="Integration\NotInsertable\ManyToOne\ManyToOneNotInsertableTest.cs" />
+    <Compile Include="Integration\NotInsertable\ManyToOne\NotInsertableEntityType.cs" />
+    <Compile Include="Integration\NotInsertable\NotInsertableTest.cs" />
+    <Compile Include="Integration\NotInsertable\NotInsertableTestEntity.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\BiRefEdEntity.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\BiRefIngEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetupNunit.cs" />
+    <Compile Include="TestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\Collection\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Components\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\Components\Relations\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\CustomType\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\Ids\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToMany\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToMany\BiOwned\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToMany\SameTable\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToMany\UniDirectional\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToOne\UniDirectional\Mapping.hbm.xml" />
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Integration\OneToOne\BiDirectional\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Data\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\HashCode\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\ChildRelation\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Integration\Inheritance\Joined\EmptyChild\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\NotOwnedRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\PrimaryKeyJoin\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\Relation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Joined\Relation\Unidirectional\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\ChildRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\NotOwnedRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\Relation\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Integration\Inheritance\TablePerClass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\TablePerClass\ChildRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\TablePerClass\NotOwnedRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\TablePerClass\Relation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Interfaces\Components\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Interfaces\Relation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\ManyToMany\Ternary\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Naming\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Naming\Ids\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\NotInsertable\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\NotInsertable\ManyToOne\Mapping.hbm.xml" />
+    <Content Include="log4net.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Integration\Collection\MapKey\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Basic\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\AccessType\Mapping.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NHibernate.Envers\NHibernate.Envers.csproj">
+      <Project>{16492F52-0C2E-4847-9CBF-696907808FD6}</Project>
+      <Name>NHibernate.Envers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

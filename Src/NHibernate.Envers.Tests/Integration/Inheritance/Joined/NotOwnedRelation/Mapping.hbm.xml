@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Inheritance.Entities">
+
+  <class name="Contact">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Email" />
+    <set name="Addresses" inverse="true">
+      <key column="contactId"/>
+      <one-to-many class="Address"/>
+    </set>
+    <joined-subclass name="PersonalContact">
+      <key column="Id" />
+      <property name="FirstName" />
+    </joined-subclass>
+  </class>
+
+  <class name="Address">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Address1" />
+    <many-to-one name="Contact" class="Contact" column="contactId"/>
+  </class>
+</hibernate-mapping>

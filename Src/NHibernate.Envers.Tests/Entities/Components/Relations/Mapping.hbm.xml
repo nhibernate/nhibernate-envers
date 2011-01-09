@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Entities.Components.Relations">
+  <class name="OneToManyComponentTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <component name="Comp1">
+      <property name="Data"/>
+      <set name="Entities">
+        <key column="dataId" />
+        <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+      </set>
+    </component>
+  </class>
+
+	<class name="ManyToOneComponentTestEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<component name="Comp1">
+			<property name="Data"/>
+			<many-to-one name="Entity" class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+		</component>
+	</class>
+
+	<class name="NotAuditedManyToOneComponentTestEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<component name="Comp1">
+			<property name="Data"/>
+			<many-to-one name="Entity" class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity" />
+		</component>
+	</class>
+</hibernate-mapping>

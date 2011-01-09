@@ -1,0 +1,37 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="NHibernate.Envers.Tests"
+    namespace="NHibernate.Envers.Tests.Integration.Data">
+  
+  <typedef name="EnumString" class="NHibernate.Type.EnumStringType`1[[NHibernate.Envers.Tests.Integration.Data.E1, NHibernate.Envers.Tests]], NHibernate" />
+
+  <class name="DateTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Date" />
+  </class>
+
+  <class name="EnumTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Enum1" type="EnumString"/>
+    <property name="Enum2" />
+  </class>
+
+  <class name="LobTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="StringLob" type="StringClob"/>
+    <property name="ByteLob" type="BinaryBlob"/>
+  </class>
+
+  <class name="SerializableTestEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Obj" type="Serializable" />
+  </class>
+</hibernate-mapping>
+

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.ManyToMany.UniDirectional">
+	<class name="ListUniEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<bag name="References" table="UniListChildren">
+			<key column="owningId" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</bag>
+	</class>
+
+	<class name="SetUniEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<set name="References" table="UniSetChildren">
+			<key column="owningId" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</set>
+	</class>
+
+	<class name="MapUniEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<map name="References" table="UniMapChildren">
+			<key column="owningId" />
+			<index type="string" column="idx" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</map>
+	</class>
+
+	<class name="M2MTargetNotAuditedEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<bag name="References" table="UniListNotAuditedChildren">
+			<key column="owningId" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity"/>
+		</bag>
+	</class>
+</hibernate-mapping>
+
