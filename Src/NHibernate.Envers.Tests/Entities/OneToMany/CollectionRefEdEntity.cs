@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace NHibernate.Envers.Tests.Entities.OneToMany
 {
-	public class SetRefIngEntity
+	public class CollectionRefEdEntity
 	{
 		public virtual int Id { get; set; }
 
@@ -8,11 +10,11 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany
 		public virtual string Data { get; set; }
 
 		[Audited]
-		public virtual SetRefEdEntity Reference { get; set; }
+		public virtual IList<CollectionRefIngEntity> Reffering { get; set; }
 
 		public override bool Equals(object obj)
 		{
-			var casted = obj as SetRefIngEntity;
+			var casted = obj as CollectionRefEdEntity;
 			if (casted == null)
 				return false;
 			return (Id == casted.Id && Data == casted.Data);

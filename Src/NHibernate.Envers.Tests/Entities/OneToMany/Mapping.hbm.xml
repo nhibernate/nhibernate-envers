@@ -22,4 +22,24 @@
                  class="SetRefEdEntity" />
   </class>
 
+  <class name="CollectionRefEdEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <bag name="Reffering" inverse="true">
+      <key column ="Reference" />
+      <one-to-many class="CollectionRefIngEntity" />
+    </bag>
+  </class>
+
+  <class name="CollectionRefIngEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Reference"
+                 class="CollectionRefEdEntity" />
+  </class>
+
 </hibernate-mapping>

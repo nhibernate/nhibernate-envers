@@ -106,6 +106,8 @@
     <Compile Include="Entities\ManyToMany\UniDirectional\SetUniEntity.cs" />
     <Compile Include="Entities\ManyToMany\WhereJoinTableEntity.cs" />
     <Compile Include="Entities\ManyToOne\UniDirectional\TargetNotAuditedEntity.cs" />
+    <Compile Include="Entities\OneToMany\CollectionRefEdEntity.cs" />
+    <Compile Include="Entities\OneToMany\CollectionRefIngEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefIngEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Integration\NotInsertable\ManyToOne\NotInsertableEntityType.cs" />
     <Compile Include="Integration\NotInsertable\NotInsertableTest.cs" />
     <Compile Include="Integration\NotInsertable\NotInsertableTestEntity.cs" />
+    <Compile Include="Integration\OneToMany\BasicCollectionTest.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefIngEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
