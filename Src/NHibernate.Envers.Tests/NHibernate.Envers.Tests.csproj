@@ -262,6 +262,7 @@
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedListTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithEmbIdTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithMulIdTest.cs" />
     <Compile Include="Integration\OneToMany\InverseSideChangesTest.cs" />
     <Compile Include="Integration\OneToMany\RefEdMapKeyEntity.cs" />
     <Compile Include="Integration\OneToMany\RefIngMapKeyEntity.cs" />
