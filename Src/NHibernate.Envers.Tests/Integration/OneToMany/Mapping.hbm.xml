@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.OneToMany">
+	<class name="RefEdMapKeyEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="IdMap" inverse="true">
+			<key column="reference" />
+			<map-key column="data" type="string"/>
+			<one-to-many class="RefIngMapKeyEntity"/>
+		</map>
+	</class>
+
+	<class name="RefIngMapKeyEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data" column="data"/>
+		<many-to-one name="Reference" 
+								 class="RefEdMapKeyEntity" 
+								 column="reference" />
+	</class>
+</hibernate-mapping>

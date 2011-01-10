@@ -108,6 +108,11 @@
     <Compile Include="Entities\ManyToOne\UniDirectional\TargetNotAuditedEntity.cs" />
     <Compile Include="Entities\OneToMany\CollectionRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\CollectionRefIngEntity.cs" />
+    <Compile Include="Entities\OneToMany\Detached\Ids\SetRefCollEntityEmbId.cs" />
+    <Compile Include="Entities\OneToMany\Detached\ListRefCollEntity.cs" />
+    <Compile Include="Entities\OneToMany\Detached\SetRefCollEntity.cs" />
+    <Compile Include="Entities\OneToMany\Ids\SetRefEdEmbIdEntity.cs" />
+    <Compile Include="Entities\OneToMany\Ids\SetRefIngEmbIdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefIngEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
@@ -249,6 +254,17 @@
     <Compile Include="Integration\NotInsertable\NotInsertableTest.cs" />
     <Compile Include="Integration\NotInsertable\NotInsertableTestEntity.cs" />
     <Compile Include="Integration\OneToMany\BasicCollectionTest.cs" />
+    <Compile Include="Integration\OneToMany\BasicSetTest.cs" />
+    <Compile Include="Integration\OneToMany\BasicSetWithEmbIdTest.cs" />
+    <Compile Include="Integration\OneToMany\BasicSetWithMulIdTest.cs" />
+    <Compile Include="Integration\OneToMany\BasicSetWithNullsDeleteTest.cs" />
+    <Compile Include="Integration\OneToMany\BidirectionalMapKeyTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\BasicDetachedListTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithEmbIdTest.cs" />
+    <Compile Include="Integration\OneToMany\InverseSideChangesTest.cs" />
+    <Compile Include="Integration\OneToMany\RefEdMapKeyEntity.cs" />
+    <Compile Include="Integration\OneToMany\RefIngMapKeyEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefIngEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -270,6 +286,9 @@
     <EmbeddedResource Include="Entities\ManyToMany\SameTable\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\ManyToMany\UniDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\ManyToOne\UniDirectional\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\OneToMany\Ids\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\OneToMany\Detached\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\OneToMany\Detached\Ids\Mapping.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -302,6 +321,7 @@
     <EmbeddedResource Include="Integration\Naming\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\NotInsertable\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\NotInsertable\ManyToOne\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\OneToMany\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

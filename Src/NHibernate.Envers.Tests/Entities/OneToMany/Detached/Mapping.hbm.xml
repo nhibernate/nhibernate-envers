@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Entities.OneToMany.Detached">
+  <class name="ListRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <bag name="Collection">
+      <key column ="listRef" />
+      <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+    </bag>
+  </class>
+  <class name="SetRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <set name="Collection">
+      <key column ="setRef" />
+      <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+    </set>
+  </class>
+</hibernate-mapping>
+

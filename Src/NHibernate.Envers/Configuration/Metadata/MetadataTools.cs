@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using NHibernate.Mapping;
-using System.Collections;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -165,7 +164,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 												   string extendsEntityName, string discriminatorValue) 
 		{
 			var class_mapping = CreateEntityCommon(document, subclassType, auditTableData, discriminatorValue);
-
 			class_mapping.SetAttribute("extends", extendsEntityName);
 
 			return class_mapping;
@@ -216,7 +214,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					var value = property.GetAttribute("name");
 					if (!string.IsNullOrEmpty(value))
 					{
-					    columnEnumerator.MoveNext();
+						columnEnumerator.MoveNext();
 						property.SetAttribute("name", columnEnumerator.Current);
 					}
 				}
@@ -227,24 +225,27 @@ namespace NHibernate.Envers.Configuration.Metadata
 														bool changeToKey, bool insertable) 
 		{
 			var nodeList = element.ChildNodes;
-			foreach (XmlElement property in nodeList)
+
+			//reversed loop cause items might be deleted inside loop
+			for (var i = nodeList.Count - 1; i >= 0; i--)
 			{
-				if ("property".Equals(property.Name)) 
+				var property = (XmlElement) nodeList[i];
+				if ("property".Equals(property.Name))
 				{
 					var value = property.GetAttribute("name");
-					if (!String.IsNullOrEmpty(value)) 
+					if (!String.IsNullOrEmpty(value))
 					{
-						property.SetAttribute("name",prefix + value);
+						property.SetAttribute("name", prefix + value);
 					}
 					ChangeNamesInColumnElement(property, columnNames);
 
-					if (changeToKey) 
+					if (changeToKey)
 					{
 						ChangeToKeyProperty(property);
 					}
 					else
 					{
-						property.SetAttribute("insert", insertable ? "true" : "false");                        
+						property.SetAttribute("insert", insertable ? "true" : "false");
 					}
 				}
 			}
@@ -265,19 +266,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			var parent = element.ParentNode;
 			parent.RemoveChild(element);
-			try 
-			{
-				parent.AppendChild(newElement);
-			}
-			catch(Exception)
-			{
-				parent.AppendChild(element);
-			}
+			parent.AppendChild(newElement);
 		}
 
 		public static IEnumerator<string> GetColumnNameEnumerator(IEnumerable<ISelectable> columns)
 		{
-            return (from Column column in columns select column.Name).GetEnumerator();
+			return (from Column column in columns select column.Name).GetEnumerator();
 		}
 	}
 }
