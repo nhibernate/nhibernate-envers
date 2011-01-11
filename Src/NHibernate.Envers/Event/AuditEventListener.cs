@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NHibernate.Event;
 using NHibernate.Proxy;
 using NHibernate.Engine;
@@ -8,17 +7,12 @@ using NHibernate.Persister.Collection;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Synchronization.Work;
-using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Persister.Entity;
-using NHibernate.Envers.Entities.Mapper;
 
 namespace NHibernate.Envers.Event
 {
-	/**
-	 * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	 */
 	public class AuditEventListener: IPostInsertEventListener, IPostUpdateEventListener,
 			IPostDeleteEventListener, IPreCollectionUpdateEventListener, IPreCollectionRemoveEventListener,
 			IPostCollectionRecreateEventListener, IInitializable 
@@ -59,41 +53,48 @@ namespace NHibernate.Envers.Event
 						if (newValue != null) {
 							// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
 							// of subclasses, this will be root class, no the actual class. So it can't be used here.
-							String toEntityName;
+							string toEntityName;
 							
 							// Java: Serializable id
 							object id;
 
-							if (newValue is INHibernateProxy) {
-								INHibernateProxy hibernateProxy = (INHibernateProxy) newValue;
+							var newValueAsProxy = newValue as INHibernateProxy;
+							if (newValueAsProxy != null) 
+							{
 								toEntityName = session.BestGuessEntityName(newValue);
-								id = hibernateProxy.HibernateLazyInitializer.Identifier;
+								id = newValueAsProxy.HibernateLazyInitializer.Identifier;
 								// We've got to initialize the object from the proxy to later read its state.   
-								newValue = NHibernate.Envers.Tools.Toolz.GetTargetFromProxy(session.Factory, hibernateProxy);
-							} else {
+								newValue = Toolz.GetTargetFromProxy(session.Factory, newValueAsProxy);
+							} 
+							else 
+							{
 								toEntityName =  session.GuessEntityName(newValue);
 
-								IIdMapper idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
+								var idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
 								id = idMapper.MapToIdFromEntity(newValue);
 							}
 
 							verSync.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, verCfg, id, newValue));
 						}
 
-						if (oldValue != null) {
-							String toEntityName;
+						if (oldValue != null) 
+						{
+							string toEntityName;
 							object id;
 
-							if(oldValue is INHibernateProxy) {
-								INHibernateProxy hibernateProxy = (INHibernateProxy) oldValue;
+							var oldValueAsProxy = oldValue as INHibernateProxy;
+							if (oldValueAsProxy != null) 
+							{
 								toEntityName = session.BestGuessEntityName(oldValue);
-								id = hibernateProxy.HibernateLazyInitializer.Identifier;
+								id = oldValueAsProxy.HibernateLazyInitializer.Identifier;
 								// We've got to initialize the object as we'll read it's state anyway.
-								oldValue = Toolz.GetTargetFromProxy(session.Factory, hibernateProxy);
-							} else {
+								oldValue = Toolz.GetTargetFromProxy(session.Factory, oldValueAsProxy);
+							} 
+							else 
+							{
 								toEntityName =  session.GuessEntityName(oldValue);
 
-								IIdMapper idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
+								var idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
 								id = idMapper.MapToIdFromEntity(oldValue);
 							}
 							
@@ -104,17 +105,19 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostInsert(PostInsertEvent evt) {
-			String entityName = evt.Persister.EntityName;
+		public void OnPostInsert(PostInsertEvent evt) 
+		{
+			var entityName = evt.Persister.EntityName;
+			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			{
+				var verSync = verCfg.AuditSyncManager.get(evt.Session);
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) {
-				AuditSync verSync = verCfg.AuditSyncManager.get(evt.Session);
-
-				IAuditWorkUnit workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
 						evt.Id, evt.Persister, evt.State);
 				verSync.AddWorkUnit(workUnit);
 
-				if (workUnit.ContainsWork()) {
+				if (workUnit.ContainsWork()) 
+				{
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
 							null, evt.Session);
 				}
@@ -129,17 +132,20 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostUpdate(PostUpdateEvent evt) {
-			String entityName = evt.Persister.EntityName;
+		public void OnPostUpdate(PostUpdateEvent evt) 
+		{
+			var entityName = evt.Persister.EntityName;
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) {
-				AuditSync verSync = verCfg.AuditSyncManager.get(evt.Session);
+			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			{
+				var verSync = verCfg.AuditSyncManager.get(evt.Session);
 
-				IAuditWorkUnit workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
 						evt.Id, evt.Persister, evt.State, evt.OldState);
 				verSync.AddWorkUnit(workUnit);
 
-				if (workUnit.ContainsWork()) {
+				if (workUnit.ContainsWork()) 
+				{
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
 							evt.OldState, evt.Session);
 				}
@@ -148,17 +154,20 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostDelete(PostDeleteEvent evt) {
-			String entityName = evt.Persister.EntityName;
+		public void OnPostDelete(PostDeleteEvent evt) 
+		{
+			var entityName = evt.Persister.EntityName;
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) {
-				AuditSync verSync = verCfg.AuditSyncManager.get(evt.Session);
+			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			{
+				var verSync = verCfg.AuditSyncManager.get(evt.Session);
 
-				IAuditWorkUnit workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
 						evt.Id, evt.Persister, evt.DeletedState);
 				verSync.AddWorkUnit(workUnit);
 
-				if (workUnit.ContainsWork()) {
+				if (workUnit.ContainsWork()) 
+				{
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
 							evt.DeletedState, evt.Session);
 				}
@@ -199,26 +208,27 @@ namespace NHibernate.Envers.Event
 																 AbstractCollectionEvent evt,
 																 RelationDescription rd) {
 			// First computing the relation changes
-			IList<PersistentCollectionChangeData> collectionChanges = verCfg.EntCfg[collectionEntityName].PropertyMapper
+			var collectionChanges = verCfg.EntCfg[collectionEntityName].PropertyMapper
 					.MapCollectionChanges(referencingPropertyName, newColl, oldColl, evt.AffectedOwnerIdOrNull);
 
 			// Getting the id mapper for the related entity, as the work units generated will corrspond to the related
 			// entities.
-			String relatedEntityName = rd.ToEntityName;
-			IIdMapper relatedIdMapper = verCfg.EntCfg[relatedEntityName].GetIdMapper();
+			var relatedEntityName = rd.ToEntityName;
+			var relatedIdMapper = verCfg.EntCfg[relatedEntityName].GetIdMapper();
 
 			// For each collection change, generating the bidirectional work unit.
-			foreach (PersistentCollectionChangeData changeData in collectionChanges) {
-				Object relatedObj = changeData.GetChangedElement();
-				object relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
-				RevisionType revType = (RevisionType) changeData.Data[verCfg.AuditEntCfg.RevisionTypePropName];
+			foreach (var changeData in collectionChanges) 
+			{
+				var relatedObj = changeData.GetChangedElement();
+				var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
+				var revType = RevisionType.FromRepresentation((byte) changeData.Data[verCfg.AuditEntCfg.RevisionTypePropName]);
 
 				// This can be different from relatedEntityName, in case of inheritance (the real entity may be a subclass
 				// of relatedEntityName).
-				String realRelatedEntityName = evt.Session.BestGuessEntityName(relatedObj);
+				var realRelatedEntityName = evt.Session.BestGuessEntityName(relatedObj);
 
 				// By default, the nested work unit is a collection change work unit.
-				IAuditWorkUnit nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, verCfg,
+				var nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, verCfg,
 						relatedId, relatedObj);
 
 				verSync.AddWorkUnit(new FakeBidirectionalRelationWorkUnit(evt.Session, realRelatedEntityName, verCfg,
@@ -232,28 +242,34 @@ namespace NHibernate.Envers.Event
 		}
 
 		private void OnCollectionAction(AbstractCollectionEvent evt, IPersistentCollection newColl, object oldColl,
-										CollectionEntry collectionEntry) {
-			String entityName = evt.GetAffectedOwnerEntityName();
+										CollectionEntry collectionEntry) 
+		{
+			var entityName = evt.GetAffectedOwnerEntityName();
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) {
-				AuditSync verSync = verCfg.AuditSyncManager.get(evt.Session);
+			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			{
+				var verSync = verCfg.AuditSyncManager.get(evt.Session);
 
-				String ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
-				String referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
+				var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
+				var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
 
 				// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
 				// null in case of collections of non-entities.
-				RelationDescription rd = verCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
-				if (rd != null && rd.MappedByPropertyName != null) {
+				var rd = verCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
+				if (rd != null && rd.MappedByPropertyName != null) 
+				{
 					GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
 							referencingPropertyName, evt, rd);
-				} else {
-					PersistentCollectionChangeWorkUnit workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
+				} 
+				else 
+				{
+					var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
 							entityName, verCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
 							referencingPropertyName);
 					verSync.AddWorkUnit(workUnit);
 
-					if (workUnit.ContainsWork()) {
+					if (workUnit.ContainsWork()) 
+					{
 						// There are some changes: a revision needs also be generated for the collection owner
 						verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
 								verCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
@@ -264,37 +280,45 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private CollectionEntry GetCollectionEntry(AbstractCollectionEvent evt) {
+		private static CollectionEntry GetCollectionEntry(AbstractCollectionEvent evt) 
+		{
 			return evt.Session.PersistenceContext.GetCollectionEntry(evt.Collection);
 		}
 
-		public void OnPreUpdateCollection(PreCollectionUpdateEvent evt) {
-			CollectionEntry collectionEntry = GetCollectionEntry(evt);
-			if (!collectionEntry.LoadedPersister.IsInverse) {
+		public void OnPreUpdateCollection(PreCollectionUpdateEvent evt) 
+		{
+			var collectionEntry = GetCollectionEntry(evt);
+			if (!collectionEntry.LoadedPersister.IsInverse) 
+			{
 				OnCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
 			}
 		}
 
-		public void OnPreRemoveCollection(PreCollectionRemoveEvent evt) {
-			CollectionEntry collectionEntry = GetCollectionEntry(evt);
-			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse) {
+		public void OnPreRemoveCollection(PreCollectionRemoveEvent evt) 
+		{
+			var collectionEntry = GetCollectionEntry(evt);
+			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse) 
+			{
 				OnCollectionAction(evt, null, collectionEntry.Snapshot, collectionEntry);
 			}
 		}
 
-		public void OnPostRecreateCollection(PostCollectionRecreateEvent evt) {
-			CollectionEntry collectionEntry = GetCollectionEntry(evt);
-			if (!collectionEntry.LoadedPersister.IsInverse) {
+		public void OnPostRecreateCollection(PostCollectionRecreateEvent evt) 
+		{
+			var collectionEntry = GetCollectionEntry(evt);
+			if (!collectionEntry.LoadedPersister.IsInverse) 
+			{
 				OnCollectionAction(evt, evt.Collection, null, collectionEntry);
 			}
 		}
 
-		//TODO Simon - see if we need it : @SuppressWarnings({"unchecked"})
-		public void Initialize(Cfg.Configuration cfg) {
+		public void Initialize(Cfg.Configuration cfg) 
+		{
 			verCfg = AuditConfiguration.getFor(cfg);
 		}
 
-		public AuditConfiguration getVerCfg() {
+		public AuditConfiguration getVerCfg() 
+		{
 			return verCfg;
 		}
 	}

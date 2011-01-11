@@ -39,5 +39,36 @@
       <many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true"/>
     </set>
   </class>
+
+  <class name="DoubleListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References1">
+      <key column="some_join_column_1"/>
+      <one-to-many class="DoubleListJoinColumnBidirectionalRefEdEntity1"/>
+    </bag>
+    <bag name="References2">
+      <key column="some_join_column_2"/>
+      <one-to-many class="DoubleListJoinColumnBidirectionalRefEdEntity2"/>
+    </bag>
+  </class>
+
+  <class name="DoubleListJoinColumnBidirectionalRefEdEntity1">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column_1" insert="false" update="false" />
+  </class>
+  
+  <class name="DoubleListJoinColumnBidirectionalRefEdEntity2">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column_2" insert="false" update="false" />
+  </class>
 </hibernate-mapping>
 
