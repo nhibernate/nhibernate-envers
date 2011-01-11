@@ -12,6 +12,7 @@
       <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
     </bag>
   </class>
+  
   <class name="SetRefCollEntity">
     <id name="Id">
       <generator class="assigned"/>
@@ -20,6 +21,22 @@
     <set name="Collection">
       <key column ="setRef" />
       <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+    </set>
+  </class>
+
+  <class name="DoubleSetRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    
+    <set name="Collection" table="DOUBLE_STR_1">
+      <key column ="doubleSetRef" />
+      <many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true"/>
+    </set>
+    <set name="Collection2" table="DOUBLE_STR_2">
+      <key column ="doubleSetRef" />
+      <many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true"/>
     </set>
   </class>
 </hibernate-mapping>

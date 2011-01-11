@@ -108,6 +108,7 @@
     <Compile Include="Entities\ManyToOne\UniDirectional\TargetNotAuditedEntity.cs" />
     <Compile Include="Entities\OneToMany\CollectionRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\CollectionRefIngEntity.cs" />
+    <Compile Include="Entities\OneToMany\Detached\DoubleSetRefCollEntity.cs" />
     <Compile Include="Entities\OneToMany\Detached\Ids\SetRefCollEntityEmbId.cs" />
     <Compile Include="Entities\OneToMany\Detached\ListRefCollEntity.cs" />
     <Compile Include="Entities\OneToMany\Detached\SetRefCollEntity.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithEmbIdTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithMulIdTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\DataChangesDetachedSetTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\DoubleDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\InverseSideChangesTest.cs" />
     <Compile Include="Integration\OneToMany\RefEdMapKeyEntity.cs" />
     <Compile Include="Integration\OneToMany\RefIngMapKeyEntity.cs" />

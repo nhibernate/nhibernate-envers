@@ -63,7 +63,7 @@
 			</bag>
 		</component>
 		<component name="Component2">
-  		<bag name="Range" fetch="subselect" cascade="all-delete-orphan">
+			<bag name="Range" fetch="subselect" cascade="all-delete-orphan">
 				<key column="VJTRCTE2_ID" update="false" />
 				<one-to-many class="VersionsJoinTableRangeTestAlternateEntity" />
 			</bag>
@@ -74,18 +74,18 @@
 		</component>
 	</class>
 
-  <class name="VersionsJoinTableRangeTestAlternateEntity" table="RANGE_TEST_ALTERNATE_ENTITY">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <property name="GenericValue" />
+	<class name="VersionsJoinTableRangeTestAlternateEntity" table="RANGE_TEST_ALTERNATE_ENTITY">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="GenericValue" />
 		<property name="AlternativeValue" />
 	</class>
 	<class name="VersionsJoinTableRangeTestEntity" table="RANGE_TEST_ENTITY">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <property name="GenericValue" />
-    <property name="Value" />
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="GenericValue" />
+		<property name="Value" />
 	</class>
 </hibernate-mapping>
