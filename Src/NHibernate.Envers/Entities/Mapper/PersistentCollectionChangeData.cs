@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper
@@ -15,33 +14,22 @@ namespace NHibernate.Envers.Entities.Mapper
 			this.changedElement = changedElement;
 		}
 
-
 		public IDictionary<string, object> Data { get; private set; }
 		public string EntityName { get; private set; }
 
 		public object GetChangedElement()
 		{
 			var elementAsPair = changedElement as IPair;
-			return elementAsPair != null ? elementAsPair.Second : keyValueOrDefault(changedElement, "Value");
+			return elementAsPair != null ? elementAsPair.Second : keyValueOrDefault(changedElement, "Value", changedElement);
 		}
 
-		public object GetChangedElementIndex() 
+		public object GetChangedElementIndex()
 		{
-			//rk - fix this later...
-			if (changedElement.GetType().Equals(typeof(Pair<,>)))
-			{
-				return ((Pair<Object, Object>)changedElement).First;
-			}
-
-			if (changedElement.GetType().Equals(typeof(KeyValuePair<,>)))
-			{
-				return ((KeyValuePair<Object, Object>)changedElement).Key;
-			}
-
-			return null;
+			var elementAsPair = changedElement as IPair;
+			return elementAsPair != null ? elementAsPair.First : keyValueOrDefault(changedElement, "Key", null);
 		}
 
-		private static object keyValueOrDefault(object changedElement, string keyOrValue)
+		private static object keyValueOrDefault(object changedElement, string keyOrValue, object defaultValue)
 		{
 			//rk hack - fix later
 			var type = changedElement.GetType();
@@ -52,7 +40,7 @@ namespace NHibernate.Envers.Entities.Mapper
 					return type.GetProperty(keyOrValue).GetValue(changedElement, null);
 				}
 			}
-			return changedElement;
+			return defaultValue;
 		}
 	}
 }

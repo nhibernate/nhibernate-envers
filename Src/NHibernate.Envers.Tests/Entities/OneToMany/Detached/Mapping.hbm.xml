@@ -70,5 +70,26 @@
     <property name="Data"/>
     <many-to-one name="Owner" column="some_join_column_2" insert="false" update="false" />
   </class>
+
+  <class name="IndexedListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <list name="References">
+      <key column ="indexed_join_column" />
+      <index column ="indexed_index" />
+      <one-to-many class="IndexedListJoinColumnBidirectionalRefEdEntity"/>
+    </list>
+  </class>
+  
+  <class name="IndexedListJoinColumnBidirectionalRefEdEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <property name="Position" insert="false" update="false" column="indexed_index"/>
+    <many-to-one name="Owner" column="indexed_join_column" insert="false" update="false" />
+  </class>
 </hibernate-mapping>
 
