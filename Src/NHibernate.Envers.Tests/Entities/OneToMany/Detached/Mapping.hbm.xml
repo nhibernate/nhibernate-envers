@@ -91,5 +91,24 @@
     <property name="Position" insert="false" update="false" column="indexed_index"/>
     <many-to-one name="Owner" column="indexed_join_column" insert="false" update="false" />
   </class>
+
+  <class name="ListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References">
+      <key column="some_join_column" />
+      <one-to-many class="ListJoinColumnBidirectionalRefEdEntity"/>
+    </bag>
+  </class>
+
+  <class name="ListJoinColumnBidirectionalRefEdEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column" insert="false" update="false" />
+  </class>
 </hibernate-mapping>
 

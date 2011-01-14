@@ -115,6 +115,8 @@
     <Compile Include="Entities\OneToMany\Detached\Ids\SetRefCollEntityEmbId.cs" />
     <Compile Include="Entities\OneToMany\Detached\IndexedListJoinColumnBidirectionalRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\Detached\IndexedListJoinColumnBidirectionalRefIngEntity.cs" />
+    <Compile Include="Entities\OneToMany\Detached\ListJoinColumnBidirectionalRefEdEntity.cs" />
+    <Compile Include="Entities\OneToMany\Detached\ListJoinColumnBidirectionalRefIngEntity.cs" />
     <Compile Include="Entities\OneToMany\Detached\ListRefCollEntity.cs" />
     <Compile Include="Entities\OneToMany\Detached\SetRefCollEntity.cs" />
     <Compile Include="Entities\OneToMany\Ids\SetRefEdEmbIdEntity.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="Integration\OneToMany\Detached\DoubleDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\DoubleJoinColumnBidirectionalListTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\IndexedJoinColumnBidirectionalListTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\JoinColumnBidirectionalListTest.cs" />
     <Compile Include="Integration\OneToMany\InverseSideChangesTest.cs" />
     <Compile Include="Integration\OneToMany\RefEdMapKeyEntity.cs" />
     <Compile Include="Integration\OneToMany\RefIngMapKeyEntity.cs" />
