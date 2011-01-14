@@ -110,5 +110,28 @@
     <property name="Data"/>
     <many-to-one name="Owner" column="some_join_column" insert="false" update="false" />
   </class>
+
+  <class name="ListJoinColumnBidirectionalInheritanceRefEdParentEntity" discriminator-value="1">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <discriminator column="discriminator" type="int" />
+    <property name="ParentData"/>
+    <many-to-one name="Owner" column="some_join_column" insert="false" update="false" />
+    <subclass name="ListJoinColumnBidirectionalInheritanceRefEdChildEntity" discriminator-value="2">
+      <property name="ChildData"/>
+    </subclass>
+  </class>
+
+  <class name="ListJoinColumnBidirectionalInheritanceRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References">
+      <key column="some_join_column" />
+      <one-to-many class="ListJoinColumnBidirectionalInheritanceRefEdParentEntity"/>
+    </bag>
+  </class>
 </hibernate-mapping>
 
