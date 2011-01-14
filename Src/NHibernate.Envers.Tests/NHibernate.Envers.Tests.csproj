@@ -279,7 +279,7 @@
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefIngEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetupNunit.cs" />
+    <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
