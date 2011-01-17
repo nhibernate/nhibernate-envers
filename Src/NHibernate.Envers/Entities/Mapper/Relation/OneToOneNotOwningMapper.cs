@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tools;
@@ -13,8 +12,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public class OneToOneNotOwningMapper : IPropertyMapper 
 	{
-		private readonly String owningReferencePropertyName;
-		private readonly String owningEntityName;
+		private readonly string owningReferencePropertyName;
+		private readonly string owningEntityName;
 		private readonly PropertyData propertyData;
 
 		public OneToOneNotOwningMapper(string owningReferencePropertyName, 
@@ -47,10 +46,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				value = versionsReader.CreateQuery().ForEntitiesAtRevision(entityClass, revision)
 						.Add(AuditEntity.RelatedId(owningReferencePropertyName).eq(primaryKey)).GetSingleResult();
 			}
-			//catch (NoResultException e)
-			//{
-			//    value = null;
-			//}
+			catch (NoResultException)
+			{
+				value = null;
+			}
 			catch (NonUniqueResultException)
 			{
 				throw new AuditException("Many versions results for one-to-one relationship: (" + owningEntityName +
@@ -61,7 +60,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			setter.Set(obj, value);
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(String referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
 																						IPersistentCollection newColl,
 																						object oldColl,
 																						object id)

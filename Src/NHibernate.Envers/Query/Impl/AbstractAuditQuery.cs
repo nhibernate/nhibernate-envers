@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Projection;
@@ -16,8 +17,8 @@ namespace NHibernate.Envers.Query.Impl
 		protected EntityInstantiator entityInstantiator;
 		protected IList<IAuditCriterion> criterions;
 
-		protected String entityName;
-		protected String versionsEntityName;
+		protected string entityName;
+		protected string versionsEntityName;
 		protected QueryBuilder qb;
 
 		protected bool hasProjection;
@@ -26,8 +27,8 @@ namespace NHibernate.Envers.Query.Impl
 		protected readonly AuditConfiguration verCfg;
 		private readonly IAuditReaderImplementor versionsReader;
 
-		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader,
-										System.Type cls) {
+		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls) 
+		{
 			this.verCfg = verCfg;
 			this.versionsReader = versionsReader;
 
@@ -41,14 +42,16 @@ namespace NHibernate.Envers.Query.Impl
 			qb = new QueryBuilder(versionsEntityName, "e");
 		}
 
-		protected IList BuildAndExecuteQuery() {
-			StringBuilder querySb = new StringBuilder();
-			IDictionary<String, Object> queryParamValues = new Dictionary<String, Object>();
+		protected IList BuildAndExecuteQuery() 
+		{
+			var querySb = new StringBuilder();
+			var queryParamValues = new Dictionary<String, Object>();
 
 			qb.Build(querySb, queryParamValues);
 
-			IQuery query = versionsReader.Session.CreateQuery(querySb.ToString());
-			foreach (KeyValuePair<String, Object> paramValue in queryParamValues) {
+			var query = versionsReader.Session.CreateQuery(querySb.ToString());
+			foreach (KeyValuePair<String, Object> paramValue in queryParamValues) 
+			{
 				query.SetParameter(paramValue.Key, paramValue.Value);
 			}
 
@@ -70,8 +73,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			if (result == null || result.Count == 0) 
 			{
-				//throw new NoResultException();
-				throw new HibernateException("No result!");
+				throw new NoResultException();
 			}
 
 			if (result.Count > 1) 
@@ -111,16 +113,16 @@ namespace NHibernate.Envers.Query.Impl
 		private int? maxResults;
 		private int? firstResult;
 		private bool? cacheable;
-		private String cacheRegion;
-		private String comment;
+		private string cacheRegion;
+		private string comment;
 		private FlushMode flushMode;
 		private CacheMode cacheMode;
 		private int? timeout;
 		private LockMode lockMode;
 
-		public IAuditQuery SetMaxResults(int _maxResults) 
+		public IAuditQuery SetMaxResults(int maxResults) 
 		{
-			maxResults = _maxResults;
+			this.maxResults = maxResults;
 			return this;
 		}
 

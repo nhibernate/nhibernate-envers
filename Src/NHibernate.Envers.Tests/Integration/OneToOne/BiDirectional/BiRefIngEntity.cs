@@ -9,5 +9,18 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 
 		[Audited]
 		public virtual BiRefEdEntity Reference { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			var casted = obj as BiRefIngEntity;
+			if (casted == null)
+				return false;
+			return (Id == casted.Id && Data == casted.Data);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id ^ Data.GetHashCode();
+		}
 	}
 }
