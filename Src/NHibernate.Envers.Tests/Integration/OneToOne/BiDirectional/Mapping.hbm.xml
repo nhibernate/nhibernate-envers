@@ -18,7 +18,6 @@
 			<generator class="assigned"/>
 		</id>
 		<property name="Data" />
-		<many-to-one name="Reference"
-								unique="true"/>
+		<many-to-one name="Reference"/>
 	</class>
 </hibernate-mapping>

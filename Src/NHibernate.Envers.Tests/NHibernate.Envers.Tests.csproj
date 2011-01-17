@@ -283,6 +283,8 @@
     <Compile Include="Integration\OneToMany\InverseSideChangesTest.cs" />
     <Compile Include="Integration\OneToMany\RefEdMapKeyEntity.cs" />
     <Compile Include="Integration\OneToMany\RefIngMapKeyEntity.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\Bidirectional2Test.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\BidirectionalNoNullsTest.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BidirectionalTest.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\BiRefIngEntity.cs" />
