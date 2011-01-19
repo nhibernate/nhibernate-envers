@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public void read()
 		{
 			// Adding all properties from the given class.
-			AddPropertiesFromClass(_persistentPropertiesSource.GetClass());
+			AddPropertiesFromClass(_persistentPropertiesSource.Clazz);
 		}
 
     	private class DeclaredPersistentProperty
@@ -182,11 +182,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	        // is the optimistic locking field, don't audit it
 	        if (_globalCfg.isDoNotAuditOptimisticLockingField()) 
             {
+				if (_persistentPropertiesSource.VersionedProperty != null)
+				{
+					if (_persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
+						return false;
+				}
 	            //Version jpaVer = property.getAnnotation(typeof(Version));
-	            var jpaVer = (VersionAttribute)Attribute.GetCustomAttribute(property, typeof(VersionAttribute));
-	            if (jpaVer != null) {
-	                return false;
-	            }
+				//if (mappedVersionName.Equals(mappedPropertyName))
+				//    return false;
+				//var jpaVer = (VersionAttribute)Attribute.GetCustomAttribute(property, typeof(VersionAttribute));
+				//if (jpaVer != null) {
+				//    return false;
+				//}
 	        }
 
 	        // Checking if this property is explicitly audited or if all properties are.
@@ -301,27 +308,31 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		    return true;
 	    }
 
-	    private static AuditJoinTableAttribute DEFAULT_AUDIT_JOIN_TABLE = new DefaultAuditJoinTableAttribute();
+	    private static readonly AuditJoinTableAttribute DEFAULT_AUDIT_JOIN_TABLE = new DefaultAuditJoinTableAttribute();
 
-        private class ComponentPropertiesSource : IPersistentPropertiesSource {
-		    private System.Type xclass;
-		    private Component component;
+        private class ComponentPropertiesSource : IPersistentPropertiesSource 
+		{
+		    private readonly System.Type xclass;
+		    private readonly Component component;
 
-		    public ComponentPropertiesSource(Component component) {
-			    try {                    
-                    this.xclass = component.ComponentClass;
-
-				    //this.xclass = reflectionManager.classForName(component.getComponentClassName(), this.getClass());
-			    } catch (Exception e) {
-				    throw new MappingException(e);
-			    }
-
+		    public ComponentPropertiesSource(Component component) 
+			{
+				xclass = component.ComponentClass;
 			    this.component = component;
 		    }
 
 		    public IEnumerable<Property> PropertyEnumerator { get { return component.PropertyIterator; } }
 		    public Property GetProperty(String propertyName) { return component.GetProperty(propertyName); }
-		    public System.Type GetClass() { return xclass; }
-	    }
+
+        	public System.Type Clazz
+        	{
+        		get { return xclass; }
+        	}
+
+        	public Property VersionedProperty
+        	{
+				get { return null; }
+        	}
+        }
     }
 }

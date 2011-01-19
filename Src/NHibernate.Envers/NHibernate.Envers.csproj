@@ -63,7 +63,6 @@
     <Compile Include="AuditTableAttribute.cs" />
     <Compile Include="ColumnAttribute.cs" />
     <Compile Include="Compatibility\Attributes\MapKeyAttribute.cs" />
-    <Compile Include="Compatibility\Attributes\VersionAttribute.cs" />
     <Compile Include="Compatibility\ISortedSet.cs" />
     <Compile Include="Compatibility\LongType.cs" />
     <Compile Include="Configuration\AuditConfiguration.cs" />

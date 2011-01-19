@@ -107,7 +107,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return defaultAuditTable;
 		}
 
-		private class PersistentClassPropertiesSource : IPersistentPropertiesSource {
+		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
+		{
 			private System.Type typ;
 			private AnnotationsMetadataReader parent;
 
@@ -117,10 +118,25 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				this.parent = parent;
 			}
 
-			//@SuppressWarnings({"unchecked"})
-			public IEnumerable<Property> PropertyEnumerator {get { return parent.pc.PropertyIterator;}}
-			public Property GetProperty(String propertyName) { return parent.pc.GetProperty(propertyName); }
-			public System.Type GetClass() { return typ; }
+			public IEnumerable<Property> PropertyEnumerator 
+			{
+				get { return parent.pc.PropertyIterator; }
+			}
+
+			public System.Type Clazz 
+			{ 
+				get { return typ; } 
+			}
+
+			public Property VersionedProperty
+			{
+				get { return parent.pc.Version; }
+			}
+
+			public Property GetProperty(String propertyName)
+			{
+				return parent.pc.GetProperty(propertyName);
+			}
 		}
 	}
 }

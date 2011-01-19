@@ -21,6 +21,7 @@ namespace NHibernate.Envers.Tests
 			Cfg.Configure();
 			addMappings();
 			Cfg.IntegrateWithEnvers();
+			AddToConfiguration(Cfg);
 			var sf = Cfg.BuildSessionFactory();
 			createDropSchema(true);
 			using (Session = openSession(sf))
@@ -30,6 +31,8 @@ namespace NHibernate.Envers.Tests
 			Session = openSession(sf);
 			AuditReader = AuditReaderFactory.Get(Session);
 		}
+
+		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
 
 		private ISession openSession(ISessionFactory sessionFactory)
 		{

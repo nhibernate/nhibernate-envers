@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(PrimitiveAddDeleteTest), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(PrimitiveTestEntity), id1));
 		}
 
 		[Test]
