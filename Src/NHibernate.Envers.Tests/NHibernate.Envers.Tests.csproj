@@ -296,6 +296,8 @@
     <Compile Include="Integration\OneToOne\UniDirectional\UniDirectionalWithNullsTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngEntity.cs" />
+    <Compile Include="Integration\Primitive\PrimitiveAddDeleteTest.cs" />
+    <Compile Include="Integration\Primitive\PrimitiveTestEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />
@@ -353,6 +355,7 @@
     <EmbeddedResource Include="Integration\OneToMany\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToOne\BiDirectional\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToOne\UniDirectional\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Primitive\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
