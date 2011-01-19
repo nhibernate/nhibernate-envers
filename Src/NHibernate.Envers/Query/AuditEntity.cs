@@ -1,94 +1,111 @@
-﻿using System;
-using NHibernate.Envers.Query.Criteria;
+﻿using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Property;
 
 namespace NHibernate.Envers.Query
 {
-	/**
-	 * TODO: ilike
-	 * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	 * @see org.hibernate.criterion.Restrictions
-	 */
-	public class AuditEntity {
-		private AuditEntity() { }
-
-		public static AuditId Id() {
+	public static class AuditEntity 
+	{
+		public static AuditId Id() 
+		{
 			return new AuditId();
 		}
 
-		/**
-		 * Create restrictions, projections and specify order for a property of an audited entity.
-		 * @param propertyName Name of the property.
-		 */
-		public static AuditProperty<Object> Property(String propertyName) {
-			return new AuditProperty<Object>(new EntityPropertyName(propertyName));
+		/// <summary>
+		/// Create restrictions, projections and specify order for a property of an audited entity.
+		/// </summary>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static AuditProperty<object> Property(string propertyName) 
+		{
+			return new AuditProperty<object>(new EntityPropertyName(propertyName));
 		}
 
-	   /**
-		 * Create restrictions, projections and specify order for the revision number, corresponding to an
-		 * audited entity.
-		 */
-		public static AuditProperty<long> RevisionNumber() {
+
+		/// <summary>
+		/// Create restrictions, projections and specify order for the revision number, corresponding to an audited entity.
+		/// </summary>
+		/// <returns></returns>
+		public static AuditProperty<long> RevisionNumber() 
+		{
 			return new AuditProperty<long>(new RevisionNumberPropertyName());
 		}
 
-		/**
-		 * Create restrictions, projections and specify order for a property of the revision entity,
-		 * corresponding to an audited entity.
-		 * @param propertyName Name of the property.
-		 */
-		public static AuditProperty<Object> RevisionProperty(String propertyName) {
-			return new AuditProperty<Object>(new RevisionPropertyPropertyName(propertyName));
+		/// <summary>
+		/// Create restrictions, projections and specify order for a property of the revision entity, corresponding to an audited entity.
+		/// </summary>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static AuditProperty<object> RevisionProperty(string propertyName) 
+		{
+			return new AuditProperty<object>(new RevisionPropertyPropertyName(propertyName));
 		}
 
-		/**
-		 * Create restrictions, projections and specify order for the revision type, corresponding to an
-		 * audited entity.
-		 */
-		public static AuditProperty<RevisionType> RevisionType() {
+		/// <summary>
+		/// Create restrictions, projections and specify order for the revision type, corresponding to an audited entity.
+		/// </summary>
+		/// <returns></returns>
+		public static AuditProperty<RevisionType> RevisionType() 
+		{
 			return new AuditProperty<RevisionType>(new RevisionTypePropertyName());
 		}
 
-		/**
-		 * Create restrictions on an id of a related entity.
-		 * @param propertyName Name of the property, which is the relation.
-		 */
-		public static AuditRelatedId RelatedId(String propertyName) {
+		/// <summary>
+		/// Create restrictions on an id of a related entity.
+		/// </summary>
+		/// <param name="propertyName">Name of the property, which is the relation.</param>
+		/// <returns></returns>
+		public static AuditRelatedId RelatedId(string propertyName) 
+		{
 			return new AuditRelatedId(new EntityPropertyName(propertyName));
 		}
 
-		/**
-		 * Return the conjuction of two criterions.
-		 */
-		public static IAuditCriterion And(IAuditCriterion lhs, IAuditCriterion rhs) {
+		/// <summary>
+		/// Return the conjuction of two criterions.
+		/// </summary>
+		/// <param name="lhs"></param>
+		/// <param name="rhs"></param>
+		/// <returns></returns>
+		public static IAuditCriterion And(IAuditCriterion lhs, IAuditCriterion rhs) 
+		{
 			return new LogicalAuditExpression(lhs, rhs, "and");
 		}
 
-		/**
-		 * Return the disjuction of two criterions.
-		 */
-		public static IAuditCriterion Or(IAuditCriterion lhs, IAuditCriterion rhs) {
+		/// <summary>
+		/// Return the disjuction of two criterions.
+		/// </summary>
+		/// <param name="lhs"></param>
+		/// <param name="rhs"></param>
+		/// <returns></returns>
+		public static IAuditCriterion Or(IAuditCriterion lhs, IAuditCriterion rhs) 
+		{
 			return new LogicalAuditExpression(lhs, rhs, "or");
 		}
 
-		/**
-		 * Return the negation of a criterion.
-		 */
-		public static IAuditCriterion Not(IAuditCriterion expression) {
+		/// <summary>
+		/// Return the negation of a criterion.
+		/// </summary>
+		/// <param name="expression"></param>
+		/// <returns></returns>
+		public static IAuditCriterion Not(IAuditCriterion expression) 
+		{
 			return new NotAuditExpression(expression);
 		}
 
-		/**
-		 * Group criterions together in a single conjunction (A and B and C...).
-		 */
-		public static AuditConjunction Conjunction() {
+		/// <summary>
+		/// Group criterions together in a single conjunction (A and B and C...).
+		/// </summary>
+		/// <returns></returns>
+		public static AuditConjunction Conjunction() 
+		{
 			return new AuditConjunction();
 		}
 
-		/**
-		 * Group criterions together in a single disjunction (A or B or C...).
-		 */
-		public static AuditDisjunction Disjunction() {
+		/// <summary>
+		/// Group criterions together in a single disjunction (A or B or C...).
+		/// </summary>
+		/// <returns></returns>
+		public static AuditDisjunction Disjunction() 
+		{
 			return new AuditDisjunction();
 		}
 	}
