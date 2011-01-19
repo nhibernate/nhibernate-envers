@@ -298,6 +298,8 @@
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngEntity.cs" />
     <Compile Include="Integration\Primitive\PrimitiveAddDeleteTest.cs" />
     <Compile Include="Integration\Primitive\PrimitiveTestEntity.cs" />
+    <Compile Include="Integration\Proxy\ProxyIdentifierTest.cs" />
+    <Compile Include="Integration\Query\AggregateQueryTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />

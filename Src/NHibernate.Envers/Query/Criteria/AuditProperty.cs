@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Order;
@@ -16,229 +14,183 @@ namespace NHibernate.Envers.Query.Criteria
      * Create restrictions, projections and specify order for a property of an audited entity.
      * @author Adam Warski (adam at warski dot org)
      */
-    public class AuditProperty<T> : IAuditProjection {
+    public class AuditProperty<T> : IAuditProjection 
+    {
         private readonly IPropertyNameGetter propertyNameGetter;
 
-        public AuditProperty(IPropertyNameGetter propertyNameGetter) {
+        public AuditProperty(IPropertyNameGetter propertyNameGetter) 
+        {
             this.propertyNameGetter = propertyNameGetter;
         }
 
-        /**
-	     * Apply an "equal" constraint
-	     */
-	    public IAuditCriterion Eq(T value) {
+        public IAuditCriterion Eq(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, "=");
 	    }
 
-        /**
-	     * Apply a "not equal" constraint
-	     */
-	    public IAuditCriterion ne(T value) {
+	    public IAuditCriterion Ne(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, "<>");
 	    }
 
-        /**
-	     * Apply a "like" constraint
-	     */
-	    public IAuditCriterion like(T value) {
+	    public IAuditCriterion Like(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, " like ");
 	    }
 
-        /**
-	     * Apply a "like" constraint
-	     */
-	    public IAuditCriterion like(String value, MatchMode matchMode) {
+	    public IAuditCriterion Like(String value, MatchMode matchMode) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, matchMode.ToMatchString(value), " like " );
 	    }
 
-        /**
-	     * Apply a "greater than" constraint
-	     */
-	    public IAuditCriterion gt(T value) {
+	    public IAuditCriterion Gt(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, ">");
 	    }
 
-        /**
-	     * Apply a "less than" constraint
-	     */
-	    public IAuditCriterion lt(T value) {
+	    public IAuditCriterion Lt(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, "<");
 	    }
 
-        /**
-	     * Apply a "less than or equal" constraint
-	     */
-	    public IAuditCriterion le(T value) {
+	    public IAuditCriterion Le(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, "<=");
 	    }
 
-        /**
-	     * Apply a "greater than or equal" constraint
-	     */
-	    public IAuditCriterion ge(T value) {
+	    public IAuditCriterion Ge(T value) 
+        {
 		    return new SimpleAuditExpression(propertyNameGetter, value, ">=");
 	    }
 
-        /**
-	     * Apply a "between" constraint
-	     */
-	    public IAuditCriterion between(T lo, T hi) {
+	    public IAuditCriterion Between(T lo, T hi) 
+        {
 		    return new BetweenAuditExpression(propertyNameGetter, lo, hi);
 	    }
 
-        /**
-	     * Apply an "in" constraint
-	     */
-	    public IAuditCriterion In(T[] values) {
-		    return new InAuditExpression(propertyNameGetter, values.Cast<object>().ToArray());
+	    public IAuditCriterion In(IEnumerable<T> values) 
+        {
+			//rk - makes this nicer when upgrading NH, http://216.121.112.228/browse/NH-2461
+			return new InAuditExpression(propertyNameGetter, values.Cast<object>().ToArray());
 	    }
 
-        /**
-	     * Apply an "in" constraint
-	     */
-	    public IAuditCriterion In(ICollection values) {
-            object[] valuesArray = new object[values.Count];
-            values.CopyTo(valuesArray, 0);
-		    return new InAuditExpression(propertyNameGetter, valuesArray);
-	    }
-
-        /**
-	     * Apply an "is null" constraint
-	     */
-	    public IAuditCriterion isNull() {
+	    public IAuditCriterion IsNull() 
+		{
 		    return new NullAuditExpression(propertyNameGetter);
 	    }
 
-        /**
-	     * Apply an "equal" constraint to another property
-	     */
-	    public IAuditCriterion eqProperty(String otherPropertyName) {
+	    public IAuditCriterion EqProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, "=");
 	    }
 
-        /**
-	     * Apply a "not equal" constraint to another property
-	     */
-	    public IAuditCriterion neProperty(String otherPropertyName) {
+	    public IAuditCriterion NeProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, "<>");
 	    }
 
-        /**
-	     * Apply a "less than" constraint to another property
-	     */
-	    public IAuditCriterion ltProperty(String otherPropertyName) {
+	    public IAuditCriterion LtProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, "<");
 	    }
 
-        /**
-	     * Apply a "less than or equal" constraint to another property
-	     */
-	    public IAuditCriterion leProperty(String otherPropertyName) {
+	    public IAuditCriterion LeProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, "<=");
 	    }
 
-        /**
-	     * Apply a "greater than" constraint to another property
-	     */
-	    public IAuditCriterion gtProperty(String otherPropertyName) {
+	    public IAuditCriterion GtProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, ">");
 	    }
 
-        /**
-	     * Apply a "greater than or equal" constraint to another property
-	     */
-	    public IAuditCriterion geProperty(String otherPropertyName) {
+	    public IAuditCriterion GeProperty(String otherPropertyName) 
+		{
 		    return new PropertyAuditExpression(propertyNameGetter, otherPropertyName, ">=");
 	    }
 
-        /**
-	     * Apply an "is not null" constraint to the another property
-	     */
-	    public IAuditCriterion isNotNull() {
+	    public IAuditCriterion IsNotNull() 
+		{
 		    return new NotNullAuditExpression(propertyNameGetter);
 	    }
 
-        /**
-         * Apply a "maximalize" constraint, with the ability to specify further constraints on the maximized
-         * property
-         */
-        public AggregatedAuditExpression maximize() {
+		/// <summary>
+		/// Apply a "maximalize" constraint, with the ability to specify further constraints on the maximized property
+		/// </summary>
+		/// <returns></returns>
+		public AggregatedAuditExpression Maximize() 
+		{
             return new AggregatedAuditExpression(propertyNameGetter,
                     AggregatedAuditExpression.AggregatedMode.MAX);
         }
 
-        /**
-         * Apply a "minimize" constraint, with the ability to specify further constraints on the minimized
-         * property
-         */
-        public AggregatedAuditExpression minimize() {
+		/// <summary>
+		/// Apply a "minimize" constraint, with the ability to specify further constraints on the minimized property
+		/// </summary>
+		/// <returns></returns>
+        public AggregatedAuditExpression Minimize() 
+		{
             return new AggregatedAuditExpression(propertyNameGetter,
                     AggregatedAuditExpression.AggregatedMode.MIN);
         }
 
-        // Projections
-
-        /**
-         * Projection on the maximum value
-         */
-        public IAuditProjection max() {
+		/// <summary>
+		/// Projection on the maximum value
+		/// </summary>
+		/// <returns></returns>
+        public IAuditProjection Max() 
+		{
             return new PropertyAuditProjection(propertyNameGetter, "max", false);
         }
 
-        /**
-         * Projection on the minimum value
-         */
-        public IAuditProjection min() {
+		/// <summary>
+		/// Projection on the minimum value
+		/// </summary>
+		/// <returns></returns>
+        public IAuditProjection Min() 
+		{
             return new PropertyAuditProjection(propertyNameGetter, "min", false);
         }
 
-        /**
-         * Projection counting the values
-         */
-        public IAuditProjection count() {
+        public IAuditProjection Count() 
+		{
             return new PropertyAuditProjection(propertyNameGetter, "count", false);
         }
 
-        /**
-         * Projection counting distinct values
-         */
-        public IAuditProjection countDistinct() {
+
+        public IAuditProjection CountDistinct() 
+		{
             return new PropertyAuditProjection(propertyNameGetter, "count", true);
         }
 
-        /**
-         * Projection on distinct values
-         */
-        public IAuditProjection distinct() {
+        public IAuditProjection Distinct() 
+		{
             return new PropertyAuditProjection(propertyNameGetter, null, true);
         }
 
-        /**
-         * Projection using a custom function
-         */
-        public IAuditProjection function(String functionName) {
+		/// <summary>
+		/// Projection using a custom function
+		/// </summary>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
+        public IAuditProjection Function(string functionName) 
+		{
             return new PropertyAuditProjection(propertyNameGetter, functionName, false);
         }
 
-        // Projection on this property
 
-        public Triple<String, String, Boolean> GetData(AuditConfiguration auditCfg) {
-            return Triple<String, String, Boolean>.Make(null, propertyNameGetter.Get(auditCfg), false);
+		public Triple<string, string, bool> GetData(AuditConfiguration auditCfg) 
+		{
+			return Triple<string, string, bool>.Make(null, propertyNameGetter.Get(auditCfg), false);
         }
 
-        // Order
-
-        /**
-         * Sort the results by the property in ascending order
-         */
-        public IAuditOrder asc() {
+        public IAuditOrder Asc() 
+		{
             return new PropertyAuditOrder(propertyNameGetter, true);
         }
 
-        /**
-         * Sort the results by the property in descending order
-         */
-        public IAuditOrder desc() {
+        public IAuditOrder Desc() 
+		{
             return new PropertyAuditOrder(propertyNameGetter, false);
         }
     }
