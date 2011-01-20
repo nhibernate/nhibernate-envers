@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
                     alias1 + "." + originalIdPropertyName, alias2 +"." + originalIdPropertyName);
 
             // e.revision = (SELECT max(...) ...)
-            rootParameters.AddWhere("e." + revisionPropertyPath, false, globalCfg.getCorrelatedSubqueryOperator(), maxERevQb);
+            rootParameters.AddWhere("e." + revisionPropertyPath, false, globalCfg.CorrelatedSubqueryOperator, maxERevQb);
         }
 
         public static void AddAssociationAtRevision(QueryBuilder qb, Parameters rootParameters,

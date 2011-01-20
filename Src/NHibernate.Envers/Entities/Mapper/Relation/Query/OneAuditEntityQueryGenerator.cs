@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 					"e." + originalIdPropertyName, "e2." + originalIdPropertyName);
 
 			// e.revision = (SELECT max(...) ...)
-			rootParameters.AddWhere(revisionPropertyPath, false, globalCfg.getCorrelatedSubqueryOperator(), maxERevQb);
+			rootParameters.AddWhere(revisionPropertyPath, false, globalCfg.CorrelatedSubqueryOperator, maxERevQb);
 
 			// e.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");

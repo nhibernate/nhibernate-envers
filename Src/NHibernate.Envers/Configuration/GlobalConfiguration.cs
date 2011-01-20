@@ -6,81 +6,62 @@ namespace NHibernate.Envers.Configuration
 {
 	public class GlobalConfiguration 
 	{
-		// Should a revision be generated when a not-owned relation field changes
-		private readonly bool generateRevisionsForCollections;
-
-		// Should the optimistic locking property of an entity be considered unversioned
-		private readonly bool doNotAuditOptimisticLockingField;
-
-		// Should entity data be stored when it is deleted
-		private readonly bool storeDataAtDelete;
-
-		// The default name of the schema of audit tables.
-		private readonly String defaultSchemaName;
-
-		// The default name of the catalog of the audit tables.
-		private readonly String defaultCatalogName;
-
-		/*
-		 Which operator to use in correlated subqueries (when we want a property to be equal to the result of
-		 a correlated subquery, for example: e.p <operator> (select max(e2.p) where e2.p2 = e.p2 ...).
-		 Normally, this should be "=". However, HSQLDB has an issue related to that, so as a workaround,
-		 "in" is used. See {@link org.hibernate.envers.test.various.HsqlTest}.
-		 */
-		private readonly string correlatedSubqueryOperator;
-
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
 			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties,
-					"NHibernate.Envers.revision_on_collection_change",
+					"envers.revision_on_collection_change",
 					"true");
-			generateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
+			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
 
 			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties,
 					"envers.do_not_audit_optimistic_locking_field",
 					"true");
-			doNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
+			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
 
 			var storeDataDeletedEntityStr = Toolz.GetProperty(properties,
-					"NHibernate.Envers.store_data_at_delete",
+					"envers.store_data_at_delete",
 					"false");
-			storeDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
+			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			defaultSchemaName = Toolz.GetProperty(properties,"NHibernate.Envers.default_schema","");
-			defaultCatalogName = Toolz.GetProperty(properties,"NHibernate.Envers.default_catalog","");
+			DefaultSchemaName = Toolz.GetProperty(properties,"envers.default_schema","");
+			DefaultCatalogName = Toolz.GetProperty(properties,"envers.default_catalog","");
 
 			//TODO Simon - see if we need to parametrize this, HSQLDialect (HSQLDB) not implemented for NHibernate
-			correlatedSubqueryOperator = "org.hibernate.dialect.HSQLDialect".Equals(
+			CorrelatedSubqueryOperator = "org.hibernate.dialect.HSQLDialect".Equals(
 					Toolz.GetProperty(properties,"hibernate.dialect","")) ? "in" : "=";
 		}
 
-		public bool isGenerateRevisionsForCollections() 
-		{
-			return generateRevisionsForCollections;
-		}
+		/// <summary>
+		/// Should a revision be generated when a not-owned relation field changes
+		/// </summary>
+		public bool GenerateRevisionsForCollections { get; private set; }
 
-		public bool isDoNotAuditOptimisticLockingField() 
-		{
-			return doNotAuditOptimisticLockingField;
-		}
+		/// <summary>
+		/// Should the optimistic locking property of an entity be considered unversioned
+		/// </summary>
+		public bool DoNotAuditOptimisticLockingField { get; private set; }
 
-		public string getCorrelatedSubqueryOperator() 
-		{
-			return correlatedSubqueryOperator;
-		}
+		/// <summary>
+		/// Which operator to use in correlated subqueries (when we want a property to be equal to the result of
+		/// a correlated subquery, for example: e.p <operator> (select max(e2.p) where e2.p2 = e.p2 ...).
+		/// Normally, this should be "=". However, HSQLDB has an issue related to that, so as a workaround,
+		/// "in" is used. See {@link org.hibernate.envers.test.various.HsqlTest}.
+		/// </summary>
+		public string CorrelatedSubqueryOperator { get; private set; }
 
-		public bool isStoreDataAtDelete() {
-			return storeDataAtDelete;
-		}
+		/// <summary>
+		/// Should entity data be stored when it is deleted
+		/// </summary>
+		public bool StoreDataAtDelete { get; private set; }
 
-		public string getDefaultSchemaName()
-		{
-			return defaultSchemaName;
-		}
+		/// <summary>
+		/// The default name of the schema of audit tables.
+		/// </summary>
+		public string DefaultSchemaName { get; private set; }
 
-		public string getDefaultCatalogName()
-		{
-			return defaultCatalogName;
-		}
+		/// <summary>
+		/// The default name of the catalog of the audit tables.
+		/// </summary>
+		public string DefaultCatalogName { get; private set; }
 	}
 }

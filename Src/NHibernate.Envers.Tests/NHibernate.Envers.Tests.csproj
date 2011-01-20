@@ -308,6 +308,7 @@
     <Compile Include="Integration\Query\OrderByLimitQueryTest.cs" />
     <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />
     <Compile Include="Integration\Query\SimpleQueryTest.cs" />
+    <Compile Include="Integration\Query\StoreDeletedDataTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />

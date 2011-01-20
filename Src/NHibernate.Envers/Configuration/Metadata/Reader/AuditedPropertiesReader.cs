@@ -111,7 +111,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		    }
 	        // if the optimistic locking field has to be unversioned and the current property
 	        // is the optimistic locking field, don't audit it
-	        if (_globalCfg.isDoNotAuditOptimisticLockingField()) 
+	        if (_globalCfg.DoNotAuditOptimisticLockingField) 
             {
 				if (_persistentPropertiesSource.VersionedProperty != null)
 				{

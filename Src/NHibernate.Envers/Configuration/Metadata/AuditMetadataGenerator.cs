@@ -196,7 +196,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// ... if empty, try using the default ...
 			if (string.IsNullOrEmpty(schema))
 			{
-				schema = GlobalCfg.getDefaultSchemaName();
+				schema = GlobalCfg.DefaultSchemaName;
 
 				// ... if still empty, use the same as the normal table.
 				if (string.IsNullOrEmpty(schema))
@@ -214,7 +214,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// ... if empty, try using the default ...
 			if (string.IsNullOrEmpty(catalog))
 			{
-				catalog = GlobalCfg.getDefaultCatalogName();
+				catalog = GlobalCfg.DefaultCatalogName;
 
 				// ... if still empty, use the same as the normal table.
 				if (string.IsNullOrEmpty(catalog))

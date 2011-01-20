@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Event
 																	string entityName, object[] newState, object[] oldState,
 																	ISessionImplementor session) {
 			// Checking if this is enabled in configuration ...
-			if (!verCfg.GlobalCfg.isGenerateRevisionsForCollections()) 
+			if (!verCfg.GlobalCfg.GenerateRevisionsForCollections) 
 			{
 				return;
 			}
@@ -179,7 +179,7 @@ namespace NHibernate.Envers.Event
 																	RelationDescription rd) 
 		{
 			// Checking if this is enabled in configuration ...
-			if (!verCfg.GlobalCfg.isGenerateRevisionsForCollections()) 
+			if (!verCfg.GlobalCfg.GenerateRevisionsForCollections) 
 			{
 				return;
 			}

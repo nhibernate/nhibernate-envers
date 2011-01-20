@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Query.Impl
 			// e.revision_type != DEL AND
 			qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.DEL);
 			// e.revision = (SELECT max(...) ...)
-			qb.RootParameters.AddWhere(revisionPropertyPath, verCfg.GlobalCfg.getCorrelatedSubqueryOperator(), maxRevQb);
+			qb.RootParameters.AddWhere(revisionPropertyPath, verCfg.GlobalCfg.CorrelatedSubqueryOperator, maxRevQb);
 			// all specified conditions
 			foreach (var criterion in criterions)
 			{
