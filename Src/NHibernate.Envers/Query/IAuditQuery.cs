@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Projection;
@@ -9,6 +10,8 @@ namespace NHibernate.Envers.Query
 	public interface IAuditQuery 
 	{
 		IList GetResultList();
+
+		IList<T> GetResultList<T>();
 
 		object GetSingleResult();
 

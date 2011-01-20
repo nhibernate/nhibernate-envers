@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Query.Impl
 			return proxy!=null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : verCfg.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
 		}
 
-		public override IList List()
+		public override void FillResult(IList result)
 		{
 			var verEntCfg = verCfg.AuditEntCfg;
 
@@ -73,15 +73,17 @@ namespace NHibernate.Envers.Query.Impl
 				qb.RootParameters.AddWhere(verCfg.AuditEntCfg.RevisionNumberPath, true, "=", "r.id", false);
 			}
 
-			var queryResult = BuildAndExecuteQuery();
 			if (hasProjection)
 			{
-				return queryResult;
+				BuildAndExecuteQuery(result);
+				return;
 			}
-			var entities = new ArrayList();
+			var internalResult = new ArrayList();
+			BuildAndExecuteQuery(internalResult);
+
 			var revisionTypePropertyName = verEntCfg.RevisionTypePropName;
 
-			foreach (var resultRow in queryResult)
+			foreach (var resultRow in internalResult)
 			{
 				IDictionary<string, object> versionsEntity;
 				object revisionData = null;
@@ -103,12 +105,10 @@ namespace NHibernate.Envers.Query.Impl
 
 				var entity = entityInstantiator.CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision);
 
-				entities.Add(selectEntitiesOnly
+				result.Add(selectEntitiesOnly
 								 ? entity
 								 : new[] {entity, revisionData, versionsEntity[revisionTypePropertyName]});
 			}
-
-			return entities;
 		}
 	}
 }

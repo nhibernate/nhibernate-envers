@@ -13,12 +13,22 @@ namespace NHibernate.Envers.Tests.Entities
 			var other = obj as StrIntTestEntity;
 			if (other == null)
 				return false;
-			return Id == other.Id && Str.Equals(other.Str) && Number==other.Number;
+			return Id == other.Id && strEquals(other) && Number == other.Number;
+		}
+
+		private bool strEquals(StrIntTestEntity other)
+		{
+			if (other.Str == null && Str == null)
+				return true;
+			if (other.Str == null || Str == null)
+				return false;
+			return Str.Equals(other.Str);
 		}
 
 		public override int GetHashCode()
 		{
-			return Id.GetHashCode() ^ Str.GetHashCode() ^Number;
+			var strValue = Str == null ? 0 : Str.GetHashCode();
+			return Id.GetHashCode() ^ strValue ^Number;
 		}
 	}
 }

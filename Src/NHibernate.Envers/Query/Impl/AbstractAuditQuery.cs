@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Query.Impl
 			qb = new QueryBuilder(versionsEntityName, "e");
 		}
 
-		protected IList BuildAndExecuteQuery() 
+		protected void BuildAndExecuteQuery(IList result) 
 		{
 			var querySb = new StringBuilder();
 			var queryParamValues = new Dictionary<String, Object>();
@@ -57,14 +57,23 @@ namespace NHibernate.Envers.Query.Impl
 
 			setQueryProperties(query);
 
-			return query.List();
+			query.List(result);
 		}
 
-		public abstract IList List();
+		public abstract void FillResult(IList result);
 
 		public IList GetResultList()
 		{
-			return List();
+			var ret = new ArrayList();
+			FillResult(ret);
+			return ret;
+		}
+
+		public IList<T> GetResultList<T>()
+		{
+			var ret = new List<T>();
+			FillResult(ret);
+			return ret;
 		}
 
 		public T GetSingleResult<T>()
@@ -72,10 +81,10 @@ namespace NHibernate.Envers.Query.Impl
 			return (T) GetSingleResult();
 		}
 
-
 		public object GetSingleResult()
 		{
-			var result = List();
+			var result = new ArrayList();
+			FillResult(result);
 
 			if (result == null || result.Count == 0) 
 			{
