@@ -85,9 +85,11 @@
     <Compile Include="Configuration\Metadata\Reader\AuditedPropertiesReader.cs" />
     <Compile Include="Configuration\Metadata\Reader\ClassAuditingData.cs" />
     <Compile Include="Configuration\Metadata\Reader\ComponentAuditingData.cs" />
+    <Compile Include="Configuration\Metadata\Reader\DeclaredPersistentProperty.cs" />
     <Compile Include="Configuration\Metadata\Reader\IAuditedPropertiesHolder.cs" />
     <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
     <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
+    <Compile Include="Configuration\Metadata\Reader\PropertyAndMemberInfo.cs" />
     <Compile Include="Configuration\Metadata\Reader\PropertyAuditingData.cs" />
     <Compile Include="Configuration\Metadata\ToOneRelationMetadataGenerator.cs" />
     <Compile Include="Configuration\NhConfigurationExtension.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Exceptions\NotAuditedException.cs" />
     <Compile Include="Exceptions\RevisionDoesNotExistException.cs" />
     <Compile Include="IAuditReader.cs" />
+    <Compile Include="IRevisionListener.cs" />
     <Compile Include="JoinColumnAttribute.cs" />
     <Compile Include="ModificationStore.cs" />
     <Compile Include="NotAuditedAttribute.cs" />

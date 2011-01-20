@@ -1,61 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate.Envers.Entities;
-using NHibernate.Envers.Tools;
-using System.Reflection;
+using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Properties;
 
 namespace NHibernate.Envers.RevisionInfo
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class DefaultRevisionInfoGenerator : IRevisionInfoGenerator {
-        private readonly String revisionInfoEntityName;
-        private readonly NewRevisionDelegate newRevisionDelegate;
-        private readonly System.Type revisionInfoType;
-        private readonly PropertyData revisionInfoTimestampData;
+    public class DefaultRevisionInfoGenerator : IRevisionInfoGenerator 
+	{
+        private readonly String _revisionInfoEntityName;
+        private readonly System.Type _revisionInfoType;
+    	private readonly bool _timestampAsDate;
+    	private readonly IRevisionListener _listener;
+    	private readonly ISetter _revisionTimestampSetter;
 
-        public DefaultRevisionInfoGenerator(String revisionInfoEntityName, System.Type revisionInfoT,
-                                           //Class<? extends RevisionListener> listenerClass,
-                                           PropertyData revisionInfoTimestampData
-                                           /*, bool timestampAsDate */) {
-            this.revisionInfoEntityName = revisionInfoEntityName;
-            this.revisionInfoType = revisionInfoT;
-            this.revisionInfoTimestampData = revisionInfoTimestampData;
+    	public DefaultRevisionInfoGenerator(String revisionInfoEntityName, System.Type revisionInfoType,
+                                           System.Type listenerClass,
+                                           PropertyData revisionInfoTimestampData,
+                                           bool timestampAsDate) 
+		{
+            _revisionInfoEntityName = revisionInfoEntityName;
+            _revisionInfoType = revisionInfoType;
+    		_timestampAsDate = timestampAsDate;
 
-            
-            //if (!listenerClass.equals(RevisionListener.class)) {
-            //    // This is not the default value.
-            //    try {
-            //        evtDelegate = listenerClass.newInstance();
-            //    } catch (InstantiationException e) {
-            //        throw new MappingException(e);
-            //    } catch (IllegalAccessException e) {
-            //        throw new MappingException(e);
-            //    }
-            //} else {
-                // Default evtDelegate - none
-                newRevisionDelegate = null;
-            //}
+    		_revisionTimestampSetter = ReflectionTools.GetSetter(revisionInfoType, revisionInfoTimestampData);
+
+			if(!listenerClass.Equals(typeof(IRevisionListener)))
+			{
+				_listener = (IRevisionListener)Activator.CreateInstance(listenerClass);
+			}
         }
 
-	    public void saveRevisionData(ISession session, Object revisionData) {
-            session.Save(revisionInfoEntityName, revisionData);
+	    public void saveRevisionData(ISession session, object revisionData) 
+		{
+            session.Save(_revisionInfoEntityName, revisionData);
 	    }
 
-        public Object generate() {
-		    Object revisionInfo;
-            revisionInfo = Activator.CreateInstance(revisionInfoType);
-            
-            PropertyInfo prop = revisionInfoType.GetProperty(revisionInfoTimestampData.BeanName, typeof(DateTime));
+        public object generate() 
+		{
+        	var revisionInfo = Activator.CreateInstance(_revisionInfoType);
 
-            prop.SetValue(revisionInfo, DateTime.Now, null);
+        	var value = _timestampAsDate ? (object) DateTime.Now : DateTime.Now.Ticks;
 
-            if (newRevisionDelegate != null)
+        	_revisionTimestampSetter.Set(revisionInfo, value);
+
+            if (_listener != null)
             {
-                newRevisionDelegate(revisionInfo);
+                _listener.NewRevision(revisionInfo);
             }
 
             return revisionInfo;

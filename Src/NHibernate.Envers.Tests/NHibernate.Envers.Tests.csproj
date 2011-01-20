@@ -126,6 +126,8 @@
     <Compile Include="Entities\OneToMany\Ids\SetRefIngEmbIdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefIngEntity.cs" />
+    <Compile Include="Entities\RevEntity\CustomRevEntity.cs" />
+    <Compile Include="Entities\StrIntTestEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
     <Compile Include="Entities\UnversionedEntity.cs" />
     <Compile Include="Entities\UnversionedStrTestEntity.cs" />
@@ -300,6 +302,7 @@
     <Compile Include="Integration\Primitive\PrimitiveTestEntity.cs" />
     <Compile Include="Integration\Proxy\ProxyIdentifierTest.cs" />
     <Compile Include="Integration\Query\AggregateQueryTest.cs" />
+    <Compile Include="Integration\Query\CustomRevEntityQueryTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
@@ -325,6 +328,7 @@
     <EmbeddedResource Include="Entities\OneToMany\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Detached\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Detached\Ids\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\CustomRevEntity.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

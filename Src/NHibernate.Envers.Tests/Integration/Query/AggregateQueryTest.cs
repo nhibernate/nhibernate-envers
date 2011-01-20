@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;

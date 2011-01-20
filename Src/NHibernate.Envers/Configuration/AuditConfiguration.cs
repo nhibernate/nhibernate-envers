@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Synchronization;
@@ -11,7 +12,8 @@ namespace NHibernate.Envers.Configuration
 		public AuditConfiguration(Cfg.Configuration cfg) 
 		{
 			var properties = cfg.Properties;
-			var revInfoCfg = new RevisionInfoConfiguration(); //rk - when configure other than attr, check here
+			var propertyAndMemberInfo = new PropertyAndMemberInfo();
+			var revInfoCfg = new RevisionInfoConfiguration(propertyAndMemberInfo); //rk - when configure other than attr, check here
 			var revInfoCfgResult = revInfoCfg.Configure(cfg); //rk - when configure other than attr, check here
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
@@ -19,7 +21,7 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, GlobalCfg, AuditEntCfg, //rk - when configure other than attr, check here (annotationmetadatareader & auditedpropertiesreader)
-					revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+					revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping, propertyAndMemberInfo);
 		}
 
 		public virtual GlobalConfiguration GlobalCfg { get; private set; }

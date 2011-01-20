@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Tools.Graph;
@@ -13,7 +12,8 @@ namespace NHibernate.Envers.Configuration
 	{
 		public EntitiesConfigurations Configure(Cfg.Configuration cfg, 
 												GlobalConfiguration globalCfg, AuditEntitiesConfiguration verEntCfg,
-												XmlDocument revisionInfoXmlMapping, XmlElement revisionInfoRelationMapping) 
+												XmlDocument revisionInfoXmlMapping, XmlElement revisionInfoRelationMapping,
+												PropertyAndMemberInfo propertyAndMemberInfo) 
 		{
 			// Creating a name register to capture all audit entity names created.
 			var auditEntityNameRegister = new AuditEntityNameRegister();
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Configuration
 			foreach (var pc in classes)
 			{
 				// Collecting information from annotations on the persistent class pc
-				var annotationsMetadataReader = new AnnotationsMetadataReader(globalCfg, pc);
+				var annotationsMetadataReader = new AnnotationsMetadataReader(propertyAndMemberInfo, globalCfg, pc);
 				var auditData = annotationsMetadataReader.AuditData;
 
 				classesAuditingData.AddClassAuditingData(pc, auditData);

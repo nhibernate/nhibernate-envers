@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -11,9 +9,23 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	 * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
 	 * @author Sebastian Komander
 	 */
-	public sealed class AnnotationsMetadataReader {
+	public sealed class AnnotationsMetadataReader 
+	{
+		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
 		private GlobalConfiguration globalCfg;
 		private PersistentClass pc;
+
+
+		public AnnotationsMetadataReader(PropertyAndMemberInfo propertyAndMemberInfo, 
+									GlobalConfiguration globalCfg, 
+									PersistentClass pc)
+		{
+			_propertyAndMemberInfo = propertyAndMemberInfo;
+			this.globalCfg = globalCfg;
+			this.pc = pc;
+
+			_auditData = new ClassAuditingData();
+		}
 
 		/**
 		 * This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
@@ -34,7 +46,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 						_auditData.setDefaultAudited(true);
 					}
 
-					AuditedPropertiesReader ar = new AuditedPropertiesReader(defaultStore, new PersistentClassPropertiesSource(typ, this), _auditData,
+					AuditedPropertiesReader ar = new AuditedPropertiesReader(_propertyAndMemberInfo, defaultStore, new PersistentClassPropertiesSource(typ, this), _auditData,
 							globalCfg, "");
 					ar.read();
 
@@ -49,13 +61,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 				return _auditData;
 			}
-		}
-
-		public AnnotationsMetadataReader(GlobalConfiguration globalCfg, PersistentClass pc) {
-			this.globalCfg = globalCfg;
-			this.pc = pc;
-
-			_auditData = new ClassAuditingData();
 		}
 
 		private ModificationStore getDefaultAudited(System.Type typ) {

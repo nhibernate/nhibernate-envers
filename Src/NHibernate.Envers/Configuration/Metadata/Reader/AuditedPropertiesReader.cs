@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using System.Reflection;
 using NHibernate.Envers.Compatibility.Attributes;
-using NHibernate.Properties;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -18,31 +16,23 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
      * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
      * @author Erik-Berndt Scheper
      */
-    public class AuditedPropertiesReader {
-    	private const BindingFlags DefaultBindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy;
+    public class AuditedPropertiesReader 
+	{
+    	private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
     	private readonly ModificationStore _defaultStore;
 	    private readonly IPersistentPropertiesSource _persistentPropertiesSource;
 	    private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
 	    private readonly GlobalConfiguration _globalCfg;
 	    private readonly String _propertyNamePrefix;
 
-    	private static readonly List<IFieldNamingStrategy> DefaultFieldNamningStrategies =
-    		new List<IFieldNamingStrategy>
-    			{
-    				new CamelCaseStrategy(),
-    				new CamelCaseUnderscoreStrategy(),
-    				new LowerCaseStrategy(),
-    				new LowerCaseUnderscoreStrategy(),
-    				new PascalCaseUnderscoreStrategy(),
-    				new PascalCaseMUnderscoreStrategy(),
-    			};
-
-	    public AuditedPropertiesReader(ModificationStore defaultStore,
-								       IPersistentPropertiesSource persistentPropertiesSource,
-								       IAuditedPropertiesHolder auditedPropertiesHolder,
-								       GlobalConfiguration globalCfg,
-								       String propertyNamePrefix) {
-		    _defaultStore = defaultStore;
+	    public AuditedPropertiesReader(PropertyAndMemberInfo propertyAndMemberInfo,
+										ModificationStore defaultStore,
+										IPersistentPropertiesSource persistentPropertiesSource,
+										IAuditedPropertiesHolder auditedPropertiesHolder,
+										GlobalConfiguration globalCfg,
+										string propertyNamePrefix) {
+	    	_propertyAndMemberInfo = propertyAndMemberInfo;
+	    	_defaultStore = defaultStore;
 		    _persistentPropertiesSource = persistentPropertiesSource;
 		    _auditedPropertiesHolder = auditedPropertiesHolder;
 		    _globalCfg = globalCfg;
@@ -55,69 +45,9 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			AddPropertiesFromClass(_persistentPropertiesSource.Clazz);
 		}
 
-    	private class DeclaredPersistentProperty
-		{
-			public MemberInfo Member { get; set; }
-			public Property Property { get; set; }
-		}
-
-		private IEnumerable<DeclaredPersistentProperty> GetPersistentInfo(System.Type @class, IEnumerable<Property> properties)
-		{
-			// a persistent property can be anything including a noop "property" declared in the mapping
-			// for query only. In this case I will apply some trick to get the MemberInfo.
-			var candidateMembers =
-				@class.GetFields(DefaultBindingFlags).Concat(@class.GetProperties(DefaultBindingFlags).Cast<MemberInfo>()).ToList();
-			var candidateMembersNames = candidateMembers.Select(m => m.Name).ToList();
-			foreach (var property in properties)
-			{
-				var exactMemberIdx = candidateMembersNames.IndexOf(property.Name);
-				if (exactMemberIdx >= 0)
-				{
-					// No metter which is the accessor the audit-attribute should be in the property where available and not
-					// to the member used to read-write the value. (This method work even for access="field").
-					yield return new DeclaredPersistentProperty {Member = candidateMembers[exactMemberIdx], Property = property};
-				}
-				else
-				{
-					// try to find the field using field-name-strategy
-					//
-					// This part will run for:
-					// 1) query only property (access="none" or access="noop")
-					// 2) a strange case where the element <property> is declared with a "field.xyz" but only a field is used in the class. (Only God may know way)
-					int exactFieldIdx = GetMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
-					if (exactFieldIdx >= 0)
-					{
-						yield return new DeclaredPersistentProperty { Member = candidateMembers[exactFieldIdx], Property = property };
-					}
-				}
-			}
-		}
-
-    	private int GetMemberIdxByFieldNamingStrategies(List<string> candidateMembersNames, Property property)
-    	{
-    		int exactFieldIdx = -1;
-    		foreach (var ns in DefaultFieldNamningStrategies)
-    		{
-    			var fieldName = ns.GetFieldName(property.Name);
-    			exactFieldIdx = candidateMembersNames.IndexOf(fieldName);
-    			if (exactFieldIdx >= 0)
-    			{
-    				break;
-    			}
-    		}
-    		return exactFieldIdx;
-    	}
-
 		private void AddPropertiesFromClass(System.Type clazz)
 		{
-			//No need to go to base class, the .NET GetProperty method can bring the base properties also
-			//System.Type superclazz = clazz.BaseType;
-			//if (!"System.Object".Equals(superclazz.FullName))
-			//{
-			//    AddPropertiesFromClass(superclazz);
-			//}
-
-			foreach (var declaredPersistentProperty in GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
+			foreach (var declaredPersistentProperty in _propertyAndMemberInfo.GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
 			{
 				IValue propertyValue = declaredPersistentProperty.Property.Value;
 
@@ -133,7 +63,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(
 						(Component) propertyValue);
-					new AuditedPropertiesReader(ModificationStore.FULL, componentPropertiesSource, componentData,
+					new AuditedPropertiesReader(_propertyAndMemberInfo, 
+												ModificationStore.FULL, componentPropertiesSource, componentData,
 					                            _globalCfg,
 					                            _propertyNamePrefix +
 					                            MappingTools.createComponentPrefix(declaredPersistentProperty.Property.Name))
