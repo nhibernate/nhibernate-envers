@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				// Mapping collection element and index (if present).
 				MapToMapFromObject(originalId, changedObj);
 
-				entityData.Add(commonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType.Representation);
+				entityData.Add(commonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType);
 			}
 		}
 

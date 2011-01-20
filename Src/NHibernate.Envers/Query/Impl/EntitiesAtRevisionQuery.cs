@@ -53,7 +53,7 @@ namespace NHibernate.Envers.Query.Impl
                                                                        "e2." + originalIdPropertyName);
 
             // e.revision_type != DEL AND
-            qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.DEL.Representation);
+            qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.DEL);
             // e.revision = (SELECT max(...) ...)
             qb.RootParameters.AddWhere(revisionPropertyPath, verCfg.GlobalCfg.getCorrelatedSubqueryOperator(), maxRevQb);
             // all specified conditions

@@ -303,6 +303,10 @@
     <Compile Include="Integration\Proxy\ProxyIdentifierTest.cs" />
     <Compile Include="Integration\Query\AggregateQueryTest.cs" />
     <Compile Include="Integration\Query\CustomRevEntityQueryTest.cs" />
+    <Compile Include="Integration\Query\DeletedEntitiesTest.cs" />
+    <Compile Include="Integration\Query\MaximalizePropertyQueryTest.cs" />
+    <Compile Include="Integration\Query\OrderByLimitQueryTest.cs" />
+    <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Criteria;
@@ -9,40 +6,36 @@ using NHibernate.Envers.Query.Projection;
 
 namespace NHibernate.Envers.Query
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     * @see org.hibernate.Criteria
-     */
-    public interface IAuditQuery 
+	public interface IAuditQuery 
 	{
-		//rk: offer generic method here
-        IList GetResultList();
+		IList GetResultList();
 
-		//rk: offer generic method here
-        Object GetSingleResult();
+		object GetSingleResult();
 
-        IAuditQuery Add(IAuditCriterion criterion);
+		T GetSingleResult<T>();
 
-        IAuditQuery AddProjection(IAuditProjection projection);
+		IAuditQuery Add(IAuditCriterion criterion);
 
-        IAuditQuery AddOrder(IAuditOrder order);
+		IAuditQuery AddProjection(IAuditProjection projection);
 
-        IAuditQuery SetMaxResults(int maxResults);
+		IAuditQuery AddOrder(IAuditOrder order);
 
-	    IAuditQuery SetFirstResult(int firstResult);
+		IAuditQuery SetMaxResults(int maxResults);
 
-        IAuditQuery SetCacheable(bool cacheable);
+		IAuditQuery SetFirstResult(int firstResult);
 
-        IAuditQuery SetCacheRegion(String cacheRegion);
+		IAuditQuery SetCacheable(bool cacheable);
 
-        IAuditQuery SetComment(String comment);
+		IAuditQuery SetCacheRegion(String cacheRegion);
 
-        IAuditQuery SetFlushMode(FlushMode flushMode);
+		IAuditQuery SetComment(String comment);
 
-        IAuditQuery SetCacheMode(CacheMode cacheMode);
+		IAuditQuery SetFlushMode(FlushMode flushMode);
 
-        IAuditQuery SetTimeout(int timeout);
+		IAuditQuery SetCacheMode(CacheMode cacheMode);
 
-        IAuditQuery SetLockMode(LockMode lockMode);
-    }
+		IAuditQuery SetTimeout(int timeout);
+
+		IAuditQuery SetLockMode(LockMode lockMode);
+	}
 }

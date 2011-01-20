@@ -221,7 +221,7 @@ namespace NHibernate.Envers.Event
 			{
 				var relatedObj = changeData.GetChangedElement();
 				var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
-				var revType = RevisionType.FromRepresentation((byte) changeData.Data[verCfg.AuditEntCfg.RevisionTypePropName]);
+				var revType = (RevisionType)changeData.Data[verCfg.AuditEntCfg.RevisionTypePropName];
 
 				// This can be different from relatedEntityName, in case of inheritance (the real entity may be a subclass
 				// of relatedEntityName).

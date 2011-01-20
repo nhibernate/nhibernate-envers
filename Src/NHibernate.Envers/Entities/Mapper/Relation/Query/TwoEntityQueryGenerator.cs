@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
@@ -83,7 +82,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
         public IQuery GetQuery(IAuditReaderImplementor versionsReader, Object primaryKey, long revision) {
             IQuery query = versionsReader.Session.CreateQuery(queryString);
             query.SetParameter("revision", revision);
-            query.SetParameter("delrevisiontype", RevisionType.DEL.Representation);
+            query.SetParameter("delrevisiontype", RevisionType.DEL);
             foreach (QueryParameterData paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey)) {
                 paramData.SetParameterValue(query);
             }

@@ -67,6 +67,12 @@ namespace NHibernate.Envers.Query.Impl
 			return List();
 		}
 
+		public T GetSingleResult<T>()
+		{
+			return (T) GetSingleResult();
+		}
+
+
 		public object GetSingleResult()
 		{
 			var result = List();

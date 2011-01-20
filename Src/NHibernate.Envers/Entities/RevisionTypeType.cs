@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Entities
 		public object NullSafeGet(IDataReader resultSet, String[] names, object owner)
 		{
 			var enumAsInt = Convert.ToByte(NHibernateUtil.Int16.NullSafeGet(resultSet, names));
-			return RevisionType.FromRepresentation(enumAsInt);
+			return Enum.ToObject(typeof (RevisionType), enumAsInt);
 		}
 
 		public void NullSafeSet(IDbCommand cmd, object value, int index)

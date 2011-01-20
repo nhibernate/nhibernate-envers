@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Synchronization.Work
             var originalId = new Dictionary<String, Object> {{entitiesCfg.RevisionFieldName, revision}};
 
         	verCfg.EntCfg[EntityName].GetIdMapper().MapToMapFromId(originalId, EntityId);
-            data.Add(entitiesCfg.RevisionTypePropName, revisionType.Representation);
+            data.Add(entitiesCfg.RevisionTypePropName, revisionType);
             data.Add(entitiesCfg.OriginalIdPropName, originalId);
         }
 
