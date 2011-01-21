@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests
@@ -12,7 +11,7 @@ namespace NHibernate.Envers.Tests
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; set; }
 		protected IAuditReader AuditReader { get; set; }
-
+		private ISessionFactory SessionFactory { get; set; }
 
 		[SetUp]
 		public void BaseSetup()
@@ -22,13 +21,12 @@ namespace NHibernate.Envers.Tests
 			addMappings();
 			Cfg.IntegrateWithEnvers();
 			AddToConfiguration(Cfg);
-			var sf = Cfg.BuildSessionFactory();
-			createDropSchema(true);
-			using (Session = openSession(sf))
+			SessionFactory = Cfg.BuildSessionFactory();
+			using (Session = openSession(SessionFactory))
 			{
 				Initialize();				
 			}
-			Session = openSession(sf);
+			Session = openSession(SessionFactory);
 			AuditReader = AuditReaderFactory.Get(Session);
 		}
 
@@ -44,8 +42,14 @@ namespace NHibernate.Envers.Tests
 		[TearDown]
 		public void BaseTearDown()
 		{
-			Session.Close();
-			createDropSchema(false);
+			if (Session != null)
+			{
+				Session.Close();
+			}
+			if (SessionFactory != null)
+			{
+				SessionFactory.Close();
+			}
 		}
 
 		protected virtual FlushMode FlushMode
@@ -54,14 +58,6 @@ namespace NHibernate.Envers.Tests
 		}
 
 		protected abstract void Initialize();
-
-		private void createDropSchema(bool both)
-		{
-			var se = new SchemaExport(Cfg);
-			se.Drop(false, true);
-			if(both)
-				se.Create(false,true);
-		}
 
 		private string nameSpaceAssemblyExtracted()
 		{

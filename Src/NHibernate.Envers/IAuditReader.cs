@@ -66,7 +66,9 @@ namespace NHibernate.Envers
          * @throws RevisionDoesNotExistException If the revision does not exist.
          * @throws IllegalStateException If the associated entity manager is closed.
          */
-        T FindRevision<T>(System.Type revisionEntityClass, long revision);
+        T FindRevision<T>(long revision);
+
+    	object FindRevision(System.Type type, long revision);
 
         /**
 	     * Gets an instance of the current revision entity, to which any entries in the audit tables will be bound.

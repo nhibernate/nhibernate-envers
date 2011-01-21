@@ -1,50 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace NHibernate.Envers.RevisionInfo
 {
-/**
- * @author Adam Warski (adam at warski dot org)
- */
-public class RevisionInfoQueryCreator {
-    private readonly String revisionDateQuery;
-    private readonly String revisionNumberForDateQuery;
-    private readonly String revisionQuery;
+	public class RevisionInfoQueryCreator 
+	{
+		private readonly bool _timestampAsDate;
+		private readonly string revisionDateQuery;
+		private readonly string revisionNumberForDateQuery;
+		private readonly string revisionQuery;
 
-    public RevisionInfoQueryCreator(String revisionInfoEntityName, String revisionInfoIdName,
-                                    String revisionInfoTimestampName) {
-        
-        revisionDateQuery = new StringBuilder()
-                .Append("select rev.").Append(revisionInfoTimestampName)
-                .Append(" from ").Append(revisionInfoEntityName)
-                .Append(" rev where ").Append(revisionInfoIdName).Append(" = :_revision_number")
-                .ToString();
+		public RevisionInfoQueryCreator(string revisionInfoEntityName, 
+										string revisionInfoIdName,
+										string revisionInfoTimestampName,
+										bool timestampAsDate) 
+		{
+			_timestampAsDate = timestampAsDate;
 
-        revisionNumberForDateQuery = new StringBuilder()
-                .Append("select max(rev.").Append(revisionInfoIdName)
-                .Append(") from ").Append(revisionInfoEntityName)
-                .Append(" rev where ").Append(revisionInfoTimestampName).Append(" <= :_revision_date")
-                .ToString();
+			revisionDateQuery = new StringBuilder()
+					.Append("select rev.").Append(revisionInfoTimestampName)
+					.Append(" from ").Append(revisionInfoEntityName)
+					.Append(" rev where ").Append(revisionInfoIdName).Append(" = :_revision_number")
+					.ToString();
 
-        revisionQuery = new StringBuilder()
-                .Append("select rev from ").Append(revisionInfoEntityName)
-                .Append(" rev where ").Append(revisionInfoIdName)
-                .Append(" = :_revision_number")
-                .ToString();
-    }
+			revisionNumberForDateQuery = new StringBuilder()
+					.Append("select max(rev.").Append(revisionInfoIdName)
+					.Append(") from ").Append(revisionInfoEntityName)
+					.Append(" rev where ").Append(revisionInfoTimestampName).Append(" <= :_revision_date")
+					.ToString();
 
-    public NHibernate.IQuery getRevisionDateQuery(ISession session, long revision) {
-        return session.CreateQuery(revisionDateQuery).SetParameter("_revision_number", revision);
-    }
+			revisionQuery = new StringBuilder()
+					.Append("select rev from ").Append(revisionInfoEntityName)
+					.Append(" rev where ").Append(revisionInfoIdName)
+					.Append(" = :_revision_number")
+					.ToString();
+		}
 
-    public NHibernate.IQuery getRevisionNumberForDateQuery(ISession session, DateTime date) {
-        return session.CreateQuery(revisionNumberForDateQuery).SetParameter("_revision_date", date);
-    }
+		public IQuery RevisionDateQuery(ISession session, long revision) 
+		{
+			return session.CreateQuery(revisionDateQuery).SetInt64("_revision_number", revision);
+		}
 
-    public NHibernate.IQuery getRevisionQuery(ISession session, long revision) {
-        return session.CreateQuery(revisionQuery).SetParameter("_revision_number", revision);
-    }
-}
+		public IQuery RevisionNumberForDateQuery(ISession session, DateTime date) 
+		{
+			//rk: todo - fix this
+			return session.CreateQuery(revisionNumberForDateQuery).SetParameter("_revision_date", _timestampAsDate ? (object) date : new TimeSpan(date.Ticks));
+		}
+
+		public IQuery RevisionQuery(ISession session, long revision) 
+		{
+			return session.CreateQuery(revisionQuery).SetInt64("_revision_number", revision);
+		}
+	}
 }

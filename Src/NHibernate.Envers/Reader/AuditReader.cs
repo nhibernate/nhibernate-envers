@@ -4,7 +4,6 @@ using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
-using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools;
 using NHibernate.Event;
 
@@ -35,7 +34,7 @@ namespace NHibernate.Envers.Reader
 			}
 		}
 
-		public T Find<T> (Object primaryKey, long revision)
+		public T Find<T> (object primaryKey, long revision)
 		{
 			return (T) Find(typeof (T), primaryKey, revision);
 		}
@@ -78,7 +77,7 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IList GetRevisions(System.Type cls, Object primaryKey)
+		public IList GetRevisions(System.Type cls, object primaryKey)
 		{
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
 			ArgumentsTools.CheckNotNull(cls, "Entity class");
@@ -104,7 +103,7 @@ namespace NHibernate.Envers.Reader
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 			CheckSession();
 
-			var query = verCfg.RevisionInfoQueryCreator.getRevisionDateQuery(Session, revision);
+			var query = verCfg.RevisionInfoQueryCreator.RevisionDateQuery(Session, revision);
 
 			try 
 			{
@@ -128,7 +127,7 @@ namespace NHibernate.Envers.Reader
 			ArgumentsTools.CheckNotNull(date, "Date of revision");
 			CheckSession();
 
-			var query = verCfg.RevisionInfoQueryCreator.getRevisionNumberForDateQuery(Session, date);
+			var query = verCfg.RevisionInfoQueryCreator.RevisionNumberForDateQuery(Session, date);
 
 			try 
 			{
@@ -138,37 +137,45 @@ namespace NHibernate.Envers.Reader
 					throw new RevisionDoesNotExistException(date);
 				}
 
-				return (long)res;
-			} catch (NonUniqueResultException e) 
-			{
-				throw new AuditException(e);
-			}
-		}
-
-		public T FindRevision<T>(System.Type revisionEntityClass, long revision)
-		{
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
-			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			CheckSession();
-
-			var query = verCfg.RevisionInfoQueryCreator.getRevisionQuery(Session, revision);
-
-			try 
-			{
-				var revisionData = query.UniqueResult();
-
-				if (revisionData == null) 
-				{
-					throw new RevisionDoesNotExistException(revision);
-				}
-
-				return (T)revisionData;
+				return Convert.ToInt64(res);
 			} 
 			catch (NonUniqueResultException e) 
 			{
 				throw new AuditException(e);
 			}
 		}
+
+
+		public object FindRevision(System.Type type, long revision)
+		{
+			ArgumentsTools.CheckNotNull(revision, "Entity revision");
+			ArgumentsTools.CheckPositive(revision, "Entity revision");
+			CheckSession();
+
+			var query = verCfg.RevisionInfoQueryCreator.RevisionQuery(Session, revision);
+
+			try
+			{
+				var revisionData = query.UniqueResult();
+
+				if (revisionData == null)
+				{
+					throw new RevisionDoesNotExistException(revision);
+				}
+
+				return revisionData;
+			}
+			catch (NonUniqueResultException e)
+			{
+				throw new AuditException(e);
+			}
+		}
+
+		public T FindRevision<T>(long revision)
+		{
+			return (T) FindRevision(typeof (T), revision);
+		}
+
 
 		public T GetCurrentRevision<T>(System.Type revisionEntityClass, bool persist)
 		{
