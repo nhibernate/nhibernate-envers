@@ -304,6 +304,8 @@
     <Compile Include="Integration\Query\AggregateQueryTest.cs" />
     <Compile Include="Integration\Query\CustomRevEntityQueryTest.cs" />
     <Compile Include="Integration\Query\DeletedEntitiesTest.cs" />
+    <Compile Include="Integration\Query\Ids\EmbIdOneToManyQueryTest.cs" />
+    <Compile Include="Integration\Query\Ids\MulIdOneToManyQueryTest.cs" />
     <Compile Include="Integration\Query\MaximalizePropertyQueryTest.cs" />
     <Compile Include="Integration\Query\OrderByLimitQueryTest.cs" />
     <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />

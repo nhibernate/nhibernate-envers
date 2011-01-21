@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			try
 			{
 				value = versionsReader.CreateQuery().ForEntitiesAtRevision(entityClass, revision)
-						.Add(AuditEntity.RelatedId(owningReferencePropertyName).eq(primaryKey)).GetSingleResult();
+						.Add(AuditEntity.RelatedId(owningReferencePropertyName).Eq(primaryKey)).GetSingleResult();
 			}
 			catch (NoResultException)
 			{
@@ -67,37 +67,5 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			return null;
 		}
-
-		#region IPropertyMapper Members
-
-		public void MapToEntityFromMap(NHibernate.Envers.Configuration.AuditConfiguration verCfg, object obj, IDictionary<object, object> data, object primaryKey, NHibernate.Envers.Reader.IAuditReaderImplementor versionsReader, long revision)
-		{
-		   // //TODO in implementing second phase/////////////
-		   //if (obj == null) {
-		   //     return;
-		   // }
-
-		   ////System.Type entityClass = ReflectionTools.loadClass(owningEntityName);
-		   // System.Runtime.Remoting.ObjectHandle hdl = Activator.CreateInstance(owningEntityName);
-		   // System.Type entityClass = hdl.GetType();
-		   // Object value;
-
-		   // try {
-		   //     value = versionsReader.CreateQuery().ForEntitiesAtRevision(entityClass, revision)
-		   //             .Add(AuditEntity.relatedId(owningReferencePropertyName).eq(primaryKey)).GetSingleResult();
-		   // } catch (NoResultException e) {
-		   //     value = null;
-		   // } catch (NonUniqueResultException e) {
-		   //     throw new AuditException("Many versions results for one-to-one relationship: (" + owningEntityName +
-		   //             ", " + owningReferencePropertyName + ")");
-		   // }
-
-		   // Setter setter = ReflectionTools.getSetter(obj.getClass(), propertyData);
-		   // setter.set(obj, value, null);
-		}
-
-
-		#endregion
 	}
-
 }
