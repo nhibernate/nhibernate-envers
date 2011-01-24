@@ -2,10 +2,10 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 									 assembly="NHibernate.Envers.Tests"
 									 namespace="NHibernate.Envers.Tests.Entities.RevEntity">
-  <class name="CustomRevEntity">
-    <id name="CustomId">
-      <generator class="native"/>
-    </id>
-    <property name="CustomTimestamp"/>
-  </class>
+	<class name="CustomRevEntity">
+		<id name="CustomId">
+			<generator class="native"/>
+		</id>
+		<property name="CustomTimestamp"/>
+	</class>
 </hibernate-mapping>

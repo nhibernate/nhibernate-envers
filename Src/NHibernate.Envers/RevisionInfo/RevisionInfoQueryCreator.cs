@@ -43,8 +43,7 @@ namespace NHibernate.Envers.RevisionInfo
 
 		public IQuery RevisionNumberForDateQuery(ISession session, DateTime date) 
 		{
-			//rk: todo - fix this
-			return session.CreateQuery(revisionNumberForDateQuery).SetParameter("_revision_date", _timestampAsDate ? (object) date : new TimeSpan(date.Ticks));
+			return session.CreateQuery(revisionNumberForDateQuery).SetParameter("_revision_date", _timestampAsDate ? (object) date : date.Ticks);
 		}
 
 		public IQuery RevisionQuery(ISession session, long revision) 

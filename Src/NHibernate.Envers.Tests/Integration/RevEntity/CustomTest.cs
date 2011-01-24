@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	[TestFixture, Ignore("continue to work on this one")]
+	[TestFixture]
 	public class CustomTest : TestBase
 	{
 		private int id;
@@ -62,9 +62,6 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyDatesForRevisions()
 		{
-			Console.WriteLine(AuditReader.GetRevisionDate(1));
-			Console.WriteLine(AuditReader.GetRevisionDate(2));
-
 			Assert.AreEqual(1, AuditReader.GetRevisionNumberForDate(AuditReader.GetRevisionDate(1)));
 			Assert.AreEqual(2, AuditReader.GetRevisionNumberForDate(AuditReader.GetRevisionDate(2)));
 		}
@@ -87,7 +84,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			Assert.IsTrue(rev1timestamp > timestamp1);
 			Assert.IsTrue(rev1timestamp <= timestamp2);
 
-			var rev2timestamp = ((CustomRevEntity)AuditReader.FindRevision(typeof(CustomRevEntity), 1)).CustomTimestamp;
+			var rev2timestamp = ((CustomRevEntity)AuditReader.FindRevision(typeof(CustomRevEntity), 2)).CustomTimestamp;
 			Assert.IsTrue(rev2timestamp > timestamp2);
 			Assert.IsTrue(rev2timestamp <= timestamp3);
 		}
@@ -104,8 +101,8 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			var ver1 = new StrTestEntity {Id = id, Str = "x"};
 			var ver2 = new StrTestEntity {Id = id, Str = "y"};
 
-			Assert.AreEqual(ver1, AuditReader.Find<StrIntTestEntity>(id, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<StrIntTestEntity>(id, 2));
+			Assert.AreEqual(ver1, AuditReader.Find<StrTestEntity>(id, 1));
+			Assert.AreEqual(ver2, AuditReader.Find<StrTestEntity>(id, 2));
 		}
 	}
 }

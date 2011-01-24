@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Configuration.Metadata;
@@ -18,14 +19,14 @@ namespace NHibernate.Envers.Configuration
 		private PropertyData revisionInfoIdData;
 		private PropertyData revisionInfoTimestampData;
 		private IType revisionInfoTimestampType;
-
 		private string revisionPropType;
 		private string revisionPropSqlType;
+		private string revisionAssQName;
 
 		public RevisionInfoConfiguration(PropertyAndMemberInfo propertyAndMemberInfo) 
 		{
 			_propertyAndMemberInfo = propertyAndMemberInfo;
-			revisionInfoEntityName = typeof(DefaultRevisionEntity).FullName;
+			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
 			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore._NULL);
 			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore._NULL);
 			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
@@ -63,9 +64,11 @@ namespace NHibernate.Envers.Configuration
 			var rev_rel_mapping = document.CreateElement("key-many-to-one");
 			//rk: removed type attribute from key-many-to-one
 			//rev_rel_mapping.SetAttribute("type", revisionPropType);
-			rev_rel_mapping.SetAttribute("class", revisionInfoEntityName);
+			//rk: changed here
+			rev_rel_mapping.SetAttribute("class", revisionAssQName);
 
-			if (revisionPropSqlType != null) {
+			if (revisionPropSqlType != null) 
+			{
 				// Putting a fake name to make Hibernate happy. It will be replaced later anyway.
 				MetadataTools.AddColumn(rev_rel_mapping, "*" , -1, 0, 0, revisionPropSqlType);
 			}
@@ -205,9 +208,8 @@ namespace NHibernate.Envers.Configuration
 								"with [RevisionTimestamp]!");
 					}
 
-					//revisionInfoEntityName = pc.EntityName;
-					//rk - this is wrong but works... look at it later
-					revisionInfoEntityName = pc.MappedClass.AssemblyQualifiedName;
+					revisionInfoEntityName = pc.EntityName;
+					revisionAssQName = pc.MappedClass.AssemblyQualifiedName;
 
 					revisionInfoClass = pc.MappedClass;
 					revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
@@ -222,10 +224,13 @@ namespace NHibernate.Envers.Configuration
 			if (revisionInfoGenerator == null) 
 			{
 				revisionInfoClass = typeof(DefaultRevisionEntity);
+				revisionAssQName = revisionInfoClass.AssemblyQualifiedName;
 				revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
 						typeof(IRevisionListener),revisionInfoTimestampData, isTimestampAsDate());
 				revisionInfoXmlMapping = generateDefaultRevisionInfoXmlMapping();
 			}
+
+		
 
 			return new RevisionInfoConfigurationResult(
 					revisionInfoGenerator, revisionInfoXmlMapping,
