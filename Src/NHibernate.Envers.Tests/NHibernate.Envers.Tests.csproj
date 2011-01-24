@@ -311,6 +311,7 @@
     <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />
     <Compile Include="Integration\Query\SimpleQueryTest.cs" />
     <Compile Include="Integration\Query\StoreDeletedDataTest.cs" />
+    <Compile Include="Integration\RevEntity\CustomColumnMappingTest.cs" />
     <Compile Include="Integration\RevEntity\CustomTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
@@ -338,6 +339,7 @@
     <EmbeddedResource Include="Entities\OneToMany\Detached\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Detached\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntity.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityColumnMapping.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

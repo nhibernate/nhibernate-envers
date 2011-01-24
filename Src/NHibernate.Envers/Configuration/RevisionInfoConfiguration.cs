@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
@@ -144,10 +145,10 @@ namespace NHibernate.Envers.Configuration
 					// Getting the @Column definition of the revision number property, to later use that info to
 					// generate the same mapping for the relation from an audit table's revision number to the
 					// revision entity revision number.
-					var revisionPropColumn = (ColumnAttribute)Attribute.GetCustomAttribute(member, typeof(ColumnAttribute));
-					if (revisionPropColumn != null)
+					var revisionPropColumn = (Column)persistentProperty.Property.ColumnIterator.First();
+					if (!string.IsNullOrEmpty(revisionPropColumn.SqlType))
 					{
-						revisionPropSqlType = revisionPropColumn.columnDefinition;
+						revisionPropSqlType = revisionPropColumn.SqlType;
 					}
 				}
 
