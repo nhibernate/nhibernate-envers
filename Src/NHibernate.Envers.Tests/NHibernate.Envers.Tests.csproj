@@ -131,6 +131,7 @@
     <Compile Include="Entities\RevEntity\CustomRevEntity.cs" />
     <Compile Include="Entities\RevEntity\CustomRevEntityField.cs" />
     <Compile Include="Entities\RevEntity\ExceptionListenerRevEntity.cs" />
+    <Compile Include="Entities\RevEntity\InheritedRevEntity.cs" />
     <Compile Include="Entities\RevEntity\TestExceptionRevisionListener.cs" />
     <Compile Include="Entities\StrIntTestEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Integration\RevEntity\CustomNoListenerTest.cs" />
     <Compile Include="Integration\RevEntity\CustomTest.cs" />
     <Compile Include="Integration\RevEntity\ExceptionListenerTest.cs" />
+    <Compile Include="Integration\RevEntity\InheritedTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
@@ -355,6 +357,7 @@
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityFieldAccess.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityFieldCamelcaseAccess.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\ExceptionListenerRevEntity.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\InheritedRevEntity.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
