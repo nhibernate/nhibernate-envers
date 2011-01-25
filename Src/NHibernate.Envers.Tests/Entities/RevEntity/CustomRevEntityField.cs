@@ -1,19 +1,19 @@
 namespace NHibernate.Envers.Tests.Entities.RevEntity
 {
 	[RevisionEntity]
-	public class CustomRevEntity
+	public class CustomRevEntityField
 	{
+		[RevisionNumber]
 		private long _customId;
+		[RevisionTimestamp]
 		private long _customTimestamp;
 
-		[RevisionNumber]
-		public virtual long CustomId 
-		{ 
+		public virtual long CustomId
+		{
 			get { return _customId; }
 			set { _customId = value; }
 		}
 
-		[RevisionTimestamp]
 		public virtual long CustomTimestamp
 		{
 			get { return _customTimestamp; }
@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity
 
 		public override bool Equals(object obj)
 		{
-			var casted = obj as CustomRevEntity;
+			var casted = obj as CustomRevEntityField;
 			if (casted == null)
 				return false;
 			return (CustomId == casted.CustomId && CustomTimestamp == casted.CustomTimestamp);

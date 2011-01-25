@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 									assembly="NHibernate.Envers.Tests"
+									default-access="field.camelcase-underscore"
 									namespace="NHibernate.Envers.Tests.Entities.RevEntity">
 	<class name="CustomRevEntity">
 		<id name="CustomId">
-			<column name="CustomerId" sql-type="int"/>
-			<generator class="native" />	 
+			<generator class="native" />
 		</id>
 		<property name="CustomTimestamp"/>
 	</class>
