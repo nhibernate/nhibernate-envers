@@ -38,13 +38,13 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.IsEmpty(AuditReader.GetRevisions(typeof(StrTestEntity), id1));
+			CollectionAssert.IsEmpty(AuditReader().GetRevisions(typeof(StrTestEntity), id1));
 		}
 
 		[Test]
 		public void VerifyHistoryOfId1()
 		{
-			Assert.IsNull(AuditReader.Find<StrTestEntity>(id1, 1));
+			Assert.IsNull(AuditReader().Find<StrTestEntity>(id1, 1));
 		}
 	}
 }

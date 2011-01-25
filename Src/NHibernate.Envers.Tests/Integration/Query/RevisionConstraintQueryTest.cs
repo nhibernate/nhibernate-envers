@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionLtQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber().Distinct())
 						.Add(AuditEntity.RevisionNumber().Lt(3))
@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionGeQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber().Distinct())
 						.Add(AuditEntity.RevisionNumber().Ge(2))
@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionLeWithPropertyQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.RevisionNumber().Lt(3))
@@ -86,7 +86,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionGtWithPropertyQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.RevisionNumber().Gt(1))
@@ -98,7 +98,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionProjectionQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber().Max())
 						.AddProjection(AuditEntity.RevisionNumber().Count())
@@ -115,7 +115,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionOrderQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Id().Eq(id1))
@@ -128,7 +128,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void VerifyRevisionCountQuery()
 		{
 			// The query shouldn't be ordered as always, otherwise - we get an exception.
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber().Count())
 						.Add(AuditEntity.Id().Eq(id1))
@@ -140,7 +140,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void VerifyRevisionTypeEqQuery()
 		{
 			// The query shouldn't be ordered as always, otherwise - we get an exception.
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), true, true)
 						.Add(AuditEntity.Id().Eq(id1))
 						.Add(AuditEntity.RevisionType().Eq(RevisionType.MOD))
@@ -158,7 +158,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void VerifyRevisionTypeNeQuery()
 		{
 			// The query shouldn't be ordered as always, otherwise - we get an exception.
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), true, true)
 						.Add(AuditEntity.Id().Eq(id1))
 						.Add(AuditEntity.RevisionType().Ne(RevisionType.MOD))

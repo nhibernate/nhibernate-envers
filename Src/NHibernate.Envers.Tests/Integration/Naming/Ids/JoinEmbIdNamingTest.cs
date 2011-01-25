@@ -38,9 +38,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinEmbIdNamingRefEdEntity), ed_id1));
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinEmbIdNamingRefEdEntity), ed_id2));
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinEmbIdNamingRefIngEntity), ing_id1));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinEmbIdNamingRefEdEntity), ed_id1));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinEmbIdNamingRefEdEntity), ed_id2));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinEmbIdNamingRefIngEntity), ing_id1));
         }
 
         [Test]
@@ -48,8 +48,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
         {
             var ver1 = new JoinEmbIdNamingRefEdEntity { Id = ed_id1, Data = "data1" };
 
-            var rev1 = AuditReader.Find<JoinEmbIdNamingRefEdEntity>(ed_id1, 1);
-            var rev2 = AuditReader.Find<JoinEmbIdNamingRefEdEntity>(ed_id1, 2);
+            var rev1 = AuditReader().Find<JoinEmbIdNamingRefEdEntity>(ed_id1, 1);
+            var rev2 = AuditReader().Find<JoinEmbIdNamingRefEdEntity>(ed_id1, 2);
 
             Assert.AreEqual(ver1, rev1);
             Assert.AreEqual(ver1, rev2);
@@ -60,8 +60,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
         {
             var ver1 = new JoinEmbIdNamingRefEdEntity { Id = ed_id2, Data = "data2" };
 
-            var rev1 = AuditReader.Find<JoinEmbIdNamingRefEdEntity>(ed_id2, 1);
-            var rev2 = AuditReader.Find<JoinEmbIdNamingRefEdEntity>(ed_id2, 2);
+            var rev1 = AuditReader().Find<JoinEmbIdNamingRefEdEntity>(ed_id2, 1);
+            var rev2 = AuditReader().Find<JoinEmbIdNamingRefEdEntity>(ed_id2, 2);
 
             Assert.AreEqual(ver1, rev1);
             Assert.AreEqual(ver1, rev2);
@@ -73,8 +73,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
             var ver1 = new JoinEmbIdNamingRefIngEntity { Id = ing_id1, Data = "x", Reference = null};
             var ver2 = new JoinEmbIdNamingRefIngEntity { Id = ing_id1, Data = "y", Reference = null};
 
-            var rev1 = AuditReader.Find<JoinEmbIdNamingRefIngEntity>(ing_id1, 1);
-            var rev2 = AuditReader.Find<JoinEmbIdNamingRefIngEntity>(ing_id1, 2);
+            var rev1 = AuditReader().Find<JoinEmbIdNamingRefIngEntity>(ing_id1, 1);
+            var rev2 = AuditReader().Find<JoinEmbIdNamingRefIngEntity>(ing_id1, 2);
 
             Assert.AreEqual(ver1, rev1);
             Assert.AreEqual(ver2, rev2);

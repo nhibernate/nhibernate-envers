@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
 	[TestFixture]
-	public class CustomTest : TestBase
+	public class CustomDateTest : TestBase
 	{
 		private int id;
 		private long timestamp1;
@@ -20,18 +20,18 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			get
 			{
-				return new[]{"Entities.Mapping.hbm.xml", "Entities.RevEntity.CustomRevEntity.hbm.xml"};
+				return new[] { "Entities.Mapping.hbm.xml", "Entities.RevEntity.CustomDateRevEntity.hbm.xml" };
 			}
 		}
 
 		protected override void Initialize()
 		{
-			var te = new StrTestEntity {Str = "x"};
+			var te = new StrTestEntity { Str = "x" };
 
 			timestamp1 = DateTime.Now.AddSeconds(-1).Ticks;
 			using (var tx = Session.BeginTransaction())
 			{
-				id = (int) Session.Save(te);
+				id = (int)Session.Save(te);
 				tx.Commit();
 			}
 
@@ -72,7 +72,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			Assert.IsTrue(
 				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2))).Ticks <= timestamp2);
 			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2))+1).Ticks > timestamp2);
+				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2)) + 1).Ticks > timestamp2);
 			Assert.IsTrue(
 				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp3))).Ticks <= timestamp3);
 		}
@@ -80,11 +80,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyFindRevision()
 		{
-			var rev1timestamp = AuditReader().FindRevision<CustomRevEntity>(1).CustomTimestamp;
+			var rev1timestamp = AuditReader().FindRevision<CustomDateRevEntity>(1).DateTimestamp.Ticks;
 			Assert.IsTrue(rev1timestamp > timestamp1);
 			Assert.IsTrue(rev1timestamp <= timestamp2);
 
-			var rev2timestamp = ((CustomRevEntity)AuditReader().FindRevision(typeof(CustomRevEntity), 2)).CustomTimestamp;
+			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(typeof(CustomDateRevEntity), 2)).DateTimestamp.Ticks;
 			Assert.IsTrue(rev2timestamp > timestamp2);
 			Assert.IsTrue(rev2timestamp <= timestamp3);
 		}
@@ -92,14 +92,14 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[]{1,2}, AuditReader().GetRevisions(typeof(StrTestEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(StrTestEntity), id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfId()
 		{
-			var ver1 = new StrTestEntity {Id = id, Str = "x"};
-			var ver2 = new StrTestEntity {Id = id, Str = "y"};
+			var ver1 = new StrTestEntity { Id = id, Str = "x" };
+			var ver2 = new StrTestEntity { Id = id, Str = "y" };
 
 			Assert.AreEqual(ver1, AuditReader().Find<StrTestEntity>(id, 1));
 			Assert.AreEqual(ver2, AuditReader().Find<StrTestEntity>(id, 2));

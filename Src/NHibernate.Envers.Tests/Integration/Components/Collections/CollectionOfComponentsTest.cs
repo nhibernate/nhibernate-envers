@@ -27,15 +27,15 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ComponentSetTestEntity), id1));
+			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ComponentSetTestEntity), id1));
 		}
 
 		[Test]
 		public void VerifyHistoryOf1()
 		{
-			CollectionAssert.IsEmpty(AuditReader.Find<ComponentSetTestEntity>(id1, 1).Comps);
+			CollectionAssert.IsEmpty(AuditReader().Find<ComponentSetTestEntity>(id1, 1).Comps);
 
-			var comps1 = AuditReader.Find<ComponentSetTestEntity>(id1, 2).Comps;
+			var comps1 = AuditReader().Find<ComponentSetTestEntity>(id1, 2).Comps;
 			Assert.AreEqual(1, comps1.Count);
 			CollectionAssert.Contains(comps1, new Component1 { Str1 = "a", Str2 = "b" });
 		}

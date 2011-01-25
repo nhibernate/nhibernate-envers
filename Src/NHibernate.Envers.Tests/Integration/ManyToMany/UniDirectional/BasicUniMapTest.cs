@@ -46,9 +46,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(MapUniEntity), coll1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(MapUniEntity), coll1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str2_id));
 		}
 
 		[Test]
@@ -57,10 +57,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 			var str1 = Session.Get<StrTestEntity>(str1_id);
 			var str2 = Session.Get<StrTestEntity>(str2_id);
 
-			var rev1 = AuditReader.Find<MapUniEntity>(coll1_id, 1);
-			var rev2 = AuditReader.Find<MapUniEntity>(coll1_id, 2);
-			var rev3 = AuditReader.Find<MapUniEntity>(coll1_id, 3);
-			var rev4 = AuditReader.Find<MapUniEntity>(coll1_id, 4);
+			var rev1 = AuditReader().Find<MapUniEntity>(coll1_id, 1);
+			var rev2 = AuditReader().Find<MapUniEntity>(coll1_id, 2);
+			var rev3 = AuditReader().Find<MapUniEntity>(coll1_id, 3);
+			var rev4 = AuditReader().Find<MapUniEntity>(coll1_id, 4);
 
 			CollectionAssert.AreEquivalent(new Dictionary<string, StrTestEntity> {{"1", str1}}, rev1.References);
 			CollectionAssert.AreEquivalent(new Dictionary<string, StrTestEntity> {{"1", str1}, {"2", str2}}, rev2.References);

@@ -70,8 +70,8 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(TargetNotAuditedEntity), tnae1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(TargetNotAuditedEntity), tnae2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(TargetNotAuditedEntity), tnae1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(TargetNotAuditedEntity), tnae2_id));
 		}
 
 		[Test]
@@ -83,10 +83,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 			var uste1 = Session.Get<UnversionedStrTestEntity>(uste1_id);
 			var uste2 = Session.Get<UnversionedStrTestEntity>(uste2_id);
 
-			var rev1 = AuditReader.Find<TargetNotAuditedEntity>(tnae1_id, 1);
-			var rev2 = AuditReader.Find<TargetNotAuditedEntity>(tnae1_id, 2);
-			var rev3 = AuditReader.Find<TargetNotAuditedEntity>(tnae1_id, 3);
-			var rev4 = AuditReader.Find<TargetNotAuditedEntity>(tnae1_id, 4);
+			var rev1 = AuditReader().Find<TargetNotAuditedEntity>(tnae1_id, 1);
+			var rev2 = AuditReader().Find<TargetNotAuditedEntity>(tnae1_id, 2);
+			var rev3 = AuditReader().Find<TargetNotAuditedEntity>(tnae1_id, 3);
+			var rev4 = AuditReader().Find<TargetNotAuditedEntity>(tnae1_id, 4);
 
 			Assert.AreEqual(uste1, rev1.Reference);
 			Assert.AreEqual(uste2, rev2.Reference);
@@ -105,10 +105,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 			var uste1 = Session.Get<UnversionedStrTestEntity>(uste1_id);
 			var uste2 = Session.Get<UnversionedStrTestEntity>(uste2_id);
 
-			var rev1 = AuditReader.Find<TargetNotAuditedEntity>(tnae2_id, 1);
-			var rev2 = AuditReader.Find<TargetNotAuditedEntity>(tnae2_id, 2);
-			var rev3 = AuditReader.Find<TargetNotAuditedEntity>(tnae2_id, 3);
-			var rev4 = AuditReader.Find<TargetNotAuditedEntity>(tnae2_id, 4);
+			var rev1 = AuditReader().Find<TargetNotAuditedEntity>(tnae2_id, 1);
+			var rev2 = AuditReader().Find<TargetNotAuditedEntity>(tnae2_id, 2);
+			var rev3 = AuditReader().Find<TargetNotAuditedEntity>(tnae2_id, 3);
+			var rev4 = AuditReader().Find<TargetNotAuditedEntity>(tnae2_id, 4);
 
 			Assert.AreEqual(uste2, rev1.Reference);
 			Assert.AreEqual(uste1, rev2.Reference);

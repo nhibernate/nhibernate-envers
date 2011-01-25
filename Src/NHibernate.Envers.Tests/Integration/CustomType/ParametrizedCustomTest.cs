@@ -35,14 +35,14 @@ namespace NHibernate.Envers.Tests.Integration.CustomType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ParametrizedCustomTypeEntity), pcte_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ParametrizedCustomTypeEntity), pcte_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfPcte()
 		{
-			var rev1 = AuditReader.Find<ParametrizedCustomTypeEntity>(pcte_id, 1);
-			var rev2 = AuditReader.Find<ParametrizedCustomTypeEntity>(pcte_id, 2);
+			var rev1 = AuditReader().Find<ParametrizedCustomTypeEntity>(pcte_id, 1);
+			var rev2 = AuditReader().Find<ParametrizedCustomTypeEntity>(pcte_id, 2);
 
 			Assert.AreEqual("xUy", rev1.Str);
 			Assert.AreEqual("xVy", rev2.Str);

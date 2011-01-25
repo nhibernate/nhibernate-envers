@@ -37,17 +37,17 @@ namespace NHibernate.Envers.Tests.Integration.Query
         [Test]
         public void VerifyEntitiesAvgMaxQuery()
         {
-            var ver1 = (object[])AuditReader.CreateQuery()
+            var ver1 = (object[])AuditReader().CreateQuery()
                 .ForEntitiesAtRevision(typeof (IntTestEntity), 1)
                 .AddProjection(AuditEntity.Property("Number").Max())
                 .AddProjection(AuditEntity.Property("Number").Function("avg"))
                 .GetSingleResult();
-            var ver2 = (object[])AuditReader.CreateQuery()
+            var ver2 = (object[])AuditReader().CreateQuery()
                 .ForEntitiesAtRevision(typeof(IntTestEntity), 2)
                 .AddProjection(AuditEntity.Property("Number").Max())
                 .AddProjection(AuditEntity.Property("Number").Function("avg"))
                 .GetSingleResult();
-            var ver3 = (object[])AuditReader.CreateQuery()
+            var ver3 = (object[])AuditReader().CreateQuery()
                 .ForEntitiesAtRevision(typeof(IntTestEntity), 3)
                 .AddProjection(AuditEntity.Property("Number").Max())
                 .AddProjection(AuditEntity.Property("Number").Function("avg"))

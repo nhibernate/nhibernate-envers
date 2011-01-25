@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(NotInsertableTestEntity), id1));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NotInsertableTestEntity), id1));
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable
             var ver1 = new NotInsertableTestEntity { Id = id1, Data = "data1", DataCopy = "data1"};
             var ver2 = new NotInsertableTestEntity { Id = id1, Data = "data2", DataCopy = "data2" };
 
-            var rev1 = AuditReader.Find<NotInsertableTestEntity>(id1, 1);
-            var rev2 = AuditReader.Find<NotInsertableTestEntity>(id1, 2);
+            var rev1 = AuditReader().Find<NotInsertableTestEntity>(id1, 1);
+            var rev2 = AuditReader().Find<NotInsertableTestEntity>(id1, 2);
 
             Assert.AreEqual(ver1, rev1);
             Assert.AreEqual(ver2, rev2);

@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(OptimisticLockEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(OptimisticLockEntity), id));
 		}
 
 		[Test]
@@ -39,15 +39,15 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 			var ver1 = new OptimisticLockEntity { Id = id, Str = "X" };
 			var ver2 = new OptimisticLockEntity { Id = id, Str = "Y" };
 
-			Assert.AreEqual(ver1, AuditReader.Find<OptimisticLockEntity>(id, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<OptimisticLockEntity>(id, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<OptimisticLockEntity>(id, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<OptimisticLockEntity>(id, 2));
 		}
 
 		[Test]
 		public void VerifyVersionedIsAudited()
 		{
-			var versionOf1 = AuditReader.Find<OptimisticLockEntity>(id, 1).Version;
-			var versionOf2 = AuditReader.Find<OptimisticLockEntity>(id, 2).Version;
+			var versionOf1 = AuditReader().Find<OptimisticLockEntity>(id, 1).Version;
+			var versionOf2 = AuditReader().Find<OptimisticLockEntity>(id, 2).Version;
 
 			Assert.AreEqual(versionOf1 +1, versionOf2);
 		}

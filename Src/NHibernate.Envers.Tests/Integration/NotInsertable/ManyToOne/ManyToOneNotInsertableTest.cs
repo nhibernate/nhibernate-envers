@@ -42,17 +42,17 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(NotInsertableEntityType), type_id1));
-            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(NotInsertableEntityType), type_id2));
-            CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(ManyToOneNotInsertableEntity), mto_id1));
+            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(NotInsertableEntityType), type_id1));
+            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(NotInsertableEntityType), type_id2));
+            CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(ManyToOneNotInsertableEntity), mto_id1));
         }
 
         [Test]
         public void VerifyHistory()
         {
-            var ver1 = AuditReader.Find<ManyToOneNotInsertableEntity>(mto_id1, 1);
-            var ver2 = AuditReader.Find<ManyToOneNotInsertableEntity>(mto_id1, 2);
-            var ver3 = AuditReader.Find<ManyToOneNotInsertableEntity>(mto_id1, 3);
+            var ver1 = AuditReader().Find<ManyToOneNotInsertableEntity>(mto_id1, 1);
+            var ver2 = AuditReader().Find<ManyToOneNotInsertableEntity>(mto_id1, 2);
+            var ver3 = AuditReader().Find<ManyToOneNotInsertableEntity>(mto_id1, 3);
 
 		    var type1 = Session.Get<NotInsertableEntityType>(type_id1);
 		    var type2 = Session.Get<NotInsertableEntityType>(type_id2);

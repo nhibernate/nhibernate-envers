@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.EmptyChild
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(EmptyChildEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(EmptyChildEntity), id1));
 		}
 
 		[Test]
@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.EmptyChild
 			var ver1 = new EmptyChildEntity { Id = id1, Data = "x" };
 			var ver2 = new EmptyChildEntity { Id = id1, Data = "y" };
 
-			Assert.AreEqual(ver1, AuditReader.Find<EmptyChildEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<EmptyChildEntity>(id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<EmptyChildEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<EmptyChildEntity>(id1, 2));
 		}
 
 		[Test]
@@ -44,8 +44,8 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.EmptyChild
 		{
 			var childVer1 = new EmptyChildEntity { Id = id1, Data = "x" };
 
-			Assert.AreEqual(childVer1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof(EmptyChildEntity), 1).GetSingleResult());
-			Assert.AreEqual(childVer1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof(ParentEntity), 1).GetSingleResult());
+			Assert.AreEqual(childVer1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(EmptyChildEntity), 1).GetSingleResult());
+			Assert.AreEqual(childVer1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(ParentEntity), 1).GetSingleResult());
 		}
 	}
 }

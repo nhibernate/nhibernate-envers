@@ -43,7 +43,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(StrTestEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(StrTestEntity), id));
 		}
 
 		[Test]
@@ -52,15 +52,15 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 			var ver1 = new StrTestEntity { Id = id, Str = "y"};
 			var ver2 = new StrTestEntity { Id = id, Str = "z" };
 
-			Assert.AreEqual(ver1, AuditReader.Find<StrTestEntity>(id, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<StrTestEntity>(id, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<StrTestEntity>(id, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<StrTestEntity>(id, 2));
 		}
 
 		[Test]
 		public void VerifyRevisionTypes()
 		{
 			//rk - avoid casting to ilist. generics?
-		    var results = AuditReader.CreateQuery()
+		    var results = AuditReader().CreateQuery()
 		                .ForRevisionsOfEntity(typeof(StrTestEntity), false, true)
 		                .Add(AuditEntity.Id().Eq(id))
 		                .GetResultList();

@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionsOfId1Query()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.Add(AuditEntity.Id().Eq(id1))
 						.GetResultList();
@@ -66,7 +66,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionsOfId2Query()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.Add(AuditEntity.Id().Eq(id2))
 						.GetResultList();
@@ -80,7 +80,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionPropertyRestriction()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.Add(AuditEntity.Id().Eq(id1))
 						.Add(AuditEntity.RevisionProperty("CustomTimestamp").Ge(timestamp))

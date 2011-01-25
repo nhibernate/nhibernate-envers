@@ -25,15 +25,15 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidir
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(ContainedEntity), cce1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(SetEntity), cse1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(ContainedEntity), cce1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(SetEntity), cse1_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfReferencedCollection()
 		{
 			var cce1 = Session.Get<ContainedEntity>(cce1_id);
-			var entities = AuditReader.Find<SetEntity>(cse1_id, 1).Entities;
+			var entities = AuditReader().Find<SetEntity>(cse1_id, 1).Entities;
 			Assert.AreEqual(1, entities.Count);
 			CollectionAssert.Contains(entities, cce1);
 		}

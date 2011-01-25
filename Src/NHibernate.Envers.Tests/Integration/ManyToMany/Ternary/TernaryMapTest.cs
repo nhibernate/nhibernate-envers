@@ -63,12 +63,12 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(TernaryMapEntity), map1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(TernaryMapEntity), map2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntTestEntity), int1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntTestEntity), int2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(TernaryMapEntity), map1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(TernaryMapEntity), map2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntTestEntity), int1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntTestEntity), int2_id));
 		}
 
 		[Test]
@@ -80,10 +80,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 			var int2 = Session.Get<IntTestEntity>(int2_id);
 
 
-			var rev1 = AuditReader.Find<TernaryMapEntity>(map1_id, 1);
-			var rev2 = AuditReader.Find<TernaryMapEntity>(map1_id, 2);
-			var rev3 = AuditReader.Find<TernaryMapEntity>(map1_id, 3);
-			var rev4 = AuditReader.Find<TernaryMapEntity>(map1_id, 4);
+			var rev1 = AuditReader().Find<TernaryMapEntity>(map1_id, 1);
+			var rev2 = AuditReader().Find<TernaryMapEntity>(map1_id, 2);
+			var rev3 = AuditReader().Find<TernaryMapEntity>(map1_id, 3);
+			var rev4 = AuditReader().Find<TernaryMapEntity>(map1_id, 4);
 
 			CollectionAssert.AreEquivalent(new Dictionary<IntTestEntity, StrTestEntity>{{int1, str1}}, rev1.Map);
 			CollectionAssert.AreEquivalent(new Dictionary<IntTestEntity, StrTestEntity>{{int1, str2}}, rev2.Map);
@@ -100,10 +100,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 			var int2 = Session.Get<IntTestEntity>(int2_id);
 
 
-			var rev1 = AuditReader.Find<TernaryMapEntity>(map2_id, 1);
-			var rev2 = AuditReader.Find<TernaryMapEntity>(map2_id, 2);
-			var rev3 = AuditReader.Find<TernaryMapEntity>(map2_id, 3);
-			var rev4 = AuditReader.Find<TernaryMapEntity>(map2_id, 4);
+			var rev1 = AuditReader().Find<TernaryMapEntity>(map2_id, 1);
+			var rev2 = AuditReader().Find<TernaryMapEntity>(map2_id, 2);
+			var rev3 = AuditReader().Find<TernaryMapEntity>(map2_id, 3);
+			var rev4 = AuditReader().Find<TernaryMapEntity>(map2_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.Map);
 			CollectionAssert.AreEquivalent(new Dictionary<IntTestEntity, StrTestEntity> { { int1, str1 }, {int2, str1} }, rev2.Map);

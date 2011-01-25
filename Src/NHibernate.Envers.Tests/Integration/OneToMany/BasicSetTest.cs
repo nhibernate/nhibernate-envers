@@ -51,11 +51,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing2_id));
 		}
 
 		[Test]
@@ -64,10 +64,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ing1 = Session.Get<SetRefIngEntity>(ing1_id);
 			var ing2 = Session.Get<SetRefIngEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<SetRefEdEntity>(ed1_id, 2);
-			var rev3 = AuditReader.Find<SetRefEdEntity>(ed1_id, 3);
-			var rev4 = AuditReader.Find<SetRefEdEntity>(ed1_id, 4);
+			var rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<SetRefEdEntity>(ed1_id, 2);
+			var rev3 = AuditReader().Find<SetRefEdEntity>(ed1_id, 3);
+			var rev4 = AuditReader().Find<SetRefEdEntity>(ed1_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.Reffering);
 			CollectionAssert.AreEquivalent(new[] { ing1, ing2 }, rev2.Reffering);
@@ -81,10 +81,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ing1 = Session.Get<SetRefIngEntity>(ing1_id);
 			var ing2 = Session.Get<SetRefIngEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<SetRefEdEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<SetRefEdEntity>(ed2_id, 2);
-			var rev3 = AuditReader.Find<SetRefEdEntity>(ed2_id, 3);
-			var rev4 = AuditReader.Find<SetRefEdEntity>(ed2_id, 4);
+			var rev1 = AuditReader().Find<SetRefEdEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<SetRefEdEntity>(ed2_id, 2);
+			var rev3 = AuditReader().Find<SetRefEdEntity>(ed2_id, 3);
+			var rev4 = AuditReader().Find<SetRefEdEntity>(ed2_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.Reffering);
 			CollectionAssert.IsEmpty(rev2.Reffering);
@@ -98,10 +98,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ed1 = Session.Get<SetRefEdEntity>(ed1_id);
 			var ed2 = Session.Get<SetRefEdEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing1_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing1_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing1_id, 4);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing1_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing1_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing1_id, 4);
 
 			Assert.IsNull(rev1);
 			Assert.AreEqual(ed1, rev2.Reference);
@@ -115,10 +115,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ed1 = Session.Get<SetRefEdEntity>(ed1_id);
 			var ed2 = Session.Get<SetRefEdEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing2_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing2_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing2_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing2_id, 4);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing2_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing2_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing2_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing2_id, 4);
 
 			Assert.IsNull(rev1);
 			Assert.AreEqual(ed1, rev2.Reference);

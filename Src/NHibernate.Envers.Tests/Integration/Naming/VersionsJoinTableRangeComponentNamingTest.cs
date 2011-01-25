@@ -46,9 +46,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(VersionsJoinTableRangeComponentTestEntity), vjrcte_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader.GetRevisions(typeof(VersionsJoinTableRangeTestEntity), vjtrte_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader.GetRevisions(typeof(VersionsJoinTableRangeTestAlternateEntity), vjtrtae_id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeComponentTestEntity), vjrcte_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeTestEntity), vjtrte_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeTestAlternateEntity), vjtrtae_id1));
 		}
 
 		[Test]
@@ -57,8 +57,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			var vjtrte = Session.Get<VersionsJoinTableRangeTestEntity>(vjtrte_id);
 			var vjtrtae = Session.Get<VersionsJoinTableRangeTestAlternateEntity>(vjtrtae_id1);
 
-			var rev1 = AuditReader.Find<VersionsJoinTableRangeComponentTestEntity>(vjrcte_id, 1);
-			var rev2 = AuditReader.Find<VersionsJoinTableRangeComponentTestEntity>(vjrcte_id, 2);
+			var rev1 = AuditReader().Find<VersionsJoinTableRangeComponentTestEntity>(vjrcte_id, 1);
+			var rev2 = AuditReader().Find<VersionsJoinTableRangeComponentTestEntity>(vjrcte_id, 2);
 
 			CollectionAssert.IsEmpty(rev1.Component1.Range);
 			CollectionAssert.IsEmpty(rev1.Component2.Range);

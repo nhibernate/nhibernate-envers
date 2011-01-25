@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(IdMapKeyEntity), imke_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(IdMapKeyEntity), imke_id));
 		}
 
 		[Test]
@@ -48,8 +48,8 @@ namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 			var ste1 = Session.Get<StrTestEntity>(ste1_id);
 			var ste2 = Session.Get<StrTestEntity>(ste2_id);
 
-			var rev1 = AuditReader.Find<IdMapKeyEntity>(imke_id, 1);
-			var rev2 = AuditReader.Find<IdMapKeyEntity>(imke_id, 2);
+			var rev1 = AuditReader().Find<IdMapKeyEntity>(imke_id, 1);
+			var rev2 = AuditReader().Find<IdMapKeyEntity>(imke_id, 2);
 
 			Assert.AreEqual(new Dictionary<int, StrTestEntity> { { ste1.Id, ste1 } }, rev1.IdMap);
 			Assert.AreEqual(new Dictionary<int, StrTestEntity> { { ste1.Id, ste1 }, { ste2.Id, ste2 } }, rev2.IdMap);

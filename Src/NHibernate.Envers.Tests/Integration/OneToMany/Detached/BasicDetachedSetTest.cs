@@ -47,10 +47,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(SetRefCollEntity), coll1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(SetRefCollEntity), coll1_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str2_id));
 		}
 
 
@@ -60,10 +60,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			var str1 = Session.Get<StrTestEntity>(str1_id);
 			var str2 = Session.Get<StrTestEntity>(str2_id);
 
-			var rev1 = AuditReader.Find<SetRefCollEntity>(coll1_id, 1);
-			var rev2 = AuditReader.Find<SetRefCollEntity>(coll1_id, 2);
-			var rev3 = AuditReader.Find<SetRefCollEntity>(coll1_id, 3);
-			var rev4 = AuditReader.Find<SetRefCollEntity>(coll1_id, 4);
+			var rev1 = AuditReader().Find<SetRefCollEntity>(coll1_id, 1);
+			var rev2 = AuditReader().Find<SetRefCollEntity>(coll1_id, 2);
+			var rev3 = AuditReader().Find<SetRefCollEntity>(coll1_id, 3);
+			var rev4 = AuditReader().Find<SetRefCollEntity>(coll1_id, 4);
 
 			CollectionAssert.AreEquivalent(new[] { str1 }, rev1.Collection);
 			CollectionAssert.AreEquivalent(new[] { str1, str2 }, rev2.Collection);

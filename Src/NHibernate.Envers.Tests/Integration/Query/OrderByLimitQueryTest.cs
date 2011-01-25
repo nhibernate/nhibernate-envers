@@ -51,19 +51,19 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyEntitiesOrderLimitByQueryRev1()
 		{
-			var res_0_to_1 = AuditReader.CreateQuery()
+			var res_0_to_1 = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 1)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(0)
 							.SetMaxResults(2)
 							.GetResultList();
-			var res_2_to_3 = AuditReader.CreateQuery()
+			var res_2_to_3 = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 1)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(2)
 							.SetMaxResults(2)
 							.GetResultList();
-			var res_empty = AuditReader.CreateQuery()
+			var res_empty = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 1)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(4)
@@ -83,19 +83,19 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyEntitiesOrderLimitByQueryRev2()
 		{
-			var res_0_to_1 = AuditReader.CreateQuery()
+			var res_0_to_1 = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 2)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(0)
 							.SetMaxResults(2)
 							.GetResultList();
-			var res_2_to_3 = AuditReader.CreateQuery()
+			var res_2_to_3 = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 2)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(2)
 							.SetMaxResults(2)
 							.GetResultList();
-			var res_4 = AuditReader.CreateQuery()
+			var res_4 = AuditReader().CreateQuery()
 							.ForEntitiesAtRevision(typeof(IntTestEntity), 2)
 							.AddOrder(AuditEntity.Property("Number").Desc())
 							.SetFirstResult(4)

@@ -72,10 +72,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ComponentTestEntity), id1));
-			CollectionAssert.AreEqual(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(ComponentTestEntity), id2));
-			CollectionAssert.AreEqual(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(ComponentTestEntity), id3));
-			CollectionAssert.AreEqual(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(ComponentTestEntity), id4));
+			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id1));
+			CollectionAssert.AreEqual(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id2));
+			CollectionAssert.AreEqual(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id3));
+			CollectionAssert.AreEqual(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id4));
 		}
 
 		[Test]
@@ -84,10 +84,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 			var ver1 = new ComponentTestEntity { Id = id1, Comp1 = new Component1 { Str1 = "a", Str2 = "b" } };
 			var ver2 = new ComponentTestEntity { Id = id1, Comp1 = new Component1 { Str1 = "a'", Str2 = "b'" } };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id1, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id1, 3));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id1, 4));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id1, 3));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id1, 4));
 		}
 
 		[Test]
@@ -96,10 +96,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 			var ver1 = new ComponentTestEntity { Id = id2, Comp1 = new Component1 { Str1 = "a2", Str2 = "b2" } };
 			var ver2 = new ComponentTestEntity { Id = id2, Comp1 = new Component1 { Str1 = "a2'", Str2 = "b2" } };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id2, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id2, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id2, 3));
-			Assert.IsNull(AuditReader.Find<ComponentTestEntity>(id2, 4));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id2, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id2, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id2, 3));
+			Assert.IsNull(AuditReader().Find<ComponentTestEntity>(id2, 4));
 		}
 
 		[Test]
@@ -108,10 +108,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 			var ver1 = new ComponentTestEntity { Id = id3, Comp1 = new Component1 { Str1 = "a3", Str2 = "b3" } };
 			var ver2 = new ComponentTestEntity { Id = id3, Comp1 = new Component1 { Str1 = "a3", Str2 = "b3'" } };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id3, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id3, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id3, 3));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id3, 4));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id3, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id3, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id3, 3));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id3, 4));
 		}
 
 		[Test]
@@ -121,10 +121,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 			var ver2 = new ComponentTestEntity { Id = id4, Comp1 = new Component1 { Str1 = "n" } };
 			var ver3 = new ComponentTestEntity { Id = id4 };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id4, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id4, 2));
-			Assert.AreEqual(ver3, AuditReader.Find<ComponentTestEntity>(id4, 3));
-			Assert.AreEqual(ver3, AuditReader.Find<ComponentTestEntity>(id4, 4));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id4, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id4, 2));
+			Assert.AreEqual(ver3, AuditReader().Find<ComponentTestEntity>(id4, 3));
+			Assert.AreEqual(ver3, AuditReader().Find<ComponentTestEntity>(id4, 4));
 		}
 	}
 }

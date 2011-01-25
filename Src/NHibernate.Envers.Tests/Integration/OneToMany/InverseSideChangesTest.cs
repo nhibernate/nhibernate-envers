@@ -31,14 +31,14 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing1_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfEd1()
 		{
-			var rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
+			var rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
 
 			CollectionAssert.IsEmpty(rev1.Reffering);
 		}
@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyHistoryOfIng1()
 		{
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing1_id, 2);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing1_id, 2);
 
 			Assert.IsNull(rev2.Reference);
 		}

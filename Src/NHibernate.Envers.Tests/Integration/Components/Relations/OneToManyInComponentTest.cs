@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(OneToManyComponentTestEntity), otmcte_id1));
+			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(OneToManyComponentTestEntity), otmcte_id1));
 		}
 
 		[Test]
@@ -59,9 +59,9 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 			ver3.Comp1.Entities.Add(ste1);
 			ver3.Comp1.Entities.Add(ste2);
 
-			Assert.IsNull(AuditReader.Find<OneToManyComponentTestEntity>(otmcte_id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<OneToManyComponentTestEntity>(otmcte_id1, 2));
-			Assert.AreEqual(ver3, AuditReader.Find<OneToManyComponentTestEntity>(otmcte_id1, 3));
+			Assert.IsNull(AuditReader().Find<OneToManyComponentTestEntity>(otmcte_id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<OneToManyComponentTestEntity>(otmcte_id1, 2));
+			Assert.AreEqual(ver3, AuditReader().Find<OneToManyComponentTestEntity>(otmcte_id1, 3));
 		}
 	}
 }

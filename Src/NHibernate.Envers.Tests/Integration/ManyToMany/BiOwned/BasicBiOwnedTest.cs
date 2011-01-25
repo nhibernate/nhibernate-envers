@@ -86,10 +86,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			// Although it would seem that when modifying references both entities should be marked as modified, because
 			// ownly the owning side is notified (because of the bi-owning mapping), a revision is created only for
 			// the entity where the collection was directly modified.
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader.GetRevisions(typeof(ListBiOwning1Entity), o1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 5 }, AuditReader.GetRevisions(typeof(ListBiOwning1Entity), o1_2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader.GetRevisions(typeof(ListBiOwning2Entity), o2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader.GetRevisions(typeof(ListBiOwning2Entity), o2_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions(typeof(ListBiOwning1Entity), o1_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 5 }, AuditReader().GetRevisions(typeof(ListBiOwning1Entity), o1_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(ListBiOwning2Entity), o2_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(ListBiOwning2Entity), o2_2_id));
 		}
 
 		[Test]
@@ -98,11 +98,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			var o2_1 = Session.Get<ListBiOwning2Entity>(o2_1_id);
 			var o2_2 = Session.Get<ListBiOwning2Entity>(o2_2_id);
 
-			var rev1 = AuditReader.Find<ListBiOwning1Entity>(o1_1_id, 1);
-			var rev2 = AuditReader.Find<ListBiOwning1Entity>(o1_1_id, 2);
-			var rev3 = AuditReader.Find<ListBiOwning1Entity>(o1_1_id, 3);
-			var rev4 = AuditReader.Find<ListBiOwning1Entity>(o1_1_id, 4);
-			var rev5 = AuditReader.Find<ListBiOwning1Entity>(o1_1_id, 5);
+			var rev1 = AuditReader().Find<ListBiOwning1Entity>(o1_1_id, 1);
+			var rev2 = AuditReader().Find<ListBiOwning1Entity>(o1_1_id, 2);
+			var rev3 = AuditReader().Find<ListBiOwning1Entity>(o1_1_id, 3);
+			var rev4 = AuditReader().Find<ListBiOwning1Entity>(o1_1_id, 4);
+			var rev5 = AuditReader().Find<ListBiOwning1Entity>(o1_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { o2_1 }, rev2.Referencing);
@@ -117,11 +117,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			var o2_1 = Session.Get<ListBiOwning2Entity>(o2_1_id);
 			var o2_2 = Session.Get<ListBiOwning2Entity>(o2_2_id);
 
-			var rev1 = AuditReader.Find<ListBiOwning1Entity>(o1_2_id, 1);
-			var rev2 = AuditReader.Find<ListBiOwning1Entity>(o1_2_id, 2);
-			var rev3 = AuditReader.Find<ListBiOwning1Entity>(o1_2_id, 3);
-			var rev4 = AuditReader.Find<ListBiOwning1Entity>(o1_2_id, 4);
-			var rev5 = AuditReader.Find<ListBiOwning1Entity>(o1_2_id, 5);
+			var rev1 = AuditReader().Find<ListBiOwning1Entity>(o1_2_id, 1);
+			var rev2 = AuditReader().Find<ListBiOwning1Entity>(o1_2_id, 2);
+			var rev3 = AuditReader().Find<ListBiOwning1Entity>(o1_2_id, 3);
+			var rev4 = AuditReader().Find<ListBiOwning1Entity>(o1_2_id, 4);
+			var rev5 = AuditReader().Find<ListBiOwning1Entity>(o1_2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { o2_2 }, rev2.Referencing);
@@ -136,11 +136,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			var o1_1 = Session.Get<ListBiOwning1Entity>(o1_1_id);
 			var o1_2 = Session.Get<ListBiOwning1Entity>(o1_2_id);
 
-			var rev1 = AuditReader.Find<ListBiOwning2Entity>(o2_1_id, 1);
-			var rev2 = AuditReader.Find<ListBiOwning2Entity>(o2_1_id, 2);
-			var rev3 = AuditReader.Find<ListBiOwning2Entity>(o2_1_id, 3);
-			var rev4 = AuditReader.Find<ListBiOwning2Entity>(o2_1_id, 4);
-			var rev5 = AuditReader.Find<ListBiOwning2Entity>(o2_1_id, 5);
+			var rev1 = AuditReader().Find<ListBiOwning2Entity>(o2_1_id, 1);
+			var rev2 = AuditReader().Find<ListBiOwning2Entity>(o2_1_id, 2);
+			var rev3 = AuditReader().Find<ListBiOwning2Entity>(o2_1_id, 3);
+			var rev4 = AuditReader().Find<ListBiOwning2Entity>(o2_1_id, 4);
+			var rev5 = AuditReader().Find<ListBiOwning2Entity>(o2_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { o1_1 }, rev2.Referencing);
@@ -155,11 +155,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			var o1_1 = Session.Get<ListBiOwning1Entity>(o1_1_id);
 			var o1_2 = Session.Get<ListBiOwning1Entity>(o1_2_id);
 
-			var rev1 = AuditReader.Find<ListBiOwning2Entity>(o2_2_id, 1);
-			var rev2 = AuditReader.Find<ListBiOwning2Entity>(o2_2_id, 2);
-			var rev3 = AuditReader.Find<ListBiOwning2Entity>(o2_2_id, 3);
-			var rev4 = AuditReader.Find<ListBiOwning2Entity>(o2_2_id, 4);
-			var rev5 = AuditReader.Find<ListBiOwning2Entity>(o2_2_id, 5);
+			var rev1 = AuditReader().Find<ListBiOwning2Entity>(o2_2_id, 1);
+			var rev2 = AuditReader().Find<ListBiOwning2Entity>(o2_2_id, 2);
+			var rev3 = AuditReader().Find<ListBiOwning2Entity>(o2_2_id, 3);
+			var rev4 = AuditReader().Find<ListBiOwning2Entity>(o2_2_id, 4);
+			var rev5 = AuditReader().Find<ListBiOwning2Entity>(o2_2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { o1_2 }, rev2.Referencing);

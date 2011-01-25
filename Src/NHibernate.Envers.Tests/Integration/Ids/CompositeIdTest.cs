@@ -70,8 +70,8 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader.GetRevisions(typeof(EmbIdTestEntity), id1));
-			CollectionAssert.AreEquivalent(new[] { 2, 3, 4, 5 }, AuditReader.GetRevisions(typeof(EmbIdTestEntity), id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(EmbIdTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(EmbIdTestEntity), id2));
 			//CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader.GetRevisions(typeof(MulIdTestEntity), id3));
 			//CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(MulIdTestEntity), id4));
 		}
@@ -83,11 +83,11 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 			var ver1 = new EmbIdTestEntity {Id = id1, Str1 = "x"};
 			var ver2 = new EmbIdTestEntity {Id = id1, Str1 = "x2"};
 
-			Assert.AreEqual(ver1, AuditReader.Find<EmbIdTestEntity>(id1, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<EmbIdTestEntity>(id1, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<EmbIdTestEntity>(id1, 3));
-			Assert.IsNull(AuditReader.Find<EmbIdTestEntity>(id1, 4));
-			Assert.IsNull(AuditReader.Find<EmbIdTestEntity>(id1, 5));
+			Assert.AreEqual(ver1, AuditReader().Find<EmbIdTestEntity>(id1, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<EmbIdTestEntity>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<EmbIdTestEntity>(id1, 3));
+			Assert.IsNull(AuditReader().Find<EmbIdTestEntity>(id1, 4));
+			Assert.IsNull(AuditReader().Find<EmbIdTestEntity>(id1, 5));
 		}
 
 
@@ -98,11 +98,11 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 			var ver2 = new EmbIdTestEntity { Id = id2, Str1 = "y2" };
 			var ver3 = new EmbIdTestEntity { Id = id2, Str1 = "y3" };
 
-			Assert.IsNull(AuditReader.Find<EmbIdTestEntity>(id2, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<EmbIdTestEntity>(id2, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<EmbIdTestEntity>(id2, 3));
-			Assert.AreEqual(ver3, AuditReader.Find<EmbIdTestEntity>(id2, 4));
-			Assert.IsNull(AuditReader.Find<EmbIdTestEntity>(id2, 5));
+			Assert.IsNull(AuditReader().Find<EmbIdTestEntity>(id2, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<EmbIdTestEntity>(id2, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<EmbIdTestEntity>(id2, 3));
+			Assert.AreEqual(ver3, AuditReader().Find<EmbIdTestEntity>(id2, 4));
+			Assert.IsNull(AuditReader().Find<EmbIdTestEntity>(id2, 5));
 		}
 
 		[Test, Ignore("Multiple id (mapped=true) is not supported in NH Core")]

@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader.GetRevisions(typeof (FieldAccessEntity), id));
+            CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions(typeof (FieldAccessEntity), id));
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
             var ver1 = new FieldAccessEntity { Id = id, Data = "first" };
             var ver2 = new FieldAccessEntity {Id = id, Data = "second"};
 
-            Assert.AreEqual(ver1, AuditReader.Find<FieldAccessEntity>(id, 1));
-            Assert.AreEqual(ver2, AuditReader.Find<FieldAccessEntity>(id, 2));
+            Assert.AreEqual(ver1, AuditReader().Find<FieldAccessEntity>(id, 1));
+            Assert.AreEqual(ver2, AuditReader().Find<FieldAccessEntity>(id, 2));
         }
     }
 }

@@ -31,9 +31,9 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(BiRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(BiRefEdEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(BiRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiRefIngEntity), ing1_id));
 		}
 
 		[Test]
@@ -41,8 +41,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 		{
 			var ing1 = Session.Get<BiRefIngEntity>(ing1_id);
 
-			var rev1 = AuditReader.Find<BiRefEdEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<BiRefEdEntity>(ed1_id, 2);
+			var rev1 = AuditReader().Find<BiRefEdEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<BiRefEdEntity>(ed1_id, 2);
 
 			Assert.AreEqual(ing1, rev1.Referencing);
 			Assert.IsNull(rev2.Referencing);
@@ -53,8 +53,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 		{
 			var ing1 = Session.Get<BiRefIngEntity>(ing1_id);
 
-			var rev1 = AuditReader.Find<BiRefEdEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<BiRefEdEntity>(ed2_id, 2);
+			var rev1 = AuditReader().Find<BiRefEdEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<BiRefEdEntity>(ed2_id, 2);
 
 			Assert.IsNull(rev1.Referencing);
 			Assert.AreEqual(ing1, rev2.Referencing);

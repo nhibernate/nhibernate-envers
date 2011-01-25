@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(PrimitiveTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(PrimitiveTestEntity), id1));
 		}
 
 		[Test]
@@ -41,15 +41,15 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 			var ver1 = new PrimitiveTestEntity { Id = id1, Number = 10, Number2 = 0 };
 			var ver2 = new PrimitiveTestEntity { Id = id1, Number = 20, Number2 = 0 };
 
-			Assert.AreEqual(ver1, AuditReader.Find<PrimitiveTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<PrimitiveTestEntity>(id1, 2));
-			Assert.IsNull(AuditReader.Find<PrimitiveTestEntity>(id1, 3));
+			Assert.AreEqual(ver1, AuditReader().Find<PrimitiveTestEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<PrimitiveTestEntity>(id1, 2));
+			Assert.IsNull(AuditReader().Find<PrimitiveTestEntity>(id1, 3));
 		}
 
 		[Test]
 		public void VerifyQueryWithDeleted()
 		{
-			var entities = AuditReader.CreateQuery()
+			var entities = AuditReader().CreateQuery()
 							.ForRevisionsOfEntity(typeof(PrimitiveTestEntity), true, true).GetResultList();
 
 			var expected = new[]

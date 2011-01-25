@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.RevEntity">
+	<class name="CustomDataRevEntity">
+		<id name="CustomId">
+			<generator class="identity" />
+		</id>
+		<property name="CustomTimestamp" />
+		<property name="Data" />
+	</class>
+</hibernate-mapping>

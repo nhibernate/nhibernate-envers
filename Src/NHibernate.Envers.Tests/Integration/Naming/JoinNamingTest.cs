@@ -35,9 +35,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinNamingRefEdEntity), ed_id1));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinNamingRefEdEntity), ed_id2));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(JoinNamingRefIngEntity), ing_id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinNamingRefEdEntity), ed_id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinNamingRefEdEntity), ed_id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(JoinNamingRefIngEntity), ing_id1));
 		}
 
 		[Test]
@@ -45,8 +45,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		{
 			var ver1 = new JoinNamingRefEdEntity {Id = ed_id1, Data = "data1"};
 
-			Assert.AreEqual(ver1, AuditReader.Find<JoinNamingRefEdEntity>(ed_id1, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<JoinNamingRefEdEntity>(ed_id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<JoinNamingRefEdEntity>(ed_id1, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<JoinNamingRefEdEntity>(ed_id1, 2));
 		}
 
 		[Test]
@@ -54,8 +54,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		{
 			var ver1 = new JoinNamingRefEdEntity { Id = ed_id2, Data = "data2" };
 
-			Assert.AreEqual(ver1, AuditReader.Find<JoinNamingRefEdEntity>(ed_id2, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<JoinNamingRefEdEntity>(ed_id2, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<JoinNamingRefEdEntity>(ed_id2, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<JoinNamingRefEdEntity>(ed_id2, 2));
 		}
 
 		[Test]
@@ -64,13 +64,13 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			var ver1 = new JoinNamingRefIngEntity {Id = ing_id1, Data = "x", Reference = null};
 			var ver2 = new JoinNamingRefIngEntity {Id = ing_id1, Data = "y", Reference = null};
 
-			Assert.AreEqual(ver1, AuditReader.Find<JoinNamingRefIngEntity>(ing_id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<JoinNamingRefIngEntity>(ing_id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<JoinNamingRefIngEntity>(ing_id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<JoinNamingRefIngEntity>(ing_id1, 2));
 
 			Assert.AreEqual(new JoinNamingRefEdEntity { Id = ed_id1, Data = "data1" },
-							AuditReader.Find<JoinNamingRefIngEntity>(ing_id1, 1).Reference);
+							AuditReader().Find<JoinNamingRefIngEntity>(ing_id1, 1).Reference);
 			Assert.AreEqual(new JoinNamingRefEdEntity { Id = ed_id2, Data = "data2" },
-										AuditReader.Find<JoinNamingRefIngEntity>(ing_id1, 2).Reference);
+										AuditReader().Find<JoinNamingRefIngEntity>(ing_id1, 2).Reference);
 		}
 
 		[Test]

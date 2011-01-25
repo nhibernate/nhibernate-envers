@@ -61,10 +61,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(ListOwnedEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader.GetRevisions(typeof(ListOwnedEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader.GetRevisions(typeof(ListOwningEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ListOwningEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListOwnedEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions(typeof(ListOwnedEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(ListOwningEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListOwningEntity), ing2_id));
 		}
 
 		[Test]
@@ -73,11 +73,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ing1 = Session.Get<ListOwningEntity>(ing1_id);
 			var ing2 = Session.Get<ListOwningEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<ListOwnedEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<ListOwnedEntity>(ed1_id, 2);
-			var rev3 = AuditReader.Find<ListOwnedEntity>(ed1_id, 3);
-			var rev4 = AuditReader.Find<ListOwnedEntity>(ed1_id, 4);
-			var rev5 = AuditReader.Find<ListOwnedEntity>(ed1_id, 5);
+			var rev1 = AuditReader().Find<ListOwnedEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<ListOwnedEntity>(ed1_id, 2);
+			var rev3 = AuditReader().Find<ListOwnedEntity>(ed1_id, 3);
+			var rev4 = AuditReader().Find<ListOwnedEntity>(ed1_id, 4);
+			var rev5 = AuditReader().Find<ListOwnedEntity>(ed1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[]{ing1, ing2}, rev2.Referencing);
@@ -92,11 +92,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ing1 = Session.Get<ListOwningEntity>(ing1_id);
 			var ing2 = Session.Get<ListOwningEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<ListOwnedEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<ListOwnedEntity>(ed2_id, 2);
-			var rev3 = AuditReader.Find<ListOwnedEntity>(ed2_id, 3);
-			var rev4 = AuditReader.Find<ListOwnedEntity>(ed2_id, 4);
-			var rev5 = AuditReader.Find<ListOwnedEntity>(ed2_id, 5);
+			var rev1 = AuditReader().Find<ListOwnedEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<ListOwnedEntity>(ed2_id, 2);
+			var rev3 = AuditReader().Find<ListOwnedEntity>(ed2_id, 3);
+			var rev4 = AuditReader().Find<ListOwnedEntity>(ed2_id, 4);
+			var rev5 = AuditReader().Find<ListOwnedEntity>(ed2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { ing2 }, rev2.Referencing);
@@ -111,11 +111,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ed1 = Session.Get<ListOwnedEntity>(ed1_id);
 			var ed2 = Session.Get<ListOwnedEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<ListOwningEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<ListOwningEntity>(ing1_id, 2);
-			var rev3 = AuditReader.Find<ListOwningEntity>(ing1_id, 3);
-			var rev4 = AuditReader.Find<ListOwningEntity>(ing1_id, 4);
-			var rev5 = AuditReader.Find<ListOwningEntity>(ing1_id, 5);
+			var rev1 = AuditReader().Find<ListOwningEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<ListOwningEntity>(ing1_id, 2);
+			var rev3 = AuditReader().Find<ListOwningEntity>(ing1_id, 3);
+			var rev4 = AuditReader().Find<ListOwningEntity>(ing1_id, 4);
+			var rev5 = AuditReader().Find<ListOwningEntity>(ing1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.References);
 			CollectionAssert.AreEquivalent(new[] { ed1 }, rev2.References);
@@ -130,11 +130,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ed1 = Session.Get<ListOwnedEntity>(ed1_id);
 			var ed2 = Session.Get<ListOwnedEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<ListOwningEntity>(ing2_id, 1);
-			var rev2 = AuditReader.Find<ListOwningEntity>(ing2_id, 2);
-			var rev3 = AuditReader.Find<ListOwningEntity>(ing2_id, 3);
-			var rev4 = AuditReader.Find<ListOwningEntity>(ing2_id, 4);
-			var rev5 = AuditReader.Find<ListOwningEntity>(ing2_id, 5);
+			var rev1 = AuditReader().Find<ListOwningEntity>(ing2_id, 1);
+			var rev2 = AuditReader().Find<ListOwningEntity>(ing2_id, 2);
+			var rev3 = AuditReader().Find<ListOwningEntity>(ing2_id, 3);
+			var rev4 = AuditReader().Find<ListOwningEntity>(ing2_id, 4);
+			var rev5 = AuditReader().Find<ListOwningEntity>(ing2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.References);
 			CollectionAssert.AreEquivalent(new[] { ed1, ed2 }, rev2.References);

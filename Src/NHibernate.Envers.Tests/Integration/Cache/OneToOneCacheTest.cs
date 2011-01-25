@@ -40,8 +40,8 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheReferenceAccessAfterFindRev1() 
 		{
-			var ed1_rev1 = AuditReader.Find<BiRefEdEntity>(ed1_id, 1);
-			var ing1_rev1 = AuditReader.Find<BiRefIngEntity>(ing1_id, 1);
+			var ed1_rev1 = AuditReader().Find<BiRefEdEntity>(ed1_id, 1);
+			var ing1_rev1 = AuditReader().Find<BiRefIngEntity>(ing1_id, 1);
 
 			Assert.AreSame(ing1_rev1.Reference, ed1_rev1);
 		}
@@ -49,8 +49,8 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheReferenceAccessAfterFindRev2()
 		{
-			var ed2_rev2 = AuditReader.Find<BiRefEdEntity>(ed2_id, 2);
-			var ing1_rev2 = AuditReader.Find<BiRefIngEntity>(ing1_id, 2);
+			var ed2_rev2 = AuditReader().Find<BiRefEdEntity>(ed2_id, 2);
+			var ing1_rev2 = AuditReader().Find<BiRefIngEntity>(ing1_id, 2);
 
 			Assert.AreSame(ing1_rev2.Reference, ed2_rev2);
 		}

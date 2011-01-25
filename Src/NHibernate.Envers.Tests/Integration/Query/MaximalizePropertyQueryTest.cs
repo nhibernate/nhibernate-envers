@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyMaximzeWithEqId()
 		{
-			var revs_id1 = AuditReader.CreateQuery()
+			var revs_id1 = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Number").Maximize()
@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyMinimizeWithPropertyEq()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Number").Minimize()
@@ -76,7 +76,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyMaximizeRevision()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.RevisionNumber().Maximize()

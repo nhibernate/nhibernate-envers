@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EntitiesIdQuery()
 		{
-			var ver2 = AuditReader.CreateQuery()
+			var ver2 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof (StrIntTestEntity), 2)
 						.Add(AuditEntity.Id().Eq(id2))
 						.GetSingleResult<StrIntTestEntity>();
@@ -65,15 +65,15 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EntitiesPropertyEqualsQuery()
 		{
-			var ver1 = AuditReader.CreateQuery()
+			var ver1 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 1)
 						.Add(AuditEntity.Property("Str").Eq("a"))
 						.GetResultList();
-			var ver2 = AuditReader.CreateQuery()
+			var ver2 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 2)
 						.Add(AuditEntity.Property("Str").Eq("a"))
 						.GetResultList();
-			var ver3 = AuditReader.CreateQuery()
+			var ver3 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 3)
 						.Add(AuditEntity.Property("Str").Eq("a"))
 						.GetResultList();
@@ -96,15 +96,15 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EntitiesPropertyLeQuery()
 		{
-			var ver1 = AuditReader.CreateQuery()
+			var ver1 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 1)
 						.Add(AuditEntity.Property("Number").Le(10))
 						.GetResultList();
-			var ver2 = AuditReader.CreateQuery()
+			var ver2 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 2)
 						.Add(AuditEntity.Property("Number").Le(10))
 						.GetResultList();
-			var ver3 = AuditReader.CreateQuery()
+			var ver3 = AuditReader().CreateQuery()
 						.ForEntitiesAtRevision(typeof(StrIntTestEntity), 3)
 						.Add(AuditEntity.Property("Number").Le(10))
 						.GetResultList();
@@ -129,19 +129,19 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void RevisionsPropertyEqQuery()
 		{
-			var revs_id1 = AuditReader.CreateQuery()
+			var revs_id1 = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Str").Le("a"))
 						.Add(AuditEntity.Id().Eq(id1))
 						.GetResultList();
-			var revs_id2 = AuditReader.CreateQuery()
+			var revs_id2 = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Str").Le("a"))
 						.Add(AuditEntity.Id().Eq(id2))
 						.GetResultList();
-			var revs_id3 = AuditReader.CreateQuery()
+			var revs_id3 = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Str").Le("a"))
@@ -155,7 +155,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void SelectEntitiesQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 							.ForRevisionsOfEntity(typeof (StrIntTestEntity), true, false)
 							.Add(AuditEntity.Id().Eq(id1))
 							.GetResultList<StrIntTestEntity>();
@@ -169,7 +169,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void SelectEntitiesAndRevisionsQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 				.Add(AuditEntity.Id().Eq(id1))
 				.GetResultList<IList>();
@@ -190,7 +190,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void SelectRevisionTypeQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 				.AddProjection(AuditEntity.RevisionType())
 				.Add(AuditEntity.Id().Eq(id1))
@@ -204,7 +204,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EmptyRevisionOfEntityQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 				.GetResultList();
 			Assert.AreEqual(7, result.Count);
@@ -213,7 +213,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EmptyConjunctionRevisionOfEntityQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 				.Add(AuditEntity.Conjunction())
 				.GetResultList();
@@ -223,7 +223,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void EmptyDisjunctionRevisionOfEntityQuery()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof(StrIntTestEntity), false, true)
 				.Add(AuditEntity.Disjunction())
 				.GetResultList();

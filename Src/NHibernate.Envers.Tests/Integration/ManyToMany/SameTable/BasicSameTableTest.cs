@@ -102,12 +102,12 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(ParentEntity), p1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(ParentEntity), p2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(Child1Entity), c1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader.GetRevisions(typeof(Child1Entity), c1_2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(Child2Entity), c2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader.GetRevisions(typeof(Child2Entity), c2_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity), p1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity), p2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child1Entity), c1_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child1Entity), c1_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child2Entity), c2_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child2Entity), c2_2_id));
 		}
 
 		[Test]
@@ -117,11 +117,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			var c1_2 = Session.Get<Child1Entity>(c1_2_id);
 			var c2_2 = Session.Get<Child2Entity>(c2_2_id);
 
-			var rev1 = AuditReader.Find<ParentEntity>(p1_id, 1);
-			var rev2 = AuditReader.Find<ParentEntity>(p1_id, 2);
-			var rev3 = AuditReader.Find<ParentEntity>(p1_id, 3);
-			var rev4 = AuditReader.Find<ParentEntity>(p1_id, 4);
-			var rev5 = AuditReader.Find<ParentEntity>(p1_id, 5);
+			var rev1 = AuditReader().Find<ParentEntity>(p1_id, 1);
+			var rev2 = AuditReader().Find<ParentEntity>(p1_id, 2);
+			var rev3 = AuditReader().Find<ParentEntity>(p1_id, 3);
+			var rev4 = AuditReader().Find<ParentEntity>(p1_id, 4);
+			var rev5 = AuditReader().Find<ParentEntity>(p1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Children1);
 			CollectionAssert.AreEquivalent(new[] { c1_1 }, rev2.Children1);
@@ -143,11 +143,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			var c2_1 = Session.Get<Child2Entity>(c2_1_id);
 			var c2_2 = Session.Get<Child2Entity>(c2_2_id);
 
-			var rev1 = AuditReader.Find<ParentEntity>(p2_id, 1);
-			var rev2 = AuditReader.Find<ParentEntity>(p2_id, 2);
-			var rev3 = AuditReader.Find<ParentEntity>(p2_id, 3);
-			var rev4 = AuditReader.Find<ParentEntity>(p2_id, 4);
-			var rev5 = AuditReader.Find<ParentEntity>(p2_id, 5);
+			var rev1 = AuditReader().Find<ParentEntity>(p2_id, 1);
+			var rev2 = AuditReader().Find<ParentEntity>(p2_id, 2);
+			var rev3 = AuditReader().Find<ParentEntity>(p2_id, 3);
+			var rev4 = AuditReader().Find<ParentEntity>(p2_id, 4);
+			var rev5 = AuditReader().Find<ParentEntity>(p2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Children1);
 			CollectionAssert.IsEmpty(rev2.Children1);
@@ -168,11 +168,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			var p1 = Session.Get<ParentEntity>(p1_id);
 			var p2 = Session.Get<ParentEntity>(p2_id);
 
-			var rev1 = AuditReader.Find<Child1Entity>(c1_1_id, 1);
-			var rev2 = AuditReader.Find<Child1Entity>(c1_1_id, 2);
-			var rev3 = AuditReader.Find<Child1Entity>(c1_1_id, 3);
-			var rev4 = AuditReader.Find<Child1Entity>(c1_1_id, 4);
-			var rev5 = AuditReader.Find<Child1Entity>(c1_1_id, 5);
+			var rev1 = AuditReader().Find<Child1Entity>(c1_1_id, 1);
+			var rev2 = AuditReader().Find<Child1Entity>(c1_1_id, 2);
+			var rev3 = AuditReader().Find<Child1Entity>(c1_1_id, 3);
+			var rev4 = AuditReader().Find<Child1Entity>(c1_1_id, 4);
+			var rev5 = AuditReader().Find<Child1Entity>(c1_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.AreEquivalent(new[] { p1 }, rev2.Parents);
@@ -186,11 +186,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		{
 			var p1 = Session.Get<ParentEntity>(p1_id);
 
-			var rev1 = AuditReader.Find<Child1Entity>(c1_2_id, 1);
-			var rev2 = AuditReader.Find<Child1Entity>(c1_2_id, 2);
-			var rev3 = AuditReader.Find<Child1Entity>(c1_2_id, 3);
-			var rev4 = AuditReader.Find<Child1Entity>(c1_2_id, 4);
-			var rev5 = AuditReader.Find<Child1Entity>(c1_2_id, 5);
+			var rev1 = AuditReader().Find<Child1Entity>(c1_2_id, 1);
+			var rev2 = AuditReader().Find<Child1Entity>(c1_2_id, 2);
+			var rev3 = AuditReader().Find<Child1Entity>(c1_2_id, 3);
+			var rev4 = AuditReader().Find<Child1Entity>(c1_2_id, 4);
+			var rev5 = AuditReader().Find<Child1Entity>(c1_2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.IsEmpty(rev2.Parents);
@@ -204,11 +204,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		{
 			var p2 = Session.Get<ParentEntity>(p2_id);
 
-			var rev1 = AuditReader.Find<Child2Entity>(c2_1_id, 1);
-			var rev2 = AuditReader.Find<Child2Entity>(c2_1_id, 2);
-			var rev3 = AuditReader.Find<Child2Entity>(c2_1_id, 3);
-			var rev4 = AuditReader.Find<Child2Entity>(c2_1_id, 4);
-			var rev5 = AuditReader.Find<Child2Entity>(c2_1_id, 5);
+			var rev1 = AuditReader().Find<Child2Entity>(c2_1_id, 1);
+			var rev2 = AuditReader().Find<Child2Entity>(c2_1_id, 2);
+			var rev3 = AuditReader().Find<Child2Entity>(c2_1_id, 3);
+			var rev4 = AuditReader().Find<Child2Entity>(c2_1_id, 4);
+			var rev5 = AuditReader().Find<Child2Entity>(c2_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.AreEquivalent(new[] { p2 }, rev2.Parents);
@@ -223,11 +223,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			var p1 = Session.Get<ParentEntity>(p1_id);
 			var p2 = Session.Get<ParentEntity>(p2_id);
 
-			var rev1 = AuditReader.Find<Child2Entity>(c2_2_id, 1);
-			var rev2 = AuditReader.Find<Child2Entity>(c2_2_id, 2);
-			var rev3 = AuditReader.Find<Child2Entity>(c2_2_id, 3);
-			var rev4 = AuditReader.Find<Child2Entity>(c2_2_id, 4);
-			var rev5 = AuditReader.Find<Child2Entity>(c2_2_id, 5);
+			var rev1 = AuditReader().Find<Child2Entity>(c2_2_id, 1);
+			var rev2 = AuditReader().Find<Child2Entity>(c2_2_id, 2);
+			var rev3 = AuditReader().Find<Child2Entity>(c2_2_id, 3);
+			var rev4 = AuditReader().Find<Child2Entity>(c2_2_id, 4);
+			var rev5 = AuditReader().Find<Child2Entity>(c2_2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.IsEmpty(rev2.Parents);

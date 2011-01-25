@@ -33,12 +33,12 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheFindAfterRevisionOfEntityQuery()
 		{
-			var entsFromQuery = AuditReader.CreateQuery()
+			var entsFromQuery = AuditReader().CreateQuery()
 				.ForRevisionsOfEntity(typeof (IntTestEntity), true, false)
 				.GetResultList();
 
-			var entFromFindRev1 = AuditReader.Find<IntTestEntity>(id1, 1);
-			var entFromFindRev2 = AuditReader.Find<IntTestEntity>(id1, 2);
+			var entFromFindRev1 = AuditReader().Find<IntTestEntity>(id1, 1);
+			var entFromFindRev2 = AuditReader().Find<IntTestEntity>(id1, 2);
 
 			Assert.AreSame(entFromFindRev1, entsFromQuery[0]);
 			Assert.AreSame(entFromFindRev2, entsFromQuery[1]);
@@ -47,10 +47,10 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheFindAfterEntitiesAtRevisionQuery()
 		{
-			var entFromQuery = (IntTestEntity) AuditReader.CreateQuery()
+			var entFromQuery = (IntTestEntity) AuditReader().CreateQuery()
 			                                   	.ForEntitiesAtRevision(typeof (IntTestEntity), 1)
 			                                   	.GetSingleResult();
-			var entFromFind = AuditReader.Find<IntTestEntity>(id1, 1);
+			var entFromFind = AuditReader().Find<IntTestEntity>(id1, 1);
 			Assert.AreSame(entFromFind, entFromQuery);
 		}
 	}

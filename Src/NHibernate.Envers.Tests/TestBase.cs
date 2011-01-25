@@ -10,8 +10,8 @@ namespace NHibernate.Envers.Tests
 		protected const string TestAssembly = "NHibernate.Envers.Tests";
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; set; }
-		protected IAuditReader AuditReader { get; set; }
 		private ISessionFactory SessionFactory { get; set; }
+		private IAuditReader _auditReader;
 
 		[SetUp]
 		public void BaseSetup()
@@ -22,12 +22,15 @@ namespace NHibernate.Envers.Tests
 			Cfg.IntegrateWithEnvers();
 			AddToConfiguration(Cfg);
 			SessionFactory = Cfg.BuildSessionFactory();
-			using (Session = openSession(SessionFactory))
-			{
-				Initialize();				
-			}
 			Session = openSession(SessionFactory);
-			AuditReader = AuditReaderFactory.Get(Session);
+			Initialize();
+			closeSessionAndAuditReader();
+			Session = openSession(SessionFactory);
+		}
+
+		protected IAuditReader AuditReader()
+		{
+			return _auditReader ?? (_auditReader = AuditReaderFactory.Get(Session));
 		}
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
@@ -42,10 +45,7 @@ namespace NHibernate.Envers.Tests
 		[TearDown]
 		public void BaseTearDown()
 		{
-			if (Session != null)
-			{
-				Session.Close();
-			}
+			closeSessionAndAuditReader();
 			if (SessionFactory != null)
 			{
 				SessionFactory.Close();
@@ -83,6 +83,15 @@ namespace NHibernate.Envers.Tests
 			{
 				Cfg.AddResource(TestAssembly + "." + mapping, ass);
 			}
+		}
+
+		private void closeSessionAndAuditReader()
+		{
+			if (Session != null)
+			{
+				Session.Close();
+			}
+			_auditReader = null;
 		}
 	}
 }

@@ -45,9 +45,9 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheReferenceAfterFind()
 		{
-			var ed1_rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
-			var ing1_rev1 = AuditReader.Find<SetRefIngEntity>(ing1_id, 1);
-			var ing2_rev1 = AuditReader.Find<SetRefIngEntity>(ing2_id, 1);
+			var ed1_rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
+			var ing1_rev1 = AuditReader().Find<SetRefIngEntity>(ing1_id, 1);
+			var ing2_rev1 = AuditReader().Find<SetRefIngEntity>(ing2_id, 1);
 
 			Assert.AreSame(ing1_rev1.Reference, ed1_rev1);
 			Assert.AreSame(ing2_rev1.Reference, ed1_rev1);
@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheReferenceAccessAfterCollectionAccessRev1()
 		{
-			var ed1_rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
+			var ed1_rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
 			Assert.AreEqual(2, ed1_rev1.Reffering.Count);
 			foreach (var setRefIngEntity in ed1_rev1.Reffering)
 			{
@@ -68,7 +68,7 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheReferenceAccessAfterCollectionAccessRev2()
 		{
-			var ed1_rev2 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
+			var ed1_rev2 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
 			Assert.AreEqual(2, ed1_rev2.Reffering.Count);
 			foreach (var setRefIngEntity in ed1_rev2.Reffering)
 			{
@@ -79,13 +79,13 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		[Test]
 		public void VerifyCacheFindAfterCollectionAccessRev1()
 		{
-			var ed1_rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
+			var ed1_rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
 
 			// Reading the collection
 			Assert.AreEqual(2, ed1_rev1.Reffering.Count);
 
-			var ing1_rev1 = AuditReader.Find<SetRefIngEntity>(ing1_id, 1);
-			var ing2_rev1 = AuditReader.Find<SetRefIngEntity>(ing2_id, 1);
+			var ing1_rev1 = AuditReader().Find<SetRefIngEntity>(ing1_id, 1);
+			var ing2_rev1 = AuditReader().Find<SetRefIngEntity>(ing2_id, 1);
 			foreach (var setRefIngEntity in ed1_rev1.Reffering)
 			{
 				if (setRefIngEntity == ing1_rev1 || setRefIngEntity == ing2_rev1)

@@ -41,11 +41,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed2_id));
 		}
 
 		[Test]
@@ -54,8 +54,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			var ed1 = Session.Get<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed1_id);
 			var ed2 = Session.Get<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id, 2);
+			var rev1 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id, 2);
 
 			CollectionAssert.AreEqual(new[] { ed1 }, rev1.References);
 			CollectionAssert.AreEqual(new[] { ed1, ed2 }, rev2.References);
@@ -66,8 +66,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		{
 			var ed2 = Session.Get<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing2_id, 1);
-			var rev2 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing2_id, 2);
+			var rev1 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing2_id, 1);
+			var rev2 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing2_id, 2);
 
 			CollectionAssert.AreEqual(new[] { ed2 }, rev1.References);
 			CollectionAssert.IsEmpty(rev2.References);
@@ -78,8 +78,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		{
 			var ing1 = Session.Get<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id);
 
-			var rev1 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed1_id, 2);
+			var rev1 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed1_id, 2);
 
 			Assert.AreEqual(ing1, rev1.Owner);
 			Assert.AreEqual(ing1, rev2.Owner);
@@ -91,8 +91,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			var ing1 = Session.Get<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing1_id);
 			var ing2 = Session.Get<ListJoinColumnBidirectionalInheritanceRefIngEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id, 2);
+			var rev1 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>(ed2_id, 2);
 
 			Assert.AreEqual(ing2, rev1.Owner);
 			Assert.AreEqual(ing1, rev2.Owner);

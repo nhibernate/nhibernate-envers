@@ -66,10 +66,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(MapOwnedEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(MapOwnedEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(MapOwningEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(MapOwningEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(MapOwnedEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(MapOwnedEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(MapOwningEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(MapOwningEntity), ing2_id));
 		}
 
 		[Test]
@@ -78,9 +78,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ing1 = Session.Get<MapOwningEntity>(ing1_id);
 			var ing2 = Session.Get<MapOwningEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<MapOwnedEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<MapOwnedEntity>(ed1_id, 2);
-			var rev3 = AuditReader.Find<MapOwnedEntity>(ed1_id, 3);
+			var rev1 = AuditReader().Find<MapOwnedEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<MapOwnedEntity>(ed1_id, 2);
+			var rev3 = AuditReader().Find<MapOwnedEntity>(ed1_id, 3);
 
 			CollectionAssert.IsEmpty(rev1.Referencing);
 			CollectionAssert.AreEquivalent(new[] { ing1, ing2 }, rev2.Referencing);
@@ -92,9 +92,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		{
 			var ing2 = Session.Get<MapOwningEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<MapOwnedEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<MapOwnedEntity>(ed2_id, 2);
-			var rev3 = AuditReader.Find<MapOwnedEntity>(ed2_id, 3);
+			var rev1 = AuditReader().Find<MapOwnedEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<MapOwnedEntity>(ed2_id, 2);
+			var rev3 = AuditReader().Find<MapOwnedEntity>(ed2_id, 3);
 
 			CollectionAssert.AreEquivalent(new[] { ing2 }, rev1.Referencing);
 			CollectionAssert.IsEmpty(rev2.Referencing);
@@ -106,9 +106,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		{
 			var ed1 = Session.Get<MapOwnedEntity>(ed1_id);
 
-			var rev1 = AuditReader.Find<MapOwningEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<MapOwningEntity>(ing1_id, 2);
-			var rev3 = AuditReader.Find<MapOwningEntity>(ing1_id, 3);
+			var rev1 = AuditReader().Find<MapOwningEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<MapOwningEntity>(ing1_id, 2);
+			var rev3 = AuditReader().Find<MapOwningEntity>(ing1_id, 3);
 
 			CollectionAssert.IsEmpty(rev1.References);
 
@@ -124,9 +124,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ed1 = Session.Get<MapOwnedEntity>(ed1_id);
 			var ed2 = Session.Get<MapOwnedEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<MapOwningEntity>(ing2_id, 1);
-			var rev2 = AuditReader.Find<MapOwningEntity>(ing2_id, 2);
-			var rev3 = AuditReader.Find<MapOwningEntity>(ing2_id, 3);
+			var rev1 = AuditReader().Find<MapOwningEntity>(ing2_id, 1);
+			var rev2 = AuditReader().Find<MapOwningEntity>(ing2_id, 2);
+			var rev3 = AuditReader().Find<MapOwningEntity>(ing2_id, 3);
 
 			Assert.AreEqual(1, rev1.References.Count);
 			Assert.AreEqual(new KeyValuePair<string, MapOwnedEntity>("2", ed2), rev1.References.First());

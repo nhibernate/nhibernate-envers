@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(NotAuditedManyToOneComponentTestEntity), mtocte_id1));
+			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NotAuditedManyToOneComponentTestEntity), mtocte_id1));
 		}
 
 		[Test]
@@ -52,8 +52,8 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 			var ver2 = new NotAuditedManyToOneComponentTestEntity
 			           	{Id = mtocte_id1, Comp1 = new NotAuditedManyToOneComponent {Data = "data2"}};
 
-			Assert.AreEqual(ver1, AuditReader.Find<NotAuditedManyToOneComponentTestEntity>(mtocte_id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<NotAuditedManyToOneComponentTestEntity>(mtocte_id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<NotAuditedManyToOneComponentTestEntity>(mtocte_id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<NotAuditedManyToOneComponentTestEntity>(mtocte_id1, 2));
 		}
 	}
 }

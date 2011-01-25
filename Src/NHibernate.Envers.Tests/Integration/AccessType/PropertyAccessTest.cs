@@ -25,14 +25,14 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(PropertyAccessEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(PropertyAccessEntity), id));
 		}
 
 		[Test]
 		public void VerifyHistory()
 		{
-			Assert.AreEqual("first", AuditReader.Find<PropertyAccessEntity>(id, 1).Data);
-			Assert.AreEqual("second", AuditReader.Find<PropertyAccessEntity>(id, 2).Data);
+			Assert.AreEqual("first", AuditReader().Find<PropertyAccessEntity>(id, 1).Data);
+			Assert.AreEqual("second", AuditReader().Find<PropertyAccessEntity>(id, 2).Data);
 		}
 	}
 }

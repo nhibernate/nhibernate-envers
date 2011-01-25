@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(Country), country.Code));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Country), country.Code));
 		}
 
 		[Test]
@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 			var country1 = Session.Get<Country>(country.Code);
 			Assert.AreEqual(country, country1);
 
-			var history = AuditReader.Find<Country>(country1.Code, 1);
+			var history = AuditReader().Find<Country>(country1.Code, 1);
 			Assert.AreEqual(country, history);
 		}
 	}

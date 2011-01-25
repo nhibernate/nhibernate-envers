@@ -34,29 +34,29 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.NotOwnedRelatio
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(Contact), pc_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(PersonalContact), pc_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(Contact), pc_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(PersonalContact), pc_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(Address), a1_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader.GetRevisions(typeof(Address), a2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Address), a1_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(Address), a2_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfContact()
 		{
 			CollectionAssert.AreEquivalent(new[] {new Address{Id = a1_id, Address1 = "a1"}}, 
-							AuditReader.Find<Contact>(pc_id, 1).Addresses);
+							AuditReader().Find<Contact>(pc_id, 1).Addresses);
 			CollectionAssert.AreEquivalent(new[] { new Address { Id = a1_id, Address1 = "a1" }, new Address { Id = a2_id, Address1 = "a2" } }, 
-							AuditReader.Find<Contact>(pc_id, 2).Addresses);
+							AuditReader().Find<Contact>(pc_id, 2).Addresses);
 		}
 
 		[Test]
 		public void VerifyHistoryOfPersonalContact()
 		{
 			CollectionAssert.AreEquivalent(new[] { new Address { Id = a1_id, Address1 = "a1" } },
-							AuditReader.Find<PersonalContact>(pc_id, 1).Addresses);
+							AuditReader().Find<PersonalContact>(pc_id, 1).Addresses);
 			CollectionAssert.AreEquivalent(new[] { new Address { Id = a1_id, Address1 = "a1" }, new Address { Id = a2_id, Address1 = "a2" } },
-							AuditReader.Find<PersonalContact>(pc_id, 2).Addresses);
+							AuditReader().Find<PersonalContact>(pc_id, 2).Addresses);
 		}
 	}
 }

@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(ComponentTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id1));
 		}
 
 		[Test]
@@ -40,9 +40,9 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 			var ver2 = new ComponentTestEntity { Id = id1, Comp1 = new Component1 { Data = "b" } };
 			var ver3 = new ComponentTestEntity { Id = id1, Comp1 = new Component1 { Data = "c" } };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ComponentTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ComponentTestEntity>(id1, 2));
-			Assert.AreEqual(ver3, AuditReader.Find<ComponentTestEntity>(id1, 3));
+			Assert.AreEqual(ver1, AuditReader().Find<ComponentTestEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ComponentTestEntity>(id1, 2));
+			Assert.AreEqual(ver3, AuditReader().Find<ComponentTestEntity>(id1, 3));
 		}
 	}
 }

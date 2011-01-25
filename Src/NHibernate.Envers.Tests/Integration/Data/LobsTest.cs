@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.Data
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(LobTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(LobTestEntity), id1));
 		}
 
 		[Test]
@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Data
 			var ver1 = new LobTestEntity { Id = id1, StringLob = "abc", ByteLob = new byte[] { 0, 1, 2 } };
 			var ver2 = new LobTestEntity { Id = id1, StringLob = "def", ByteLob = new byte[] { 3, 4, 5 } };
 
-			Assert.AreEqual(ver1, AuditReader.Find<LobTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<LobTestEntity>(id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<LobTestEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<LobTestEntity>(id1, 2));
 		}
 	}
 }

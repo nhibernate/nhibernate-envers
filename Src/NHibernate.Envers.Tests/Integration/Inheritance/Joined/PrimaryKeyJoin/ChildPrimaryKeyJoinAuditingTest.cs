@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader.GetRevisions(typeof (ChildPrimaryKeyJoinEntity), id1));
+			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions(typeof (ChildPrimaryKeyJoinEntity), id1));
 		}
 
 		[Test]
@@ -39,10 +39,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 			var ver1 = new ChildPrimaryKeyJoinEntity {Id = id1, Data = "x", Number = 1};
 			var ver2 = new ChildPrimaryKeyJoinEntity {Id = id1, Data = "y", Number = 2};
 
-			Assert.AreEqual(ver1, AuditReader.Find<ChildPrimaryKeyJoinEntity>(id1, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<ParentEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ChildPrimaryKeyJoinEntity>(id1, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<ParentEntity>(id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<ChildPrimaryKeyJoinEntity>(id1, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<ParentEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ChildPrimaryKeyJoinEntity>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<ParentEntity>(id1, 2));
 		}
 
 		[Test]
@@ -50,9 +50,9 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 		{
 			var ver1 = new ChildPrimaryKeyJoinEntity {Id = id1, Data = "x", Number = 1};
 			Assert.AreEqual(ver1,
-			                AuditReader.CreateQuery().ForEntitiesAtRevision(typeof (ChildPrimaryKeyJoinEntity), 1).
+			                AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (ChildPrimaryKeyJoinEntity), 1).
 			                	GetSingleResult());
-			Assert.AreEqual(ver1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof (ParentEntity), 1).GetSingleResult());
+			Assert.AreEqual(ver1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (ParentEntity), 1).GetSingleResult());
 		}
 
 		[Test]

@@ -39,9 +39,9 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Relation
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing1_id));
 		}
 
 		[Test]
@@ -50,9 +50,9 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Relation
 			var ed1 = Session.Get<SetRefEdEntity>(ed1_id);
 			var ed2 = Session.Get<SetRefEdEntity>(ed2_id);
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing1_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing1_id, 3);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing1_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing1_id, 3);
 
 			Assert.IsNull(rev1);
 			Assert.AreEqual(ed1, rev2.Reference);

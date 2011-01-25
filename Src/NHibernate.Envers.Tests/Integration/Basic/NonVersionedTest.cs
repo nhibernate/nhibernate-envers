@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		public void VerifyRevisionCount()
 		{
 			Assert.Throws<NotAuditedException>(() =>
-				AuditReader.GetRevisions(typeof (BasicTestEntity3), id1)
+				AuditReader().GetRevisions(typeof (BasicTestEntity3), id1)
 			);
 		}
 
@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		public void VerifyHistory()
 		{
 			Assert.Throws<NotAuditedException>(() =>
-				AuditReader.Find<BasicTestEntity3>(id1, 1)
+				AuditReader().Find<BasicTestEntity3>(id1, 1)
 			);
 		}
 	}

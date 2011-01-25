@@ -58,29 +58,29 @@ namespace NHibernate.Envers.Tests.Integration.Query.Ids
 		[Test]
 		public void VerifyEntitiesReferencedToId3()
 		{
-			var rev1_related = AuditReader.CreateQuery()
+			var rev1_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof (SetRefIngEmbIdEntity), 1)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.GetResultList();
-			var rev1 = AuditReader.CreateQuery()
+			var rev1 = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 1)
 				.Add(AuditEntity.Property("Reference").Eq(new SetRefEdEmbIdEntity {Id = id3}))
 				.GetResultList();
 
-			var rev2_related = AuditReader.CreateQuery()
+			var rev2_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 2)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.GetResultList();
-			var rev2 = AuditReader.CreateQuery()
+			var rev2 = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 2)
 				.Add(AuditEntity.Property("Reference").Eq(new SetRefEdEmbIdEntity { Id = id3 }))
 				.GetResultList();
 
-			var rev3_related = AuditReader.CreateQuery()
+			var rev3_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 3)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.GetResultList();
-			var rev3 = AuditReader.CreateQuery()
+			var rev3 = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 3)
 				.Add(AuditEntity.Property("Reference").Eq(new SetRefEdEmbIdEntity { Id = id3 }))
 				.GetResultList();
@@ -104,15 +104,15 @@ namespace NHibernate.Envers.Tests.Integration.Query.Ids
 		[Test]
 		public void VerifyEntitiesReferencedToId4()
 		{
-			var rev1_related = AuditReader.CreateQuery()
+			var rev1_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 1)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id4))
 				.GetResultList();
-			var rev2_related = AuditReader.CreateQuery()
+			var rev2_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 2)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id4))
 				.GetResultList();
-			var rev3_related = AuditReader.CreateQuery()
+			var rev3_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 3)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id4))
 				.GetResultList();
@@ -125,17 +125,17 @@ namespace NHibernate.Envers.Tests.Integration.Query.Ids
 		[Test]
 		public void VerifyEntitiesReferencedByIng1ToId3()
 		{
-			var rev1_related = AuditReader.CreateQuery()
+			var rev1_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 1)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id1))
 				.GetResultList();
-			var rev2_related = AuditReader.CreateQuery()
+			var rev2_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof (SetRefIngEmbIdEntity), 2)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id1))
 				.GetResultList();
-			var rev3_related = AuditReader.CreateQuery()
+			var rev3_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof (SetRefIngEmbIdEntity), 3)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id1))
@@ -148,17 +148,17 @@ namespace NHibernate.Envers.Tests.Integration.Query.Ids
 		[Test]
 		public void VerifyEntitiesReferencedByIng2ToId3()
 		{
-			var rev1_related = AuditReader.CreateQuery()
+			var rev1_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 1)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id2))
 				.GetResultList();
-			var rev2_related = AuditReader.CreateQuery()
+			var rev2_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 2)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id2))
 				.GetResultList();
-			var rev3_related = AuditReader.CreateQuery()
+			var rev3_related = AuditReader().CreateQuery()
 				.ForEntitiesAtRevision(typeof(SetRefIngEmbIdEntity), 3)
 				.Add(AuditEntity.RelatedId("Reference").Eq(id3))
 				.Add(AuditEntity.Id().Eq(id2))

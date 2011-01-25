@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(ManyToOneComponentTestEntity), mtocte_id1));
+			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(ManyToOneComponentTestEntity), mtocte_id1));
 		}
 
 		[Test]
@@ -56,9 +56,9 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 			var ver2 = new ManyToOneComponentTestEntity { Id = mtocte_id1, Comp1 = new ManyToOneComponent{Entity = ste1, Data = "data1" } };
 			var ver3 = new ManyToOneComponentTestEntity { Id = mtocte_id1, Comp1 = new ManyToOneComponent{Entity = ste2, Data = "data1" } };
 
-			Assert.IsNull(AuditReader.Find<ManyToOneComponentTestEntity>(mtocte_id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ManyToOneComponentTestEntity>(mtocte_id1, 2));
-			Assert.AreEqual(ver3, AuditReader.Find<ManyToOneComponentTestEntity>(mtocte_id1, 3));
+			Assert.IsNull(AuditReader().Find<ManyToOneComponentTestEntity>(mtocte_id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ManyToOneComponentTestEntity>(mtocte_id1, 2));
+			Assert.AreEqual(ver3, AuditReader().Find<ManyToOneComponentTestEntity>(mtocte_id1, 3));
 		}
 	}
 }

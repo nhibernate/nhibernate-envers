@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.Data
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(EnumTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(EnumTestEntity), id1));
 		}
 
 		[Test]
@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Data
 			var ver1 = new EnumTestEntity {Id = id1, Enum1 = E1.X, Enum2 = E2.A};
 			var ver2 = new EnumTestEntity {Id = id1, Enum1 = E1.Y, Enum2 = E2.B};
 
-			Assert.AreEqual(ver1, AuditReader.Find<EnumTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<EnumTestEntity>(id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<EnumTestEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<EnumTestEntity>(id1, 2));
 		}
 	}
 }

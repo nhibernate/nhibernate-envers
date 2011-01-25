@@ -32,8 +32,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(DetachedNamingTestEntity), uni1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(StrTestEntity), str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(DetachedNamingTestEntity), uni1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
 		}
 
 		[Test]
@@ -41,8 +41,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		{
 			var str1 = Session.Get<StrTestEntity>(str1_id);
 
-			var rev1 = AuditReader.Find<DetachedNamingTestEntity>(uni1_id, 1);
-			var rev2 = AuditReader.Find<DetachedNamingTestEntity>(uni1_id, 2);
+			var rev1 = AuditReader().Find<DetachedNamingTestEntity>(uni1_id, 1);
+			var rev2 = AuditReader().Find<DetachedNamingTestEntity>(uni1_id, 2);
 
 			CollectionAssert.IsEmpty(rev1.Collection);
 			CollectionAssert.AreEquivalent(new[] { str1}, rev2.Collection);

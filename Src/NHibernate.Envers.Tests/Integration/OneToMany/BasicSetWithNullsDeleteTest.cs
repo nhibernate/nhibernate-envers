@@ -58,13 +58,13 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader.GetRevisions(typeof(SetRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing3_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader.GetRevisions(typeof(SetRefIngEntity), ing4_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing3_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing4_id));
 		}
 
 		[Test]
@@ -75,11 +75,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ing3 = Session.Get<SetRefIngEntity>(ing3_id);
 			var ing4 = Session.Get<SetRefIngEntity>(ing4_id);
 
-			var rev1 = AuditReader.Find<SetRefEdEntity>(ed1_id, 1);
-			var rev2 = AuditReader.Find<SetRefEdEntity>(ed1_id, 2);
-			var rev3 = AuditReader.Find<SetRefEdEntity>(ed1_id, 3);
-			var rev4 = AuditReader.Find<SetRefEdEntity>(ed1_id, 4);
-			var rev5 = AuditReader.Find<SetRefEdEntity>(ed1_id, 5);
+			var rev1 = AuditReader().Find<SetRefEdEntity>(ed1_id, 1);
+			var rev2 = AuditReader().Find<SetRefEdEntity>(ed1_id, 2);
+			var rev3 = AuditReader().Find<SetRefEdEntity>(ed1_id, 3);
+			var rev4 = AuditReader().Find<SetRefEdEntity>(ed1_id, 4);
+			var rev5 = AuditReader().Find<SetRefEdEntity>(ed1_id, 5);
 
 			CollectionAssert.AreEquivalent(new[] { ing1, ing2, ing3, ing4 }, rev1.Reffering);
 			CollectionAssert.AreEquivalent(new[] { ing2, ing3, ing4 }, rev2.Reffering);
@@ -93,11 +93,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		{
 			var ing3 = Session.Get<SetRefIngEntity>(ing3_id);
 
-			var rev1 = AuditReader.Find<SetRefEdEntity>(ed2_id, 1);
-			var rev2 = AuditReader.Find<SetRefEdEntity>(ed2_id, 2);
-			var rev3 = AuditReader.Find<SetRefEdEntity>(ed2_id, 3);
-			var rev4 = AuditReader.Find<SetRefEdEntity>(ed2_id, 4);
-			var rev5 = AuditReader.Find<SetRefEdEntity>(ed2_id, 5);
+			var rev1 = AuditReader().Find<SetRefEdEntity>(ed2_id, 1);
+			var rev2 = AuditReader().Find<SetRefEdEntity>(ed2_id, 2);
+			var rev3 = AuditReader().Find<SetRefEdEntity>(ed2_id, 3);
+			var rev4 = AuditReader().Find<SetRefEdEntity>(ed2_id, 4);
+			var rev5 = AuditReader().Find<SetRefEdEntity>(ed2_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Reffering);
 			CollectionAssert.IsEmpty(rev2.Reffering);
@@ -111,11 +111,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		{
 			var ed1 = new SetRefEdEntity {Id = ed1_id, Data = "data_ed_1"};
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing1_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing1_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing1_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing1_id, 4);
-			var rev5= AuditReader.Find<SetRefIngEntity>(ing1_id, 5);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing1_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing1_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing1_id, 4);
+			var rev5= AuditReader().Find<SetRefIngEntity>(ing1_id, 5);
 
 			Assert.AreEqual(ed1, rev1.Reference);
 			Assert.IsNull(rev2.Reference);
@@ -129,11 +129,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		{
 			var ed1 = new SetRefEdEntity { Id = ed1_id, Data = "data_ed_1" };
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing2_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing2_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing2_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing2_id, 4);
-			var rev5 = AuditReader.Find<SetRefIngEntity>(ing2_id, 5);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing2_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing2_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing2_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing2_id, 4);
+			var rev5 = AuditReader().Find<SetRefIngEntity>(ing2_id, 5);
 
 			Assert.AreEqual(ed1, rev1.Reference);
 			Assert.AreEqual(ed1, rev2.Reference);
@@ -148,11 +148,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ed1 = new SetRefEdEntity { Id = ed1_id, Data = "data_ed_1" };
 			var ed2 = new SetRefEdEntity { Id = ed2_id, Data = "data_ed_2" };
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing3_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing3_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing3_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing3_id, 4);
-			var rev5 = AuditReader.Find<SetRefIngEntity>(ing3_id, 5);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing3_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing3_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing3_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing3_id, 4);
+			var rev5 = AuditReader().Find<SetRefIngEntity>(ing3_id, 5);
 
 			Assert.AreEqual(ed1, rev1.Reference);
 			Assert.AreEqual(ed1, rev2.Reference);
@@ -166,11 +166,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		{
 			var ed1 = new SetRefEdEntity { Id = ed1_id, Data = "data_ed_1" };
 
-			var rev1 = AuditReader.Find<SetRefIngEntity>(ing4_id, 1);
-			var rev2 = AuditReader.Find<SetRefIngEntity>(ing4_id, 2);
-			var rev3 = AuditReader.Find<SetRefIngEntity>(ing4_id, 3);
-			var rev4 = AuditReader.Find<SetRefIngEntity>(ing4_id, 4);
-			var rev5 = AuditReader.Find<SetRefIngEntity>(ing4_id, 5);
+			var rev1 = AuditReader().Find<SetRefIngEntity>(ing4_id, 1);
+			var rev2 = AuditReader().Find<SetRefIngEntity>(ing4_id, 2);
+			var rev3 = AuditReader().Find<SetRefIngEntity>(ing4_id, 3);
+			var rev4 = AuditReader().Find<SetRefIngEntity>(ing4_id, 4);
+			var rev5 = AuditReader().Find<SetRefIngEntity>(ing4_id, 5);
 
 			Assert.AreEqual(ed1, rev1.Reference);
 			Assert.AreEqual(ed1, rev2.Reference);

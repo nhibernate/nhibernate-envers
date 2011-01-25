@@ -71,8 +71,8 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(M2MTargetNotAuditedEntity), tnae1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader.GetRevisions(typeof(M2MTargetNotAuditedEntity), tnae2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(M2MTargetNotAuditedEntity), tnae1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(M2MTargetNotAuditedEntity), tnae2_id));
 		}
 
 
@@ -82,10 +82,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 			var uste1 = Session.Get<UnversionedStrTestEntity>(uste1_id);
 			var uste2 = Session.Get<UnversionedStrTestEntity>(uste2_id);
 
-			var rev1 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae1_id, 1);
-			var rev2 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae1_id, 2);
-			var rev3 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae1_id, 3);
-			var rev4 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae1_id, 4);
+			var rev1 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae1_id, 1);
+			var rev2 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae1_id, 2);
+			var rev3 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae1_id, 3);
+			var rev4 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae1_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.References);
 			CollectionAssert.AreEquivalent(new[] { uste1 }, rev2.References);
@@ -99,10 +99,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 			var uste1 = Session.Get<UnversionedStrTestEntity>(uste1_id);
 			var uste2 = Session.Get<UnversionedStrTestEntity>(uste2_id);
 
-			var rev1 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae2_id, 1);
-			var rev2 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae2_id, 2);
-			var rev3 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae2_id, 3);
-			var rev4 = AuditReader.Find<M2MTargetNotAuditedEntity>(tnae2_id, 4);
+			var rev1 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae2_id, 1);
+			var rev2 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae2_id, 2);
+			var rev3 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae2_id, 3);
+			var rev4 = AuditReader().Find<M2MTargetNotAuditedEntity>(tnae2_id, 4);
 
 
 			CollectionAssert.AreEquivalent(new[] { uste1, uste2 }, rev1.References);

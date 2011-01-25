@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionsPropertyEqQuery()
 		{
-			var revs_id1 = AuditReader.CreateQuery()
+			var revs_id1 = AuditReader().CreateQuery()
 							.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 							.Add(AuditEntity.Id().Eq(id1))
 							.GetResultList<IList>();

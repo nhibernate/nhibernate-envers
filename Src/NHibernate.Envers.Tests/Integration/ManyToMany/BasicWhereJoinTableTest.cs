@@ -71,13 +71,13 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader.GetRevisions(typeof(WhereJoinTableEntity), wjte1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader.GetRevisions(typeof(WhereJoinTableEntity), wjte2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(WhereJoinTableEntity), wjte1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(WhereJoinTableEntity), wjte2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntNoAutoIdTestEntity), ite1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntNoAutoIdTestEntity), ite1_2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntNoAutoIdTestEntity), ite2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(IntNoAutoIdTestEntity), ite2_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntNoAutoIdTestEntity), ite1_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntNoAutoIdTestEntity), ite1_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntNoAutoIdTestEntity), ite2_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(IntNoAutoIdTestEntity), ite2_2_id));
 		}
 
 		[Test]
@@ -86,10 +86,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ite1_1 = Session.Get<IntNoAutoIdTestEntity>(ite1_1_id);
 			var ite2_1 = Session.Get<IntNoAutoIdTestEntity>(ite2_1_id);
 
-			var rev1 = AuditReader.Find<WhereJoinTableEntity>(wjte1_id, 1);
-			var rev2 = AuditReader.Find<WhereJoinTableEntity>(wjte1_id, 2);
-			var rev3 = AuditReader.Find<WhereJoinTableEntity>(wjte1_id, 3);
-			var rev4 = AuditReader.Find<WhereJoinTableEntity>(wjte1_id, 4);
+			var rev1 = AuditReader().Find<WhereJoinTableEntity>(wjte1_id, 1);
+			var rev2 = AuditReader().Find<WhereJoinTableEntity>(wjte1_id, 2);
+			var rev3 = AuditReader().Find<WhereJoinTableEntity>(wjte1_id, 3);
+			var rev4 = AuditReader().Find<WhereJoinTableEntity>(wjte1_id, 4);
 
 			// Checking 1st list
 			CollectionAssert.IsEmpty(rev1.References1);
@@ -111,10 +111,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			var ite1_2 = Session.Get<IntNoAutoIdTestEntity>(ite1_2_id);
 			var ite2_2 = Session.Get<IntNoAutoIdTestEntity>(ite2_2_id);
 
-			var rev1 = AuditReader.Find<WhereJoinTableEntity>(wjte2_id, 1);
-			var rev2 = AuditReader.Find<WhereJoinTableEntity>(wjte2_id, 2);
-			var rev3 = AuditReader.Find<WhereJoinTableEntity>(wjte2_id, 3);
-			var rev4 = AuditReader.Find<WhereJoinTableEntity>(wjte2_id, 4);
+			var rev1 = AuditReader().Find<WhereJoinTableEntity>(wjte2_id, 1);
+			var rev2 = AuditReader().Find<WhereJoinTableEntity>(wjte2_id, 2);
+			var rev3 = AuditReader().Find<WhereJoinTableEntity>(wjte2_id, 3);
+			var rev4 = AuditReader().Find<WhereJoinTableEntity>(wjte2_id, 4);
 
 			// Checking 1st list
 			CollectionAssert.IsEmpty(rev1.References1);

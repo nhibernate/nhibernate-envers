@@ -126,6 +126,8 @@
     <Compile Include="Entities\OneToMany\Ids\SetRefIngEmbIdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefEdEntity.cs" />
     <Compile Include="Entities\OneToMany\SetRefIngEntity.cs" />
+    <Compile Include="Entities\RevEntity\CustomDataRevEntity.cs" />
+    <Compile Include="Entities\RevEntity\CustomDateRevEntity.cs" />
     <Compile Include="Entities\RevEntity\CustomRevEntity.cs" />
     <Compile Include="Entities\StrIntTestEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
@@ -312,6 +314,8 @@
     <Compile Include="Integration\Query\SimpleQueryTest.cs" />
     <Compile Include="Integration\Query\StoreDeletedDataTest.cs" />
     <Compile Include="Integration\RevEntity\CustomColumnMappingTest.cs" />
+    <Compile Include="Integration\RevEntity\CustomDateTest.cs" />
+    <Compile Include="Integration\RevEntity\CustomNoListenerTest.cs" />
     <Compile Include="Integration\RevEntity\CustomTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
@@ -340,6 +344,8 @@
     <EmbeddedResource Include="Entities\OneToMany\Detached\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityColumnMapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\CustomDateRevEntity.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\CustomDataRevEntity.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

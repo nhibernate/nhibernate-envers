@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(MixedAccessEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(MixedAccessEntity), id1));
 		}
 
 		[Test]
@@ -34,8 +34,8 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 			var ver1 = new MixedAccessEntity(id1, "data");
 			var ver2 = new MixedAccessEntity(id1, "data2");
 
-			var rev1 = AuditReader.Find<MixedAccessEntity>(id1, 1);
-			var rev2 = AuditReader.Find<MixedAccessEntity>(id1, 2);
+			var rev1 = AuditReader().Find<MixedAccessEntity>(id1, 1);
+			var rev2 = AuditReader().Find<MixedAccessEntity>(id1, 2);
 
 			Assert.IsTrue(rev1.IsDataSet);
 			Assert.IsTrue(rev2.IsDataSet);

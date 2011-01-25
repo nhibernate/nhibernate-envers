@@ -38,21 +38,21 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyProjectionsInEntitiesAtRevision()
 		{
-			Assert.AreEqual(2, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof (StrIntTestEntity), 1).GetResultList().Count);
-			Assert.AreEqual(1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof (StrIntTestEntity), 2).GetResultList().Count);
+			Assert.AreEqual(2, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (StrIntTestEntity), 1).GetResultList().Count);
+			Assert.AreEqual(1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (StrIntTestEntity), 2).GetResultList().Count);
 
 			Assert.AreEqual(2, 
-				AuditReader.CreateQuery()
+				AuditReader().CreateQuery()
 					.ForEntitiesAtRevision(typeof(StrIntTestEntity), 1).AddProjection(AuditEntity.Id().Count("Id")).GetResultList()[0]);
 			Assert.AreEqual(1,
-				AuditReader.CreateQuery()
+				AuditReader().CreateQuery()
 					.ForEntitiesAtRevision(typeof(StrIntTestEntity), 2).AddProjection(AuditEntity.Id().Count("Id")).GetResultList()[0]);
 		}
 
 		[Test]
 		public void VerifyRevisionOfEntityWithoutDelete()
 		{
-			var result = AuditReader.CreateQuery()
+			var result = AuditReader().CreateQuery()
 					.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, false)
 					.Add(AuditEntity.Id().Eq(id2))
 					.GetResultList();

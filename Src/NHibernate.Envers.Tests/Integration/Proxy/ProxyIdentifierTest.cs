@@ -43,7 +43,7 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
         [Test]
         public void VerifyProxyIdentifier()
         {
-            var rev1 = AuditReader.Find<TargetNotAuditedEntity>(tnae1.Id, 1);
+            var rev1 = AuditReader().Find<TargetNotAuditedEntity>(tnae1.Id, 1);
             var proxyCreatedByEnvers = rev1.Reference as INHibernateProxy;
 
             Assert.IsNotNull(proxyCreatedByEnvers);

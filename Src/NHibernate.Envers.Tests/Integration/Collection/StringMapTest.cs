@@ -52,17 +52,17 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(StringMapEntity), sme1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(StringMapEntity), sme2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(StringMapEntity), sme1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(StringMapEntity), sme2_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOf1()
 		{
-			var rev1 = AuditReader.Find<StringMapEntity>(sme1_id, 1);
-			var rev2 = AuditReader.Find<StringMapEntity>(sme1_id, 2);
-			var rev3 = AuditReader.Find<StringMapEntity>(sme1_id, 3);
-			var rev4 = AuditReader.Find<StringMapEntity>(sme1_id, 4);
+			var rev1 = AuditReader().Find<StringMapEntity>(sme1_id, 1);
+			var rev2 = AuditReader().Find<StringMapEntity>(sme1_id, 2);
+			var rev3 = AuditReader().Find<StringMapEntity>(sme1_id, 3);
+			var rev4 = AuditReader().Find<StringMapEntity>(sme1_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.Strings.Keys);
 			Assert.AreEqual(new Dictionary<string, string> { { "1", "a" }, { "2", "b" } }, rev2.Strings);
@@ -73,10 +73,10 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		[Test]
 		public void VerifyHistoryOf2()
 		{
-			var rev1 = AuditReader.Find<StringMapEntity>(sme2_id, 1);
-			var rev2 = AuditReader.Find<StringMapEntity>(sme2_id, 2);
-			var rev3 = AuditReader.Find<StringMapEntity>(sme2_id, 3);
-			var rev4 = AuditReader.Find<StringMapEntity>(sme2_id, 4);
+			var rev1 = AuditReader().Find<StringMapEntity>(sme2_id, 1);
+			var rev2 = AuditReader().Find<StringMapEntity>(sme2_id, 2);
+			var rev3 = AuditReader().Find<StringMapEntity>(sme2_id, 3);
+			var rev4 = AuditReader().Find<StringMapEntity>(sme2_id, 4);
 
 			Assert.AreEqual(new Dictionary<string, string> { { "1", "a" } }, rev1.Strings);
 			Assert.AreEqual(new Dictionary<string, string> { { "1", "a" } }, rev2.Strings);

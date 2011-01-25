@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(NamingTestEntity1), id1));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(NamingTestEntity1), id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NamingTestEntity1), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(NamingTestEntity1), id2));
 		}
 
 		[Test]
@@ -45,9 +45,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			var ver1 = new NamingTestEntity1 {Id = id1, Data = "data1"};
 			var ver2 = new NamingTestEntity1 {Id = id1, Data = "data1'"};
 
-			Assert.AreEqual(ver1, AuditReader.Find<NamingTestEntity1>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<NamingTestEntity1>(id1, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<NamingTestEntity1>(id1, 3));
+			Assert.AreEqual(ver1, AuditReader().Find<NamingTestEntity1>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<NamingTestEntity1>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<NamingTestEntity1>(id1, 3));
 		}
 
 		[Test]
@@ -56,9 +56,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			var ver1 = new NamingTestEntity1 { Id = id2, Data = "data2" };
 			var ver2 = new NamingTestEntity1 { Id = id2, Data = "data2'" };
 
-			Assert.AreEqual(ver1, AuditReader.Find<NamingTestEntity1>(id2, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<NamingTestEntity1>(id2, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<NamingTestEntity1>(id2, 3));
+			Assert.AreEqual(ver1, AuditReader().Find<NamingTestEntity1>(id2, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<NamingTestEntity1>(id2, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<NamingTestEntity1>(id2, 3));
 		}
 
 		[Test]

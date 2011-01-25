@@ -41,15 +41,15 @@ namespace NHibernate.Envers.Tests.Integration.CustomType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader.GetRevisions(typeof(CompositeCustomTypeEntity), ccte_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(CompositeCustomTypeEntity), ccte_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOfCccte()
 		{
-			var rev1 = AuditReader.Find<CompositeCustomTypeEntity>(ccte_id, 1);
-			var rev2 = AuditReader.Find<CompositeCustomTypeEntity>(ccte_id, 2);
-			var rev3 = AuditReader.Find<CompositeCustomTypeEntity>(ccte_id, 3);
+			var rev1 = AuditReader().Find<CompositeCustomTypeEntity>(ccte_id, 1);
+			var rev2 = AuditReader().Find<CompositeCustomTypeEntity>(ccte_id, 2);
+			var rev3 = AuditReader().Find<CompositeCustomTypeEntity>(ccte_id, 3);
 
 			Assert.AreEqual(rev1.Component, new Component {Prop1 = "a", Prop2 = 1});
 			Assert.AreEqual(rev2.Component, new Component {Prop1 = "b", Prop2 = 1});

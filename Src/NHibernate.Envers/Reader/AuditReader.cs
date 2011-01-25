@@ -176,19 +176,23 @@ namespace NHibernate.Envers.Reader
 			return (T) FindRevision(typeof (T), revision);
 		}
 
-
-		public T GetCurrentRevision<T>(System.Type revisionEntityClass, bool persist)
+		public object GetCurrentRevision(System.Type type, bool persist)
 		{
-			if (!(Session is IEventSource)) 
+			if (!(Session is IEventSource))
 			{
 				throw new NotSupportedException("The provided session is not an EventSource!");// ORIG IllegalArgumentException
 			}
 
 			// Obtaining the current audit sync
-			var auditSync = verCfg.AuditSyncManager.get((IEventSource) Session);
+			var auditSync = verCfg.AuditSyncManager.get((IEventSource)Session);
 
 			// And getting the current revision data
-			return (T) auditSync.GetCurrentRevisionData(Session, persist);
+			return auditSync.GetCurrentRevisionData(Session, persist);
+		}
+
+		public T GetCurrentRevision<T>(bool persist)
+		{
+			return (T) GetCurrentRevision(typeof(T), persist);
 		}
 
 		public AuditQueryCreator CreateQuery() 

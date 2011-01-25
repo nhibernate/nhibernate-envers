@@ -34,24 +34,24 @@ namespace NHibernate.Envers.Tests.Integration.HashCode
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(WikiPage), pageId));
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader.GetRevisions(typeof(WikiImage), imageId));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(WikiPage), pageId));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(WikiImage), imageId));
 		}
 
 		[Test]
 		public void VerifyHistoryOfImage()
 		{
-			Assert.IsNull(AuditReader.Find<WikiImage>(imageId, 1));
-			Assert.AreEqual(new WikiImage{Name="name1"}, AuditReader.Find<WikiImage>(imageId, 2));
-			Assert.AreEqual(new WikiImage{Name="name2"}, AuditReader.Find<WikiImage>(imageId, 3));
+			Assert.IsNull(AuditReader().Find<WikiImage>(imageId, 1));
+			Assert.AreEqual(new WikiImage{Name="name1"}, AuditReader().Find<WikiImage>(imageId, 2));
+			Assert.AreEqual(new WikiImage{Name="name2"}, AuditReader().Find<WikiImage>(imageId, 3));
 		}
 
 		[Test]
 		public void VerifyHistoryOfPage()
 		{
-			CollectionAssert.IsEmpty(AuditReader.Find<WikiPage>(pageId, 1).Images);
-			CollectionAssert.AreEquivalent(AuditReader.Find<WikiPage>(pageId, 2).Images, new[]{new WikiImage{Name="name1"}});
-			CollectionAssert.AreEquivalent(AuditReader.Find<WikiPage>(pageId, 3).Images, new[]{new WikiImage{Name="name2"}});
+			CollectionAssert.IsEmpty(AuditReader().Find<WikiPage>(pageId, 1).Images);
+			CollectionAssert.AreEquivalent(AuditReader().Find<WikiPage>(pageId, 2).Images, new[]{new WikiImage{Name="name1"}});
+			CollectionAssert.AreEquivalent(AuditReader().Find<WikiPage>(pageId, 3).Images, new[]{new WikiImage{Name="name2"}});
 		}
 	}
 }

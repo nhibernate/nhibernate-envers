@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(ChildEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ChildEntity), id1));
 		}
 
 		[Test]
@@ -39,16 +39,16 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single
 			var ver1 = new ChildEntity { Id = id1, Data = "x", Number = 1 };
 			var ver2 = new ChildEntity { Id = id1, Data = "y", Number = 2 };
 
-			Assert.AreEqual(ver1, AuditReader.Find<ChildEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader.Find<ChildEntity>(id1, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<ChildEntity>(id1, 1));
+			Assert.AreEqual(ver2, AuditReader().Find<ChildEntity>(id1, 2));
 		}
 
 		[Test]
 		public void VerifyPolymorphicQuery()
 		{
 			var childVersion1 = new ChildEntity { Id = id1, Data = "x", Number = 1 };
-			Assert.AreEqual(childVersion1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof(ChildEntity), 1).GetSingleResult());
-			Assert.AreEqual(childVersion1, AuditReader.CreateQuery().ForEntitiesAtRevision(typeof(ParentEntity), 1).GetSingleResult());
+			Assert.AreEqual(childVersion1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(ChildEntity), 1).GetSingleResult());
+			Assert.AreEqual(childVersion1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(ParentEntity), 1).GetSingleResult());
 		}
 	}
 }

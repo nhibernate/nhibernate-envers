@@ -37,9 +37,9 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(RefEdMapKeyEntity), ed_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader.GetRevisions(typeof(RefIngMapKeyEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(RefIngMapKeyEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(RefEdMapKeyEntity), ed_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(RefIngMapKeyEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(RefIngMapKeyEntity), ing2_id));
 		}
 
 		[Test]
@@ -48,8 +48,8 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			var ing1 = Session.Get<RefIngMapKeyEntity>(ing1_id);
 			var ing2 = Session.Get<RefIngMapKeyEntity>(ing2_id);
 
-			var rev1 = AuditReader.Find<RefEdMapKeyEntity>(ed_id, 1);
-			var rev2 = AuditReader.Find<RefEdMapKeyEntity>(ed_id, 2);
+			var rev1 = AuditReader().Find<RefEdMapKeyEntity>(ed_id, 1);
+			var rev2 = AuditReader().Find<RefEdMapKeyEntity>(ed_id, 2);
 
 			CollectionAssert.AreEquivalent(new Dictionary<string, RefIngMapKeyEntity> { { "a", ing1 } }, rev1.IdMap);
 			CollectionAssert.AreEquivalent(new Dictionary<string, RefIngMapKeyEntity> { { "a", ing1 }, { "b", ing2 } }, rev2.IdMap);

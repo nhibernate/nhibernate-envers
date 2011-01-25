@@ -48,16 +48,16 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader.GetRevisions(typeof(StringSetEntity), sse1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(StringSetEntity), sse2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(StringSetEntity), sse1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(StringSetEntity), sse2_id));
 		}
 
 		[Test]
 		public void VerifyHistoryOf1()
 		{
-			var rev1 = AuditReader.Find<StringSetEntity>(sse1_id, 1);
-			var rev2 = AuditReader.Find<StringSetEntity>(sse1_id, 2);
-			var rev3 = AuditReader.Find<StringSetEntity>(sse1_id, 3);
+			var rev1 = AuditReader().Find<StringSetEntity>(sse1_id, 1);
+			var rev2 = AuditReader().Find<StringSetEntity>(sse1_id, 2);
+			var rev3 = AuditReader().Find<StringSetEntity>(sse1_id, 3);
 
 			CollectionAssert.IsEmpty(rev1.Strings);
 			CollectionAssert.AreEquivalent(new[] { "sse1_string1", "sse1_string2" }, rev2.Strings);
@@ -67,9 +67,9 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		[Test]
 		public void VerifyHistoryOf2()
 		{
-			var rev1 = AuditReader.Find<StringSetEntity>(sse2_id, 1);
-			var rev2 = AuditReader.Find<StringSetEntity>(sse2_id, 2);
-			var rev3 = AuditReader.Find<StringSetEntity>(sse2_id, 3);
+			var rev1 = AuditReader().Find<StringSetEntity>(sse2_id, 1);
+			var rev2 = AuditReader().Find<StringSetEntity>(sse2_id, 2);
+			var rev3 = AuditReader().Find<StringSetEntity>(sse2_id, 3);
 
 			CollectionAssert.AreEquivalent(new[] { "sse2_string1", "sse2_string2" }, rev1.Strings);
 			CollectionAssert.AreEquivalent(new[] { "sse2_string1", "sse2_string2" }, rev2.Strings);

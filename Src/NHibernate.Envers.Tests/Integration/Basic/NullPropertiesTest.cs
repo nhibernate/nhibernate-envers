@@ -42,8 +42,8 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader.GetRevisions(typeof(BasicTestEntity1), id1));
-			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader.GetRevisions(typeof(BasicTestEntity1), id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(BasicTestEntity1), id1));
+			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader().GetRevisions(typeof(BasicTestEntity1), id2));
 		}
 
 		[Test]
@@ -52,10 +52,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			var ver1 = new BasicTestEntity1 { Id = id1, Str1 = "x", Long1 = 1 };
 			var ver2 = new BasicTestEntity1 { Id = id1, Str1 = null, Long1 = 1 };
 
-			Assert.AreEqual(ver1, AuditReader.Find<BasicTestEntity1>(id1, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<BasicTestEntity1>(id1, 2));
-			Assert.AreEqual(ver2, AuditReader.Find<BasicTestEntity1>(id1, 3));
-			Assert.AreEqual(ver2, AuditReader.Find<BasicTestEntity1>(id1, 4));
+			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id1, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find<BasicTestEntity1>(id1, 3));
+			Assert.AreEqual(ver2, AuditReader().Find<BasicTestEntity1>(id1, 4));
 		}
 
 		[Test]
@@ -64,10 +64,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			var ver1 = new BasicTestEntity1 { Id = id2, Str1 = null, Long1 = 20 };
 			var ver2 = new BasicTestEntity1 { Id = id2, Str1 = "y2", Long1 = 20 };
 
-			Assert.IsNull(AuditReader.Find<BasicTestEntity1>(id2, 1));
-			Assert.AreEqual(ver1, AuditReader.Find<BasicTestEntity1>(id2, 2));
-			Assert.AreEqual(ver1, AuditReader.Find<BasicTestEntity1>(id2, 3));
-			Assert.AreEqual(ver2, AuditReader.Find<BasicTestEntity1>(id2, 4));
+			Assert.IsNull(AuditReader().Find<BasicTestEntity1>(id2, 1));
+			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id2, 2));
+			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id2, 3));
+			Assert.AreEqual(ver2, AuditReader().Find<BasicTestEntity1>(id2, 4));
 		}
 	}
 }
