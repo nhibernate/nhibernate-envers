@@ -117,12 +117,12 @@ namespace NHibernate.Envers.Synchronization
 			// Generating the revision data if not yet generated
 			if (revisionData == null) 
 			{
-				revisionData = revisionInfoGenerator.generate();
+				revisionData = revisionInfoGenerator.Generate();
 			}
 
 			// Saving the revision data, if not yet saved and persist is true
 			if (!session.Contains(revisionData) && persist) {
-				revisionInfoGenerator.saveRevisionData(session, revisionData);
+				revisionInfoGenerator.SaveRevisionData(session, revisionData);
 			}
 
 			return revisionData;

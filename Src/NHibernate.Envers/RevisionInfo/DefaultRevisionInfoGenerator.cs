@@ -30,12 +30,12 @@ namespace NHibernate.Envers.RevisionInfo
 			}
 		}
 
-		public void saveRevisionData(ISession session, object revisionData) 
+		public void SaveRevisionData(ISession session, object revisionData) 
 		{
 			session.Save(_revisionInfoEntityName, revisionData);
 		}
 
-		public object generate() 
+		public object Generate() 
 		{
 			var revisionInfo = Activator.CreateInstance(_revisionInfoType);
 

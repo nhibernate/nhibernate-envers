@@ -10,6 +10,11 @@ namespace NHibernate.Envers
 			Value = typeof (IRevisionListener);
 		}
 
+		public RevisionEntityAttribute(System.Type listener)
+		{
+			Value = listener;
+		}
+
 		public System.Type Value { get; set; }
 	}
 }
