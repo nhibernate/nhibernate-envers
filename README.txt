@@ -6,6 +6,6 @@ Some notes...
 
 * Hopefully an alpha release will be available when NH 3.01 is released.
 
-* Right now you can only configure what to audit by using attributes (like Envers). Hopefully there will be alternatives soon.
+* Right now you can only configure what to audit by using attributes (like Envers). Hopefully there will be alternatives soon. 
 
 
