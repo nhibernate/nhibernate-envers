@@ -35,7 +35,7 @@ namespace NHibernate.Envers
 					if (ArraysTools.ArrayIncludesInstanceOf(listeners.PostUpdateEventListeners, typeof(AuditEventListener)) &&
 						ArraysTools.ArrayIncludesInstanceOf(listeners.PostDeleteEventListeners, typeof(AuditEventListener))) 
 					{
-							return new AuditReader(auditEventListener.getVerCfg(), session,sessionImpl);
+							return new AuditReader(auditEventListener.GetVerCfg(), session,sessionImpl);
 					}
 				}
 			}

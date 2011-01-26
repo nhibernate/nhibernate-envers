@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Configuration
 				//ORIG: = new WeakHashMap<Cfg.Configuration, AuditConfiguration>(); TODO Simon see if it's ok
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		public static AuditConfiguration getFor(Cfg.Configuration cfg) 
+		public static AuditConfiguration GetFor(Cfg.Configuration cfg) 
 		{
 			AuditConfiguration verCfg;
 			if (!cfgs.TryGetValue(cfg, out verCfg))

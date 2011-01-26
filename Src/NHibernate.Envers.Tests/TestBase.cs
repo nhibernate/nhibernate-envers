@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
+using NHibernate.Envers.Event;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests
@@ -19,7 +20,7 @@ namespace NHibernate.Envers.Tests
 			Cfg = new Cfg.Configuration();
 			Cfg.Configure();
 			addMappings();
-			Cfg.IntegrateWithEnvers();
+			Cfg.IntegrateWithEnvers(new AuditEventListener());
 			AddToConfiguration(Cfg);
 			SessionFactory = Cfg.BuildSessionFactory();
 			Session = openSession(SessionFactory);

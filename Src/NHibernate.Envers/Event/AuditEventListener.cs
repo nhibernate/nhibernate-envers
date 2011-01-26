@@ -105,7 +105,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostInsert(PostInsertEvent evt) 
+		public virtual void OnPostInsert(PostInsertEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
 			if (verCfg.EntCfg.IsVersioned(entityName)) 
@@ -132,7 +132,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostUpdate(PostUpdateEvent evt) 
+		public virtual void OnPostUpdate(PostUpdateEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
 
@@ -154,7 +154,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostDelete(PostDeleteEvent evt) 
+		public virtual void OnPostDelete(PostDeleteEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
 
@@ -285,7 +285,7 @@ namespace NHibernate.Envers.Event
 			return evt.Session.PersistenceContext.GetCollectionEntry(evt.Collection);
 		}
 
-		public void OnPreUpdateCollection(PreCollectionUpdateEvent evt) 
+		public virtual void OnPreUpdateCollection(PreCollectionUpdateEvent evt) 
 		{
 			var collectionEntry = GetCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse) 
@@ -294,7 +294,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPreRemoveCollection(PreCollectionRemoveEvent evt) 
+		public virtual void OnPreRemoveCollection(PreCollectionRemoveEvent evt) 
 		{
 			var collectionEntry = GetCollectionEntry(evt);
 			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse) 
@@ -303,7 +303,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void OnPostRecreateCollection(PostCollectionRecreateEvent evt) 
+		public virtual void OnPostRecreateCollection(PostCollectionRecreateEvent evt) 
 		{
 			var collectionEntry = GetCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse) 
@@ -312,12 +312,12 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		public void Initialize(Cfg.Configuration cfg) 
+		public virtual void Initialize(Cfg.Configuration cfg) 
 		{
-			verCfg = AuditConfiguration.getFor(cfg);
+			verCfg = AuditConfiguration.GetFor(cfg);
 		}
 
-		public AuditConfiguration getVerCfg() 
+		public AuditConfiguration GetVerCfg() 
 		{
 			return verCfg;
 		}

@@ -5,15 +5,15 @@ namespace NHibernate.Cfg
 {
 	public static class NhConfigurationExtension
 	{
-		public static Cfg.Configuration IntegrateWithEnvers(this Configuration configuration)
+		public static Configuration IntegrateWithEnvers(this Configuration configuration, AuditEventListener auditEventListener)
 		{
-			addListeners(configuration);
+			addListeners(configuration, auditEventListener);
 			return configuration;
 		}
 
-		private static void addListeners(Cfg.Configuration cfg)
+        private static void addListeners(Configuration cfg, AuditEventListener auditEventListener)
 		{
-			var listeners = new[] { new AuditEventListener() };
+			var listeners = new[] { auditEventListener };
 			cfg.AppendListeners(ListenerType.PostInsert, listeners);
 			cfg.AppendListeners(ListenerType.PostUpdate, listeners);
 			cfg.AppendListeners(ListenerType.PostDelete, listeners);
