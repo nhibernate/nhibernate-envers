@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace NHibernate.Envers.Tests.Entities.OneToMany
 {
+	[Serializable]
 	public class CollectionRefEdEntity
 	{
 		public virtual int Id { get; set; }

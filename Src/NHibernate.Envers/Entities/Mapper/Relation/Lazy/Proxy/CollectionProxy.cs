@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public abstract class CollectionProxy<TItem, TCollection> : ICollection<TItem>
 							where TCollection : class, ICollection<TItem>
 	{
+		[NonSerialized]
 		private readonly IInitializor<TCollection> initializor;
 		protected TCollection delegat;
 

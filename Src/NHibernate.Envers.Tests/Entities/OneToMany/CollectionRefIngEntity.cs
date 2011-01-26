@@ -1,5 +1,8 @@
-﻿namespace NHibernate.Envers.Tests.Entities.OneToMany
+﻿using System;
+
+namespace NHibernate.Envers.Tests.Entities.OneToMany
 {
+	[Serializable]
 	public class CollectionRefIngEntity
 	{
 		public virtual int Id { get; set; }

@@ -337,6 +337,7 @@
     <Compile Include="Integration\SameIds\SameIdTestEntity2.cs" />
     <Compile Include="Integration\Join\JoinTestEntity.cs" />
     <Compile Include="Integration\Join\JoinWithAuditNameEntity.cs" />
+    <Compile Include="Integration\Serialization\SerializingCollectionTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />

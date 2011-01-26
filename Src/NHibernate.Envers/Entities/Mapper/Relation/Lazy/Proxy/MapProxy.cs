@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public class MapProxy<K, V> : IDictionary<K,V>
 	{
 		private readonly IInitializor<IDictionary<K,V>> _initializor;

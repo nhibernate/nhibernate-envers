@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public class ListProxy<T> : CollectionProxy<T, IList<T>>, IList<T>
 	{
 		public ListProxy()
