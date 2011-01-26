@@ -329,6 +329,7 @@
     <Compile Include="Integration\RevEntity\ExceptionListenerTest.cs" />
     <Compile Include="Integration\RevEntity\InheritedTest.cs" />
     <Compile Include="Integration\RevEntity\ListenerTest.cs" />
+    <Compile Include="Integration\RevForDate\RevisionForDateTest.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
