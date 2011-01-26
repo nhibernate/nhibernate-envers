@@ -319,6 +319,7 @@
     <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />
     <Compile Include="Integration\Query\SimpleQueryTest.cs" />
     <Compile Include="Integration\Query\StoreDeletedDataTest.cs" />
+    <Compile Include="Integration\RevEntity\CustomColumnInheritanceTest.cs" />
     <Compile Include="Integration\RevEntity\CustomColumnMappingTest.cs" />
     <Compile Include="Integration\RevEntity\CustomDateTest.cs" />
     <Compile Include="Integration\RevEntity\CustomFieldAccessTest.cs" />
