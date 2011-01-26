@@ -8,6 +8,8 @@ namespace NHibernate.Envers
 		public AuditTableAttribute(string value)
 		{
 			Value = value;
+			Schema = string.Empty;
+			Catalog = string.Empty;
 		}
 
 		public string Value { get; private set; }

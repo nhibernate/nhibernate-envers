@@ -105,7 +105,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 
 
-		private readonly AuditTableAttribute defaultAuditTable = new DefaultAuditTableAttribute(string.Empty) { Schema = string.Empty, Catalog = string.Empty};
+		private readonly AuditTableAttribute defaultAuditTable = new AuditTableAttribute(string.Empty);
 		  
 
 		private AuditTableAttribute getDefaultAuditTable() {

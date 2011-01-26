@@ -92,8 +92,6 @@
     <Compile Include="Configuration\NhConfigurationExtension.cs" />
     <Compile Include="Configuration\PersistentClassGraphDefiner.cs" />
     <Compile Include="Configuration\RevisionInfoConfiguration.cs" />
-    <Compile Include="DefaultAuditJoinTableAttribute.cs" />
-    <Compile Include="DefaultAuditTableAttribute.cs" />
     <Compile Include="DefaultRevisionEntity.cs" />
     <Compile Include="Entities\EntitiesConfigurations.cs" />
     <Compile Include="Entities\EntityConfiguration.cs" />
@@ -206,7 +204,6 @@
     <Compile Include="Reader\IAuditReaderImplementor.cs" />
     <Compile Include="Reader\IFirstLevelCache.cs" />
     <Compile Include="RelationTargetAuditMode.cs" />
-    <Compile Include="RevisionDelegate.cs" />
     <Compile Include="RevisionEntityAttribute.cs" />
     <Compile Include="RevisionInfo\DefaultRevisionInfoGenerator.cs" />
     <Compile Include="RevisionInfo\IRevisionInfoGenerator.cs" />
