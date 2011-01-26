@@ -43,7 +43,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 					ModificationStore defaultStore = getDefaultAudited(typ);
 					if (defaultStore != ModificationStore._NULL) {
-						_auditData.setDefaultAudited(true);
+						_auditData.SetDefaultAudited(true);
 					}
 
 					AuditedPropertiesReader ar = new AuditedPropertiesReader(_propertyAndMemberInfo, defaultStore, new PersistentClassPropertiesSource(typ, this), _auditData,

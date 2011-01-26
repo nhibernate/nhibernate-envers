@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Envers.Tools;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -10,9 +6,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
      * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
      * @author Sebastian Komander
     */
-    public class ClassAuditingData : IAuditedPropertiesHolder {
-        public IDictionary<String, PropertyAuditingData> Properties { get; private set; }
-        public IDictionary<String, String> SecondaryTableDictionary { get; private set; }
+    public class ClassAuditingData : IAuditedPropertiesHolder 
+    {
+        public IDictionary<string, PropertyAuditingData> Properties { get; private set; }
+        public IDictionary<string, string> SecondaryTableDictionary { get; private set; }
 
         public AuditTableAttribute AuditTable { get; set; }
 
@@ -23,32 +20,33 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	    private bool defaultAudited;
 
         public ClassAuditingData() {
-            Properties = Toolz.NewDictionary<String,PropertyAuditingData>();
-            SecondaryTableDictionary = Toolz.NewDictionary<String, String>();
+            Properties = new Dictionary<string, PropertyAuditingData>();
+            SecondaryTableDictionary = new Dictionary<string, string>();
         }
 
-	    public void AddPropertyAuditingData(String propertyName, PropertyAuditingData auditingData) {
+        public void AddPropertyAuditingData(string propertyName, PropertyAuditingData auditingData)
+        {
 		    Properties.Add(propertyName, auditingData);
 	    }
 
-        public PropertyAuditingData GetPropertyAuditingData(String propertyName) {
-            try{
-                return Properties[propertyName];
-            }
-            catch(KeyNotFoundException){
-                return null;
-            }
+        public PropertyAuditingData GetPropertyAuditingData(string propertyName)
+        {
+            PropertyAuditingData ret;
+            return Properties.TryGetValue(propertyName, out ret) ? ret : null;
         }
 
-        public IEnumerable<String> getPropertyNames() {
-            return Properties.Keys;
+        public IEnumerable<string> PropertyNames
+        {
+            get { return Properties.Keys; }
         }
 
-	    public void setDefaultAudited(bool defaultAudited) {
+        public void SetDefaultAudited(bool defaultAudited) 
+        {
 		    this.defaultAudited = defaultAudited;
 	    }
 
-	    public bool IsAudited() {
+	    public bool IsAudited() 
+        {
             return defaultAudited || Properties.Count > 0;
         }
     }

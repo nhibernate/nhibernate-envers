@@ -56,7 +56,7 @@ namespace NHibernate.Envers.Configuration
             foreach (KeyValuePair<PersistentClass, ClassAuditingData> classAuditingDataEntry in persistentClassToAuditingData) {
                 PersistentClass pc = classAuditingDataEntry.Key;
                 ClassAuditingData classAuditingData = classAuditingDataEntry.Value;
-                foreach (String propertyName in classAuditingData.getPropertyNames()) {
+                foreach (String propertyName in classAuditingData.PropertyNames) {
                     PropertyAuditingData propertyAuditingData = classAuditingData.GetPropertyAuditingData(propertyName);
                     // If a property had the @AuditMappedBy annotation, setting the referenced fields to be always insertable.
                     if (propertyAuditingData.AuditMappedBy != null) {

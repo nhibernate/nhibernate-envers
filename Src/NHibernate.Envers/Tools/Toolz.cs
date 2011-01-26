@@ -11,15 +11,6 @@ namespace NHibernate.Envers.Tools
 	public static class Toolz 
 	{
 
-		//TODO Simon gaseste versiune pentru LinkedHashMap in c#
-		//public static <K,V> Map<K,V> NewDictionary() {
-		//    return new LinkedHashMap<K,V>();
-		//}
-		public static IDictionary<K,V> NewDictionary<K,V>() 
-		{
-			return new Dictionary<K,V>();
-		}
-
 		public static bool EntitiesEqual(ISessionImplementor session, object obj1, object obj2) 
 		{
 			var id1 = GetIdentifier(session, obj1);
