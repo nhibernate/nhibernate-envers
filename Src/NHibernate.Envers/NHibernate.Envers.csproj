@@ -218,7 +218,7 @@
     <Compile Include="RevisionNumberAttribute.cs" />
     <Compile Include="RevisionTimestampAttribute.cs" />
     <Compile Include="RevisionType.cs" />
-    <Compile Include="SecondaryAuditTableAttribute.cs" />
+    <Compile Include="JoinAuditTableAttribute.cs" />
     <Compile Include="SecondaryAuditTablesAttribute.cs" />
     <Compile Include="Synchronization\AuditSync.cs" />
     <Compile Include="Synchronization\AuditSyncManager.cs" />

@@ -7,6 +7,6 @@ namespace NHibernate.Envers
 {
     class SecondaryAuditTablesAttribute:Attribute
     {
-        public SecondaryAuditTableAttribute[] Value { get; set; }
+        public JoinAuditTableAttribute[] Value { get; set; }
     }
 }

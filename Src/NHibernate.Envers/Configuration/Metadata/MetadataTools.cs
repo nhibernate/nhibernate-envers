@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -87,7 +87,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <param name="precision"></param>
 		/// <param name="sqlType"></param>
 		/// <returns></returns>
-		public static XmlElement AddColumn(XmlElement parent, String name, int length, int scale, int precision, String sqlType) 
+		public static XmlElement AddColumn(XmlElement parent, string name, int length, int scale, int precision, string sqlType) 
 		{
 			var column_mapping = parent.OwnerDocument.CreateElement("column");
 			parent.AppendChild(column_mapping);
@@ -169,20 +169,20 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return class_mapping;
 		}
 
-		public static XmlElement CreateJoin(XmlElement parent, String tableName,
-										 String schema, String catalog) 
+		public static XmlElement CreateJoin(XmlElement parent, string tableName,
+										 string schema, string catalog) 
 		{
 			var join_mapping = parent.OwnerDocument.CreateElement("join");
 			parent.AppendChild(join_mapping);
 
 			join_mapping.SetAttribute("table", tableName);
 
-			if (schema.Length != 0) 
+			if (!string.IsNullOrEmpty(schema)) 
 			{
 				join_mapping.SetAttribute("schema", schema);
 			}
 
-			if (catalog.Length != 0) 
+			if (!string.IsNullOrEmpty(catalog)) 
 			{
 				join_mapping.SetAttribute("catalog", catalog);
 			}
@@ -221,7 +221,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		public static void PrefixNamesInPropertyElement(XmlElement element, String prefix, IEnumerator<string> columnNames,
+		public static void PrefixNamesInPropertyElement(XmlElement element, string prefix, IEnumerator<string> columnNames,
 														bool changeToKey, bool insertable) 
 		{
 			var nodeList = element.ChildNodes;
@@ -233,7 +233,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if ("property".Equals(property.Name))
 				{
 					var value = property.GetAttribute("name");
-					if (!String.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty(value))
 					{
 						property.SetAttribute("name", prefix + value);
 					}

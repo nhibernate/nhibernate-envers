@@ -87,18 +87,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void addAuditSecondaryTables(System.Type typ) {
 			// Getting information on secondary tables
 			//SecondaryAuditTableAttribute secondaryVersionsTable1 = clazz.getAnnotation(SecondaryAuditTable.class);
-			SecondaryAuditTableAttribute secondaryVersionsTable1 = (SecondaryAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTableAttribute));
-			if (secondaryVersionsTable1 != null) {
-				_auditData.SecondaryTableDictionary.Add(secondaryVersionsTable1.secondaryTableName,
-						secondaryVersionsTable1.secondaryAuditTableName);
+			JoinAuditTableAttribute joinVersionsTable1 = (JoinAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(JoinAuditTableAttribute));
+			if (joinVersionsTable1 != null) {
+				_auditData.SecondaryTableDictionary.Add(joinVersionsTable1.JoinTableName,
+						joinVersionsTable1.JoinAuditTableName);
 			}
 
 			//SecondaryAuditTablesAttribute secondaryAuditTables = clazz.getAnnotation(SecondaryAuditTables.class);
 			SecondaryAuditTablesAttribute secondaryAuditTables = (SecondaryAuditTablesAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTablesAttribute));
 			if (secondaryAuditTables != null) {
-				foreach (SecondaryAuditTableAttribute secondaryAuditTable2 in secondaryAuditTables.Value) {
-					_auditData.SecondaryTableDictionary.Add(secondaryAuditTable2.secondaryTableName,
-							secondaryAuditTable2.secondaryAuditTableName);
+				foreach (JoinAuditTableAttribute secondaryAuditTable2 in secondaryAuditTables.Value) {
+					_auditData.SecondaryTableDictionary.Add(secondaryAuditTable2.JoinTableName,
+							secondaryAuditTable2.JoinAuditTableName);
 				}
 			}
 		}

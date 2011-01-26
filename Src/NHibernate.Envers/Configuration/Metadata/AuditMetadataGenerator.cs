@@ -227,15 +227,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void CreateJoins(PersistentClass pc, XmlElement parent, ClassAuditingData auditingData)
 		{
-			var joins = pc.JoinIterator.GetEnumerator();
-
 			var JoinElements = new Dictionary<Join, XmlElement>();
 			entitiesJoins.Add(pc.EntityName, JoinElements);
 
-			while (joins.MoveNext())
+			foreach (var join in pc.JoinIterator)
 			{
-				var join = joins.Current;
-
 				// Checking if all of the join properties are audited
 				if (!CheckPropertiesAudited(join.PropertyIterator.GetEnumerator(), auditingData))
 				{
@@ -245,8 +241,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
 				var originalTableName = join.Table.Name;
-				var auditTableName = auditingData.SecondaryTableDictionary[originalTableName] ??
-				                     VerEntCfg.GetAuditEntityName(originalTableName);
+				string auditTableName;
+				if (!auditingData.SecondaryTableDictionary.TryGetValue(originalTableName, out auditTableName))
+				{
+					auditTableName = VerEntCfg.GetAuditEntityName(originalTableName);
+				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
 				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);
