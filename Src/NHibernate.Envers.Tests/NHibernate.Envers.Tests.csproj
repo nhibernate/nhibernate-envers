@@ -338,6 +338,9 @@
     <Compile Include="Integration\Join\JoinTestEntity.cs" />
     <Compile Include="Integration\Join\JoinWithAuditNameEntity.cs" />
     <Compile Include="Integration\Serialization\SerializingCollectionTest.cs" />
+    <Compile Include="Integration\SuperClass\MappedSubclassingTest.cs" />
+    <Compile Include="Integration\SuperClass\SubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\SuperclassOfEntity.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
@@ -411,6 +414,7 @@
     <EmbeddedResource Include="Integration\Versioning\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SameIds\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Join\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
