@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.SameIds">
+	<class name="SameIdTestEntity1">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Str1" />
+	</class>
+
+	<class name="SameIdTestEntity2">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Str1" />
+	</class>
+</hibernate-mapping>

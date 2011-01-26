@@ -330,6 +330,9 @@
     <Compile Include="Integration\RevEntity\InheritedTest.cs" />
     <Compile Include="Integration\RevEntity\ListenerTest.cs" />
     <Compile Include="Integration\RevForDate\RevisionForDateTest.cs" />
+    <Compile Include="Integration\SameIds\SameIdsTest.cs" />
+    <Compile Include="Integration\SameIds\SameIdTestEntity1.cs" />
+    <Compile Include="Integration\SameIds\SameIdTestEntity2.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
@@ -401,6 +404,7 @@
     <EmbeddedResource Include="Integration\OneToOne\UniDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Primitive\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Versioning\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SameIds\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
