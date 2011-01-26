@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 				te.Str = "y";
 				tx.Commit();
 			}
-			timestamp3 = DateTime.Now.Ticks;
+			timestamp3 = DateTime.Now.AddSeconds(1).Ticks;
 		}
 
 		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]

@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 				rfd.Str = "z";
 				tx.Commit();
 			}
-			timestamp4 = DateTime.Now.Ticks;
+			timestamp4 = DateTime.Now.AddSeconds(1).Ticks;
 		}
 
 		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]
@@ -88,5 +88,6 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			Assert.IsTrue(
 				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp4))).Ticks <= timestamp4);
 		}
+
 	}
 }
