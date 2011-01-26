@@ -10,10 +10,6 @@ namespace NHibernate.Envers.Tools
 {
 	public static class Toolz 
 	{
-		public static ISet<E> NewHashSet<E>() 
-		{
-			return new HashedSet<E>();
-		}
 
 		//TODO Simon gaseste versiune pentru LinkedHashMap in c#
 		//public static <K,V> Map<K,V> NewDictionary() {
@@ -75,14 +71,7 @@ namespace NHibernate.Envers.Tools
 			return obj1.Equals(obj2);
 		}
 
-		public static IList<T> IteratorToList<T>(IEnumerator<T> iter) {
-			IList<T> ret = new List<T>();
-			while (iter.MoveNext()) {
-				ret.Add(iter.Current);
-			}
 
-			return ret;
-		}
 		public static bool IteratorsContentEqual(IEnumerator iter1, IEnumerator iter2)
 		{
 			while (iter1.MoveNext() && iter2.MoveNext()) {

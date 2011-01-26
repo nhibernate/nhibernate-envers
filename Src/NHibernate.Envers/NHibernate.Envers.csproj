@@ -62,8 +62,6 @@
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="AuditTableAttribute.cs" />
     <Compile Include="Compatibility\Attributes\MapKeyAttribute.cs" />
-    <Compile Include="Compatibility\ISortedSet.cs" />
-    <Compile Include="Compatibility\LongType.cs" />
     <Compile Include="Configuration\AuditConfiguration.cs" />
     <Compile Include="Configuration\AuditEntitiesConfiguration.cs" />
     <Compile Include="Configuration\ClassesAuditingData.cs" />
@@ -165,7 +163,6 @@
     <Compile Include="Exceptions\RevisionDoesNotExistException.cs" />
     <Compile Include="IAuditReader.cs" />
     <Compile Include="IRevisionListener.cs" />
-    <Compile Include="JoinColumnAttribute.cs" />
     <Compile Include="ModificationStore.cs" />
     <Compile Include="NotAuditedAttribute.cs" />
     <Compile Include="Query\AuditEntity.cs" />
@@ -245,8 +242,6 @@
     <Compile Include="Tools\Graph\TopologicalSort.cs" />
     <Compile Include="Tools\Graph\Vertex.cs" />
     <Compile Include="Tools\IPair.cs" />
-    <Compile Include="Tools\ListOfDictionariesWrapper.cs" />
-    <Compile Include="Tools\ListWrapper.cs" />
     <Compile Include="Tools\MappingTools.cs" />
     <Compile Include="Tools\MutableBoolean.cs" />
     <Compile Include="Tools\MutableInteger.cs" />

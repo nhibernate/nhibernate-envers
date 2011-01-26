@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 	{
 		private int str1_id;
 		private int str2_id;
-		private int coll1_id;
+		private const int coll1_id = 47;
 
 		protected override void Initialize()
 		{
