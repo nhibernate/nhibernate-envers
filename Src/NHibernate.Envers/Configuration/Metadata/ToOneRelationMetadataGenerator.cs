@@ -75,7 +75,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 
             // Adding mapper for the id
-            PropertyData propertyData = propertyAuditingData.getPropertyData();
+            PropertyData propertyData = propertyAuditingData.GetPropertyData();
             mapper.AddComposite(propertyData, new ToOneIdMapper(relMapper,propertyData,referencedEntityName,nonInsertableFake));
         }
 
@@ -108,7 +108,7 @@ namespace NHibernate.Envers.Configuration.Metadata
                     referencedEntityName, ownedIdMapper);
 
             // Adding mapper for the id
-            PropertyData propertyData = propertyAuditingData.getPropertyData();
+            PropertyData propertyData = propertyAuditingData.GetPropertyData();
             mapper.AddComposite(propertyData, new OneToOneNotOwningMapper(owningReferencePropertyName,
                     referencedEntityName, propertyData));
         }

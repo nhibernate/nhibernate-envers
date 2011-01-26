@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		public void VerifyRevisionsForDates()
 		{
 			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2))).Ticks <= timestamp2);
+                AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2))).AddSeconds(-1).Ticks <= timestamp2);
 			Assert.IsTrue(
 				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2)) + 1).Ticks > timestamp2);
 			Assert.IsTrue(

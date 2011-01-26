@@ -139,7 +139,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Creating common mapper data.
 			var commonCollectionMapperData = new CommonCollectionMapperData(
 					mainGenerator.VerEntCfg, referencedEntityName,
-					propertyAuditingData.getPropertyData(),
+					propertyAuditingData.GetPropertyData(),
 					referencingIdData, queryGenerator);
 
 			IPropertyMapper fakeBidirectionalRelationMapper;
@@ -252,10 +252,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (!propertyValue.IsInverse)
 			{
 				// Generating a unique middle entity name
-				auditMiddleEntityName = mainGenerator.AuditEntityNameRegister.createUnique(auditMiddleEntityName);
+				auditMiddleEntityName = mainGenerator.AuditEntityNameRegister.CreateUnique(auditMiddleEntityName);
 
 				// Registering the generated name
-				mainGenerator.AuditEntityNameRegister.register(auditMiddleEntityName);
+				mainGenerator.AuditEntityNameRegister.Register(auditMiddleEntityName);
 
 				middleEntityXml = CreateMiddleEntityXml(auditMiddleTableName, auditMiddleEntityName, propertyValue.Where);
 			}
@@ -331,7 +331,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Creating common data
 			var commonCollectionMapperData = new CommonCollectionMapperData(
 					mainGenerator.VerEntCfg, auditMiddleEntityName,
-					propertyAuditingData.getPropertyData(),
+					propertyAuditingData.GetPropertyData(),
 					referencingIdData, queryGenerator);
 
 			// Checking the type of the collection and adding an appropriate mapper.
@@ -348,7 +348,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (propertyValue is IndexedCollection)
 			{
 				var indexedValue = (IndexedCollection)propertyValue;
-				string mapKey = propertyAuditingData.MapKey;
+				var mapKey = propertyAuditingData.MapKey;
 				if (mapKey == null)
 				{
 					// This entity doesn't specify a javax.persistence.MapKey. Mapping it to the middle entity.
@@ -357,7 +357,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 				var referencedIdMapping = mainGenerator.EntitiesConfigurations[referencedEntityName].IdMappingData;
 				var currentIndex = queryGeneratorBuilder == null ? 0 : queryGeneratorBuilder.CurrentIndex;
-				if ("".Equals(mapKey))
+				if (string.IsNullOrEmpty(mapKey))
 				{
 					// The key of the map is the id of the entity.
 					return new MiddleComponentData(new MiddleMapKeyIdComponentMapper(mainGenerator.VerEntCfg,
@@ -503,7 +503,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					elementComponentData, indexComponentData));
 			 */
 
-			currentMapper.AddComposite(propertyAuditingData.getPropertyData(), collectionMapper);
+			currentMapper.AddComposite(propertyAuditingData.GetPropertyData(), collectionMapper);
 		}
 
 		private void StoreMiddleEntityRelationInformation(string mappedBy) 
@@ -527,7 +527,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var schema = mainGenerator.GetSchema(propertyAuditingData.JoinTable.Schema, propertyValue.CollectionTable);
 			var catalog = mainGenerator.GetCatalog(propertyAuditingData.JoinTable.Catalog, propertyValue.CollectionTable);
 
-			var middleEntityXml = MetadataTools.CreateEntity(xmlMappingData.newAdditionalMapping(),
+			var middleEntityXml = MetadataTools.CreateEntity(xmlMappingData.NewAdditionalMapping(),
 					new AuditTableData(auditMiddleEntityName, auditMiddleTableName, schema, catalog), null);
 			var middleEntityXmlId = middleEntityXml.OwnerDocument.CreateElement("composite-id");
 			middleEntityXml.AppendChild(middleEntityXmlId);

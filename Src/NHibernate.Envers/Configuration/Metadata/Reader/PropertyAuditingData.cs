@@ -9,7 +9,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
     /**
      * @author Adam Warski (adam at warski dot org)
      */
-    public class PropertyAuditingData {
+    public class PropertyAuditingData 
+    {
         public String Name { get; set; }
         public String BeanName { get; set; }
         public ModificationStore Store { get; set; }
@@ -23,8 +24,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
         public String PositionMappedBy { get; set; }
         public bool ForceInsertable { get; set; }
 
-	    public PropertyAuditingData() {
-        }
+	    public PropertyAuditingData() {}
 
         public PropertyAuditingData(String name, String accessType, ModificationStore store,
 								    RelationTargetAuditMode relationTargetAuditMode,
@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
         }
 
 
-        public PropertyData getPropertyData() {
+        public PropertyData GetPropertyData() {
             return new PropertyData(Name, BeanName, AccessType, Store);
         }
 

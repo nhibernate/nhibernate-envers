@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using NHibernate.Mapping;
@@ -76,17 +75,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			return column_mapping;
 		}
-		/// <summary>
-		/// Add column
-		/// </summary>
-		/// <param name="doc"></param>
-		/// <param name="parent"></param>
-		/// <param name="name"></param>
-		/// <param name="length"> pass -1 if you don't want this attribute</param>
-		/// <param name="scale"></param>
-		/// <param name="precision"></param>
-		/// <param name="sqlType"></param>
-		/// <returns></returns>
+
 		public static XmlElement AddColumn(XmlElement parent, string name, int length, int scale, int precision, string sqlType) 
 		{
 			var column_mapping = parent.OwnerDocument.CreateElement("column");
@@ -119,7 +108,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			hibernate_mapping.SetAttribute("assembly", "NHibernate.Envers");
 			hibernate_mapping.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
 			hibernate_mapping.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			//rk: changed from Configuration.MappingSchemaXMLNS. Not available in NH3
 			hibernate_mapping.SetAttribute("xmlns", "urn:nhibernate-mapping-2.2"); 
 			hibernate_mapping.SetAttribute("auto-import", "false");
 			document.AppendChild(hibernate_mapping);

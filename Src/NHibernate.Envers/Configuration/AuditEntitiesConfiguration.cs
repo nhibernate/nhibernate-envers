@@ -30,15 +30,15 @@ namespace NHibernate.Envers.Configuration
 			}
 		}
 
-		private readonly IDictionary<String, String> customAuditTablesNames;
+        private readonly IDictionary<string, string> customAuditTablesNames;
 
-		public AuditEntitiesConfiguration(IDictionary<String, String> properties, string revisionInfoEntityName)
+		public AuditEntitiesConfiguration(IDictionary<string, string> properties, string revisionInfoEntityName)
 		{
 			RevisionInfoEntityName = revisionInfoEntityName;
 
 			auditTablePrefix = Toolz.GetProperty(properties,
 					"NHibernate.envers.audit_table_prefix",
-					"");
+					string.Empty);
 			auditTableSuffix = Toolz.GetProperty(properties,
 					"NHibernate.envers.audit_table_suffix",
 					"_AUD");

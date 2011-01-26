@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml;
 
 namespace NHibernate.Envers.Configuration.Metadata
@@ -25,9 +22,9 @@ namespace NHibernate.Envers.Configuration.Metadata
             AdditionalXmlMappings = new List<XmlDocument>();
         }
 
-        public XmlDocument newAdditionalMapping()
+        public XmlDocument NewAdditionalMapping()
         {
-            XmlDocument additionalMapping = new XmlDocument();
+            var additionalMapping = new XmlDocument();
             AdditionalXmlMappings.Add(additionalMapping);
 
             return additionalMapping;

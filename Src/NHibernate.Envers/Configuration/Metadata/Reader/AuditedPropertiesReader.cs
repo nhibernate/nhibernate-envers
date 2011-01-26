@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_propertyNamePrefix = propertyNamePrefix;
 		}
 
-		public void read()
+		public void Read()
 		{
 			// Adding all properties from the given class.
 			AddPropertiesFromClass(_persistentPropertiesSource.Clazz);
@@ -68,7 +68,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 												_globalCfg,
 												_propertyNamePrefix +
 												MappingTools.createComponentPrefix(declaredPersistentProperty.Property.Name))
-						.read();
+						.Read();
 
 					propertyData = componentData;
 				}
@@ -162,7 +162,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			if (auditMappedBy != null) 
 			{
 				propertyData.AuditMappedBy = auditMappedBy.MappedBy;
-				if (!"".Equals(auditMappedBy.PositionMappedBy)) {
+				if (!string.IsNullOrEmpty(auditMappedBy.PositionMappedBy)) 
+                {
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;
 				}
 			}

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Proxy;
 using NHibernate.Engine;
 using System.Collections;
-using Iesi.Collections.Generic;
-using System.Reflection;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Tools
 {
 	public static class Toolz 
 	{
-
 		public static bool EntitiesEqual(ISessionImplementor session, object obj1, object obj2) 
 		{
 			var id1 = GetIdentifier(session, obj1);
@@ -19,7 +16,7 @@ namespace NHibernate.Envers.Tools
 			return ObjectsEqual(id1, id2);
 		}
 
-		public static object GetIdentifier(ISessionImplementor session, object obj) 
+		private static object GetIdentifier(ISessionImplementor session, object obj) 
 		{
 			if (obj == null) 
 			{
@@ -54,8 +51,10 @@ namespace NHibernate.Envers.Tools
 			}
 		}
 
-		public static bool ObjectsEqual(Object obj1, Object obj2) {
-			if (obj1 == null) {
+        public static bool ObjectsEqual(object obj1, object obj2)
+        {
+			if (obj1 == null) 
+            {
 				return obj2 == null;
 			}
 
@@ -65,14 +64,17 @@ namespace NHibernate.Envers.Tools
 
 		public static bool IteratorsContentEqual(IEnumerator iter1, IEnumerator iter2)
 		{
-			while (iter1.MoveNext() && iter2.MoveNext()) {
-				if (!iter1.Current.Equals(iter2.Current)) {
+			while (iter1.MoveNext() && iter2.MoveNext()) 
+            {
+				if (!iter1.Current.Equals(iter2.Current)) 
+                {
 					return false;
 				}
 			}
 
 			//noinspection RedundantIfStatement
-			if (iter1.MoveNext() || iter2.MoveNext()) {
+			if (iter1.MoveNext() || iter2.MoveNext()) 
+            {
 				return false;
 			}
 
@@ -102,61 +104,15 @@ namespace NHibernate.Envers.Tools
 		 * @param defaultValue Default value returned if no value for {@code propertyName} is set.
 		 * @return The value of the property or the default value, if property is not set.
 		 */
-		public static String GetProperty(IDictionary<string, string> properties, String propertyName, String defaultValue)
+        public static string GetProperty(IDictionary<string, string> properties, string propertyName, string defaultValue)
 		{
-			if (properties.Keys.Contains(propertyName))
-				return properties[propertyName];
-			else
-			{
-				return defaultValue;
-			}
+		    string ret;
+		    return properties.TryGetValue(propertyName, out ret) ? ret : defaultValue;
 		}
 
-		/// <summary>
-		/// Get the System.Type coresponding to the type name passed as parameter, looking in all assemblies
-		/// of the app domain. Inspired from Drools.NET
-		/// Throws an exception is more than one Type is found.
-		/// </summary>
-		/// <param name="className">the name of the type</param>
-		/// <returns>the unique System.Type corresponding to the name passed</returns>
 		public static System.Type ResolveDotnetType(string className)
-		{
-			System.Type clazz = null;
-			AppDomain currentDomain = AppDomain.CurrentDomain;
-
-			// try loading className
-			if (clazz == null)
-			{
-				try {
-					clazz = System.Type.GetType(className);
-				}
-				catch (System.Exception e) { clazz = null; }
-			}
-
-			if (clazz == null)
-			{
-				System.Collections.ArrayList validTypes = new System.Collections.ArrayList();
-				//check is the type is in any referenced assemblies
-				foreach (Assembly assembly in currentDomain.GetAssemblies())
-				{
-					clazz = assembly.GetType(className);
-					if (clazz != null) validTypes.Add(clazz);
-				}
-
-				if (validTypes.Count > 1)
-				{
-					throw new System.Exception("Ambiguous class reference : " + className);
-				}
-				else if (validTypes.Count == 1)
-				{
-					clazz = (System.Type)validTypes[0];
-				}
-				else
-				{
-					clazz = null;
-				}
-			}
-			return clazz;
+	    {
+	        return ReflectHelper.ClassForFullName(className);
 		}
 	}
 }

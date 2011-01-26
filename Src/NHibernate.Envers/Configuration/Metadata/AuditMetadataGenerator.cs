@@ -374,7 +374,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var auditTableName = VerEntCfg.GetAuditTableName(entityName, pc.Table.Name);
 
 			// Registering the audit entity name, now that it is known
-			AuditEntityNameRegister.register(auditEntityName);
+			AuditEntityNameRegister.Register(auditEntityName);
 
 			var auditTableData = new AuditTableData(auditEntityName, auditTableName, schema, catalog);
 
@@ -499,7 +499,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 							+ propertyAuditingData.Name + " to a not audited entity " + referencedEntityName + "!"
 							+ (allowNotAuditedTarget ?
 								" Such mapping is possible, but has to be explicitly defined using [Audited(TargetAuditMode = RelationTargetAuditMode.NOT_AUDITED)]." :
-								""));
+								string.Empty));
 				}
 				configuration = NotAuditedEntitiesConfigurations[referencedEntityName];
 			}

@@ -105,15 +105,20 @@ namespace NHibernate.Envers.Query
             orders.Add(Pair<String,bool>.Make(propertyName, ascending));
         }
 
-        public void AddProjection(String function, String propertyName, bool distinct) {
+        public void AddProjection(string function, string propertyName, bool distinct)
+        {
             AddProjection(function, propertyName, distinct, true);
         }
 
-        public void AddProjection(String function, String propertyName, bool distinct, bool addAlias) {
-            if (function == null) {
-                projections.Add((distinct ? "distinct " : "") + (addAlias ? alias+ "." : "") + propertyName);
-            } else {
-                projections.Add(function + "(" + (distinct ? "distinct " : "") + (addAlias ? alias + "." : "") + propertyName + ")");
+        public void AddProjection(string function, string propertyName, bool distinct, bool addAlias)
+        {
+            if (function == null) 
+            {
+                projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? alias+ "." : string.Empty) + propertyName);
+            } 
+            else 
+            {
+                projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? alias + "." : string.Empty) + propertyName + ")");
             }
         }
 

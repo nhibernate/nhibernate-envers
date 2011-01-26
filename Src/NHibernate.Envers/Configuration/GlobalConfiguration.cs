@@ -23,12 +23,12 @@ namespace NHibernate.Envers.Configuration
 					"false");
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			DefaultSchemaName = Toolz.GetProperty(properties,"envers.default_schema","");
-			DefaultCatalogName = Toolz.GetProperty(properties,"envers.default_catalog","");
+			DefaultSchemaName = Toolz.GetProperty(properties,"envers.default_schema",string.Empty);
+            DefaultCatalogName = Toolz.GetProperty(properties, "envers.default_catalog", string.Empty);
 
 			//TODO Simon - see if we need to parametrize this, HSQLDialect (HSQLDB) not implemented for NHibernate
 			CorrelatedSubqueryOperator = "org.hibernate.dialect.HSQLDialect".Equals(
-					Toolz.GetProperty(properties,"hibernate.dialect","")) ? "in" : "=";
+                    Toolz.GetProperty(properties, "hibernate.dialect", string.Empty)) ? "in" : "=";
 		}
 
 		/// <summary>

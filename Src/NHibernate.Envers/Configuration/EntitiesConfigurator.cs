@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				// Collecting information from annotations on the persistent class pc
 				var annotationsMetadataReader = new AnnotationsMetadataReader(propertyAndMemberInfo, globalCfg, pc);
-				var auditData = annotationsMetadataReader.AuditData;
+				var auditData = annotationsMetadataReader.GetAuditData();
 
 				classesAuditingData.AddClassAuditingData(pc, auditData);
 			}

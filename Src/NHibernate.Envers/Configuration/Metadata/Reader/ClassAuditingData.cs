@@ -10,7 +10,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
     {
         public IDictionary<string, PropertyAuditingData> Properties { get; private set; }
         public IDictionary<string, string> SecondaryTableDictionary { get; private set; }
-
         public AuditTableAttribute AuditTable { get; set; }
 
 	    /**
@@ -19,7 +18,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	     */
 	    private bool defaultAudited;
 
-        public ClassAuditingData() {
+        public ClassAuditingData() 
+        {
             Properties = new Dictionary<string, PropertyAuditingData>();
             SecondaryTableDictionary = new Dictionary<string, string>();
         }

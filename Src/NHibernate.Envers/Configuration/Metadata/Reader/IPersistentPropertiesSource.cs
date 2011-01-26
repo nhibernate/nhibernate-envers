@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -7,7 +6,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
     public interface IPersistentPropertiesSource
     {
         IEnumerable<Property> PropertyEnumerator { get; }
-        Property GetProperty(String propertyName);
+        Property GetProperty(string propertyName);
     	System.Type Clazz { get; }
     	Property VersionedProperty { get; }
     }

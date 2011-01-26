@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 							     EntityXmlMappingData xmlMappingData, bool firstPass) {
 		    Component prop_component = (Component) value;
 
-		    ICompositeMapperBuilder componentMapper = mapper.AddComponent(propertyAuditingData.getPropertyData(),
+		    ICompositeMapperBuilder componentMapper = mapper.AddComponent(propertyAuditingData.GetPropertyData(),
 				    prop_component.ComponentClassName);
 
 		    // The property auditing data must be for a component.

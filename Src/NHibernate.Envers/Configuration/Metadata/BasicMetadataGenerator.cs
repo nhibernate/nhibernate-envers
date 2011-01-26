@@ -54,7 +54,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// A null mapper means that we only want to add xml mappings
 			if (mapper != null) 
 			{
-				mapper.Add(propertyAuditingData.getPropertyData());
+				mapper.Add(propertyAuditingData.GetPropertyData());
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			if (mapper != null) 
 			{
-				mapper.Add(propertyAuditingData.getPropertyData());
+				mapper.Add(propertyAuditingData.GetPropertyData());
 			}
 		}
 	}
