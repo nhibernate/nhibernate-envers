@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Util;
 using System.Collections;
@@ -21,14 +20,13 @@ namespace NHibernate.Envers.Entities
 			this.versionsReader = versionsReader;
 		}
 
-		/**
-		 * Creates an entity instance based on an entry from the versions table.
-		 * @param entityName Name of the entity, which instances should be read
-		 * @param versionsEntity An entry in the versions table, from which data should be mapped.
-		 * @param revision Revision at which this entity was read.
-		 * @return An entity instance, with versioned properties set as in the versionsEntity map, and proxies
-		 * created for collections.
-		 */
+		/// <summary>
+		/// Creates an entity instance based on an entry from the versions table.
+		/// </summary>
+		/// <param name="entityName">Name of the entity, which instances should be read.</param>
+		/// <param name="versionsEntity">An entry in the versions table, from which data should be mapped.</param>
+		/// <param name="revision">Revision at which this entity was read.</param>
+		/// <returns>An entity instance, with versioned properties set as in the versionsEntity map, and proxies created for collections.</returns>
 		public object CreateInstanceFromVersionsEntity(string entityName, IDictionary<string,object> versionsEntity, long revision) 
 		{
 			if (versionsEntity == null) 

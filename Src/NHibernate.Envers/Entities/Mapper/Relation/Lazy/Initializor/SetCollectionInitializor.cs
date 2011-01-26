@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 		public SetCollectionInitializor(AuditConfiguration verCfg,
 											IAuditReaderImplementor versionsReader,
 											IRelationQueryGenerator queryGenerator,
-											Object primaryKey, long revision,
+											object primaryKey, long revision,
 											System.Type collectionType,
 											MiddleComponentData elementComponentData) 
 								:base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
