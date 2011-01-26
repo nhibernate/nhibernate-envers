@@ -236,6 +236,7 @@
     <Compile Include="Integration\Interfaces\Relation\SetRefEdEntity.cs" />
     <Compile Include="Integration\Interfaces\Relation\SetRefIngEntity.cs" />
     <Compile Include="Integration\Join\BasicJoinTest.cs" />
+    <Compile Include="Integration\Join\NamingJoinTest.cs" />
     <Compile Include="Integration\ManyToMany\BasicListTest.cs" />
     <Compile Include="Integration\ManyToMany\BasicMapTest.cs" />
     <Compile Include="Integration\ManyToMany\BasicSetTest.cs" />
