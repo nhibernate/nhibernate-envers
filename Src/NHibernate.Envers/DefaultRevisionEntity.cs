@@ -29,10 +29,5 @@ namespace NHibernate.Envers
 			result = 31 * result + (int) (((ulong)RevisionDate.Ticks) ^ (((ulong)RevisionDate.Ticks) >> 32));
 			return result;
 		}
-
-		public override string ToString() 
-		{
-			return "DefaultRevisionEntity(id = " + Id + ", revisionDate = " + RevisionDate.ToShortDateString() + ")";
-		}
 	}
 }
