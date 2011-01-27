@@ -10,10 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 	[TestFixture]
 	public class RevisionForDateTest : TestBase
 	{
-		private long timestamp1;
-		private long timestamp2;
-		private long timestamp3;
-		private long timestamp4;
+		private DateTime timestamp1;
+		private DateTime timestamp2;
+		private DateTime timestamp3;
+		private DateTime timestamp4;
 
 		protected override IEnumerable<string> Mappings
 		{
@@ -27,42 +27,42 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		{
 			var rfd = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.Now.AddSeconds(-1).Ticks;
+			timestamp1 = DateTime.Now;
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.Save(rfd);
 				tx.Commit();
 			}
 
-			timestamp2 = DateTime.Now.Ticks;
+			timestamp2 = DateTime.Now;
 			Thread.Sleep(100);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "y";
 				tx.Commit();
 			}
-			timestamp3 = DateTime.Now.Ticks;
+			timestamp3 = DateTime.Now;
 			Thread.Sleep(100);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "z";
 				tx.Commit();
 			}
-			timestamp4 = DateTime.Now.AddSeconds(1).Ticks;
+			timestamp4 = DateTime.Now;
 		}
 
 		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]
 		public void TooEarlyTimeStampShouldFireException()
 		{
-			AuditReader().GetRevisionNumberForDate(new DateTime(timestamp1));
+			AuditReader().GetRevisionNumberForDate(timestamp1);
 		}
 
 		[Test]
 		public void VerifyTimestamps()
 		{
-			Assert.AreEqual(1, AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2)));
-			Assert.AreEqual(2, AuditReader().GetRevisionNumberForDate(new DateTime(timestamp3)));
-			Assert.AreEqual(3, AuditReader().GetRevisionNumberForDate(new DateTime(timestamp4)));
+			Assert.AreEqual(1, AuditReader().GetRevisionNumberForDate(timestamp2));
+			Assert.AreEqual(2, AuditReader().GetRevisionNumberForDate(timestamp3));
+			Assert.AreEqual(3, AuditReader().GetRevisionNumberForDate(timestamp4));
 		}
 
 
@@ -77,17 +77,13 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		[Test]
 		public void VerifyRevisionsForDates()
 		{
-			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2))).AddSeconds(-1).Ticks <= timestamp2);
-			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp2)) + 1).Ticks > timestamp2);
-			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp3))).Ticks <= timestamp3);
-			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp3)) + 1).Ticks > timestamp3);
-			Assert.IsTrue(
-				AuditReader().GetRevisionDate(AuditReader().GetRevisionNumberForDate(new DateTime(timestamp4))).Ticks <= timestamp4);
-		}
+			var ar = AuditReader();
 
+			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp2)).LessOrEqualTo(timestamp2);
+			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp2) + 1).GreaterThan(timestamp2);
+			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp3)).LessOrEqualTo(timestamp3);
+			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp3) + 1).GreaterThan(timestamp3);
+			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp4)).LessOrEqualTo(timestamp4);
+		}
 	}
 }
