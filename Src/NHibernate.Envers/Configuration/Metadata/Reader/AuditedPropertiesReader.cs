@@ -163,7 +163,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				propertyData.AuditMappedBy = auditMappedBy.MappedBy;
 				if (!string.IsNullOrEmpty(auditMappedBy.PositionMappedBy)) 
-                {
+				{
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;
 				}
 			}
@@ -254,7 +254,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 
 			public IEnumerable<Property> PropertyEnumerator { get { return component.PropertyIterator; } }
-			public Property GetProperty(String propertyName) { return component.GetProperty(propertyName); }
 
 			public System.Type Clazz
 			{

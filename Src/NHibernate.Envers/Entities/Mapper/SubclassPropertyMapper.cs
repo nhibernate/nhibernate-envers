@@ -46,20 +46,21 @@ namespace NHibernate.Envers.Entities.Mapper
 																						IPersistentCollection newColl, 
 																						Object oldColl,
 																						Object id) {
-			IList<PersistentCollectionChangeData> parentCollectionChanges = parentMapper.MapCollectionChanges(
+			var parentCollectionChanges = parentMapper.MapCollectionChanges(
 					referencingPropertyName, newColl, oldColl, id);
 
-			IList<PersistentCollectionChangeData> mainCollectionChanges = main.MapCollectionChanges(
+			var mainCollectionChanges = main.MapCollectionChanges(
 					referencingPropertyName, newColl, oldColl, id);
 
-			if (parentCollectionChanges == null) {
+			if (parentCollectionChanges == null) 
+			{
 				return mainCollectionChanges;
-			} else {
-				if(mainCollectionChanges != null) {
-					parentCollectionChanges.Concat(mainCollectionChanges);
-				}
-				return parentCollectionChanges;
 			}
+			if(mainCollectionChanges != null) 
+			{
+				parentCollectionChanges.Concat(mainCollectionChanges);
+			}
+			return parentCollectionChanges;
 		}
 
 		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, String componentClassName) {

@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Configuration
 					revisionInfoRelationMapping, auditEntityNameRegister, classesAuditingData);
 
 			// First pass
-			foreach (var pcDatasEntry in classesAuditingData.GetAllClassAuditedData())
+			foreach (var pcDatasEntry in classesAuditingData.AllClassAuditedData)
 			{
 				var pc = pcDatasEntry.Key;
 				var auditData = pcDatasEntry.Value;
@@ -65,7 +65,7 @@ namespace NHibernate.Envers.Configuration
 			}
 
 			// Second pass
-			foreach (var pcDatasEntry in classesAuditingData.GetAllClassAuditedData())
+			foreach (var pcDatasEntry in classesAuditingData.AllClassAuditedData)
 			{
 				var xmlMappingData = xmlMappings[pcDatasEntry.Key];
 
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Configuration
 			}
 
 			// Only if there are any versioned classes
-			if (classesAuditingData.GetAllClassAuditedData().Count > 0)
+			if (classesAuditingData.AllClassAuditedData.Count > 0)
 			{
 				if (revisionInfoXmlMapping !=  null) 
 				{

@@ -33,68 +33,68 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 */
 		private ClassAuditingData _auditData;
 
-	    public ClassAuditingData GetAuditData()
-	    {
-	        if (pc.ClassName == null)
-	        {
-	            return _auditData;
-	        }
-	        try
-	        {
-	            var typ = pc.MappedClass;
+		public ClassAuditingData GetAuditData()
+		{
+			if (pc.ClassName == null)
+			{
+				return _auditData;
+			}
+			try
+			{
+				var typ = pc.MappedClass;
 
-	            var defaultStore = getDefaultAudited(typ);
-	            if (defaultStore != ModificationStore._NULL)
-	            {
-	                _auditData.SetDefaultAudited(true);
-	            }
+				var defaultStore = getDefaultAudited(typ);
+				if (defaultStore != ModificationStore._NULL)
+				{
+					_auditData.SetDefaultAudited(true);
+				}
 
-	            var ar = new AuditedPropertiesReader(_propertyAndMemberInfo, defaultStore,
-	                                                 new PersistentClassPropertiesSource(typ, this), _auditData,
-	                                                 globalCfg, string.Empty);
-	            ar.Read();
+				var ar = new AuditedPropertiesReader(_propertyAndMemberInfo, defaultStore,
+													 new PersistentClassPropertiesSource(typ, this), _auditData,
+													 globalCfg, string.Empty);
+				ar.Read();
 
-	            addAuditTable(typ);
-	            addAuditSecondaryTables(typ);
-	        }
-	        catch (Exception e)
-	        {
-	            throw new MappingException(e);
-	        }
+				addAuditTable(typ);
+				addAuditSecondaryTables(typ);
+			}
+			catch (Exception e)
+			{
+				throw new MappingException(e);
+			}
 
 
-	        return _auditData;
-	    }
+			return _auditData;
+		}
 
-	    private ModificationStore getDefaultAudited(System.Type typ) 
-        {
+		private ModificationStore getDefaultAudited(System.Type typ) 
+		{
 			var defaultAudited = (AuditedAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditedAttribute));
 
 			return defaultAudited != null ? defaultAudited.ModStore : ModificationStore._NULL;
-        }
+		}
 
 		private void addAuditTable(System.Type typ)
 		{
-		    var auditTable = (AuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditTableAttribute));
-		    _auditData.AuditTable = auditTable ?? getDefaultAuditTable();
+			var auditTable = (AuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditTableAttribute));
+			_auditData.AuditTable = auditTable ?? getDefaultAuditTable();
 		}
 
-	    private void addAuditSecondaryTables(System.Type typ) 
-        {
+		private void addAuditSecondaryTables(System.Type typ) 
+		{
 			// Getting information on secondary tables
 			//SecondaryAuditTableAttribute secondaryVersionsTable1 = clazz.getAnnotation(SecondaryAuditTable.class);
 			var joinVersionsTable1 = (JoinAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(JoinAuditTableAttribute));
 			if (joinVersionsTable1 != null) 
-            {
+			{
 				_auditData.SecondaryTableDictionary.Add(joinVersionsTable1.JoinTableName,
 						joinVersionsTable1.JoinAuditTableName);
 			}
 
 			var secondaryAuditTables = (SecondaryAuditTablesAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTablesAttribute));
 			if (secondaryAuditTables != null) 
-            {
+			{
 				foreach (var secondaryAuditTable2 in secondaryAuditTables.Value) 
-                {
+				{
 					_auditData.SecondaryTableDictionary.Add(secondaryAuditTable2.JoinTableName,
 							secondaryAuditTable2.JoinAuditTableName);
 				}
@@ -107,7 +107,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		  
 
 		private AuditTableAttribute getDefaultAuditTable() 
-        {
+		{
 			return defaultAuditTable;
 		}
 
@@ -135,11 +135,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			public Property VersionedProperty
 			{
 				get { return parent.pc.Version; }
-			}
-
-			public Property GetProperty(String propertyName)
-			{
-				return parent.pc.GetProperty(propertyName);
 			}
 		}
 	}

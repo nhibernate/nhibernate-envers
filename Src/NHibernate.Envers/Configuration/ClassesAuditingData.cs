@@ -32,21 +32,13 @@ namespace NHibernate.Envers.Configuration
         /**
          * @return A collection of all auditing meta-data for persistent classes.
          */
-        public ICollection<KeyValuePair<PersistentClass, ClassAuditingData>> GetAllClassAuditedData() 
-        {
-            return persistentClassToAuditingData;
-        }
 
-        /**
-         * @param entityName Name of the entity.
-         * @return Auditing meta-data for the given entity.
-         */
-        public ClassAuditingData GetClassAuditingData(string entityName) 
-        {
-            return entityNameToAuditingData[entityName];
-        }
+    	public ICollection<KeyValuePair<PersistentClass, ClassAuditingData>> AllClassAuditedData
+    	{
+    		get { return persistentClassToAuditingData; }
+    	}
 
-        /**
+    	/**
          * After all meta-data is read, updates calculated fields. This includes:
          * <ul>
          * <li>setting {@code forceInsertable} to {@code true} for properties specified by {@code @AuditMappedBy}</li> 
