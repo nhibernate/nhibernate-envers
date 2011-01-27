@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var te = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.Now;
+			timestamp1 = DateTime.Now.AddSeconds(-1);
 			using (var tx = Session.BeginTransaction())
 			{
 				TestRevisionListener.Data = "data1";

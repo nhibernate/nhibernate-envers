@@ -27,7 +27,8 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		{
 			var rfd = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.Now;
+			timestamp1 = DateTime.Now.AddSeconds(-1);
+
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.Save(rfd);
