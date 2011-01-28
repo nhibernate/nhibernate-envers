@@ -31,7 +31,7 @@ namespace NHibernate.Envers
 
 		/// <summary>
 		///  The foreign key columns of the join table which reference the primary table of the entity that does not
-		///  own the association (i.e. the inverse side of the association).</summary>
+		///  own the association (i.e. the inverse side of the association).
 		/// </summary>
 		public string[] InverseJoinColumns { get; set; }
 	}

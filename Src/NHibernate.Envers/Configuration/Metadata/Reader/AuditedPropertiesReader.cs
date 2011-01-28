@@ -118,25 +118,24 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					if (_persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
 						return false;
 				}
-				//Version jpaVer = property.getAnnotation(typeof(Version));
-				//if (mappedVersionName.Equals(mappedPropertyName))
-				//    return false;
-				//var jpaVer = (VersionAttribute)Attribute.GetCustomAttribute(property, typeof(VersionAttribute));
-				//if (jpaVer != null) {
-				//    return false;
-				//}
 			}
 
 			// Checking if this property is explicitly audited or if all properties are.
 			//AuditedAttribute aud = property.getAnnotation(typeof(AuditedAttribute));
 			var aud = (AuditedAttribute)Attribute.GetCustomAttribute(property, typeof(AuditedAttribute));
-			if (aud != null) {
+			if (aud != null) 
+			{
 				propertyData.Store = aud.ModStore;
-				propertyData.setRelationTargetAuditMode(aud.TargetAuditMode);
-			} else {
-				if (_defaultStore != ModificationStore._NULL) {
+				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
+			} 
+			else 
+			{
+				if (_defaultStore != ModificationStore._NULL) 
+				{
 					propertyData.Store = _defaultStore;
-				} else {
+				} 
+				else 
+				{
 					return false;
 				}
 			}
@@ -147,7 +146,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			AddPropertyJoinTables(property, propertyData);
 			AddPropertyAuditingOverrides(property, propertyData);
-			if (!ProcessPropertyAuditingOverrides(property, propertyData)) {
+			if (!ProcessPropertyAuditingOverrides(property, propertyData)) 
+			{
 				return false; // not audited due to AuditOverride annotation
 			}
 			AddPropertyMapKey(property, propertyData);
@@ -235,7 +235,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 						}
 					}
 				}
-				
 			}
 			return true;
 		}

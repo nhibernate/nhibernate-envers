@@ -490,7 +490,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				configuration = EntitiesConfigurations[referencedEntityName];
 			else
 			{
-				var relationTargetAuditMode = propertyAuditingData.getRelationTargetAuditMode();
+				var relationTargetAuditMode = propertyAuditingData.RelationTargetAuditMode;
 
 				if (!NotAuditedEntitiesConfigurations.Keys.Contains(referencedEntityName) ||
 					!allowNotAuditedTarget || !RelationTargetAuditMode.NOT_AUDITED.Equals(relationTargetAuditMode))

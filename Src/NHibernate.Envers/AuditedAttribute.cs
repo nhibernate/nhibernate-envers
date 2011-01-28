@@ -11,7 +11,7 @@ namespace NHibernate.Envers
 			ModStore = ModificationStore.FULL;
 		}
 
-		public ModificationStore ModStore { get; set; }
+		public ModificationStore ModStore { get; private set; }
 
 		/// <summary>
 		/// @return Specifies if the entity that is the target of the relation should be audited or not. If not, then when
