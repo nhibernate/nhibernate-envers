@@ -79,13 +79,13 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyFindRevision()
 		{
-			var rev1timestamp = AuditReader().FindRevision<CustomDateRevEntity>(1).DateTimestamp.Ticks;
-			Assert.IsTrue(rev1timestamp > timestamp1.Ticks);
-			Assert.IsTrue(rev1timestamp <= timestamp2.Ticks);
+			var rev1timestamp = AuditReader().FindRevision<CustomDateRevEntity>(1).DateTimestamp;
+			rev1timestamp.GreaterThan(timestamp1);
+			rev1timestamp.LessOrEqualTo(timestamp2);
 
-			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(typeof(CustomDateRevEntity), 2)).DateTimestamp.Ticks;
-			Assert.IsTrue(rev2timestamp > timestamp2.Ticks);
-			Assert.IsTrue(rev2timestamp <= timestamp3.Ticks);
+			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(typeof(CustomDateRevEntity), 2)).DateTimestamp;
+			rev2timestamp.GreaterThan(timestamp2);
+			rev2timestamp.LessOrEqualTo(timestamp3);
 		}
 
 		[Test]
