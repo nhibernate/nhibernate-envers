@@ -2,7 +2,7 @@
 
 namespace NHibernate.Envers
 {
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Field)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 	public class AuditOverrideAttribute:Attribute
 	{
 		public AuditOverrideAttribute()
