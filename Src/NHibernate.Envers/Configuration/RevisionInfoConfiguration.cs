@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				var member = persistentProperty.Member;
 				var property = persistentProperty.Property;
-				var revisionTimestamp = (RevisionTimestampAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionTimestampAttribute));
+				var revisionTimestamp = (RevisionTimestampAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionTimestampAttribute), false);
 				if (revisionTimestamp != null)
 				{
 					if (revisionTimestampFound)
@@ -115,7 +115,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				var member = persistentProperty.Member;
 				var property = persistentProperty.Property;
-				var revisionNumber = (RevisionNumberAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionNumberAttribute));
+				var revisionNumber = (RevisionNumberAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionNumberAttribute), false);
 				if (revisionNumber != null)
 				{
 					if (revisionNumberFound)
@@ -176,7 +176,7 @@ namespace NHibernate.Envers.Configuration
 					throw new MappingException(e);
 				}
 
-				var revisionEntity =  (RevisionEntityAttribute)Attribute.GetCustomAttribute(clazz, typeof(RevisionEntityAttribute));
+				var revisionEntity = (RevisionEntityAttribute)Attribute.GetCustomAttribute(clazz, typeof(RevisionEntityAttribute), false);
 				if (revisionEntity != null) 
 				{
 					if (revisionEntityFound) 
@@ -185,7 +185,7 @@ namespace NHibernate.Envers.Configuration
 					}
 
 					// Checking if custom revision entity isn't audited
-					if (Attribute.GetCustomAttribute(clazz, typeof(AuditedAttribute)) != null) 
+					if (Attribute.GetCustomAttribute(clazz, typeof(AuditedAttribute), false) != null) 
 					{
 						throw new MappingException("An entity decorated with [RevisionEntity] cannot be audited!");
 					}

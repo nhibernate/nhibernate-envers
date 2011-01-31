@@ -68,14 +68,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private ModificationStore getDefaultAudited(System.Type typ) 
 		{
-			var defaultAudited = (AuditedAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditedAttribute));
+			var defaultAudited = (AuditedAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditedAttribute), false);
 
 			return defaultAudited != null ? defaultAudited.ModStore : ModificationStore._NULL;
 		}
 
 		private void addAuditTable(System.Type typ)
 		{
-			var auditTable = (AuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditTableAttribute));
+			var auditTable = (AuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditTableAttribute), false);
 			_auditData.AuditTable = auditTable ?? getDefaultAuditTable();
 		}
 
@@ -83,14 +83,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			// Getting information on secondary tables
 			//SecondaryAuditTableAttribute secondaryVersionsTable1 = clazz.getAnnotation(SecondaryAuditTable.class);
-			var joinVersionsTable1 = (JoinAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(JoinAuditTableAttribute));
+			var joinVersionsTable1 = (JoinAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(JoinAuditTableAttribute), false);
 			if (joinVersionsTable1 != null) 
 			{
 				_auditData.SecondaryTableDictionary.Add(joinVersionsTable1.JoinTableName,
 						joinVersionsTable1.JoinAuditTableName);
 			}
 
-			var secondaryAuditTables = (SecondaryAuditTablesAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTablesAttribute));
+			var secondaryAuditTables = (SecondaryAuditTablesAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTablesAttribute), false);
 			if (secondaryAuditTables != null) 
 			{
 				foreach (var secondaryAuditTable2 in secondaryAuditTables.Value) 
