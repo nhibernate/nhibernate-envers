@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Configuration.Metadata;
 using System.Xml;
@@ -15,6 +15,7 @@ namespace NHibernate.Envers.Configuration
 {
 	public class RevisionInfoConfiguration 
 	{
+		private readonly IMetaDataStore _metaDataStore;
 		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
 		private string revisionInfoEntityName;
 		private PropertyData revisionInfoIdData;
@@ -24,8 +25,9 @@ namespace NHibernate.Envers.Configuration
 		private string revisionPropSqlType;
 		private string revisionAssQName;
 
-		public RevisionInfoConfiguration(PropertyAndMemberInfo propertyAndMemberInfo) 
+		public RevisionInfoConfiguration(IMetaDataStore metaDataStore, PropertyAndMemberInfo propertyAndMemberInfo) 
 		{
+			_metaDataStore = metaDataStore;
 			_propertyAndMemberInfo = propertyAndMemberInfo;
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
 			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore._NULL);
@@ -37,7 +39,7 @@ namespace NHibernate.Envers.Configuration
 
 		private XmlDocument generateDefaultRevisionInfoXmlMapping() 
 		{
-			var document = new XmlDocument();//ORIG: DocumentHelper.createDocument();
+			var document = new XmlDocument();
 
 			var class_mapping = MetadataTools.CreateEntity(document, new AuditTableData(null, null, null, null), null);
 
@@ -84,7 +86,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				var member = persistentProperty.Member;
 				var property = persistentProperty.Property;
-				var revisionTimestamp = (RevisionTimestampAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionTimestampAttribute), false);
+				var revisionTimestamp = _metaDataStore.MemberMeta<RevisionTimestampAttribute>(member);
 				if (revisionTimestamp != null)
 				{
 					if (revisionTimestampFound)
@@ -115,7 +117,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				var member = persistentProperty.Member;
 				var property = persistentProperty.Property;
-				var revisionNumber = (RevisionNumberAttribute)Attribute.GetCustomAttribute(member, typeof(RevisionNumberAttribute), false);
+				var revisionNumber = _metaDataStore.MemberMeta<RevisionNumberAttribute>(member);
 				if (revisionNumber != null)
 				{
 					if (revisionNumberFound)
@@ -176,7 +178,7 @@ namespace NHibernate.Envers.Configuration
 					throw new MappingException(e);
 				}
 
-				var revisionEntity = (RevisionEntityAttribute)Attribute.GetCustomAttribute(clazz, typeof(RevisionEntityAttribute), false);
+				var revisionEntity = _metaDataStore.ClassMeta<RevisionEntityAttribute>(clazz);
 				if (revisionEntity != null) 
 				{
 					if (revisionEntityFound) 
@@ -185,7 +187,7 @@ namespace NHibernate.Envers.Configuration
 					}
 
 					// Checking if custom revision entity isn't audited
-					if (Attribute.GetCustomAttribute(clazz, typeof(AuditedAttribute), false) != null) 
+					if (_metaDataStore.ClassMeta<AuditedAttribute>(clazz) != null) 
 					{
 						throw new MappingException("An entity decorated with [RevisionEntity] cannot be audited!");
 					}

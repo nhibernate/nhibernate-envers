@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Synchronization;
@@ -9,18 +11,20 @@ namespace NHibernate.Envers.Configuration
 {
 	public class AuditConfiguration 
 	{
-		public AuditConfiguration(Cfg.Configuration cfg) 
+		public AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider) 
 		{
+			var mds = new MetaDataStore(cfg, metaDataProvider);
+
 			var properties = cfg.Properties;
 			var propertyAndMemberInfo = new PropertyAndMemberInfo();
-			var revInfoCfg = new RevisionInfoConfiguration(propertyAndMemberInfo); //rk - when configure other than attr, check here
+			var revInfoCfg = new RevisionInfoConfiguration(mds, propertyAndMemberInfo); //rk - when configure other than attr, check here
 			var revInfoCfgResult = revInfoCfg.Configure(cfg); //rk - when configure other than attr, check here
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
 			AuditSyncManager = new AuditSyncManager(revInfoCfgResult.RevisionInfoGenerator);
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
-			EntCfg = new EntitiesConfigurator().Configure(cfg, GlobalCfg, AuditEntCfg, //rk - when configure other than attr, check here (annotationmetadatareader & auditedpropertiesreader)
+			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, //rk - when configure other than attr, check here (annotationmetadatareader & auditedpropertiesreader)
 					revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping, propertyAndMemberInfo);
 		}
 
@@ -33,7 +37,10 @@ namespace NHibernate.Envers.Configuration
 
 		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> cfgs
 				= new Dictionary<Cfg.Configuration, AuditConfiguration>();
-				//ORIG: = new WeakHashMap<Cfg.Configuration, AuditConfiguration>(); TODO Simon see if it's ok
+
+		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> confMetas
+				= new Dictionary<Cfg.Configuration, IMetaDataProvider>();
+
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static AuditConfiguration GetFor(Cfg.Configuration cfg) 
@@ -41,13 +48,22 @@ namespace NHibernate.Envers.Configuration
 			AuditConfiguration verCfg;
 			if (!cfgs.TryGetValue(cfg, out verCfg))
 			{
-				verCfg = new AuditConfiguration(cfg);
+				IMetaDataProvider metas;
+				if (!confMetas.TryGetValue(cfg, out metas))
+					metas = new AttributeMetaDataProvider();
+				verCfg = new AuditConfiguration(cfg, metas);
 				cfgs.Add(cfg, verCfg);
 				
 				cfg.BuildMappings();
 			}
 
 			return verCfg;
+		}
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public static void SetConfigMetas(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
+		{
+			confMetas[cfg] = metaDataProvider;
 		}
 	}
 }

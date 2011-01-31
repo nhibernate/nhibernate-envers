@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using System.Reflection;
@@ -19,6 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	public class AuditedPropertiesReader 
 	{
 		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
+		private readonly IMetaDataStore _metaDataStore;
 		private readonly ModificationStore _defaultStore;
 		private readonly IPersistentPropertiesSource _persistentPropertiesSource;
 		private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
@@ -26,12 +28,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly String _propertyNamePrefix;
 
 		public AuditedPropertiesReader(PropertyAndMemberInfo propertyAndMemberInfo,
+										IMetaDataStore metaDataStore,
 										ModificationStore defaultStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
 										IAuditedPropertiesHolder auditedPropertiesHolder,
 										GlobalConfiguration globalCfg,
 										string propertyNamePrefix) {
 			_propertyAndMemberInfo = propertyAndMemberInfo;
+			_metaDataStore = metaDataStore;
 			_defaultStore = defaultStore;
 			_persistentPropertiesSource = persistentPropertiesSource;
 			_auditedPropertiesHolder = auditedPropertiesHolder;
@@ -64,6 +68,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(
 						(Component) propertyValue);
 					new AuditedPropertiesReader(_propertyAndMemberInfo, 
+												_metaDataStore,
 												ModificationStore.FULL, componentPropertiesSource, componentData,
 												_globalCfg,
 												_propertyNamePrefix +
@@ -104,7 +109,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			// check if a property is declared as not audited to exclude it
 			// useful if a class is audited but some properties should be excluded
-			var unVer = (NotAuditedAttribute)Attribute.GetCustomAttribute(property, typeof(NotAuditedAttribute), false);
+			var unVer = _metaDataStore.MemberMeta<NotAuditedAttribute>(property);
 			if (unVer != null) 
 			{
 				return false;
@@ -122,7 +127,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			// Checking if this property is explicitly audited or if all properties are.
 			//AuditedAttribute aud = property.getAnnotation(typeof(AuditedAttribute));
-			var aud = (AuditedAttribute)Attribute.GetCustomAttribute(property, typeof(AuditedAttribute), false);
+			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);
 			if (aud != null) 
 			{
 				propertyData.Store = aud.ModStore;
@@ -158,7 +163,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData) 
 		{
-			var auditMappedBy = (AuditMappedByAttribute)Attribute.GetCustomAttribute(property, typeof(AuditMappedByAttribute), false);
+
+			var auditMappedBy = _metaDataStore.MemberMeta<AuditMappedByAttribute>(property);
 			if (auditMappedBy != null) 
 			{
 				propertyData.AuditMappedBy = auditMappedBy.MappedBy;
@@ -171,7 +177,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void AddPropertyMapKey(MemberInfo property, PropertyAuditingData propertyData) 
 		{
-			var mapKey = (MapKeyAttribute)Attribute.GetCustomAttribute(property, typeof(MapKeyAttribute), false);
+			var mapKey = _metaDataStore.MemberMeta<MapKeyAttribute>(property);
 			if (mapKey != null) 
 			{
 				propertyData.MapKey = mapKey.Name;
@@ -181,7 +187,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void AddPropertyJoinTables(MemberInfo property, PropertyAuditingData propertyData)
 		{
 			// first set the join table based on the AuditJoinTable annotation
-			var joinTable = (AuditJoinTableAttribute)Attribute.GetCustomAttribute(property, typeof(AuditJoinTableAttribute), false);
+			var joinTable = _metaDataStore.MemberMeta<AuditJoinTableAttribute>(property);
 			propertyData.JoinTable = joinTable ?? DEFAULT_AUDIT_JOIN_TABLE;
 		}
 
@@ -193,12 +199,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 */
 		private void AddPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
-			var annotationOverride = (AuditOverrideAttribute)Attribute.GetCustomAttribute(property, typeof(AuditOverrideAttribute), false);
+			var annotationOverride = _metaDataStore.MemberMeta<AuditOverrideAttribute>(property);
 			if (annotationOverride != null) 
 			{
 				propertyData.addAuditingOverride(annotationOverride);
 			}
-			var annotationOverrides = (AuditOverridesAttribute)Attribute.GetCustomAttribute(property, typeof(AuditOverridesAttribute), false);
+			var annotationOverrides = _metaDataStore.MemberMeta<AuditOverridesAttribute>(property);
 			if (annotationOverrides != null) 
 			{
 				propertyData.addAuditingOverrides(annotationOverrides);

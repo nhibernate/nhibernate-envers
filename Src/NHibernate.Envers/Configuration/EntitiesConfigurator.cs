@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using NHibernate.Envers.Configuration.Metadata;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools.Graph;
 using NHibernate.Envers.Entities;
 using NHibernate.Mapping;
@@ -11,6 +12,7 @@ namespace NHibernate.Envers.Configuration
 	public class EntitiesConfigurator 
 	{
 		public EntitiesConfigurations Configure(Cfg.Configuration cfg, 
+												IMetaDataStore metaDataStore,
 												GlobalConfiguration globalCfg, AuditEntitiesConfiguration verEntCfg,
 												XmlDocument revisionInfoXmlMapping, XmlElement revisionInfoRelationMapping,
 												PropertyAndMemberInfo propertyAndMemberInfo) 
@@ -28,7 +30,7 @@ namespace NHibernate.Envers.Configuration
 			foreach (var pc in classes)
 			{
 				// Collecting information from annotations on the persistent class pc
-				var annotationsMetadataReader = new AnnotationsMetadataReader(propertyAndMemberInfo, globalCfg, pc);
+				var annotationsMetadataReader = new AnnotationsMetadataReader(propertyAndMemberInfo, metaDataStore, globalCfg, pc);
 				var auditData = annotationsMetadataReader.GetAuditData();
 
 				classesAuditingData.AddClassAuditingData(pc, auditData);
@@ -75,7 +77,7 @@ namespace NHibernate.Envers.Configuration
 
 					cfg.AddDocument(xmlMappingData.MainXmlMapping);
 
-					foreach (XmlDocument additionalMapping in  xmlMappingData.AdditionalXmlMappings) 
+					foreach (var additionalMapping in  xmlMappingData.AdditionalXmlMappings) 
 					{
 						cfg.AddDocument(additionalMapping);
 					}

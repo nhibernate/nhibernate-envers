@@ -62,6 +62,8 @@
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="AuditTableAttribute.cs" />
     <Compile Include="Compatibility\Attributes\MapKeyAttribute.cs" />
+    <Compile Include="Configuration\Attributes\AttributeEntityMeta.cs" />
+    <Compile Include="Configuration\Attributes\AttributeMetaDataProvider.cs" />
     <Compile Include="Configuration\AuditConfiguration.cs" />
     <Compile Include="Configuration\AuditEntitiesConfiguration.cs" />
     <Compile Include="Configuration\ClassesAuditingData.cs" />
@@ -92,6 +94,10 @@
     <Compile Include="Configuration\NhConfigurationExtension.cs" />
     <Compile Include="Configuration\PersistentClassGraphDefiner.cs" />
     <Compile Include="Configuration\RevisionInfoConfiguration.cs" />
+    <Compile Include="Configuration\Store\IEntityMeta.cs" />
+    <Compile Include="Configuration\Store\IMetaDataProvider.cs" />
+    <Compile Include="Configuration\Store\IMetaDataStore.cs" />
+    <Compile Include="Configuration\Store\MetaDataStore.cs" />
     <Compile Include="DefaultRevisionEntity.cs" />
     <Compile Include="Entities\EntitiesConfigurations.cs" />
     <Compile Include="Entities\EntityConfiguration.cs" />

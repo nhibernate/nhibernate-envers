@@ -350,6 +350,7 @@
     <Compile Include="TestTool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="todo.txt" />
     <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\Collection\Mapping.hbm.xml">

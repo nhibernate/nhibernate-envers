@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -12,15 +13,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	public sealed class AnnotationsMetadataReader 
 	{
 		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
-		private GlobalConfiguration globalCfg;
-		private PersistentClass pc;
+		private readonly IMetaDataStore _metaDataStore;
+		private readonly GlobalConfiguration globalCfg;
+		private readonly PersistentClass pc;
 
 
 		public AnnotationsMetadataReader(PropertyAndMemberInfo propertyAndMemberInfo, 
+									IMetaDataStore metaDataStore,
 									GlobalConfiguration globalCfg, 
 									PersistentClass pc)
 		{
 			_propertyAndMemberInfo = propertyAndMemberInfo;
+			_metaDataStore = metaDataStore;
 			this.globalCfg = globalCfg;
 			this.pc = pc;
 
@@ -31,7 +35,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 * This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
 		 * method.
 		 */
-		private ClassAuditingData _auditData;
+		private readonly ClassAuditingData _auditData;
 
 		public ClassAuditingData GetAuditData()
 		{
@@ -49,7 +53,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					_auditData.SetDefaultAudited(true);
 				}
 
-				var ar = new AuditedPropertiesReader(_propertyAndMemberInfo, defaultStore,
+				var ar = new AuditedPropertiesReader(_propertyAndMemberInfo, _metaDataStore, defaultStore,
 													 new PersistentClassPropertiesSource(typ, this), _auditData,
 													 globalCfg, string.Empty);
 				ar.Read();
@@ -68,29 +72,28 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private ModificationStore getDefaultAudited(System.Type typ) 
 		{
-			var defaultAudited = (AuditedAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditedAttribute), false);
+			var defaultAudited = _metaDataStore.ClassMeta<AuditedAttribute>(typ);
 
 			return defaultAudited != null ? defaultAudited.ModStore : ModificationStore._NULL;
 		}
 
 		private void addAuditTable(System.Type typ)
 		{
-			var auditTable = (AuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(AuditTableAttribute), false);
+			var auditTable = _metaDataStore.ClassMeta<AuditTableAttribute>(typ);
 			_auditData.AuditTable = auditTable ?? getDefaultAuditTable();
 		}
 
 		private void addAuditSecondaryTables(System.Type typ) 
 		{
 			// Getting information on secondary tables
-			//SecondaryAuditTableAttribute secondaryVersionsTable1 = clazz.getAnnotation(SecondaryAuditTable.class);
-			var joinVersionsTable1 = (JoinAuditTableAttribute)Attribute.GetCustomAttribute(typ, typeof(JoinAuditTableAttribute), false);
+			var joinVersionsTable1 = _metaDataStore.ClassMeta<JoinAuditTableAttribute>(typ);
 			if (joinVersionsTable1 != null) 
 			{
 				_auditData.SecondaryTableDictionary.Add(joinVersionsTable1.JoinTableName,
 						joinVersionsTable1.JoinAuditTableName);
 			}
 
-			var secondaryAuditTables = (SecondaryAuditTablesAttribute)Attribute.GetCustomAttribute(typ, typeof(SecondaryAuditTablesAttribute), false);
+			var secondaryAuditTables = _metaDataStore.ClassMeta<SecondaryAuditTablesAttribute>(typ);
 			if (secondaryAuditTables != null) 
 			{
 				foreach (var secondaryAuditTable2 in secondaryAuditTables.Value) 
