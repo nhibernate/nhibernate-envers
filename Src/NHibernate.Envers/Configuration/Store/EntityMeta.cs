@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NHibernate.Envers.Configuration.Store;
 
-namespace NHibernate.Envers.Configuration.Attributes
+namespace NHibernate.Envers.Configuration.Store
 {
-	public class AttributeEntityMeta : IEntityMeta
+	public class EntityMeta : IEntityMeta
 	{
-		public AttributeEntityMeta()
+		public EntityMeta()
 		{
 			ClassMetas = new List<Attribute>();
 			MemberMetas = new Dictionary<MemberInfo, IEnumerable<Attribute>>();

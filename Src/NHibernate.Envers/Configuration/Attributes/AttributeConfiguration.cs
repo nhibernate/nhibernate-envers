@@ -6,11 +6,11 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Attributes
 {
-	public class AttributeMetaDataProvider : IMetaDataProvider
+	public class AttributeConfiguration : IMetaDataProvider
 	{
 		private readonly PropertyAndMemberInfo propertyAndMemberInfo;
 
-		public AttributeMetaDataProvider()
+		public AttributeConfiguration()
 		{
 			propertyAndMemberInfo = new PropertyAndMemberInfo();
 		}
@@ -58,8 +58,8 @@ namespace NHibernate.Envers.Configuration.Attributes
 				foreach (var attr in Attribute.GetCustomAttributes(propInfo.Member))
 				{
 					if (!dicToFill.ContainsKey(type))
-						dicToFill[type] = new AttributeEntityMeta();
-					((AttributeEntityMeta)dicToFill[type]).AddMemberMeta(propInfo.Member, attr);
+						dicToFill[type] = new EntityMeta();
+					((EntityMeta)dicToFill[type]).AddMemberMeta(propInfo.Member, attr);
 				}
 			}
 		}
@@ -69,8 +69,8 @@ namespace NHibernate.Envers.Configuration.Attributes
 			foreach (Attribute attr in typ.GetCustomAttributes(false))
 			{
 				if (!dicToFill.ContainsKey(typ))
-					dicToFill[typ] = new AttributeEntityMeta();
-				((AttributeEntityMeta)dicToFill[typ]).AddClassMeta(attr);
+					dicToFill[typ] = new EntityMeta();
+				((EntityMeta)dicToFill[typ]).AddClassMeta(attr);
 			}
 		}
 	}

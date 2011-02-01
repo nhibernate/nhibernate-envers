@@ -1,0 +1,66 @@
+using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Store;
+
+namespace NHibernate.Envers.Configuration.Fluent
+{
+	public class FluentConfiguration : IMetaDataProvider
+	{
+		private readonly IList<IAttributeFactory> attributeBuilders;
+
+		public FluentConfiguration()
+		{
+			attributeBuilders = new List<IAttributeFactory>();
+		}
+
+		public IFluentAudit<T> Audit<T>()
+		{
+			var ret = new FluentAudit<T>();
+			attributeBuilders.Add(ret);
+			return ret;
+		}
+
+		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
+		{
+			var ret = new Dictionary<System.Type, IEntityMeta>();
+			foreach (var attributeBuilder in attributeBuilders)
+			{
+				var attrs = attributeBuilder.Create();
+				foreach (var membAndAttrs in attrs)
+				{
+					var memberInfo = membAndAttrs.Key;
+					var classType = memberInfo as System.Type;
+					if(classType != null)
+					{
+						var entMeta = createOrGetEntityMeta(ret, classType);
+						foreach (var attribute in membAndAttrs.Value)
+						{
+							entMeta.AddClassMeta(attribute);							
+						}
+					}
+					else
+					{
+						var memberType = memberInfo.DeclaringType;
+						var entMeta = createOrGetEntityMeta(ret, memberType);
+						foreach (var attribute in membAndAttrs.Value)
+						{
+							entMeta.AddMemberMeta(memberInfo, attribute);							
+						}
+					}
+				}
+			}
+			return ret;
+		}
+
+		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)
+		{
+			IEntityMeta ret;
+			if (!metas.TryGetValue(type, out ret))
+			{
+				ret = new EntityMeta();
+				metas[type] = ret;
+			}
+			return (EntityMeta)ret;
+		}
+	}
+}

@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo
 				.Configure()
 				.AddResource(TestBase.TestAssembly + ".Entities.RevEntity.CustomRevEntity.hbm.xml", currAss)
 				.AddResource(TestBase.TestAssembly + ".Entities.RevEntity.CustomDateRevEntity.hbm.xml", currAss)
-				.IntegrateWithEnvers(new AuditEventListener(), new AttributeMetaDataProvider());
+				.IntegrateWithEnvers(new AuditEventListener(), new AttributeConfiguration());
 
 			Assert.Throws<MappingException>(() => cfg.BuildSessionFactory());
 		}

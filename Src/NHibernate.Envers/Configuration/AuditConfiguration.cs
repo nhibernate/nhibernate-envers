@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				IMetaDataProvider metas;
 				if (!confMetas.TryGetValue(cfg, out metas))
-					metas = new AttributeMetaDataProvider();
+					metas = new AttributeConfiguration();
 				verCfg = new AuditConfiguration(cfg, metas);
 				cfgs.Add(cfg, verCfg);
 				

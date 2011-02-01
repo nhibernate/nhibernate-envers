@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Tools
@@ -21,6 +23,13 @@ namespace NHibernate.Envers.Tests.Tools
 		{
 			var compareWith = smaller.AddMilliseconds(-5);
 			Assert.Greater(org, compareWith);
+		}
+
+
+		public static void OnlyContains<T>(this IEnumerable<Attribute> attributes) where T : Attribute
+		{
+			Assert.AreEqual(1, attributes.Count());
+			Assert.AreEqual(typeof(T), attributes.First().GetType());
 		}
 	}
 }
