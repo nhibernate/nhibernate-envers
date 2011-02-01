@@ -166,6 +166,9 @@ namespace NHibernate.Envers.Configuration
 
 			System.Type revisionInfoClass = null;
 
+			//IEnumerable<System.Type> revEntityType = _metaDataStore.DeclaredTypesFor<RevisionEntityAttribute>();
+
+
 			foreach (var pc in classes) 
 			{
 				System.Type clazz;

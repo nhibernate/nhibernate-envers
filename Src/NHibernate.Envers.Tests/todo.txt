@@ -4,3 +4,4 @@
 * test two different ways of configuration in same appdomain
 * test för attr conf default
 * lägg till en Environmentklass med strängar för conf å annat
+* test för inkorrekt revinfo (multipla numbers etc)

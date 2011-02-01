@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
 using NUnit.Framework;
 
@@ -10,7 +9,7 @@ namespace NHibernate.Envers.Tests
 {
 	public abstract class TestBase
 	{
-		protected const string TestAssembly = "NHibernate.Envers.Tests";
+		public const string TestAssembly = "NHibernate.Envers.Tests";
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; set; }
 		private ISessionFactory SessionFactory { get; set; }

@@ -344,10 +344,11 @@
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />
-    <Compile Include="TestTool.cs" />
+    <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="todo.txt" />
@@ -430,7 +431,9 @@
       <Name>NHibernate.Envers</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NetSpecific\UnitTests\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,8 +9,33 @@ namespace NHibernate.Envers.Configuration.Store
 	/// </summary>
 	public interface IMetaDataStore
 	{
-		T ClassMeta<T>(System.Type entityType) where T : Attribute;
-		T MemberMeta<T>(MemberInfo member) where T : Attribute;
+		/// <summary>
+		/// All entity metas keyed by type.
+		/// </summary>
 		IDictionary<System.Type, IEntityMeta> EntityMetas { get; }
+
+		/// <summary>
+		/// Gets attribute for certain type.
+		/// </summary>
+		/// <typeparam name="T">Attribute type</typeparam>
+		/// <param name="entityType">Type to search</param>
+		/// <returns>
+		/// Only one attribute will be returned, 
+		/// if multiple exists you'll need to use <see cref="EntityMetas"/>
+		/// If attribute does not exists, null is returned.
+		/// </returns>
+		T ClassMeta<T>(System.Type entityType) where T : Attribute;
+
+		/// <summary>
+		/// Gets attribute for certain member.
+		/// <typeparam name="T">Attribute type</typeparam>
+		/// </summary>
+		/// <param name="member">The member to search</param>
+		/// <returns>
+		/// Only one attribute will be returned, 
+		/// if multiple exists you'll need to use <see cref="EntityMetas"/>
+		/// If attribute does not exists, null is returned.
+		/// </returns>
+		T MemberMeta<T>(MemberInfo member) where T : Attribute;
 	}
 }

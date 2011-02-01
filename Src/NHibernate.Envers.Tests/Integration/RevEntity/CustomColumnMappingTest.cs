@@ -4,6 +4,7 @@ using System.Threading;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.RevEntity;
+using NHibernate.Envers.Tests.Tools;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity

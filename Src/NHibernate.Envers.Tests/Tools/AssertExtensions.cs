@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace NHibernate.Envers.Tests
+namespace NHibernate.Envers.Tests.Tools
 {
-	public static class TestTool
+	public static class AssertExtensions
 	{
 		/// <summary>
 		/// Asserts less then with some marginal due to non precise db value
