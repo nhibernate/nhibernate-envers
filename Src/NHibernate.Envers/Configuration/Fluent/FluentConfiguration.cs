@@ -6,24 +6,25 @@ namespace NHibernate.Envers.Configuration.Fluent
 {
 	public class FluentConfiguration : IMetaDataProvider
 	{
-		private readonly IList<IAttributeFactory> attributeBuilders;
+	    private readonly IDictionary<System.Type, IAttributeFactory> audits;
 
 		public FluentConfiguration()
 		{
-			attributeBuilders = new List<IAttributeFactory>();
+			audits = new Dictionary<System.Type, IAttributeFactory>();
 		}
 
 		public IFluentAudit<T> Audit<T>()
 		{
-			var ret = new FluentAudit<T>();
-			attributeBuilders.Add(ret);
-			return ret;
+		    var type = typeof (T);
+            var ret = new FluentAudit<T>();
+            audits[type] = ret;
+		    return ret;
 		}
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
 			var ret = new Dictionary<System.Type, IEntityMeta>();
-			foreach (var attributeBuilder in attributeBuilders)
+			foreach (var attributeBuilder in audits.Values)
 			{
 				var attrs = attributeBuilder.Create();
 				foreach (var membAndAttrs in attrs)

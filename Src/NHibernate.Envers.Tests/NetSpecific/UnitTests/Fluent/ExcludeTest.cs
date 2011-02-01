@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
-using NHibernate.Envers.Tests.Entities;
+using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NUnit.Framework;
 using NHibernate.Envers.Tests.Tools;
 
@@ -16,13 +16,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		public void Setup()
 		{
 			var cfg = new FluentConfiguration();
-			cfg.Audit<StrTestEntity>()
-					.Exclude(s => s.Str);
+			cfg.Audit<SomePropsEntity>()
+					.Exclude(s => s.Number)
+                    .Exclude(s => s.String);
 			metas = cfg.CreateMetaData(null);
 		}
 
 		[Test]
-		public void NumberOfEntities()
+		public void NumberOfEntityMetas()
 		{
 			Assert.AreEqual(1, metas.Count);
 		}
@@ -30,17 +31,19 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		[Test]
 		public void ClassShouldBeAudited()
 		{
-			var entMeta = metas[typeof(StrTestEntity)];
+            var entMeta = metas[typeof(SomePropsEntity)];
 			entMeta.ClassMetas.OnlyContains<AuditedAttribute>();
 		}
 
 		[Test]
 		public void ExcludedPropertyShouldNotBeAudited()
 		{
-			var propInfo = typeof (StrTestEntity).GetProperty("Str");
-			var entMeta = metas[typeof(StrTestEntity)];
-			Assert.AreEqual(1, entMeta.MemberMetas.Count);
+            var propInfo = typeof(SomePropsEntity).GetProperty("Number");
+            var propInfo2 = typeof(SomePropsEntity).GetProperty("String");
+            var entMeta = metas[typeof(SomePropsEntity)];
+			Assert.AreEqual(2, entMeta.MemberMetas.Count);
 			entMeta.MemberMetas[propInfo].OnlyContains<NotAuditedAttribute>();
+			entMeta.MemberMetas[propInfo2].OnlyContains<NotAuditedAttribute>();
 		}
 	}
 }

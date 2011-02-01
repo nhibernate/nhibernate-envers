@@ -6,16 +6,19 @@ namespace NHibernate.Envers.Configuration.Fluent
 {
 	public static class ExpressionExtension
 	{
-		//todo - doesn't currently work with fields
 		public static MemberInfo MethodInfo(this Expression expression, string errText)
 		{
-			var memberEx = expression as MemberExpression;
-			
-			if (memberEx == null)
-			{
-				throw new ArgumentException("Only properties or fields can be used for " + errText);
-			}
-			return memberEx.Member;
+            switch (expression.NodeType)
+            {
+                case ExpressionType.MemberAccess:                      
+                    var memberExpression = (MemberExpression)expression; 
+                    return memberExpression.Member; 
+                case ExpressionType.Convert:                      
+                    var unaryExpression = (UnaryExpression)expression;
+                    return MethodInfo(unaryExpression.Operand, errText); 
+                default:
+                    throw new ArgumentException("Cannot find property or field for " + errText);
+            }  
 		}
 	}
 }

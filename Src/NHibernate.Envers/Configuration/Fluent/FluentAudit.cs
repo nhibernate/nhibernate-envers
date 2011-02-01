@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -20,15 +21,25 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
+	    public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
 		{
 			var ret = new Dictionary<MemberInfo, IEnumerable<Attribute>>();
-			ret[typeof (T)] = new List<Attribute> {new AuditedAttribute()};
+            
+			addType(ret, typeof(T));
 			foreach (var ex in excluded)
 			{
 				ret[ex] = new List<Attribute> {new NotAuditedAttribute()};
 			}
 			return ret;
 		}
+
+	    private void addType(IDictionary<MemberInfo, IEnumerable<Attribute>> ret, System.Type type)
+	    {
+	        ret[type] = new List<Attribute> {new AuditedAttribute()};
+            if(!type.BaseType.Equals(typeof(object)))
+            {
+                addType(ret, type.BaseType);
+            }
+	    }
 	}
 }
