@@ -52,5 +52,19 @@ namespace NHibernate.Envers.Configuration.Store
 			}
 			return null;
 		}
+
+		public IEnumerable<System.Type> EntitiesDeclaredWith<T>() where T : Attribute
+		{
+			var ret = new HashSet<System.Type>();
+			foreach (var keyValueMeta in EntityMetas)
+			{
+				foreach (var classMeta in keyValueMeta.Value.ClassMetas)
+				{
+					if (classMeta.GetType().Equals(typeof(T)))
+						ret.Add(keyValueMeta.Key);
+				}
+			}
+			return ret;
+		}
 	}
 }

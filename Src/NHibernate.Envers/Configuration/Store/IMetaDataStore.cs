@@ -37,5 +37,12 @@ namespace NHibernate.Envers.Configuration.Store
 		/// If attribute does not exists, null is returned.
 		/// </returns>
 		T MemberMeta<T>(MemberInfo member) where T : Attribute;
+
+		/// <summary>
+		/// Gets all types decorated with attribute T
+		/// </summary>
+		/// <typeparam name="T">Attribute type</typeparam>
+		/// <returns>The types</returns>
+		IEnumerable<System.Type> EntitiesDeclaredWith<T>() where T : Attribute;
 	}
 }

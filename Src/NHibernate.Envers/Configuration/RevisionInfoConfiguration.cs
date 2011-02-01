@@ -160,83 +160,66 @@ namespace NHibernate.Envers.Configuration
 
 		public RevisionInfoConfigurationResult Configure(Cfg.Configuration cfg) 
 		{
-			var classes = cfg.ClassMappings;
-			var revisionEntityFound = false;
-			IRevisionInfoGenerator revisionInfoGenerator = null;
+			IRevisionInfoGenerator revisionInfoGenerator;
+			XmlDocument revisionInfoXmlMapping = null;
+			System.Type revisionInfoClass;
 
-			System.Type revisionInfoClass = null;
+			var revEntityType = _metaDataStore.EntitiesDeclaredWith<RevisionEntityAttribute>();
+			var noOfRevEntities = revEntityType.Count();
 
-			//IEnumerable<System.Type> revEntityType = _metaDataStore.DeclaredTypesFor<RevisionEntityAttribute>();
-
-
-			foreach (var pc in classes) 
+			switch (noOfRevEntities)
 			{
-				System.Type clazz;
-				try 
-				{
-					clazz = System.Type.GetType(pc.ClassName, true);
-				} 
-				catch (Exception e) 
-				{
-					throw new MappingException(e);
-				}
+				case 0:
+					{
+						revisionInfoClass = typeof(DefaultRevisionEntity);
+						revisionAssQName = revisionInfoClass.AssemblyQualifiedName;
+						revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
+								typeof(IRevisionListener), revisionInfoTimestampData, isTimestampAsDate());
+						revisionInfoXmlMapping = generateDefaultRevisionInfoXmlMapping();
+						break;
+					}
+				case 1:
+					{
+						var clazz = revEntityType.First();
+						var revEntityAttr = _metaDataStore.ClassMeta<RevisionEntityAttribute>(clazz);
+						var pc = cfg.GetClassMapping(clazz);
+						// Checking if custom revision entity isn't audited))
+						if (_metaDataStore.ClassMeta<AuditedAttribute>(clazz) != null)
+						{
+							throw new MappingException("An entity decorated with [RevisionEntity] cannot be audited!");
+						}
 
-				var revisionEntity = _metaDataStore.ClassMeta<RevisionEntityAttribute>(clazz);
-				if (revisionEntity != null) 
-				{
-					if (revisionEntityFound) 
+						var propertiesPlusIdentifier = new List<Property>();
+						propertiesPlusIdentifier.AddRange(pc.PropertyIterator);
+						propertiesPlusIdentifier.Add(pc.IdentifierProperty);
+						var persistentProperties = _propertyAndMemberInfo.GetPersistentInfo(clazz, propertiesPlusIdentifier);
+
+						if (!searchForRevisionNumberCfg(persistentProperties))
+						{
+							throw new MappingException("An entity decorated with [RevisionEntity] must have a field decorated " +
+													   "with [RevisionNumber]!");
+						}
+
+						if (!searchForTimestampCfg(persistentProperties))
+						{
+							throw new MappingException("An entity decorated with [RevisionEntity] must have a field decorated " +
+													   "with [RevisionTimestamp]!");
+						}
+
+						revisionInfoEntityName = pc.EntityName;
+						revisionAssQName = pc.MappedClass.AssemblyQualifiedName;
+
+						revisionInfoClass = pc.MappedClass;
+						revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
+						revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
+																				 revEntityAttr.Value, revisionInfoTimestampData, isTimestampAsDate());
+						break;
+					}
+				default:
 					{
 						throw new MappingException("Only one entity may be decorated with [RevisionEntity]!");
 					}
-
-					// Checking if custom revision entity isn't audited
-					if (_metaDataStore.ClassMeta<AuditedAttribute>(clazz) != null) 
-					{
-						throw new MappingException("An entity decorated with [RevisionEntity] cannot be audited!");
-					}
-
-					revisionEntityFound = true;
-
-					var propertiesPlusIdentifier = new List<Property>();
-					propertiesPlusIdentifier.AddRange(pc.PropertyIterator);
-					propertiesPlusIdentifier.Add(pc.IdentifierProperty);
-					var persistentProperties = _propertyAndMemberInfo.GetPersistentInfo(clazz, propertiesPlusIdentifier);
-
-					if (!searchForRevisionNumberCfg(persistentProperties)) 
-					{
-						throw new MappingException("An entity decorated with [RevisionEntity] must have a field decorated " +
-								"with [RevisionNumber]!");
-					}
-
-					if (!searchForTimestampCfg(persistentProperties)) 
-					{
-						throw new MappingException("An entity decorated with [RevisionEntity] must have a field decorated " +
-								"with [RevisionTimestamp]!");
-					}
-
-					revisionInfoEntityName = pc.EntityName;
-					revisionAssQName = pc.MappedClass.AssemblyQualifiedName;
-
-					revisionInfoClass = pc.MappedClass;
-					revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
-					revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
-						revisionEntity.Value, revisionInfoTimestampData, isTimestampAsDate());
-				}
 			}
-
-			// In case of a custom revision info generator, the mapping will be null.
-			XmlDocument revisionInfoXmlMapping = null;
-
-			if (revisionInfoGenerator == null) 
-			{
-				revisionInfoClass = typeof(DefaultRevisionEntity);
-				revisionAssQName = revisionInfoClass.AssemblyQualifiedName;
-				revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
-						typeof(IRevisionListener),revisionInfoTimestampData, isTimestampAsDate());
-				revisionInfoXmlMapping = generateDefaultRevisionInfoXmlMapping();
-			}
-
-		
 
 			return new RevisionInfoConfigurationResult(
 					revisionInfoGenerator, revisionInfoXmlMapping,
