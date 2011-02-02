@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using NHibernate.Envers.Configuration.Attributes;
+using log4net;
 using NHibernate.Envers.Configuration.Store;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
 	public class FluentConfiguration : IMetaDataProvider
 	{
+	    private static ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
 	    private readonly IDictionary<System.Type, IAttributeFactory> audits;
 
 		public FluentConfiguration()
@@ -36,6 +37,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 						var entMeta = createOrGetEntityMeta(ret, classType);
 						foreach (var attribute in membAndAttrs.Value)
 						{
+                            if(log.IsDebugEnabled)
+                                log.Debug("Adding " + attribute.GetType().Name + " to type " + classType.FullName);
 							entMeta.AddClassMeta(attribute);							
 						}
 					}
@@ -45,6 +48,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 						var entMeta = createOrGetEntityMeta(ret, memberType);
 						foreach (var attribute in membAndAttrs.Value)
 						{
+                            if (log.IsDebugEnabled)
+                                log.Debug("Adding " + attribute.GetType().Name + " to type " + memberType.FullName);
 							entMeta.AddMemberMeta(memberInfo, attribute);							
 						}
 					}

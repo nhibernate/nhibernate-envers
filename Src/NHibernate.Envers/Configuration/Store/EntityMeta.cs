@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace NHibernate.Envers.Configuration.Store
 {
 	public class EntityMeta : IEntityMeta
@@ -27,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Store
 
 		public void AddClassMeta(Attribute envAttr)
 		{
-			((IList<Attribute>)ClassMetas).Add(envAttr);
+            ((IList<Attribute>)ClassMetas).Add(envAttr);
 		}
 	}
 }
