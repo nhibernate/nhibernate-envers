@@ -345,11 +345,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private MiddleComponentData AddIndex(XmlElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
 		{
-			if (propertyValue is IndexedCollection)
+            var indexedValue = propertyValue as IndexedCollection;
+			if (indexedValue != null)
 			{
-				var indexedValue = (IndexedCollection)propertyValue;
 				var mapKey = propertyAuditingData.MapKey;
-				if (mapKey == null)
+                if (mapKey == null)
 				{
 					// This entity doesn't specify a javax.persistence.MapKey. Mapping it to the middle entity.
 					return AddValueToMiddleTable(indexedValue.Index, middleEntityXml,

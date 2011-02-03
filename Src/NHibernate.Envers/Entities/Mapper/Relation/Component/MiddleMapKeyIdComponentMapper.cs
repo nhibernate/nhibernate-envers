@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
+using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
@@ -28,7 +30,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
                                             object dataObject, 
 											long revision) 
 		{
-            return relatedIdMapper.MapToIdFromMap((IDictionary<string, object>) data[verEntCfg.OriginalIdPropName]);
+            return relatedIdMapper.MapToIdFromMap(DictionaryWrapper<string, object>.Wrap((IDictionary) data[verEntCfg.OriginalIdPropName]));
         }
 
         public void MapToMapFromObject(IDictionary<String, Object> data, Object obj) 

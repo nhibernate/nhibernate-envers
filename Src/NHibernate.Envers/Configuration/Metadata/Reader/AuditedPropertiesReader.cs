@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
@@ -25,7 +24,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly IPersistentPropertiesSource _persistentPropertiesSource;
 		private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
 		private readonly GlobalConfiguration _globalCfg;
-		private readonly String _propertyNamePrefix;
+		private readonly string _propertyNamePrefix;
 
 		public AuditedPropertiesReader(PropertyAndMemberInfo propertyAndMemberInfo,
 										IMetaDataStore metaDataStore,
