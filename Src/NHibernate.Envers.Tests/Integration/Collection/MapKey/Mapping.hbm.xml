@@ -22,7 +22,7 @@
 		</id>
 		<map name="IdMap" table="IdIdMap">
 			<key column="compMapKeyEntityId"/>
-			<map-key type="int" />
+			<map-key type="int" column="Id"/>
 			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
 		</map>
 	</class>

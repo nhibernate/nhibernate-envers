@@ -61,7 +61,6 @@
     <Compile Include="AuditOverridesAttribute.cs" />
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="AuditTableAttribute.cs" />
-    <Compile Include="Compatibility\Attributes\MapKeyAttribute.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfiguration.cs" />
     <Compile Include="Configuration\AuditConfiguration.cs" />

@@ -3,7 +3,6 @@ using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using System.Reflection;
-using NHibernate.Envers.Compatibility.Attributes;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -154,7 +153,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				return false; // not audited due to AuditOverride annotation
 			}
-			AddPropertyMapKey(property, propertyData);
 			SetPropertyAuditMappedBy(property, propertyData);
 
 			return true;
@@ -171,15 +169,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				{
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;
 				}
-			}
-		}
-
-		private void AddPropertyMapKey(MemberInfo property, PropertyAuditingData propertyData) 
-		{
-			var mapKey = _metaDataStore.MemberMeta<MapKeyAttribute>(property);
-			if (mapKey != null) 
-			{
-				propertyData.MapKey = mapKey.Name;
 			}
 		}
 

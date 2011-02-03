@@ -343,28 +343,50 @@ namespace NHibernate.Envers.Configuration.Metadata
 			StoreMiddleEntityRelationInformation(mappedBy);
 		}
 
+        private bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
+        {
+            var firstNames = from f in first
+                             select ((Column) f).Name;
+            var lastNames = from s in second
+                            select ((Column) s).Name;
+            return firstNames.Count()==lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
+        }
+
 		private MiddleComponentData AddIndex(XmlElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
 		{
             var indexedValue = propertyValue as IndexedCollection;
 			if (indexedValue != null)
 			{
-				var mapKey = propertyAuditingData.MapKey;
-                if (mapKey == null)
+			    var idMatch = false;
+                string propMatch = null;
+			    PersistentClass refPc = null;
+                if (referencedEntityName != null)
+                    refPc = mainGenerator.Cfg.GetClassMapping(referencedEntityName);
+                    
+                if(refPc!=null)
+                {
+                    idMatch = sameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
+                    foreach (var propertyRef in refPc.PropertyIterator)
+                    {
+                        if(sameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
+                            propMatch = propertyRef.Name;
+                    }
+                }
+                if (!idMatch && propMatch==null)
 				{
-					// This entity doesn't specify a javax.persistence.MapKey. Mapping it to the middle entity.
 					return AddValueToMiddleTable(indexedValue.Index, middleEntityXml,
 							queryGeneratorBuilder, "mapkey", null);
 				}
-				var referencedIdMapping = mainGenerator.EntitiesConfigurations[referencedEntityName].IdMappingData;
 				var currentIndex = queryGeneratorBuilder == null ? 0 : queryGeneratorBuilder.CurrentIndex;
-				if (string.IsNullOrEmpty(mapKey))
+				if (idMatch)
 				{
 					// The key of the map is the id of the entity.
+                    var referencedIdMapping = mainGenerator.EntitiesConfigurations[referencedEntityName].IdMappingData;
 					return new MiddleComponentData(new MiddleMapKeyIdComponentMapper(mainGenerator.VerEntCfg,
 																					 referencedIdMapping.IdMapper), currentIndex);
 				}
 				// The key of the map is a property of the entity.
-				return new MiddleComponentData(new MiddleMapKeyPropertyComponentMapper(mapKey,
+				return new MiddleComponentData(new MiddleMapKeyPropertyComponentMapper(propMatch,
 																					   propertyAuditingData.AccessType), currentIndex);
 			}
 			// No index - creating a dummy mapper.
