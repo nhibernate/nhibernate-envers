@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
@@ -25,7 +26,8 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public SinglePropertyMapper() { }
 
-		public void Add(PropertyData propertyData) {
+		public void Add(PropertyData propertyData) 
+		{
 			if (this.propertyData != null) 
 			{
 				throw new AuditException("Only one property can be added!");
@@ -44,7 +46,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			return !newObj.Equals(oldObj);
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary<string,object> data, object primaryKey,
+		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
 									   IAuditReaderImplementor versionsReader, long revision) 
 		{
 			if (data == null || obj == null) 

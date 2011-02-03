@@ -1,16 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate.Envers.Exceptions;
-using NHibernate.Util;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-
-    /**
-     * @author Catalina Panait, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
     public class MultipleIdMapper : AbstractCompositeIdMapper, ISimpleIdMapperBuilder
     {
         public MultipleIdMapper(System.Type compositeIdClass)
@@ -22,52 +16,58 @@ namespace NHibernate.Envers.Entities.Mapper.Id
             foreach (IIdMapper idMapper in ids.Values)
             { 
                 idMapper.MapToMapFromEntity(data, obj);
-        }
-    }
+			}
+		}
 
         public override void MapToMapFromEntity(IDictionary<String, Object> data, Object obj)
         {
            MapToMapFromId(data, obj);
         }
 
-        public override void MapToEntityFromMap(Object obj, IDictionary<String, Object> data) {
-        foreach (IIdMapper idMapper in ids.Values) {
-            idMapper.MapToEntityFromMap(obj,data);
-        }
-    }
+        public override void MapToEntityFromMap(Object obj, IDictionary data) 
+		{
+			foreach (IIdMapper idMapper in ids.Values) 
+			{
+				idMapper.MapToEntityFromMap(obj,data);
+			}
+		}
 
         public override IIdMapper PrefixMappedProperties(String prefix)
         {
-        MultipleIdMapper ret = new MultipleIdMapper(compositeIdClass);
+			MultipleIdMapper ret = new MultipleIdMapper(compositeIdClass);
 
-        foreach (PropertyData propertyData in ids.Keys) {
-            String propertyName = propertyData.Name;
-            ret.ids.Add(propertyData, new SingleIdMapper(new PropertyData(prefix + propertyName, propertyData)));
-        }
+			foreach (PropertyData propertyData in ids.Keys) {
+				String propertyName = propertyData.Name;
+				ret.ids.Add(propertyData, new SingleIdMapper(new PropertyData(prefix + propertyName, propertyData)));
+			}
 
-        return ret;
-    }
+			return ret;
+		}
 
         public override Object MapToIdFromEntity(Object data)
         {
-        if (data == null) {
-            return null;
-        }
+			if (data == null) 
+			{
+				return null;
+			}
 
-        Object ret;
-        try {
-            ret = Activator.CreateInstance(compositeIdClass );
-            //ret = Thread.currentThread().getContextClassLoader().loadClass(compositeIdClass).newInstance();
-        } catch (Exception e) {
-            throw new AuditException(e);
-        }
+			Object ret;
+			try 
+			{
+				ret = Activator.CreateInstance(compositeIdClass );
+			} 
+			catch (Exception e) 
+			{
+				throw new AuditException(e);
+			}
 
-        foreach (SingleIdMapper mapper in ids.Values) {
-            mapper.MapToEntityFromEntity(ret, data);
-        }
+			foreach (SingleIdMapper mapper in ids.Values) 
+			{
+				mapper.MapToEntityFromEntity(ret, data);
+			}
 
-        return ret;
-    }
+			return ret;
+		}
 
         public override IList<QueryParameterData> MapToQueryParametersFromId(Object obj)
         {
@@ -82,10 +82,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
                 ret.Add(new QueryParameterData(propertyData.Key, propertyData.Value));
             }
 
-
             return ret;
         }
-
-
     }
 }

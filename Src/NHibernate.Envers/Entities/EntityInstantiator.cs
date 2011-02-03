@@ -27,18 +27,19 @@ namespace NHibernate.Envers.Entities
 		/// <param name="versionsEntity">An entry in the versions table, from which data should be mapped.</param>
 		/// <param name="revision">Revision at which this entity was read.</param>
 		/// <returns>An entity instance, with versioned properties set as in the versionsEntity map, and proxies created for collections.</returns>
-		public object CreateInstanceFromVersionsEntity(string entityName, IDictionary<string,object> versionsEntity, long revision) 
+		public object CreateInstanceFromVersionsEntity(string entityName, IDictionary versionsEntity, long revision)
 		{
+            const string typeKey = "$type$";
+
 			if (versionsEntity == null) 
 			{
 				return null;
 			}
 
-			object type;
 			string name = null;
-			if(versionsEntity.TryGetValue("$type$", out type))
+			if(versionsEntity.Contains(typeKey))
 			{
-				name = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)type);
+                name = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
 			}
 
 			if (name != null) 
@@ -48,7 +49,7 @@ namespace NHibernate.Envers.Entities
 
 			// First mapping the primary key
 			var idMapper = verCfg.EntCfg[entityName].GetIdMapper();
-			var originalId = DictionaryWrapper<string,object>.Wrap((IDictionary)versionsEntity[verCfg.AuditEntCfg.OriginalIdPropName]);
+			var originalId = (IDictionary)versionsEntity[verCfg.AuditEntCfg.OriginalIdPropName];
 
 			var primaryKey = idMapper.MapToIdFromMap(originalId);
 
@@ -81,9 +82,9 @@ namespace NHibernate.Envers.Entities
 			return ret;
 		}
 
-		public void AddInstancesFromVersionsEntities(String entityName, IList addTo, IEnumerable<IDictionary<string, object>> versionsEntities, long revision)
+		public void AddInstancesFromVersionsEntities(String entityName, IList addTo, IEnumerable<IDictionary> versionsEntities, long revision)
 		{
-			foreach (IDictionary<string,object> versionsEntity in versionsEntities) 
+			foreach (var versionsEntity in versionsEntities) 
 			{
 				addTo.Add(CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision));
 			}

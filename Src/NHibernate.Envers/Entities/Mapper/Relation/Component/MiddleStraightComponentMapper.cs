@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 
@@ -18,11 +19,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			_propertyName = propertyName;
 		}
 
-		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary<string, object> data,
-											 object dataObject, long revision)
+		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision)
 		{
-			object ret;
-			return data.TryGetValue(_propertyName, out ret) ? ret : null;
+			return data.Contains(_propertyName) ? data[_propertyName] : null;
 		}
 
 		public void MapToMapFromObject(IDictionary<string, object> data, object obj) 

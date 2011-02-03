@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			return parentDiffs || mainDiffs;
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary<string,object> data, Object primaryKey, IAuditReaderImplementor versionsReader, long revision) {
+		public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary data, Object primaryKey, IAuditReaderImplementor versionsReader, long revision) {
 			parentMapper.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 			main.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 		}

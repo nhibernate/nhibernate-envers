@@ -38,12 +38,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			// if they are maps or not.
 			T element;
 
-			//rk - have a look at this later. ugly!
-			//also - investigate: will change tracking work when data is wrapped?
 			var elementDataAsDic = elementData as IDictionary;
 			if (elementDataAsDic!=null) 
 			{
-				element = (T)elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator, DictionaryWrapper<string, object>.Wrap(elementDataAsDic), null, revision);
+				element = (T)elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator, elementDataAsDic, null, revision);
 			} 
 			else 
 			{

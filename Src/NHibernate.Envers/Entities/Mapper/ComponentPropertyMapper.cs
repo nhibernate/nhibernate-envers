@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,12 +17,14 @@ namespace NHibernate.Envers.Entities.Mapper
     /**
     ///@author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
      */
-    public class ComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder {
+    public class ComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder 
+	{
         private readonly PropertyData propertyData;
         private readonly MultiPropertyMapper _delegate;
 	    private readonly String componentClassName;
 
-        public ComponentPropertyMapper(PropertyData propertyData, String componentClassName) {
+        public ComponentPropertyMapper(PropertyData propertyData, String componentClassName) 
+		{
             this.propertyData = propertyData;
             this._delegate = new MultiPropertyMapper();
 		    this.componentClassName = componentClassName;
@@ -44,7 +47,7 @@ namespace NHibernate.Envers.Entities.Mapper
             return _delegate.MapToMapFromEntity(session, data, newObj, oldObj);
         }
 
-        public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary<String, Object> data, 
+        public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary data, 
                                        Object primaryKey, IAuditReaderImplementor versionsReader, long revision)
         {
             if (data == null || obj == null) 

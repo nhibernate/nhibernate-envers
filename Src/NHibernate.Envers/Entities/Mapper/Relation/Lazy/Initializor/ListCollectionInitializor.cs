@@ -40,16 +40,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementData = ((IList)collectionRow)[_elementComponentData.ComponentIndex];
 			var indexData = ((IList)collectionRow)[_indexComponentData.ComponentIndex];
 
-			//rk - have a look at this later. 
-			var wrappedElementData = DictionaryWrapper<string, object>.Wrap((IDictionary)elementData);
-			var wrappedIndexData = DictionaryWrapper<string, object>.Wrap((IDictionary)indexData);
 			var element = (T)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
-																				wrappedElementData, 
+																				(IDictionary) elementData, 
 																				null, 
 																				revision);
 
 			var index = (int)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
-																				wrappedIndexData, 
+																				(IDictionary) indexData, 
 																				element, 
 																				revision);
 			collection[index] = element;

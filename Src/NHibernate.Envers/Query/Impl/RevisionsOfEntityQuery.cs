@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Query.Impl
 			this.selectDeletedEntities = selectDeletedEntities;
 		}
 
-		private long GetRevisionNumber(IDictionary<string, object> versionsEntity) 
+		private long GetRevisionNumber(IDictionary versionsEntity) 
 		{
 			var verEntCfg = verCfg.AuditEntCfg;
 			var originalId = verEntCfg.OriginalIdPropName;
@@ -85,19 +85,17 @@ namespace NHibernate.Envers.Query.Impl
 
 			foreach (var resultRow in internalResult)
 			{
-				IDictionary<string, object> versionsEntity;
+				IDictionary versionsEntity;
 				object revisionData = null;
 
 				if (selectEntitiesOnly)
 				{
-					//rk - check this
-					versionsEntity = DictionaryWrapper<string, object>.Wrap((IDictionary) resultRow);
+					versionsEntity = (IDictionary) resultRow;
 				}
 				else
 				{
-					//rk - check this
 					var arrayResultRow = (Object[]) resultRow;
-					versionsEntity = DictionaryWrapper<string, object>.Wrap((IDictionary) arrayResultRow[0]);
+					versionsEntity = (IDictionary) arrayResultRow[0];
 					revisionData = arrayResultRow[1];
 				}
 

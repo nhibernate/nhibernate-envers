@@ -26,11 +26,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
         }
 
         public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, 
-											IDictionary<string, object> data,
+											IDictionary data,
                                             object dataObject, 
 											long revision) 
 		{
-            return relatedIdMapper.MapToIdFromMap(DictionaryWrapper<string, object>.Wrap((IDictionary) data[verEntCfg.OriginalIdPropName]));
+            return relatedIdMapper.MapToIdFromMap((IDictionary) data[verEntCfg.OriginalIdPropName]);
         }
 
         public void MapToMapFromObject(IDictionary<String, Object> data, Object obj) 

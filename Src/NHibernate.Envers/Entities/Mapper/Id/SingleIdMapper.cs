@@ -1,54 +1,51 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
-using System.Reflection;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-
-	public class SingleIdMapper : AbstractIdMapper , ISimpleIdMapperBuilder 
+	public class SingleIdMapper : AbstractIdMapper, ISimpleIdMapperBuilder 
 	{
 		private PropertyData propertyData;
 
-		public SingleIdMapper() {
-		}
+		public SingleIdMapper() {}
 
-		public SingleIdMapper(PropertyData propertyData) {
+		public SingleIdMapper(PropertyData propertyData) 
+		{
 			this.propertyData = propertyData;
 		}
 
 		public void Add(PropertyData propertyData) 
 		{
-			if (this.propertyData != null) {
+			if (this.propertyData != null) 
+			{
 				throw new AuditException("Only one property can be added!");
 			}
 
 			this.propertyData = propertyData;
 		}
 
-		public override void MapToEntityFromMap(object obj, IDictionary<string, object> data)
+		public override void MapToEntityFromMap(object obj, IDictionary data)
 		{
-			if (data == null || obj == null) {
+			if (data == null || obj == null) 
+            {
 				return;
 			}
 			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
 			setter.Set(obj, data[propertyData.Name]);
 		}
 
-		public override Object MapToIdFromMap(IDictionary<String, Object> data)
-		{  //IDictionary<PropertyData, SingleIdMapper>  
-			if (data == null) {
-				return null;
-			}
-
-			return data[propertyData.Name];
+		public override object MapToIdFromMap(IDictionary data)
+		{
+		    return data == null ? null : data[propertyData.Name];
 		}
 
-		public override object MapToIdFromEntity(object data)
+	    public override object MapToIdFromEntity(object data)
 		{
-			if (data == null) {
+			if (data == null) 
+            {
 				return null;
 			}
 
@@ -62,50 +59,56 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			return getter.Get(data);
 		}
 
-		public override void MapToMapFromId(IDictionary<String, Object> data, Object obj)
+		public override void MapToMapFromId(IDictionary<string, object> data, object obj)
 		{
-			if (data != null) {
-				data.Add(propertyData.Name,obj);
+			if (data != null) 
+            {
+				data.Add(propertyData.Name, obj);
 			}
 		}
 
-		public override void MapToMapFromEntity(IDictionary<String, Object> data, Object obj)
+		public override void MapToMapFromEntity(IDictionary<string, object> data, object obj)
 		{
-			if (obj == null) {
+			if (obj == null) 
+            {
 				data.Add(propertyData.Name,null);
-			} else {
-				if(obj is INHibernateProxy) {
-					INHibernateProxy hibernateProxy = (INHibernateProxy)obj;
-					data.Add(propertyData.Name , hibernateProxy.HibernateLazyInitializer.Identifier);
-				} else {
-					PropertyInfo propInfo = obj.GetType().GetProperty(propertyData.BeanName);
-					data.Add(propertyData.Name, propInfo.GetValue(obj, null));
+			} 
+            else
+			{
+			    var proxy = obj as INHibernateProxy;
+				if(proxy!=null) 
+                {
+					data.Add(propertyData.Name, proxy.HibernateLazyInitializer.Identifier);
+				} 
+                else 
+                {
+                    var getter = ReflectionTools.GetGetter(obj.GetType(), propertyData);
+                    data.Add(propertyData.Name, getter.Get(obj));
 				}
 			}
 		}
 
-		public void MapToEntityFromEntity(Object objTo, Object objFrom) {
-			if (objTo == null || objFrom == null) {
+		public void MapToEntityFromEntity(object objTo, object objFrom) 
+        {
+			if (objTo == null || objFrom == null) 
+            {
 				return;
 			}
-			PropertyInfo propInfoFrom = objFrom.GetType().GetProperty(propertyData.Name);
-			PropertyInfo propInfoTo = objTo.GetType().GetProperty(propertyData.Name);
-			propInfoTo.SetValue(objTo, propInfoFrom.GetValue(objFrom,null), null);
+		    var getter = ReflectionTools.GetGetter(objFrom.GetType(), propertyData);
+		    var setter = ReflectionTools.GetSetter(objTo.GetType(), propertyData);
+            setter.Set(objTo, getter.Get(objFrom));
 		}
 
-		public override IIdMapper PrefixMappedProperties(String prefix) {
+		public override IIdMapper PrefixMappedProperties(string prefix) 
+        {
 			return new SingleIdMapper(new PropertyData(prefix + propertyData.Name, propertyData));
 		}
 
-		public override IList<QueryParameterData> MapToQueryParametersFromId(Object obj)
+		public override IList<QueryParameterData> MapToQueryParametersFromId(object obj)
 		{
-			IList<QueryParameterData> ret = new List<QueryParameterData>();
+			IList<QueryParameterData> ret = new List<QueryParameterData> {new QueryParameterData(propertyData.Name, obj)};
 
-			ret.Add(new QueryParameterData(propertyData.Name, obj));
-
-			return ret;
+		    return ret;
 		}
-
 	}
-
 }

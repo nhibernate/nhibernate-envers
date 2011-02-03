@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,15 +21,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
          * @param revision Revision at which the data is read.
          * @return An object with data corresponding to the one found in the given map.
          */
-        Object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary<String, Object> data,
-                                      Object dataObject, long revision);
+        object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision);
 
         /**
          * Maps from an object to the object's map representation (for an entity - only its id).
          * @param data Map to which data should be added.
          * @param obj Object to map from.
          */
-        void MapToMapFromObject(IDictionary<String, Object> data, Object obj);
+        void MapToMapFromObject(IDictionary<string, Object> data, Object obj);
 
         /**
          * Adds query statements, which contains restrictions, which express the property that part of the middle
@@ -38,6 +38,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
          * @param prefix1 First alias of the entity + prefix to add to the properties.
          * @param prefix2 Second alias of the entity + prefix to add to the properties.
          */
-        void AddMiddleEqualToQuery(Parameters parameters, String prefix1, String prefix2);
+        void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2);
     }
 }

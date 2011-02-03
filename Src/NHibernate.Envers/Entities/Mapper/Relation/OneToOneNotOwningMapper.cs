@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tools;
@@ -30,7 +31,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return false;
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary<string, object> data, object primaryKey, IAuditReaderImplementor versionsReader, long revision) 
+		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey, IAuditReaderImplementor versionsReader, long revision) 
 		{
 			if (obj == null) 
 			{

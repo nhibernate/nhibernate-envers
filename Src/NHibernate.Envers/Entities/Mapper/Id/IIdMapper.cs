@@ -1,26 +1,16 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Envers.Query;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-    /**
-     * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
     public interface IIdMapper
     {
-        void MapToMapFromId(IDictionary<String, Object> data, Object obj);
-
-        void MapToMapFromEntity(IDictionary<String, Object> data, Object obj);
-
-        void MapToEntityFromMap(Object obj, IDictionary<string,object> data);
-
-        Object MapToIdFromEntity(Object data);
-
-        Object MapToIdFromMap(IDictionary<string,object> data);
+        void MapToMapFromId(IDictionary<string, object> data, object obj);
+        void MapToMapFromEntity(IDictionary<string, object> data, object obj);
+        void MapToEntityFromMap(object obj, IDictionary data);
+        object MapToIdFromEntity(object data);
+        object MapToIdFromMap(IDictionary data);
 
         /**
          * Creates a mapper with all mapped properties prefixed. A mapped property is a property which
@@ -28,13 +18,13 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          * @param prefix Prefix to add to mapped properties
          * @return A copy of the current property mapper, with mapped properties prefixed.
          */
-        IIdMapper PrefixMappedProperties(String prefix);
+        IIdMapper PrefixMappedProperties(string prefix);
 
         /**
          * @param obj Id from which to map.
          * @return A set parameter data, needed to build a query basing on the given id.
          */
-        IList<QueryParameterData> MapToQueryParametersFromId(Object obj);
+        IList<QueryParameterData> MapToQueryParametersFromId(object obj);
 
         /**
          * Adds query statements, which contains restrictions, which express the property that the id of the entity
@@ -43,7 +33,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          * @param prefix1 First alias of the entity + prefix to add to the properties.
          * @param prefix2 Second alias of the entity + prefix to add to the properties.
          */
-        void AddIdsEqualToQuery(Parameters parameters, String prefix1, String prefix2);
+        void AddIdsEqualToQuery(Parameters parameters, string prefix1, string prefix2);
 
         /**
          * Adds query statements, which contains restrictions, which express the property that the id of the entity
@@ -55,7 +45,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          * of the equation.
          * @param prefix2 Second alias of the entity + prefix to add to the properties.
          */
-        void AddIdsEqualToQuery(Parameters parameters, String prefix1, IIdMapper mapper2, String prefix2);
+        void AddIdsEqualToQuery(Parameters parameters, string prefix1, IIdMapper mapper2, string prefix2);
 
         /**
          * Adds query statements, which contains restrictions, which express the property that the id of the entity
@@ -65,7 +55,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          * @param prefix Prefix to add to the properties (may be null).
          * @param equals Should this query express the "=" relation or the "<>" relation.
          */
-        void AddIdEqualsToQuery(Parameters parameters, Object id, String prefix, bool equals);
+        void AddIdEqualsToQuery(Parameters parameters, object id, string prefix, bool equals);
 
         /**
          * Adds query statements, which contains named parameters, which express the property that the id of the entity
@@ -75,6 +65,6 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          * @param prefix Prefix to add to the properties (may be null).
          * @param equals Should this query express the "=" relation or the "<>" relation.
          */
-        void AddNamedIdEqualsToQuery(Parameters parameters, String prefix, bool equals);
+        void AddNamedIdEqualsToQuery(Parameters parameters, string prefix, bool equals);
     }
 }

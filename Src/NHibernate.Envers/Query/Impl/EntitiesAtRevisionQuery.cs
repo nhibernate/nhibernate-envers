@@ -57,15 +57,10 @@ namespace NHibernate.Envers.Query.Impl
 				BuildAndExecuteQuery(result);
 				return;
 			}
-			var internalResult = new ArrayList();
-			BuildAndExecuteQuery(internalResult);
-			var queryResultTyped = new List<IDictionary<string, object>>();
-			foreach (IDictionary hash in internalResult)
-			{
-				queryResultTyped.Add(DictionaryWrapper<string, object>.Wrap(hash));
-			}
+			var queryResult = new List<IDictionary>();
+			BuildAndExecuteQuery(queryResult);
 			entityInstantiator.AddInstancesFromVersionsEntities(entityName, result,
-			                                                    queryResultTyped, revision);
+																queryResult, revision);
 		}
 	}
 }

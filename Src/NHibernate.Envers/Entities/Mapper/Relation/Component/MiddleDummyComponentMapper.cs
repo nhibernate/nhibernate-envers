@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
     public sealed class MiddleDummyComponentMapper: IMiddleComponentMapper
     {
-        public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary<string, object> data, object dataObject, long revision)
+        public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision)
         {
             return null;
         }

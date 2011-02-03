@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return _nonInsertableFake ? false : !Toolz.EntitiesEqual(session, newObj, oldObj);
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary<string, object> data, object primaryKey,
+		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
 									   IAuditReaderImplementor versionsReader, long revision)
 		{
 			if (obj == null)
@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				return;
 			}
 
-			var entityId = _delegat.MapToIdFromMap(DictionaryWrapper<string, object>.Wrap((IDictionary)data[_propertyData.Name]));
+			var entityId = _delegat.MapToIdFromMap((IDictionary)data[_propertyData.Name]);
 			object value;
 			if (entityId == null)
 			{

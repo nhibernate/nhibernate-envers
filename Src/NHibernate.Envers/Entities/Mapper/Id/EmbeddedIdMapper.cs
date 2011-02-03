@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Util;
 using NHibernate.Envers.Exceptions;
-using System.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-	public class EmbeddedIdMapper  : AbstractCompositeIdMapper , ISimpleIdMapperBuilder
+	public class EmbeddedIdMapper : AbstractCompositeIdMapper, ISimpleIdMapperBuilder
 	{
 		private readonly PropertyData idPropertyData;
 
@@ -35,7 +35,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			MapToMapFromId(data, getter.Get(obj));
 		}
 
-		public override void MapToEntityFromMap(object obj, IDictionary<string, object> data)
+		public override void MapToEntityFromMap(object obj, IDictionary data)
 		{
 			if (data == null || obj == null) 
 			{

@@ -239,12 +239,8 @@
     <Compile Include="Synchronization\Work\PersistentCollectionChangeWorkUnit.cs" />
     <Compile Include="Tools\ArgumentsTools.cs" />
     <Compile Include="Tools\ArraysTools.cs" />
-    <Compile Include="Tools\CollectionWrapper.cs" />
     <Compile Include="Tools\DictionaryComparer.cs" />
-    <Compile Include="Tools\DictionaryWrapper.cs" />
     <Compile Include="Tools\EmptyDictionary.cs" />
-    <Compile Include="Tools\EnumeratorOfDictionariesWrapper.cs" />
-    <Compile Include="Tools\EnumeratorWrapper.cs" />
     <Compile Include="Tools\Graph\GraphTopologicalSort.cs" />
     <Compile Include="Tools\Graph\IGraphDefiner.cs" />
     <Compile Include="Tools\Graph\TopologicalSort.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace NHibernate.Envers.Entities.Mapper
          * @param versionsReader VersionsReader for reading relations
          * @param revision Revision at which the object is read, for reading relations
          */
-        void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary<String,object> data, Object primaryKey,
+        void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
                                 IAuditReaderImplementor versionsReader, long revision);
 
         /**

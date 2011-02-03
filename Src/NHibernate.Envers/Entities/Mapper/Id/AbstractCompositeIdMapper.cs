@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
 
-
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-	public abstract class  AbstractCompositeIdMapper : AbstractIdMapper , ISimpleIdMapperBuilder
+	public abstract class AbstractCompositeIdMapper : AbstractIdMapper , ISimpleIdMapperBuilder
 	{
 		protected IDictionary<PropertyData, SingleIdMapper> ids;
 		protected System.Type compositeIdClass;
@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			ids.Add(propertyData, new SingleIdMapper(propertyData));     
 		}
 
-		public override object MapToIdFromMap(IDictionary<string, object> data)
+		public override object MapToIdFromMap(IDictionary data)
 		{
 			object ret;
 			try 

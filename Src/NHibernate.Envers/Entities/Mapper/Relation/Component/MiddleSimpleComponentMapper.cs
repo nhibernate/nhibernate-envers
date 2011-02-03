@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
             this.verEntCfg = verEntCfg;
         }
 
-        public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary<string, object> data, object dataObject, long revision)
+        public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision)
         {
             return ((IDictionary)data[verEntCfg.OriginalIdPropName])[propertyName];
         }

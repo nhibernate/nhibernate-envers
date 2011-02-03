@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools;
 using NHibernate.Collection;
@@ -97,7 +98,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			return ret;
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary<string, object> data,
+		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data,
 									   object primaryKey, IAuditReaderImplementor versionsReader, long revision) 
 		{
 			foreach (var mapper in Properties.Values) 

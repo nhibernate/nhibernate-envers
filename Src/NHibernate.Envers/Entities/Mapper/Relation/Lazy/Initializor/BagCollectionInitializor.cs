@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementDataAsDic = elementData as IDictionary;
 			if (elementDataAsDic!=null) 
 			{
-				element = (T)elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator, DictionaryWrapper<string, object>.Wrap(elementDataAsDic), null, revision);
+				element = (T)elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator, elementDataAsDic, null, revision);
 			} 
 			else 
 			{

@@ -107,24 +107,20 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			// check if a property is declared as not audited to exclude it
 			// useful if a class is audited but some properties should be excluded
-			var unVer = _metaDataStore.MemberMeta<NotAuditedAttribute>(property);
-			if (unVer != null) 
+			if (_metaDataStore.MemberMeta<NotAuditedAttribute>(property) != null) 
 			{
 				return false;
 			}
 			// if the optimistic locking field has to be unversioned and the current property
 			// is the optimistic locking field, don't audit it
-			if (_globalCfg.DoNotAuditOptimisticLockingField) 
+			if (_globalCfg.DoNotAuditOptimisticLockingField && 
+                _persistentPropertiesSource.VersionedProperty != null &&
+                _persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
 			{
-				if (_persistentPropertiesSource.VersionedProperty != null)
-				{
-					if (_persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
-						return false;
-				}
+			    return false;			    
 			}
 
 			// Checking if this property is explicitly audited or if all properties are.
-			//AuditedAttribute aud = property.getAnnotation(typeof(AuditedAttribute));
 			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);
 			if (aud != null) 
 			{

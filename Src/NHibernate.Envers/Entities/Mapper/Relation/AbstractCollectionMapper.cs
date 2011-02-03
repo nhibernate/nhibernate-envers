@@ -138,7 +138,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public void MapToEntityFromMap(AuditConfiguration verCfg, 
 										object obj, 
-										IDictionary<string, object> data, 
+										IDictionary data, 
 										object primaryKey, 
 										IAuditReaderImplementor versionsReader, 
 										long revision) 
