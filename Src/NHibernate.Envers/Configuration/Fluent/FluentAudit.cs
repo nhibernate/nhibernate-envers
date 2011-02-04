@@ -21,10 +21,10 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-	    public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
+		public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
 		{
 			var ret = new Dictionary<MemberInfo, IEnumerable<Attribute>>();
-            
+			
 			addType(ret, typeof(T));
 			foreach (var ex in excluded)
 			{
@@ -33,13 +33,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return ret;
 		}
 
-	    private void addType(IDictionary<MemberInfo, IEnumerable<Attribute>> ret, System.Type type)
-	    {
-	        ret[type] = new List<Attribute> {new AuditedAttribute()};
-            if(!type.BaseType.Equals(typeof(object)))
-            {
-                addType(ret, type.BaseType);
-            }
-	    }
+		private static void addType(IDictionary<MemberInfo, IEnumerable<Attribute>> ret, System.Type type)
+		{
+			ret[type] = new List<Attribute> {new AuditedAttribute()};
+		}
 	}
 }

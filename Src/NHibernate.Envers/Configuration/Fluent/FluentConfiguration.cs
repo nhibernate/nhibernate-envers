@@ -6,8 +6,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 {
 	public class FluentConfiguration : IMetaDataProvider
 	{
-	    private static ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
-	    private readonly IDictionary<System.Type, IAttributeFactory> audits;
+		private static ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
+		private readonly IDictionary<System.Type, IAttributeFactory> audits;
 
 		public FluentConfiguration()
 		{
@@ -16,10 +16,10 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IFluentAudit<T> Audit<T>()
 		{
-		    var type = typeof (T);
-            var ret = new FluentAudit<T>();
-            audits[type] = ret;
-		    return ret;
+			var type = typeof (T);
+			var ret = new FluentAudit<T>();
+			audits[type] = ret;
+			return ret;
 		}
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
@@ -37,8 +37,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 						var entMeta = createOrGetEntityMeta(ret, classType);
 						foreach (var attribute in membAndAttrs.Value)
 						{
-                            if(log.IsDebugEnabled)
-                                log.Debug("Adding " + attribute.GetType().Name + " to type " + classType.FullName);
+							if(log.IsDebugEnabled)
+								log.Debug("Adding " + attribute.GetType().Name + " to type " + classType.FullName);
 							entMeta.AddClassMeta(attribute);							
 						}
 					}
@@ -48,14 +48,35 @@ namespace NHibernate.Envers.Configuration.Fluent
 						var entMeta = createOrGetEntityMeta(ret, memberType);
 						foreach (var attribute in membAndAttrs.Value)
 						{
-                            if (log.IsDebugEnabled)
-                                log.Debug("Adding " + attribute.GetType().Name + " to type " + memberType.FullName);
+							if (log.IsDebugEnabled)
+								log.Debug("Adding " + attribute.GetType().Name + " to type " + memberType.FullName);
 							entMeta.AddMemberMeta(memberInfo, attribute);							
 						}
 					}
 				}
 			}
+			addBaseTypesForAuditAttribute(ret);
 			return ret;
+		}
+
+		private void addBaseTypesForAuditAttribute(IDictionary<System.Type, IEntityMeta> ret)
+		{
+			foreach (var auditedType in audits.Keys)
+			{
+				setBaseTypeAsAudited(auditedType.BaseType, ret);
+			}
+		}
+
+		private static void setBaseTypeAsAudited(System.Type baseType, IDictionary<System.Type, IEntityMeta> ret)
+		{
+			if (!ret.ContainsKey(baseType) && !baseType.Equals(typeof(object)))
+			{
+				var eMeta = new EntityMeta();
+				eMeta.AddClassMeta(new AuditedAttribute());
+				ret[baseType] = eMeta;
+
+				setBaseTypeAsAudited(baseType.BaseType, ret);
+			}
 		}
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)
