@@ -67,7 +67,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 						(Component) propertyValue);
 					new AuditedPropertiesReader(_propertyAndMemberInfo, 
 												_metaDataStore,
-												ModificationStore.FULL, componentPropertiesSource, componentData,
+												ModificationStore.Full, componentPropertiesSource, componentData,
 												_globalCfg,
 												_propertyNamePrefix +
 												MappingTools.createComponentPrefix(declaredPersistentProperty.Property.Name))
@@ -129,7 +129,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			} 
 			else 
 			{
-				if (_defaultStore != ModificationStore._NULL) 
+				if (_defaultStore != ModificationStore.Null) 
 				{
 					propertyData.Store = _defaultStore;
 				} 

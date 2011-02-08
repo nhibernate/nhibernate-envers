@@ -10,7 +10,7 @@ namespace NHibernate.Envers
      */
     public enum ModificationStore
     {
-        _NULL, // C# does not accept null values passed for an enum value so we use this.
-        FULL
+        Null, // C# does not accept null values passed for an enum value so we use this.
+        Full
     }
 }
