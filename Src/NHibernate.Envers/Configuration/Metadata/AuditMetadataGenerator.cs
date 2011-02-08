@@ -381,7 +381,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Generating a mapping for the id
 			var idMapper = idMetadataGenerator.AddId(pc);
 
-			var inheritanceType = InheritanceType.GetForChild(pc);
+			var inheritanceType = pc.GetInheritanceType();
 
 			// These properties will be read from the mapping data
 
@@ -390,16 +390,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Reading the mapping data depending on inheritance type (if any)
 			switch (inheritanceType)
 			{
-				case InheritanceType.Type.None:
+				case InheritanceType.None:
 					mappingData = GenerateMappingData(pc, xmlMappingData, auditTableData, idMapper);
 					break;
 
-				case InheritanceType.Type.Single:
+				case InheritanceType.Single:
 					auditTableData = new AuditTableData(auditEntityName, null, schema, catalog);
 					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "subclass");
 					break;
 
-				case InheritanceType.Type.Joined:
+				case InheritanceType.Joined:
 					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
 
 					// Adding the "key" element with all id columns...
@@ -411,7 +411,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					keyMapping.AppendChild(CloneAndSetupRevisionInfoRelationMapping(keyMapping.OwnerDocument).GetElementsByTagName("column")[0].Clone());
 					break;
 
-				case InheritanceType.Type.TablePerClass:
+				case InheritanceType.TablePerClass:
 					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "union-subclass");
 
 					break;
