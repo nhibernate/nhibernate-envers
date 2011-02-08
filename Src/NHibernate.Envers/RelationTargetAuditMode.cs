@@ -5,7 +5,7 @@
      */
     public enum RelationTargetAuditMode
     {
-        AUDITED,
-        NOT_AUDITED
+        Audited,
+        NotAudited
     }
 }

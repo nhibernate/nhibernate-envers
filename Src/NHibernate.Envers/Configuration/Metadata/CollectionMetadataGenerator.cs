@@ -439,7 +439,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			// Last but one parameter: collection components are always insertable
 			var mapped = mainGenerator.BasicMetadataGenerator.AddBasic(xmlMapping,
-																		new PropertyAuditingData(prefix, "field", ModificationStore.Full, RelationTargetAuditMode.AUDITED, null, null, false),
+																		new PropertyAuditingData(prefix, "field", ModificationStore.Full, RelationTargetAuditMode.Audited, null, null, false),
 																		value, null, true, true);
 
 			if (mapped) 

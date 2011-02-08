@@ -493,7 +493,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var relationTargetAuditMode = propertyAuditingData.RelationTargetAuditMode;
 
 				if (!NotAuditedEntitiesConfigurations.Keys.Contains(referencedEntityName) ||
-					!allowNotAuditedTarget || !RelationTargetAuditMode.NOT_AUDITED.Equals(relationTargetAuditMode))
+					!allowNotAuditedTarget || !RelationTargetAuditMode.NotAudited.Equals(relationTargetAuditMode))
 				{
 					throw new MappingException("An audited relation from " + entityName + "."
 							+ propertyAuditingData.Name + " to a not audited entity " + referencedEntityName + "!"

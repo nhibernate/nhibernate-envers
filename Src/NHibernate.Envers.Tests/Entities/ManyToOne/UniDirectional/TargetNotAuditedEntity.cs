@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Entities.ManyToOne.UniDirectional
 		[Audited]
 		public virtual string Data { get; set; }
 
-		[Audited(TargetAuditMode = RelationTargetAuditMode.NOT_AUDITED)]
+		[Audited(TargetAuditMode = RelationTargetAuditMode.NotAudited)]
 		public virtual UnversionedStrTestEntity Reference { get; set; }
 
 		public override bool Equals(object obj)

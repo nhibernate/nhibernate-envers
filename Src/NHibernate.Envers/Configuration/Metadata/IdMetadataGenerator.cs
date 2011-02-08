@@ -112,7 +112,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private PropertyAuditingData GetIdPersistentPropertyAuditingData(Property property) 
 		{
 			return new PropertyAuditingData(property.Name, property.PropertyAccessorName,
-					ModificationStore.Full, RelationTargetAuditMode.AUDITED, null, null, false);
+					ModificationStore.Full, RelationTargetAuditMode.Audited, null, null, false);
 		}
 	}
 }

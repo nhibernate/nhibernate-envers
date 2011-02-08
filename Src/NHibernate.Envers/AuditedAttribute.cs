@@ -7,7 +7,7 @@ namespace NHibernate.Envers
 	{
 		public AuditedAttribute()
 		{
-			TargetAuditMode = RelationTargetAuditMode.AUDITED;
+			TargetAuditMode = RelationTargetAuditMode.Audited;
 			ModStore = ModificationStore.Full;
 		}
 
