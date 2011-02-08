@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Synchronization.Work
         public override IDictionary<String, Object> GenerateData(Object revisionData)
         {
             IDictionary<String, Object> data = new Dictionary<String, Object>();
-            FillDataWithId(data, revisionData, RevisionType.Del);
+            FillDataWithId(data, revisionData, RevisionType.Deleted);
 
 		    if (verCfg.GlobalCfg.StoreDataAtDelete) {
 			    verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, data,

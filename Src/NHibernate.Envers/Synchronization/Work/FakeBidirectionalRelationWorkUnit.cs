@@ -158,12 +158,12 @@ namespace NHibernate.Envers.Synchronization.Work
                 // If the revision type is "DEL", it means that the object is removed from the collection. Then the
                 // new owner will in fact be null.
                 rd.FakeBidirectionalRelationMapper.MapToMapFromEntity(sessionImplementor, data,
-                        RevisionType == RevisionType.Del ? null : owningEntity, null);
+                        RevisionType == RevisionType.Deleted ? null : owningEntity, null);
 
                 // Also mapping the index, if the collection is indexed.
                 if (rd.FakeBidirectionalRelationIndexMapper != null) {
                     rd.FakeBidirectionalRelationIndexMapper.MapToMapFromEntity(sessionImplementor, data,
-                            RevisionType == RevisionType.Del ? null : index, null);
+                            RevisionType == RevisionType.Deleted ? null : index, null);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace NHibernate.Envers.Synchronization.Work
                  * - ADD, DEL - return ADD (points to new owner)
                  * - ADD, ADD - return second (points to newer owner)
                  */
-                if (first.RevisionType == RevisionType.Del || second.RevisionType == RevisionType.Add) {
+                if (first.RevisionType == RevisionType.Deleted || second.RevisionType == RevisionType.Added) {
                     return second;
                 } else {
                     return first;

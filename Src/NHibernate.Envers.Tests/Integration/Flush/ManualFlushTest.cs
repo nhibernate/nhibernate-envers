@@ -75,8 +75,8 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		                .ForRevisionsOfEntity(typeof(StrTestEntity), false, true)
 		                .Add(AuditEntity.Id().Eq(id))
 		                .GetResultList();
-			Assert.AreEqual(RevisionType.Add, ((IList)results[0])[2]);
-			Assert.AreEqual(RevisionType.Mod, ((IList)results[1])[2]);
+			Assert.AreEqual(RevisionType.Added, ((IList)results[0])[2]);
+			Assert.AreEqual(RevisionType.Modified, ((IList)results[1])[2]);
 		}
 	}
 }

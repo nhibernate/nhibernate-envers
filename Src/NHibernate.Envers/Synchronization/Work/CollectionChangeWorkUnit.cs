@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Synchronization.Work
         public override IDictionary<String, Object> GenerateData(Object revisionData)
         {
             IDictionary<String, Object> data = new Dictionary<String, Object>();
-            FillDataWithId(data, revisionData, RevisionType.Mod);
+            FillDataWithId(data, revisionData, RevisionType.Modified);
 
             verCfg.EntCfg[EntityName].PropertyMapper.MapToMapFromEntity(sessionImplementor,
 				    data, entity, null);

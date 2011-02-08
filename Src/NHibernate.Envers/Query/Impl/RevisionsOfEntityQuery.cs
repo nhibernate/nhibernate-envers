@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Query.Impl
 			if (!selectDeletedEntities)
 			{
 				// e.revision_type != DEL AND
-				qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Del);
+				qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
 			}
 
 			// all specified conditions, transformed
