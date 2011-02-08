@@ -121,7 +121,7 @@ namespace NHibernate.Envers.Query.Criteria
 		public AggregatedAuditExpression Maximize() 
 		{
             return new AggregatedAuditExpression(_propertyNameGetter,
-                    AggregatedAuditExpression.AggregatedMode.MAX);
+                    AggregatedAuditExpression.AggregatedMode.Max);
         }
 
 		/// <summary>
@@ -131,7 +131,7 @@ namespace NHibernate.Envers.Query.Criteria
         public AggregatedAuditExpression Minimize() 
 		{
             return new AggregatedAuditExpression(_propertyNameGetter,
-                    AggregatedAuditExpression.AggregatedMode.MIN);
+                    AggregatedAuditExpression.AggregatedMode.Min);
         }
 
 		/// <summary>

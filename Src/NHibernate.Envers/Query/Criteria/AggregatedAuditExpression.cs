@@ -23,8 +23,8 @@ namespace NHibernate.Envers.Query.Criteria
         }
 
         public enum AggregatedMode {
-            MAX,
-            MIN
+            Max,
+            Min
         }
 
         public IExtendableCriterion Add(IAuditCriterion criterion) {
@@ -49,10 +49,10 @@ namespace NHibernate.Envers.Query.Criteria
 
             // Setting the desired projection of the aggregated query
             switch (mode) {
-                case AggregatedMode.MIN:
+                case AggregatedMode.Min:
                     subQb.AddProjection("min", propertyName, false);
                     break;
-                case AggregatedMode.MAX:
+                case AggregatedMode.Max:
                     subQb.AddProjection("max", propertyName, false);
                     break;
             }
