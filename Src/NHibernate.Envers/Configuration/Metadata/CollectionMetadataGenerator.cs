@@ -158,14 +158,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 						relMapper,
 					// The mapper will only be used to map from entity to map, so no need to provide other details
 					// when constructing the PropertyData.
-						new PropertyData(auditMappedBy, null, null, ModificationStore.Null),
+						new PropertyData(auditMappedBy, null, null, ModificationStore.None),
 						referencedEntityName, false);
 
 				// Checking if there's an index defined. If so, adding a mapper for it.
 				if (propertyAuditingData.PositionMappedBy != null)
 				{
 					var positionMappedBy = propertyAuditingData.PositionMappedBy;
-					fakeBidirectionalRelationIndexMapper = new SinglePropertyMapper(new PropertyData(positionMappedBy, null, null, ModificationStore.Null));
+					fakeBidirectionalRelationIndexMapper = new SinglePropertyMapper(new PropertyData(positionMappedBy, null, null, ModificationStore.None));
 
 					// Also, overwriting the index component data to properly read the index.
 					indexComponentData = new MiddleComponentData(new MiddleStraightComponentMapper(positionMappedBy), 0);

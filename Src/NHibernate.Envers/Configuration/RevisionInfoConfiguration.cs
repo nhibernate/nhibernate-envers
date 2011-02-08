@@ -30,8 +30,8 @@ namespace NHibernate.Envers.Configuration
 			_metaDataStore = metaDataStore;
 			_propertyAndMemberInfo = propertyAndMemberInfo;
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
-			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.Null);
-			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.Null);
+			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.None);
+			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.None);
 			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
 
 			revisionPropType = "integer";
@@ -98,7 +98,7 @@ namespace NHibernate.Envers.Configuration
 					if (typeof(DateTime).Equals(revisionTimestampType) ||
 							typeof(long).Equals(revisionTimestampType))
 					{
-						revisionInfoTimestampData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.Null);
+						revisionInfoTimestampData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionTimestampFound = true;
 					}
 					else
@@ -128,12 +128,12 @@ namespace NHibernate.Envers.Configuration
 					var revNrType = property.Type.ReturnedClass;
 					if (revNrType.Equals(typeof(int)))
 					{
-						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.Null);
+						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionNumberFound = true;
 					}
 					else if (revNrType.Equals(typeof(long)))
 					{
-						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.Null);
+						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionNumberFound = true;
 
 						// The default is integer

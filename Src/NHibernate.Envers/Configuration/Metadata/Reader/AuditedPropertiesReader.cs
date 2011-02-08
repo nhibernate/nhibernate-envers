@@ -129,7 +129,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			} 
 			else 
 			{
-				if (_defaultStore != ModificationStore.Null) 
+				if (_defaultStore != ModificationStore.None) 
 				{
 					propertyData.Store = _defaultStore;
 				} 
