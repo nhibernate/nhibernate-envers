@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
@@ -16,11 +16,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			TablePerClass
 		}
 
-		/**
-		 * @param pc The class for which to get the inheritance type.
-		 * @return The inheritance type of this class. NONE, if this class does not inherit from
-		 * another persisten class.
-		 */
+		/// <summary>
+		/// Get the <see cref="InheritanceType.Type"/> for a given <see cref="PersistentClass"/>.
+		/// </summary>
+		/// <param name="pc">The class for which to get the inheritance type.</param>
+		/// <returns>
+		/// The inheritance type of this class. NONE, if this class does not inherit from another persisten class.
+		/// </returns>
 		public static Type GetForChild(PersistentClass pc) 
 		{
 			var superclass = pc.Superclass;
@@ -30,9 +32,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			// We assume that every subclass is of the same type.
-			var enu = superclass.SubclassIterator.GetEnumerator();
-			enu.MoveNext();
-			return DoGetForSubclass(enu.Current);
+			return DoGetForSubclass(superclass.SubclassIterator.FirstOrDefault());
 		}
 
 		private static Type DoGetForSubclass(Subclass subclass) 
@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				return Type.TablePerClass;
 			}
 
-			throw new MappingException("Unknown subclass class: " + subclass.ClassName);
+			throw new MappingException("Unknown subclass class: " + (subclass != null ? subclass.GetType().FullName : "Not available type." ));
 		}
 	}
 }
