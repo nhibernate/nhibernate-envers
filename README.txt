@@ -1,11 +1,19 @@
 Some notes...
 
-* This is no official alpha release! Feel free to test it though.
-
-* Most of Envers functionality is ported, you can read manual here... http://docs.jboss.org/envers/docs/index.html. There's a short cut for configuration though - simply call IntegrateWithEnvers on your NH Configuration object.
+* Most of Envers functionality is ported, you can read manual here... 
+http://docs.jboss.org/envers/docs/index.html. 
+There's a short cut for configuration though - simply call IntegrateWithEnvers on your NH Configuration object.
 
 * Hopefully an alpha release will be available when NH 3.01 is released.
 
-* Right now you can only configure what to audit by using attributes (like Envers). Hopefully there will be alternatives soon. 
+* There's some experimental support for programmatic configuration.
+Have a look at FluentConfiguration
+
+* Send user questions to NH user group list, http://groups.google.com/group/nhusers?pli=1
+
+* Report bugs and/or patches with unit tests here http://216.121.112.228/browse/NHE
+
+
+
 
 
