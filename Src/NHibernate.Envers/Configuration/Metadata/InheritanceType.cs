@@ -10,10 +10,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 	{
 		public enum Type
 		{
-			NONE,
-			JOINED,
-			SINGLE,
-			TABLE_PER_CLASS
+			None,
+			Joined,
+			Single,
+			TablePerClass
 		}
 
 		/**
@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var superclass = pc.Superclass;
 			if (superclass == null) 
 			{
-				return Type.NONE;
+				return Type.None;
 			}
 
 			// We assume that every subclass is of the same type.
@@ -39,15 +39,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			if (subclass is SingleTableSubclass) 
 			{
-				return Type.SINGLE;
+				return Type.Single;
 			}
 			if (subclass is JoinedSubclass) 
 			{
-				return Type.JOINED;
+				return Type.Joined;
 			}
 			if (subclass is UnionSubclass) 
 			{
-				return Type.TABLE_PER_CLASS;
+				return Type.TablePerClass;
 			}
 
 			throw new MappingException("Unknown subclass class: " + subclass.ClassName);
