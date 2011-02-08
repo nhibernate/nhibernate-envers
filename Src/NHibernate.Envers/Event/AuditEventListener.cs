@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Event
 			{
 				var propertyName = propertyNames[i];
 				var relDesc = verCfg.EntCfg.GetRelationDescription(entityName, propertyName);
-				if (relDesc != null && relDesc.Bidirectional && relDesc.RelationType == RelationType.TO_ONE &&
+				if (relDesc != null && relDesc.Bidirectional && relDesc.RelationType == RelationType.ToOne &&
 						relDesc.Insertable) 
 				{
 					// Checking for changes

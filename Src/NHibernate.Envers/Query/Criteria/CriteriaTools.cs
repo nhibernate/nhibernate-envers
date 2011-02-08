@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Query.Criteria
                 return null;
             }
 
-            if (relationDesc.RelationType == RelationType.TO_ONE) {
+            if (relationDesc.RelationType == RelationType.ToOne) {
                 return relationDesc;
             }
 

@@ -14,25 +14,25 @@ namespace NHibernate.Envers.Entities
         /**
          * A single-reference-valued relation. The entity owns the relation.
          */
-        TO_ONE,
+        ToOne,
         /**
          * A single-reference-valued relation. The entity doesn't own the relation. It is directly mapped in the related
          * entity.
          */
-        TO_ONE_NOT_OWNING,
+        ToOneNotOwning,
         /**
          * A collection-of-references-valued relation. The entity doesn't own the relation. It is directly mapped in the
          * related entity.
          */
-        TO_MANY_NOT_OWNING,
+        ToManyNotOwning,
         /**
          * A collection-of-references-valued relation. The entity owns the relation. It is mapped using a middle table.
          */
-        TO_MANY_MIDDLE,
+        ToManyMiddle,
         /**
          * A collection-of-references-valued relation. The entity doesn't own the relation. It is mapped using a middle
          * table.
          */
-        TO_MANY_MIDDLE_NOT_OWNING
+        ToManyMiddleNotOwning
     }
 }

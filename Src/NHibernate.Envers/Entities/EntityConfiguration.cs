@@ -32,14 +32,14 @@ namespace NHibernate.Envers.Entities
 
         public void AddToOneRelation(String fromPropertyName, String toEntityName, IIdMapper idMapper, bool insertable)
         {
-            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.TO_ONE,
+            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOne,
                     toEntityName, null, idMapper, null, null, insertable));
         }
 
         public void AddToOneNotOwningRelation(String fromPropertyName, String mappedByPropertyName, String toEntityName,
                                               IIdMapper idMapper)
         {
-            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.TO_ONE_NOT_OWNING,
+            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOneNotOwning,
                     toEntityName, mappedByPropertyName, idMapper, null, null, true));
         }
 
@@ -47,20 +47,20 @@ namespace NHibernate.Envers.Entities
                                                IIdMapper idMapper, IPropertyMapper fakeBidirectionalRelationMapper,
                                                IPropertyMapper fakeBidirectionalRelationIndexMapper)
         {
-            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.TO_MANY_NOT_OWNING,
+            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyNotOwning,
                     toEntityName, mappedByPropertyName, idMapper, fakeBidirectionalRelationMapper,
                     fakeBidirectionalRelationIndexMapper, true));
         }
 
         public void addToManyMiddleRelation(String fromPropertyName, String toEntityName)
         {
-            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.TO_MANY_MIDDLE,
+            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddle,
                     toEntityName, null, null, null, null, true));
         }
 
         public void AddToManyMiddleNotOwningRelation(String fromPropertyName, String mappedByPropertyName, String toEntityName)
         {
-            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.TO_MANY_MIDDLE_NOT_OWNING,
+            relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddleNotOwning,
                     toEntityName, mappedByPropertyName, null, null, null, true));
         }
 
