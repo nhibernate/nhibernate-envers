@@ -61,7 +61,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			var res = (object[]) result[0];
 			Assert.AreEqual(new StrIntTestEntity { Str = "b", Number = 11, Id=id2 }, res[0]);
 			Assert.AreEqual(1, ((DefaultRevisionEntity)res[1]).Id);
-			Assert.AreEqual(RevisionType.ADD, res[2]);
+			Assert.AreEqual(RevisionType.Add, res[2]);
 		}
 	}
 }

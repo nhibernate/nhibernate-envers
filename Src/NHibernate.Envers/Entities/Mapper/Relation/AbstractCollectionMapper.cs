@@ -99,7 +99,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				added.RemoveAll(itemsToRemove);
 			}
 
-			addCollectionChanges(collectionChanges, added, RevisionType.ADD, id);
+			addCollectionChanges(collectionChanges, added, RevisionType.Add, id);
 
 			var deleted = new HashedSet();
 			if (oldColl != null)
@@ -120,7 +120,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				deleted.RemoveAll(itemsToRemove);
 			}
 
-			addCollectionChanges(collectionChanges, deleted, RevisionType.DEL, id);
+			addCollectionChanges(collectionChanges, deleted, RevisionType.Del, id);
 
 			return collectionChanges;
 		}

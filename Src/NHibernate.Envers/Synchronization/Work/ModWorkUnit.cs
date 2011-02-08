@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
         public override IDictionary<String, Object> GenerateData(Object revisionData)
         {
-            FillDataWithId(data, revisionData, RevisionType.MOD);
+            FillDataWithId(data, revisionData, RevisionType.Mod);
 
             return data;
         }

@@ -2,8 +2,8 @@
 {
 	public enum RevisionType
 	{
-		ADD,
-		MOD,
-		DEL
+		Add,
+		Mod,
+		Del
 	}
 }

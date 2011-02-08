@@ -76,7 +76,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		{
 			IQuery query = versionsReader.Session.CreateQuery(queryString);
 			query.SetParameter("revision", revision);
-			query.SetParameter("delrevisiontype", RevisionType.DEL);
+			query.SetParameter("delrevisiontype", RevisionType.Del);
 			foreach (QueryParameterData paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);

@@ -182,9 +182,9 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			Assert.AreEqual(2, ((DefaultRevisionEntity)result[1][1]).Id);
 			Assert.AreEqual(4, ((DefaultRevisionEntity)result[2][1]).Id);
 
-			Assert.AreEqual(RevisionType.ADD, result[0][2]);
-			Assert.AreEqual(RevisionType.MOD, result[1][2]);
-			Assert.AreEqual(RevisionType.DEL, result[2][2]);
+			Assert.AreEqual(RevisionType.Add, result[0][2]);
+			Assert.AreEqual(RevisionType.Mod, result[1][2]);
+			Assert.AreEqual(RevisionType.Del, result[2][2]);
 		}
 
 		[Test]
@@ -196,9 +196,9 @@ namespace NHibernate.Envers.Tests.Integration.Query
 				.Add(AuditEntity.Id().Eq(id1))
 				.GetResultList<RevisionType>();
 
-			Assert.AreEqual(RevisionType.ADD, result[0]);
-			Assert.AreEqual(RevisionType.MOD, result[1]);
-			Assert.AreEqual(RevisionType.DEL, result[2]);
+			Assert.AreEqual(RevisionType.Add, result[0]);
+			Assert.AreEqual(RevisionType.Mod, result[1]);
+			Assert.AreEqual(RevisionType.Del, result[2]);
 		}
 
 		[Test]

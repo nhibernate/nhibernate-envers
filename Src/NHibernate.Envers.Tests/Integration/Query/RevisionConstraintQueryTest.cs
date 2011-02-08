@@ -143,7 +143,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), true, true)
 						.Add(AuditEntity.Id().Eq(id1))
-						.Add(AuditEntity.RevisionType().Eq(RevisionType.MOD))
+						.Add(AuditEntity.RevisionType().Eq(RevisionType.Mod))
 						.GetResultList();
 			CollectionAssert.AreEqual(
 				new[]
@@ -161,7 +161,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			var result = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof(StrIntTestEntity), true, true)
 						.Add(AuditEntity.Id().Eq(id1))
-						.Add(AuditEntity.RevisionType().Ne(RevisionType.MOD))
+						.Add(AuditEntity.RevisionType().Ne(RevisionType.Mod))
 						.GetResultList();
 			CollectionAssert.AreEqual(
 				new[]
