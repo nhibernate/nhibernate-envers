@@ -7,4 +7,3 @@
 * test för structs as components
 fluent...
 * loggning för fluent
-* revisionrev fluent
