@@ -1,33 +1,34 @@
-﻿using System;
-
-namespace NHibernate.Envers.Entities
+﻿namespace NHibernate.Envers.Entities
 {
     public class PropertyData 
 	{
-        public String Name { get; private set; }
-	    public String BeanName { get; private set; }
-        public String AccessType {get; private set;}
+        public string Name { get; private set; }
+	    public string BeanName { get; private set; }
+        public string AccessType {get; private set;}
         public ModificationStore Store {get; private set;}
 
-        /**
-         * Copies the given property data, except the name.
-         * @param newName New name.
-         * @param propertyData Property data to copy the rest of properties from.
-         */
-        public PropertyData(String newName, PropertyData propertyData) {
+		/// <summary>
+		/// Copies the given property data, except the name.
+		/// </summary>
+		/// <param name="newName">New name</param>
+		/// <param name="propertyData">Property data to copy the rest of properties from.</param>
+        public PropertyData(string newName, PropertyData propertyData) 
+		{
             Name = newName;
 		    BeanName = propertyData.BeanName;
             AccessType = propertyData.AccessType;
             Store = propertyData.Store;
         }
 
-        /**
-         * @param name Name of the property.
-	     * @param beanName Name of the property in the bean.
-         * @param accessType Accessor type for this property.
-         * @param store How this property should be stored.
-         */
-        public PropertyData(String name, String beanName, String accessType, ModificationStore store) {
+        /// <summary>
+        /// 
+        /// </summary>
+		/// <param name="name">Name of the property.</param>
+		/// <param name="beanName">Name of the property in the bean.</param>
+		/// <param name="accessType">Accessor type for this property.</param>
+		/// <param name="store">How this property should be stored.</param>
+        public PropertyData(string name, string beanName, string accessType, ModificationStore store) 
+		{
             Name = name;
 		    BeanName = beanName;
             AccessType = accessType;

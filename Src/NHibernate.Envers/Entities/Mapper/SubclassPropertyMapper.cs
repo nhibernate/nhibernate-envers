@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
@@ -10,43 +8,47 @@ using NHibernate.Collection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
-	/**
-	 * A mapper which maps from a parent mapper and a "main" one, but adds only to the "main". The "main" mapper
-	 * should be the mapper of the subclass.
-	 * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	 */
-	public class SubclassPropertyMapper : IExtendedPropertyMapper {
-		private IExtendedPropertyMapper main;
-		private IExtendedPropertyMapper parentMapper;
+	/// <summary>
+	/// A mapper which maps from a parent mapper and a "main" one, but adds only to the "main". The "main" mapper
+	/// should be the mapper of the subclass.
+	/// </summary>
+	public class SubclassPropertyMapper : IExtendedPropertyMapper 
+	{
+		private readonly IExtendedPropertyMapper main;
+		private readonly IExtendedPropertyMapper parentMapper;
 
-		public SubclassPropertyMapper(IExtendedPropertyMapper main, IExtendedPropertyMapper parentMapper) {
+		public SubclassPropertyMapper(IExtendedPropertyMapper main, IExtendedPropertyMapper parentMapper) 
+		{
 			this.main = main;
 			this.parentMapper = parentMapper;
 		}
 
-		public bool Map(ISessionImplementor session, IDictionary<String, Object> data, String[] propertyNames, Object[] newState, Object[] oldState) {
-			bool parentDiffs = parentMapper.Map(session, data, propertyNames, newState, oldState);
-			bool mainDiffs = main.Map(session, data, propertyNames, newState, oldState);
+		public bool Map(ISessionImplementor session, IDictionary<string, object> data, string[] propertyNames, object[] newState, object[] oldState) 
+		{
+			var parentDiffs = parentMapper.Map(session, data, propertyNames, newState, oldState);
+			var mainDiffs = main.Map(session, data, propertyNames, newState, oldState);
 
 			return parentDiffs || mainDiffs;
 		}
 
-		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<String, Object> data, Object newObj, Object oldObj) {
-			bool parentDiffs = parentMapper.MapToMapFromEntity(session, data, newObj, oldObj);
-			bool mainDiffs = main.MapToMapFromEntity(session, data, newObj, oldObj);
+		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) {
+			var parentDiffs = parentMapper.MapToMapFromEntity(session, data, newObj, oldObj);
+			var mainDiffs = main.MapToMapFromEntity(session, data, newObj, oldObj);
 
 			return parentDiffs || mainDiffs;
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary data, Object primaryKey, IAuditReaderImplementor versionsReader, long revision) {
+		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey, IAuditReaderImplementor versionsReader, long revision) 
+		{
 			parentMapper.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 			main.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(String referencingPropertyName,
-																						IPersistentCollection newColl, 
-																						Object oldColl,
-																						Object id) {
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+																		IPersistentCollection newColl, 
+																		object oldColl,
+																		object id) 
+		{
 			var parentCollectionChanges = parentMapper.MapCollectionChanges(
 					referencingPropertyName, newColl, oldColl, id);
 
@@ -64,15 +66,18 @@ namespace NHibernate.Envers.Entities.Mapper
 			return parentCollectionChanges;
 		}
 
-		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, String componentClassName) {
+		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
+		{
 			return main.AddComponent(propertyData, componentClassName);
 		}
 
-		public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) {
+		public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) 
+		{
 			main.AddComposite(propertyData, propertyMapper);
 		}
 
-		public void Add(PropertyData propertyData) {
+		public void Add(PropertyData propertyData) 
+		{
 			main.Add(propertyData);
 		}
 	}

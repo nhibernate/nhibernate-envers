@@ -1,49 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Entities.Mapper;
 
 namespace NHibernate.Envers.Entities
 {
-    /**
-     * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
     public class EntityConfiguration
     {
-        public String VersionsEntityName { get; private set; }
+        public string VersionsEntityName { get; private set; }
         public IdMappingData IdMappingData { get; private set; }
         public IExtendedPropertyMapper PropertyMapper { get; private set; }
         // Maps from property name
-        private IDictionary<String, RelationDescription> relations;
-        public String ParentEntityName { get; private set; }
+        private readonly IDictionary<string, RelationDescription> relations;
+        public string ParentEntityName { get; private set; }
 
-        public EntityConfiguration(String versionsEntityName, IdMappingData idMappingData,
-                                   IExtendedPropertyMapper propertyMapper, String parentEntityName)
+        public EntityConfiguration(string versionsEntityName, IdMappingData idMappingData,
+                                   IExtendedPropertyMapper propertyMapper, string parentEntityName)
         {
-            this.VersionsEntityName = versionsEntityName;
-            this.IdMappingData = idMappingData;
-            this.PropertyMapper = propertyMapper;
-            this.ParentEntityName = parentEntityName;
+            VersionsEntityName = versionsEntityName;
+            IdMappingData = idMappingData;
+            PropertyMapper = propertyMapper;
+            ParentEntityName = parentEntityName;
 
-            this.relations = new Dictionary<String, RelationDescription>();
+			relations = new Dictionary<string, RelationDescription>();
         }
 
-        public void AddToOneRelation(String fromPropertyName, String toEntityName, IIdMapper idMapper, bool insertable)
+        public void AddToOneRelation(string fromPropertyName, string toEntityName, IIdMapper idMapper, bool insertable)
         {
             relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOne,
                     toEntityName, null, idMapper, null, null, insertable));
         }
 
-        public void AddToOneNotOwningRelation(String fromPropertyName, String mappedByPropertyName, String toEntityName,
+        public void AddToOneNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName,
                                               IIdMapper idMapper)
         {
             relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOneNotOwning,
                     toEntityName, mappedByPropertyName, idMapper, null, null, true));
         }
 
-        public void AddToManyNotOwningRelation(String fromPropertyName, String mappedByPropertyName, String toEntityName,
+        public void AddToManyNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName,
                                                IIdMapper idMapper, IPropertyMapper fakeBidirectionalRelationMapper,
                                                IPropertyMapper fakeBidirectionalRelationIndexMapper)
         {
@@ -52,24 +46,24 @@ namespace NHibernate.Envers.Entities
                     fakeBidirectionalRelationIndexMapper, true));
         }
 
-        public void addToManyMiddleRelation(String fromPropertyName, String toEntityName)
+        public void addToManyMiddleRelation(string fromPropertyName, string toEntityName)
         {
             relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddle,
                     toEntityName, null, null, null, null, true));
         }
 
-        public void AddToManyMiddleNotOwningRelation(String fromPropertyName, String mappedByPropertyName, String toEntityName)
+        public void AddToManyMiddleNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName)
         {
             relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddleNotOwning,
                     toEntityName, mappedByPropertyName, null, null, null, true));
         }
 
-        public bool IsRelation(String propertyName)
+        public bool IsRelation(string propertyName)
         {
             return relations.ContainsKey(propertyName) && relations[propertyName] != null;
         }
 
-        public RelationDescription GetRelationDescription(String propertyName)
+        public RelationDescription GetRelationDescription(string propertyName)
         {
             return relations.ContainsKey(propertyName)? relations[propertyName]: null;
         }

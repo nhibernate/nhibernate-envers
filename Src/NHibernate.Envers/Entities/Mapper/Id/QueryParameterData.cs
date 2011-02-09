@@ -1,22 +1,17 @@
-﻿using System;
-
-namespace NHibernate.Envers.Entities.Mapper.Id
+﻿namespace NHibernate.Envers.Entities.Mapper.Id
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
     public class QueryParameterData
     {
-        private string flatEntityPropertyName;
-        private object value;
+        private readonly string flatEntityPropertyName;
+        private readonly object value;
 
-        public QueryParameterData(String flatEntityPropertyName, Object value)
+        public QueryParameterData(string flatEntityPropertyName, object value)
         {
             this.flatEntityPropertyName = flatEntityPropertyName;
             this.value = value;
         }
 
-        public string getProperty(String prefix)
+        public string GetProperty(string prefix)
         {
             if (prefix != null)
             {
@@ -25,12 +20,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
             return flatEntityPropertyName;
         }
 
-        public object getValue()
-        {
-            return value;
-        }
+    	public object Value
+    	{
+    		get { return value; }
+    	}
 
-        public void SetParameterValue(IQuery query)
+    	public void SetParameterValue(IQuery query)
         {
             query.SetParameter(flatEntityPropertyName, value);
         }
@@ -40,12 +35,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
             return flatEntityPropertyName;
         }
 
-        public override bool Equals(Object o) 
+        public override bool Equals(object o) 
         {
             if (this == o) return true;
             if (!(o is QueryParameterData)) return false;
 
-            QueryParameterData that = (QueryParameterData) o;
+            var that = (QueryParameterData) o;
 
             if (flatEntityPropertyName != null ? !flatEntityPropertyName.Equals(that.flatEntityPropertyName) : that.flatEntityPropertyName != null)
                 return false;

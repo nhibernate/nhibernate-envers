@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
             : base(compositeIdClass)
             {}
 
-        public override void MapToMapFromId(IDictionary<String, Object> data, Object obj)
+        public override void MapToMapFromId(IDictionary<string, object> data, object obj)
         {
             foreach (IIdMapper idMapper in ids.Values)
             { 
@@ -19,12 +19,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-        public override void MapToMapFromEntity(IDictionary<String, Object> data, Object obj)
+        public override void MapToMapFromEntity(IDictionary<string, object> data, object obj)
         {
            MapToMapFromId(data, obj);
         }
 
-        public override void MapToEntityFromMap(Object obj, IDictionary data) 
+        public override void MapToEntityFromMap(object obj, IDictionary data) 
 		{
 			foreach (IIdMapper idMapper in ids.Values) 
 			{
@@ -32,26 +32,27 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-        public override IIdMapper PrefixMappedProperties(String prefix)
+        public override IIdMapper PrefixMappedProperties(string prefix)
         {
-			MultipleIdMapper ret = new MultipleIdMapper(compositeIdClass);
+			var ret = new MultipleIdMapper(compositeIdClass);
 
-			foreach (PropertyData propertyData in ids.Keys) {
-				String propertyName = propertyData.Name;
+			foreach (var propertyData in ids.Keys) 
+			{
+				var propertyName = propertyData.Name;
 				ret.ids.Add(propertyData, new SingleIdMapper(new PropertyData(prefix + propertyName, propertyData)));
 			}
 
 			return ret;
 		}
 
-        public override Object MapToIdFromEntity(Object data)
+        public override object MapToIdFromEntity(object data)
         {
 			if (data == null) 
 			{
 				return null;
 			}
 
-			Object ret;
+			object ret;
 			try 
 			{
 				ret = Activator.CreateInstance(compositeIdClass );
@@ -69,15 +70,15 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			return ret;
 		}
 
-        public override IList<QueryParameterData> MapToQueryParametersFromId(Object obj)
+        public override IList<QueryParameterData> MapToQueryParametersFromId(object obj)
         {
             //Simon 27/06/2010 - era new LinkedHashMap
-            IDictionary<String, Object> data = new Dictionary<String, Object>();
+            IDictionary<string, object> data = new Dictionary<string, object>();
             MapToMapFromId(data, obj);
 
             IList<QueryParameterData> ret = new List<QueryParameterData>();
 
-            foreach (KeyValuePair<String, Object> propertyData in data)
+            foreach (KeyValuePair<string, object> propertyData in data)
             {
                 ret.Add(new QueryParameterData(propertyData.Key, propertyData.Value));
             }

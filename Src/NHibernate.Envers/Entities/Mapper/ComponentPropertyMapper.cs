@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
 using NHibernate.Engine;
-using System.Reflection;
 using NHibernate.Envers.Configuration;
 using NHibernate.Collection;
 using NHibernate.Envers.Tools;
@@ -14,41 +11,42 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
-    /**
-    ///@author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
     public class ComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder 
 	{
         private readonly PropertyData propertyData;
         private readonly MultiPropertyMapper _delegate;
-	    private readonly String componentClassName;
+	    private readonly string componentClassName;
 
-        public ComponentPropertyMapper(PropertyData propertyData, String componentClassName) 
+        public ComponentPropertyMapper(PropertyData propertyData, string componentClassName) 
 		{
             this.propertyData = propertyData;
             this._delegate = new MultiPropertyMapper();
 		    this.componentClassName = componentClassName;
         }
 
-	    public void Add(PropertyData propertyData) {
+	    public void Add(PropertyData propertyData) 
+		{
             _delegate.Add(propertyData);
         }
 
-        public ICompositeMapperBuilder AddComponent(PropertyData propertyData, String componentClassName) {
+        public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
+		{
             return _delegate.AddComponent(propertyData, componentClassName);
         }
 
-        public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) {
+        public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) 
+		{
             _delegate.AddComposite(propertyData, propertyMapper);
         }
 
-        public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<String, Object> data, 
-                                       Object newObj, Object oldObj) {
+        public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, 
+                                       object newObj, object oldObj) 
+		{
             return _delegate.MapToMapFromEntity(session, data, newObj, oldObj);
         }
 
-        public void MapToEntityFromMap(AuditConfiguration verCfg, Object obj, IDictionary data, 
-                                       Object primaryKey, IAuditReaderImplementor versionsReader, long revision)
+        public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, 
+                                       object primaryKey, IAuditReaderImplementor versionsReader, long revision)
         {
             if (data == null || obj == null) 
 			{
@@ -85,12 +83,12 @@ namespace NHibernate.Envers.Entities.Mapper
 		    }
         }
 
-        public IList<PersistentCollectionChangeData> MapCollectionChanges(String referencingPropertyName,
-                                                                                        IPersistentCollection newColl,
-                                                                                        Object oldColl,
-                                                                                        Object id) {
+        public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+                                                                        IPersistentCollection newColl,
+                                                                        object oldColl,
+                                                                        object id) 
+		{
             return _delegate.MapCollectionChanges(referencingPropertyName, newColl, oldColl, id);
         }
-
     }
 }

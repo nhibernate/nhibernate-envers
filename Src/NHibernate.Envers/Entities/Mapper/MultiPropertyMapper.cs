@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools;
 using NHibernate.Collection;
@@ -14,12 +13,12 @@ namespace NHibernate.Envers.Entities.Mapper
 	public class MultiPropertyMapper : IExtendedPropertyMapper 
 	{
 		public IDictionary<PropertyData, IPropertyMapper> Properties { get; protected set; }
-		private readonly IDictionary<String, PropertyData> propertyDatas;
+		private readonly IDictionary<string, PropertyData> propertyDatas;
 
 		public MultiPropertyMapper() 
 		{
 			Properties = new Dictionary<PropertyData, IPropertyMapper>();
-			propertyDatas = new Dictionary<String, PropertyData>();
+			propertyDatas = new Dictionary<string, PropertyData>();
 		}
 
 		public void Add(PropertyData propertyData) 
@@ -30,7 +29,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
-		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, String componentClassName) 
+		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
 		{
 			if (Properties.ContainsKey(propertyData)) 
 			{
@@ -50,18 +49,18 @@ namespace NHibernate.Envers.Entities.Mapper
 			propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
-		private Object GetAtIndexOrNull(Object[] array, int index) { return array == null ? null : array[index]; }
+		private static object getAtIndexOrNull(object[] array, int index) { return array == null ? null : array[index]; }
 
-		public bool Map(ISessionImplementor session, IDictionary<String, Object> data, String[] propertyNames, 
-						Object[] newState, Object[] oldState) {
+		public bool Map(ISessionImplementor session, IDictionary<string, object> data, string[] propertyNames, 
+						object[] newState, object[] oldState) {
 			bool ret = false;
 			for (int i=0; i<propertyNames.Length; i++) {
-				String propertyName = propertyNames[i];
+				string propertyName = propertyNames[i];
 
 				if (propertyDatas.ContainsKey(propertyName)) {
 					ret |= Properties[propertyDatas[propertyName]].MapToMapFromEntity(session, data,
-							GetAtIndexOrNull(newState, i),
-							GetAtIndexOrNull(oldState, i));
+							getAtIndexOrNull(newState, i),
+							getAtIndexOrNull(oldState, i));
 				}
 			}
 

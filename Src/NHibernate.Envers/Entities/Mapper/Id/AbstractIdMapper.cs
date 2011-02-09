@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var paramData in paramDatas) 
 			{
-				parametersToUse.AddWhere(paramData.getProperty(prefix1), false, "=", paramData.getProperty(prefix2), false);
+				parametersToUse.AddWhere(paramData.GetProperty(prefix1), false, "=", paramData.GetProperty(prefix2), false);
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			{
 				var paramData1 = paramDatas1[i];
 				var paramData2 = paramDatas2[i];
-				parametersToUse.AddWhere(paramData1.getProperty(prefix1), false, "=", paramData2.getProperty(prefix2), false);
+				parametersToUse.AddWhere(paramData1.GetProperty(prefix1), false, "=", paramData2.GetProperty(prefix2), false);
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var paramData in paramDatas) 
 			{
-				parametersToUse.AddWhereWithParam(paramData.getProperty(prefix) , equals ? "=" : "<>", paramData.getValue());
+				parametersToUse.AddWhereWithParam(paramData.GetProperty(prefix) , equals ? "=" : "<>", paramData.Value);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var paramData in paramDatas) 
 			{
-				parametersToUse.AddWhereWithNamedParam(paramData.getProperty(prefix), equals ? "=" : "<>", paramData.GetQueryParameterName());
+				parametersToUse.AddWhereWithNamedParam(paramData.GetProperty(prefix), equals ? "=" : "<>", paramData.GetQueryParameterName());
 			}
 		}
 
