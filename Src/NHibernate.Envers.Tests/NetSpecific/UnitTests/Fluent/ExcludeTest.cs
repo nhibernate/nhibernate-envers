@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			var cfg = new FluentConfiguration();
 			cfg.Audit<SomePropsEntity>()
 					.Exclude(s => s.Number)
-                    .Exclude(s => s.String);
+					.Exclude(s => s.String);
 			metas = cfg.CreateMetaData(null);
 		}
 
@@ -31,16 +31,16 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		[Test]
 		public void ClassShouldBeAudited()
 		{
-            var entMeta = metas[typeof(SomePropsEntity)];
+			var entMeta = metas[typeof(SomePropsEntity)];
 			entMeta.ClassMetas.OnlyContains<AuditedAttribute>();
 		}
 
 		[Test]
 		public void ExcludedPropertyShouldNotBeAudited()
 		{
-            var propInfo = typeof(SomePropsEntity).GetProperty("Number");
-            var propInfo2 = typeof(SomePropsEntity).GetProperty("String");
-            var entMeta = metas[typeof(SomePropsEntity)];
+			var propInfo = typeof(SomePropsEntity).GetProperty("Number");
+			var propInfo2 = typeof(SomePropsEntity).GetProperty("String");
+			var entMeta = metas[typeof(SomePropsEntity)];
 			Assert.AreEqual(2, entMeta.MemberMetas.Count);
 			entMeta.MemberMetas[propInfo].OnlyContains<NotAuditedAttribute>();
 			entMeta.MemberMetas[propInfo2].OnlyContains<NotAuditedAttribute>();
