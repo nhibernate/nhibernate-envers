@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Tools
 {
@@ -28,8 +29,7 @@ namespace NHibernate.Envers.Tests.Tools
 
 		public static void OnlyContains<T>(this IEnumerable<Attribute> attributes) where T : Attribute
 		{
-			Assert.AreEqual(1, attributes.Count());
-			Assert.AreEqual(typeof(T), attributes.First().GetType());
+			attributes.Select(x => x.GetType()).Should().Have.SameSequenceAs(new[] { typeof(T) });
 		}
 	}
 }
