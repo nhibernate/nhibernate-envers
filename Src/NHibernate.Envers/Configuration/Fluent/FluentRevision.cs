@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
-	public class FluentRevision : IAttributeFactory
+	public class FluentRevision : IAttributesPerMethodInfoFactory
 	{
 		private readonly System.Type _type;
 		private readonly MemberInfo _number;

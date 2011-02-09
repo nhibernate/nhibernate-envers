@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
-	public interface IAttributeFactory
+	public interface IAttributesPerMethodInfoFactory
 	{
 		IDictionary<MemberInfo, IEnumerable<Attribute>> Create();
 	}

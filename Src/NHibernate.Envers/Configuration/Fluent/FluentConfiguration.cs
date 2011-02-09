@@ -8,25 +8,27 @@ namespace NHibernate.Envers.Configuration.Fluent
 {
 	public class FluentConfiguration : IMetaDataProvider
 	{
-		private readonly System.Type auditAttrType = typeof (AuditedAttribute);
 		private static readonly ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
-		private readonly IList<IAttributeFactory> audits;
+		private readonly IList<IAttributesPerMethodInfoFactory> attributeFactories;
+		private readonly ICollection<System.Type> auditedTypes;
 
 		public FluentConfiguration()
 		{
-			audits = new List<IAttributeFactory>();
+			attributeFactories = new List<IAttributesPerMethodInfoFactory>();
+			auditedTypes = new List<System.Type>();
 		}
 
 		public IFluentAudit<T> Audit<T>()
 		{
 			var ret = new FluentAudit<T>();
-			audits.Add(ret);
+			attributeFactories.Add(ret);
+			auditedTypes.Add(typeof(T));
 			return ret;
 		}
 
 		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, Expression<Func<T, object>> revisionTimestamp)
 		{
-			audits.Add(new FluentRevision(typeof (T), 
+			attributeFactories.Add(new FluentRevision(typeof (T), 
 								revisionNumber.Body.MethodInfo("revisionNumber"),
 								revisionTimestamp.Body.MethodInfo("revisionTimestamp")));
 		}
@@ -34,15 +36,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
 			var ret = new Dictionary<System.Type, IEntityMeta>();
-			var auditedTypes = new HashSet<System.Type>();
-			foreach (var attributeBuilder in audits)
+			foreach (var attributeFactory in attributeFactories)
 			{
-				var attrs = attributeBuilder.Create();
-				foreach (var membAndAttrs in attrs)
+				var factoryResult = attributeFactory.Create();
+				foreach (var memberInfoAndAttributes in factoryResult)
 				{
-					var memberInfo = membAndAttrs.Key;
+					var memberInfo = memberInfoAndAttributes.Key;
 					var classType = memberInfo as System.Type;
-					foreach (var attribute in membAndAttrs.Value)
+					foreach (var attribute in memberInfoAndAttributes.Value)
 					{
 						var attrType = attribute.GetType();
 						if (classType != null)
@@ -50,8 +51,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 							var entMeta = createOrGetEntityMeta(ret, classType);
 							log.Debug("Adding " + attrType.Name + " to type " + classType.FullName);
 							entMeta.AddClassMeta(attribute);
-							if (attrType.Equals(auditAttrType))
-								auditedTypes.Add(classType);
 						}
 						else
 						{
