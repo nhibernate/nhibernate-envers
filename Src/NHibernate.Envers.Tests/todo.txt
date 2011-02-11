@@ -7,3 +7,4 @@
 * test för structs as components
 fluent...
 * loggning för fluent
+* throw om property/field inte kan hittas, typ "kom ihåg att det är prylen som NH-mappningen använder som gäller!
