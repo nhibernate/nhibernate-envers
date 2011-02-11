@@ -5,6 +5,7 @@ using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NUnit.Framework;
 using NHibernate.Envers.Tests.Tools;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
@@ -48,8 +49,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var weightRefl = typeof (Animal).GetField("weight", BindingFlags.Instance | BindingFlags.NonPublic);
 			var nameRefl = typeof (Animal).GetProperty("Name");
-			metas[typeof(Animal)].MemberMetas[weightRefl].OnlyContains<NotAuditedAttribute>();
-			metas[typeof(Animal)].MemberMetas[nameRefl].OnlyContains<NotAuditedAttribute>();
+			metas[typeof(Dog)].MemberMetas[weightRefl].OnlyContains<NotAuditedAttribute>();
+			metas[typeof(Dog)].MemberMetas[nameRefl].OnlyContains<NotAuditedAttribute>();
+			metas[typeof (Animal)].MemberMetas.Should().Be.Empty();
 		}
 		
 	}
