@@ -349,10 +349,13 @@
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\InheritanceTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\FieldEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\Inheritance.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\Model\NotAuditedEntity.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\Model\NotAuditedOwnerEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevisionEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\SomePropsEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\RevisionInfoTest.cs" />
