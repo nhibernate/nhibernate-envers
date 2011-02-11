@@ -49,6 +49,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void AddPropertiesFromClass(System.Type clazz)
 		{
+			if (clazz.Name == "MainShiftActivityLayer")
+			{
+				string goo = "";
+			}
+
 			foreach (var declaredPersistentProperty in _propertyAndMemberInfo.GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
 			{
 				IValue propertyValue = declaredPersistentProperty.Property.Value;
@@ -114,10 +119,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			// if the optimistic locking field has to be unversioned and the current property
 			// is the optimistic locking field, don't audit it
 			if (_globalCfg.DoNotAuditOptimisticLockingField && 
-                _persistentPropertiesSource.VersionedProperty != null &&
-                _persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
+				_persistentPropertiesSource.VersionedProperty != null &&
+				_persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
 			{
-			    return false;			    
+				return false;			    
 			}
 
 			// Checking if this property is explicitly audited or if all properties are.

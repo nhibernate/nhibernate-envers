@@ -9,12 +9,12 @@ namespace NHibernate.Envers.Configuration.Fluent
 	public class FluentConfiguration : IMetaDataProvider
 	{
 		private static readonly ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
-		private readonly IList<IAttributesPerMethodInfoFactory> attributeFactories;
+		private readonly IList<IAttributeProvider> attributeFactories;
 		private readonly ICollection<System.Type> auditedTypes;
 
 		public FluentConfiguration()
 		{
-			attributeFactories = new List<IAttributesPerMethodInfoFactory>();
+			attributeFactories = new List<IAttributeProvider>();
 			auditedTypes = new List<System.Type>();
 		}
 
@@ -38,28 +38,18 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var ret = new Dictionary<System.Type, IEntityMeta>();
 			foreach (var attributeFactory in attributeFactories)
 			{
-				var factoryResult = attributeFactory.Create();
-				foreach (var memberInfoAndAttributes in factoryResult)
+				var type = attributeFactory.Type;
+				foreach (var classAttribute in attributeFactory.CreateClassAttributes())
 				{
-					var memberInfo = memberInfoAndAttributes.Key;
-					var classType = memberInfo as System.Type;
-					foreach (var attribute in memberInfoAndAttributes.Value)
-					{
-						var attrType = attribute.GetType();
-						if (classType != null)
-						{
-							var entMeta = createOrGetEntityMeta(ret, classType);
-							log.Debug("Adding " + attrType.Name + " to type " + classType.FullName);
-							entMeta.AddClassMeta(attribute);
-						}
-						else
-						{
-							var memberType = memberInfo.DeclaringType;
-							var entMeta = createOrGetEntityMeta(ret, memberType);
-							log.Debug("Adding " + attrType.Name + " to type " + memberType.FullName);
-							entMeta.AddMemberMeta(memberInfo, attribute);	
-						}
-					}
+					var entMeta = createOrGetEntityMeta(ret, type);
+					log.Debug("Adding " + classAttribute.GetType().Name + " to type " + type.FullName);
+					entMeta.AddClassMeta(classAttribute);
+				}
+				foreach (var memberInfoAndAttribute in attributeFactory.CreateMemberAttributes())
+				{
+					var entMeta = createOrGetEntityMeta(ret, type);
+					log.Debug("Adding " + memberInfoAndAttribute.Attribute.GetType().Name + " to member " + memberInfoAndAttribute.MemberInfo.Name + " on type " + type.FullName);
+					entMeta.AddMemberMeta(memberInfoAndAttribute.MemberInfo, memberInfoAndAttribute.Attribute);	
 				}
 			}
 			addBaseTypesForAuditAttribute(ret, auditedTypes);

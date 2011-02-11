@@ -43,40 +43,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
-		{
-			var ret = new Dictionary<MemberInfo, IEnumerable<Attribute>>();
-			
-			addType(ret, typeof(T));
-			addExcludedInfo(ret);
-			addExcludedRelationInfo(ret);
-			return ret;
-		}
-
-		private void addExcludedRelationInfo(IDictionary<MemberInfo, IEnumerable<Attribute>> ret)
-		{
-			foreach (var ex in excludedRelations)
-			{
-				var attr = new AuditedAttribute
-				           	{
-				           		TargetAuditMode = RelationTargetAuditMode.NotAudited
-				           	};
-				ret[ex] = new List<Attribute> { attr };
-			}
-		}
-
-		private void addExcludedInfo(IDictionary<MemberInfo, IEnumerable<Attribute>> ret)
-		{
-			foreach (var ex in excluded)
-			{
-				ret[ex] = new List<Attribute> {new NotAuditedAttribute()};
-			}
-		}
-
-		private static void addType(IDictionary<MemberInfo, IEnumerable<Attribute>> ret, System.Type type)
-		{
-			ret[type] = new List<Attribute> {new AuditedAttribute()};
-		}
 
 		private static MemberInfo getMemberOrThrow(System.Type entityType, string propertyName)
 		{
@@ -89,6 +55,34 @@ namespace NHibernate.Envers.Configuration.Fluent
 				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
 			}
 			return member;
+		}
+
+		public System.Type Type
+		{
+			get { return typeof(T); }
+		}
+
+		public IEnumerable<Attribute> CreateClassAttributes()
+		{
+			return new[] {new AuditedAttribute()};
+		}
+
+		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
+		{
+			var ret = new List<MemberInfoAndAttribute>();
+			foreach (var ex in excluded)
+			{
+				ret.Add(new MemberInfoAndAttribute(ex, new NotAuditedAttribute()));
+			}
+			foreach (var ex in excludedRelations)
+			{
+				var attr = new AuditedAttribute
+				{
+					TargetAuditMode = RelationTargetAuditMode.NotAudited
+				};
+				ret.Add(new MemberInfoAndAttribute(ex, attr));
+			}
+			return ret;
 		}
 	}
 }

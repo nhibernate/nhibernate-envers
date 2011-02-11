@@ -70,6 +70,7 @@
     <Compile Include="AuditTableAttribute.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
     <Compile Include="Configuration\Fluent\FluentRevision.cs" />
+    <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfiguration.cs" />
     <Compile Include="Configuration\AuditConfiguration.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Configuration\Fluent\ExpressionExtension.cs" />
     <Compile Include="Configuration\Fluent\FluentAudit.cs" />
     <Compile Include="Configuration\Fluent\FluentConfiguration.cs" />
-    <Compile Include="Configuration\Fluent\IAttributesPerMethodInfoFactory.cs" />
+    <Compile Include="Configuration\Fluent\IAttributeProvider.cs" />
     <Compile Include="Configuration\Fluent\IFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\IMainConfiguration.cs" />
     <Compile Include="Configuration\GlobalConfiguration.cs" />

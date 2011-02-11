@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
-	public class FluentRevision : IAttributesPerMethodInfoFactory
+	public class FluentRevision : IAttributeProvider
 	{
 		private readonly System.Type _type;
 		private readonly MemberInfo _number;
@@ -17,13 +17,24 @@ namespace NHibernate.Envers.Configuration.Fluent
 			_timestamp = timestamp;
 		}
 
-		public IDictionary<MemberInfo, IEnumerable<Attribute>> Create()
+		public System.Type Type
 		{
-			var ret = new Dictionary<MemberInfo, IEnumerable<Attribute>>();
-			ret[_type] = new[]{new RevisionEntityAttribute()};
-			ret[_number] = new[] {new RevisionNumberAttribute()};
-			ret[_timestamp] = new[] {new RevisionTimestampAttribute()};
-			return ret;
+			get { return _type; }
+		}
+
+		public IEnumerable<Attribute> CreateClassAttributes()
+		{
+			return new[] { new RevisionEntityAttribute() };
+		}
+
+		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
+		{
+			return new[]
+			          	{
+			          		new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
+							new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute()), 
+			          	};
+
 		}
 	}
 }
