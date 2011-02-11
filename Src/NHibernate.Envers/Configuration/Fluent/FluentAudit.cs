@@ -8,15 +8,26 @@ namespace NHibernate.Envers.Configuration.Fluent
 	public class FluentAudit<T> : IFluentAudit<T>
 	{
 		private readonly ICollection<MemberInfo> excluded;
+		private const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
 
 		public FluentAudit()
 		{
 			excluded = new HashSet<MemberInfo>();
 		}
 
-		public IFluentAudit<T> Exclude(Expression<Func<T, object>> func)
+		public IFluentAudit<T> Exclude(Expression<Func<T, object>> property)
 		{
-			excluded.Add(func.Body.MethodInfo("exclusion"));
+			excluded.Add(property.Body.MethodInfo("exclusion"));
+			return this;
+		}
+
+		public IFluentAudit<T> Exclude(string propertyName)
+		{
+			var entityType = typeof (T);
+			var member = entityType.GetField(propertyName, bindingFlags) ?? entityType.GetProperty(propertyName, bindingFlags) as MemberInfo;
+			if(member==null)	
+				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
+			excluded.Add(member);
 			return this;
 		}
 
