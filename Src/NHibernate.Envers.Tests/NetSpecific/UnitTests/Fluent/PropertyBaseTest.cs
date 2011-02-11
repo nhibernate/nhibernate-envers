@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		public void CanExcludeInBaseClass()
 		{
 			var weightRefl = typeof (Animal).GetField("weight", BindingFlags.Instance | BindingFlags.NonPublic);
-			var nameRefl = typeof (Animal).GetProperty("Name");
+			var nameRefl = typeof (Dog).GetProperty("Name");
 			metas[typeof(Dog)].MemberMetas[weightRefl].OnlyContains<NotAuditedAttribute>();
 			metas[typeof(Dog)].MemberMetas[nameRefl].OnlyContains<NotAuditedAttribute>();
 			metas[typeof (Animal)].MemberMetas.Should().Be.Empty();
