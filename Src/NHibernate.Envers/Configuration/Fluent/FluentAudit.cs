@@ -23,12 +23,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		public IFluentAudit<T> Exclude(string propertyName)
+		public IFluentAudit<T> Exclude(string property)
 		{
-			var entityType = typeof (T);
-			var member = entityType.GetField(propertyName, bindingFlags) ?? entityType.GetProperty(propertyName, bindingFlags) as MemberInfo;
-			if(member==null)	
-				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
+			var member = getMemberOrThrow(property);
 			excluded.Add(member);
 			return this;
 		}
@@ -36,6 +33,13 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public IFluentAudit<T> ExcludeRelation(Expression<Func<T, object>> property)
 		{
 			excludedRelations.Add(property.Body.MethodInfo("relation exclusion"));
+			return this;
+		}
+
+		public IFluentAudit<T> ExcludeRelation(string property)
+		{
+			var member = getMemberOrThrow(property);
+			excludedRelations.Add(member);
 			return this;
 		}
 
@@ -72,6 +76,15 @@ namespace NHibernate.Envers.Configuration.Fluent
 		private static void addType(IDictionary<MemberInfo, IEnumerable<Attribute>> ret, System.Type type)
 		{
 			ret[type] = new List<Attribute> {new AuditedAttribute()};
+		}
+
+		private static MemberInfo getMemberOrThrow(string propertyName)
+		{
+			var entityType = typeof(T);
+			var member = entityType.GetField(propertyName, bindingFlags) ?? entityType.GetProperty(propertyName, bindingFlags) as MemberInfo;
+			if (member == null)
+				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
+			return member;
 		}
 	}
 }

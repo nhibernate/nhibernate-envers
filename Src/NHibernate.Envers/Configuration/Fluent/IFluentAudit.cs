@@ -8,5 +8,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 		IFluentAudit<T> Exclude(Expression<Func<T, object>> property);
 		IFluentAudit<T> Exclude(string property);
 		IFluentAudit<T> ExcludeRelation(Expression<Func<T, object>> property);
+		IFluentAudit<T> ExcludeRelation(string property);
 	}
 }
