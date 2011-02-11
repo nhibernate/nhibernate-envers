@@ -49,11 +49,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void AddPropertiesFromClass(System.Type clazz)
 		{
-			if (clazz.Name == "MainShiftActivityLayer")
-			{
-				string goo = "";
-			}
-
 			foreach (var declaredPersistentProperty in _propertyAndMemberInfo.GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
 			{
 				IValue propertyValue = declaredPersistentProperty.Property.Value;
