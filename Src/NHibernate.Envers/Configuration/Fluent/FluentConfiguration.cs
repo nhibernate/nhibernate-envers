@@ -76,14 +76,31 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static void setBaseTypeAsAudited(System.Type baseType, IDictionary<System.Type, IEntityMeta> ret)
 		{
-			if (!ret.ContainsKey(baseType) && !baseType.Equals(typeof(object)))
-			{
-				var eMeta = new EntityMeta();
-				eMeta.AddClassMeta(new AuditedAttribute());
-				ret[baseType] = eMeta;
+			if (baseType.Equals(typeof(object)))
+				return;
 
-				setBaseTypeAsAudited(baseType.BaseType, ret);
+			IEntityMeta entMetaForBaseTypeTemp;
+			if(!ret.TryGetValue(baseType, out entMetaForBaseTypeTemp))
+			{
+				entMetaForBaseTypeTemp = new EntityMeta();
 			}
+			var entMetaForBaseType = (EntityMeta) entMetaForBaseTypeTemp;
+			if(!entityMetaIsAuditedClass(entMetaForBaseType))
+			{
+				entMetaForBaseType.AddClassMeta(new AuditedAttribute());
+				ret[baseType] = entMetaForBaseType;
+			}
+			setBaseTypeAsAudited(baseType.BaseType, ret);
+		}
+
+		private static bool entityMetaIsAuditedClass(EntityMeta entMetaForBaseType)
+		{
+			foreach (var classMeta in entMetaForBaseType.ClassMetas)
+			{
+				if (classMeta.GetType().Equals(typeof(AuditedAttribute)))
+					return true;
+			}
+			return false;
 		}
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)
