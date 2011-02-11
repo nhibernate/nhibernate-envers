@@ -49,5 +49,21 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			auditAttr.TargetAuditMode.Should().Be.EqualTo(RelationTargetAuditMode.NotAudited);
 		}
 
+		[Test]
+		public void PropertyShouldHaveOneAuditAttributeWithNoAuditedRelation_using_field()
+		{
+			var cfg = new FluentConfiguration();
+			cfg.Audit<NotAuditedOwnerEntity>()
+					.ExcludeRelation("RelationField");
+			metas = cfg.CreateMetaData(null);
+
+			var propInfo = typeof(NotAuditedOwnerEntity).GetField("RelationField");
+			var entMeta = metas[typeof(NotAuditedOwnerEntity)];
+
+			entMeta.MemberMetas[propInfo]
+				.Should().Have.Count.EqualTo(1);
+			var auditAttr = (AuditedAttribute)entMeta.MemberMetas[propInfo].First();
+			auditAttr.TargetAuditMode.Should().Be.EqualTo(RelationTargetAuditMode.NotAudited);
+		}
 	}
 }
