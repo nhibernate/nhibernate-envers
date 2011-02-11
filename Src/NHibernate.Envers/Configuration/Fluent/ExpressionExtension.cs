@@ -8,17 +8,17 @@ namespace NHibernate.Envers.Configuration.Fluent
 	{
 		public static MemberInfo MethodInfo(this Expression expression, string errText)
 		{
-            switch (expression.NodeType)
-            {
-                case ExpressionType.MemberAccess:                      
-                    var memberExpression = (MemberExpression)expression; 
-                    return memberExpression.Member; 
-                case ExpressionType.Convert:                      
-                    var unaryExpression = (UnaryExpression)expression;
-                    return MethodInfo(unaryExpression.Operand, errText); 
-                default:
-                    throw new ArgumentException("Cannot find property or field for " + errText);
-            }  
+			switch (expression.NodeType)
+			{
+				case ExpressionType.MemberAccess:                      
+					var memberExpression = (MemberExpression)expression; 
+					return memberExpression.Member; 
+				case ExpressionType.Convert:                      
+					var unaryExpression = (UnaryExpression)expression;
+					return MethodInfo(unaryExpression.Operand, errText);
+				default:
+					throw new ArgumentException("Cannot find property or field for " + errText);
+			}  
 		}
 	}
 }
