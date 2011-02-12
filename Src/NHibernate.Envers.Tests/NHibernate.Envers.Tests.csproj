@@ -347,6 +347,9 @@
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
+    <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
+    <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
+    <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
@@ -366,6 +369,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
     <Content Include="todo.txt" />
     <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />
