@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Tests
 		private string nameSpaceAssemblyExtracted()
 		{
 			var fullNamespace = GetType().Namespace;
-			return fullNamespace.TrimStart(TestAssembly.ToCharArray());
+			return fullNamespace.Remove(0, TestAssembly.Length + 1);
 		}
 
 		protected virtual IEnumerable<string> Mappings
