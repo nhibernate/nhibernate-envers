@@ -172,11 +172,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private bool CheckPropertiesAudited(IEnumerator<Property> properties, ClassAuditingData auditingData)
+		private bool CheckPropertiesAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
 		{
-			while (properties.MoveNext())
+			foreach (var property in properties)
 			{
-				var property = properties.Current;
 				var propertyName = property.Name;
 				var propertyAuditingData = auditingData.GetPropertyAuditingData(propertyName);
 				if (propertyAuditingData == null)
@@ -232,7 +231,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			foreach (var join in pc.JoinIterator)
 			{
 				// Checking if all of the join properties are audited
-				if (!CheckPropertiesAudited(join.PropertyIterator.GetEnumerator(), auditingData))
+				if (!CheckPropertiesAudited(join.PropertyIterator, auditingData))
 				{
 					continue;
 				}
