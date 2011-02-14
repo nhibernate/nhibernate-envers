@@ -17,243 +17,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		protected ISessionImplementor delegat;
 
-		public AbstractDelegateSessionImplementor(ISessionImplementor delegat) 
+		protected AbstractDelegateSessionImplementor(ISessionImplementor delegat) 
 		{
 			this.delegat = delegat;
 		}
 
-		public abstract Object doImmediateLoad(String entityName);
-
-		public Object immediateLoad(String entityName, Object id) 
-		{ 
-			return doImmediateLoad(entityName);
-		}
-
-		// Delegate methods
-
-		public IInterceptor getInterceptor() 
-		{
-			return delegat.Interceptor;
-		}
-
-		public void setAutoClear(bool enabled) 
-		{
-			//delegat.setAutoClear(enabled);// not implemented yet
-			throw new NotImplementedException();
-		}
-
-		public bool isTransactionInProgress() 
-		{
-			return delegat.TransactionInProgress;
-		}
-
-		public void initializeCollection(IPersistentCollection collection, bool writing)  
-		{
-			delegat.InitializeCollection(collection, writing);
-		}
-
-		public Object internalLoad(String entityName, object id, bool eager, bool nullable) 
-		{
-			return delegat.InternalLoad(entityName, id, eager, nullable);
-		}
-
-		public long getTimestamp() 
-		{
-			return delegat.Timestamp;
-		}
-
-		public ISessionFactoryImplementor getFactory() 
-		{
-			return delegat.Factory;
-		}
-
-		public IBatcher getBatcher() 
-		{
-			return delegat.Batcher;
-		}
-
-		public IList list(String query, QueryParameters queryParameters)
-		{
-			return delegat.List(query, queryParameters);
-		}
-		// TODO in second implementation phase
-		//public Iterator iterate(String query, QueryParameters queryParameters)  {
-		//    return delegat.iterate(query, queryParameters);
-		//}
-
-		// TODO in second implementation phase
-		//public ScrollableResults scroll(String query, QueryParameters queryParameters) throws HibernateException {
-		//    return delegate.scroll(query, queryParameters);
-		//}
-
-			// TODO in second implementation phase
-		//public ScrollableResults scroll(CriteriaImpl criteria, ScrollMode scrollMode) {
-		//    return delegate.scroll(criteria, scrollMode);
-		//}
-
-		public IList list(CriteriaImpl criteria) {
-			return delegat.List(criteria);
-		}
-
-		public IList listFilter(Object collection, String filter, QueryParameters queryParameters)  {
-			return delegat.ListFilter(collection, filter, queryParameters);
-		}
-		// TODO in second implementation phase
-		//public IEnumerator iterateFilter(Object collection, String filter, QueryParameters queryParameters){
-		//    return delegat.iterateFilter(collection, filter, queryParameters);
-		//}
-
-		public IEntityPersister getEntityPersister(String entityName, Object obj)  {
-			return delegat.GetEntityPersister(entityName, obj);
-		}
-
-		public Object getEntityUsingInterceptor(EntityKey key) {
-			return delegat.GetEntityUsingInterceptor(key);
-		}
-
-		public void afterTransactionCompletion(bool successful, ITransaction tx) {
-			delegat.AfterTransactionCompletion(successful, tx);
-		}
-
-		public void beforeTransactionCompletion(ITransaction tx) {
-			delegat.BeforeTransactionCompletion(tx);
-		}
-
-		public object getContextEntityIdentifier(Object obj) {
-			return delegat.GetContextEntityIdentifier(obj);
-		}
-
-		public String bestGuessEntityName(Object obj) {
-			return delegat.BestGuessEntityName(obj);
-		}
-
-		public String guessEntityName(Object entity) {
-			return delegat.GuessEntityName(entity);
-		}
-
-		public Object instantiate(String entityName, object id) {
-			return delegat.Instantiate(entityName, id);
-		}
-		//// TODO in second implementation phase
-		//public IList listCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters) {
-		//    //IList list;
-		//    //delegat.ListCustomQuery(customQuery, queryParameters, list);
-		//    //return list;
-		//}
-
-		//public ScrollableResults scrollCustomQuery(CustomQuery customQuery, QueryParameters queryParameters) throws HibernateException {
-		//    return delegate.scrollCustomQuery(customQuery, queryParameters);
-		//}
-
-		public IList list(NativeSQLQuerySpecification spec, QueryParameters queryParameters) {
-			return delegat.List(spec, queryParameters);
-		}
-		// TODO in second implementation phase
-		//public ScrollableResults scroll(NativeSQLQuerySpecification spec, QueryParameters queryParameters) throws HibernateException {
-		//    return delegate.scroll(spec, queryParameters);
-		//}
-
-		public Object getFilterParameterValue(String filterParameterName) {
-			return delegat.GetFilterParameterValue(filterParameterName);
-		}
-
-		public IType getFilterParameterType(String filterParameterName) {
-			return delegat.GetFilterParameterType(filterParameterName);
-		}
-
-		public IDictionary<String, IFilter> getEnabledFilters() {
-			return delegat.EnabledFilters;
-		}
-
-		public int getDontFlushFromFind() {
-			return delegat.DontFlushFromFind;
-		}
-
-		public EventListeners getListeners() {
-			return delegat.Listeners;
-		}
-
-		public IPersistenceContext getPersistenceContext() {
-			return delegat.PersistenceContext;
-		}
-
-		public int executeUpdate(String query, QueryParameters queryParameters){
-			return delegat.ExecuteUpdate(query, queryParameters);
-		}
-
-		public int executeNativeUpdate(NativeSQLQuerySpecification specification, QueryParameters queryParameters)  {
-			return delegat.ExecuteNativeUpdate(specification, queryParameters);
-		}
-
-		public EntityMode getEntityMode() {
-			return delegat.EntityMode;
-		}
-
-		public CacheMode getCacheMode() {
-			return delegat.CacheMode;
-		}
-
-		public void setCacheMode(CacheMode cm) {
-			delegat.CacheMode = cm;
-		}
-
-		public bool isOpen() {
-			return delegat.IsOpen;
-		}
-
-		public bool isConnected() {
-			return delegat.IsConnected;
-		}
-
-		public FlushMode getFlushMode() {
-			return delegat.FlushMode;
-		}
-
-		public void setFlushMode(FlushMode fm) {
-			delegat.FlushMode = fm ;
-		}
-
-		public IDbConnection connection() {
-			return delegat.Connection; 
-		}
-
-		public void flush() {
-			delegat.Flush();
-		}
-
-		public IQuery getNamedQuery(String name) {
-			return delegat.GetNamedQuery(name);
-		}
-
-		public IQuery getNamedSQLQuery(String name) {
-			return delegat.GetNamedSQLQuery(name);
-		}
-
-		public bool isEventSource() {
-			return delegat.IsEventSource;
-		}
-		// TODO in second implementation phase  
-		//public void afterScrollOperation() {
-		//    delegate.afterScrollOperation();
-		//}
-
-		public void setFetchProfile(String name) {
-			delegat.FetchProfile = name;
-		}
-
-		public String getFetchProfile() {
-			return delegat.FetchProfile;
-		}
-
-		//public JDBCContext getJDBCContext() {
-		//    return delegate.getJDBCContext();
-		//}
-
-		public bool isClosed() {
-			return delegat.IsClosed;
-		}
-
-		#region ISessionImplementor Members
+		public abstract object DoImmediateLoad(string entityName);
 
 		public void Initialize()
 		{
@@ -272,7 +41,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public object ImmediateLoad(string entityName, object id)
 		{
-			return doImmediateLoad(entityName);
+			return DoImmediateLoad(entityName);
 		}
 
 		public long Timestamp
@@ -586,7 +355,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			get { return delegat.SessionId; }
 		}
 
-		public NHibernate.Transaction.ITransactionContext TransactionContext
+		public Transaction.ITransactionContext TransactionContext
 		{
 			get
 			{
@@ -602,7 +371,5 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			delegat.CloseSessionFromDistributedTransaction();
 		}
-
-		#endregion
 	}
 }
