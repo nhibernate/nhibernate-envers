@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Event;
+﻿using NHibernate.Event;
 using NHibernate.Proxy;
 using NHibernate.Engine;
 using NHibernate.Collection;
@@ -204,7 +203,7 @@ namespace NHibernate.Envers.Event
 		}
 
 		private void GenerateFakeBidirecationalRelationWorkUnits(AuditSync verSync, IPersistentCollection newColl, object oldColl,
-																 String collectionEntityName, String referencingPropertyName,
+																 string collectionEntityName, string referencingPropertyName,
 																 AbstractCollectionEvent evt,
 																 RelationDescription rd) {
 			// First computing the relation changes

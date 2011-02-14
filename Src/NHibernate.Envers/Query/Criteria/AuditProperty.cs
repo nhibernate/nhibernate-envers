@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
@@ -38,7 +37,7 @@ namespace NHibernate.Envers.Query.Criteria
 		    return new SimpleAuditExpression(_propertyNameGetter, value, " like ");
 	    }
 
-	    public IAuditCriterion Like(String value, MatchMode matchMode) 
+		public IAuditCriterion Like(string value, MatchMode matchMode) 
         {
 		    return new SimpleAuditExpression(_propertyNameGetter, matchMode.ToMatchString(value), " like " );
 	    }
@@ -79,32 +78,32 @@ namespace NHibernate.Envers.Query.Criteria
 		    return new NullAuditExpression(_propertyNameGetter);
 	    }
 
-	    public IAuditCriterion EqProperty(String otherPropertyName) 
+		public IAuditCriterion EqProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, "=");
 	    }
 
-	    public IAuditCriterion NeProperty(String otherPropertyName) 
+		public IAuditCriterion NeProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, "<>");
 	    }
 
-	    public IAuditCriterion LtProperty(String otherPropertyName) 
+		public IAuditCriterion LtProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, "<");
 	    }
 
-	    public IAuditCriterion LeProperty(String otherPropertyName) 
+		public IAuditCriterion LeProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, "<=");
 	    }
 
-	    public IAuditCriterion GtProperty(String otherPropertyName) 
+		public IAuditCriterion GtProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, ">");
 	    }
 
-	    public IAuditCriterion GeProperty(String otherPropertyName) 
+		public IAuditCriterion GeProperty(string otherPropertyName) 
 		{
 		    return new PropertyAuditExpression(_propertyNameGetter, otherPropertyName, ">=");
 	    }
