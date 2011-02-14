@@ -5,5 +5,18 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 	{
 		public virtual int Id { get; set; }
 		public virtual OneToOneOwnedEntity Owned { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			var casted = obj as OneToOneOwningEntity;
+			if (casted == null)
+				return false;
+			return (Id == casted.Id);
+		}
+
+		public override int GetHashCode()
+		{
+			return Id;
+		}
 	}
 }

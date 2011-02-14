@@ -3,7 +3,7 @@
                    namespace="NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne">
   <class name="OneToOneOwningEntity">
     <id name="Id">
-      <generator class="native"/>
+      <generator class="assigned"/>
     </id>
     <one-to-one name="Owned" />
   </class>
@@ -15,5 +15,6 @@
     </id>
     <one-to-one name="Owning"
                 constrained="true"/>
+    <property name="Data" />
   </class>
 </hibernate-mapping>
