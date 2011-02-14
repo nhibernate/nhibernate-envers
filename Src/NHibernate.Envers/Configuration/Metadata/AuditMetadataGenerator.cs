@@ -156,13 +156,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		//@SuppressWarnings({"unchecked"})
-		private void AddProperties(XmlElement parent, IEnumerator<Property> properties, ICompositeMapperBuilder currentMapper,
+		private void AddProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
 								   ClassAuditingData auditingData, String entityName, EntityXmlMappingData xmlMappingData,
 								   bool firstPass)
 		{
-			while (properties.MoveNext())
+			foreach (var property in properties)
 			{
-				var property = properties.Current;
 				var propertyName = property.Name;
 				var propertyAuditingData = auditingData.GetPropertyAuditingData(propertyName);
 				if (propertyAuditingData != null)
@@ -272,7 +271,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				if (joinElement != null)
 				{
-					AddProperties(joinElement, join.PropertyIterator.GetEnumerator(), currentMapper, auditingData, entityName,
+					AddProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName,
 							xmlMappingData, firstPass);
 				}
 			}
@@ -427,7 +426,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			xmlMappingData.ClassMapping = class_mapping;
 
 			// Mapping unjoined properties
-			AddProperties(class_mapping, pc.UnjoinedPropertyIterator.GetEnumerator(), propertyMapper,
+			AddProperties(class_mapping, pc.UnjoinedPropertyIterator, propertyMapper,
 					auditingData, pc.EntityName, xmlMappingData,
 					true);
 
@@ -454,7 +453,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Mapping unjoined properties
 			var parent = xmlMappingData.ClassMapping;
 
-			AddProperties(parent, pc.UnjoinedPropertyIterator.GetEnumerator(),
+			AddProperties(parent, pc.UnjoinedPropertyIterator,
 					propertyMapper, auditingData, entityName, xmlMappingData, false);
 
 			// Mapping joins (second pass)
