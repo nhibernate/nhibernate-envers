@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-		public object NullSafeGet(IDataReader resultSet, String[] names, object owner)
+		public object NullSafeGet(IDataReader resultSet, string[] names, object owner)
 		{
 			var enumAsInt = Convert.ToByte(NHibernateUtil.Int16.NullSafeGet(resultSet, names));
 			return Enum.ToObject(typeof (RevisionType), enumAsInt);
@@ -65,7 +65,7 @@ namespace NHibernate.Envers.Entities
 			return value;
 		}
 
-		public Object Replace(object original, object target, object owner)
+		public object Replace(object original, object target, object owner)
 		{
 			return original;
 		}

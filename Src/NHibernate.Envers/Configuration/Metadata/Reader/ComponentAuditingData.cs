@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
     public class ComponentAuditingData : PropertyAuditingData, IAuditedPropertiesHolder 
 	{
-	    private readonly IDictionary<String, PropertyAuditingData> properties;
+		private readonly IDictionary<string, PropertyAuditingData> properties;
 
 	    public ComponentAuditingData() 
 		{
-		    properties = new Dictionary<String, PropertyAuditingData>();
+			properties = new Dictionary<string, PropertyAuditingData>();
 	    }
 
-	    public void AddPropertyAuditingData(String propertyName, PropertyAuditingData auditingData) 
+		public void AddPropertyAuditingData(string propertyName, PropertyAuditingData auditingData) 
 		{
 		    properties.Add(propertyName, auditingData);
 	    }
 
-        public PropertyAuditingData GetPropertyAuditingData(String propertyName)
+		public PropertyAuditingData GetPropertyAuditingData(string propertyName)
         {
         	PropertyAuditingData ret;
         	properties.TryGetValue(propertyName, out ret);

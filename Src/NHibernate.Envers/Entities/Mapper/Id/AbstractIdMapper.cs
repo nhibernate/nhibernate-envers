@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 
@@ -48,7 +47,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-		public void AddNamedIdEqualsToQuery(Parameters parameters, String prefix, bool equals) 
+		public void AddNamedIdEqualsToQuery(Parameters parameters, string prefix, bool equals) 
 		{
 			var paramDatas = MapToQueryParametersFromId(null);
 			var parametersToUse = GetParametersToUse(parameters, paramDatas);

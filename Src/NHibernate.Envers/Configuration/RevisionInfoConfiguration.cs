@@ -243,7 +243,7 @@ namespace NHibernate.Envers.Configuration
 										RevisionInfoQueryCreator revisionInfoQueryCreator,
 										XmlElement revisionInfoRelationMapping,
 										RevisionInfoNumberReader revisionInfoNumberReader, 
-										String revisionInfoEntityName) {
+										string revisionInfoEntityName) {
 			RevisionInfoGenerator = revisionInfoGenerator;
 			RevisionInfoXmlMapping = revisionInfoXmlMapping;
 			RevisionInfoQueryCreator = revisionInfoQueryCreator;
@@ -257,6 +257,6 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public XmlElement RevisionInfoRelationMapping { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
-		public String RevisionInfoEntityName { get; private set; }
+		public string RevisionInfoEntityName { get; private set; }
 	}
 }
