@@ -3,7 +3,7 @@
 namespace NHibernate.Envers
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class RevisionTimestampAttribute : Attribute
+    public sealed class RevisionTimestampAttribute : Attribute
     {
     }
 }

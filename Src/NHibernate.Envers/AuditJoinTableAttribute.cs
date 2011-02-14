@@ -3,7 +3,7 @@
 namespace NHibernate.Envers
 {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public class AuditJoinTableAttribute : Attribute
+	public sealed class AuditJoinTableAttribute : Attribute
 	{
 		public AuditJoinTableAttribute()
 		{

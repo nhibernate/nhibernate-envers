@@ -343,7 +343,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			StoreMiddleEntityRelationInformation(mappedBy);
 		}
 
-        private bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
+        private static bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
         {
             var firstNames = from f in first
                              select ((Column) f).Name;

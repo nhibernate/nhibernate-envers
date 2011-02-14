@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Entities
 			{
 				var entCfg = entitiesConfigurations[entityName];
 				// Iterating over all relations from that entity
-				foreach (var relDesc in entCfg.GetRelationsIterator()) 
+				foreach (var relDesc in entCfg.RelationsIterator) 
 				{
 					// If this is an "owned" relation, checking the related entity, if it has a relation that has
 					// a mapped-by attribute to the currently checked. If so, this is a bidirectional relation.
@@ -49,7 +49,7 @@ namespace NHibernate.Envers.Entities
 						if (entitiesConfigurations.Keys.Contains(relDesc.ToEntityName))
 						{
 							var entityConfiguration = entitiesConfigurations[relDesc.ToEntityName];
-							foreach (var other in entityConfiguration.GetRelationsIterator()) 
+							foreach (var other in entityConfiguration.RelationsIterator) 
 							{
 								if (relDesc.FromPropertyName.Equals(other.MappedByPropertyName) &&
 										(entityName.Equals(other.ToEntityName))) 

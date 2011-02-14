@@ -2,12 +2,11 @@
 
 namespace NHibernate.Envers
 {
-	/**
-	 * When applied to a field, indicates that this field should not be audited.
-	 * @author Simon Duduica, port of Envers omonyme class by Sebastian Komander
-	 */
+	/// <summary>
+	/// When applied to a field, indicates that this field should not be audited.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public class NotAuditedAttribute : Attribute
+	public sealed class NotAuditedAttribute : Attribute
 	{
 	}
 }
