@@ -3,7 +3,7 @@
 namespace NHibernate.Envers
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class AuditTableAttribute : Attribute
+	public sealed class AuditTableAttribute : Attribute
 	{
 		public AuditTableAttribute(string value)
 		{

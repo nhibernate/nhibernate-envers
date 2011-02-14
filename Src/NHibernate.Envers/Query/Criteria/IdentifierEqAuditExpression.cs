@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Query.Criteria
         }
 
         public void AddToQuery(AuditConfiguration verCfg, String entityName, QueryBuilder qb, Parameters parameters) {
-            verCfg.EntCfg[entityName].GetIdMapper()
+            verCfg.EntCfg[entityName].IdMapper
                     .AddIdEqualsToQuery(parameters, id, verCfg.AuditEntCfg.OriginalIdPropName, equals);
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
@@ -9,72 +6,69 @@ using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-    /**
-     * A work unit that handles "fake" bidirectional one-to-many relations (mapped with {@code @OneToMany+@JoinColumn} and
-     * {@code @ManyToOne+@Column(insertable=false, updatable=false)}.
-     * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
-    public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit {
-        private readonly IDictionary<String, FakeRelationChange> fakeRelationChanges;
-
-        /*
+	/// <summary>
+	/// A work unit that handles "fake" bidirectional one-to-many relations (mapped with {@code @OneToMany+@JoinColumn} and
+	/// {@code @ManyToOne+@Column(insertable=false, updatable=false)}.
+	/// </summary>
+    public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit 
+	{
+    	/*
          * The work unit responsible for generating the "raw" entity data to be saved.
          */
-        private readonly IAuditWorkUnit nestedWorkUnit;
-
-        public FakeBidirectionalRelationWorkUnit(ISessionImplementor sessionImplementor, String entityName,
-                                                 AuditConfiguration verCfg, Object id,
-                                                 String referencingPropertyName, Object owningEntity,
+		public FakeBidirectionalRelationWorkUnit(ISessionImplementor sessionImplementor, string entityName,
+                                                 AuditConfiguration verCfg, object id,
+												 string referencingPropertyName, object owningEntity,
                                                  RelationDescription rd, RevisionType revisionType,
-                                                 Object index,
+                                                 object index,
                                                  IAuditWorkUnit nestedWorkUnit) 
             :base(sessionImplementor, entityName, verCfg, id)
         {
-            this.nestedWorkUnit = nestedWorkUnit;
+            NestedWorkUnit = nestedWorkUnit;
 
             // Adding the change for the relation.
-            fakeRelationChanges = new Dictionary<String, FakeRelationChange>();
-            fakeRelationChanges.Add(referencingPropertyName, new FakeRelationChange(owningEntity, rd, revisionType, index));
+            FakeRelationChanges = new Dictionary<string, FakeRelationChange>
+                                  	{
+                                  		{
+                                  			referencingPropertyName,
+                                  			new FakeRelationChange(owningEntity, rd, revisionType, index)
+                                  		}
+                                  	};
         }
 
         public FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original,
-                                                 IDictionary<String, FakeRelationChange> fakeRelationChanges,
+                                                 IDictionary<string, FakeRelationChange> fakeRelationChanges,
                                                  IAuditWorkUnit nestedWorkUnit)
             : base(original.sessionImplementor, original.EntityName, original.verCfg, original.EntityId)
         {
-            this.fakeRelationChanges = fakeRelationChanges;
-            this.nestedWorkUnit = nestedWorkUnit;
+            FakeRelationChanges = fakeRelationChanges;
+            NestedWorkUnit = nestedWorkUnit;
         }
 
         public FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original, IAuditWorkUnit nestedWorkUnit)
             : base(original.sessionImplementor, original.EntityName, original.verCfg, original.EntityId)
         {
-            this.nestedWorkUnit = nestedWorkUnit;
-
-            fakeRelationChanges = new Dictionary<String, FakeRelationChange>(original.getFakeRelationChanges());
+            NestedWorkUnit = nestedWorkUnit;
+			FakeRelationChanges = new Dictionary<string, FakeRelationChange>(original.FakeRelationChanges);
         }
 
-        public IAuditWorkUnit getNestedWorkUnit() {
-            return nestedWorkUnit;
-        }
+    	public IAuditWorkUnit NestedWorkUnit { get; private set; }
 
-        public IDictionary<String, FakeRelationChange> getFakeRelationChanges() {
-            return fakeRelationChanges;
-        }
+    	public IDictionary<string, FakeRelationChange> FakeRelationChanges { get; private set; }
 
-        public override bool ContainsWork()
+    	public override bool ContainsWork()
         {
             return true;
         }
 
-        public override IDictionary<String, Object> GenerateData(Object revisionData)
+        public override IDictionary<string, object> GenerateData(object revisionData)
         {
             // Generating data with the nested work unit. This data contains all data except the fake relation.
             // Making a defensive copy not to modify the data held by the nested work unit.
-            IDictionary<String, Object> nestedData = new Dictionary<String, Object>(nestedWorkUnit.GenerateData(revisionData));
+            var nestedData = new Dictionary<string, object>(NestedWorkUnit.GenerateData(revisionData));
 
             // Now adding data for all fake relations.
-            foreach (FakeRelationChange fakeRelationChange in fakeRelationChanges.Values) {
+            foreach (var fakeRelationChange in FakeRelationChanges.Values) 
+			{
                 fakeRelationChange.GenerateData(sessionImplementor, nestedData);
             }
 
@@ -83,12 +77,12 @@ namespace NHibernate.Envers.Synchronization.Work
 
         public override IAuditWorkUnit Merge(AddWorkUnit second)
         {
-            return merge(this, nestedWorkUnit, second);
+            return Merge(this, NestedWorkUnit, second);
         }
 
         public override IAuditWorkUnit Merge(ModWorkUnit second)
         {
-            return merge(this, nestedWorkUnit, second);
+            return Merge(this, NestedWorkUnit, second);
         }
 
         public override IAuditWorkUnit Merge(DelWorkUnit second)
@@ -104,19 +98,20 @@ namespace NHibernate.Envers.Synchronization.Work
         public override IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit second)
         {
             // First merging the nested work units.
-            IAuditWorkUnit mergedNested = second.getNestedWorkUnit().Dispatch(nestedWorkUnit);
+            var mergedNested = second.NestedWorkUnit.Dispatch(NestedWorkUnit);
 
             // Now merging the fake relation changes from both work units.
-            IDictionary<String, FakeRelationChange> secondFakeRelationChanges = second.getFakeRelationChanges();
-            IDictionary<String, FakeRelationChange> mergedFakeRelationChanges = new Dictionary<String, FakeRelationChange>();
+            var secondFakeRelationChanges = second.FakeRelationChanges;
+            var mergedFakeRelationChanges = new Dictionary<string, FakeRelationChange>();
             //TODO Simon - decide if we use IESI.Collections in the end.
-            ISet<String> allPropertyNames = new HashedSet<String>(fakeRelationChanges.Keys);
+            var allPropertyNames = new HashedSet<string>(FakeRelationChanges.Keys);
             allPropertyNames.AddAll(secondFakeRelationChanges.Keys);
 
-            foreach (String propertyName in allPropertyNames) {
+            foreach (var propertyName in allPropertyNames) 
+			{
                 mergedFakeRelationChanges.Add(propertyName,
                         FakeRelationChange.Merge(
-                                fakeRelationChanges[propertyName],
+                                FakeRelationChanges[propertyName],
                                 secondFakeRelationChanges[propertyName]));
             }
 
@@ -128,32 +123,36 @@ namespace NHibernate.Envers.Synchronization.Work
             return first.Merge(this);
         }
 
-        public static IAuditWorkUnit merge(FakeBidirectionalRelationWorkUnit frwu, IAuditWorkUnit nestedFirst,
-                                        IAuditWorkUnit nestedSecond) {
-            IAuditWorkUnit nestedMerged = nestedSecond.Dispatch(nestedFirst);
+        public static IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit frwu, IAuditWorkUnit nestedFirst,
+                                        IAuditWorkUnit nestedSecond) 
+		{
+            var nestedMerged = nestedSecond.Dispatch(nestedFirst);
 
             // Creating a new fake relation work unit with the nested merged data
             return new FakeBidirectionalRelationWorkUnit(frwu, nestedMerged);
         }
 
-        /**
-         * Describes a change to a single fake bidirectional relation.
-         */
-        public class FakeRelationChange {
-            private readonly Object owningEntity;
+		/// <summary>
+		/// Describes a change to a single fake bidirectional relation.
+		/// </summary>
+        public class FakeRelationChange 
+		{
+            private readonly object owningEntity;
             private readonly RelationDescription rd;
-            public RevisionType RevisionType { get; private set; }
-            private readonly Object index;
+            private readonly object index;
 
-            public FakeRelationChange(Object owningEntity, RelationDescription rd, RevisionType revisionType,
-                                      Object index) {
+            public FakeRelationChange(object owningEntity, RelationDescription rd, RevisionType revisionType,
+									  object index)
+			{
                 this.owningEntity = owningEntity;
                 this.rd = rd;
-                this.RevisionType = revisionType;
+                RevisionType = revisionType;
                 this.index = index;
             }
 
-            public void GenerateData(ISessionImplementor sessionImplementor, IDictionary<String, Object> data)
+			public RevisionType RevisionType { get; private set; }
+
+            public void GenerateData(ISessionImplementor sessionImplementor, IDictionary<string, object> data)
             {
                 // If the revision type is "DEL", it means that the object is removed from the collection. Then the
                 // new owner will in fact be null.
@@ -179,11 +178,11 @@ namespace NHibernate.Envers.Synchronization.Work
                  * - ADD, DEL - return ADD (points to new owner)
                  * - ADD, ADD - return second (points to newer owner)
                  */
-                if (first.RevisionType == RevisionType.Deleted || second.RevisionType == RevisionType.Added) {
+                if (first.RevisionType == RevisionType.Deleted || second.RevisionType == RevisionType.Added) 
+				{
                     return second;
-                } else {
-                    return first;
                 }
+            	return first;
             }
         }
     }

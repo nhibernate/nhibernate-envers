@@ -9,7 +9,7 @@ namespace NHibernate.Envers
 	///  an auto-generated database-assigned primary id.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public class RevisionNumberAttribute : Attribute
+	public sealed class RevisionNumberAttribute : Attribute
 	{
 	}
 }
