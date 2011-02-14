@@ -134,16 +134,16 @@ namespace NHibernate.Envers.Query
             if (projections.Count > 0)
             {
                 // all projections separated with commas
-                StringTools.Append(sb, projections.GetEnumerator(), ", ");
+                StringTools.Append(sb, projections, ", ");
             }
             else
             {
                 // all aliases separated with commas
-                StringTools.Append(sb, GetAliasList().GetEnumerator(), ", ");
+                StringTools.Append(sb, GetAliasList(), ", ");
             }
             sb.Append(" from ");
             // all from entities with aliases, separated with commas
-            StringTools.Append(sb, GetFromList().GetEnumerator(), ", ");
+            StringTools.Append(sb, GetFromList(), ", ");
             // where part - rootParameters
             if (!rootParameters.IsEmpty())
             {
@@ -154,7 +154,7 @@ namespace NHibernate.Envers.Query
             if (orders.Count > 0)
             {
                 sb.Append(" order by ");
-                StringTools.Append(sb, GetOrderList().GetEnumerator(), ", ");
+                StringTools.Append(sb, GetOrderList(), ", ");
             }
         }
 

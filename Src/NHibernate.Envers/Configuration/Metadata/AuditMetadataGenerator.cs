@@ -259,13 +259,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		private void AddJoins(PersistentClass pc, ICompositeMapperBuilder currentMapper, ClassAuditingData auditingData,
-							  String entityName, EntityXmlMappingData xmlMappingData, bool firstPass)
+							  string entityName, EntityXmlMappingData xmlMappingData, bool firstPass)
 		{
-			var joins = pc.JoinIterator.GetEnumerator();
-
-			while (joins.MoveNext())
+			foreach (var join in pc.JoinIterator)
 			{
-				var join = joins.Current;
 				var joinElement = entitiesJoins[entityName][join];
 
 				if (joinElement != null)
