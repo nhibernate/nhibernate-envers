@@ -59,5 +59,18 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 			Assert.IsNull(rev1.Referencing);
 			Assert.AreEqual(ing1, rev2.Referencing);
 		}
+
+		[Test]
+		public void VerifyHistoryOfIng1()
+		{
+			var ed1 = Session.Get<BiRefEdEntity>(ed1_id);
+			var ed2 = Session.Get<BiRefEdEntity>(ed2_id);
+
+			var rev1 = AuditReader().Find<BiRefIngEntity>(ing1_id, 1);
+			var rev2 = AuditReader().Find<BiRefIngEntity>(ing1_id, 2);
+
+			Assert.AreEqual(ed1, rev1.Reference);
+			Assert.AreEqual(ed2, rev2.Reference);
+		}
 	}
 }
