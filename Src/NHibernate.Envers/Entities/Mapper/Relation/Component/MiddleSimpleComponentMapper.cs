@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tools.Query;
@@ -9,9 +8,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
     class MiddleSimpleComponentMapper: IMiddleComponentMapper
     {
         private readonly AuditEntitiesConfiguration verEntCfg;
-        private readonly String propertyName;
+		private readonly string propertyName;
 
-        public MiddleSimpleComponentMapper(AuditEntitiesConfiguration verEntCfg, String propertyName)
+		public MiddleSimpleComponentMapper(AuditEntitiesConfiguration verEntCfg, string propertyName)
         {
             this.propertyName = propertyName;
             this.verEntCfg = verEntCfg;

@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools.Query;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
-    /**
-     * Selects data from a relation middle-table and a related versions entity.
-     * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
-    public sealed class TwoEntityQueryGenerator : IRelationQueryGenerator {
-        private readonly String queryString;
+	/// <summary>
+	/// Selects data from a relation middle-table and a related versions entity.
+	/// </summary>
+    public sealed class TwoEntityQueryGenerator : IRelationQueryGenerator 
+	{
+        private readonly string queryString;
         private readonly MiddleIdData referencingIdData;
 
         public TwoEntityQueryGenerator(GlobalConfiguration globalCfg,
                                        AuditEntitiesConfiguration verEntCfg,
-                                       String versionsMiddleEntityName,
+									   string versionsMiddleEntityName,
                                        MiddleIdData referencingIdData,
                                        MiddleIdData referencedIdData,
                                        IEnumerable<MiddleComponentData> componentDatas) {
@@ -44,17 +42,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
              *     ee.revision_type != DEL AND
              *     e.revision_type != DEL
              */
-            String revisionPropertyPath = verEntCfg.RevisionNumberPath;
-            String originalIdPropertyName = verEntCfg.OriginalIdPropName;
+            var revisionPropertyPath = verEntCfg.RevisionNumberPath;
+            var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
-            String eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
+            var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
 
             // SELECT new list(ee) FROM middleEntity ee
-            QueryBuilder qb = new QueryBuilder(versionsMiddleEntityName, "ee");
+            var qb = new QueryBuilder(versionsMiddleEntityName, "ee");
             qb.AddFrom(referencedIdData.AuditEntityName, "e");
             qb.AddProjection("new list", "ee, e", false, false);
             // WHERE
-            Parameters rootParameters = qb.RootParameters;
+            var rootParameters = qb.RootParameters;
             // ee.id_ref_ed = e.id_ref_ed
             referencedIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
                     referencedIdData.OriginalMapper, "e." + originalIdPropertyName);
@@ -74,16 +72,18 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
             // e.revision_type != DEL
             rootParameters.AddWhereWithNamedParam("e." + verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");
 
-            StringBuilder sb = new StringBuilder();
-            qb.Build(sb, EmptyDictionary<String, Object>.Instance);
+            var sb = new StringBuilder();
+            qb.Build(sb, EmptyDictionary<string, object>.Instance);
             queryString = sb.ToString();
         }
 
-        public IQuery GetQuery(IAuditReaderImplementor versionsReader, Object primaryKey, long revision) {
-            IQuery query = versionsReader.Session.CreateQuery(queryString);
+        public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision) 
+		{
+            var query = versionsReader.Session.CreateQuery(queryString);
             query.SetParameter("revision", revision);
             query.SetParameter("delrevisiontype", RevisionType.Deleted);
-            foreach (QueryParameterData paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey)) {
+            foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey)) 
+			{
                 paramData.SetParameterValue(query);
             }
 

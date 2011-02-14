@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
@@ -16,12 +14,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	 */
 	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator 
 	{
-		private readonly String queryString;
+		private readonly string queryString;
 		private readonly MiddleIdData referencingIdData;
 
 		public TwoEntityOneAuditedQueryGenerator(
 									   AuditEntitiesConfiguration verEntCfg,
-									   String versionsMiddleEntityName,
+									   string versionsMiddleEntityName,
 									   MiddleIdData referencingIdData,
 									   MiddleIdData referencedIdData,
 									   IEnumerable<MiddleComponentData> componentDatas) 
@@ -42,17 +40,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 * (only non-deleted entities and associations)
 			 *     ee.revision_type != DEL
 			 */
-			String revisionPropertyPath = verEntCfg.RevisionNumberPath;
-			String originalIdPropertyName = verEntCfg.OriginalIdPropName;
+			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
+			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
-			String eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
+			var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
 
 			// SELECT new list(ee) FROM middleEntity ee
-			QueryBuilder qb = new QueryBuilder(versionsMiddleEntityName, "ee");
+			var qb = new QueryBuilder(versionsMiddleEntityName, "ee");
 			qb.AddFrom(referencedIdData.EntityName, "e");
 			qb.AddProjection("new list", "ee, e", false, false);
 			// WHERE
-			Parameters rootParameters = qb.RootParameters;
+			var rootParameters = qb.RootParameters;
 			// ee.id_ref_ed = e.id_ref_ed
 			referencedIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
 					referencedIdData.OriginalMapper, "e");
@@ -66,18 +64,18 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// ee.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
 
-			StringBuilder sb = new StringBuilder();
-			qb.Build(sb, EmptyDictionary<String, Object>.Instance);
+			var sb = new StringBuilder();
+			qb.Build(sb, EmptyDictionary<string, object>.Instance);
 			queryString = sb.ToString();
 		}
 
 
-		public IQuery GetQuery(IAuditReaderImplementor versionsReader, Object primaryKey, long revision)
+		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
-			IQuery query = versionsReader.Session.CreateQuery(queryString);
+			var query = versionsReader.Session.CreateQuery(queryString);
 			query.SetParameter("revision", revision);
 			query.SetParameter("delrevisiontype", RevisionType.Deleted);
-			foreach (QueryParameterData paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
+			foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);
 			}

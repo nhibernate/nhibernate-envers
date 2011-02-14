@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Criteria;
@@ -10,7 +9,6 @@ namespace NHibernate.Envers.Query
 	public interface IAuditQuery 
 	{
 		IList GetResultList();
-
 		IList<T> GetResultList<T>();
 
 		object GetSingleResult();
@@ -29,9 +27,9 @@ namespace NHibernate.Envers.Query
 
 		IAuditQuery SetCacheable(bool cacheable);
 
-		IAuditQuery SetCacheRegion(String cacheRegion);
+		IAuditQuery SetCacheRegion(string cacheRegion);
 
-		IAuditQuery SetComment(String comment);
+		IAuditQuery SetComment(string comment);
 
 		IAuditQuery SetFlushMode(FlushMode flushMode);
 

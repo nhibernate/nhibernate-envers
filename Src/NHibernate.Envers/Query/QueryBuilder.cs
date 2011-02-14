@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query
 {
-    /**
-     * A class for incrementaly building a HQL query.
-     * @author Catalina Panait, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
-    public class QueryBuilder {
+	/// <summary>
+	/// A class for incrementaly building a HQL query.
+	/// </summary>
+    public class QueryBuilder 
+	{
         //TODO in second implementation phase
-        private readonly String entityName;
-        private readonly String alias;
+        private readonly string entityName;
+        private readonly string alias;
 
         /**
          * For use by alias generator (in case an alias is not provided by the user).
          */
-        private MutableInteger aliasCounter;
+        private readonly MutableInteger aliasCounter;
         /**
          * For use by parameter generator, in {@link Parameters}. This counter must be
          * the same in all parameters and sub-queries of this query.
          */
-        private MutableInteger paramCounter;
+        private readonly MutableInteger paramCounter;
         /**
          * Main "where" parameters for this query.
          */
@@ -49,13 +48,14 @@ namespace NHibernate.Envers.Query
          * @param entityName Main entity which should be selected.
          * @param alias Alias of the entity
          */
-        public QueryBuilder(String entityName, String alias)
+        public QueryBuilder(string entityName, string alias)
             :this(entityName, alias, new MutableInteger(), new MutableInteger())
         {
             
         }
 
-        private QueryBuilder(String entityName, String alias, MutableInteger aliasCounter, MutableInteger paramCounter) {
+		private QueryBuilder(string entityName, string alias, MutableInteger aliasCounter, MutableInteger paramCounter)
+		{
             this.entityName = entityName;
             this.alias = alias;
             this.aliasCounter = aliasCounter;
@@ -63,9 +63,9 @@ namespace NHibernate.Envers.Query
 
             rootParameters = new Parameters(alias, "and", paramCounter);
 
-            froms = new List<Pair<String, String>>();
-            orders = new List<Pair<String, Boolean>>();
-            projections = new List<String>();
+			froms = new List<Pair<string, String>>();
+			orders = new List<Pair<string, Boolean>>();
+			projections = new List<string>();
 
             AddFrom(entityName, alias);
         }
@@ -75,11 +75,13 @@ namespace NHibernate.Envers.Query
          * @param entName Name of the entity from which to select.
          * @param als Alias of the entity. Should be different than all other aliases.
          */
-        public void AddFrom(String entName, String als) {
-            froms.Add(Pair<String, String>.Make(entName, als));
+		public void AddFrom(string entName, string als)
+		{
+			froms.Add(Pair<string, string>.Make(entName, als));
         }
 
-        private String GenerateAlias() {
+		private string GenerateAlias()
+		{
             return "_e" + aliasCounter.getAndIncrease();
         }
 
@@ -87,7 +89,8 @@ namespace NHibernate.Envers.Query
          * @return A sub-query builder for the same entity (with an auto-generated alias). The sub-query can
          * be later used as a value of a parameter.
          */
-        public QueryBuilder NewSubQueryBuilder() {
+        public QueryBuilder NewSubQueryBuilder() 
+		{
             return NewSubQueryBuilder(entityName, GenerateAlias());
         }
 
@@ -97,12 +100,14 @@ namespace NHibernate.Envers.Query
          * @return A sub-query builder for the given entity, with the given alias. The sub-query can
          * be later used as a value of a parameter.
          */
-        public QueryBuilder NewSubQueryBuilder(String entityName, String alias) {
+		public QueryBuilder NewSubQueryBuilder(string entityName, string alias)
+		{
             return new QueryBuilder(entityName, alias, aliasCounter, paramCounter);
         }
 
-        public void AddOrder(String propertyName, bool ascending) {
-            orders.Add(Pair<String,bool>.Make(propertyName, ascending));
+		public void AddOrder(string propertyName, bool ascending)
+		{
+			orders.Add(Pair<string, bool>.Make(propertyName, ascending));
         }
 
         public void AddProjection(string function, string propertyName, bool distinct)
@@ -128,7 +133,7 @@ namespace NHibernate.Envers.Query
          * @param sb String builder to which the query will be appended.
          * @param queryParamValues Map to which name and values of parameters used in the query should be added.
          */
-         public void Build(StringBuilder sb, IDictionary<String, Object> queryParamValues)
+		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
         {
             sb.Append("select ");
             if (projections.Count > 0)
@@ -158,27 +163,33 @@ namespace NHibernate.Envers.Query
             }
         }
 
-        private IList<String> GetAliasList() {
-            IList<String> aliasList = new List<String>();
-            foreach (Pair<String, String> from in froms) {
+		private IList<string> GetAliasList()
+		{
+			IList<string> aliasList = new List<string>();
+			foreach (var from in froms)
+			{
                 aliasList.Add(from.Second);
             }
 
             return aliasList;
         }
 
-        private IList<String> GetFromList() {
-            IList<String> fromList = new List<String>();
-            foreach (Pair<String, String> from in froms) {
+		private IList<string> GetFromList() 
+		{
+			var fromList = new List<string>();
+            foreach (var from in froms) 
+			{
                 fromList.Add(from.First + " " + from.Second);
             }
 
             return fromList;
         }
 
-        private IList<String> GetOrderList() {
-            IList<String> orderList = new List<String>();
-            foreach (Pair<String, Boolean> order in orders) {
+		private IList<string> GetOrderList()
+		{
+			var orderList = new List<string>();
+            foreach (var order in orders) 
+			{
                 orderList.Add(alias + "." + order.First + " " + (order.Second ? "asc" : "desc"));
             }
 

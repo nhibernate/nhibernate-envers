@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Query;
@@ -64,7 +63,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");
 
 			var sb = new StringBuilder();
-			qb.Build(sb, EmptyDictionary<String, object>.Instance);
+			qb.Build(sb, EmptyDictionary<string, object>.Instance);
 			queryString = sb.ToString();
 		}
 
