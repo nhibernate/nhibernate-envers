@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-		public override void MapToMapFromEntity(IDictionary<string, object> data, Object obj)
+		public override void MapToMapFromEntity(IDictionary<string, object> data, object obj)
 		{
 			if (obj == null)
 			{
@@ -87,7 +87,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 		public override IList<QueryParameterData> MapToQueryParametersFromId(object obj) 
 		{
 			//Simon 27/06/2010 - era LinkedHashMap
-			var data = new Dictionary<String, Object>();
+			var data = new Dictionary<string, object>();
 			MapToMapFromId(data, obj);
 
 			var ret = new List<QueryParameterData>();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using NHibernate.Envers.Entities;
@@ -32,14 +31,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/*
 		 * Here information about already generated mappings will be accumulated.
 		 */
-		public IDictionary<String, EntityConfiguration> EntitiesConfigurations { get; private set; }
-		public IDictionary<String, EntityConfiguration> NotAuditedEntitiesConfigurations { get; private set; }
+		public IDictionary<string, EntityConfiguration> EntitiesConfigurations { get; private set; }
+		public IDictionary<string, EntityConfiguration> NotAuditedEntitiesConfigurations { get; private set; }
 
 		public AuditEntityNameRegister AuditEntityNameRegister { get; private set; }
 		public ClassesAuditingData ClassesAuditingData { get; private set; }
 
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
-		private IDictionary<String, IDictionary<Join, XmlElement>> entitiesJoins;
+		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
 
 		public AuditMetadataGenerator(Cfg.Configuration cfg, GlobalConfiguration globalCfg,
 									  AuditEntitiesConfiguration verEntCfg,
@@ -60,9 +59,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			AuditEntityNameRegister = auditEntityNameRegister;
 			ClassesAuditingData = classesAuditingData;
 
-			EntitiesConfigurations = new Dictionary<String, EntityConfiguration>();
-			NotAuditedEntitiesConfigurations = new Dictionary<String, EntityConfiguration>();
-			entitiesJoins = new Dictionary<String, IDictionary<Join, XmlElement>>();
+			EntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
+			NotAuditedEntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
+			entitiesJoins = new Dictionary<string, IDictionary<Join, XmlElement>>();
 		}
 
 		/**
@@ -92,7 +91,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
 		}
 
-		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, String entityName,
+		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 					  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
 					  bool insertable, bool firstPass)
 		{
@@ -155,9 +154,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		//@SuppressWarnings({"unchecked"})
 		private void AddProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
-								   ClassAuditingData auditingData, String entityName, EntityXmlMappingData xmlMappingData,
+								   ClassAuditingData auditingData, string entityName, EntityXmlMappingData xmlMappingData,
 								   bool firstPass)
 		{
 			foreach (var property in properties)
@@ -187,7 +185,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return true;
 		}
 
-		public String GetSchema(string schemaFromAnnotation, Table table)
+		public string GetSchema(string schemaFromAnnotation, Table table)
 		{
 			// Get the schema from the annotation ...
 			var schema = schemaFromAnnotation;
@@ -273,7 +271,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, String> GenerateMappingData(
+		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				IdMappingData idMapper)
 		{
@@ -302,9 +300,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return Triple<XmlElement, IExtendedPropertyMapper, string>.Make(class_mapping, propertyMapper, null);
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, String> GenerateInheritanceMappingData(
+		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateInheritanceMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
-				String inheritanceMappingType)
+				string inheritanceMappingType)
 		{
 			var extendsEntityName = VerEntCfg.GetAuditEntityName(pc.Superclass.EntityName);
 			var hasDiscriminator = pc.Discriminator != null;
@@ -326,7 +324,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
 			var propertyMapper = new SubclassPropertyMapper(new MultiPropertyMapper(), parentPropertyMapper);
 
-			return Triple<XmlElement, IExtendedPropertyMapper, String>.Make(class_mapping, propertyMapper, parentEntityName);
+			return Triple<XmlElement, IExtendedPropertyMapper, string>.Make(class_mapping, propertyMapper, parentEntityName);
 		}
 
 		public void GenerateFirstPass(PersistentClass pc, ClassAuditingData auditingData,
@@ -380,7 +378,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// These properties will be read from the mapping data
 
-			Triple<XmlElement, IExtendedPropertyMapper, String> mappingData;
+			Triple<XmlElement, IExtendedPropertyMapper, string> mappingData;
 
 			// Reading the mapping data depending on inheritance type (if any)
 			switch (inheritanceType)
@@ -458,7 +456,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		// Getters for generators and configuration
 
-		public void ThrowUnsupportedTypeException(IType type, String entityName, String propertyName)
+		public void ThrowUnsupportedTypeException(IType type, string entityName, string propertyName)
 		{
 			var message = "Type not supported for auditing: " + type.Name +
 					", on entity " + entityName + ", property '" + propertyName + "'.";
@@ -476,7 +474,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		 * mapped using {@link RelationTargetAuditMode#NOT_AUDITED}.
 		 * @return The id mapping data of the related entity. 
 		 */
-		public IdMappingData GetReferencedIdMappingData(String entityName, String referencedEntityName,
+		public IdMappingData GetReferencedIdMappingData(string entityName, string referencedEntityName,
 												PropertyAuditingData propertyAuditingData,
 												bool allowNotAuditedTarget)
 		{

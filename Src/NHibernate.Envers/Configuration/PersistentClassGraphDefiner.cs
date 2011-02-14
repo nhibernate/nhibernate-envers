@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Mapping;
 using NHibernate.Envers.Tools.Graph;
 
@@ -18,7 +17,7 @@ namespace NHibernate.Envers.Configuration
 			this.cfg = cfg;
 		}
 
-		public String GetRepresentation(PersistentClass pc) 
+		public string GetRepresentation(PersistentClass pc) 
 		{
 			return pc.EntityName;
 		}

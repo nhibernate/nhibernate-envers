@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Configuration
@@ -54,7 +53,7 @@ namespace NHibernate.Envers.Configuration
 					"REVTYPE");
 			RevisionTypePropType = "byte";
 
-			customAuditTablesNames = new Dictionary<String, String>();
+			customAuditTablesNames = new Dictionary<string, string>();
 
 			RevisionNumberPath = OriginalIdPropName + "." + RevisionFieldName + ".id";
 			revisionPropBasePath = OriginalIdPropName + "." + RevisionFieldName + ".";
@@ -68,13 +67,11 @@ namespace NHibernate.Envers.Configuration
 			return revisionPropBasePath + propertyName;
 		}
 
-		//
 
-		public void AddCustomAuditTableName(string entityName, string tableName) {
+		public void AddCustomAuditTableName(string entityName, string tableName) 
+		{
 			customAuditTablesNames.Add(entityName, tableName);
 		}
-
-		//
 
 		public string GetAuditEntityName(string entityName) 
 		{

@@ -82,7 +82,7 @@ namespace NHibernate.Envers.Entities
 			return ret;
 		}
 
-		public void AddInstancesFromVersionsEntities(String entityName, IList addTo, IEnumerable<IDictionary> versionsEntities, long revision)
+		public void AddInstancesFromVersionsEntities(string entityName, IList addTo, IEnumerable<IDictionary> versionsEntities, long revision)
 		{
 			foreach (var versionsEntity in versionsEntities) 
 			{
