@@ -12,11 +12,11 @@ namespace NHibernate.Cfg
 														IMetaDataProvider metaDataProvider)
 		{
 			AuditConfiguration.SetConfigMetas(configuration, metaDataProvider);
-			addListeners(configuration, auditEventListener);
+			AddListeners(configuration, auditEventListener);
 			return configuration;
 		}
 
-		private static void addListeners(Configuration cfg, AuditEventListener auditEventListener)
+		private static void AddListeners(Configuration cfg, AuditEventListener auditEventListener)
 		{
 			var listeners = new[] { auditEventListener };
 			cfg.AppendListeners(ListenerType.PostInsert, listeners);
