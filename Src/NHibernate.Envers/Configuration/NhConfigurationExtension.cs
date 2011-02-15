@@ -14,6 +14,7 @@ namespace NHibernate.Cfg
 		{
 			AuditConfiguration.SetConfigMetas(configuration, metaDataProvider);
 			AddListeners(configuration, auditEventListener);
+			AuditConfiguration.GetFor(configuration);
 			return configuration;
 		}
 

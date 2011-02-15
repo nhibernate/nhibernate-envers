@@ -1,3 +1,4 @@
+using System.Linq;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
@@ -14,6 +15,7 @@ namespace NHibernate.Envers.Tests.Configuration
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
 	}
+
 	public class AuditConfigurationTests
 	{
 		const string SimpleMapping = @"<?xml version='1.0' encoding='utf-8'?>
@@ -53,5 +55,36 @@ namespace NHibernate.Envers.Tests.Configuration
 											 }
 										 }).Should().NotThrow();
 		}
+
+		[Test]
+		public void WhenCallIntegrationThenMappingsShouldBeAvailableimmediately()
+		{
+			var cfg = new Cfg.Configuration();
+			cfg.Configure();
+			cfg.AddXml(SimpleMapping);
+			cfg.IntegrateWithEnvers();
+
+			cfg.ClassMappings.Where(cm => cm.EntityName.Contains("SimpleAuiditableForConf")).Should().Have.Count.EqualTo(2);
+		}
+
+		[Test]
+		public void WhenIntegrateThenBuildSessionFactoryDoesNotThrows()
+		{
+			var cfg = new Cfg.Configuration();
+			cfg.Configure();
+
+			cfg.AddXml(SimpleMapping);
+			cfg.IntegrateWithEnvers();
+
+			Executing.This(() =>
+			{
+				using (var sf = cfg.BuildSessionFactory())
+				{
+					// build the session factory to run initialization of listeners and be completelly sure
+					// there isn't problems
+				}
+			}).Should().NotThrow();
+		}
+
 	}
 }
