@@ -47,24 +47,22 @@ namespace NHibernate.Envers.Entities.Mapper.Id
          */
         void AddIdsEqualToQuery(Parameters parameters, string prefix1, IIdMapper mapper2, string prefix2);
 
-        /**
-         * Adds query statements, which contains restrictions, which express the property that the id of the entity
-         * with alias prefix, is equal to the given object.
-         * @param parameters Parameters, to which to add the statements.
-         * @param id Value of id.
-         * @param prefix Prefix to add to the properties (may be null).
-         * @param equals Should this query express the "=" relation or the "<>" relation.
-         */
-        void AddIdEqualsToQuery(Parameters parameters, object id, string prefix, bool equals);
+    	/// <summary>
+    	/// Adds query statements, which contains restrictions, which express the property that the id of the entity with alias prefix, is equal to the given object.
+    	/// </summary>
+    	/// <param name="parameters">Parameters, to which to add the statements.</param>
+    	/// <param name="id">Value of id.</param>
+    	/// <param name="prefix">Prefix to add to the properties (may be null).</param>
+    	/// <param name="equals">Should this query express the "=" relation or the "!=" relation.</param>
+    	void AddIdEqualsToQuery(Parameters parameters, object id, string prefix, bool equals);
 
-        /**
-         * Adds query statements, which contains named parameters, which express the property that the id of the entity
-         * with alias prefix, is equal to the given object. It is the responsibility of the using method to read
-         * parameter values from the id and specify them on the final query object.
-         * @param parameters Parameters, to which to add the statements.
-         * @param prefix Prefix to add to the properties (may be null).
-         * @param equals Should this query express the "=" relation or the "<>" relation.
-         */
-        void AddNamedIdEqualsToQuery(Parameters parameters, string prefix, bool equals);
-    }
+    	/// <summary>
+    	/// Adds query statements, which contains named parameters, which express the property that the id of the entity with alias prefix, is equal to the given object.
+    	/// </summary>
+    	/// <param name="parameters">Parameters, to which to add the statements.</param>
+    	/// <param name="prefix">Prefix to add to the properties (may be null).</param>
+    	/// <param name="equals">Should this query express the "=" relation or the "!=" relation.</param>
+    	/// <remarks>It is the responsibility of the using method to read parameter values from the id and specify them on the final query object.</remarks>
+    	void AddNamedIdEqualsToQuery(Parameters parameters, string prefix, bool equals);
+		}
 }
