@@ -47,6 +47,7 @@ namespace NHibernate.Envers.Configuration
 			AuditConfiguration verCfg;
 			if (!Configurations.TryGetValue(cfg, out verCfg))
 			{
+				cfg.BuildMappings(); // force secondpass for mappings added by users
 				IMetaDataProvider metas;
 				if (!ConfigurationMetadataProvider.TryGetValue(cfg, out metas))
 				{
@@ -54,8 +55,6 @@ namespace NHibernate.Envers.Configuration
 				}
 				verCfg = new AuditConfiguration(cfg, metas);
 				Configurations.Add(cfg, verCfg);
-
-				cfg.BuildMappings();
 			}
 
 			return verCfg;
