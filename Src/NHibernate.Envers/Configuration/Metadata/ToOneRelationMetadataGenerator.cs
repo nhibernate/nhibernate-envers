@@ -1,48 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
+﻿using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
-using NHibernate.Envers.Configuration.Metadata;
-using NHibernate.Envers.Tools.Graph;
-using NHibernate.Envers.Entities;
 using NHibernate.Mapping;
-using NHibernate.Properties;
-using NHibernate.Type;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tools;
-using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Entities.Mapper.Relation;
 
 
 namespace NHibernate.Envers.Configuration.Metadata
-
 {
-/**
- * Generates metadata for to-one relations (reference-valued properties).
- * @author Catalina Panait, port of Envers omonyme class by Adam Warski (adam at warski dot org)
- */
-    public sealed class ToOneRelationMetadataGenerator {
-        private AuditMetadataGenerator mainGenerator;
+	/// <summary>
+	/// Generates metadata for to-one relations (reference-valued properties).
+	/// </summary>
+    public sealed class ToOneRelationMetadataGenerator 
+	{
+        private readonly AuditMetadataGenerator mainGenerator;
 
-        public ToOneRelationMetadataGenerator(AuditMetadataGenerator auditMetadataGenerator) {
+        public ToOneRelationMetadataGenerator(AuditMetadataGenerator auditMetadataGenerator) 
+		{
             mainGenerator = auditMetadataGenerator;
         }
 
         //@SuppressWarnings({"unchecked"})
         public void AddToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value,
-                      ICompositeMapperBuilder mapper, String entityName, bool insertable) {
-            String referencedEntityName = ((ToOne)value).ReferencedEntityName;
+                      ICompositeMapperBuilder mapper, string entityName, bool insertable) 
+		{
+            var referencedEntityName = ((ToOne)value).ReferencedEntityName;
 
-            IdMappingData idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
+            var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
                     propertyAuditingData, true);
 
-            String lastPropertyPrefix = MappingTools.createToOneRelationPrefix(propertyAuditingData.Name);
+            var lastPropertyPrefix = MappingTools.createToOneRelationPrefix(propertyAuditingData.Name);
 
             // Generating the id mapper for the relation
-            IIdMapper relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
+            var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
             // Storing information about this relation
             mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(
@@ -56,17 +46,20 @@ namespace NHibernate.Envers.Configuration.Metadata
             // to the entity that did involve the relation, it's the responsibility of the collection side to store the
             // proper data.
             bool nonInsertableFake;
-            if (!insertable && propertyAuditingData.ForceInsertable) {
+            if (!insertable && propertyAuditingData.ForceInsertable) 
+			{
                 nonInsertableFake = true;
                 insertable = true;
-            } else {
+            } 
+			else 
+			{
                 nonInsertableFake = false;
             }
 
             
             // Adding an element to the mapping corresponding to the references entity id's
             // Use OwnerDocument.ImportNode() instead of XmlNode.Clone();
-            XmlElement properties = (XmlElement)parent.OwnerDocument.ImportNode(idMapping.XmlRelationMapping,true);
+            var properties = (XmlElement)parent.OwnerDocument.ImportNode(idMapping.XmlRelationMapping,true);
             properties.SetAttribute("name",propertyAuditingData.Name);
 
             MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
@@ -75,32 +68,34 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 
             // Adding mapper for the id
-            PropertyData propertyData = propertyAuditingData.GetPropertyData();
+            var propertyData = propertyAuditingData.GetPropertyData();
             mapper.AddComposite(propertyData, new ToOneIdMapper(relMapper,propertyData,referencedEntityName,nonInsertableFake));
         }
 
-        //@SuppressWarnings({"unchecked"})
         public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, IValue value,
-                                  ICompositeMapperBuilder mapper, String entityName) {
-            OneToOne propertyValue = (OneToOne)value;
+                                  ICompositeMapperBuilder mapper, string entityName) 
+		{
+            var propertyValue = (OneToOne)value;
 
-            String owningReferencePropertyName = propertyValue.ReferencedPropertyName; // mappedBy
-            EntityConfiguration configuration = mainGenerator.EntitiesConfigurations[entityName]; 
-            if (configuration == null) {
+            var owningReferencePropertyName = propertyValue.ReferencedPropertyName; // mappedBy
+            var configuration = mainGenerator.EntitiesConfigurations[entityName]; 
+            if (configuration == null) 
+			{
                 throw new MappingException("An audited relation to a non-audited entity " + entityName + "!");
             }
 
-            IdMappingData ownedIdMapping = configuration.IdMappingData;
+            var ownedIdMapping = configuration.IdMappingData;
 
-            if (ownedIdMapping == null) {
+            if (ownedIdMapping == null) 
+			{
                 throw new MappingException("An audited relation to a non-audited entity " + entityName + "!");
             }
 
-            String lastPropertyPrefix = MappingTools.createToOneRelationPrefix(owningReferencePropertyName);
-            String referencedEntityName = propertyValue.ReferencedEntityName;
+            var lastPropertyPrefix = MappingTools.createToOneRelationPrefix(owningReferencePropertyName);
+            var referencedEntityName = propertyValue.ReferencedEntityName;
 
             // Generating the id mapper for the relation
-            IIdMapper ownedIdMapper = ownedIdMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
+            var ownedIdMapper = ownedIdMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
             // Storing information about this relation
             mainGenerator.EntitiesConfigurations[entityName].AddToOneNotOwningRelation(
@@ -108,7 +103,7 @@ namespace NHibernate.Envers.Configuration.Metadata
                     referencedEntityName, ownedIdMapper);
 
             // Adding mapper for the id
-            PropertyData propertyData = propertyAuditingData.GetPropertyData();
+            var propertyData = propertyAuditingData.GetPropertyData();
             mapper.AddComposite(propertyData, new OneToOneNotOwningMapper(owningReferencePropertyName,
                     referencedEntityName, propertyData));
         }

@@ -3,7 +3,7 @@
 namespace NHibernate.Envers
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class RevisionEntityAttribute : Attribute
+	public sealed class RevisionEntityAttribute : Attribute
 	{
 		public RevisionEntityAttribute()
 		{

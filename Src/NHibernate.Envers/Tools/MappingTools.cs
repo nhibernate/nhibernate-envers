@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Tools
@@ -30,16 +27,22 @@ namespace NHibernate.Envers.Tools
             return referencePropertyName + "_";
         }
 
-        public static String getReferencedEntityName(IValue value) {
-            if (value is ToOne) {
+        public static String getReferencedEntityName(IValue value) 
+		{
+            if (value is ToOne) 
+			{
                 return ((ToOne) value).ReferencedEntityName;
-            } else if (value is OneToMany) {
-                return ((OneToMany) value).ReferencedEntityName;
-            } else if (value is NHibernate.Mapping.Collection) {
-                return getReferencedEntityName(((NHibernate.Mapping.Collection)value).Element);
             }
+        	if (value is OneToMany) 
+			{
+        		return ((OneToMany) value).ReferencedEntityName;
+        	}
+        	if (value is Mapping.Collection) 
+			{
+        		return getReferencedEntityName(((Mapping.Collection)value).Element);
+        	}
 
-            return null;
+        	return null;
         }
     }
 }

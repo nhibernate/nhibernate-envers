@@ -1,20 +1,18 @@
-﻿using System;
-using Iesi.Collections.Generic;
+﻿using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-    /**
-     * A register of all audit entity names used so far.
-     * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
-     */
+	/// <summary>
+	/// A register of all audit entity names used so far.
+	/// </summary>
     public class AuditEntityNameRegister 
     {
-        private readonly ISet<String> auditEntityNames = new HashedSet<String>();
+        private readonly ISet<string> auditEntityNames = new HashedSet<string>();
 
-        /**
-         * @param auditEntityName Name of the audit entity.
-         * @return True if the given audit entity name is already used.
-         */
+        /// <summary>
+        /// </summary>
+		/// <param name="auditEntityName">Name of the audit entity.</param>
+		/// <returns>True if the given audit entity name is already used.</returns>
         private bool check(string auditEntityName) 
         {
             return auditEntityNames.Contains(auditEntityName);

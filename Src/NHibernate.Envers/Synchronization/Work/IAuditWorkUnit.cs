@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-    /**
-     * TODO: refactor constructors into factory methods
-     * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-     */
-    public interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher {
-    Object EntityId { get;}
-    String EntityName { get;}
+    public interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher 
+	{
+    	object EntityId { get; }
+    	string EntityName { get; }
     
-    bool ContainsWork();
+		bool ContainsWork();
 
-    bool IsPerformed();
+		bool IsPerformed();
 
-    /**
-     * Perform this work unit in the given session.
-     * @param session Session, in which the work unit should be performed.
-     * @param revisionData The current revision data, which will be used to populate the work unit with the correct
-     * revision relation.
-     */
-    void Perform(ISession session, Object revisionData);
-    void Undo(ISession session);
+		/// <summary>
+		/// Perform this work unit in the given session.
+		/// </summary>
+		/// <param name="session">Session, in which the work unit should be performed.</param>
+		/// <param name="revisionData">
+		/// The current revision data, which will be used to populate the work unit with the correct revision relation.
+		/// </param>
+		void Perform(ISession session, object revisionData);
+		void Undo(ISession session);
 
-    /**
-     * @param revisionData The current revision data, which will be used to populate the work unit with the correct
-     * revision relation.
-     * @return Generates data that should be saved when performing this work unit.
-     */
-    IDictionary<String, Object> GenerateData(Object revisionData);
-}
+		/// <summary>
+		/// </summary>
+		/// <param name="revisionData">The current revision data, which will be used to populate the work unit with the correct revision relation.</param>
+		/// <returns>Generates data that should be saved when performing this work unit.</returns>
+		IDictionary<string, object> GenerateData(object revisionData);
+	}
 }

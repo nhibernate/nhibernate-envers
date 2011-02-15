@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers.Entities
 {
@@ -8,14 +7,14 @@ namespace NHibernate.Envers.Entities
 	/// </summary>
     public class EntitiesConfigurations
     {
-        private readonly IDictionary<String, EntityConfiguration> entitiesConfigurations;
-        private readonly IDictionary<String, EntityConfiguration> notAuditedEntitiesConfigurations;
+        private readonly IDictionary<string, EntityConfiguration> entitiesConfigurations;
+		private readonly IDictionary<string, EntityConfiguration> notAuditedEntitiesConfigurations;
 
         // Map versions entity name -> entity name
-        private IDictionary<String, String> _entityNamesForVersionsEntityNames = new Dictionary<String, String>();
+		private IDictionary<string, string> _entityNamesForVersionsEntityNames = new Dictionary<string, string>();
 
-        public EntitiesConfigurations(IDictionary<String, EntityConfiguration> entitiesConfigurations,
-                                      IDictionary<String, EntityConfiguration> notAuditedEntitiesConfigurations)
+		public EntitiesConfigurations(IDictionary<string, EntityConfiguration> entitiesConfigurations,
+									  IDictionary<string, EntityConfiguration> notAuditedEntitiesConfigurations)
         {
             this.entitiesConfigurations = entitiesConfigurations;
             this.notAuditedEntitiesConfigurations = notAuditedEntitiesConfigurations;
@@ -26,9 +25,9 @@ namespace NHibernate.Envers.Entities
 
         private void GenerateVersionsEntityToEntityNames() 
 		{
-			_entityNamesForVersionsEntityNames = new Dictionary<String, String>();
+			_entityNamesForVersionsEntityNames = new Dictionary<string, string>();
 
-			foreach (String entityName in entitiesConfigurations.Keys) 
+			foreach (var entityName in entitiesConfigurations.Keys) 
 			{
 				_entityNamesForVersionsEntityNames.Add(entitiesConfigurations[entityName].VersionsEntityName, entityName);
 			}
@@ -41,7 +40,7 @@ namespace NHibernate.Envers.Entities
 			{
 				var entCfg = entitiesConfigurations[entityName];
 				// Iterating over all relations from that entity
-				foreach (var relDesc in entCfg.GetRelationsIterator()) 
+				foreach (var relDesc in entCfg.RelationsIterator) 
 				{
 					// If this is an "owned" relation, checking the related entity, if it has a relation that has
 					// a mapped-by attribute to the currently checked. If so, this is a bidirectional relation.
@@ -50,7 +49,7 @@ namespace NHibernate.Envers.Entities
 						if (entitiesConfigurations.Keys.Contains(relDesc.ToEntityName))
 						{
 							var entityConfiguration = entitiesConfigurations[relDesc.ToEntityName];
-							foreach (var other in entityConfiguration.GetRelationsIterator()) 
+							foreach (var other in entityConfiguration.RelationsIterator) 
 							{
 								if (relDesc.FromPropertyName.Equals(other.MappedByPropertyName) &&
 										(entityName.Equals(other.ToEntityName))) 
@@ -77,7 +76,6 @@ namespace NHibernate.Envers.Entities
 
         public string GetEntityNameForVersionsEntityName(string versionsEntityName)
         {
-            //rk changed
             if (versionsEntityName == null)
                 return null;
             string ret;

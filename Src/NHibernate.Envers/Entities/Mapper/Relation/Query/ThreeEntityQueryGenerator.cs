@@ -7,10 +7,9 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
-	/**
-	 * Selects data from a relation middle-table and a two related versions entity.
-	 * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	 */
+	/// <summary>
+	/// Selects data from a relation middle-table and a two related versions entity.
+	/// </summary>
 	public sealed class ThreeEntityQueryGenerator : IRelationQueryGenerator 
 	{
 		private readonly string queryString;

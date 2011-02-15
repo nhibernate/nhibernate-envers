@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Event;
+﻿using NHibernate.Event;
 using NHibernate.Proxy;
 using NHibernate.Engine;
 using NHibernate.Collection;
@@ -17,13 +16,13 @@ namespace NHibernate.Envers.Event
 			IPostDeleteEventListener, IPreCollectionUpdateEventListener, IPreCollectionRemoveEventListener,
 			IPostCollectionRecreateEventListener, IInitializable 
 	{
-		private AuditConfiguration verCfg;
+		public AuditConfiguration VerCfg { get; private set; }
 
 		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditSync verSync, IEntityPersister entityPersister,
 																	string entityName, object[] newState, object[] oldState,
 																	ISessionImplementor session) {
 			// Checking if this is enabled in configuration ...
-			if (!verCfg.GlobalCfg.GenerateRevisionsForCollections) 
+			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections) 
 			{
 				return;
 			}
@@ -36,7 +35,7 @@ namespace NHibernate.Envers.Event
 			for (var i=0; i<propertyNames.GetLength(0); i++) 
 			{
 				var propertyName = propertyNames[i];
-				var relDesc = verCfg.EntCfg.GetRelationDescription(entityName, propertyName);
+				var relDesc = VerCfg.EntCfg.GetRelationDescription(entityName, propertyName);
 				if (relDesc != null && relDesc.Bidirectional && relDesc.RelationType == RelationType.ToOne &&
 						relDesc.Insertable) 
 				{
@@ -70,11 +69,11 @@ namespace NHibernate.Envers.Event
 							{
 								toEntityName =  session.GuessEntityName(newValue);
 
-								var idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
+								var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
 								id = idMapper.MapToIdFromEntity(newValue);
 							}
 
-							verSync.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, verCfg, id, newValue));
+							verSync.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, newValue));
 						}
 
 						if (oldValue != null) 
@@ -94,11 +93,11 @@ namespace NHibernate.Envers.Event
 							{
 								toEntityName =  session.GuessEntityName(oldValue);
 
-								var idMapper = verCfg.EntCfg[toEntityName].GetIdMapper();
+								var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
 								id = idMapper.MapToIdFromEntity(oldValue);
 							}
 							
-							verSync.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, verCfg, id, oldValue));
+							verSync.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, oldValue));
 						}
 					}
 				}
@@ -108,11 +107,11 @@ namespace NHibernate.Envers.Event
 		public virtual void OnPostInsert(PostInsertEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
-			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = verCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
 
-				var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.State);
 				verSync.AddWorkUnit(workUnit);
 
@@ -136,11 +135,11 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.Persister.EntityName;
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = verCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
 
-				var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.State, evt.OldState);
 				verSync.AddWorkUnit(workUnit);
 
@@ -158,11 +157,11 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.Persister.EntityName;
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = verCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
 
-				var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, verCfg,
+				var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.DeletedState);
 				verSync.AddWorkUnit(workUnit);
 
@@ -179,7 +178,7 @@ namespace NHibernate.Envers.Event
 																	RelationDescription rd) 
 		{
 			// Checking if this is enabled in configuration ...
-			if (!verCfg.GlobalCfg.GenerateRevisionsForCollections) 
+			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections) 
 			{
 				return;
 			}
@@ -190,54 +189,54 @@ namespace NHibernate.Envers.Event
 			if (rd != null && rd.Bidirectional) 
 			{
 				var relatedEntityName = rd.ToEntityName;
-				var relatedIdMapper = verCfg.EntCfg[relatedEntityName].GetIdMapper();
+				var relatedIdMapper = VerCfg.EntCfg[relatedEntityName].IdMapper;
 				
 				foreach (var changeData in workUnit.CollectionChanges) 
 				{
 					var relatedObj = changeData.GetChangedElement();
 					var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
 
-					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, relatedEntityName, verCfg,
+					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, relatedEntityName, VerCfg,
 							relatedId, relatedObj));
 				}
 			}
 		}
 
 		private void GenerateFakeBidirecationalRelationWorkUnits(AuditSync verSync, IPersistentCollection newColl, object oldColl,
-																 String collectionEntityName, String referencingPropertyName,
+																 string collectionEntityName, string referencingPropertyName,
 																 AbstractCollectionEvent evt,
 																 RelationDescription rd) {
 			// First computing the relation changes
-			var collectionChanges = verCfg.EntCfg[collectionEntityName].PropertyMapper
+			var collectionChanges = VerCfg.EntCfg[collectionEntityName].PropertyMapper
 					.MapCollectionChanges(referencingPropertyName, newColl, oldColl, evt.AffectedOwnerIdOrNull);
 
 			// Getting the id mapper for the related entity, as the work units generated will corrspond to the related
 			// entities.
 			var relatedEntityName = rd.ToEntityName;
-			var relatedIdMapper = verCfg.EntCfg[relatedEntityName].GetIdMapper();
+			var relatedIdMapper = VerCfg.EntCfg[relatedEntityName].IdMapper;
 
 			// For each collection change, generating the bidirectional work unit.
 			foreach (var changeData in collectionChanges) 
 			{
 				var relatedObj = changeData.GetChangedElement();
 				var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
-				var revType = (RevisionType)changeData.Data[verCfg.AuditEntCfg.RevisionTypePropName];
+				var revType = (RevisionType)changeData.Data[VerCfg.AuditEntCfg.RevisionTypePropName];
 
 				// This can be different from relatedEntityName, in case of inheritance (the real entity may be a subclass
 				// of relatedEntityName).
 				var realRelatedEntityName = evt.Session.BestGuessEntityName(relatedObj);
 
 				// By default, the nested work unit is a collection change work unit.
-				var nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, verCfg,
+				var nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, VerCfg,
 						relatedId, relatedObj);
 
-				verSync.AddWorkUnit(new FakeBidirectionalRelationWorkUnit(evt.Session, realRelatedEntityName, verCfg,
+				verSync.AddWorkUnit(new FakeBidirectionalRelationWorkUnit(evt.Session, realRelatedEntityName, VerCfg,
 						relatedId, referencingPropertyName, evt.AffectedOwnerOrNull, rd, revType,
 						changeData.GetChangedElementIndex(), nestedWorkUnit));
 			}
 
 			// We also have to generate a collection change work unit for the owning entity.
-			verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, collectionEntityName, verCfg,
+			verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, collectionEntityName, VerCfg,
 					evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 		}
 
@@ -246,16 +245,16 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.GetAffectedOwnerEntityName();
 
-			if (verCfg.EntCfg.IsVersioned(entityName)) 
+			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = verCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
 
 				var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
 				var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
 
 				// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
 				// null in case of collections of non-entities.
-				var rd = verCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
+				var rd = VerCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
 				if (rd != null && rd.MappedByPropertyName != null) 
 				{
 					GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
@@ -264,7 +263,7 @@ namespace NHibernate.Envers.Event
 				else 
 				{
 					var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
-							entityName, verCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
+							entityName, VerCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
 							referencingPropertyName);
 					verSync.AddWorkUnit(workUnit);
 
@@ -272,7 +271,7 @@ namespace NHibernate.Envers.Event
 					{
 						// There are some changes: a revision needs also be generated for the collection owner
 						verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
-								verCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
+								VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 
 						GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
 					}
@@ -314,12 +313,7 @@ namespace NHibernate.Envers.Event
 
 		public virtual void Initialize(Cfg.Configuration cfg) 
 		{
-			verCfg = AuditConfiguration.GetFor(cfg);
-		}
-
-		public AuditConfiguration GetVerCfg() 
-		{
-			return verCfg;
+			VerCfg = AuditConfiguration.GetFor(cfg);
 		}
 	}
 }

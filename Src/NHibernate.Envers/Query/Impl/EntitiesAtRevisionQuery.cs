@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Query.Impl
 			// e2.revision <= :revision
 			maxRevQb.RootParameters.AddWhereWithParam(revisionPropertyPath, "<=", revision);
 			// e2.id = e.id
-			verCfg.EntCfg[entityName].GetIdMapper().AddIdsEqualToQuery(maxRevQb.RootParameters,
+			verCfg.EntCfg[entityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
 																	   "e." + originalIdPropertyName,
 																	   "e2." + originalIdPropertyName);
 

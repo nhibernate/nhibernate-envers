@@ -35,14 +35,13 @@
             return flatEntityPropertyName;
         }
 
-        public override bool Equals(object o) 
+        public override bool Equals(object obj) 
         {
-            if (this == o) return true;
-            if (!(o is QueryParameterData)) return false;
+            if (this == obj) return true;
+        	var casted = obj as QueryParameterData;
+            if (casted==null) return false;
 
-            var that = (QueryParameterData) o;
-
-            if (flatEntityPropertyName != null ? !flatEntityPropertyName.Equals(that.flatEntityPropertyName) : that.flatEntityPropertyName != null)
+            if (flatEntityPropertyName != null ? !flatEntityPropertyName.Equals(casted.flatEntityPropertyName) : casted.flatEntityPropertyName != null)
                 return false;
 
             return true;
