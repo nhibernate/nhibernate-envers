@@ -82,7 +82,6 @@ namespace NHibernate.Envers
 		/// <summary>
 		/// A helper method; should be used only if a custom revision entity is used.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
 		/// <param name="type">Class of the revision entity. Should be annotated with RevisionEntity.</param>
 		/// <param name="revision">Number of the revision for which to get the data.</param>
 		/// <returns>Entity containing data for the given revision.</returns>
