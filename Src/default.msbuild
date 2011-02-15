@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <BuildFolder>$(RootDir)\..\Build</BuildFolder>
+    <ExternalLibRootFolder>$(RootDir)\..\lib</ExternalLibRootFolder>
+    <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
+    <DeployFolder>$(BuildFolder)\Nuget</DeployFolder>
+  </PropertyGroup>
+  
+  <ItemGroup Label="Extra files to deploy">
+    <ExtraFiles Include="$(RootDir)\LGPL_3.0.txt" />
+    <ExtraFiles Include="$(RootDir)\NHibernate.Envers\Envers.snk" />
+    <ExtraFiles Include="$(RootDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
+  </ItemGroup>
+  
+  <ItemGroup Label="NHibernate dependencies">
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\NHibernate.dll" />
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Iesi.Collections.dll" />
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Antlr3.Runtime.dll" />
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Remotion.Data.Linq.dll" />
+  </ItemGroup>
+
+  <Target Name = "Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
+
+  <Target Name="RunBuild">
+    <MSBuild Projects="$(RootDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
+      <Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+  </Target>
+
+  <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
+
+  <Target Name="MakeBuildDirectory">
+    <MakeDir Directories="$(BuildFolder)" />
+    <MakeDir Directories="$(FullDeployFolder)" />
+    <MakeDir Directories="$(DeployFolder)" />
+  </Target>
+
+  <Target Name="CopyOutputsToBin">
+    <Copy SourceFiles="@(OutputFiles)"
+      DestinationFiles="@(OutputFiles->'$(FullDeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(OutputFiles)"
+      DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyExtraFiles">
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(FullDeployFolder)" />
+  </Target>
+
+  <Target Name="CopyNHibernateLibsToDeploy">
+    <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
+  </Target>
+  
+</Project>
