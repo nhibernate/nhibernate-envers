@@ -21,8 +21,8 @@ namespace NHibernate.Envers.Tests
 			Cfg = new Cfg.Configuration();
 			Cfg.Configure();
 			addMappings();
-			Cfg.IntegrateWithEnvers(new AuditEventListener(), new AttributeConfiguration());
 			AddToConfiguration(Cfg);
+			Cfg.IntegrateWithEnvers(new AuditEventListener(), new AttributeConfiguration());
 			SessionFactory = Cfg.BuildSessionFactory();
 			Session = openSession(SessionFactory);
 			Initialize();
