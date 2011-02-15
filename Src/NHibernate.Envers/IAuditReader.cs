@@ -51,13 +51,24 @@ namespace NHibernate.Envers
 		DateTime GetRevisionDate(long revision);
 
 		/// <summary>
-		/// Gets the revision number, that corresponds to the given date. More precisely, returns
-		/// the number of the highest revision, which was created on or before the given date. So:
-		/// <code>getRevisionDate(GetRevisionNumberForDate(date)) <= date</code> and
-		/// <code>getRevisionDate(GetRevisionNumberForDate(date)+1) > date</code>.
+		/// Gets the revision number, that corresponds to the given date.
 		/// </summary>
 		/// <param name="date">Date for which to get the revision.</param>
-		/// <returns></returns>
+		/// <returns>The number of the highest revision, which was created on or before the given <paramref name="date"/>.</returns>
+		/// <remarks>
+		/// The result is that:
+		/// <code>
+		/// <![CDATA[
+		/// GetRevisionDate(GetRevisionNumberForDate(date)) <= date
+		/// ]]>
+		/// </code>
+		/// and
+		/// <code>
+		/// <![CDATA[
+		/// GetRevisionDate(GetRevisionNumberForDate(date)+1) > date
+		/// ]]>
+		/// </code>
+		/// </remarks>
 		long GetRevisionNumberForDate(DateTime date);
 
 		/// <summary>
