@@ -67,6 +67,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AuditConfigurationTests.cs" />
     <Compile Include="Entities\Collection\EnumSetEntity.cs" />
     <Compile Include="Entities\Collection\StringListEntity.cs" />
     <Compile Include="Entities\Collection\StringMapEntity.cs" />
