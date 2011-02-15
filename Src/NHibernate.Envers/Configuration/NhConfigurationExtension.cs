@@ -8,6 +8,15 @@ namespace NHibernate.Cfg
 {
 	public static class NhConfigurationExtension
 	{
+		/// <summary>
+		/// Integrate Envers with NHibernate.
+		/// </summary>
+		/// <param name="configuration">The NHibernate configuration.</param>
+		/// <param name="auditEventListener">The audit event listener</param>
+		/// <param name="metaDataProvider">The provider of metadata (attributes, embedded fluent-configuration or custom <see cref="IMetaDataProvider"/> for custom DSL.</param>
+		/// <returns>The NHibernate configuration.</returns>
+		/// <seealso cref="AttributeConfiguration"/>
+		/// <seealso cref="NHibernate.Envers.Configuration.Fluent.FluentConfiguration"/>
 		public static Configuration IntegrateWithEnvers(this Configuration configuration, 
 														AuditEventListener auditEventListener,
 														IMetaDataProvider metaDataProvider)

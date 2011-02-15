@@ -4,17 +4,17 @@ namespace NHibernate.Envers.Exceptions
 {
     public class AuditException : HibernateException 
 	{
-		public AuditException(String message) 
+		public AuditException(string message) 
 						: base(message)
 		{
 		}
 
-		public AuditException(String message, System.Exception innerException) 
+		public AuditException(string message, Exception innerException) 
 						: base(message, innerException)
 		{
 		}
 
-		public AuditException(System.Exception innerException)
+		public AuditException(Exception innerException)
 						:base(innerException)
 		{
 		}

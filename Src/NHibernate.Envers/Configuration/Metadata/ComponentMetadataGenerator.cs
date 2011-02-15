@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Mapping;
+﻿using NHibernate.Mapping;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using System.Xml;
@@ -19,7 +18,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public void AddComponent(XmlElement parent, PropertyAuditingData propertyAuditingData,
-								 IValue value, ICompositeMapperBuilder mapper, String entityName,
+								 IValue value, ICompositeMapperBuilder mapper, string entityName,
 								 EntityXmlMappingData xmlMappingData, bool firstPass) 
 		{
 			var prop_component = (Component) value;

@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Entities
 			}
 
 			// First mapping the primary key
-			var idMapper = verCfg.EntCfg[entityName].GetIdMapper();
+			var idMapper = verCfg.EntCfg[entityName].IdMapper;
 			var originalId = (IDictionary)versionsEntity[verCfg.AuditEntCfg.OriginalIdPropName];
 
 			var primaryKey = idMapper.MapToIdFromMap(originalId);
@@ -82,7 +82,7 @@ namespace NHibernate.Envers.Entities
 			return ret;
 		}
 
-		public void AddInstancesFromVersionsEntities(String entityName, IList addTo, IEnumerable<IDictionary> versionsEntities, long revision)
+		public void AddInstancesFromVersionsEntities(string entityName, IList addTo, IEnumerable<IDictionary> versionsEntities, long revision)
 		{
 			foreach (var versionsEntity in versionsEntities) 
 			{

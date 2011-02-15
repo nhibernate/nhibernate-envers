@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
     public override IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit second)
     {
-        return FakeBidirectionalRelationWorkUnit.merge(second, this, second.getNestedWorkUnit());
+        return FakeBidirectionalRelationWorkUnit.Merge(second, this, second.NestedWorkUnit);
     }
 
     public override IAuditWorkUnit Dispatch(IWorkUnitMergeVisitor first)

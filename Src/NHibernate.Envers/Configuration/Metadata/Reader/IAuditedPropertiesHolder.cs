@@ -1,24 +1,22 @@
-﻿using System;
-
-namespace NHibernate.Envers.Configuration.Metadata.Reader
+﻿namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-    /**
-     * Implementations hold other audited properties.
-     * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
-     */
+	/// <summary>
+	/// Implementations hold other audited properties.
+	/// </summary>
     public interface IAuditedPropertiesHolder
     {
-        /**
-         * Add an audited property.
-         * @param propertyName Name of the audited property.
-         * @param auditingData Data for the audited property.
-         */
-        void AddPropertyAuditingData(String propertyName, PropertyAuditingData auditingData);
+        /// <summary>
+		/// Add an audited property.
+        /// </summary>
+		/// <param name="propertyName">Name of the audited property.</param>
+		/// <param name="auditingData">Data for the audited property.</param>
+		void AddPropertyAuditingData(string propertyName, PropertyAuditingData auditingData);
 
-        /**
-         * @param propertyName Name of a property.
-         * @return Auditing data for the property.
-         */
-        PropertyAuditingData GetPropertyAuditingData(String propertyName);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="propertyName">Name of a property.</param>
+		/// <returns>Auditing data for the property.</returns>
+		PropertyAuditingData GetPropertyAuditingData(string propertyName);
     }
 }

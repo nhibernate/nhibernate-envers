@@ -103,13 +103,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return new IdMappingData(mapper, orig_id_mapping, rel_id_mapping);
 		}
 
-		private PropertyData GetIdPropertyData(Property property) 
+		private static PropertyData GetIdPropertyData(Property property) 
 		{
 			return new PropertyData(property.Name, property.Name, property.PropertyAccessorName,
 					ModificationStore.Full);
 		}
 
-		private PropertyAuditingData GetIdPersistentPropertyAuditingData(Property property) 
+		private static PropertyAuditingData GetIdPersistentPropertyAuditingData(Property property) 
 		{
 			return new PropertyAuditingData(property.Name, property.PropertyAccessorName,
 					ModificationStore.Full, RelationTargetAuditMode.Audited, null, null, false);

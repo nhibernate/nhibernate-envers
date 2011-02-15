@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NHibernate.Envers.Exceptions
+﻿namespace NHibernate.Envers.Exceptions
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class NotAuditedException : AuditException {
-    	
-        public String EntityName{ get; private set;}
+    public class NotAuditedException : AuditException 
+	{
 
-	    public NotAuditedException(String entityName, String message):base(message) {
-            this.EntityName = entityName;
+		public NotAuditedException(string entityName, string message)
+			: base(message)
+		{
+            EntityName = entityName;
         }
+
+		public string EntityName { get; private set; }
     }
 }

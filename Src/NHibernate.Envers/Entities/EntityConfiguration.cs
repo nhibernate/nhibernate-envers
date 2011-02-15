@@ -24,6 +24,17 @@ namespace NHibernate.Envers.Entities
 			relations = new Dictionary<string, RelationDescription>();
         }
 
+		public IIdMapper IdMapper
+		{
+			get { return IdMappingData.IdMapper; }
+		}
+
+
+		public ICollection<RelationDescription> RelationsIterator
+		{
+			get { return relations.Values; }
+		}
+
         public void AddToOneRelation(string fromPropertyName, string toEntityName, IIdMapper idMapper, bool insertable)
         {
             relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOne,
@@ -66,19 +77,6 @@ namespace NHibernate.Envers.Entities
         public RelationDescription GetRelationDescription(string propertyName)
         {
             return relations.ContainsKey(propertyName)? relations[propertyName]: null;
-        }
-
-        // For use by EntitiesConfigurations
-
-        public IIdMapper GetIdMapper()
-        {
-            return IdMappingData.IdMapper;
-        }
-
-        //TODO Simon rename - getRelationsCollection
-        public ICollection<RelationDescription> GetRelationsIterator()
-        {
-            return relations.Values;
         }
     }
 }

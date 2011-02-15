@@ -35,12 +35,12 @@
             Store = store;
         }
 
-	    public override bool Equals(object o) 
+	    public override bool Equals(object obj) 
 		{
-		    if (this == o) return true;
-		    if (o == null || GetType() != o.GetType()) return false;
+		    if (this == obj) return true;
+		    if (obj == null || GetType() != obj.GetType()) return false;
 
-		    var that = (PropertyData) o;
+		    var that = (PropertyData) obj;
 
 		    if (AccessType != null ? !AccessType.Equals(that.AccessType) : that.AccessType != null) return false;
 		    if (BeanName != null ? !BeanName.Equals(that.BeanName) : that.BeanName != null) return false;
