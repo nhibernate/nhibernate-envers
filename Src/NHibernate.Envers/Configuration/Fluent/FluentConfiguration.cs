@@ -103,5 +103,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 			}
 			return (EntityMeta)ret;
 		}
+
+		public void Audit(IEnumerable<System.Type> types)
+		{
+			foreach (var type in types)
+			{
+				attributeFactories.Add(new LooselyTypedFluentAudit(type));
+				auditedTypes.Add(type);
+			}
+		}
 	}
 }

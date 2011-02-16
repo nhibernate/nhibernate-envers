@@ -363,6 +363,7 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\NotAuditedOwnerEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevisionEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\SomePropsEntity.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\MultipleFullClassAuditRegistrationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\PropertyBaseTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\RevisionInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
