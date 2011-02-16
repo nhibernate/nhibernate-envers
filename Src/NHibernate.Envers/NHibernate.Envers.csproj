@@ -72,6 +72,7 @@
     <Compile Include="AuditTableAttribute.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
     <Compile Include="Configuration\Fluent\FluentRevision.cs" />
+    <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
     <Compile Include="Configuration\Attributes\AttributeConfiguration.cs" />
