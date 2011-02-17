@@ -103,5 +103,21 @@ namespace NHibernate.Envers.Configuration.Fluent
 			}
 			return (EntityMeta)ret;
 		}
+
+		/// <summary>
+		/// Register multiple audited entities.
+		/// </summary>
+		/// <param name="types">All types to be audited.</param>
+		/// <remarks>
+		/// Each class will be audited using default values of <see cref="AuditedAttribute"/> without exclusions of properties.
+		/// </remarks>
+		public void Audit(IEnumerable<System.Type> types)
+		{
+			foreach (var type in types)
+			{
+				attributeFactories.Add(new LooselyTypedFluentAudit(type));
+				auditedTypes.Add(type);
+			}
+		}
 	}
 }
