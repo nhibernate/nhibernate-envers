@@ -5,6 +5,7 @@
 * lägg till en Environmentklass med strängar för conf å annat
 * test för inkorrekt revinfo (multipla numbers etc)
 * test för structs as components
+* biref index och andra sidan har olika access settings
 fluent...
 * loggning för fluent
 * throw om property/field inte kan hittas, typ "kom ihåg att det är prylen som NH-mappningen använder som gäller!
