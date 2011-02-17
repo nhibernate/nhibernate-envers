@@ -1,0 +1,16 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Component">
+  <class name="ComponentOwner">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <component name="Component">
+      <property name="Data1"/>
+      <component name="NestedComponent">
+        <property name="Data2"/>
+      </component>
+    </component>
+  </class>
+</hibernate-mapping>
+

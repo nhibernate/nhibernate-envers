@@ -348,6 +348,10 @@
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
+    <Compile Include="NetSpecific\Integration\Component\ComponentOwner.cs" />
+    <Compile Include="NetSpecific\Integration\Component\SimpleStructTest.cs" />
+    <Compile Include="NetSpecific\Integration\Component\StructComponent.cs" />
+    <Compile Include="NetSpecific\Integration\Component\StructComponent2.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
@@ -373,6 +377,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\Component\Mapping.hbm.xml" />
     <Content Include="todo.txt" />
     <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />
