@@ -72,9 +72,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			    try 
 				{
                     var subObj = Activator.CreateInstance(Toolz.ResolveDotnetType(componentClassName));
-                    setter.Set(obj, subObj);
-
 				    _delegate.MapToEntityFromMap(verCfg, subObj, data, primaryKey, versionsReader, revision);
+					setter.Set(obj, subObj);
 			    } 
 				catch (Exception e) 
 				{
