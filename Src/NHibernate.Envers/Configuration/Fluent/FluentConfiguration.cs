@@ -6,6 +6,10 @@ using NHibernate.Envers.Configuration.Store;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
+	/// <summary>
+	/// This implementation of <see cref="IMetaDataProvider"/>
+	/// is used to programmaticly configure envers.
+	/// </summary>
 	public class FluentConfiguration : IMetaDataProvider
 	{
 		private static readonly ILog log = LogManager.GetLogger(typeof (FluentConfiguration));
@@ -26,6 +30,28 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return ret;
 		}
 
+		/// <summary>
+		/// Register multiple audited entities.
+		/// </summary>
+		/// <param name="types">All types to be audited.</param>
+		/// <remarks>
+		/// Each class will be audited using default values of <see cref="AuditedAttribute"/> without exclusions of properties.
+		/// </remarks>
+		public void Audit(IEnumerable<System.Type> types)
+		{
+			foreach (var type in types)
+			{
+				attributeFactories.Add(new LooselyTypedFluentAudit(type));
+				auditedTypes.Add(type);
+			}
+		}
+
+		/// <summary>
+		/// Defines a custom revision entity.
+		/// </summary>
+		/// <typeparam name="T">The custom revision entity type</typeparam>
+		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
+		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
 		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, Expression<Func<T, object>> revisionTimestamp)
 		{
 			attributeFactories.Add(new FluentRevision(typeof (T), 
@@ -102,22 +128,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 				metas[type] = ret;
 			}
 			return (EntityMeta)ret;
-		}
-
-		/// <summary>
-		/// Register multiple audited entities.
-		/// </summary>
-		/// <param name="types">All types to be audited.</param>
-		/// <remarks>
-		/// Each class will be audited using default values of <see cref="AuditedAttribute"/> without exclusions of properties.
-		/// </remarks>
-		public void Audit(IEnumerable<System.Type> types)
-		{
-			foreach (var type in types)
-			{
-				attributeFactories.Add(new LooselyTypedFluentAudit(type));
-				auditedTypes.Add(type);
-			}
 		}
 	}
 }
