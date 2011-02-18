@@ -343,36 +343,36 @@ namespace NHibernate.Envers.Configuration.Metadata
 			StoreMiddleEntityRelationInformation(mappedBy);
 		}
 
-        private static bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
-        {
-            var firstNames = from f in first
-                             select ((Column) f).Name;
-            var lastNames = from s in second
-                            select ((Column) s).Name;
-            return firstNames.Count()==lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
-        }
+		private static bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
+		{
+			var firstNames = from f in first
+							 select ((Column) f).Name;
+			var lastNames = from s in second
+							select ((Column) s).Name;
+			return firstNames.Count()==lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
+		}
 
 		private MiddleComponentData AddIndex(XmlElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
 		{
-            var indexedValue = propertyValue as IndexedCollection;
+			var indexedValue = propertyValue as IndexedCollection;
 			if (indexedValue != null)
 			{
-			    var idMatch = false;
-                string propMatch = null;
-			    PersistentClass refPc = null;
-                if (referencedEntityName != null)
-                    refPc = mainGenerator.Cfg.GetClassMapping(referencedEntityName);
-                    
-                if(refPc!=null)
-                {
-                    idMatch = sameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
-                    foreach (var propertyRef in refPc.PropertyIterator)
-                    {
-                        if(sameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
-                            propMatch = propertyRef.Name;
-                    }
-                }
-                if (!idMatch && propMatch==null)
+				var idMatch = false;
+				string propMatch = null;
+				PersistentClass refPc = null;
+				if (referencedEntityName != null)
+					refPc = mainGenerator.Cfg.GetClassMapping(referencedEntityName);
+					
+				if(refPc!=null)
+				{
+					idMatch = sameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
+					foreach (var propertyRef in refPc.PropertyIterator)
+					{
+						if(sameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
+							propMatch = propertyRef.Name;
+					}
+				}
+				if (!idMatch && propMatch==null)
 				{
 					return AddValueToMiddleTable(indexedValue.Index, middleEntityXml,
 							queryGeneratorBuilder, "mapkey", null);
@@ -381,7 +381,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (idMatch)
 				{
 					// The key of the map is the id of the entity.
-                    var referencedIdMapping = mainGenerator.EntitiesConfigurations[referencedEntityName].IdMappingData;
+					var referencedIdMapping = mainGenerator.EntitiesConfigurations[referencedEntityName].IdMappingData;
 					return new MiddleComponentData(new MiddleMapKeyIdComponentMapper(mainGenerator.VerEntCfg,
 																					 referencedIdMapping.IdMapper), currentIndex);
 				}
@@ -423,7 +423,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					AddRelatedToXmlMapping(xmlMapping, prefixRelated,
 							joinColumns != null && joinColumns.Length > 0
-                                    ? joinColumns.ToList().GetEnumerator()
+									? joinColumns.ToList().GetEnumerator()
 									: MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
 							referencedIdMapping);
 				}
