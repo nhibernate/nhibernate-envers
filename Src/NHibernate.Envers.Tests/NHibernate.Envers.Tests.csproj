@@ -261,7 +261,6 @@
     <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingRefEdEntity.cs" />
     <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingRefIngEntity.cs" />
     <Compile Include="Integration\Naming\Ids\JoinEmbIdNamingTest.cs" />
-    <Compile Include="Integration\Naming\Ids\JoinMulIdNamingTest.cs" />
     <Compile Include="Integration\Naming\JoinNamingRefEdEntity.cs" />
     <Compile Include="Integration\Naming\JoinNamingRefIngEntity.cs" />
     <Compile Include="Integration\Naming\JoinNamingTest.cs" />
@@ -283,13 +282,11 @@
     <Compile Include="Integration\OneToMany\BasicCollectionTest.cs" />
     <Compile Include="Integration\OneToMany\BasicSetTest.cs" />
     <Compile Include="Integration\OneToMany\BasicSetWithEmbIdTest.cs" />
-    <Compile Include="Integration\OneToMany\BasicSetWithMulIdTest.cs" />
     <Compile Include="Integration\OneToMany\BasicSetWithNullsDeleteTest.cs" />
     <Compile Include="Integration\OneToMany\BidirectionalMapKeyTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedListTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithEmbIdTest.cs" />
-    <Compile Include="Integration\OneToMany\Detached\BasicDetachedSetWithMulIdTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\DataChangesDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\DoubleDetachedSetTest.cs" />
     <Compile Include="Integration\OneToMany\Detached\DoubleJoinColumnBidirectionalListTest.cs" />
@@ -307,7 +304,6 @@
     <Compile Include="Integration\OneToOne\BiDirectional\Ids\BiEmbIdRefEdEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\Ids\BiEmbIdRefIngEntity.cs" />
     <Compile Include="Integration\OneToOne\BiDirectional\Ids\EmbIdBidirectionalTest.cs" />
-    <Compile Include="Integration\OneToOne\BiDirectional\Ids\MulIdBidirectionalTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UnidirectionalTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniDirectionalWithNullsTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefEdEntity.cs" />
@@ -319,7 +315,6 @@
     <Compile Include="Integration\Query\CustomRevEntityQueryTest.cs" />
     <Compile Include="Integration\Query\DeletedEntitiesTest.cs" />
     <Compile Include="Integration\Query\Ids\EmbIdOneToManyQueryTest.cs" />
-    <Compile Include="Integration\Query\Ids\MulIdOneToManyQueryTest.cs" />
     <Compile Include="Integration\Query\MaximalizePropertyQueryTest.cs" />
     <Compile Include="Integration\Query\OrderByLimitQueryTest.cs" />
     <Compile Include="Integration\Query\RevisionConstraintQueryTest.cs" />

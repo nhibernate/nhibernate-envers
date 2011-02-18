@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Reader
 		{
 			if (!Session.IsOpen) 
 			{
-				throw new Exception("The associated entity manager is closed!");
+				throw new Exception("The associated session is closed!");
 			}
 		}
 

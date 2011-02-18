@@ -44,9 +44,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			// Xml mapping which will be used for relations
 			var id_mappingDoc = new XmlDocument();
-			var rel_id_mapping = id_mappingDoc.CreateElement("properties"); //= new DefaultElement("properties"); // (din DOM4J)
+			var rel_id_mapping = id_mappingDoc.CreateElement("properties"); 
 			// Xml mapping which will be used for the primary key of the versions table
-			var orig_id_mapping = id_mappingDoc.CreateElement("composite-id");  //= new DefaultElement("composite-id"); // (din DOM4J)
+			var orig_id_mapping = id_mappingDoc.CreateElement("composite-id"); 
 
 			var id_prop = pc.IdentifierProperty;
 			var id_mapper = pc.IdentifierMapper;
@@ -61,14 +61,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (id_mapper != null) 
 			{
 				// Multiple id
-
-				mapper = new MultipleIdMapper(((Component)pc.Identifier).ComponentClass);
-				AddIdProperties(rel_id_mapping, id_mapper.PropertyIterator, mapper, false);
-
-				// null mapper - the mapping where already added the first time, now we only want to generate the xml
-				AddIdProperties(orig_id_mapping, id_mapper.PropertyIterator, null, true);
-			} 
-			else if (id_prop.IsComposite) 
+				throw new MappingException("Multi id mapping isn't (wasn't?) available in NH Core");
+			}
+			if (id_prop.IsComposite) 
 			{
 				// Embedded id
 				var id_component = (Component) id_prop.Value;
@@ -86,13 +81,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Last but one parameter: ids are always insertable
 				mainGenerator.BasicMetadataGenerator.AddBasic(rel_id_mapping,
-						GetIdPersistentPropertyAuditingData(id_prop),
-						id_prop.Value, mapper, true, false);
+				                                              GetIdPersistentPropertyAuditingData(id_prop),
+				                                              id_prop.Value, mapper, true, false);
 
 				// null mapper - the mapping where already added the first time, now we only want to generate the xml
 				mainGenerator.BasicMetadataGenerator.AddBasic(orig_id_mapping,
-						GetIdPersistentPropertyAuditingData(id_prop),
-						id_prop.Value, null, true, true);
+				                                              GetIdPersistentPropertyAuditingData(id_prop),
+				                                              id_prop.Value, null, true, true);
 			}
 
 			orig_id_mapping.SetAttribute("name", mainGenerator.VerEntCfg.OriginalIdPropName);

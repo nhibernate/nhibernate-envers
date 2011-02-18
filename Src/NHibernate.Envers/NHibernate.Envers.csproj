@@ -128,7 +128,6 @@
     <Compile Include="Entities\Mapper\Id\EmbeddedIdMapper.cs" />
     <Compile Include="Entities\Mapper\Id\IIdMapper.cs" />
     <Compile Include="Entities\Mapper\Id\ISimpleIdMapperBuilder.cs" />
-    <Compile Include="Entities\Mapper\Id\MultipleIdMapper.cs" />
     <Compile Include="Entities\Mapper\Id\QueryParameterData.cs" />
     <Compile Include="Entities\Mapper\Id\SingleIdMapper.cs" />
     <Compile Include="Entities\Mapper\IExtendedPropertyMapper.cs" />
