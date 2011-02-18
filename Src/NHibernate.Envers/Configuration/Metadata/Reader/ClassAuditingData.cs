@@ -2,20 +2,16 @@
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-	/**
-	 * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
-	 * @author Sebastian Komander
-	*/
 	public class ClassAuditingData : IAuditedPropertiesHolder 
 	{
 		public IDictionary<string, PropertyAuditingData> Properties { get; private set; }
 		public IDictionary<string, string> SecondaryTableDictionary { get; private set; }
 		public AuditTableAttribute AuditTable { get; set; }
 
-		/**
-		 * True if the class is audited globally (this helps to cover the cases when there are no fields in the class,
-		 * but it's still audited).
-		 */
+		/// <summary>
+		///  True if the class is audited globally (this helps to cover the cases when there are no fields in the class,
+		///  but it's still audited).
+		/// </summary>
 		private bool defaultAudited;
 
 		public ClassAuditingData() 

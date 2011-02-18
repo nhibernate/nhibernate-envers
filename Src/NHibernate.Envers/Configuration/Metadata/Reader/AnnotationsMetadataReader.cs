@@ -5,11 +5,9 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-	/**
-	 * A helper class to read versioning meta-data from annotations on a persistent class.
-	 * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
-	 * @author Sebastian Komander
-	 */
+	/// <summary>
+	/// A helper class to read versioning meta-data from annotations on a persistent class.
+	/// </summary>
 	public sealed class AnnotationsMetadataReader 
 	{
 		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
@@ -17,6 +15,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly GlobalConfiguration globalCfg;
 		private readonly PersistentClass pc;
 
+		/// <summary>
+		/// This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
+		/// method.</summary>
+		private readonly ClassAuditingData _auditData;
 
 		public AnnotationsMetadataReader(PropertyAndMemberInfo propertyAndMemberInfo, 
 									IMetaDataStore metaDataStore,
@@ -30,12 +32,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			_auditData = new ClassAuditingData();
 		}
-
-		/**
-		 * This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
-		 * method.
-		 */
-		private readonly ClassAuditingData _auditData;
 
 		public ClassAuditingData GetAuditData()
 		{
