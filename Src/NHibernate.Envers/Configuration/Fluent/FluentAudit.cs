@@ -22,11 +22,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			excludedRelations = new HashSet<MemberInfo>();
 		}
 
-		/// <summary>
-		/// Excludes the property from being audited.
-		/// </summary>
-		/// <param name="property"></param>
-		/// <returns></returns>
 		public IFluentAudit<T> Exclude(Expression<Func<T, object>> property)
 		{
 			var methodInfo = property.Body.MethodInfo("exclusion"); 
@@ -34,11 +29,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		/// <summary>
-		/// Excludes the property from being audited.
-		/// </summary>
-		/// <param name="property"></param>
-		/// <returns></returns>
 		public IFluentAudit<T> Exclude(string property)
 		{
 			var member = getMemberOrThrow(typeof(T), property);
@@ -46,11 +36,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		/// <summary>
-		/// Excludes the property from tracking changes on related entity.
-		/// </summary>
-		/// <param name="property"></param>
-		/// <returns></returns>
 		public IFluentAudit<T> ExcludeRelation(Expression<Func<T, object>> property)
 		{
 			var methodInfo = property.Body.MethodInfo("relation exclusion");
