@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NHibernate.Envers.Synchronization.Work
+﻿namespace NHibernate.Envers.Synchronization.Work
 {
-    /**
-     * Visitor pattern visitor. All methods should be invoked on the first work unit.
-     * @author Adam Warski (adam at warski dot org)
-     */
+	/// <summary>
+	/// Visitor pattern visitor. All methods should be invoked on the first work unit.
+	/// </summary>
     public interface IWorkUnitMergeVisitor
     {
         IAuditWorkUnit Merge(AddWorkUnit second);

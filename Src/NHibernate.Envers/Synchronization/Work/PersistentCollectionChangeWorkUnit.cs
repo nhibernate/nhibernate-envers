@@ -111,7 +111,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// to the PCCD objects. That way, we will be later able to check if an "original" collection change
 				// should be added, or if it is overshadowed by a new one.
 				var newChangesIdMap = new Dictionary<IDictionary<string, object>, PersistentCollectionChangeData>(new DictionaryComparer<string, object>());
-				foreach (PersistentCollectionChangeData persistentCollectionChangeData in CollectionChanges) 
+				foreach (var persistentCollectionChangeData in CollectionChanges) 
 				{
 					newChangesIdMap.Add(
 							OriginalId(persistentCollectionChangeData),
@@ -145,11 +145,11 @@ namespace NHibernate.Envers.Synchronization.Work
 			return (IDictionary<string, object>) persistentCollectionChangeData.Data[verCfg.AuditEntCfg.OriginalIdPropName];
 		}
 
-		/**
-		 * A unique identifier for a collection work unit. Consists of an id of the owning entity and the name of
-		 * the entity plus the name of the field (the role). This is needed because such collections aren't entities
-		 * in the "normal" mapping, but they are entities for Envers.
-		 */
+		/// <summary>
+		/// A unique identifier for a collection work unit. Consists of an id of the owning entity and the name of
+		/// the entity plus the name of the field (the role). This is needed because such collections aren't entities
+		/// in the "normal" mapping, but they are entities for Envers.
+		/// </summary>
 		private class PersistentCollectionChangeWorkUnitId
 		{
 			private readonly object ownerId;
@@ -169,7 +169,6 @@ namespace NHibernate.Envers.Synchronization.Work
 				var that = (PersistentCollectionChangeWorkUnitId) o;
 
 				if (ownerId != null ? !ownerId.Equals(that.ownerId) : that.ownerId != null) return false;
-				//noinspection RedundantIfStatement
 				if (role != null ? !role.Equals(that.role) : that.role != null) return false;
 
 				return true;

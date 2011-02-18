@@ -1,72 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class ModWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit {
-        private readonly IDictionary<String, Object> data;
-        private readonly bool changes;        
+	public class ModWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit 
+	{
+		private readonly bool changes;        
 
-        public ModWorkUnit(ISessionImplementor sessionImplementor, String entityName, AuditConfiguration verCfg, 
-					       Object id, IEntityPersister entityPersister, Object[] newState, Object[] oldState)
-            : base(sessionImplementor, entityName, verCfg, id)
-        {
-            data = new Dictionary<String, Object>();
-            changes = verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, data,
-				    entityPersister.PropertyNames, newState, oldState);
-        }
+		public ModWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg, 
+						   object id, IEntityPersister entityPersister, object[] newState, object[] oldState)
+			: base(sessionImplementor, entityName, verCfg, id)
+		{
+			Data = new Dictionary<string, object>();
+			changes = verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, Data,
+					entityPersister.PropertyNames, newState, oldState);
+		}
 
-        public override bool ContainsWork() {
-            return changes;
-        }
+		public IDictionary<string, object> Data { get; private set; }
 
-        public override IDictionary<String, Object> GenerateData(Object revisionData)
-        {
-            FillDataWithId(data, revisionData, RevisionType.Modified);
+		public override bool ContainsWork() 
+		{
+			return changes;
+		}
 
-            return data;
-        }
+		public override IDictionary<string, object> GenerateData(object revisionData)
+		{
+			FillDataWithId(Data, revisionData, RevisionType.Modified);
 
-        public IDictionary<String, Object> getData() {
-            return data;
-        }
+			return Data;
+		}
 
-        public override IAuditWorkUnit Merge(AddWorkUnit second)
-        {
-            return this;
-        }
+		public override IAuditWorkUnit Merge(AddWorkUnit second)
+		{
+			return this;
+		}
 
-        public override IAuditWorkUnit Merge(ModWorkUnit second)
-        {
-            return second;
-        }
+		public override IAuditWorkUnit Merge(ModWorkUnit second)
+		{
+			return second;
+		}
 
-        public override IAuditWorkUnit Merge(DelWorkUnit second)
-        {
-            return second;
-        }
+		public override IAuditWorkUnit Merge(DelWorkUnit second)
+		{
+			return second;
+		}
 
-        public override IAuditWorkUnit Merge(CollectionChangeWorkUnit second)
-        {
-            return this;
-        }
+		public override IAuditWorkUnit Merge(CollectionChangeWorkUnit second)
+		{
+			return this;
+		}
 
-        public override IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit second)
-        {
-            return FakeBidirectionalRelationWorkUnit.Merge(second, this, second.NestedWorkUnit);
-        }
+		public override IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit second)
+		{
+			return FakeBidirectionalRelationWorkUnit.Merge(second, this, second.NestedWorkUnit);
+		}
 
-        public override IAuditWorkUnit Dispatch(IWorkUnitMergeVisitor first)
-        {
-            return first.Merge(this);
-        }
-    }
+		public override IAuditWorkUnit Dispatch(IWorkUnitMergeVisitor first)
+		{
+			return first.Merge(this);
+		}
+	}
 }
