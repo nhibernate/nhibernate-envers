@@ -2,11 +2,11 @@
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-    public interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher 
+	public interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher 
 	{
-    	object EntityId { get; }
-    	string EntityName { get; }
-    
+		object EntityId { get; }
+		string EntityName { get; }
+	
 		bool ContainsWork();
 
 		bool IsPerformed();
@@ -19,6 +19,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		/// The current revision data, which will be used to populate the work unit with the correct revision relation.
 		/// </param>
 		void Perform(ISession session, object revisionData);
+
 		void Undo(ISession session);
 
 		/// <summary>
