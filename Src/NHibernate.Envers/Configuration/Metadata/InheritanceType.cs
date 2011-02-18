@@ -3,9 +3,6 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-	/// <summary>
-	/// @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	/// </summary>
 	public enum InheritanceType
 	{
 			None,
