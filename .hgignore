@@ -34,3 +34,4 @@ _ReSharper*/
 *.[Pp]ublish.xml
 glob:hibernate.cfg.xml
 glob:Build
+glob:Src/lint.db
