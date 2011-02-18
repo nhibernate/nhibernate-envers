@@ -214,7 +214,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var nodeList = element.ChildNodes;
 
-			//reversed loop cause items might be deleted inside loop
 			for (var i = nodeList.Count - 1; i >= 0; i--)
 			{
 				var property = (XmlElement) nodeList[i];
