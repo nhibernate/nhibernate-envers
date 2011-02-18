@@ -12,14 +12,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private static readonly List<IFieldNamingStrategy> DefaultFieldNamningStrategies =
 			new List<IFieldNamingStrategy>
-    			{
-    				new CamelCaseStrategy(),
-    				new CamelCaseUnderscoreStrategy(),
-    				new LowerCaseStrategy(),
-    				new LowerCaseUnderscoreStrategy(),
-    				new PascalCaseUnderscoreStrategy(),
-    				new PascalCaseMUnderscoreStrategy(),
-    			};
+				{
+					new CamelCaseStrategy(),
+					new CamelCaseUnderscoreStrategy(),
+					new LowerCaseStrategy(),
+					new LowerCaseUnderscoreStrategy(),
+					new PascalCaseUnderscoreStrategy(),
+					new PascalCaseMUnderscoreStrategy(),
+				};
 
 		//rk - todo: cache the result here
 		public IEnumerable<DeclaredPersistentProperty> GetPersistentInfo(System.Type @class, IEnumerable<Property> properties)

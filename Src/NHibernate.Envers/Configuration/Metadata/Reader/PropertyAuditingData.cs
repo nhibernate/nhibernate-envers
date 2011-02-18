@@ -3,10 +3,6 @@ using NHibernate.Envers.Entities;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-	/**
-	 * @author Adam Warski (adam at warski dot org)
-	 */
-
 	public class PropertyAuditingData
 	{
 		public PropertyAuditingData()
