@@ -29,7 +29,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public string Name { get; set; }
 		public string BeanName { get; set; }
 		public ModificationStore Store { get; set; }
-		public string MapKey { get; set; }
 		public AuditJoinTableAttribute JoinTable { get; set; }
 		public string AccessType { get; set; }
 		public IList<AuditOverrideAttribute> AuditingOverrides { get; private set; }
