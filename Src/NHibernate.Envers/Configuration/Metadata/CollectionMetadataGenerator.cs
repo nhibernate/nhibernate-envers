@@ -72,7 +72,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				throw new MappingException("Unable to read auditing configuration for " + referencingEntityName + "!");
 			}
 
-			referencedEntityName = MappingTools.getReferencedEntityName(propertyValue.Element);
+			referencedEntityName = MappingTools.ReferencedEntityName(propertyValue.Element);
 			collectionMapperFactory = new CollectionMapperFactory();
 		}
 
@@ -152,7 +152,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Creating a prefixed relation mapper.
 				var relMapper = referencingIdMapping.IdMapper.PrefixMappedProperties(
-						MappingTools.createToOneRelationPrefix(auditMappedBy));
+						MappingTools.CreateToOneRelationPrefix(auditMappedBy));
 
 				fakeBidirectionalRelationMapper = new ToOneIdMapper(
 						relMapper,
@@ -217,7 +217,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				// This must be a @JoinColumn+@OneToMany mapping. Generating the table name, as Hibernate doesn't use a
 				// middle table for mapping this relation.
-				var refEntName = MappingTools.getReferencedEntityName(value.Element);
+				var refEntName = MappingTools.ReferencedEntityName(value.Element);
 				return entityName.Substring(entityName.LastIndexOf(".") + 1) + "_" + 
 					refEntName.Substring(refEntName.LastIndexOf(".") + 1);
 			}
@@ -343,15 +343,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			StoreMiddleEntityRelationInformation(mappedBy);
 		}
 
-		private static bool sameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
-		{
-			var firstNames = from f in first
-							 select ((Column) f).Name;
-			var lastNames = from s in second
-							select ((Column) s).Name;
-			return firstNames.Count()==lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
-		}
-
 		private MiddleComponentData AddIndex(XmlElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
 		{
 			var indexedValue = propertyValue as IndexedCollection;
@@ -365,10 +356,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 					
 				if(refPc!=null)
 				{
-					idMatch = sameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
+					idMatch = MappingTools.SameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
 					foreach (var propertyRef in refPc.PropertyIterator)
 					{
-						if(sameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
+						if(MappingTools.SameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
 							propMatch = propertyRef.Name;
 					}
 				}
@@ -412,7 +403,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (type is ManyToOneType) 
 			{
 				var prefixRelated = prefix + "_";
-				var referencedEntityName = MappingTools.getReferencedEntityName(value);
+				var referencedEntityName = MappingTools.ReferencedEntityName(value);
 
 				var referencedIdMapping = mainGenerator.GetReferencedIdMappingData(referencingEntityName,
 						referencedEntityName, propertyAuditingData, true);

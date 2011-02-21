@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 												ModificationStore.Full, componentPropertiesSource, componentData,
 												_globalCfg,
 												_propertyNamePrefix +
-												MappingTools.createComponentPrefix(declaredPersistentProperty.Property.Name))
+												MappingTools.CreateComponentPrefix(declaredPersistentProperty.Property.Name))
 						.Read();
 
 					propertyData = componentData;
