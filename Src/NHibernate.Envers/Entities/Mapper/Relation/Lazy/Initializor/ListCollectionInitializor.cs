@@ -44,7 +44,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 																				(IDictionary) elementData, 
 																				null, 
 																				revision);
-
 			var index = (int)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
 																				(IDictionary) indexData, 
 																				element, 

@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, 
 											IDictionary data,
 											object dataObject, 
-											long revision) 
+											long revision)
 		{
 			// dataObject is not null, as this mapper can only be used in an index.
 			return ReflectionTools.GetGetter(dataObject.GetType(), propertyName, accessType).Get(dataObject);
