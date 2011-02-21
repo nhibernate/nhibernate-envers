@@ -121,7 +121,7 @@ namespace NHibernate.Envers.Entities.Mapper
 				// Computing the name of the component
 				var componentName = referencingPropertyName.Substring(0, dotIndex);
 				// And the name of the property in the component
-				var propertyInComponentName = MappingTools.createComponentPrefix(componentName)
+				var propertyInComponentName = MappingTools.CreateComponentPrefix(componentName)
 						+ referencingPropertyName.Substring(dotIndex+1);
 
 				// We need to get the mapper for the component.

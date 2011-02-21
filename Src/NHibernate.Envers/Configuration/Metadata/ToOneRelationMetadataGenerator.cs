@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
 					propertyAuditingData, true);
 
-			var lastPropertyPrefix = MappingTools.createToOneRelationPrefix(propertyAuditingData.Name);
+			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(propertyAuditingData.Name);
 
 			// Generating the id mapper for the relation
 			var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
@@ -90,7 +90,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				throw new MappingException("An audited relation to a non-audited entity " + entityName + "!");
 			}
 
-			var lastPropertyPrefix = MappingTools.createToOneRelationPrefix(owningReferencePropertyName);
+			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(owningReferencePropertyName);
 			var referencedEntityName = propertyValue.ReferencedEntityName;
 
 			// Generating the id mapper for the relation

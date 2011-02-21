@@ -1,48 +1,55 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Tools
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class MappingTools
-    {
-        /**
-         * @param componentName Name of the component, that is, name of the property in the entity that references the
-         * component.
-         * @return A prefix for properties in the given component.
-         */
-        public static String createComponentPrefix(String componentName)
-        {
-            return componentName + "_";
-        }
-
-        /**
-         * @param referencePropertyName The name of the property that holds the relation to the entity.
-         * @return A prefix which should be used to prefix an id mapper for the related entity.
-         */
-        public static String createToOneRelationPrefix(String referencePropertyName)
-        {
-            return referencePropertyName + "_";
-        }
-
-        public static String getReferencedEntityName(IValue value) 
+	public class MappingTools
+	{
+		/// <summary>
+		/// </summary>
+		/// <param name="componentName">Name of the component, that is, 
+		/// name of the property in the entity that references the component</param>
+		/// <returns>A prefix for properties in the given component.</returns>
+		public static string CreateComponentPrefix(string componentName)
 		{
-            if (value is ToOne) 
-			{
-                return ((ToOne) value).ReferencedEntityName;
-            }
-        	if (value is OneToMany) 
-			{
-        		return ((OneToMany) value).ReferencedEntityName;
-        	}
-        	if (value is Mapping.Collection) 
-			{
-        		return getReferencedEntityName(((Mapping.Collection)value).Element);
-        	}
+			return componentName + "_";
+		}
 
-        	return null;
-        }
-    }
+		/// <summary>
+		/// </summary>
+		/// <param name="referencePropertyName">The name of the property that holds the relation to the entity.</param>
+		/// <returns>A prefix which should be used to prefix an id mapper for the related entity.</returns>
+		public static string CreateToOneRelationPrefix(string referencePropertyName)
+		{
+			return referencePropertyName + "_";
+		}
+
+		public static string ReferencedEntityName(IValue value) 
+		{
+			if (value is ToOne) 
+			{
+				return ((ToOne) value).ReferencedEntityName;
+			}
+			if (value is OneToMany) 
+			{
+				return ((OneToMany) value).ReferencedEntityName;
+			}
+			if (value is Mapping.Collection) 
+			{
+				return ReferencedEntityName(((Mapping.Collection)value).Element);
+			}
+
+			return null;
+		}
+
+		public static bool SameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
+		{
+			var firstNames = from f in first
+							 select ((Column)f).Name;
+			var lastNames = from s in second
+							select ((Column)s).Name;
+			return firstNames.Count() == lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
+		}
+	}
 }
