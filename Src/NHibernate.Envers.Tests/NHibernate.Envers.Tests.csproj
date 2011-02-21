@@ -343,6 +343,9 @@
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\BidirectionalListWithDifferentAccessTest.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\Child.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\Parent.cs" />
     <Compile Include="NetSpecific\Integration\Access\ReadonlyAccessTest.cs" />
     <Compile Include="NetSpecific\Integration\Access\ReadonlyEntity.cs" />
     <Compile Include="NetSpecific\Integration\Component\ComponentOwner.cs" />
@@ -374,6 +377,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Component\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\Mapping.hbm.xml" />
     <Content Include="todo.txt" />

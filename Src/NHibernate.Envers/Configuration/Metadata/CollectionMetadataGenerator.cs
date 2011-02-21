@@ -225,7 +225,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return value.CollectionTable.Name;
 		}
 
-		private void AddWithMiddleTable() {
+		private void AddWithMiddleTable() 
+		{
 			log.Debug("Adding audit mapping for property " + referencingEntityName + "." + propertyName +
 					": collection with a join table.");
 
@@ -349,21 +350,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (indexedValue != null)
 			{
 				var idMatch = false;
-				string propMatch = null;
+				Property referencedProperty = null;
 				PersistentClass refPc = null;
 				if (referencedEntityName != null)
 					refPc = mainGenerator.Cfg.GetClassMapping(referencedEntityName);
-					
-				if(refPc!=null)
+
+				if (refPc != null)
 				{
 					idMatch = MappingTools.SameColumns(refPc.IdentifierProperty.ColumnIterator, indexedValue.Index.ColumnIterator);
 					foreach (var propertyRef in refPc.PropertyIterator)
 					{
-						if(MappingTools.SameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
-							propMatch = propertyRef.Name;
+						if (MappingTools.SameColumns(propertyRef.ColumnIterator, indexedValue.Index.ColumnIterator))
+						{
+							referencedProperty = propertyRef;
+							break;
+						}
 					}
 				}
-				if (!idMatch && propMatch==null)
+				if (!idMatch && referencedProperty == null)
 				{
 					return AddValueToMiddleTable(indexedValue.Index, middleEntityXml,
 							queryGeneratorBuilder, "mapkey", null);
@@ -376,9 +380,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 					return new MiddleComponentData(new MiddleMapKeyIdComponentMapper(mainGenerator.VerEntCfg,
 																					 referencedIdMapping.IdMapper), currentIndex);
 				}
+				if(indexedValue is Map)
+				{
+					// The key of the map is a property of the entity.
+					return new MiddleComponentData(new MiddleMapKeyPropertyComponentMapper(referencedProperty.Name,
+																						   referencedProperty.PropertyAccessorName), currentIndex);					
+				}
+				//bidirectional list
 				// The key of the map is a property of the entity.
-				return new MiddleComponentData(new MiddleMapKeyPropertyComponentMapper(propMatch,
-																					   propertyAuditingData.AccessType), currentIndex);
+				return new MiddleComponentData(new MiddleStraightComponentMapper(referencedProperty.Name), currentIndex);
 			}
 			// No index - creating a dummy mapper.
 			return new MiddleComponentData(new MiddleDummyComponentMapper(), 0);
@@ -603,7 +613,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (propValueAsColl != null)
 				{
 					// The equality is intentional. We want to find a collection property with the same collection table.
-					//noinspection ObjectEquality
 					if (propValueAsColl.CollectionTable == collectionTable)
 					{
 						return property.Name;
