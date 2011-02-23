@@ -54,7 +54,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var paramData in paramDatas) 
 			{
-				parametersToUse.AddWhereWithNamedParam(paramData.GetProperty(prefix), equals ? "=" : "<>", paramData.GetQueryParameterName());
+				parametersToUse.AddWhereWithNamedParam(paramData.GetProperty(prefix), equals ? "=" : "<>", paramData.QueryParameterName);
 			}
 		}
 
