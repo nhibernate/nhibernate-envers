@@ -12,7 +12,6 @@ namespace NHibernate.Envers.Entities.Mapper
 {
 	public class MultiPropertyMapper : IExtendedPropertyMapper 
 	{
-		public IDictionary<PropertyData, IPropertyMapper> Properties { get; protected set; }
 		private readonly IDictionary<string, PropertyData> propertyDatas;
 
 		public MultiPropertyMapper() 
@@ -20,6 +19,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			Properties = new Dictionary<PropertyData, IPropertyMapper>();
 			propertyDatas = new Dictionary<string, PropertyData>();
 		}
+
+		public IDictionary<PropertyData, IPropertyMapper> Properties { get; private set; }
 
 		public void Add(PropertyData propertyData) 
 		{

@@ -2,46 +2,36 @@
 {
     public class QueryParameterData
     {
-        private readonly string flatEntityPropertyName;
-        private readonly object value;
-
-        public QueryParameterData(string flatEntityPropertyName, object value)
+    	public QueryParameterData(string flatEntityPropertyName, object value)
         {
-            this.flatEntityPropertyName = flatEntityPropertyName;
-            this.value = value;
+            QueryParameterName = flatEntityPropertyName;
+            Value = value;
         }
+
+		public string QueryParameterName { get; private set; }
+		public object Value { get; private set; }
 
         public string GetProperty(string prefix)
         {
             if (prefix != null)
             {
-                return prefix + "." + flatEntityPropertyName;
+                return prefix + "." + QueryParameterName;
             }
-            return flatEntityPropertyName;
+            return QueryParameterName;
         }
-
-    	public object Value
-    	{
-    		get { return value; }
-    	}
 
     	public void SetParameterValue(IQuery query)
         {
-            query.SetParameter(flatEntityPropertyName, value);
+            query.SetParameter(QueryParameterName, Value);
         }
 
-        public string GetQueryParameterName()
-        {
-            return flatEntityPropertyName;
-        }
-
-        public override bool Equals(object obj) 
+    	public override bool Equals(object obj) 
         {
             if (this == obj) return true;
         	var casted = obj as QueryParameterData;
             if (casted==null) return false;
 
-            if (flatEntityPropertyName != null ? !flatEntityPropertyName.Equals(casted.flatEntityPropertyName) : casted.flatEntityPropertyName != null)
+            if (QueryParameterName != null ? !QueryParameterName.Equals(casted.QueryParameterName) : casted.QueryParameterName != null)
                 return false;
 
             return true;
@@ -49,7 +39,7 @@
 
         public override int GetHashCode()
         {
-            return (flatEntityPropertyName != null ? flatEntityPropertyName.GetHashCode() : 0);
+            return (QueryParameterName != null ? QueryParameterName.GetHashCode() : 0);
         }
     }
 }
