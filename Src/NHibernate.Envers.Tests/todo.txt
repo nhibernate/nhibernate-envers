@@ -1,13 +1,10 @@
-﻿* integrationtest + impl for nested components
-* tests för overrideSattr
+﻿* tests för overrideSattr
 * test two different ways of configuration in same appdomain
 * test för attr conf default
 * lägg till en Environmentklass med strängar för conf å annat
 * test för inkorrekt revinfo (multipla numbers etc)
-* test för structs as components
 * biref index och andra sidan har olika access settings
 * se över transaktioner (verkar som det biter även vid exception om flushmode never)
 fluent...
 * loggning för fluent
 * throw om property/field inte kan hittas, typ "kom ihåg att det är prylen som NH-mappningen använder som gäller!
-* kommentaror på IFluentAudit
