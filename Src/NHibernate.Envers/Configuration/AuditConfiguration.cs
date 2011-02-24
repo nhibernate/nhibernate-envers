@@ -19,17 +19,16 @@ namespace NHibernate.Envers.Configuration
 		{
 			var mds = new MetaDataStore(cfg, metaDataProvider);
 
-			IDictionary<string, string> properties = cfg.Properties;
+			var properties = cfg.Properties;
 			var propertyAndMemberInfo = new PropertyAndMemberInfo();
-			var revInfoCfg = new RevisionInfoConfiguration(mds, propertyAndMemberInfo); //rk - when configure other than attr, check here
-			RevisionInfoConfigurationResult revInfoCfgResult = revInfoCfg.Configure(cfg); //rk - when configure other than attr, check here
+			var revInfoCfg = new RevisionInfoConfiguration(mds, propertyAndMemberInfo);
+			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
 			AuditSyncManager = new AuditSyncManager(revInfoCfgResult.RevisionInfoGenerator);
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg,
-			                                              //rk - when configure other than attr, check here (annotationmetadatareader & auditedpropertiesreader)
 			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping, propertyAndMemberInfo);
 		}
 
