@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Configuration
 			}
 		}
 
-        private readonly IDictionary<string, string> customAuditTablesNames;
+		private readonly IDictionary<string, string> customAuditTablesNames;
 
 		public AuditEntitiesConfiguration(IDictionary<string, string> properties, string revisionInfoEntityName)
 		{

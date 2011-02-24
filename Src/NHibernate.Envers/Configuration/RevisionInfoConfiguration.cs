@@ -65,9 +65,6 @@ namespace NHibernate.Envers.Configuration
 		{
 			var document = new XmlDocument();
 			var rev_rel_mapping = document.CreateElement("key-many-to-one");
-			//rk: removed type attribute from key-many-to-one
-			//rev_rel_mapping.SetAttribute("type", revisionPropType);
-			//rk: changed here
 			rev_rel_mapping.SetAttribute("class", revisionAssQName);
 
 			if (revisionPropSqlType != null) 
