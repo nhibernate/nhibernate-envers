@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 {
-	[TestFixture, Ignore("Does not work right now")]
+	[TestFixture]
 	public class OneToOnePrimaryKeyTest : TestBase
 	{
 		private const int id = 47;
@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(OneToOneOwningEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(OneToOneOwningEntity), id));
 			CollectionAssert.AreEquivalent(new[] { 2, 3, 4}, AuditReader().GetRevisions(typeof (OneToOneOwnedEntity), id));
 		}
 
@@ -66,16 +66,21 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 		}
 
 		[Test]
-		public void VerifyHistoryOfOwned() //same for both 1 and 2
+		public void VerifyHistoryOfOwned()
 		{
 			var owning = Session.Get<OneToOneOwningEntity>(id);
 
-			AuditReader().Find<OneToOneOwnedEntity>(id, 2).Owning
-				.Should().Be.EqualTo(owning);
-			AuditReader().Find<OneToOneOwnedEntity>(id, 2).Owning
-				.Should().Be.EqualTo(owning);
-			AuditReader().Find<OneToOneOwnedEntity>(id, 2).Owning
-				.Should().Be.Null();
+			AuditReader().Find<OneToOneOwnedEntity>(id, 1).Should().Be.Null();
+
+			var ver2 = AuditReader().Find<OneToOneOwnedEntity>(id, 2);
+			ver2.Data.Should().Be.EqualTo("1");
+			ver2.Owning.Should().Be.EqualTo(owning);
+			
+			var ver3 = AuditReader().Find<OneToOneOwnedEntity>(id, 3);
+			ver3.Data.Should().Be.EqualTo("2");
+			ver3.Owning.Should().Be.EqualTo(owning);
+			
+			AuditReader().Find<OneToOneOwnedEntity>(id, 4).Should().Be.Null();
 		}
 	}
 }

@@ -9,6 +9,7 @@ namespace NHibernate.Envers.Synchronization.Work
 	{
 		private readonly object[] state;
 		private readonly string[] propertyNames;
+		private readonly IEntityPersister entityPersister;
 
 		public DelWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
 						   object id, IEntityPersister entityPersister, object[] state)
@@ -16,6 +17,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		{
 			this.state = state;
 			propertyNames = entityPersister.PropertyNames;
+			this.entityPersister = entityPersister;
 		}
 
 		public override bool ContainsWork()
@@ -38,7 +40,8 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(AddWorkUnit second)
 		{
-			return null;
+			//needed to get onetoone pk work. What should happen with "normal" entities?
+			return new ModWorkUnit(sessionImplementor, EntityName, verCfg, EntityId, entityPersister, second.State, state);
 		}
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)
