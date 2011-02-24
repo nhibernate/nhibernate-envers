@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Configuration.Store
 		}
 
 		public IEnumerable<Attribute> ClassMetas { get; set; }
-		public IDictionary<MemberInfo, IEnumerable<Attribute>> MemberMetas { get; set; }
+		public IDictionary<MemberInfo, IEnumerable<Attribute>> MemberMetas { get; private set; }
 
 		public void AddMemberMeta(MemberInfo member, Attribute envAttr)
 		{
