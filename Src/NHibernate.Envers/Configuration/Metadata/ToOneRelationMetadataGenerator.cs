@@ -1,6 +1,9 @@
-﻿using System.Xml;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Exceptions;
 using NHibernate.Mapping;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -21,10 +24,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public void AddToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value,
-					  ICompositeMapperBuilder mapper, string entityName, bool insertable) 
+					  ICompositeMapperBuilder mapper, string entityName, bool insertable, IEnumerable<string> fixedColumnNames) 
 		{
 			var referencedEntityName = ((ToOne)value).ReferencedEntityName;
-
 			var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
 					propertyAuditingData, true);
 
@@ -61,8 +63,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var properties = (XmlElement)parent.OwnerDocument.ImportNode(idMapping.XmlRelationMapping,true);
 			properties.SetAttribute("name",propertyAuditingData.Name);
 
-			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
-					MetadataTools.GetColumnNameEnumerator(value.ColumnIterator), false, insertable);
+			if (fixedColumnNames == null)
+			{
+				MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix, MetadataTools.GetColumnNameEnumerator(value.ColumnIterator), false, insertable);				
+			}
+			else
+			{
+				MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix, fixedColumnNames.GetEnumerator(), false, insertable);
+			}
 			parent.AppendChild(properties);
 
 
@@ -71,12 +79,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			mapper.AddComposite(propertyData, new ToOneIdMapper(relMapper,propertyData,referencedEntityName,nonInsertableFake));
 		}
 
-		public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, IValue value,
-								  ICompositeMapperBuilder mapper, string entityName) 
+		public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, OneToOne value, ICompositeMapperBuilder mapper, string entityName) 
 		{
-			var propertyValue = (OneToOne)value;
+			var owningReferencePropertyName = referencePropertyName(value, entityName);
 
-			var owningReferencePropertyName = propertyValue.ReferencedPropertyName; // mappedBy
 			var configuration = mainGenerator.EntitiesConfigurations[entityName]; 
 			if (configuration == null) 
 			{
@@ -91,7 +97,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(owningReferencePropertyName);
-			var referencedEntityName = propertyValue.ReferencedEntityName;
+			var referencedEntityName = value.ReferencedEntityName;
 
 			// Generating the id mapper for the relation
 			var ownedIdMapper = ownedIdMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
@@ -105,6 +111,26 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var propertyData = propertyAuditingData.GetPropertyData();
 			mapper.AddComposite(propertyData, new OneToOneNotOwningMapper(owningReferencePropertyName,
 					referencedEntityName, propertyData));
+		}
+
+		private string referencePropertyName(OneToOne value, string entityName)
+		{
+			var owningReferencePropertyName = value.ReferencedPropertyName;
+
+			if (owningReferencePropertyName == null) //onetoone pk
+			{
+				foreach (var refProperty in mainGenerator.Cfg.GetClassMapping(value.ReferencedEntityName).PropertyIterator)
+				{
+					if (refProperty.Value is OneToOne && refProperty.Type.Name.Equals(entityName))
+					{
+						owningReferencePropertyName = refProperty.Name;
+						break;
+					}
+				}
+			}
+			if(owningReferencePropertyName==null)
+				throw new AuditException("The onetoone mapping on entity " + entityName + ", property " + value.PropertyName + " is not supported!");
+			return owningReferencePropertyName;
 		}
 	}
 }

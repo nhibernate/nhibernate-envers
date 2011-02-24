@@ -13,6 +13,7 @@ namespace NHibernate.Envers.Synchronization.Work
 						   object id, IEntityPersister entityPersister, object[] state) 
 			: base(sessionImplementor, entityName, verCfg, id)
 		{
+			State = state;
 			data = new Dictionary<string, object>();
 			verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, data,
 					entityPersister.PropertyNames, state, null);
@@ -24,6 +25,8 @@ namespace NHibernate.Envers.Synchronization.Work
 		{
 			this.data = data;
 		}
+
+		internal object[] State { get; private set; }
 
 		public override bool ContainsWork()
 		{
