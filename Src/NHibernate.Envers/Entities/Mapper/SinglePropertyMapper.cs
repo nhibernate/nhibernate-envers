@@ -71,7 +71,6 @@ namespace NHibernate.Envers.Entities.Mapper
 				throw new HibernateException("No field found for property: " + setter.PropertyName);
 			}
 			//rk: I'm not sure about this one...
-			//this won't work if mapped "readonly"
 			if (setter.Method == null)
 			{
 				var field = cls.GetField(propertyData.BeanName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);

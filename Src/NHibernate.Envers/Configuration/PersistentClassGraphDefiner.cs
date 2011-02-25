@@ -27,27 +27,25 @@ namespace NHibernate.Envers.Configuration
 			return cfg.GetClassMapping(entityName);
 		}
 
-		private void AddNeighbours(ICollection<PersistentClass> neighbours, IEnumerable<Subclass> subclasses) 
-		{
-			foreach (var subclass in subclasses)
-			{
-				neighbours.Add(subclass);
-				AddNeighbours(neighbours, subclass.SubclassIterator);
-			}
-		}
-
 		public IList<PersistentClass> GetNeighbours(PersistentClass pc) 
 		{
 			var neighbours = new List<PersistentClass>();
-
 			AddNeighbours(neighbours, pc.SubclassIterator);
-
 			return neighbours;
 		}
 
 		public IEnumerable<PersistentClass> GetValues() 
 		{
 			return cfg.ClassMappings;
+		}
+
+		private void AddNeighbours(ICollection<PersistentClass> neighbours, IEnumerable<Subclass> subclasses)
+		{
+			foreach (var subclass in subclasses)
+			{
+				neighbours.Add(subclass);
+				AddNeighbours(neighbours, subclass.SubclassIterator);
+			}
 		}
 	}
 }

@@ -31,7 +31,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			return parentDiffs || mainDiffs;
 		}
 
-		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) {
+		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) 
+		{
 			var parentDiffs = parentMapper.MapToMapFromEntity(session, data, newObj, oldObj);
 			var mainDiffs = main.MapToMapFromEntity(session, data, newObj, oldObj);
 

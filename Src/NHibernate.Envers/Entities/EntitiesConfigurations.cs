@@ -5,25 +5,25 @@ namespace NHibernate.Envers.Entities
 	/// <summary>
 	/// Configuration of the user entities: property mapping of the entities, relations, inheritance.
 	/// </summary>
-    public class EntitiesConfigurations
-    {
-        private readonly IDictionary<string, EntityConfiguration> entitiesConfigurations;
+	public class EntitiesConfigurations
+	{
+		private readonly IDictionary<string, EntityConfiguration> entitiesConfigurations;
 		private readonly IDictionary<string, EntityConfiguration> notAuditedEntitiesConfigurations;
 
-        // Map versions entity name -> entity name
+		// Map versions entity name -> entity name
 		private IDictionary<string, string> _entityNamesForVersionsEntityNames = new Dictionary<string, string>();
 
 		public EntitiesConfigurations(IDictionary<string, EntityConfiguration> entitiesConfigurations,
 									  IDictionary<string, EntityConfiguration> notAuditedEntitiesConfigurations)
-        {
-            this.entitiesConfigurations = entitiesConfigurations;
-            this.notAuditedEntitiesConfigurations = notAuditedEntitiesConfigurations;
+		{
+			this.entitiesConfigurations = entitiesConfigurations;
+			this.notAuditedEntitiesConfigurations = notAuditedEntitiesConfigurations;
 
-            GenerateBidirectionRelationInfo();
-            GenerateVersionsEntityToEntityNames();
-        }
+			GenerateBidirectionRelationInfo();
+			GenerateVersionsEntityToEntityNames();
+		}
 
-        private void GenerateVersionsEntityToEntityNames() 
+		private void GenerateVersionsEntityToEntityNames() 
 		{
 			_entityNamesForVersionsEntityNames = new Dictionary<string, string>();
 
@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-        private void GenerateBidirectionRelationInfo() 
+		private void GenerateBidirectionRelationInfo() 
 		{
 			// Checking each relation if it is bidirectional. If so, storing that information.
 			foreach (var entityName in entitiesConfigurations.Keys) 
@@ -64,38 +64,38 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-        public EntityConfiguration this [string entityName]
-        {
-            get { return entitiesConfigurations.ContainsKey(entityName)? entitiesConfigurations[entityName]:null; }
-        }
+		public EntityConfiguration this [string entityName]
+		{
+			get { return entitiesConfigurations.ContainsKey(entityName)? entitiesConfigurations[entityName]:null; }
+		}
 
-        public EntityConfiguration GetNotVersionEntityConfiguration(string entityName)
-        {
-            return notAuditedEntitiesConfigurations.ContainsKey(entityName)? notAuditedEntitiesConfigurations[entityName]:null;
-        }
+		public EntityConfiguration GetNotVersionEntityConfiguration(string entityName)
+		{
+			return notAuditedEntitiesConfigurations.ContainsKey(entityName)? notAuditedEntitiesConfigurations[entityName]:null;
+		}
 
-        public string GetEntityNameForVersionsEntityName(string versionsEntityName)
-        {
-            if (versionsEntityName == null)
-                return null;
-            string ret;
-            return _entityNamesForVersionsEntityNames.TryGetValue(versionsEntityName, out ret) ? ret : null;
-        }
+		public string GetEntityNameForVersionsEntityName(string versionsEntityName)
+		{
+			if (versionsEntityName == null)
+				return null;
+			string ret;
+			return _entityNamesForVersionsEntityNames.TryGetValue(versionsEntityName, out ret) ? ret : null;
+		}
 
-        public bool IsVersioned(string entityName)
-        {
-            return entitiesConfigurations.Keys.Contains(entityName);
-        }
+		public bool IsVersioned(string entityName)
+		{
+			return entitiesConfigurations.Keys.Contains(entityName);
+		}
 
 		public RelationDescription GetRelationDescription(string entityName, string propertyName)
-        {
-            var entCfg = entitiesConfigurations[entityName];
-            var relDesc = entCfg.GetRelationDescription(propertyName);
-            if (relDesc != null)
-            {
-                return relDesc;
-            }
+		{
+			var entCfg = entitiesConfigurations[entityName];
+			var relDesc = entCfg.GetRelationDescription(propertyName);
+			if (relDesc != null)
+			{
+				return relDesc;
+			}
 			return entCfg.ParentEntityName != null ? GetRelationDescription(entCfg.ParentEntityName, propertyName) : null;
-        }
-    }
+		}
+	}
 }

@@ -50,15 +50,20 @@ namespace NHibernate.Envers.Entities.Mapper
 			propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
-		private static object getAtIndexOrNull(object[] array, int index) { return array == null ? null : array[index]; }
+		private static object getAtIndexOrNull(object[] array, int index)
+		{
+			return array == null ? null : array[index];
+		}
 
 		public bool Map(ISessionImplementor session, IDictionary<string, object> data, string[] propertyNames, 
 						object[] newState, object[] oldState) {
 			bool ret = false;
-			for (int i=0; i<propertyNames.Length; i++) {
-				string propertyName = propertyNames[i];
+			for (var i=0; i<propertyNames.Length; i++) 
+			{
+				var propertyName = propertyNames[i];
 
-				if (propertyDatas.ContainsKey(propertyName)) {
+				if (propertyDatas.ContainsKey(propertyName)) 
+				{
 					ret |= Properties[propertyDatas[propertyName]].MapToMapFromEntity(session, data,
 							getAtIndexOrNull(newState, i),
 							getAtIndexOrNull(oldState, i));

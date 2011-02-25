@@ -40,8 +40,6 @@ namespace NHibernate.Envers.Entities
 			else 
 			{
 				((IDbDataParameter)cmd.Parameters[index]).Value = value;
-				//DbParameter param = DbParameter;
-				//cmd.Parameters[index] = param.Value();
 			}
 		}
 
@@ -77,12 +75,13 @@ namespace NHibernate.Envers.Entities
 
 		public new bool Equals(object x, object y)
 		{
-			//noinspection ObjectEquality
-			if (x == y) {
+			if (x == y) 
+			{
 				return true;
 			}
 
-			if (null == x || null == y) {
+			if (null == x || null == y) 
+			{
 				return false;
 			}
 

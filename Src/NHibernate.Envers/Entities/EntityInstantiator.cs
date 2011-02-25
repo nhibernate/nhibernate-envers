@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Entities
 		/// <returns>An entity instance, with versioned properties set as in the versionsEntity map, and proxies created for collections.</returns>
 		public object CreateInstanceFromVersionsEntity(string entityName, IDictionary versionsEntity, long revision)
 		{
-            const string typeKey = "$type$";
+			const string typeKey = "$type$";
 
 			if (versionsEntity == null) 
 			{
@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Entities
 			string name = null;
 			if(versionsEntity.Contains(typeKey))
 			{
-                name = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
+				name = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
 			}
 
 			if (name != null) 
