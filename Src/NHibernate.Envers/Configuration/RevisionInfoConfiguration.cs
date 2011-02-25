@@ -64,16 +64,16 @@ namespace NHibernate.Envers.Configuration
 		private XmlElement generateRevisionInfoRelationMapping() 
 		{
 			var document = new XmlDocument();
-			var rev_rel_mapping = document.CreateElement("key-many-to-one");
-			rev_rel_mapping.SetAttribute("class", revisionAssQName);
+			var revRelMapping = document.CreateElement("key-many-to-one");
+			revRelMapping.SetAttribute("class", revisionAssQName);
 
 			if (revisionPropSqlType != null) 
 			{
 				// Putting a fake name to make Hibernate happy. It will be replaced later anyway.
-				MetadataTools.AddColumn(rev_rel_mapping, "*" , -1, 0, 0, revisionPropSqlType);
+				MetadataTools.AddColumn(revRelMapping, "*" , -1, 0, 0, revisionPropSqlType);
 			}
 
-			return rev_rel_mapping;
+			return revRelMapping;
 		}
 
 		private bool searchForTimestampCfg(IEnumerable<DeclaredPersistentProperty> persistentProperties)
