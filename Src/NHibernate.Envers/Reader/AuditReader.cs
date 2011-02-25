@@ -65,10 +65,6 @@ namespace NHibernate.Envers.Reader
 				result = CreateQuery().ForEntitiesAtRevision(cls, revision)
 					.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
 			}
-			catch (NonUniqueResultException e)
-			{
-				throw new AuditException(e);
-			}
 			catch (NoResultException)
 			{
 				result = null;
@@ -105,21 +101,14 @@ namespace NHibernate.Envers.Reader
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionDateQuery(Session, revision);
 
-			try 
+			var timestampObject = query.UniqueResult();
+			if (timestampObject == null) 
 			{
-				var timestampObject = query.UniqueResult();
-				if (timestampObject == null) 
-				{
-					throw new RevisionDoesNotExistException(revision);
-				}
-
-				// The timestamp object is either a date or a long
-				return timestampObject is DateTime ? (DateTime) timestampObject : new DateTime((long) timestampObject);
-			} 
-			catch (NonUniqueResultException e) 
-			{
-				throw new AuditException(e);
+				throw new RevisionDoesNotExistException(revision);
 			}
+
+			// The timestamp object is either a date or a long
+			return timestampObject is DateTime ? (DateTime) timestampObject : new DateTime((long) timestampObject);
 		}
 
 		public long GetRevisionNumberForDate(DateTime date) 
@@ -129,20 +118,13 @@ namespace NHibernate.Envers.Reader
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionNumberForDateQuery(Session, date);
 
-			try 
+			var res = query.UniqueResult();
+			if (res == null) 
 			{
-				var res = query.UniqueResult();
-				if (res == null) 
-				{
-					throw new RevisionDoesNotExistException(date);
-				}
-
-				return Convert.ToInt64(res);
-			} 
-			catch (NonUniqueResultException e) 
-			{
-				throw new AuditException(e);
+				throw new RevisionDoesNotExistException(date);
 			}
+
+			return Convert.ToInt64(res);
 		}
 
 
@@ -154,21 +136,14 @@ namespace NHibernate.Envers.Reader
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionQuery(Session, revision);
 
-			try
-			{
-				var revisionData = query.UniqueResult();
+			var revisionData = query.UniqueResult();
 
-				if (revisionData == null)
-				{
-					throw new RevisionDoesNotExistException(revision);
-				}
-
-				return revisionData;
-			}
-			catch (NonUniqueResultException e)
+			if (revisionData == null)
 			{
-				throw new AuditException(e);
+				throw new RevisionDoesNotExistException(revision);
 			}
+
+			return revisionData;
 		}
 
 		public T FindRevision<T>(long revision)

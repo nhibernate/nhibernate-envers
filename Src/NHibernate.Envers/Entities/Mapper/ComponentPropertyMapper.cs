@@ -77,7 +77,7 @@ namespace NHibernate.Envers.Entities.Mapper
 				} 
 				catch (Exception e) 
 				{
-					throw new AuditException(e);
+					throw new AuditException("Cannot create instance of type " + componentClassName, e);
 				}
 			}
 		}

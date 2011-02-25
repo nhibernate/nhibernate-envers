@@ -153,15 +153,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			} 
 			catch (InstantiationException e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException(e.Message, e);
 			} 
 			catch (SecurityException e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException(e.Message, e);
 			} 
 			catch (TargetInvocationException e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException(e.Message, e);
 			}
 		}
 	}
