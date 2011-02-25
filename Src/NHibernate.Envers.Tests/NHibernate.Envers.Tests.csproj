@@ -89,8 +89,6 @@
     <Compile Include="Entities\CustomType\ParametrizedTestUserType.cs" />
     <Compile Include="Entities\Ids\EmbId.cs" />
     <Compile Include="Entities\Ids\EmbIdTestEntity.cs" />
-    <Compile Include="Entities\Ids\MulId.cs" />
-    <Compile Include="Entities\Ids\MulIdTestEntity.cs" />
     <Compile Include="Entities\ManyToMany\IntNoAutoIdTestEntity.cs" />
     <Compile Include="Entities\IntTestEntity.cs" />
     <Compile Include="Entities\ManyToMany\BiOwned\ListBiOwning1Entity.cs" />

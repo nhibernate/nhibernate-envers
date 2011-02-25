@@ -9,11 +9,4 @@
     </composite-id>
     <property name="Str1"/>
   </class>
-
-  <class name="MulIdTestEntity">
-    <composite-id class="MulId" mapped="true">
-      <key-property name="Id1"/>
-      <key-property name="Id2"/>
-    </composite-id>
-  </class>
 </hibernate-mapping>
