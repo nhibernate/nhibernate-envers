@@ -69,7 +69,7 @@ namespace NHibernate.Envers.Entities
 			} 
 			catch (Exception e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException("Cannot create instance of type " + entityName, e);
 			}
 
 			// Putting the newly created entity instance into the first level cache, in case a one-to-one bidirectional

@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace NHibernate.Envers.Exceptions
 {
-    public class AuditException : HibernateException 
+	[Serializable]
+	public class AuditException : HibernateException 
 	{
+		public AuditException()
+		{
+		}
+
 		public AuditException(string message) 
 						: base(message)
 		{
@@ -14,9 +20,9 @@ namespace NHibernate.Envers.Exceptions
 		{
 		}
 
-		public AuditException(Exception innerException)
-						:base(innerException)
-		{
+		protected AuditException(SerializationInfo info, StreamingContext context) 
+						: base(info, context)
+	    {
 		}
 	}
 }

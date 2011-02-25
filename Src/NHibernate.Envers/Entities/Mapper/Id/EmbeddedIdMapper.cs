@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			} 
 			catch (Exception e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException("Cannot create instance of type " + getter.ReturnType, e);
 			}
 		}
 

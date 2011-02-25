@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			} 
 			catch (Exception e) 
 			{
-				throw new AuditException(e);
+				throw new AuditException("Cannot create instance of type " + compositeIdClass, e);
 			}	
 
 			foreach (var mapper in ids.Values) 
