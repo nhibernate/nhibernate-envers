@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Query.Impl
 	{
 		public RevisionsQuery(AuditConfiguration auditConfiguration,
 		                      IAuditReaderImplementor versionsReader,
-		                      bool includesDeletations) : base(auditConfiguration, versionsReader, includesDeletations) {}
+		                      bool includesDeletations) : base(auditConfiguration, versionsReader, includesDeletations, typeof (TEntity).FullName) {}
 
 		public override IEnumerable<TEntity> Results()
 		{
@@ -34,17 +34,6 @@ namespace NHibernate.Envers.Query.Impl
 			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
 			       let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
 			       select (TEntity) EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision);
-		}
-
-		private long GetRevisionNumberFromDynamicEntity(IDictionary versionsEntity)
-		{
-			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
-			string originalId = auditEntitiesConfiguration.OriginalIdPropName;
-			string revisionPropertyName = auditEntitiesConfiguration.RevisionFieldName;
-			object revisionInfoObject = ((IDictionary) versionsEntity[originalId])[revisionPropertyName];
-			var proxy = revisionInfoObject as INHibernateProxy; // TODO: usage of proxyfactory IsProxy
-
-			return proxy != null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : AuditConfiguration.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
 		}
 	}
 }

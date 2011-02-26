@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
@@ -7,6 +9,7 @@ using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
+using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Query.Impl
 {
@@ -33,7 +36,7 @@ namespace NHibernate.Envers.Query.Impl
 
 		protected AbstractRevisionsQuery(AuditConfiguration auditConfiguration,
 		                              IAuditReaderImplementor versionsReader,
-		                              bool includesDeletations)
+		                              bool includesDeletations, string entityName)
 		{
 			this.auditConfiguration = auditConfiguration;
 			this.versionsReader = versionsReader;
@@ -41,9 +44,9 @@ namespace NHibernate.Envers.Query.Impl
 			criterions = new List<IAuditCriterion>();
 			entityInstantiator = new EntityInstantiator(auditConfiguration, versionsReader);
 
-			entityName = typeof (TEntity).FullName;
+			this.entityName = entityName;
 
-			versionsEntityName = auditConfiguration.AuditEntCfg.GetAuditEntityName(entityName);
+			versionsEntityName = auditConfiguration.AuditEntCfg.GetAuditEntityName(this.entityName);
 
 			queryBuilder = new QueryBuilder(versionsEntityName, "e");
 			this.includesDeletations = includesDeletations;
@@ -188,6 +191,17 @@ namespace NHibernate.Envers.Query.Impl
 				// e.revision_type != DEL AND
 				queryBuilder.RootParameters.AddWhereWithParam(auditConfiguration.AuditEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
 			}
+		}
+
+		protected long GetRevisionNumberFromDynamicEntity(IDictionary versionsEntity)
+		{
+			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
+			string originalId = auditEntitiesConfiguration.OriginalIdPropName;
+			string revisionPropertyName = auditEntitiesConfiguration.RevisionFieldName;
+			object revisionInfoObject = ((IDictionary)versionsEntity[originalId])[revisionPropertyName];
+			var proxy = revisionInfoObject as INHibernateProxy; // TODO: usage of proxyfactory IsProxy
+
+			return proxy != null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : AuditConfiguration.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
 		}
 
 		protected IList<TResult> BuildAndExecuteQuery<TResult>()

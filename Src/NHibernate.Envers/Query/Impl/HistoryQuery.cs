@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Reader;
+
+namespace NHibernate.Envers.Query.Impl
+{
+	public class HistoryQuery<TEntity, TRevisionEntity> : AbstractRevisionsQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>>
+		where TEntity : class
+		where TRevisionEntity : class
+	{
+		public HistoryQuery(AuditConfiguration auditConfiguration, IAuditReaderImplementor versionsReader, bool includesDeletations)
+			: base(auditConfiguration, versionsReader, includesDeletations, typeof (TEntity).FullName) {}
+
+		public override IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>> Results()
+		{
+			AuditEntitiesConfiguration auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
+			/*
+			The query that should be executed in the versions table:
+			SELECT e FROM ent_ver e, rev_entity r WHERE
+			  e.revision_type != DEL (if selectDeletedEntities == false) AND
+			  e.revision = r.revision AND
+			  (all specified conditions, transformed, on the "e" entity)
+			  ORDER BY e.revision ASC (unless another order is specified)
+			 */
+			SetIncludeDeletationClause();
+			AddCriterions();
+			AddOrders();
+			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName, "r");
+			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", "r.id", false);
+
+			string revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
+
+			return (from resultRow in BuildAndExecuteQuery<object[]>()
+			        let versionsEntity = (IDictionary) resultRow[0]
+			        let revisionData = (TRevisionEntity) resultRow[1]
+			        let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
+			        let entity = (TEntity) EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision)
+			        select new RevisionEntityInfo<TEntity, TRevisionEntity>(entity, revisionData, (RevisionType) versionsEntity[revisionTypePropertyName]))
+				.Cast<IRevisionEntityInfo<TEntity, TRevisionEntity>>();
+		}
+	}
+}

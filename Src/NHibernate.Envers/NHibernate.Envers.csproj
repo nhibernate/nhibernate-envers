@@ -212,6 +212,8 @@
     <Compile Include="Query\IEntityAuditQuery.cs" />
     <Compile Include="Query\Impl\AbstractAuditQuery.cs" />
     <Compile Include="Query\Impl\AbstractRevisionsQuery.cs" />
+    <Compile Include="Query\Impl\HistoryQuery.cs" />
+    <Compile Include="Query\Impl\RevisionEntityInfo.cs" />
     <Compile Include="Query\Impl\RevisionsQuery.cs" />
     <Compile Include="Query\Impl\EntitiesAtRevisionQuery.cs" />
     <Compile Include="Query\Impl\RevisionsOfEntityQuery.cs" />
