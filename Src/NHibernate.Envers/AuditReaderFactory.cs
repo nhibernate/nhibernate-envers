@@ -42,5 +42,16 @@ namespace NHibernate.Envers
 			throw new AuditException("You need to install nhibernate.envers.event.AuditEventListener " +
 					"class as post insert, update and delete event listener.");
 		}
+
+		/// <summary>
+		/// Create an audit reader associated with an open session.
+		/// </summary>
+		/// <param name="session">An open session.</param>
+		/// <returns>An audit reader associated with the given sesison. It shouldn't be used after the session is closed.</returns>
+		/// <exception cref="AuditException">When the given required listeners aren't installed.</exception>
+		public static IAuditReader Auditer(this ISession session)
+		{
+			return Get(session);
+		}
 	}
 }
