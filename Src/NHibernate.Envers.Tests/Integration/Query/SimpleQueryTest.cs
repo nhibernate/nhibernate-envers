@@ -155,6 +155,26 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		}
 
 		[Test]
+		public void RevisionsPropertyEqQueryForHistory()
+		{
+			var revs_id1 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+						.Add(AuditEntity.Property("Str").Le("a"))
+						.Add(AuditEntity.Id().Eq(id1))
+						.Results().Select(x=> x.RevisionEntity.Id);
+			var revs_id2 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+						.Add(AuditEntity.Property("Str").Le("a"))
+						.Add(AuditEntity.Id().Eq(id2))
+						.Results().Select(x => x.RevisionEntity.Id);
+			var revs_id3 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+						.Add(AuditEntity.Property("Str").Le("a"))
+						.Add(AuditEntity.Id().Eq(id3))
+						.Results().Select(x => x.RevisionEntity.Id);
+			CollectionAssert.AreEquivalent(new[] { 1 }, revs_id1);
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, revs_id2);
+			CollectionAssert.AreEquivalent(new[] { 3 }, revs_id3);
+		}
+
+		[Test]
 		public void SelectEntitiesQuery()
 		{
 			var result = AuditReader().CreateQuery()
