@@ -1,43 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Impl;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class AuditQueryCreator {
-        private readonly AuditConfiguration auditCfg;
-        private readonly IAuditReaderImplementor auditReaderImplementor;
+	public class AuditQueryCreator
+	{
+		private readonly AuditConfiguration auditCfg;
+		private readonly IAuditReaderImplementor auditReaderImplementor;
 
-        public AuditQueryCreator(AuditConfiguration auditCfg, IAuditReaderImplementor auditReaderImplementor) {
-            this.auditCfg = auditCfg;
-            this.auditReaderImplementor = auditReaderImplementor;
-        }
+		public AuditQueryCreator(AuditConfiguration auditCfg, IAuditReaderImplementor auditReaderImplementor)
+		{
+			this.auditCfg = auditCfg;
+			this.auditReaderImplementor = auditReaderImplementor;
+		}
 
-        /**
-         * Creates a query, which will return entities satisfying some conditions (specified later),
-         * at a given revision.
-         * @param c Class of the entities for which to query.
-         * @param revision Revision number at which to execute the query.
-         * @return A query for entities at a given revision, to which conditions can be added and which
-         * can then be executed. The result of the query will be a list of entities (beans), unless a
-         * projection is added.
-         */
-        public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision) {
-            //throw new NotImplementedException("Query not implemented yet");
-            ArgumentsTools.CheckNotNull(revision, "Entity revision");
-            ArgumentsTools.CheckPositive(revision, "Entity revision");
-            return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
-        }
 
-        /**
+		/// <summary>
+		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+		/// </summary>
+		/// <param name="c"><see cref="System.Type"/> of the entities for which to query.</param>
+		/// <param name="revision">Revision number at which to execute the query.</param>
+		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
+		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
+		{
+			//throw new NotImplementedException("Query not implemented yet");
+			ArgumentsTools.CheckNotNull(revision, "Entity revision");
+			ArgumentsTools.CheckPositive(revision, "Entity revision");
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
+		}
+
+		/**
          * Creates a query, which selects the revisions, at which the given entity was modified.
          * Unless an explicit projection is set, the result will be a list of three-element arrays, containing:
          * <ol>
@@ -57,9 +53,47 @@ namespace NHibernate.Envers.Query
          * can then be executed. The results of the query will be sorted in ascending order by the revision number,
          * unless an order or projection is added.
          */
-        public IAuditQuery ForRevisionsOfEntity(System.Type c, bool selectEntitiesOnly, bool selectDeletedEntities) {
-            //throw new NotImplementedException("Query not implemented yet");
-            return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly,selectDeletedEntities);
-        }
-    }
+		public IAuditQuery ForRevisionsOfEntity(System.Type c, bool selectEntitiesOnly, bool selectDeletedEntities)
+		{
+			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly, selectDeletedEntities);
+		}
+
+		/// <summary>
+		/// Creates a query, which selects the revisions, at which the given entity was modified.
+		/// </summary>
+		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
+		/// <returns>List of <typeparamref name="TEntity"/> instances of each revision excluding deletation.</returns>
+		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
+		public IAuditQuery ForRevisionsOf<TEntity>() where TEntity: class
+		{
+			return ForRevisionsOf<TEntity>(false);
+		}
+
+		/// <summary>
+		/// Creates a query, which selects the revisions, at which the given entity was modified.
+		/// </summary>
+		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
+		/// <param name="selectDeletedEntities">If true, also revisions where entities were deleted will be returned. 
+		/// <remarks>
+		/// The additional entities will have revision type <see cref="RevisionType.Deleted"/>, and contain no data (all fields null), except for the id field.
+		/// </remarks>
+		/// </param>
+		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
+		public IAuditQuery ForRevisionsOf<TEntity>(bool selectDeletedEntities) where TEntity : class
+		{
+			//			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, selectDeletedEntities);
+			throw new NotImplementedException();
+		}
+
+		public IAuditQuery ForRevisionsHistoryOf<TEntity>() where TEntity : class
+		{
+			return ForRevisionsHistoryOf<TEntity>(true);
+		}
+
+		public IAuditQuery ForRevisionsHistoryOf<TEntity>(bool selectDeletedEntities) where TEntity : class
+		{
+			//			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), false, selectDeletedEntities);
+			throw new NotImplementedException();
+		}
+	}
 }
