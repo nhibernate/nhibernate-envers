@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests
 
 		protected IAuditReader AuditReader()
 		{
-			return _auditReader ?? (_auditReader = AuditReaderFactory.Get(Session));
+			return _auditReader ?? (_auditReader = Session.Auditer());
 		}
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
