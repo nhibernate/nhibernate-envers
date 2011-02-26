@@ -84,12 +84,13 @@ namespace NHibernate.Envers.Query.Impl
 				queryBuilder.AddOrder(revisionPropertyPath, true);
 			}
 
-			return from versionsEntity in BuildAndExecuteQuery()
+			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
+			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
 						 let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
 						 select (TEntity)entityInstantiator.CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision);
 		}
 
-		protected virtual IList<IDictionary> BuildAndExecuteQuery()
+		protected IList<TExpectedResult> BuildAndExecuteQuery<TExpectedResult>()
 		{
 			var querySb = new StringBuilder();
 			var queryParamValues = new Dictionary<string, object>();
@@ -103,8 +104,7 @@ namespace NHibernate.Envers.Query.Impl
 			}
 
 			SetQueryProperties(query);
-			// the result is always the name-value pair of EntityMode.Map
-			return query.List<IDictionary>();
+			return query.List<TExpectedResult>();
 		}
 
 		private long GetRevisionNumberFromDynamicEntity(IDictionary versionsEntity)
