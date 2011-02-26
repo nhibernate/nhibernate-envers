@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
@@ -199,6 +201,15 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			Assert.AreEqual(RevisionType.Added, result[0]);
 			Assert.AreEqual(RevisionType.Modified, result[1]);
 			Assert.AreEqual(RevisionType.Deleted, result[2]);
+		}
+
+		[Test]
+		public void SelectRevisionTypeQueryUsingRevisionInfo()
+		{
+			var result = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+				.Add(AuditEntity.Id().Eq(id1))
+				.Results();
+			result.Select(x => x.Operation).Should().Have.SameSequenceAs(RevisionType.Added, RevisionType.Modified, RevisionType.Deleted);
 		}
 
 		[Test]
