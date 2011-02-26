@@ -214,6 +214,7 @@
     <Compile Include="Query\Impl\RevisionsQuery.cs" />
     <Compile Include="Query\Impl\EntitiesAtRevisionQuery.cs" />
     <Compile Include="Query\Impl\RevisionsOfEntityQuery.cs" />
+    <Compile Include="Query\IRevisionEntityInfo.cs" />
     <Compile Include="Query\Order\IAuditOrder.cs" />
     <Compile Include="Query\Order\PropertyAuditOrder.cs" />
     <Compile Include="Query\Projection\IAuditProjection.cs" />
