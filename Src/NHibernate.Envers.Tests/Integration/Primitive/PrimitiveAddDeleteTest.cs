@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Primitive
 {
@@ -59,6 +60,35 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 			               		new PrimitiveTestEntity {Id = id1, Number = 0, Number2 = 0}
 			               	};
 			CollectionAssert.AreEqual(expected, entities);
+		}
+
+		[Test]
+		public void VerifyQueryWithDeletedUsingGeneric()
+		{
+			var entities = AuditReader().CreateQuery()
+							.ForRevisionsOf<PrimitiveTestEntity>(true).GetResultList<PrimitiveTestEntity>();
+
+			var expected = new[]
+			               	{
+			               		new PrimitiveTestEntity {Id = id1, Number = 10, Number2 = 0},
+			               		new PrimitiveTestEntity {Id = id1, Number = 20, Number2 = 0},
+			               		new PrimitiveTestEntity {Id = id1, Number = 0, Number2 = 0}
+			               	};
+			entities.Should().Have.SameSequenceAs(expected);
+		}
+
+		[Test]
+		public void VerifyQueryWithNoDeletedUsingGeneric()
+		{
+			var entities = AuditReader().CreateQuery()
+							.ForRevisionsOf<PrimitiveTestEntity>().GetResultList<PrimitiveTestEntity>();
+
+			var expected = new[]
+			               	{
+			               		new PrimitiveTestEntity {Id = id1, Number = 10, Number2 = 0},
+			               		new PrimitiveTestEntity {Id = id1, Number = 20, Number2 = 0},
+			               	};
+			entities.Should().Have.SameSequenceAs(expected);
 		}
 	}
 }

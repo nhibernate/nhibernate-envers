@@ -81,8 +81,7 @@ namespace NHibernate.Envers.Query
 		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
 		public IAuditQuery ForRevisionsOf<TEntity>(bool selectDeletedEntities) where TEntity : class
 		{
-			//			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, selectDeletedEntities);
-			throw new NotImplementedException();
+			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, selectDeletedEntities);
 		}
 
 		public IAuditQuery ForRevisionsHistoryOf<TEntity>() where TEntity : class
