@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Query
 		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
 		/// <returns>List of <typeparamref name="TEntity"/> instances of each revision excluding deletation.</returns>
 		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
-		public IAuditQuery ForRevisionsOf<TEntity>() where TEntity: class
+		public IEntityAuditQuery<TEntity> ForRevisionsOf<TEntity>() where TEntity : class
 		{
 			return ForRevisionsOf<TEntity>(false);
 		}
@@ -79,9 +79,9 @@ namespace NHibernate.Envers.Query
 		/// </remarks>
 		/// </param>
 		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
-		public IAuditQuery ForRevisionsOf<TEntity>(bool includesDeletations) where TEntity : class
+		public IEntityAuditQuery<TEntity> ForRevisionsOf<TEntity>(bool includesDeletations) where TEntity : class
 		{
-			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, includesDeletations);
+			return new RevisionsQuery<TEntity>(auditCfg, auditReaderImplementor, includesDeletations);
 		}
 
 		public IAuditQuery ForHistoryOf<TEntity>() where TEntity : class

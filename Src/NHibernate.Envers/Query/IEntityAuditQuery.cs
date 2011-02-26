@@ -12,8 +12,8 @@ namespace NHibernate.Envers.Query
 	/// <seealso cref="IAuditQuery"/>
 	public interface IEntityAuditQuery<T> where T: class
 	{
-		IList<T> ToList();
-		T SingleOrDefault();
+		IEnumerable<T> Results();
+		T Single();
 
 		IEntityAuditQuery<T> Add(IAuditCriterion criterion);
 
