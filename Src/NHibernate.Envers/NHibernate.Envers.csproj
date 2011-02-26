@@ -209,6 +209,7 @@
     <Compile Include="Query\Criteria\RelatedAuditExpression.cs" />
     <Compile Include="Query\Criteria\SimpleAuditExpression.cs" />
     <Compile Include="Query\IAuditQuery.cs" />
+    <Compile Include="Query\IEntityAuditQuery.cs" />
     <Compile Include="Query\Impl\AbstractAuditQuery.cs" />
     <Compile Include="Query\Impl\EntitiesAtRevisionQuery.cs" />
     <Compile Include="Query\Impl\RevisionsOfEntityQuery.cs" />
