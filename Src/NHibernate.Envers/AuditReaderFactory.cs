@@ -8,20 +8,19 @@ namespace NHibernate.Envers
 {
 	public static class AuditReaderFactory 
 	{
-
-		/**
-		 * Create an audit reader associated with an open session.
-		 * @param session An open session.
-		 * @return An audit reader associated with the given sesison. It shouldn't be used
-		 * after the session is closed.
-		 * @throws AuditException When the given required listeners aren't installed.
-		 */
+		/// <summary>
+		/// Create an audit reader associated with an open session.
+		/// </summary>
+		/// <param name="session">An open session.</param>
+		/// <returns>An audit reader associated with the given sesison. It shouldn't be used after the session is closed.</returns>
+		/// <exception cref="AuditException">When the given required listeners aren't installed.</exception>
 		public static IAuditReader Get(ISession session)
 		{
 			var sessionImpl = session as ISessionImplementor;
 			if (sessionImpl == null)
 			{
 				//rk - why is this needed?
+				//fm = it is an interesting feature when you are using contextualized sessions (as I'm doing always)
 				sessionImpl = (ISessionImplementor)session.SessionFactory.GetCurrentSession();
 			}
 
