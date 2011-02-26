@@ -65,8 +65,7 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 		[Test]
 		public void VerifyQueryWithDeletedUsingGeneric()
 		{
-			var entities = AuditReader().CreateQuery()
-							.ForRevisionsOf<PrimitiveTestEntity>(true).GetResultList<PrimitiveTestEntity>();
+			var entities = AuditReader().CreateQuery().ForRevisionsOf<PrimitiveTestEntity>(true).Results();
 
 			var expected = new[]
 			               	{
@@ -81,7 +80,7 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 		public void VerifyQueryWithNoDeletedUsingGeneric()
 		{
 			var entities = AuditReader().CreateQuery()
-							.ForRevisionsOf<PrimitiveTestEntity>().GetResultList<PrimitiveTestEntity>();
+							.ForRevisionsOf<PrimitiveTestEntity>().Results();
 
 			var expected = new[]
 			               	{
