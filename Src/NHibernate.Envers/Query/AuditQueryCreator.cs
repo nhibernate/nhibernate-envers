@@ -73,23 +73,23 @@ namespace NHibernate.Envers.Query
 		/// Creates a query, which selects the revisions, at which the given entity was modified.
 		/// </summary>
 		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
-		/// <param name="selectDeletedEntities">If true, also revisions where entities were deleted will be returned. 
+		/// <param name="includesDeletations">If true, also revisions where entities were deleted will be returned. 
 		/// <remarks>
 		/// The additional entities will have revision type <see cref="RevisionType.Deleted"/>, and contain no data (all fields null), except for the id field.
 		/// </remarks>
 		/// </param>
 		/// <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
-		public IAuditQuery ForRevisionsOf<TEntity>(bool selectDeletedEntities) where TEntity : class
+		public IAuditQuery ForRevisionsOf<TEntity>(bool includesDeletations) where TEntity : class
 		{
-			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, selectDeletedEntities);
+			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), true, includesDeletations);
 		}
 
-		public IAuditQuery ForRevisionsHistoryOf<TEntity>() where TEntity : class
+		public IAuditQuery ForHistoryOf<TEntity>() where TEntity : class
 		{
-			return ForRevisionsHistoryOf<TEntity>(true);
+			return ForHistoryOf<TEntity>(true);
 		}
 
-		public IAuditQuery ForRevisionsHistoryOf<TEntity>(bool selectDeletedEntities) where TEntity : class
+		public IAuditQuery ForHistoryOf<TEntity>(bool selectDeletedEntities) where TEntity : class
 		{
 			//			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), false, selectDeletedEntities);
 			throw new NotImplementedException();
