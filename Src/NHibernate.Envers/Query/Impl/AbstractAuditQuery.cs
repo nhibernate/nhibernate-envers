@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Query.Impl
 				query.SetParameter(paramValue.Key, paramValue.Value);
 			}
 
-			setQueryProperties(query);
+			SetQueryProperties(query);
 
 			query.List(result);
 		}
@@ -189,7 +189,7 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
-		protected void setQueryProperties(IQuery query) 
+		protected void SetQueryProperties(IQuery query) 
 		{
 			if (maxResults != null) query.SetMaxResults((int)maxResults);
 			if (firstResult != null) query.SetFirstResult((int)firstResult);
