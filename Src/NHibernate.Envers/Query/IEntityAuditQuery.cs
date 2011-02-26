@@ -15,27 +15,26 @@ namespace NHibernate.Envers.Query
 		IList<T> ToList();
 		T SingleOrDefault();
 
-		IAuditQuery Add(IAuditCriterion criterion);
+		IEntityAuditQuery<T> Add(IAuditCriterion criterion);
 
-		IAuditQuery AddOrder(IAuditOrder order);
+		IEntityAuditQuery<T> AddOrder(IAuditOrder order);
 
-		IAuditQuery SetMaxResults(int maxResults);
+		IEntityAuditQuery<T> SetMaxResults(int maxResults);
 
-		IAuditQuery SetFirstResult(int firstResult);
+		IEntityAuditQuery<T> SetFirstResult(int firstResult);
 
-		IAuditQuery SetCacheable(bool cacheable);
+		IEntityAuditQuery<T> SetCacheable(bool cacheable);
 
-		IAuditQuery SetCacheRegion(string cacheRegion);
+		IEntityAuditQuery<T> SetCacheRegion(string cacheRegion);
 
-		IAuditQuery SetComment(string comment);
+		IEntityAuditQuery<T> SetComment(string comment);
 
-		IAuditQuery SetFlushMode(FlushMode flushMode);
+		IEntityAuditQuery<T> SetFlushMode(FlushMode flushMode);
 
-		IAuditQuery SetCacheMode(CacheMode cacheMode);
+		IEntityAuditQuery<T> SetCacheMode(CacheMode cacheMode);
 
-		IAuditQuery SetTimeout(int timeout);
+		IEntityAuditQuery<T> SetTimeout(int timeout);
 
-		IAuditQuery SetLockMode(LockMode lockMode);
-
+		IEntityAuditQuery<T> SetLockMode(LockMode lockMode);
 	}
 }
