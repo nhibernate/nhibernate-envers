@@ -84,12 +84,12 @@ namespace NHibernate.Envers.Query
 			return new RevisionsQuery<TEntity>(auditCfg, auditReaderImplementor, includesDeletations);
 		}
 
-		public IAuditQuery ForHistoryOf<TEntity>() where TEntity : class
+		public IRevisionEntityInfo<TEntity, DefaultRevisionEntity> ForHistoryOf<TEntity>() where TEntity : class
 		{
 			return ForHistoryOf<TEntity>(true);
 		}
 
-		public IAuditQuery ForHistoryOf<TEntity>(bool selectDeletedEntities) where TEntity : class
+		public IRevisionEntityInfo<TEntity, DefaultRevisionEntity> ForHistoryOf<TEntity>(bool selectDeletedEntities) where TEntity : class
 		{
 			//			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, typeof(TEntity), false, selectDeletedEntities);
 			throw new NotImplementedException();
