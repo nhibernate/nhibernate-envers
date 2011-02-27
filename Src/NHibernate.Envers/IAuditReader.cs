@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Envers.Query;
 
 namespace NHibernate.Envers
@@ -41,7 +41,7 @@ namespace NHibernate.Envers
 		/// A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
 		/// revisions come first).
 		/// </returns>
-		IList GetRevisions(System.Type cls, object primaryKey);
+		IEnumerable<long> GetRevisions(System.Type cls, object primaryKey);
 
 		/// <summary>
 		/// Get the date, at which a revision was created. 
