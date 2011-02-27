@@ -33,7 +33,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			else 
 			{
 				prop_mapping = parent.OwnerDocument.CreateElement("property");
-				//rk: only insert/update attributes on property - not key-property
 				prop_mapping.SetAttribute("insert", insertable ? "true" : "false");
 				prop_mapping.SetAttribute("update", "false");
 			}
