@@ -1,3 +1,4 @@
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Entities.Ids;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.Ids

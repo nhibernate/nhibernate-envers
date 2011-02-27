@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Mapping;
 using NHibernate.Type;

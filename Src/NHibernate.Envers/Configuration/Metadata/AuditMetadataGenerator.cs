@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Mapping;
 using NHibernate.Envers.Configuration.Metadata.Reader;

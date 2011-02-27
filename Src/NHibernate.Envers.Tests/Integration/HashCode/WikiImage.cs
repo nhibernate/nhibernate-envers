@@ -1,4 +1,6 @@
-﻿namespace NHibernate.Envers.Tests.Integration.HashCode
+﻿using NHibernate.Envers.Configuration.Attributes;
+
+namespace NHibernate.Envers.Tests.Integration.HashCode
 {
 	[Audited]
 	public class WikiImage

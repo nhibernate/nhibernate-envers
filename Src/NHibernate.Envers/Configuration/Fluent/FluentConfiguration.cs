@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using log4net;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 
 namespace NHibernate.Envers.Configuration.Fluent

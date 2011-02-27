@@ -1,4 +1,6 @@
-﻿namespace NHibernate.Envers.Tests.Integration.Naming
+﻿using NHibernate.Envers.Configuration.Attributes;
+
+namespace NHibernate.Envers.Tests.Integration.Naming
 {
 	[Audited]
 	public class VersionsJoinTableRangeTestEntity : VersionsJoinTableRangeTestEntityBaseClass

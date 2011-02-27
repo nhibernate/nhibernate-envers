@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
