@@ -41,11 +41,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalInheritanceRefIngEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalInheritanceRefIngEntity>( ing2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalInheritanceRefEdParentEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>( ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalInheritanceRefEdParentEntity>( ed2_id));
 		}
 
 		[Test]

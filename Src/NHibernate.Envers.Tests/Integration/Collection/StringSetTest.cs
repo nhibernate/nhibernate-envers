@@ -48,8 +48,8 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(StringSetEntity), sse1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(StringSetEntity), sse2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<StringSetEntity>( sse1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<StringSetEntity>( sse2_id));
 		}
 
 		[Test]

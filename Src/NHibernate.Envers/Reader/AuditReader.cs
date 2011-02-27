@@ -75,8 +75,9 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IEnumerable<long> GetRevisions(System.Type cls, object primaryKey)
+		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity: class
 		{
+			var cls = typeof(TEntity);
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
 			ArgumentsTools.CheckNotNull(cls, "Entity class");
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");

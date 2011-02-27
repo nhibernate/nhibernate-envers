@@ -35,8 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NamingTestEntity1), id1));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(NamingTestEntity1), id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<NamingTestEntity1>( id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<NamingTestEntity1>( id2));
 		}
 
 		[Test]

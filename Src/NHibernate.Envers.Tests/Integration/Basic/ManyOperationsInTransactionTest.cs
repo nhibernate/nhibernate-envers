@@ -42,9 +42,9 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BasicTestEntity1), id1));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(BasicTestEntity1), id2));
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(BasicTestEntity1), id3));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<BasicTestEntity1>( id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<BasicTestEntity1>( id2));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions<BasicTestEntity1>( id3));
 		}
 
 		[Test]
