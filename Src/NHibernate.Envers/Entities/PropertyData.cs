@@ -1,4 +1,6 @@
-﻿namespace NHibernate.Envers.Entities
+﻿using NHibernate.Envers.Configuration;
+
+namespace NHibernate.Envers.Entities
 {
 	public class PropertyData 
 	{
