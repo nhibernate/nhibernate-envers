@@ -264,7 +264,6 @@
     <Compile Include="Tools\Graph\Vertex.cs" />
     <Compile Include="Tools\IPair.cs" />
     <Compile Include="Tools\MappingTools.cs" />
-    <Compile Include="Tools\MutableBoolean.cs" />
     <Compile Include="Tools\MutableInteger.cs" />
     <Compile Include="Tools\Pair.cs" />
     <Compile Include="Tools\Query\Parameters.cs" />

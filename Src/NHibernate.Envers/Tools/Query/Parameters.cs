@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NHibernate.Envers.Query;
 
@@ -134,7 +135,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void AddWhereWithNamedParam(string left, bool addAlias, string op, string paramName) 
 		{
-			var expression = new StringBuilder();
+			var expression = new StringBuilder(1024);
 
 			if (addAlias) { expression.Append(alias).Append("."); }
 			expression.Append(left);
@@ -146,7 +147,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void AddWhereWithParams(string left, string opStart, object[] paramValues, string opEnd) 
 		{
-			var expression = new StringBuilder();
+			var expression = new StringBuilder(1024);
 
 			expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
 
@@ -175,7 +176,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void AddWhere(string left, bool addAlias, string op, QueryBuilder right) 
 		{
-			var expression = new StringBuilder();
+			var expression = new StringBuilder(1024);
 
 			if (addAlias) {
 				expression.Append(alias).Append(".");
@@ -192,15 +193,16 @@ namespace NHibernate.Envers.Tools.Query
 			expressions.Add(expression.ToString());
 		}
 
-		private void Append(StringBuilder sb, string toAppend, MutableBoolean isFirst) 
+		private bool Append(StringBuilder sb, string toAppend, bool isFirst) 
 		{
-			if (!isFirst.isSet()) {
+			if (!isFirst)
+			{
 				sb.Append(" ").Append(connective).Append(" ");
 			}
 
 			sb.Append(toAppend);
 
-			isFirst.unset();
+			return false;
 		}
 
 		public bool IsEmpty() 
@@ -208,37 +210,53 @@ namespace NHibernate.Envers.Tools.Query
 			return expressions.Count == 0 && subParameters.Count == 0 && negatedParameters.Count == 0;
 		}
 
-		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues) 
+		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
 		{
-			MutableBoolean isFirst = new MutableBoolean(true);
-
-			foreach (string expression in expressions) 
+			var pp = new ClauseAppender(sb, connective);
+			foreach (var expression in expressions)
 			{
-				Append(sb, expression, isFirst);
+				pp.Append(expression);
+			}
+			foreach (Parameters sub in subParameters.Where(sub => subParameters.Count > 0))
+			{
+				pp.Append("(");
+				sub.Build(sb, queryParamValues);
+				sb.Append(")");
 			}
 
-			foreach (Parameters sub in subParameters) 
+			foreach (Parameters negated in negatedParameters.Where(negated => negatedParameters.Count > 0))
 			{
-				if (subParameters.Count > 0) 
-				{
-					Append(sb, "(", isFirst);
-					sub.Build(sb, queryParamValues);
-					sb.Append(")");
-				}
-			}
-
-			foreach (Parameters negated in negatedParameters) 
-			{
-				if (negatedParameters.Count > 0) {
-					Append(sb, "not (", isFirst);
-					negated.Build(sb, queryParamValues);
-					sb.Append(")");
-				}
+				pp.Append("not (");
+				negated.Build(sb, queryParamValues);
+				sb.Append(")");
 			}
 
 			foreach (var pair in localQueryParamValues)
 			{
 				queryParamValues.Add(pair);
+			}
+		}
+
+		private class ClauseAppender
+		{
+			private readonly StringBuilder stringBuilder;
+			private readonly string connective;
+			private bool isFirstAppend = true;
+			public ClauseAppender(StringBuilder stringBuilder, string connective)
+			{
+				this.stringBuilder = stringBuilder;
+				this.connective = connective;
+			}
+
+			public void Append(string toAppend)
+			{
+				if (!isFirstAppend)
+				{
+					stringBuilder.Append(" ").Append(connective).Append(" ");
+				}
+
+				stringBuilder.Append(toAppend);
+				isFirstAppend = false;
 			}
 		}
 	}
