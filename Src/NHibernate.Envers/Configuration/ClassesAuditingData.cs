@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Mapping;
-using log4net;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Tools;
 
@@ -11,7 +10,7 @@ namespace NHibernate.Envers.Configuration
 	/// </summary>
 	public class ClassesAuditingData 
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(ClassesAuditingData));
+		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ClassesAuditingData));
 
 		private readonly IDictionary<string, ClassAuditingData> entityNameToAuditingData = new Dictionary<string, ClassAuditingData>();
 		//Simon 27/06/2010 - era new LinkedHashMap...

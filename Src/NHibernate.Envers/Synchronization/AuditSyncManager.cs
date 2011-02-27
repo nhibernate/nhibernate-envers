@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Event;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -11,20 +12,22 @@ namespace NHibernate.Envers.Synchronization
 
 		public AuditSyncManager(IRevisionInfoGenerator revisionInfoGenerator) 
 		{
-			//ORIG: auditSyncs = new ConcurrentHashMap<ITransaction, AuditSync>(); TODO Simon see if it's OK
-			auditSyncs = new Dictionary<ITransaction, AuditSync>();
+			auditSyncs = new ThreadSafeDictionary<ITransaction, AuditSync>(new Dictionary<ITransaction, AuditSync>());
 
 			this.revisionInfoGenerator = revisionInfoGenerator;
 		}
 
-		public AuditSync get(IEventSource session) 
+		public AuditSync Get(IEventSource session) 
 		{
 			var transaction = session.Transaction;
+			AuditSync verSync;
+			if(auditSyncs.TryGetValue(transaction, out verSync))
+			{
+				return verSync;
+			}
 
-			if( auditSyncs.Keys.Contains(transaction))
-				return auditSyncs[transaction];
 			// No worries about registering a transaction twice - a transaction is single thread
-			var verSync = new AuditSync(this, session, revisionInfoGenerator);
+			verSync = new AuditSync(this, session, revisionInfoGenerator);
 			auditSyncs.Add(transaction, verSync);
 
 			transaction.RegisterSynchronization(verSync);

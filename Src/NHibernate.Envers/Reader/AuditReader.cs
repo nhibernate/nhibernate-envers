@@ -163,7 +163,7 @@ namespace NHibernate.Envers.Reader
 			}
 
 			// Obtaining the current audit sync
-			var auditSync = verCfg.AuditSyncManager.get((IEventSource)Session);
+			var auditSync = verCfg.AuditSyncManager.Get((IEventSource)Session);
 
 			// And getting the current revision data
 			return auditSync.GetCurrentRevisionData(Session, persist);

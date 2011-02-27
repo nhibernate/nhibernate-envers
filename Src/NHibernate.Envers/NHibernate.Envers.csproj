@@ -49,9 +49,6 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\lib\nhibernate\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\lib\Misc\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\nhibernate\NHibernate.dll</HintPath>
     </Reference>

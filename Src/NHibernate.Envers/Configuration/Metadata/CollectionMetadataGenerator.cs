@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Iesi.Collections.Generic;
-using log4net;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Configuration.Metadata.Reader;
@@ -22,7 +21,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public sealed class CollectionMetadataGenerator 
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(CollectionMetadataGenerator));
+		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(CollectionMetadataGenerator));
 
 		private readonly AuditMetadataGenerator mainGenerator;
 		private readonly string propertyName;

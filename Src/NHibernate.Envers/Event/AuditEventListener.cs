@@ -109,7 +109,7 @@ namespace NHibernate.Envers.Event
 			var entityName = evt.Persister.EntityName;
 			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.Get(evt.Session);
 
 				var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.State);
@@ -137,7 +137,7 @@ namespace NHibernate.Envers.Event
 
 			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.Get(evt.Session);
 
 				var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.State, evt.OldState);
@@ -159,7 +159,7 @@ namespace NHibernate.Envers.Event
 
 			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.Get(evt.Session);
 
 				var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 						evt.Id, evt.Persister, evt.DeletedState);
@@ -247,7 +247,7 @@ namespace NHibernate.Envers.Event
 
 			if (VerCfg.EntCfg.IsVersioned(entityName)) 
 			{
-				var verSync = VerCfg.AuditSyncManager.get(evt.Session);
+				var verSync = VerCfg.AuditSyncManager.Get(evt.Session);
 
 				var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
 				var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
