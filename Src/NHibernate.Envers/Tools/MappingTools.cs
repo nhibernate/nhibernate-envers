@@ -4,7 +4,7 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Tools
 {
-	public class MappingTools
+	public static class MappingTools
 	{
 		/// <summary>
 		/// </summary>
