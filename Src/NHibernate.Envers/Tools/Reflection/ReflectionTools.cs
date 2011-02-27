@@ -12,8 +12,6 @@ namespace NHibernate.Envers.Tools.Reflection
 
 		public static IGetter GetGetter(System.Type cls, string propertyName, string accessorType)
         {
-			//rk:  todo: cache result			
-            //var key = Pair<System.Type, string>.Make(cls, propertyName);
 			var value = accessor(accessorType).GetGetter(cls, propertyName);
 
             return value;
@@ -30,11 +28,8 @@ namespace NHibernate.Envers.Tools.Reflection
 		}
 
 		private static ISetter GetSetter(System.Type cls, string propertyName, string accessorType)
-		{
-			//rk:  todo: cache result			
-			var value = accessor(accessorType).GetSetter(cls, propertyName);
-			
-			return value;
+		{	
+			return accessor(accessorType).GetSetter(cls, propertyName);
 		}
     }
 }
