@@ -70,8 +70,8 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(TargetNotAuditedEntity), tnae1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(TargetNotAuditedEntity), tnae2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<TargetNotAuditedEntity>( tnae1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<TargetNotAuditedEntity>( tnae2_id));
 		}
 
 		[Test]

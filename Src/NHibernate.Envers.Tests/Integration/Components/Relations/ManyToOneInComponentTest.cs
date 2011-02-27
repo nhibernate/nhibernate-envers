@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(ManyToOneComponentTestEntity), mtocte_id1));
+			CollectionAssert.AreEqual(new[] { 2, 3 }, AuditReader().GetRevisions<ManyToOneComponentTestEntity>( mtocte_id1));
 		}
 
 		[Test]

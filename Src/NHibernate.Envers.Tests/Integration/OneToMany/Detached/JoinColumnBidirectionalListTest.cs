@@ -68,10 +68,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalRefIngEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalRefIngEntity>( ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalRefEdEntity>( ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<ListJoinColumnBidirectionalRefEdEntity>( ed2_id));
 		}
 
 		[Test]

@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<ComponentTestEntity>( id1));
 		}
 
 		[Test]

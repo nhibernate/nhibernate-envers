@@ -72,6 +72,11 @@ namespace NHibernate.Envers.Query.Impl
 			get { return entityName; }
 		}
 
+		public string VersionsEntityName
+		{
+			get { return versionsEntityName; }
+		}
+
 		#region IEntityAuditQuery<TEntity> Members
 
 		public abstract IEnumerable<TEntity> Results();

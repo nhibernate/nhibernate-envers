@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Country), country.Code));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Country>( country.Code));
 		}
 
 		[Test]

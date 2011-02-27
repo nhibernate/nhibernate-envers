@@ -34,8 +34,8 @@ namespace NHibernate.Envers.Tests.Integration.HashCode
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(WikiPage), pageId));
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(WikiImage), imageId));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<WikiPage>( pageId));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions<WikiImage>( imageId));
 		}
 
 		[Test]
