@@ -28,18 +28,18 @@ namespace NHibernate.Envers.Query.Impl
 
 		private long GetRevisionNumber(IDictionary versionsEntity) 
 		{
-			var verEntCfg = verCfg.AuditEntCfg;
+			var verEntCfg = VerCfg.AuditEntCfg;
 			var originalId = verEntCfg.OriginalIdPropName;
 			var revisionPropertyName = verEntCfg.RevisionFieldName;
 			var revisionInfoObject = ((IDictionary) versionsEntity[originalId])[revisionPropertyName];
 			var proxy = revisionInfoObject as INHibernateProxy;
 
-			return proxy!=null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : verCfg.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
+			return proxy!=null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : VerCfg.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
 		}
 
-		public override void FillResult(IList result)
+		protected override void FillResult(IList result)
 		{
-			var verEntCfg = verCfg.AuditEntCfg;
+			var verEntCfg = VerCfg.AuditEntCfg;
 
 			/*
 			The query that should be executed in the versions table:
@@ -52,28 +52,28 @@ namespace NHibernate.Envers.Query.Impl
 			if (!selectDeletedEntities)
 			{
 				// e.revision_type != DEL AND
-				qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
+				QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
 			}
 
 			// all specified conditions, transformed
-			foreach (var criterion in criterions)
+			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(verCfg, entityName, qb, qb.RootParameters);
+				criterion.AddToQuery(VerCfg, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
-			if (!hasProjection && !hasOrder)
+			if (!HasProjection && !HasOrder)
 			{
 				var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-				qb.AddOrder(revisionPropertyPath, true);
+				QueryBuilder.AddOrder(revisionPropertyPath, true);
 			}
 
 			if (!selectEntitiesOnly)
 			{
-				qb.AddFrom(verCfg.AuditEntCfg.RevisionInfoEntityFullClassName, "r");
-				qb.RootParameters.AddWhere(verCfg.AuditEntCfg.RevisionNumberPath, true, "=", "r.id", false);
+				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName, "r");
+				QueryBuilder.RootParameters.AddWhere(VerCfg.AuditEntCfg.RevisionNumberPath, true, "=", "r.id", false);
 			}
 
-			if (hasProjection)
+			if (HasProjection)
 			{
 				BuildAndExecuteQuery(result);
 				return;
@@ -101,7 +101,7 @@ namespace NHibernate.Envers.Query.Impl
 
 				var revision = GetRevisionNumber(versionsEntity);
 
-				var entity = entityInstantiator.CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision);
+				var entity = EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision);
 
 				result.Add(selectEntitiesOnly
 								 ? entity
