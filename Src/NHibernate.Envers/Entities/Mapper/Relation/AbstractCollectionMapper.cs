@@ -32,11 +32,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected abstract IEnumerable GetNewCollectionContent(IPersistentCollection newCollection);
 		protected abstract IEnumerable GetOldCollectionContent(object oldCollection);
 
-		/**
-		 * Maps the changed collection element to the given map.
-		 * @param data Where to map the data.
-		 * @param changed The changed collection element to map.
-		 */
+		/// <summary>
+		/// Maps the changed collection element to the given map.
+		/// </summary>
+		/// <param name="data">Where to map the data.</param>
+		/// <param name="changed">The changed collection element to map.</param>
 		protected abstract void MapToMapFromObject(IDictionary<string, object> data, object changed);
 
 		private void addCollectionChanges(ICollection<PersistentCollectionChangeData> collectionChanges, 
@@ -75,7 +75,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			var collectionChanges = new List<PersistentCollectionChangeData>();
 
 			// Comparing new and old collection content.
-			// check if generic works here instead!
 			var newCollection = GetNewCollectionContent(newColl);
 			var oldCollection = GetOldCollectionContent(oldColl);
 
