@@ -16,18 +16,19 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public abstract class AbstractCollectionMapper<T> : IPropertyMapper
 	{
-		protected readonly CommonCollectionMapperData commonCollectionMapperData;    
-		protected readonly System.Type collectionType;
-		private readonly System.Type proxyType;
+		private readonly System.Type _proxyType;
 
 		protected AbstractCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 											System.Type collectionType, 
 											System.Type proxyType) 
 		{
-			this.commonCollectionMapperData = commonCollectionMapperData;
-			this.collectionType = collectionType;
-			this.proxyType = proxyType;
+			CommonCollectionMapperData = commonCollectionMapperData;
+			CollectionType = collectionType;
+			_proxyType = proxyType;
 		}
+
+		protected CommonCollectionMapperData CommonCollectionMapperData { get; private set; }
+		protected System.Type CollectionType { get; private set; }
 
 		protected abstract IEnumerable GetNewCollectionContent(IPersistentCollection newCollection);
 		protected abstract IEnumerable GetOldCollectionContent(object oldCollection);
@@ -48,17 +49,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				var entityData = new Dictionary<string, object>();
 				var originalId = new Dictionary<string, object>();
-				entityData.Add(commonCollectionMapperData.VerEntCfg.OriginalIdPropName, originalId);
+				entityData.Add(CommonCollectionMapperData.VerEntCfg.OriginalIdPropName, originalId);
 
 				collectionChanges.Add(new PersistentCollectionChangeData(
-						commonCollectionMapperData.VersionsMiddleEntityName, entityData, changedObj));
+						CommonCollectionMapperData.VersionsMiddleEntityName, entityData, changedObj));
 				// Mapping the collection owner's id.
-				commonCollectionMapperData.ReferencingIdData.PrefixedMapper.MapToMapFromId(originalId, id);
+				CommonCollectionMapperData.ReferencingIdData.PrefixedMapper.MapToMapFromId(originalId, id);
 
 				// Mapping collection element and index (if present).
 				MapToMapFromObject(originalId, changedObj);
 
-				entityData.Add(commonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType);
+				entityData.Add(CommonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType);
 			}
 		}
 
@@ -67,7 +68,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 																			object oldColl, 
 																			object id) 
 		{
-			if (!commonCollectionMapperData.CollectionReferencingPropertyData.Name.Equals(referencingPropertyName)) 
+			if (!CommonCollectionMapperData.CollectionReferencingPropertyData.Name.Equals(referencingPropertyName)) 
 			{
 				return null;
 			}
@@ -143,11 +144,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										long revision) 
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(),
-												   commonCollectionMapperData.CollectionReferencingPropertyData);
+												   CommonCollectionMapperData.CollectionReferencingPropertyData);
 
 			try 
 			{
-				var coll = Activator.CreateInstance(proxyType, new object[]{GetInitializor(verCfg, versionsReader, primaryKey, revision)});
+				var coll = Activator.CreateInstance(_proxyType, new object[]{GetInitializor(verCfg, versionsReader, primaryKey, revision)});
 				setter.Set(obj, coll);
 			} 
 			catch (InstantiationException e) 

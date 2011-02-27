@@ -28,10 +28,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
         {
             return new SetCollectionInitializor<T>(verCfg, 
 											versionsReader, 
-											commonCollectionMapperData.QueryGenerator,
+											CommonCollectionMapperData.QueryGenerator,
 											primaryKey, 
 											revision, 
-											collectionType, 
+											CollectionType, 
 											elementComponentData);
         }
 
