@@ -7,19 +7,18 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 {
 	public abstract class AbstractCompositeIdMapper : AbstractIdMapper , ISimpleIdMapperBuilder
 	{
-		protected IDictionary<PropertyData, SingleIdMapper> ids;
-		protected System.Type compositeIdClass;
-
 		protected AbstractCompositeIdMapper(System.Type compositeIdClass)
 		{
-			ids = new Dictionary<PropertyData, SingleIdMapper>();
-
-			this.compositeIdClass = compositeIdClass;
+			Ids = new Dictionary<PropertyData, SingleIdMapper>();
+			CompositeIdClass = compositeIdClass;
 		}
+
+		protected IDictionary<PropertyData, SingleIdMapper> Ids { get; private set; }
+		protected System.Type CompositeIdClass { get; private set; }
 
 		public void Add(PropertyData propertyData)
 		{
-			ids.Add(propertyData, new SingleIdMapper(propertyData));     
+			Ids.Add(propertyData, new SingleIdMapper(propertyData));     
 		}
 
 		public override object MapToIdFromMap(IDictionary data)
@@ -27,14 +26,14 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			object ret;
 			try 
 			{
-				ret = Activator.CreateInstance(compositeIdClass);
+				ret = Activator.CreateInstance(CompositeIdClass);
 			} 
 			catch (Exception e) 
 			{
-				throw new AuditException("Cannot create instance of type " + compositeIdClass, e);
+				throw new AuditException("Cannot create instance of type " + CompositeIdClass, e);
 			}	
 
-			foreach (var mapper in ids.Values) 
+			foreach (var mapper in Ids.Values) 
 			{
 				mapper.MapToEntityFromMap(ret, data);
 			}
