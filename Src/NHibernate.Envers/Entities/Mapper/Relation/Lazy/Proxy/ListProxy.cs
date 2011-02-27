@@ -19,19 +19,19 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 		public int IndexOf(T item)
 		{
 			CheckInit();
-			return delegat.IndexOf(item);
+			return CollectionDelegate.IndexOf(item);
 		}
 
 		public void Insert(int index, T item)
 		{
 			CheckInit();
-			delegat.Insert(index, item);
+			CollectionDelegate.Insert(index, item);
 		}
 
 		public void RemoveAt(int index)
 		{
 			CheckInit();
-			delegat.RemoveAt(index);
+			CollectionDelegate.RemoveAt(index);
 		}
 
 		public T this[int index]
@@ -39,12 +39,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			get
 			{
 				CheckInit();
-				return delegat[index];
+				return CollectionDelegate[index];
 			}
 			set
 			{
 				CheckInit();
-				delegat[index] = value;
+				CollectionDelegate[index] = value;
 			}
 		}
 	}

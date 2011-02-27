@@ -11,7 +11,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 	{
 		[NonSerialized]
 		private readonly IInitializor<TCollection> initializor;
-		protected TCollection delegat;
 
 		protected CollectionProxy() 
 		{
@@ -22,11 +21,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			this.initializor = initializor;
 		}
 
+		protected TCollection CollectionDelegate { get; private set; }
+
 		protected void CheckInit() 
 		{
-			if (delegat == null)
+			if (CollectionDelegate == null)
 			{
-				delegat = initializor.Initialize();
+				CollectionDelegate = initializor.Initialize();
 			}
 		}
 
@@ -35,7 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			get 
 			{
 				CheckInit();
-				return delegat.Count;
+				return CollectionDelegate.Count;
 			}
 		}
 
@@ -44,62 +45,62 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			get
 			{
 				CheckInit();
-				return delegat.IsReadOnly;
+				return CollectionDelegate.IsReadOnly;
 			}
 		}
 
 		public bool Contains(TItem o) 
 		{
 			CheckInit();
-			return delegat.Contains(o);
+			return CollectionDelegate.Contains(o);
 		}
 
 		public void CopyTo(TItem[] array, int arrayIndex)
 		{
 			CheckInit();
-			delegat.CopyTo(array, arrayIndex);
+			CollectionDelegate.CopyTo(array, arrayIndex);
 		}
 
 		public IEnumerator<TItem> GetEnumerator() 
 		{
 			CheckInit();
-			return delegat.GetEnumerator();
+			return CollectionDelegate.GetEnumerator();
 		}
 
 		public void Add(TItem o) 
 		{
 			CheckInit();
-			delegat.Add(o);
+			CollectionDelegate.Add(o);
 		}
 
 		public bool Remove(TItem o) 
 		{
 			CheckInit();
-			return delegat.Remove(o);
+			return CollectionDelegate.Remove(o);
 		}
 
 		public void Clear() 
 		{
 			CheckInit();
-			delegat.Clear();
+			CollectionDelegate.Clear();
 		}
 
 		public override string ToString() 
 		{
 			CheckInit();
-			return delegat.ToString();
+			return CollectionDelegate.ToString();
 		}
 
 		public override bool Equals(object obj) 
 		{
 			CheckInit();
-			return delegat.Equals(obj);
+			return CollectionDelegate.Equals(obj);
 		}
 
 		public override int GetHashCode() 
 		{
 			CheckInit();
-			return delegat.GetHashCode();
+			return CollectionDelegate.GetHashCode();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

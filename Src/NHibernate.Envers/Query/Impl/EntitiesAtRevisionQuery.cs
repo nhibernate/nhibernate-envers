@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Query.Impl
 			this.revision = revision;
 		}
 
-		public override void FillResult(IList result)
+		protected override void FillResult(IList result)
 		{
 			/*
 			The query that should be executed in the versions table:
@@ -28,8 +28,8 @@ namespace NHibernate.Envers.Query.Impl
 			  e.revision = (SELECT max(e2.revision) FROM ent_ver e2 WHERE
 				e2.revision <= :revision AND e2.originalId.id = e.originalId.id)
 			 */
-			var maxRevQb = qb.NewSubQueryBuilder(versionsEntityName, "e2");
-			var verEntCfg = verCfg.AuditEntCfg;
+			var maxRevQb = QueryBuilder.NewSubQueryBuilder(VersionsEntityName, "e2");
+			var verEntCfg = VerCfg.AuditEntCfg;
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
 			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
@@ -38,28 +38,28 @@ namespace NHibernate.Envers.Query.Impl
 			// e2.revision <= :revision
 			maxRevQb.RootParameters.AddWhereWithParam(revisionPropertyPath, "<=", revision);
 			// e2.id = e.id
-			verCfg.EntCfg[entityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
+			VerCfg.EntCfg[EntityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
 																	   "e." + originalIdPropertyName,
 																	   "e2." + originalIdPropertyName);
 
 			// e.revision_type != DEL AND
-			qb.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
+			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
 			// e.revision = (SELECT max(...) ...)
-			qb.RootParameters.AddWhere(revisionPropertyPath, verCfg.GlobalCfg.CorrelatedSubqueryOperator, maxRevQb);
+			QueryBuilder.RootParameters.AddWhere(revisionPropertyPath, VerCfg.GlobalCfg.CorrelatedSubqueryOperator, maxRevQb);
 			// all specified conditions
-			foreach (var criterion in criterions)
+			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(verCfg, entityName, qb, qb.RootParameters);
+				criterion.AddToQuery(VerCfg, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
-			if (hasProjection)
+			if (HasProjection)
 			{
 				BuildAndExecuteQuery(result);
 				return;
 			}
 			var queryResult = new List<IDictionary>();
 			BuildAndExecuteQuery(queryResult);
-			entityInstantiator.AddInstancesFromVersionsEntities(entityName, result,
+			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result,
 																queryResult, revision);
 		}
 	}

@@ -16,13 +16,8 @@ namespace NHibernate.Envers
 		/// <exception cref="AuditException">When the given required listeners aren't installed.</exception>
 		public static IAuditReader Get(ISession session)
 		{
-			var sessionImpl = session as ISessionImplementor;
-			if (sessionImpl == null)
-			{
-				//rk - why is this needed?
-				//fm = it is an interesting feature when you are using contextualized sessions (as I'm doing always)
-				sessionImpl = (ISessionImplementor)session.SessionFactory.GetCurrentSession();
-			}
+			var sessionImpl = session as ISessionImplementor 
+						?? (ISessionImplementor)session.SessionFactory.GetCurrentSession();
 
 			var listeners = sessionImpl.Listeners;
 

@@ -36,8 +36,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		protected override void AddToCollection(IDictionary<K, V> collection, object collectionRow)
 		{
-			var elementData = ((IList)collectionRow)[_elementComponentData.ComponentIndex];
-			var indexData = ((IList)collectionRow)[_indexComponentData.ComponentIndex];
+			var listRow = (IList) collectionRow;
+			var elementData = listRow[_elementComponentData.ComponentIndex];
+			var indexData = listRow[_indexComponentData.ComponentIndex];
 
 			var element = (V)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
 																				(IDictionary) elementData,

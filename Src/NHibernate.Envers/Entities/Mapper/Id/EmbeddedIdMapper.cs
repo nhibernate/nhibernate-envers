@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override void MapToMapFromId(IDictionary<string, object> data, object obj)
 		{
-			foreach (var idMapper in ids.Values) 
+			foreach (var idMapper in Ids.Values) 
 			{
 				idMapper.MapToMapFromEntity(data, obj);
 			}
@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 				var subObj = ReflectHelper.GetDefaultConstructor(getter.ReturnType).Invoke(null); 
 				setter.Set(obj, subObj);
 
-				foreach(var idMapper in ids.Values) 
+				foreach(var idMapper in Ids.Values) 
 				{
 					idMapper.MapToEntityFromMap(subObj, data);
 				}
@@ -63,12 +63,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override IIdMapper PrefixMappedProperties(string prefix)
 		{
-			var ret = new EmbeddedIdMapper(idPropertyData, compositeIdClass);
+			var ret = new EmbeddedIdMapper(idPropertyData, CompositeIdClass);
 
-			foreach (var propertyData in ids.Keys) 
+			foreach (var propertyData in Ids.Keys) 
 			{
 				var propertyName = propertyData.Name;
-				ret.ids.Add(propertyData, new SingleIdMapper(new PropertyData(prefix + propertyName, propertyData)));
+				ret.Ids.Add(propertyData, new SingleIdMapper(new PropertyData(prefix + propertyName, propertyData)));
 			}
 
 			return ret;
