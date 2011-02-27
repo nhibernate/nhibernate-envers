@@ -46,9 +46,9 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(MapUniEntity), coll1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<MapUniEntity>( coll1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<StrTestEntity>( str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<StrTestEntity>( str2_id));
 		}
 
 		[Test]

@@ -46,13 +46,13 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(UniRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(UniRefEdEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(UniRefEdEntity), ed3_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(UniRefEdEntity), ed4_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<UniRefEdEntity>( ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<UniRefEdEntity>( ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<UniRefEdEntity>( ed3_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<UniRefEdEntity>( ed4_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(UniRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(UniRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<UniRefIngEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<UniRefIngEntity>( ing2_id));
 		}
 
 		[Test]

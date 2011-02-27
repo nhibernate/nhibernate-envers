@@ -46,9 +46,9 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeComponentTestEntity), vjrcte_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeTestEntity), vjtrte_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(VersionsJoinTableRangeTestAlternateEntity), vjtrtae_id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<VersionsJoinTableRangeComponentTestEntity>( vjrcte_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions<VersionsJoinTableRangeTestEntity>( vjtrte_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions<VersionsJoinTableRangeTestAlternateEntity>( vjtrtae_id1));
 		}
 
 		[Test]

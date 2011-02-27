@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NotInsertableTestEntity), id1));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<NotInsertableTestEntity>( id1));
         }
 
         [Test]

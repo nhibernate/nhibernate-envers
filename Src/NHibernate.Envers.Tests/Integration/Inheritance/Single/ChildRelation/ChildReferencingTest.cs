@@ -43,9 +43,9 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.ChildRelation
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(ReferencedToChildEntity), re_id1));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(ReferencedToChildEntity), re_id2));
-			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(ChildIngEntity), c_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<ReferencedToChildEntity>( re_id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<ReferencedToChildEntity>( re_id2));
+			CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions<ChildIngEntity>( c_id));
 		}
 
 		[Test]

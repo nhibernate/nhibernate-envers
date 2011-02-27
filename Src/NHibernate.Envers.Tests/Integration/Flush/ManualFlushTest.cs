@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(StrTestEntity), id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<StrTestEntity>( id));
 		}
 
 		[Test]

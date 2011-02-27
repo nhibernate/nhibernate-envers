@@ -36,9 +36,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Parent), parent_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(Child), child1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(Child), child2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Parent>( parent_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<Child>( child1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<Child>( child2_id));
 		}
 
 		[Test]

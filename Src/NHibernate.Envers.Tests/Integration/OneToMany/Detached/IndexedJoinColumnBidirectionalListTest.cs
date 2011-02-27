@@ -71,11 +71,11 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefIngEntity), ing2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefEdEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefEdEntity), ed3_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefIngEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefIngEntity>( ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefEdEntity>( ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefEdEntity>( ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefEdEntity>( ed3_id));
 		}
 
 		[Test]
