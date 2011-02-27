@@ -27,7 +27,6 @@ namespace NHibernate.Envers.Query
 		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
 		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
 		{
-			//throw new NotImplementedException("Query not implemented yet");
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
