@@ -69,7 +69,6 @@ namespace NHibernate.Envers.Query.Criteria
 
 	    public IAuditCriterion In(IEnumerable<T> values) 
         {
-			//rk - makes this nicer when upgrading NH, http://216.121.112.228/browse/NH-2461
 			return new InAuditExpression(_propertyNameGetter, values.Cast<object>().ToArray());
 	    }
 

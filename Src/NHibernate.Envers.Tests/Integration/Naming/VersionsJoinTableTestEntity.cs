@@ -1,4 +1,5 @@
 using Iesi.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Entities;
 
 namespace NHibernate.Envers.Tests.Integration.Naming

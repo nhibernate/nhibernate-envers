@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
 	/// <summary>
 	/// When applied to a field, indicates that this field should not be audited.

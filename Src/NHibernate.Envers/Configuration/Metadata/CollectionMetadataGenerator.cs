@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Iesi.Collections.Generic;
 using log4net;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper.Relation.Component;

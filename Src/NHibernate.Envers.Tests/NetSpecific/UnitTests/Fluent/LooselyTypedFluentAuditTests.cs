@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
 using NUnit.Framework;
 using SharpTestsEx;

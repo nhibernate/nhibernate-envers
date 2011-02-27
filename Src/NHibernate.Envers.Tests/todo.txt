@@ -3,7 +3,6 @@
 * test för attr conf default
 * lägg till en Environmentklass med strängar för conf å annat
 * test för inkorrekt revinfo (multipla numbers etc)
-* biref index och andra sidan har olika access settings
 * se över transaktioner (verkar som det biter även vid exception om flushmode never)
 fluent...
 * loggning för fluent

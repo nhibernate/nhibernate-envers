@@ -1,4 +1,6 @@
-﻿namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
+﻿using NHibernate.Envers.Configuration.Attributes;
+
+namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
 {
     [Audited]
     public class NotInsertableEntityType
