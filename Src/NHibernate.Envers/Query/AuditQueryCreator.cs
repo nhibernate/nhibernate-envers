@@ -57,6 +57,13 @@ namespace NHibernate.Envers.Query
 			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly, selectDeletedEntities);
 		}
 
+		public IEntityAuditQuery<TEntity> ForEntitiesAtRevision<TEntity>(long revision) where TEntity : class
+		{
+			ArgumentsTools.CheckNotNull(revision, "Entity revision");
+			ArgumentsTools.CheckPositive(revision, "Entity revision");
+			return new AllEntitiesAtRevisionQuery<TEntity>(auditCfg, auditReaderImplementor, revision);
+		}
+
 		/// <summary>
 		/// Creates a query, which selects the revisions, at which the given entity was modified.
 		/// </summary>

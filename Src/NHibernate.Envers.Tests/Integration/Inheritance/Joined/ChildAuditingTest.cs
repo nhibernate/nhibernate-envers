@@ -1,5 +1,6 @@
 using NHibernate.Envers.Tests.Integration.Inheritance.Entities;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 {
@@ -48,6 +49,14 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 			var childVersion1 = new ChildEntity { Id = id1, Data = "x", Number = 1 };
 			Assert.AreEqual(childVersion1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(ChildEntity), 1).GetSingleResult());
 			Assert.AreEqual(childVersion1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(ParentEntity), 1).GetSingleResult());
+		}
+
+		[Test]
+		public void VerifyPolymorphicQueryGeneric()
+		{
+			var childVersion1 = new ChildEntity { Id = id1, Data = "x", Number = 1 };
+			AuditReader().CreateQuery().ForEntitiesAtRevision<ChildEntity>(1).Single().Should().Be(childVersion1);
+			AuditReader().CreateQuery().ForEntitiesAtRevision<ParentEntity>(1).Single().Should().Be(childVersion1);
 		}
 	}
 }
