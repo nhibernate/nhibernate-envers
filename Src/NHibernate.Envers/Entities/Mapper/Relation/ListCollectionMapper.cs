@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			return new ListCollectionInitializor<T>(verCfg, 
 												versionsReader, 
-												commonCollectionMapperData.QueryGenerator,
+												CommonCollectionMapperData.QueryGenerator,
 												primaryKey, 
 												revision, 
 												_elementComponentData, 

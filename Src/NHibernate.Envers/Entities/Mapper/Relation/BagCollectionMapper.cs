@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			return new BagCollectionInitializor<T>(verCfg, 
 											versionsReader, 
-											commonCollectionMapperData.QueryGenerator,
+											CommonCollectionMapperData.QueryGenerator,
 											primaryKey, 
 											revision,
 											elementComponentData);

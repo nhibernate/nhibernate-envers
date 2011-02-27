@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
@@ -14,43 +13,37 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public abstract class AbstractAuditQuery : IAuditQuery 
 	{
-		protected EntityInstantiator entityInstantiator;
-		protected IList<IAuditCriterion> criterions;
-
-		protected string entityName;
-		protected string versionsEntityName;
-		protected QueryBuilder qb;
-
-		protected bool hasProjection;
-		protected bool hasOrder;
-
-		protected readonly AuditConfiguration verCfg;
-		private readonly IAuditReaderImplementor versionsReader;
+		private readonly IAuditReaderImplementor _versionsReader;
 
 		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls) 
 		{
-			this.verCfg = verCfg;
-			this.versionsReader = versionsReader;
-
-			criterions = new List<IAuditCriterion>();
-			entityInstantiator = new EntityInstantiator(verCfg, versionsReader);
-
-			entityName = cls.FullName;
-			
-			versionsEntityName = verCfg.AuditEntCfg.GetAuditEntityName(entityName);
-
-			qb = new QueryBuilder(versionsEntityName, "e");
+			VerCfg = verCfg;
+			_versionsReader = versionsReader;
+			Criterions = new List<IAuditCriterion>();
+			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
+			EntityName = cls.FullName;
+			VersionsEntityName = verCfg.AuditEntCfg.GetAuditEntityName(EntityName);
+			QueryBuilder = new QueryBuilder(VersionsEntityName, "e");
 		}
+
+		protected EntityInstantiator EntityInstantiator { get; private set; }
+		protected IList<IAuditCriterion> Criterions { get; private set; }
+		protected string EntityName { get; private set; }
+		protected string VersionsEntityName { get; private set; }
+		protected QueryBuilder QueryBuilder { get; private set; }
+		protected bool HasProjection { get; private set; }
+		protected bool HasOrder { get; private set; }
+		protected AuditConfiguration VerCfg { get; private set; }
 
 		protected void BuildAndExecuteQuery(IList result) 
 		{
 			var querySb = new StringBuilder();
-			var queryParamValues = new Dictionary<String, Object>();
+			var queryParamValues = new Dictionary<string, object>();
 
-			qb.Build(querySb, queryParamValues);
+			QueryBuilder.Build(querySb, queryParamValues);
 
-			var query = versionsReader.Session.CreateQuery(querySb.ToString());
-			foreach (KeyValuePair<String, Object> paramValue in queryParamValues) 
+			var query = _versionsReader.Session.CreateQuery(querySb.ToString());
+			foreach (var paramValue in queryParamValues) 
 			{
 				query.SetParameter(paramValue.Key, paramValue.Value);
 			}
@@ -60,7 +53,7 @@ namespace NHibernate.Envers.Query.Impl
 			query.List(result);
 		}
 
-		public abstract void FillResult(IList result);
+		protected abstract void FillResult(IList result);
 
 		public IList GetResultList()
 		{
@@ -101,25 +94,24 @@ namespace NHibernate.Envers.Query.Impl
 
 		public IAuditQuery Add(IAuditCriterion criterion) 
 		{
-			criterions.Add(criterion);
+			Criterions.Add(criterion);
 			return this;
 		}
 
-		// Projection and order
 
 		public IAuditQuery AddProjection(IAuditProjection projection) 
 		{
-			var projectionData = projection.GetData(verCfg);
-			hasProjection = true;
-			qb.AddProjection(projectionData.First, projectionData.Second, projectionData.Third);
+			var projectionData = projection.GetData(VerCfg);
+			HasProjection = true;
+			QueryBuilder.AddProjection(projectionData.First, projectionData.Second, projectionData.Third);
 			return this;
 		}
 
 		public IAuditQuery AddOrder(IAuditOrder order) 
 		{
-			hasOrder = true;
-			var orderData = order.getData(verCfg);
-			qb.AddOrder(orderData.First, orderData.Second);
+			HasOrder = true;
+			var orderData = order.getData(VerCfg);
+			QueryBuilder.AddOrder(orderData.First, orderData.Second);
 			return this;
 		}
 
@@ -189,7 +181,7 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
-		protected void SetQueryProperties(IQuery query) 
+		private void SetQueryProperties(IQuery query) 
 		{
 			if (maxResults != null) query.SetMaxResults((int)maxResults);
 			if (firstResult != null) query.SetFirstResult((int)firstResult);

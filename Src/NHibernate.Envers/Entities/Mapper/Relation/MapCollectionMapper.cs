@@ -43,8 +43,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override IInitializor<IDictionary<K, V>> GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
-			return new MapCollectionInitializor<K, V>(verCfg, versionsReader, commonCollectionMapperData.QueryGenerator,
-			                                          primaryKey, revision, collectionType, _elementComponentData,
+			return new MapCollectionInitializor<K, V>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
+			                                          primaryKey, revision, CollectionType, _elementComponentData,
 			                                          _indexComponentData);
 		}
 	}

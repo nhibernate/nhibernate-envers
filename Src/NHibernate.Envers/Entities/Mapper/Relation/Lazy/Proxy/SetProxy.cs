@@ -20,61 +20,61 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 		public object Clone()
 		{
 			CheckInit();
-			return delegat.Clone();
+			return CollectionDelegate.Clone();
 		}
 
 		public ISet<T> Union(ISet<T> a)
 		{
 			CheckInit();
-			return delegat.Union(a);
+			return CollectionDelegate.Union(a);
 		}
 
 		public ISet<T> Intersect(ISet<T> a)
 		{
 			CheckInit();
-			return delegat.Intersect(a);
+			return CollectionDelegate.Intersect(a);
 		}
 
 		public ISet<T> Minus(ISet<T> a)
 		{
 			CheckInit();
-			return delegat.Minus(a);
+			return CollectionDelegate.Minus(a);
 		}
 
 		public ISet<T> ExclusiveOr(ISet<T> a)
 		{
 			CheckInit();
-			return delegat.ExclusiveOr(a);
+			return CollectionDelegate.ExclusiveOr(a);
 		}
 
 		public bool ContainsAll(ICollection<T> c)
 		{
 			CheckInit();
-			return delegat.ContainsAll(c);
+			return CollectionDelegate.ContainsAll(c);
 		}
 
 		public new bool Add(T o)
 		{
 			CheckInit();
-			return delegat.Add(o);
+			return CollectionDelegate.Add(o);
 		}
 
 		public bool AddAll(ICollection<T> c)
 		{
 			CheckInit();
-			return delegat.AddAll(c);
+			return CollectionDelegate.AddAll(c);
 		}
 
 		public bool RemoveAll(ICollection<T> c)
 		{
 			CheckInit();
-			return delegat.RemoveAll(c);
+			return CollectionDelegate.RemoveAll(c);
 		}
 
 		public bool RetainAll(ICollection<T> c)
 		{
 			CheckInit();
-			return delegat.RetainAll(c);
+			return CollectionDelegate.RetainAll(c);
 		}
 
 		public bool IsEmpty
@@ -82,7 +82,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			get
 			{
 				CheckInit();
-				return delegat.IsEmpty;
+				return CollectionDelegate.IsEmpty;
 			}
 		}
 	}
