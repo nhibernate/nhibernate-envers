@@ -12,10 +12,9 @@ namespace NHibernate.Envers.Configuration
 	public class AuditConfiguration
 	{
 		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> Configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>();
-
 		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> ConfigurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
 
-		protected AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
+		private AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
 		{
 			var mds = new MetaDataStore(cfg, metaDataProvider);
 
