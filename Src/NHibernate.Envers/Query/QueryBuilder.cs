@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Query;
@@ -139,16 +140,16 @@ namespace NHibernate.Envers.Query
             if (projections.Count > 0)
             {
                 // all projections separated with commas
-                StringTools.Append(sb, projections, ", ");
+							sb.Append(string.Join(", ",projections.ToArray()));
             }
             else
             {
                 // all aliases separated with commas
-                StringTools.Append(sb, GetAliasList(), ", ");
+							sb.Append(string.Join(", ",GetAliasList().ToArray()));
             }
             sb.Append(" from ");
             // all from entities with aliases, separated with commas
-            StringTools.Append(sb, GetFromList(), ", ");
+						sb.Append(string.Join(", ", GetFromList().ToArray()));
             // where part - rootParameters
             if (!rootParameters.IsEmpty())
             {
@@ -159,7 +160,7 @@ namespace NHibernate.Envers.Query
             if (orders.Count > 0)
             {
                 sb.Append(" order by ");
-                StringTools.Append(sb, GetOrderList(), ", ");
+								sb.Append(string.Join(", ", GetOrderList().ToArray()));
             }
         }
 
