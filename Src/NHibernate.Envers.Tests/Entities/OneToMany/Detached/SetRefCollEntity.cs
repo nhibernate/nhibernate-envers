@@ -1,4 +1,5 @@
 using Iesi.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 {

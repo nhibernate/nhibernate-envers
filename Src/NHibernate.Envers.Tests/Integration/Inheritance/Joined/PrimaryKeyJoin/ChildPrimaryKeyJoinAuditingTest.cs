@@ -1,4 +1,5 @@
 using System.Linq;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Integration.Inheritance.Entities;
 using NHibernate.Mapping;
 using NUnit.Framework;

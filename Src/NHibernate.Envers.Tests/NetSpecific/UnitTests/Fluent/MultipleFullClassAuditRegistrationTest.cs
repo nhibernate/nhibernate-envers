@@ -1,3 +1,4 @@
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NHibernate.Envers.Tests.Tools;

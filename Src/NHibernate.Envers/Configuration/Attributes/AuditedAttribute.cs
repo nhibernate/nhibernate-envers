@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property |  AttributeTargets.Field)]
 	public sealed class AuditedAttribute : Attribute

@@ -1,4 +1,5 @@
 using System;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.RevEntity
 {

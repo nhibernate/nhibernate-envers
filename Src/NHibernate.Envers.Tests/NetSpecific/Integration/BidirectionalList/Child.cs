@@ -1,3 +1,5 @@
+using NHibernate.Envers.Configuration.Attributes;
+
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
 {
 	[Audited]

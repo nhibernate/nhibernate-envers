@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
 	//todo: remove this one?
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {

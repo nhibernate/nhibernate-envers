@@ -1,3 +1,5 @@
+using NHibernate.Envers.Configuration.Attributes;
+
 namespace NHibernate.Envers.Tests.Entities.ManyToOne.UniDirectional
 {
 	public class TargetNotAuditedEntity

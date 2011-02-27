@@ -1,4 +1,6 @@
-﻿namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
+﻿using NHibernate.Envers.Configuration.Attributes;
+
+namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 {
 	[Audited]
 	public class ListJoinColumnBidirectionalInheritanceRefEdChildEntity : ListJoinColumnBidirectionalInheritanceRefEdParentEntity
