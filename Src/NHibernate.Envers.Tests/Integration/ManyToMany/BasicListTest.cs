@@ -61,10 +61,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListOwnedEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions(typeof(ListOwnedEntity), ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(ListOwningEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ListOwningEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions<ListOwnedEntity>( ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions<ListOwnedEntity>( ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions<ListOwningEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ListOwningEntity>( ing2_id));
 		}
 
 		[Test]

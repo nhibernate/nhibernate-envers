@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
@@ -73,8 +75,9 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IList GetRevisions(System.Type cls, object primaryKey)
+		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity: class
 		{
+			var cls = typeof(TEntity);
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
 			ArgumentsTools.CheckNotNull(cls, "Entity class");
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
@@ -87,10 +90,11 @@ namespace NHibernate.Envers.Reader
 				throw new NotAuditedException(entityName, entityName + " is not versioned!");
 			}
 
-			return CreateQuery().ForRevisionsOfEntity(cls, false, true)
-					.AddProjection(AuditEntity.RevisionNumber())
-					.Add(AuditEntity.Id().Eq(primaryKey))
-					.GetResultList();
+			var resultList = CreateQuery().ForRevisionsOfEntity(cls, false, true)
+				.AddProjection(AuditEntity.RevisionNumber())
+				.Add(AuditEntity.Id().Eq(primaryKey))
+				.GetResultList();
+			return from object revision in resultList select Convert.ToInt64(revision);
 		}
 
 		public DateTime GetRevisionDate(long revision)

@@ -3,6 +3,7 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Integration.Inheritance.Entities;
 using NHibernate.Mapping;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 {
@@ -31,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions(typeof (ChildPrimaryKeyJoinEntity), id1));
+			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions<ChildPrimaryKeyJoinEntity>(id1));
 		}
 
 		[Test]
@@ -54,6 +55,14 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 			                AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (ChildPrimaryKeyJoinEntity), 1).
 			                	GetSingleResult());
 			Assert.AreEqual(ver1, AuditReader().CreateQuery().ForEntitiesAtRevision(typeof (ParentEntity), 1).GetSingleResult());
+		}
+
+		[Test]
+		public void VerifyPolymorphicQueryGeneric()
+		{
+			var ver1 = new ChildPrimaryKeyJoinEntity { Id = id1, Data = "x", Number = 1 };
+			AuditReader().CreateQuery().ForEntitiesAtRevision<ChildPrimaryKeyJoinEntity>(1).Single().Should().Be(ver1);
+			AuditReader().CreateQuery().ForEntitiesAtRevision<ParentEntity>(1).Single().Should().Be(ver1);
 		}
 
 		[Test]
