@@ -5,7 +5,6 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Mapping;
 using NHibernate.Envers.Configuration.Metadata.Reader;
-using log4net;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Type;
 using NHibernate.Envers.Tools;
@@ -14,7 +13,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public sealed class AuditMetadataGenerator
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(AuditMetadataGenerator));
+		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditMetadataGenerator));
 
 		public Cfg.Configuration Cfg { get; private set; }
 		public GlobalConfiguration GlobalCfg { get; private set; }
