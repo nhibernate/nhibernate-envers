@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class RevisionTimestampAttribute : Attribute

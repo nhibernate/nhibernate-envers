@@ -70,7 +70,6 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		[Test]
 		public void VerifyRevisionTypes()
 		{
-			//rk - avoid casting to ilist. generics?
 		    var results = AuditReader().CreateQuery()
 		                .ForRevisionsOfEntity(typeof(StrTestEntity), false, true)
 		                .Add(AuditEntity.Id().Eq(id))

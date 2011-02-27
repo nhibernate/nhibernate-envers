@@ -1,224 +1,245 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Collections;
 using NHibernate.Envers.Query;
-using Iesi.Collections;
 
 namespace NHibernate.Envers.Tools.Query
 {
-/**
- * Generates metadata for to-one relations (reference-valued properties).
- * @author Catalina Panait, port of Envers omonyme class by Adam Warski (adam at warski dot org)
- */
-public class Parameters {
-    public static String AND = "and";
-    public static String OR = "or";
+	/// <summary>
+	/// Generates metadata for to-one relations (reference-valued properties).
+	/// </summary>
+	public class Parameters 
+	{
+		public const string AND = "and";
+		public const string OR = "or";
     
-    /**
-     * Main alias of the entity.
-     */
-    private String alias;
-    /**
-     * Connective between these parameters - "and" or "or".
-     */
-    private String connective;
-    /**
-     * For use by the parameter generator. Must be the same in all "child" (and parent) parameters.
-     */
-    private MutableInteger queryParamCounter;
+		/// <summary>
+		/// Main alias of the entity.
+		/// </summary>
+		private readonly string alias;
 
-    /**
-     * A list of sub-parameters (parameters with a different connective).
-     */
-    private  IList<Parameters> subParameters;
-    /**
-     * A list of negated parameters.
-     */
-    private IList<Parameters> negatedParameters;
-    /**
-     * A list of complete where-expressions.
-     */
-    private IList<String> expressions;
-    /**
-     * Values of parameters used in expressions.
-     */
-    private IDictionary<String, Object> localQueryParamValues;
+		/// <summary>
+		/// Connective between these parameters - "and" or "or".
+		/// </summary>
+		private readonly string connective;
 
-    public Parameters(String alias, String connective, MutableInteger queryParamCounter) {
-        this.alias = alias;
-        this.connective = connective;
-        this.queryParamCounter = queryParamCounter;
+		/// <summary>
+		/// For use by the parameter generator. Must be the same in all "child" (and parent) parameters.
+		/// </summary>
+		private readonly MutableInteger queryParamCounter;
 
-        subParameters = new List<Parameters>();   
-        negatedParameters = new List<Parameters>();
-        expressions = new List<String>();
-        localQueryParamValues = new Dictionary<String, Object>(); 
-    }
+		/// <summary>
+		/// A list of sub-parameters (parameters with a different connective).
+		/// </summary>
+		private readonly IList<Parameters> subParameters;
 
-    private String GenerateQueryParam() {
-        return "_p" + queryParamCounter.getAndIncrease();
-    }
+		/// <summary>
+		/// A list of negated parameters.
+		/// </summary>
+		private readonly IList<Parameters> negatedParameters;
 
-    /**
-     * Adds sub-parameters with a new connective. That is, the parameters will be grouped in parentheses in the
-     * generated query, e.g.: ... and (exp1 or exp2) and ..., assuming the old connective is "and", and the
-     * new connective is "or".
-     * @param newConnective New connective of the parameters.
-     * @return Sub-parameters with the given connective.
-     */
-    public Parameters AddSubParameters(String newConnective) {
-        if (connective.Equals(newConnective)) {
-            return this;
-        } else {
-            Parameters newParams = new Parameters(alias, newConnective, queryParamCounter);
-            subParameters.Add(newParams);
-            return newParams;
-        }
-    }
+		/// <summary>
+		/// A list of complete where-expressions.
+		/// </summary>
+		private readonly IList<string> expressions;
 
-    /**
-     * Adds negated parameters, by default with the "and" connective. These paremeters will be grouped in parentheses
-     * in the generated query and negated, e.g. ... not (exp1 and exp2) ...
-     * @return Negated sub paremters.
-     */
-    public Parameters AddNegatedParameters() {
-        Parameters newParams = new Parameters(alias, AND, queryParamCounter);
-        negatedParameters.Add(newParams);
-        return newParams;
-    }
+		/// <summary>
+		/// Values of parameters used in expressions.
+		/// </summary>
+		private readonly IDictionary<string, object> localQueryParamValues;
 
-    public void AddWhere(String left, String op, String right) {
-        AddWhere(left, true, op, right, true);
-    }
+		public Parameters(string alias, string connective, MutableInteger queryParamCounter) 
+		{
+			this.alias = alias;
+			this.connective = connective;
+			this.queryParamCounter = queryParamCounter;
 
-    public void AddWhere(String left, bool addAliasLeft, String op, String right, bool addAliasRight) {
-        StringBuilder expression = new StringBuilder();
+			subParameters = new List<Parameters>();   
+			negatedParameters = new List<Parameters>();
+			expressions = new List<string>();
+			localQueryParamValues = new Dictionary<string, object>(); 
+		}
 
-        if (addAliasLeft) { expression.Append(alias).Append("."); }
-        expression.Append(left);
+		private string GenerateQueryParam() 
+		{
+			return "_p" + queryParamCounter.getAndIncrease();
+		}
 
-        expression.Append(" ").Append(op).Append(" ");
+		/**
+		 * Adds sub-parameters with a new connective. That is, the parameters will be grouped in parentheses in the
+		 * generated query, e.g.: ... and (exp1 or exp2) and ..., assuming the old connective is "and", and the
+		 * new connective is "or".
+		 * @param newConnective New connective of the parameters.
+		 * @return Sub-parameters with the given connective.
+		 */
+		public Parameters AddSubParameters(string newConnective) 
+		{
+			if (connective.Equals(newConnective)) 
+			{
+				return this;
+			}
+			var newParams = new Parameters(alias, newConnective, queryParamCounter);
+			subParameters.Add(newParams);
+			return newParams;
+		}
 
-        if (addAliasRight) { expression.Append(alias).Append("."); }
-        expression.Append(right);
+		/**
+		 * Adds negated parameters, by default with the "and" connective. These paremeters will be grouped in parentheses
+		 * in the generated query and negated, e.g. ... not (exp1 and exp2) ...
+		 * @return Negated sub paremters.
+		 */
+		public Parameters AddNegatedParameters() 
+		{
+			var newParams = new Parameters(alias, AND, queryParamCounter);
+			negatedParameters.Add(newParams);
+			return newParams;
+		}
 
-        expressions.Add(expression.ToString());
-    }
+		public void AddWhere(string left, string op, string right) 
+		{
+			AddWhere(left, true, op, right, true);
+		}
 
-    public void AddWhereWithParam(String left, String op, Object paramValue) {
-        AddWhereWithParam(left, true, op, paramValue);
-    }
+		public void AddWhere(string left, bool addAliasLeft, string op, string right, bool addAliasRight) 
+		{
+			var expression = new StringBuilder();
 
-    public void AddWhereWithParam(String left, bool addAlias, String op, Object paramValue) {
-        String paramName = GenerateQueryParam();
-        localQueryParamValues.Add(paramName, paramValue);
+			if (addAliasLeft) { expression.Append(alias).Append("."); }
+			expression.Append(left);
 
-        AddWhereWithNamedParam(left, addAlias, op, paramName);
-    }
+			expression.Append(" ").Append(op).Append(" ");
 
-    public void AddWhereWithNamedParam(String left, String op, String paramName) {
-        AddWhereWithNamedParam(left, true, op, paramName);
-    }
+			if (addAliasRight) { expression.Append(alias).Append("."); }
+			expression.Append(right);
 
-    public void AddWhereWithNamedParam(String left, bool addAlias, String op, String paramName) {
-        StringBuilder expression = new StringBuilder();
+			expressions.Add(expression.ToString());
+		}
 
-        if (addAlias) { expression.Append(alias).Append("."); }
-        expression.Append(left);
-        expression.Append(" ").Append(op).Append(" ");
-        expression.Append(":").Append(paramName);
+		public void AddWhereWithParam(string left, string op, object paramValue) 
+		{
+			AddWhereWithParam(left, true, op, paramValue);
+		}
 
-        expressions.Add(expression.ToString());
-    }
+		public void AddWhereWithParam(string left, bool addAlias, string op, object paramValue) 
+		{
+			var paramName = GenerateQueryParam();
+			localQueryParamValues.Add(paramName, paramValue);
 
-    public void AddWhereWithParams(String left, String opStart, Object[] paramValues, String opEnd) {
-        StringBuilder expression = new StringBuilder();
+			AddWhereWithNamedParam(left, addAlias, op, paramName);
+		}
 
-        expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
+		public void AddWhereWithNamedParam(string left, string op, string paramName) 
+		{
+			AddWhereWithNamedParam(left, true, op, paramName);
+		}
 
-        for (int i=0; i<paramValues.Length; i++) {
-            Object paramValue = paramValues[i];
-            String paramName = GenerateQueryParam();
-            localQueryParamValues.Add(paramName, paramValue);
-            expression.Append(":").Append(paramName);
+		public void AddWhereWithNamedParam(string left, bool addAlias, string op, string paramName) 
+		{
+			var expression = new StringBuilder();
 
-            if (i != paramValues.Length - 1)
-            {
-                expression.Append(", ");
-            }
-        }
+			if (addAlias) { expression.Append(alias).Append("."); }
+			expression.Append(left);
+			expression.Append(" ").Append(op).Append(" ");
+			expression.Append(":").Append(paramName);
 
-        expression.Append(opEnd);
+			expressions.Add(expression.ToString());
+		}
 
-        expressions.Add(expression.ToString());
-    }
+		public void AddWhereWithParams(string left, string opStart, object[] paramValues, string opEnd) 
+		{
+			var expression = new StringBuilder();
 
-    public void AddWhere(String left, String op, QueryBuilder right) {
-        AddWhere(left, true, op, right);
-    }
+			expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
 
-    public void AddWhere(String left, bool addAlias, String op, QueryBuilder right) {
-        StringBuilder expression = new StringBuilder();
+			for (var i=0; i<paramValues.Length; i++) 
+			{
+				var paramValue = paramValues[i];
+				var paramName = GenerateQueryParam();
+				localQueryParamValues.Add(paramName, paramValue);
+				expression.Append(":").Append(paramName);
 
-        if (addAlias) {
-            expression.Append(alias).Append(".");
-        }
+				if (i != paramValues.Length - 1)
+				{
+					expression.Append(", ");
+				}
+			}
 
-        expression.Append(left);
+			expression.Append(opEnd);
 
-        expression.Append(" ").Append(op).Append(" ");
+			expressions.Add(expression.ToString());
+		}
 
-        expression.Append("(");
-        right.Build(expression, localQueryParamValues);
-        expression.Append(")");        
+		public void AddWhere(string left, string op, QueryBuilder right) 
+		{
+			AddWhere(left, true, op, right);
+		}
 
-        expressions.Add(expression.ToString());
-    }
+		public void AddWhere(string left, bool addAlias, string op, QueryBuilder right) 
+		{
+			var expression = new StringBuilder();
 
-    private void Append(StringBuilder sb, String toAppend, MutableBoolean isFirst) {
-        if (!isFirst.isSet()) {
-            sb.Append(" ").Append(connective).Append(" ");
-        }
+			if (addAlias) {
+				expression.Append(alias).Append(".");
+			}
 
-        sb.Append(toAppend);
+			expression.Append(left);
 
-        isFirst.unset();
-    }
+			expression.Append(" ").Append(op).Append(" ");
 
-    public bool IsEmpty() {
-        return expressions.Count == 0 && subParameters.Count == 0 && negatedParameters.Count == 0;
-    }
+			expression.Append("(");
+			right.Build(expression, localQueryParamValues);
+			expression.Append(")");        
 
-    public void Build(StringBuilder sb, IDictionary<String, Object> queryParamValues) {
-        MutableBoolean isFirst = new MutableBoolean(true);
+			expressions.Add(expression.ToString());
+		}
 
-        foreach (String expression in expressions) {
-            Append(sb, expression, isFirst);
-        }
+		private void Append(StringBuilder sb, string toAppend, MutableBoolean isFirst) 
+		{
+			if (!isFirst.isSet()) {
+				sb.Append(" ").Append(connective).Append(" ");
+			}
 
-        foreach (Parameters sub in subParameters) {
-            if (!(subParameters.Count == 0)) {
-                Append(sb, "(", isFirst);
-                sub.Build(sb, queryParamValues);
-                sb.Append(")");
-            }
-        }
+			sb.Append(toAppend);
 
-        foreach (Parameters negated in negatedParameters) {
-            if (!(negatedParameters.Count == 0)) {
-                Append(sb, "not (", isFirst);
-                negated.Build(sb, queryParamValues);
-                sb.Append(")");
-            }
-        }
+			isFirst.unset();
+		}
 
-        foreach (KeyValuePair<String, Object> pair in localQueryParamValues)
-        {
-            queryParamValues.Add(pair);
-        }
-    }
-}
+		public bool IsEmpty() 
+		{
+			return expressions.Count == 0 && subParameters.Count == 0 && negatedParameters.Count == 0;
+		}
 
+		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues) 
+		{
+			MutableBoolean isFirst = new MutableBoolean(true);
+
+			foreach (string expression in expressions) 
+			{
+				Append(sb, expression, isFirst);
+			}
+
+			foreach (Parameters sub in subParameters) 
+			{
+				if (subParameters.Count > 0) 
+				{
+					Append(sb, "(", isFirst);
+					sub.Build(sb, queryParamValues);
+					sb.Append(")");
+				}
+			}
+
+			foreach (Parameters negated in negatedParameters) 
+			{
+				if (negatedParameters.Count > 0) {
+					Append(sb, "not (", isFirst);
+					negated.Build(sb, queryParamValues);
+					sb.Append(")");
+				}
+			}
+
+			foreach (var pair in localQueryParamValues)
+			{
+				queryParamValues.Add(pair);
+			}
+		}
+	}
 }

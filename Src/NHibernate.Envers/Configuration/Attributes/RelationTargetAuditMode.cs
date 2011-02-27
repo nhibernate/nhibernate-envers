@@ -1,4 +1,4 @@
-﻿namespace NHibernate.Envers
+﻿namespace NHibernate.Envers.Configuration.Attributes
 {
     public enum RelationTargetAuditMode
     {

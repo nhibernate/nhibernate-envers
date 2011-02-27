@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
 	/// <summary>
 	///  Marks a property which will hold the number of the revision in a revision entity, see

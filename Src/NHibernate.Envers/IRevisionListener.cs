@@ -1,3 +1,5 @@
+using NHibernate.Envers.Configuration.Attributes;
+
 namespace NHibernate.Envers
 {
 	public interface IRevisionListener

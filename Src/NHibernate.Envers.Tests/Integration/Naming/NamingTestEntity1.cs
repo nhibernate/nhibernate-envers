@@ -1,3 +1,5 @@
+using NHibernate.Envers.Configuration.Attributes;
+
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
 	[AuditTable("naming_test_entity_1_versions")]

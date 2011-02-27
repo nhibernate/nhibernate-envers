@@ -1,3 +1,5 @@
+using NHibernate.Envers.Configuration.Attributes;
+
 namespace NHibernate.Envers.Tests.Integration.Data
 {
 	public enum E1 { X, Y }

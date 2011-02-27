@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers
+namespace NHibernate.Envers.Configuration.Attributes
 {
 	//todo - rk, remove this one?
 	class SecondaryAuditTablesAttribute:Attribute
