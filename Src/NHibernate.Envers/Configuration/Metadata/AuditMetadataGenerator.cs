@@ -188,7 +188,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private bool CheckPropertiesAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
+		private static bool CheckPropertiesAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
 		{
 			foreach (var property in properties)
 			{
