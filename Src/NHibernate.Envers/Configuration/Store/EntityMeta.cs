@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Configuration.Store
 			MemberMetas = new Dictionary<MemberInfo, IEnumerable<Attribute>>();
 		}
 
-		public IEnumerable<Attribute> ClassMetas { get; set; }
+		public IEnumerable<Attribute> ClassMetas { get; private set; }
 		public IDictionary<MemberInfo, IEnumerable<Attribute>> MemberMetas { get; private set; }
 
 		public void AddMemberMeta(MemberInfo member, Attribute envAttr)

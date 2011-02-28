@@ -255,7 +255,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// as if it was an entity (by appending/prepending configured strings).
 				var originalTableName = join.Table.Name;
 				string auditTableName;
-				if (!auditingData.SecondaryTableDictionary.TryGetValue(originalTableName, out auditTableName))
+				if (!auditingData.JoinTableDictionary.TryGetValue(originalTableName, out auditTableName))
 				{
 					auditTableName = VerEntCfg.GetAuditEntityName(originalTableName);
 				}
