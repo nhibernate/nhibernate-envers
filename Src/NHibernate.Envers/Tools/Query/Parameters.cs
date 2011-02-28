@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tools.Query
 		/// <summary>
 		/// For use by the parameter generator. Must be the same in all "child" (and parent) parameters.
 		/// </summary>
-		private readonly MutableInteger queryParamCounter;
+		private readonly Incrementor queryParamCounter;
 
 		/// <summary>
 		/// A list of sub-parameters (parameters with a different connective).
@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Tools.Query
 		/// </summary>
 		private readonly IDictionary<string, object> localQueryParamValues;
 
-		public Parameters(string alias, string connective, MutableInteger queryParamCounter) 
+		public Parameters(string alias, string connective, Incrementor queryParamCounter) 
 		{
 			this.alias = alias;
 			this.connective = connective;
@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		private string GenerateQueryParam() 
 		{
-			return "_p" + queryParamCounter.getAndIncrease();
+			return "_p" + queryParamCounter.Get();
 		}
 
 		/**
