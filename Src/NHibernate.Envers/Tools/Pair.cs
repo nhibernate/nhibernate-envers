@@ -2,8 +2,23 @@
 {
 	public class Pair<T1, T2> : IPair
 	{
-		public T1 First{ get; private set;}
+		private readonly int hashCode;
+
+		internal Pair(T1 first, T2 second)
+		{
+			First = first;
+			Second = second;
+			unchecked
+			{
+				hashCode = ReferenceEquals(First, null) ? 17 : First.GetHashCode();
+				hashCode = (hashCode*397) ^ (ReferenceEquals(Second, null) ? 19 : Second.GetHashCode());
+			}
+		}
+
+		public T1 First { get; private set; }
 		public T2 Second { get; private set; }
+
+		#region IPair Members
 
 		object IPair.First
 		{
@@ -15,34 +30,46 @@
 			get { return Second; }
 		}
 
-		private Pair(T1 obj1, T2 obj2)
+		#endregion
+
+		public override bool Equals(object obj)
 		{
-			First = obj1;
-			Second = obj2;
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+			if (ReferenceEquals(this, obj))
+			{
+				return true;
+			}
+			if (obj.GetType() != typeof (Pair<T1, T2>))
+			{
+				return false;
+			}
+			return Equals((Pair<T1, T2>) obj);
 		}
 
-		public override bool Equals(object o) 
+		public static Pair<T1, T2> Make(T1 first, T2 second)
 		{
-			if (this == o) return true;
-
-			var pair = (Pair<T1, T2>) o;
-
-			if (First != null ? !First.Equals(pair.First) : pair.First != null) return false;
-			if (Second != null ? !Second.Equals(pair.Second) : pair.Second != null) return false;
-
-			return true;
+			return new Pair<T1, T2>(first, second);
 		}
 
-		public override int GetHashCode() 
+		public bool Equals(Pair<T1, T2> other)
 		{
-			var result = (First != null ? First.GetHashCode() : 0);
-			result = 31 * result + (Second != null ? Second.GetHashCode() : 0);
-			return result;
+			if (ReferenceEquals(null, other))
+			{
+				return false;
+			}
+			if (ReferenceEquals(this, other))
+			{
+				return true;
+			}
+			return Equals(other.First, First) && Equals(other.Second, Second);
 		}
 
-		public static Pair<T1, T2> Make(T1 obj1, T2 obj2)
+		public override int GetHashCode()
 		{
-			return new Pair<T1, T2>(obj1, obj2);
+			return hashCode;
 		}
 	}
 }
