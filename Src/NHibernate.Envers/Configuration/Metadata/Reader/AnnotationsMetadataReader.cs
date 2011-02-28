@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Mapping;
@@ -80,28 +81,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_auditData.AuditTable = auditTable ?? getDefaultAuditTable();
 		}
 
-		private void addAuditSecondaryTables(System.Type typ) 
+		private void addAuditSecondaryTables(System.Type typ)
 		{
-			// Getting information on secondary tables
-			var joinVersionsTable1 = _metaDataStore.ClassMeta<JoinAuditTableAttribute>(typ);
-			if (joinVersionsTable1 != null) 
+			IEntityMeta entityMeta;
+			if (_metaDataStore.EntityMetas.TryGetValue(typ, out entityMeta))
 			{
-				_auditData.SecondaryTableDictionary.Add(joinVersionsTable1.JoinTableName,
-						joinVersionsTable1.JoinAuditTableName);
-			}
-
-			var secondaryAuditTables = _metaDataStore.ClassMeta<SecondaryAuditTablesAttribute>(typ);
-			if (secondaryAuditTables != null) 
-			{
-				foreach (var secondaryAuditTable2 in secondaryAuditTables.Value) 
+				var joinAuditTableAttributes = entityMeta.ClassMetas.OfType<JoinAuditTableAttribute>().ToList();
+				foreach (var joinAuditTableAttribute in joinAuditTableAttributes)
 				{
-					_auditData.SecondaryTableDictionary.Add(secondaryAuditTable2.JoinTableName,
-							secondaryAuditTable2.JoinAuditTableName);
+					_auditData.JoinTableDictionary.Add(joinAuditTableAttribute.JoinTableName, joinAuditTableAttribute.JoinAuditTableName);
 				}
 			}
 		}
-
-
 
 		private readonly AuditTableAttribute defaultAuditTable = new AuditTableAttribute(string.Empty);
 		  
