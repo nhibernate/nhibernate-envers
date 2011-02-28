@@ -19,12 +19,12 @@ namespace NHibernate.Envers.Query
         /**
          * For use by alias generator (in case an alias is not provided by the user).
          */
-        private readonly MutableInteger aliasCounter;
+        private readonly Incrementor aliasCounter;
         /**
          * For use by parameter generator, in {@link Parameters}. This counter must be
          * the same in all parameters and sub-queries of this query.
          */
-        private readonly MutableInteger paramCounter;
+        private readonly Incrementor paramCounter;
         /**
          * Main "where" parameters for this query.
          */
@@ -50,12 +50,12 @@ namespace NHibernate.Envers.Query
          * @param alias Alias of the entity
          */
         public QueryBuilder(string entityName, string alias)
-            :this(entityName, alias, new MutableInteger(), new MutableInteger())
+            :this(entityName, alias, new Incrementor(), new Incrementor())
         {
             
         }
 
-		private QueryBuilder(string entityName, string alias, MutableInteger aliasCounter, MutableInteger paramCounter)
+		private QueryBuilder(string entityName, string alias, Incrementor aliasCounter, Incrementor paramCounter)
 		{
             this.entityName = entityName;
             this.alias = alias;
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Query
 
 		private string GenerateAlias()
 		{
-            return "_e" + aliasCounter.getAndIncrease();
+            return "_e" + aliasCounter.Get();
         }
 
         /**
