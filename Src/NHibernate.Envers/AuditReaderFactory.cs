@@ -1,8 +1,8 @@
-﻿using NHibernate.Engine;
+﻿using System.Linq;
+using NHibernate.Engine;
 using NHibernate.Envers.Event;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers
 {
@@ -24,13 +24,13 @@ namespace NHibernate.Envers
 			foreach (var listener in listeners.PostInsertEventListeners)
 			{
 				var auditEventListener = listener as AuditEventListener;
-				if (auditEventListener!=null) 
+				if (auditEventListener == null) continue;
+
+				var auditEventListenerType = typeof (AuditEventListener);
+				if (listeners.PostUpdateEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType())) &&
+				    listeners.PostDeleteEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType()))) 
 				{
-					if (ArraysTools.ArrayIncludesInstanceOf(listeners.PostUpdateEventListeners, typeof(AuditEventListener)) &&
-						ArraysTools.ArrayIncludesInstanceOf(listeners.PostDeleteEventListeners, typeof(AuditEventListener))) 
-					{
-							return new AuditReader(auditEventListener.VerCfg, session,sessionImpl);
-					}
+					return new AuditReader(auditEventListener.VerCfg, session, sessionImpl);
 				}
 			}
 
