@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
+    <SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
     <BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
-    <ExternalLibRootFolder>$(RootDir)\..\lib</ExternalLibRootFolder>
+    <ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
     <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
     <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
   </PropertyGroup>
   
   <ItemGroup Label="Extra files to deploy">
-    <ExtraFiles Include="$(RootDir)\LGPL_3.0.txt" />
-    <ExtraFiles Include="$(RootDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
-    <ExtraFiles Include="$(RootDir)\ReleaseNotes.txt"/>
+    <ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
+    <ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
+    <ExtraFiles Include="$(SourceDir)\ReleaseNotes.txt"/>
   </ItemGroup>
   
   <ItemGroup Label="NHibernate dependencies">
@@ -24,7 +24,7 @@
   <Target Name="Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
 
   <Target Name="RunBuild">
-    <MSBuild Projects="$(RootDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
+    <MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
       <Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
     </MSBuild>
   </Target>
