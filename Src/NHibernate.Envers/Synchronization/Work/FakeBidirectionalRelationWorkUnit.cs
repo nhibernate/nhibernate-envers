@@ -10,8 +10,10 @@ namespace NHibernate.Envers.Synchronization.Work
 	/// A work unit that handles "fake" bidirectional one-to-many relations (mapped with {@code @OneToMany+@JoinColumn} and
 	/// {@code @ManyToOne+@Column(insertable=false, updatable=false)}.
 	/// </summary>
-	public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit 
+	public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit
 	{
+		private readonly IDictionary<string, FakeRelationChange> fakeRelationChanges;
+
 		/// <summary>
 		/// The work unit responsible for generating the "raw" entity data to be saved.
 		/// </summary>
@@ -36,7 +38,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			NestedWorkUnit = nestedWorkUnit;
 
 			// Adding the change for the relation.
-			FakeRelationChanges = new Dictionary<string, FakeRelationChange>
+			fakeRelationChanges = new Dictionary<string, FakeRelationChange>
 									{
 										{
 											referencingPropertyName,
@@ -45,25 +47,23 @@ namespace NHibernate.Envers.Synchronization.Work
 									};
 		}
 
-		public FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original,
+		private FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original,
 												 IDictionary<string, FakeRelationChange> fakeRelationChanges,
 												 IAuditWorkUnit nestedWorkUnit)
-			: base(original.sessionImplementor, original.EntityName, original.verCfg, original.EntityId)
+			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId)
 		{
-			FakeRelationChanges = fakeRelationChanges;
+			this.fakeRelationChanges = fakeRelationChanges;
 			NestedWorkUnit = nestedWorkUnit;
 		}
 
-		public FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original, IAuditWorkUnit nestedWorkUnit)
-			: base(original.sessionImplementor, original.EntityName, original.verCfg, original.EntityId)
+		private FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original, IAuditWorkUnit nestedWorkUnit)
+			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId)
 		{
 			NestedWorkUnit = nestedWorkUnit;
-			FakeRelationChanges = new Dictionary<string, FakeRelationChange>(original.FakeRelationChanges);
+			fakeRelationChanges = new Dictionary<string, FakeRelationChange>(original.fakeRelationChanges);
 		}
 
 		public IAuditWorkUnit NestedWorkUnit { get; private set; }
-
-		public IDictionary<string, FakeRelationChange> FakeRelationChanges { get; private set; }
 
 		public override bool ContainsWork()
 		{
@@ -77,9 +77,9 @@ namespace NHibernate.Envers.Synchronization.Work
 			var nestedData = new Dictionary<string, object>(NestedWorkUnit.GenerateData(revisionData));
 
 			// Now adding data for all fake relations.
-			foreach (var fakeRelationChange in FakeRelationChanges.Values) 
+			foreach (var fakeRelationChange in fakeRelationChanges.Values) 
 			{
-				fakeRelationChange.GenerateData(sessionImplementor, nestedData);
+				fakeRelationChange.GenerateData(SessionImplementor, nestedData);
 			}
 
 			return nestedData;
@@ -111,16 +111,16 @@ namespace NHibernate.Envers.Synchronization.Work
 			var mergedNested = second.NestedWorkUnit.Dispatch(NestedWorkUnit);
 
 			// Now merging the fake relation changes from both work units.
-			var secondFakeRelationChanges = second.FakeRelationChanges;
+			var secondFakeRelationChanges = second.fakeRelationChanges;
 			var mergedFakeRelationChanges = new Dictionary<string, FakeRelationChange>();
-			var allPropertyNames = new HashedSet<string>(FakeRelationChanges.Keys);
+			var allPropertyNames = new HashedSet<string>(fakeRelationChanges.Keys);
 			allPropertyNames.AddAll(secondFakeRelationChanges.Keys);
 
 			foreach (var propertyName in allPropertyNames) 
 			{
 				mergedFakeRelationChanges.Add(propertyName,
 						FakeRelationChange.Merge(
-								FakeRelationChanges[propertyName],
+								fakeRelationChanges[propertyName],
 								secondFakeRelationChanges[propertyName]));
 			}
 
@@ -144,34 +144,33 @@ namespace NHibernate.Envers.Synchronization.Work
 		/// <summary>
 		/// Describes a change to a single fake bidirectional relation.
 		/// </summary>
-		public class FakeRelationChange 
+		private class FakeRelationChange 
 		{
 			private readonly object owningEntity;
 			private readonly RelationDescription rd;
 			private readonly object index;
+			private readonly RevisionType revisionType;
 
 			public FakeRelationChange(object owningEntity, RelationDescription rd, RevisionType revisionType,
 									  object index)
 			{
 				this.owningEntity = owningEntity;
 				this.rd = rd;
-				RevisionType = revisionType;
+				this.revisionType = revisionType;
 				this.index = index;
 			}
-
-			public RevisionType RevisionType { get; private set; }
 
 			public void GenerateData(ISessionImplementor sessionImplementor, IDictionary<string, object> data)
 			{
 				// If the revision type is "DEL", it means that the object is removed from the collection. Then the
 				// new owner will in fact be null.
 				rd.FakeBidirectionalRelationMapper.MapToMapFromEntity(sessionImplementor, data,
-						RevisionType == RevisionType.Deleted ? null : owningEntity, null);
+						revisionType == RevisionType.Deleted ? null : owningEntity, null);
 
 				// Also mapping the index, if the collection is indexed.
 				if (rd.FakeBidirectionalRelationIndexMapper != null) {
 					rd.FakeBidirectionalRelationIndexMapper.MapToMapFromEntity(sessionImplementor, data,
-							RevisionType == RevisionType.Deleted ? null : index, null);
+							revisionType == RevisionType.Deleted ? null : index, null);
 				}
 			}
 
@@ -187,7 +186,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				 * - ADD, DEL - return ADD (points to new owner)
 				 * - ADD, ADD - return second (points to newer owner)
 				 */
-				if (first.RevisionType == RevisionType.Deleted || second.RevisionType == RevisionType.Added) 
+				if (first.revisionType == RevisionType.Deleted || second.revisionType == RevisionType.Added) 
 				{
 					return second;
 				}

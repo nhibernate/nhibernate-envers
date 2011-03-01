@@ -9,8 +9,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 		private readonly IAuditReaderImplementor versionsReader;
 		private readonly IRelationQueryGenerator queryGenerator;
 		private readonly object primaryKey;
-		protected readonly long revision;
-		protected readonly EntityInstantiator entityInstantiator;
 
 		protected AbstractCollectionInitializor(AuditConfiguration verCfg,
 												IAuditReaderImplementor versionsReader,
@@ -21,10 +19,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			this.versionsReader = versionsReader;
 			this.queryGenerator = queryGenerator;
 			this.primaryKey = primaryKey;
-			this.revision = revision;
-
-			entityInstantiator = new EntityInstantiator(verCfg, versionsReader);
+			Revision = revision;
+			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
 		}
+
+		protected EntityInstantiator EntityInstantiator { get; private set; }
+		protected long Revision { get; private set; }
 
 		protected abstract T InitializeCollection(int size);
 
@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		public T Initialize() 
 		{
-			var collectionContent = queryGenerator.GetQuery(versionsReader, primaryKey, revision).List();
+			var collectionContent = queryGenerator.GetQuery(versionsReader, primaryKey, Revision).List();
 			var collection = InitializeCollection(collectionContent.Count);
 			foreach (var collectionRow in collectionContent) 
 			{

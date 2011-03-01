@@ -56,7 +56,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override void Perform(ISession session, object revisionData) 
 		{
-			var entitiesCfg = verCfg.AuditEntCfg;
+			var entitiesCfg = VerCfg.AuditEntCfg;
 
 			foreach (var persistentCollectionChangeData in collectionChanges) 
 			{
@@ -133,7 +133,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Finally adding all of the new changes to the end of the list
 				mergedChanges = mergedChanges.Concat(CollectionChanges).ToList();
 
-				return new PersistentCollectionChangeWorkUnit(sessionImplementor, EntityName, verCfg, EntityId, mergedChanges, 
+				return new PersistentCollectionChangeWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, mergedChanges, 
 						ReferencingPropertyName);
 			}
 			throw new Exception("Trying to merge a " + first + " with a PersitentCollectionChangeWorkUnit. " +
@@ -142,7 +142,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		private IDictionary<string, object> OriginalId(PersistentCollectionChangeData persistentCollectionChangeData) 
 		{
-			return (IDictionary<string, object>) persistentCollectionChangeData.Data[verCfg.AuditEntCfg.OriginalIdPropName];
+			return (IDictionary<string, object>) persistentCollectionChangeData.Data[VerCfg.AuditEntCfg.OriginalIdPropName];
 		}
 
 		/// <summary>

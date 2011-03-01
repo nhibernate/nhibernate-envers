@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.AdoNet;
 using NHibernate.Engine;
 using NHibernate.Collection;
 using System.Collections;
+using NHibernate.Hql;
 using NHibernate.Impl;
 using NHibernate.Persister.Entity;
 using NHibernate.Loader.Custom;
 using NHibernate.Engine.Query.Sql;
+using NHibernate.Transaction;
 using NHibernate.Type;
 using NHibernate.Event;
 using System.Data;
@@ -15,28 +18,28 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public abstract class AbstractDelegateSessionImplementor : ISessionImplementor 
 	{
-		protected ISessionImplementor delegat;
-
 		protected AbstractDelegateSessionImplementor(ISessionImplementor delegat) 
 		{
-			this.delegat = delegat;
+			SessionDelegate = delegat;
 		}
 
-		public abstract object DoImmediateLoad(string entityName);
+		protected ISessionImplementor SessionDelegate { get; private set; }
+
+		protected abstract object DoImmediateLoad(string entityName);
 
 		public void Initialize()
 		{
-			delegat.Initialize();
+			SessionDelegate.Initialize();
 		}
 
 		public void InitializeCollection(IPersistentCollection collection, bool writing)
 		{
-			delegat.InitializeCollection(collection, writing);
+			SessionDelegate.InitializeCollection(collection, writing);
 		}
 
 		public object InternalLoad(string entityName, object id, bool eager, bool isNullable)
 		{
-			return delegat.InternalLoad(entityName, id, eager, isNullable);
+			return SessionDelegate.InternalLoad(entityName, id, eager, isNullable);
 		}
 
 		public object ImmediateLoad(string entityName, object id)
@@ -46,235 +49,235 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public long Timestamp
 		{
-			get { return delegat.Timestamp; }
+			get { return SessionDelegate.Timestamp; }
 		}
 
 		public ISessionFactoryImplementor Factory
 		{
-			get { return delegat.Factory; }
+			get { return SessionDelegate.Factory; }
 		}
 
 		public IBatcher Batcher
 		{
-			get { return delegat.Batcher; }
+			get { return SessionDelegate.Batcher; }
 		}
 
 		public IList List(string query, QueryParameters parameters)
 		{
-			return delegat.List(query, parameters);
+			return SessionDelegate.List(query, parameters);
 		}
 
 		public IList List(IQueryExpression queryExpression, QueryParameters parameters)
 		{
-			return delegat.List(queryExpression, parameters);
+			return SessionDelegate.List(queryExpression, parameters);
 		}
 
 		public IQuery CreateQuery(IQueryExpression queryExpression)
 		{
-			return delegat.CreateQuery(queryExpression);
+			return SessionDelegate.CreateQuery(queryExpression);
 		}
 
 		public void List(string query, QueryParameters parameters, IList results)
 		{
-			delegat.List(query, parameters, results);
+			SessionDelegate.List(query, parameters, results);
 		}
 
 		public IList<T> List<T>(string query, QueryParameters queryParameters)
 		{
-			return delegat.List<T>(query, queryParameters);
+			return SessionDelegate.List<T>(query, queryParameters);
 		}
 
 		public IList<T> List<T>(CriteriaImpl criteria)
 		{
-			return delegat.List<T>(criteria);
+			return SessionDelegate.List<T>(criteria);
 		}
 
 		public void List(CriteriaImpl criteria, IList results)
 		{
-			delegat.List(criteria, results);
+			SessionDelegate.List(criteria, results);
 		}
 
 		public IList List(CriteriaImpl criteria)
 		{
-			return delegat.List(criteria);
+			return SessionDelegate.List(criteria);
 		}
 
 		public IEnumerable Enumerable(string query, QueryParameters parameters)
 		{
-			return delegat.Enumerable(query, parameters);
+			return SessionDelegate.Enumerable(query, parameters);
 		}
 
 		public IEnumerable<T> Enumerable<T>(string query, QueryParameters queryParameters)
 		{
-			return delegat.Enumerable<T>(query, queryParameters);
+			return SessionDelegate.Enumerable<T>(query, queryParameters);
 		}
 
 		public IList ListFilter(object collection, string filter, QueryParameters parameters)
 		{
-			return delegat.ListFilter(collection, filter, parameters);
+			return SessionDelegate.ListFilter(collection, filter, parameters);
 		}
 
 		public IList<T> ListFilter<T>(object collection, string filter, QueryParameters parameters)
 		{
-			return delegat.ListFilter<T>(collection, filter, parameters);
+			return SessionDelegate.ListFilter<T>(collection, filter, parameters);
 		}
 
 		public IEnumerable EnumerableFilter(object collection, string filter, QueryParameters parameters)
 		{
-			return delegat.EnumerableFilter(collection, filter, parameters);
+			return SessionDelegate.EnumerableFilter(collection, filter, parameters);
 		}
 
 		public IEnumerable<T> EnumerableFilter<T>(object collection, string filter, QueryParameters parameters)
 		{
-			return delegat.EnumerableFilter<T>(collection, filter, parameters);
+			return SessionDelegate.EnumerableFilter<T>(collection, filter, parameters);
 		}
 
 		public IEntityPersister GetEntityPersister(string entityName, object obj)
 		{
-			return delegat.GetEntityPersister(entityName, obj);
+			return SessionDelegate.GetEntityPersister(entityName, obj);
 		}
 
 		public void AfterTransactionBegin(ITransaction tx)
 		{
-			delegat.AfterTransactionBegin(tx);
+			SessionDelegate.AfterTransactionBegin(tx);
 		}
 
 		public void BeforeTransactionCompletion(ITransaction tx)
 		{
-			delegat.BeforeTransactionCompletion(tx);
+			SessionDelegate.BeforeTransactionCompletion(tx);
 		}
 
 		public void AfterTransactionCompletion(bool successful, ITransaction tx)
 		{
-			delegat.AfterTransactionCompletion(successful, tx);
+			SessionDelegate.AfterTransactionCompletion(successful, tx);
 		}
 
 		public object GetContextEntityIdentifier(object obj)
 		{
-			return delegat.GetContextEntityIdentifier(obj);
+			return SessionDelegate.GetContextEntityIdentifier(obj);
 		}
 
 		public object Instantiate(string entityName, object id)
 		{
-			return delegat.Instantiate(entityName, id);
+			return SessionDelegate.Instantiate(entityName, id);
 		}
 
 		public IList List(NativeSQLQuerySpecification spec, QueryParameters queryParameters)
 		{
-			return delegat.List(spec, queryParameters);
+			return SessionDelegate.List(spec, queryParameters);
 		}
 
 		public void List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
 		{
-			delegat.List(spec, queryParameters, results);
+			SessionDelegate.List(spec, queryParameters, results);
 		}
 
 		public IList<T> List<T>(NativeSQLQuerySpecification spec, QueryParameters queryParameters)
 		{
-			return delegat.List<T>(spec, queryParameters);
+			return SessionDelegate.List<T>(spec, queryParameters);
 		}
 
 		public void ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
 		{
-			delegat.ListCustomQuery(customQuery,queryParameters, results);
+			SessionDelegate.ListCustomQuery(customQuery,queryParameters, results);
 		}
 
 		public IList<T> ListCustomQuery<T>(ICustomQuery customQuery, QueryParameters queryParameters)
 		{
-			return delegat.ListCustomQuery<T>(customQuery, queryParameters);
+			return SessionDelegate.ListCustomQuery<T>(customQuery, queryParameters);
 		}
 
 		public object GetFilterParameterValue(string filterParameterName)
 		{
-			return delegat.GetFilterParameterValue(filterParameterName);
+			return SessionDelegate.GetFilterParameterValue(filterParameterName);
 		}
 
 		public IType GetFilterParameterType(string filterParameterName)
 		{
-			return delegat.GetFilterParameterType(filterParameterName);
+			return SessionDelegate.GetFilterParameterType(filterParameterName);
 		}
 
 		public IDictionary<string, IFilter> EnabledFilters
 		{
-			get { return delegat.EnabledFilters; }
+			get { return SessionDelegate.EnabledFilters; }
 		}
 
 		public IQuery GetNamedSQLQuery(string name)
 		{
-			return delegat.GetNamedSQLQuery(name);
+			return SessionDelegate.GetNamedSQLQuery(name);
 		}
 
-		public NHibernate.Hql.IQueryTranslator[] GetQueries(string query, bool scalar)
+		public IQueryTranslator[] GetQueries(string query, bool scalar)
 		{
-			return delegat.GetQueries(query, scalar);
+			return SessionDelegate.GetQueries(query, scalar);
 		}
 
 		public IInterceptor Interceptor
 		{
-			get { return delegat.Interceptor; }
+			get { return SessionDelegate.Interceptor; }
 		}
 
 		public EventListeners Listeners
 		{
-			get { return delegat.Listeners; }
+			get { return SessionDelegate.Listeners; }
 		}
 
 		public int DontFlushFromFind
 		{
-			get { return delegat.DontFlushFromFind; }
+			get { return SessionDelegate.DontFlushFromFind; }
 		}
 
-		public NHibernate.AdoNet.ConnectionManager ConnectionManager
+		public ConnectionManager ConnectionManager
 		{
-			get { return delegat.ConnectionManager; }
+			get { return SessionDelegate.ConnectionManager; }
 		}
 
 		public bool IsEventSource
 		{
-			get { return delegat.IsEventSource; }
+			get { return SessionDelegate.IsEventSource; }
 		}
 
 		public object GetEntityUsingInterceptor(EntityKey key)
 		{
-			return delegat.GetEntityUsingInterceptor(key);
+			return SessionDelegate.GetEntityUsingInterceptor(key);
 		}
 
 		public IPersistenceContext PersistenceContext
 		{
-			get { return delegat.PersistenceContext; }
+			get { return SessionDelegate.PersistenceContext; }
 		}
 
 		public CacheMode CacheMode
 		{
 			get
 			{
-				return delegat.CacheMode;
+				return SessionDelegate.CacheMode;
 			}
 			set
 			{
-				delegat.CacheMode = value;
+				SessionDelegate.CacheMode = value;
 			}
 		}
 
 		public bool IsOpen
 		{
-			get { return delegat.IsOpen; }
+			get { return SessionDelegate.IsOpen; }
 		}
 
 		public bool IsConnected
 		{
-			get { return delegat.IsConnected; }
+			get { return SessionDelegate.IsConnected; }
 		}
 
 		public FlushMode FlushMode
 		{
 			get
 			{
-				return delegat.FlushMode;
+				return SessionDelegate.FlushMode;
 			}
 			set
 			{
-				delegat.FlushMode = value;
+				SessionDelegate.FlushMode = value;
 			}
 		}
 
@@ -282,94 +285,94 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			get
 			{
-				return delegat.FetchProfile;
+				return SessionDelegate.FetchProfile;
 			}
 			set
 			{
-				delegat.FetchProfile = value;
+				SessionDelegate.FetchProfile = value;
 			}
 		}
 
 		public string BestGuessEntityName(object entity)
 		{
-			return delegat.BestGuessEntityName(entity);
+			return SessionDelegate.BestGuessEntityName(entity);
 		}
 
 		public string GuessEntityName(object entity)
 		{
-			return delegat.GuessEntityName(entity);
+			return SessionDelegate.GuessEntityName(entity);
 		}
 
 		public IDbConnection Connection
 		{
-			get { return delegat.Connection; }
+			get { return SessionDelegate.Connection; }
 		}
 
 		public IQuery GetNamedQuery(string queryName)
 		{
-			return delegat.GetNamedQuery(queryName);
+			return SessionDelegate.GetNamedQuery(queryName);
 		}
 
 		public bool IsClosed
 		{
-			get { return delegat.IsClosed; }
+			get { return SessionDelegate.IsClosed; }
 		}
 
 		public void Flush()
 		{
-			delegat.Flush();
+			SessionDelegate.Flush();
 		}
 
 		public bool TransactionInProgress
 		{
-			get { return delegat.TransactionInProgress; }
+			get { return SessionDelegate.TransactionInProgress; }
 		}
 
 		public EntityMode EntityMode
 		{
-			get { return delegat.EntityMode; }
+			get { return SessionDelegate.EntityMode; }
 		}
 
 		public int ExecuteNativeUpdate(NativeSQLQuerySpecification specification, QueryParameters queryParameters)
 		{
-			return delegat.ExecuteNativeUpdate(specification, queryParameters);
+			return SessionDelegate.ExecuteNativeUpdate(specification, queryParameters);
 		}
 
 		public int ExecuteUpdate(string query, QueryParameters queryParameters)
 		{
-			return delegat.ExecuteUpdate(query, queryParameters);
+			return SessionDelegate.ExecuteUpdate(query, queryParameters);
 		}
 
 		public FutureCriteriaBatch FutureCriteriaBatch
 		{
-			get { return delegat.FutureCriteriaBatch; }
+			get { return SessionDelegate.FutureCriteriaBatch; }
 		}
 
 		public FutureQueryBatch FutureQueryBatch
 		{
-			get { return delegat.FutureQueryBatch; }
+			get { return SessionDelegate.FutureQueryBatch; }
 		}
 
 		public Guid SessionId
 		{
-			get { return delegat.SessionId; }
+			get { return SessionDelegate.SessionId; }
 		}
 
-		public Transaction.ITransactionContext TransactionContext
+		public ITransactionContext TransactionContext
 		{
 			get
 			{
-				return delegat.TransactionContext;
+				return SessionDelegate.TransactionContext;
 			}
 			set
 			{
-				delegat.TransactionContext = value;
+				SessionDelegate.TransactionContext = value;
 			}
 		}
 
 		public void CloseSessionFromDistributedTransaction()
 		{
-			delegat.CloseSessionFromDistributedTransaction();
+			SessionDelegate.CloseSessionFromDistributedTransaction();
 		}
 	}
 }

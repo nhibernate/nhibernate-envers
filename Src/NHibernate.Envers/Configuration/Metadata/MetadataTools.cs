@@ -5,7 +5,7 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-	public class MetadataTools 
+	public static class MetadataTools 
 	{
 		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, string type) 
 		{
