@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <RootDir>$(MSBuildProjectDirectory)\..\</RootDir>
+    <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
     <BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
     <ExternalLibRootFolder>$(RootDir)\..\lib</ExternalLibRootFolder>
     <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
-    <DeployFolder>$(BuildFolder)\Nuget</DeployFolder>
+    <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
   </PropertyGroup>
   
   <ItemGroup Label="Extra files to deploy">
     <ExtraFiles Include="$(RootDir)\LGPL_3.0.txt" />
-    <ExtraFiles Include="$(RootDir)\NHibernate.Envers\Envers.snk" />
     <ExtraFiles Include="$(RootDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
+    <ExtraFiles Include="$(RootDir)\ReleaseNotes.txt"/>
   </ItemGroup>
   
   <ItemGroup Label="NHibernate dependencies">
@@ -21,7 +21,7 @@
     <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Remotion.Data.Linq.dll" />
   </ItemGroup>
 
-  <Target Name = "Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
+  <Target Name="Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
 
   <Target Name="RunBuild">
     <MSBuild Projects="$(RootDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
@@ -52,5 +52,4 @@
   <Target Name="CopyNHibernateLibsToDeploy">
     <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
   </Target>
-  
 </Project>
