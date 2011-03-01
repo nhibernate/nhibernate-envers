@@ -254,7 +254,6 @@
     <Compile Include="Synchronization\Work\ModWorkUnit.cs" />
     <Compile Include="Synchronization\Work\PersistentCollectionChangeWorkUnit.cs" />
     <Compile Include="Tools\ArgumentsTools.cs" />
-    <Compile Include="Tools\ArraysTools.cs" />
     <Compile Include="Tools\DictionaryComparer.cs" />
     <Compile Include="Tools\EmptyDictionary.cs" />
     <Compile Include="Tools\Graph\GraphTopologicalSort.cs" />
