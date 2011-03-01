@@ -7,15 +7,13 @@ using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-	/**
-	 * Reads persistent properties form a
-	 * {@link org.hibernate.envers.configuration.metadata.reader.PersistentPropertiesSource}
-	 * and adds the ones that are audited to a
-	 * {@link org.hibernate.envers.configuration.metadata.reader.AuditedPropertiesHolder},
-	 * filling all the auditing data.
-	 * @author Simon Duduica, port of Envers Tools class by Adam Warski (adam at warski dot org)
-	 * @author Erik-Berndt Scheper
-	 */
+	/// <summary>
+	/// Reads persistent properties form a
+	/// {@link org.hibernate.envers.configuration.metadata.reader.PersistentPropertiesSource}
+	/// and adds the ones that are audited to a
+	/// {@link org.hibernate.envers.configuration.metadata.reader.AuditedPropertiesHolder},
+	/// filling all the auditing data.
+	/// </summary>
 	public class AuditedPropertiesReader 
 	{
 		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
@@ -52,11 +50,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			foreach (var declaredPersistentProperty in _propertyAndMemberInfo.GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
 			{
-				IValue propertyValue = declaredPersistentProperty.Property.Value;
+				var propertyValue = declaredPersistentProperty.Property.Value;
 
 				PropertyAuditingData propertyData;
 				bool isAudited;
-				if (propertyValue is Component)
+				var componentValue = propertyValue as Component;
+				if (componentValue!=null)
 				{
 					var componentData = new ComponentAuditingData();
 					isAudited = FillPropertyData(declaredPersistentProperty.Member,
@@ -64,8 +63,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 													componentData,
 													declaredPersistentProperty.Property.PropertyAccessorName);
 
-					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(
-						(Component) propertyValue);
+					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(componentValue);
 					new AuditedPropertiesReader(_propertyAndMemberInfo, 
 												_metaDataStore,
 												ModificationStore.Full, componentPropertiesSource, componentData,
@@ -93,13 +91,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 		}
 
-		/**
-		 * Checks if a property is audited and if yes, fills all of its data.
-		 * @param property Property to check.
-		 * @param propertyData Property data, on which to set this property's modification store.
-		 * @param accessType Access type for the property.
-		 * @return False if this property is not audited.
-		 */
+		/// <summary>
+		/// Checks if a property is audited and if yes, fills all of its data.
+		/// </summary>
+		/// <param name="property">Property to check.</param>
+		/// <param name="mappedPropertyName">NH Property name</param>
+		/// <param name="propertyData">Property data, on which to set this property's modification store.</param>
+		/// <param name="accessType">Access type for the property.</param>
+		/// <returns>False if this property is not audited.</returns>
 		private bool FillPropertyData(MemberInfo property,
 										string mappedPropertyName,
 										PropertyAuditingData propertyData,
