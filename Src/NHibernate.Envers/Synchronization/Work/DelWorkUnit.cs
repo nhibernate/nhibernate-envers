@@ -30,8 +30,8 @@ namespace NHibernate.Envers.Synchronization.Work
 			IDictionary<string, object> data = new Dictionary<string, object>();
 			FillDataWithId(data, revisionData, RevisionType.Deleted);
 
-			if (verCfg.GlobalCfg.StoreDataAtDelete) {
-				verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, data,
+			if (VerCfg.GlobalCfg.StoreDataAtDelete) {
+				VerCfg.EntCfg[EntityName].PropertyMapper.Map(SessionImplementor, data,
 						propertyNames, state, state);
 			}
 
@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public override IAuditWorkUnit Merge(AddWorkUnit second)
 		{
 			//needed to get onetoone pk work. What should happen with "normal" entities?
-			return new ModWorkUnit(sessionImplementor, EntityName, verCfg, EntityId, entityPersister, second.State, state);
+			return new ModWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, entityPersister, second.State, state);
 		}
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)

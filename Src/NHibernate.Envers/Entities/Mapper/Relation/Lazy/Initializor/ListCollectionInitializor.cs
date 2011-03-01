@@ -41,14 +41,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementData = listRow[_elementComponentData.ComponentIndex];
 			var indexData = listRow[_indexComponentData.ComponentIndex];
 
-			var element = (T)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
+			var element = (T)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) elementData, 
 																				null, 
-																				revision);
-			var index = (int)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
+																				Revision);
+			var index = (int)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) indexData, 
 																				element, 
-																				revision);
+																				Revision);
 			collection[index] = element;
 		}
 	}

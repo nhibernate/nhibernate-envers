@@ -30,13 +30,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
             notVersionedEntityConfiguration = entCfg.GetNotVersionEntityConfiguration(entityClass.FullName);
         }
 
-        public override Object DoImmediateLoad(String entityName) 
+    	protected override Object DoImmediateLoad(String entityName) 
         {
 		    if (notVersionedEntityConfiguration == null) 
             {
                 return versionsReader.Find(entityClass, entityId, revision);
 		    } 
-		    return delegat.ImmediateLoad(entityName, entityId);
+		    return SessionDelegate.ImmediateLoad(entityName, entityId);
         }
     }
 

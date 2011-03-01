@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 
@@ -7,31 +6,31 @@ namespace NHibernate.Envers.Synchronization.Work
 {
 	public abstract class AbstractAuditWorkUnit : IAuditWorkUnit 
 	{
-		protected readonly ISessionImplementor sessionImplementor;
-		protected readonly AuditConfiguration verCfg;
-		public object EntityId { get; private set; }
-		public string EntityName { get; private set; }
-
-		public object performedData;
+		private object performedData;
 
 		protected AbstractAuditWorkUnit(ISessionImplementor sessionImplementor,			
 										string entityName, 
 										AuditConfiguration verCfg,
 										object id) 
 		{
-			this.sessionImplementor = sessionImplementor;
-			this.verCfg = verCfg;
+			SessionImplementor = sessionImplementor;
+			VerCfg = verCfg;
 			EntityId = id;
 			EntityName = entityName;
 		}
 
+		public object EntityId { get; private set; }
+		public string EntityName { get; private set; }
+		protected ISessionImplementor SessionImplementor { get; private set; }
+		protected AuditConfiguration VerCfg { get; private set; }
+
 		protected void FillDataWithId(IDictionary<string, object> data, object revision, RevisionType revisionType) 
 		{
-			var entitiesCfg = verCfg.AuditEntCfg;
+			var entitiesCfg = VerCfg.AuditEntCfg;
 
-			var originalId = new Dictionary<String, Object> {{entitiesCfg.RevisionFieldName, revision}};
+			var originalId = new Dictionary<string, object> {{entitiesCfg.RevisionFieldName, revision}};
 
-			verCfg.EntCfg[EntityName].IdMapper.MapToMapFromId(originalId, EntityId);
+			VerCfg.EntCfg[EntityName].IdMapper.MapToMapFromId(originalId, EntityId);
 			data.Add(entitiesCfg.RevisionTypePropName, revisionType);
 			data.Add(entitiesCfg.OriginalIdPropName, originalId);
 		}
@@ -39,7 +38,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public virtual void Perform(ISession session, object revisionData) 
 		{
 			var data = GenerateData(revisionData);
-			session.Save(verCfg.AuditEntCfg.GetAuditEntityName(EntityName), data);
+			session.Save(VerCfg.AuditEntCfg.GetAuditEntityName(EntityName), data);
 			SetPerformed(data);
 		}
 
@@ -48,7 +47,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			return performedData != null;
 		}
 
-		protected void SetPerformed(object performedData) 
+		private void SetPerformed(object performedData) 
 		{
 			this.performedData = performedData;
 		}
@@ -57,7 +56,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		{
 			if (IsPerformed()) 
 			{
-				session.Delete(verCfg.AuditEntCfg.GetAuditEntityName(EntityName), performedData);
+				session.Delete(VerCfg.AuditEntCfg.GetAuditEntityName(EntityName), performedData);
 				session.Flush();
 			}
 		}

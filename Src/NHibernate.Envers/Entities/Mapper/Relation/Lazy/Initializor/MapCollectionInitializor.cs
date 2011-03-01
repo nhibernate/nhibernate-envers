@@ -40,15 +40,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementData = listRow[_elementComponentData.ComponentIndex];
 			var indexData = listRow[_indexComponentData.ComponentIndex];
 
-			var element = (V)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
+			var element = (V)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) elementData,
 																				null,
-																				revision);
+																				Revision);
 
-			var index = (K)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(entityInstantiator,
+			var index = (K)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) indexData,
 																				element,
-																				revision);
+																				Revision);
 			collection[index] = element;
 		}
 	}

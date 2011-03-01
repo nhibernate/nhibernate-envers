@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			IDictionary<string, object> data = new Dictionary<string, object>();
 			FillDataWithId(data, revisionData, RevisionType.Modified);
 
-			verCfg.EntCfg[EntityName].PropertyMapper.MapToMapFromEntity(sessionImplementor,
+			VerCfg.EntCfg[EntityName].PropertyMapper.MapToMapFromEntity(SessionImplementor,
 					data, entity, null);
 
 			return data;
