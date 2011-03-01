@@ -193,18 +193,6 @@ namespace NHibernate.Envers.Tools.Query
 			expressions.Add(expression.ToString());
 		}
 
-		private bool Append(StringBuilder sb, string toAppend, bool isFirst) 
-		{
-			if (!isFirst)
-			{
-				sb.Append(" ").Append(connective).Append(" ");
-			}
-
-			sb.Append(toAppend);
-
-			return false;
-		}
-
 		public bool IsEmpty() 
 		{
 			return expressions.Count == 0 && subParameters.Count == 0 && negatedParameters.Count == 0;
