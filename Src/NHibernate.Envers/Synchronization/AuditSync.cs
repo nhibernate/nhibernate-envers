@@ -181,7 +181,7 @@ namespace NHibernate.Envers.Synchronization
 			}
 		}
 
-		public void AfterCompletion(bool b) 
+		public void AfterCompletion(bool success) 
 		{
 			manager.Remove(transaction);
 		}

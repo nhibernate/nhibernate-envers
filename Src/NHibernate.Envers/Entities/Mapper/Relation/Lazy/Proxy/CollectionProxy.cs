@@ -49,10 +49,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			}
 		}
 
-		public bool Contains(TItem o) 
+		public bool Contains(TItem item) 
 		{
 			CheckInit();
-			return CollectionDelegate.Contains(o);
+			return CollectionDelegate.Contains(item);
 		}
 
 		public void CopyTo(TItem[] array, int arrayIndex)
@@ -67,16 +67,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			return CollectionDelegate.GetEnumerator();
 		}
 
-		public void Add(TItem o) 
+		public void Add(TItem item) 
 		{
 			CheckInit();
-			CollectionDelegate.Add(o);
+			CollectionDelegate.Add(item);
 		}
 
-		public bool Remove(TItem o) 
+		public bool Remove(TItem item) 
 		{
 			CheckInit();
-			return CollectionDelegate.Remove(o);
+			return CollectionDelegate.Remove(item);
 		}
 
 		public void Clear() 
