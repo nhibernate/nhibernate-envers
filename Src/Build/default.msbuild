@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootDir>$(MSBuildProjectDirectory)\..\</RootDir>
-    <BuildFolder>$(RootDir)\..\Build</BuildFolder>
+    <BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
     <ExternalLibRootFolder>$(RootDir)\..\lib</ExternalLibRootFolder>
     <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
     <DeployFolder>$(BuildFolder)\Nuget</DeployFolder>
