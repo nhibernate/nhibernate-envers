@@ -31,12 +31,12 @@ namespace NHibernate.Envers.Configuration
 			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping, propertyAndMemberInfo);
 		}
 
-		public virtual GlobalConfiguration GlobalCfg { get; private set; }
-		public virtual AuditEntitiesConfiguration AuditEntCfg { get; private set; }
-		public virtual AuditSyncManager AuditSyncManager { get; private set; }
-		public virtual EntitiesConfigurations EntCfg { get; private set; }
-		public virtual RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
-		public virtual RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
+		public GlobalConfiguration GlobalCfg { get; private set; }
+		public AuditEntitiesConfiguration AuditEntCfg { get; private set; }
+		public AuditSyncManager AuditSyncManager { get; private set; }
+		public EntitiesConfigurations EntCfg { get; private set; }
+		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
+		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
