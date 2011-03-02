@@ -11,21 +11,21 @@ namespace NHibernate.Envers.Configuration.Attributes
 			AuditJoinTable = new AuditJoinTableAttribute();
 		}
 
-		/**
-		 * @return <strong>Required</strong> Name of the field (or property) whose mapping
-		 * is being overridden.
-		 */
+		/// <summary>
+		///  <strong>Required</strong> Name of the field (or property) whose mapping
+		///  is being overridden.
+		/// </summary>
 		public string Name { get; set; }
 
-		/**
-		 * @return Indicates if the field (or property) is audited; defaults to {@code true}.
-		 */
+		/// <summary>
+		/// Indicates if the field (or property) is audited; defaults to {@code true}.
+		/// </summary>
 		public bool IsAudited { get; set; }
 
-		/**
-		 * @return New {@link AuditJoinTable} used for this field (or property). Its value
-		 * is ignored if {@link #isAudited()} equals to {@code false}.
-		 */
+		/// <summary>
+		/// @return New {@link AuditJoinTable} used for this field (or property). Its value
+		/// is ignored if {@link #isAudited()} equals to {@code false}.
+		/// </summary>
 		public AuditJoinTableAttribute AuditJoinTable { get; set; }
 	}
 }
