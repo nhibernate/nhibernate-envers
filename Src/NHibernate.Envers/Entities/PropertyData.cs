@@ -4,10 +4,7 @@ namespace NHibernate.Envers.Entities
 {
 	public class PropertyData 
 	{
-		public string Name { get; private set; }
-		public string BeanName { get; private set; }
-		public string AccessType {get; private set;}
-		public ModificationStore Store {get; private set;}
+		private readonly ModificationStore store;
 
 		/// <summary>
 		/// Copies the given property data, except the name.
@@ -19,11 +16,10 @@ namespace NHibernate.Envers.Entities
 			Name = newName;
 			BeanName = propertyData.BeanName;
 			AccessType = propertyData.AccessType;
-			Store = propertyData.Store;
+			store = propertyData.store;
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="name">Name of the property.</param>
 		/// <param name="beanName">Name of the property in the bean.</param>
@@ -34,8 +30,13 @@ namespace NHibernate.Envers.Entities
 			Name = name;
 			BeanName = beanName;
 			AccessType = accessType;
-			Store = store;
+			this.store = store;
 		}
+
+		public string Name { get; private set; }
+		public string BeanName { get; private set; }
+		public string AccessType { get; private set; }
+
 
 		public override bool Equals(object obj) 
 		{
@@ -47,7 +48,7 @@ namespace NHibernate.Envers.Entities
 			if (AccessType != null ? !AccessType.Equals(that.AccessType) : that.AccessType != null) return false;
 			if (BeanName != null ? !BeanName.Equals(that.BeanName) : that.BeanName != null) return false;
 			if (Name != null ? !Name.Equals(that.Name) : that.Name != null) return false;
-			if (Store != that.Store) return false;
+			if (store != that.store) return false;
 
 			return true;
 		}
@@ -57,7 +58,7 @@ namespace NHibernate.Envers.Entities
 			var result = Name != null ? Name.GetHashCode() : 0;
 			result = 31 * result + (BeanName != null ? BeanName.GetHashCode() : 0);
 			result = 31 * result + (AccessType != null ? AccessType.GetHashCode() : 0);
-			result = 31 * result + (Store.GetHashCode());
+			result = 31 * result + (store.GetHashCode());
 			return result;
 		}
 	}
