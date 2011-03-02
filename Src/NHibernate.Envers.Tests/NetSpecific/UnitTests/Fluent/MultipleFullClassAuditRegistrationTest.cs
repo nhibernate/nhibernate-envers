@@ -7,6 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
+	[TestFixture]
 	public class MultipleFullClassAuditRegistrationTest
 	{
 		[Test]
