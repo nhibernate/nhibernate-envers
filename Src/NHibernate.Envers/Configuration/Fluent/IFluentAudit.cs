@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
-	public interface IFluentAudit<T> : IAttributeProvider
+	public interface IFluentAudit<T> 
 	{
 		/// <summary>
 		/// Excludes the property from being audited.
