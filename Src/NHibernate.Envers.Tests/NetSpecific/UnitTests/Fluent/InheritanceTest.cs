@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			var cfg = new FluentConfiguration();
 			cfg.Audit<Dog>();
 			cfg.Audit<Cat>();
-			metas = cfg.CreateMetaData(null);
+			metas = cfg.BuildMetaData();
 		}
 
 		[Test]

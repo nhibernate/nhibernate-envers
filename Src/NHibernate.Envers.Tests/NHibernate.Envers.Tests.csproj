@@ -374,6 +374,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Tools\AssertExtensions.cs" />
+    <Compile Include="Tools\FluentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />

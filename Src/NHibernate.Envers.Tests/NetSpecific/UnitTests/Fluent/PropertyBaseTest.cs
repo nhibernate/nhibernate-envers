@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			cfg.Audit<Dog>()
 				.Exclude(dog => dog.Name)
 				.Exclude("weight");
-			metas = cfg.CreateMetaData(null);
+			metas = cfg.BuildMetaData();
 		}
 
 		[Test]

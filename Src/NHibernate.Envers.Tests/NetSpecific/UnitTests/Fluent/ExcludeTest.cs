@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			cfg.Audit<SomePropsEntity>()
 					.Exclude(s => s.Number)
 					.Exclude(s => s.String);
-			metas = cfg.CreateMetaData(null);
+			metas = cfg.BuildMetaData();
 		}
 
 		[Test]
