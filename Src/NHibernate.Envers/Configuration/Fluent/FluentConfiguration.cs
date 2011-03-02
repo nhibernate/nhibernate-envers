@@ -22,6 +22,11 @@ namespace NHibernate.Envers.Configuration.Fluent
 			auditedTypes = new List<System.Type>();
 		}
 
+		/// <summary>
+		/// Register entity type T to be audited.
+		/// </summary>
+		/// <typeparam name="T">The type to be audited.</typeparam>
+		/// <returns>A fluent audit object where you can fine grain the auditing.</returns>
 		public IFluentAudit<T> Audit<T>()
 		{
 			var ret = new FluentAudit<T>();
