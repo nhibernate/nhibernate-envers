@@ -13,7 +13,6 @@ namespace NHibernate.Envers.Synchronization
 		public AuditSyncManager(IRevisionInfoGenerator revisionInfoGenerator) 
 		{
 			auditSyncs = new ThreadSafeDictionary<ITransaction, AuditSync>(new Dictionary<ITransaction, AuditSync>());
-
 			this.revisionInfoGenerator = revisionInfoGenerator;
 		}
 

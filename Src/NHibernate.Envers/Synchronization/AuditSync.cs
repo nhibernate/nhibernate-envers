@@ -17,9 +17,9 @@ namespace NHibernate.Envers.Synchronization
 		private readonly ITransaction transaction;
 		private readonly LinkedList<IAuditWorkUnit> workUnits;
 		private readonly Queue<IAuditWorkUnit> undoQueue;
-		private readonly IDictionary<Pair<String, Object>, IAuditWorkUnit> usedIds;
+		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
 
-		private Object revisionData;
+		private object revisionData;
 
 		public AuditSync(AuditSyncManager manager, IEventSource session, IRevisionInfoGenerator revisionInfoGenerator) 
 		{
@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Synchronization
 			transaction = session.Transaction;
 			workUnits = new LinkedList<IAuditWorkUnit>();
 			undoQueue = new Queue<IAuditWorkUnit>();
-			usedIds = new Dictionary<Pair<String, Object>, IAuditWorkUnit>();
+			usedIds = new Dictionary<Pair<string, object>, IAuditWorkUnit>();
 		}
 
 		private void RemoveWorkUnit(IAuditWorkUnit vwu) 
@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Synchronization
 				else 
 				{
 					var entityName = vwu.EntityName;
-					var usedIdsKey = Pair<String, Object>.Make(entityName, entityId);
+					var usedIdsKey = Pair<string, object>.Make(entityName, entityId);
 
 					if (usedIds.ContainsKey(usedIdsKey)) 
 					{
@@ -112,7 +112,7 @@ namespace NHibernate.Envers.Synchronization
 			}
 		}
 
-		public Object GetCurrentRevisionData(ISession session, bool persist) 
+		public object GetCurrentRevisionData(ISession session, bool persist) 
 		{
 			// Generating the revision data if not yet generated
 			if (revisionData == null) 

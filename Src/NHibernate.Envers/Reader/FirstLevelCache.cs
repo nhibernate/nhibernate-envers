@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Reader
@@ -10,7 +9,7 @@ namespace NHibernate.Envers.Reader
     /// </summary>
     public class FirstLevelCache: IFirstLevelCache 
     {
-        private readonly IDictionary<Triple<String, long, Object>, Object> cache;
+        private readonly IDictionary<Triple<string, long, object>, object> cache;
 
         public FirstLevelCache() 
         {

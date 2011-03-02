@@ -7,14 +7,14 @@ namespace NHibernate.Envers.Configuration.Attributes
 	{
 		public RevisionEntityAttribute()
 		{
-			Value = typeof (IRevisionListener);
+			Listener = typeof (IRevisionListener);
 		}
 
 		public RevisionEntityAttribute(System.Type listener)
 		{
-			Value = listener;
+			Listener = listener;
 		}
 
-		public System.Type Value { get; set; }
+		public System.Type Listener { get; set; }
 	}
 }

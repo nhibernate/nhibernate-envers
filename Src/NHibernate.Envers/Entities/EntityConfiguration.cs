@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Entities
 		}
 
 
-		public ICollection<RelationDescription> RelationsIterator
+		public IEnumerable<RelationDescription> RelationsIterator
 		{
 			get { return relations.Values; }
 		}
