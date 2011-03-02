@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// </summary>
 	/// <seealso cref="IFluentAudit{T}"/>
 	/// <seealso cref="LooselyTypedFluentAudit"/>
-	public class FluentAudit<T> : IFluentAudit<T>
+	public class FluentAudit<T> : IFluentAudit<T>, IAttributeProvider
 	{
 		private readonly ICollection<MemberInfo> excluded;
 		private readonly ICollection<MemberInfo> excludedRelations;
