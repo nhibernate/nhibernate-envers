@@ -47,8 +47,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			if (annotation != null)
 			{
-				string overrideName = annotation.Name;
-				bool present = false;
+				var overrideName = annotation.Name;
+				var present = false;
 				foreach (AuditOverrideAttribute current in AuditingOverrides)
 				{
 					if (current.Name.Equals(overrideName))
@@ -68,7 +68,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			if (annotationOverrides != null)
 			{
-				foreach (AuditOverrideAttribute attrib in annotationOverrides.value)
+				foreach (var attrib in annotationOverrides.value)
 				{
 					addAuditingOverride(attrib);
 				}
