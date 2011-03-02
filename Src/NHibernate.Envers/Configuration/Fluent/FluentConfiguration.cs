@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 								revisionTimestamp.Body.MethodInfo("revisionTimestamp")));
 		}
 
-		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
+		IDictionary<System.Type, IEntityMeta> IMetaDataProvider.CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
 			var ret = new Dictionary<System.Type, IEntityMeta>();
 			foreach (var attributeFactory in attributeFactories)
