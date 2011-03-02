@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 				.Exclude("data1")
 				.Exclude("data2");
 
-			metas = cfg.BuildMetaData();
+			metas = cfg.CreateMetaData(null);
 		}
 
 		[Test]

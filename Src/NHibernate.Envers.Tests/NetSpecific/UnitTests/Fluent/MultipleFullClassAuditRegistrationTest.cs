@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit(new[]{typeof(Animal)});
-			cfg.BuildMetaData().Keys.Should().Contain(typeof(Animal)).And.Have.Count.EqualTo(1);
+			cfg.CreateMetaData(null).Keys.Should().Contain(typeof(Animal)).And.Have.Count.EqualTo(1);
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit(new[] { typeof(Dog), typeof(Cat) });
-			cfg.BuildMetaData().Keys.Should().Have.SameValuesAs(new[] { typeof(Animal), typeof(Cat), typeof(Dog)});
+			cfg.CreateMetaData(null).Keys.Should().Have.SameValuesAs(new[] { typeof(Animal), typeof(Cat), typeof(Dog) });
 		}
 
 		[Test]
@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit(new[] { typeof(Dog), typeof(Cat) });
-			var metas = cfg.BuildMetaData();
+			var metas = cfg.CreateMetaData(null);
 			foreach (var entityMeta in metas.Values)
 			{
 				entityMeta.ClassMetas.OnlyContains<AuditedAttribute>();
