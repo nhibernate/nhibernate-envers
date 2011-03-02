@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Synchronization.Work
 					entityPersister.PropertyNames, state, null);
 		}
 
-		public AddWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
+		private AddWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
 						   object id, IDictionary<string, object> data)
 			: base(sessionImplementor, entityName, verCfg, id)
 		{

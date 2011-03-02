@@ -36,15 +36,9 @@ namespace NHibernate.Envers.Entities
 				return null;
 			}
 
-			string name = null;
 			if(versionsEntity.Contains(typeKey))
 			{
-				name = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
-			}
-
-			if (name != null) 
-			{
-				entityName = name;
+				entityName = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
 			}
 
 			// First mapping the primary key

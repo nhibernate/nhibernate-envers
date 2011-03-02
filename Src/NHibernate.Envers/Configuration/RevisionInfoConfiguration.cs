@@ -210,7 +210,7 @@ namespace NHibernate.Envers.Configuration
 						revisionInfoClass = pc.MappedClass;
 						revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
 						revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
-																				 revEntityAttr.Value, revisionInfoTimestampData, isTimestampAsDate());
+																				 revEntityAttr.Listener, revisionInfoTimestampData, isTimestampAsDate());
 						break;
 					}
 				default:

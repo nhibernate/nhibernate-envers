@@ -12,6 +12,7 @@ namespace NHibernate.Envers.Synchronization.Work
 	public class PersistentCollectionChangeWorkUnit : AbstractAuditWorkUnit, IAuditWorkUnit 
 	{
 		private readonly IList<PersistentCollectionChangeData> collectionChanges;
+		private readonly string referencingPropertyName;
 
 		public PersistentCollectionChangeWorkUnit(ISessionImplementor sessionImplementor, 
 												string entityName,
@@ -24,15 +25,13 @@ namespace NHibernate.Envers.Synchronization.Work
 			: base(sessionImplementor, entityName, auditCfg, 
 					new PersistentCollectionChangeWorkUnitId(id, collectionEntry.Role))
 		{
-			ReferencingPropertyName = referencingPropertyName;
+			this.referencingPropertyName = referencingPropertyName;
 
 			collectionChanges = auditCfg.EntCfg[EntityName].PropertyMapper
 					.MapCollectionChanges(referencingPropertyName, collection, snapshot, id);
 		}
 
-		public string ReferencingPropertyName { get; private set; }
-
-		public PersistentCollectionChangeWorkUnit(ISessionImplementor sessionImplementor, 
+		private PersistentCollectionChangeWorkUnit(ISessionImplementor sessionImplementor, 
 												string entityName,
 												AuditConfiguration verCfg, 
 												object id,
@@ -41,7 +40,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			:base(sessionImplementor, entityName, verCfg, id)
 		{
 			this.collectionChanges = collectionChanges;
-			ReferencingPropertyName = referencingPropertyName;
+			this.referencingPropertyName = referencingPropertyName;
 		}
 
 		public override bool ContainsWork()
@@ -68,7 +67,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> CollectionChanges
+		public IEnumerable<PersistentCollectionChangeData> CollectionChanges
 		{
 			get { return collectionChanges; }
 		}
@@ -134,7 +133,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				mergedChanges = mergedChanges.Concat(CollectionChanges).ToList();
 
 				return new PersistentCollectionChangeWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, mergedChanges, 
-						ReferencingPropertyName);
+						referencingPropertyName);
 			}
 			throw new Exception("Trying to merge a " + first + " with a PersitentCollectionChangeWorkUnit. " +
 								"This is not really possible.");
