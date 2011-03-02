@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
@@ -73,18 +74,28 @@ namespace NHibernate.Envers.Configuration.Fluent
 				foreach (var classAttribute in attributeFactory.CreateClassAttributes())
 				{
 					var entMeta = createOrGetEntityMeta(ret, type);
-					log.Debug("Adding " + classAttribute.GetType().Name + " to type " + type.FullName);
-					entMeta.AddClassMeta(classAttribute);
+					addClassMetaAndLog(type, classAttribute, entMeta);
 				}
 				foreach (var memberInfoAndAttribute in attributeFactory.CreateMemberAttributes())
 				{
 					var entMeta = createOrGetEntityMeta(ret, type);
-					log.Debug("Adding " + memberInfoAndAttribute.Attribute.GetType().Name + " to member " + memberInfoAndAttribute.MemberInfo.Name + " on type " + type.FullName);
-					entMeta.AddMemberMeta(memberInfoAndAttribute.MemberInfo, memberInfoAndAttribute.Attribute);	
+					addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
 				}
 			}
 			addBaseTypesForAuditAttribute(ret, auditedTypes);
 			return ret;
+		}
+
+		private static void addMemberMetaAndLog(System.Type type, MemberInfoAndAttribute memberInfoAndAttribute, EntityMeta entMeta)
+		{
+			log.Debug("Adding " + memberInfoAndAttribute.Attribute.GetType().Name + " to member " + memberInfoAndAttribute.MemberInfo.Name + " on type " + type.FullName);
+			entMeta.AddMemberMeta(memberInfoAndAttribute.MemberInfo, memberInfoAndAttribute.Attribute);
+		}
+
+		private static void addClassMetaAndLog(System.Type type, Attribute classAttribute, EntityMeta entMeta)
+		{
+			log.Debug("Adding " + classAttribute.GetType().Name + " to type " + type.FullName);
+			entMeta.AddClassMeta(classAttribute);
 		}
 
 		private static void addBaseTypesForAuditAttribute(IDictionary<System.Type, IEntityMeta> ret, IEnumerable<System.Type> auditedTypes)
@@ -108,7 +119,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var entMetaForBaseType = (EntityMeta) entMetaForBaseTypeTemp;
 			if(!entityMetaIsAuditedClass(entMetaForBaseType))
 			{
-				entMetaForBaseType.AddClassMeta(new AuditedAttribute());
+				addClassMetaAndLog(baseType, new AuditedAttribute(), entMetaForBaseType);
 				ret[baseType] = entMetaForBaseType;
 			}
 			setBaseTypeAsAudited(baseType.BaseType, ret);
@@ -116,12 +127,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static bool entityMetaIsAuditedClass(EntityMeta entMetaForBaseType)
 		{
-			foreach (var classMeta in entMetaForBaseType.ClassMetas)
-			{
-				if (classMeta.GetType().Equals(typeof(AuditedAttribute)))
-					return true;
-			}
-			return false;
+			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta.GetType().Equals(typeof (AuditedAttribute)));
 		}
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)
