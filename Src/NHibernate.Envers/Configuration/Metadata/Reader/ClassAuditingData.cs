@@ -5,13 +5,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
 	public class ClassAuditingData : IAuditedPropertiesHolder 
 	{
+		private readonly IDictionary<string, PropertyAuditingData> properties;
+
 		public ClassAuditingData()
 		{
-			Properties = new Dictionary<string, PropertyAuditingData>();
+			properties = new Dictionary<string, PropertyAuditingData>();
 			JoinTableDictionary = new Dictionary<string, string>();
 		}
 
-		public IDictionary<string, PropertyAuditingData> Properties { get; private set; }
 		//called SecondaryTableDictionary in Hibernate Envers
 		public IDictionary<string, string> JoinTableDictionary { get; private set; }
 		public AuditTableAttribute AuditTable { get; set; }
@@ -24,18 +25,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public void AddPropertyAuditingData(string propertyName, PropertyAuditingData auditingData)
 		{
-			Properties.Add(propertyName, auditingData);
+			properties.Add(propertyName, auditingData);
 		}
 
 		public PropertyAuditingData GetPropertyAuditingData(string propertyName)
 		{
 			PropertyAuditingData ret;
-			return Properties.TryGetValue(propertyName, out ret) ? ret : null;
+			return properties.TryGetValue(propertyName, out ret) ? ret : null;
 		}
 
 		public IEnumerable<string> PropertyNames
 		{
-			get { return Properties.Keys; }
+			get { return properties.Keys; }
 		}
 
 		public void SetDefaultAudited(bool defaultAudited) 
@@ -45,7 +46,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public bool IsAudited() 
 		{
-			return defaultAudited || Properties.Count > 0;
+			return defaultAudited || properties.Count > 0;
 		}
 	}
 }
