@@ -356,6 +356,7 @@
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
+    <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
