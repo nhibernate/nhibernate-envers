@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
-	[TestFixture, Ignore("Fails right now - NHE-7")]
+	[TestFixture, Ignore("Continue later - NHE7")]
 	public class RollbackAuditExceptionTest : TestBase
 	{
 		protected override void Initialize()
@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			{
 				intId = (int)Session.Save(intEntity);
 				Session.Save(strEntity);
-				Assert.Throws<NullReferenceException>(tx.Commit);
+				Assert.Throws<SqlException>(tx.Commit);
 			}
 			verifyNoDataGotPeristed(intId);
 		}
@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			{
 				intId = (int)Session.Save(intEntity);
 				Session.Save(strEntity);
-				Assert.Throws<NullReferenceException>(tx.Commit);
+				Assert.Throws<SqlException>(tx.Commit);
 			}
 			verifyNoDataGotPeristed(intId);
 		}
