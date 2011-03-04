@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Engine;
@@ -159,14 +158,14 @@ namespace NHibernate.Envers.Reader
 		{
 			if (!(Session is IEventSource))
 			{
-				throw new NotSupportedException("The provided session is not an EventSource!");// ORIG IllegalArgumentException
+				throw new NotSupportedException("The provided session is not an EventSource!");
 			}
 
 			// Obtaining the current audit sync
-			var auditSync = verCfg.AuditSyncManager.Get((IEventSource)Session);
+			var auditSync = verCfg.AuditProcessManager.Get((IEventSource)Session);
 
 			// And getting the current revision data
-			return auditSync.GetCurrentRevisionData(Session, persist);
+			return auditSync.CurrentRevisionData(Session, persist);
 		}
 
 		public T GetCurrentRevision<T>(bool persist)

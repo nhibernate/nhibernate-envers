@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using NHibernate.Envers.Tests.Entities;
+using NHibernate.Exceptions;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
-	[TestFixture, Ignore("Continue later - NHE7")]
+	[TestFixture]
 	public class RollbackAuditExceptionTest : TestBase
 	{
 		protected override void Initialize()
@@ -25,12 +25,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			{
 				intId = (int)Session.Save(intEntity);
 				Session.Save(strEntity);
-				Assert.Throws<SqlException>(tx.Commit);
+				Assert.Throws<GenericADOException>(tx.Commit);
 			}
 			verifyNoDataGotPeristed(intId);
 		}
 
-		[Test]
+		[Test, Ignore("Bug NH-8")]
 		public void WhenAuditPeristExceptionOccursTransactionShouldBeRolledBack_FlushModeNever()
 		{
 			int intId;
@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			{
 				intId = (int)Session.Save(intEntity);
 				Session.Save(strEntity);
-				Assert.Throws<SqlException>(tx.Commit);
+				Assert.Throws<GenericADOException>(tx.Commit);
 			}
 			verifyNoDataGotPeristed(intId);
 		}

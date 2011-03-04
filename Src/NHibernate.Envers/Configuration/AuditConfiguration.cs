@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Configuration
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
-			AuditSyncManager = new AuditSyncManager(revInfoCfgResult.RevisionInfoGenerator);
+			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg,
@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration AuditEntCfg { get; private set; }
-		public AuditSyncManager AuditSyncManager { get; private set; }
+		public AuditProcessManager AuditProcessManager { get; private set; }
 		public EntitiesConfigurations EntCfg { get; private set; }
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
