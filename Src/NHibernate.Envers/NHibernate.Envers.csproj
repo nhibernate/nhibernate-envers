@@ -241,8 +241,8 @@
     <Compile Include="Configuration\Attributes\RevisionTimestampAttribute.cs" />
     <Compile Include="RevisionType.cs" />
     <Compile Include="Configuration\Attributes\JoinAuditTableAttribute.cs" />
-    <Compile Include="Synchronization\AuditSync.cs" />
-    <Compile Include="Synchronization\AuditSyncManager.cs" />
+    <Compile Include="Synchronization\AuditProcess.cs" />
+    <Compile Include="Synchronization\AuditProcessManager.cs" />
     <Compile Include="Synchronization\Work\AbstractAuditWorkUnit.cs" />
     <Compile Include="Synchronization\Work\AddWorkUnit.cs" />
     <Compile Include="Synchronization\Work\CollectionChangeWorkUnit.cs" />
