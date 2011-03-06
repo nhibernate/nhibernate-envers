@@ -1,4 +1,3 @@
-using System;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
@@ -15,23 +14,22 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
             set { id = value; }
         }
 
-        public virtual string Data
-        {
-            get { return data; }
-            set { data = value; }
-        }
+		public virtual void SetData(string theData)
+		{
+			data = theData;
+		}
 
         public override bool Equals(object obj)
         {
             var bte = obj as FieldAccessEntity;
             if (bte == null)
                 return false;
-            return (bte.Id == Id && string.Equals(bte.Data, Data));
+            return (bte.Id == Id && string.Equals(bte.data, data));
         }
 
         public override int GetHashCode()
         {
-            return Id ^ Data.GetHashCode();
+            return Id ^ data.GetHashCode();
         }
     }
 
@@ -46,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
     public class Country
     {
         private readonly int _code;
-        private readonly string _name;
+        private string _name;
 
         protected Country()
         {
@@ -63,18 +61,23 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
             get { return _code; }
         }
 
-        public override bool Equals(object obj)
+    	public virtual string Name
+    	{
+    		get { return _name; }
+    	}
+
+    	public override bool Equals(object obj)
         {
             var casted = obj as Country;
             if (casted == null)
                 return false;
 
-            return casted.Code == Code && casted._name.Equals(_name);
+            return casted.Code == Code && casted.Name.Equals(Name);
         }
 
         public override int GetHashCode()
         {
-            return Code ^ _name.GetHashCode();
+            return Code ^ Name.GetHashCode();
         }
     }
 

@@ -1,1 +1,7 @@
-=== ALPHA 1 (v 0.8) ===
+=== ALPHA 1 (v 0.8.1.0), 2011-03-05 ===
+
+[NHE-2] - Biref onetoone on pk
+[NHE-3] - Support access="readonly"
+[NHE-4] - Structs as components - querying
+[NHE-6] - Bidirectional list support
+[NHE-7] - Exception in AuditSync.BeforeCompletion is swallowed by (NH) AdoTransaction
