@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Configuration
 	/// </summary>
 	public class PersistentClassGraphDefiner : IGraphDefiner<PersistentClass, string> 
 	{
-		private Cfg.Configuration cfg;
+		private readonly Cfg.Configuration cfg;
 
 		public PersistentClassGraphDefiner(Cfg.Configuration cfg) 
 		{
