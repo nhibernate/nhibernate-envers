@@ -1,5 +1,5 @@
-﻿using NHibernate.Envers.Entities.Mapper.Id;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {

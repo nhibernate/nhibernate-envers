@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace NHibernate.Envers.Tools
+﻿namespace NHibernate.Envers.Tools
 {
 	public static class StringTools
 	{

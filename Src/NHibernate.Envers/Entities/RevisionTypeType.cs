@@ -1,7 +1,7 @@
 ﻿using System;
-using NHibernate.UserTypes;
-using NHibernate.SqlTypes;
 using System.Data;
+using NHibernate.SqlTypes;
+using NHibernate.UserTypes;
 
 namespace NHibernate.Envers.Entities
 {

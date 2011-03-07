@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using NHibernate.Envers.Tests.Integration.Inheritance.Entities;
 using NUnit.Framework;
 

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
-using NHibernate.Envers.Configuration.Metadata;
-using System.Xml;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
-using NHibernate.Type;
 using NHibernate.SqlTypes;
+using NHibernate.Type;
 
 namespace NHibernate.Envers.Configuration
 {

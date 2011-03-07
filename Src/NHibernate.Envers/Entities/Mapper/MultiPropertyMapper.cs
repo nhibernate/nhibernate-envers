@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NHibernate.Envers.Tools;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
 

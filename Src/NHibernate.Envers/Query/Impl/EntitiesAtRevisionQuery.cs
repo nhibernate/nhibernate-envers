@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Impl
 {

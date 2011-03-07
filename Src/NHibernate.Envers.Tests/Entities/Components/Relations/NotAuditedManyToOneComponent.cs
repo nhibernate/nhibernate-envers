@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Envers.Configuration.Attributes;
+﻿using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.Components.Relations
 {

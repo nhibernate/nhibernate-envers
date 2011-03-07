@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Collection;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Tools;
 

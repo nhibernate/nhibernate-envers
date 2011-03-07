@@ -1,14 +1,14 @@
-﻿using NHibernate.Event;
-using NHibernate.Proxy;
+﻿using NHibernate.Collection;
 using NHibernate.Engine;
-using NHibernate.Collection;
-using NHibernate.Persister.Collection;
-using NHibernate.Envers.Entities;
-using NHibernate.Envers.Tools;
-using NHibernate.Envers.Synchronization.Work;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities;
 using NHibernate.Envers.Synchronization;
+using NHibernate.Envers.Synchronization.Work;
+using NHibernate.Envers.Tools;
+using NHibernate.Event;
+using NHibernate.Persister.Collection;
 using NHibernate.Persister.Entity;
+using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Event
 {

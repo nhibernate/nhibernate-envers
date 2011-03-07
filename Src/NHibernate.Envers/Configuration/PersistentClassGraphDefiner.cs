@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using NHibernate.Mapping;
 using NHibernate.Envers.Tools.Graph;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
 {

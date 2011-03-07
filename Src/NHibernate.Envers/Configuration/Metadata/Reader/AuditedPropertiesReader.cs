@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
-using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {

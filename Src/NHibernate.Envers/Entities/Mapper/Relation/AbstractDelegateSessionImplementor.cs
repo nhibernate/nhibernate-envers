@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using NHibernate.AdoNet;
-using NHibernate.Engine;
-using NHibernate.Collection;
 using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using NHibernate.AdoNet;
+using NHibernate.Collection;
+using NHibernate.Engine;
+using NHibernate.Engine.Query.Sql;
+using NHibernate.Event;
 using NHibernate.Hql;
 using NHibernate.Impl;
-using NHibernate.Persister.Entity;
 using NHibernate.Loader.Custom;
-using NHibernate.Engine.Query.Sql;
+using NHibernate.Persister.Entity;
 using NHibernate.Transaction;
 using NHibernate.Type;
-using NHibernate.Event;
-using System.Data;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {

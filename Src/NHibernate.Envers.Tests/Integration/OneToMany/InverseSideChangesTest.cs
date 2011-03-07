@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.OneToMany;
 using NUnit.Framework;
@@ -51,7 +52,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			Assert.IsNull(rev2.Reference);
 		}
 
-		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		protected override IEnumerable<string> Mappings
 		{
 			get
 			{

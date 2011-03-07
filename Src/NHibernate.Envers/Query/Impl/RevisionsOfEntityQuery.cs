@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools;
 using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Query.Impl

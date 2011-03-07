@@ -1,5 +1,5 @@
-﻿using NHibernate.Envers.Entities.Mapper.Id;
-using System.Xml;
+﻿using System.Xml;
+using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities
 {

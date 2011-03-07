@@ -2,11 +2,10 @@
 using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
-using NHibernate.Envers.Exceptions;
-using NHibernate.Mapping;
-using NHibernate.Envers.Tools;
 using NHibernate.Envers.Entities.Mapper.Relation;
-
+using NHibernate.Envers.Exceptions;
+using NHibernate.Envers.Tools;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {

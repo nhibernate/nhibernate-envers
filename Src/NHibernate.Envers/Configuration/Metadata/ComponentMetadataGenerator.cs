@@ -1,7 +1,7 @@
-﻿using NHibernate.Mapping;
+﻿using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
-using System.Xml;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {

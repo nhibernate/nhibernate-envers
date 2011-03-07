@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Reader;
 using NHibernate.Envers.Exceptions;
-using NHibernate.Util;
-using System.Collections;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Entities
 {
