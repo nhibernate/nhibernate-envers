@@ -125,7 +125,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			setBaseTypeAsAudited(baseType.BaseType, ret);
 		}
 
-		private static bool entityMetaIsAuditedClass(EntityMeta entMetaForBaseType)
+		private static bool entityMetaIsAuditedClass(IEntityMeta entMetaForBaseType)
 		{
 			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta.GetType().Equals(typeof (AuditedAttribute)));
 		}
