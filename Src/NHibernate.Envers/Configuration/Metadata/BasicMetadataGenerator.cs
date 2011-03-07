@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private void AddCustomValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		private static void AddCustomValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
 									IValue value, ISimpleMapperBuilder mapper, bool insertable, 
 									bool key, System.Type typeOfUserImplementation) 
 		{
