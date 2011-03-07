@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
-	/**
-	 * Selects data from a relation middle-table and a related non-audited entity.
-	 * @author Adam Warski (adam at warski dot org)
-	 */
+	/// <summary>
+	/// Selects data from a relation middle-table and a related non-audited entity.
+	/// </summary>
 	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator 
 	{
 		private readonly string queryString;
