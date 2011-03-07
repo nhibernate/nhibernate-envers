@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Mapping;
 using NHibernate.Properties;
 
-namespace NHibernate.Envers.Configuration.Metadata.Reader
+namespace NHibernate.Envers.Tools.Reflection
 {
-	public class PropertyAndMemberInfo
+	public static class PropertyAndMemberInfo
 	{
 		private const BindingFlags DefaultBindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy;
 
@@ -21,8 +22,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					new PascalCaseMUnderscoreStrategy(),
 				};
 
-		//rk - todo: cache the result here
-		public IEnumerable<DeclaredPersistentProperty> GetPersistentInfo(System.Type @class, IEnumerable<Property> properties)
+		public static IEnumerable<DeclaredPersistentProperty> PersistentInfo(System.Type @class, IEnumerable<Property> properties)
 		{
 			// a persistent property can be anything including a noop "property" declared in the mapping
 			// for query only. In this case I will apply some trick to get the MemberInfo.
@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					// This part will run for:
 					// 1) query only property (access="none" or access="noop")
 					// 2) a strange case where the element <property> is declared with a "field.xyz" but only a field is used in the class. (Only God may know way)
-					int exactFieldIdx = GetMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
+					var exactFieldIdx = GetMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
 					if (exactFieldIdx >= 0)
 					{
 						yield return new DeclaredPersistentProperty { Member = candidateMembers[exactFieldIdx], Property = property };

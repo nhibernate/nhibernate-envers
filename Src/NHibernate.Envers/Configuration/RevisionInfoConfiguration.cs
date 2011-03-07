@@ -8,6 +8,7 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.Configuration.Metadata;
 using System.Xml;
 using NHibernate.Envers.RevisionInfo;
+using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
 using NHibernate.Type;
 using NHibernate.SqlTypes;
@@ -17,7 +18,6 @@ namespace NHibernate.Envers.Configuration
 	public class RevisionInfoConfiguration 
 	{
 		private readonly IMetaDataStore _metaDataStore;
-		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
 		private string revisionInfoEntityName;
 		private PropertyData revisionInfoIdData;
 		private PropertyData revisionInfoTimestampData;
@@ -26,10 +26,9 @@ namespace NHibernate.Envers.Configuration
 		private string revisionPropSqlType;
 		private string revisionAssQName;
 
-		public RevisionInfoConfiguration(IMetaDataStore metaDataStore, PropertyAndMemberInfo propertyAndMemberInfo) 
+		public RevisionInfoConfiguration(IMetaDataStore metaDataStore) 
 		{
 			_metaDataStore = metaDataStore;
-			_propertyAndMemberInfo = propertyAndMemberInfo;
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
 			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.None);
 			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.None);
@@ -190,7 +189,7 @@ namespace NHibernate.Envers.Configuration
 						var propertiesPlusIdentifier = new List<Property>();
 						propertiesPlusIdentifier.AddRange(pc.PropertyIterator);
 						propertiesPlusIdentifier.Add(pc.IdentifierProperty);
-						var persistentProperties = _propertyAndMemberInfo.GetPersistentInfo(clazz, propertiesPlusIdentifier);
+						var persistentProperties = PropertyAndMemberInfo.PersistentInfo(clazz, propertiesPlusIdentifier);
 
 						if (!searchForRevisionNumberCfg(persistentProperties))
 						{
