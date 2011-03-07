@@ -33,9 +33,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		 */
 		public IDictionary<string, EntityConfiguration> EntitiesConfigurations { get; private set; }
 		public IDictionary<string, EntityConfiguration> NotAuditedEntitiesConfigurations { get; private set; }
-
 		public AuditEntityNameRegister AuditEntityNameRegister { get; private set; }
-		public ClassesAuditingData ClassesAuditingData { get; private set; }
 
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
 		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
@@ -43,22 +41,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public AuditMetadataGenerator(Cfg.Configuration cfg, GlobalConfiguration globalCfg,
 									  AuditEntitiesConfiguration verEntCfg,
 									  XmlElement revisionInfoRelationMapping,
-									  AuditEntityNameRegister auditEntityNameRegister,
-									  ClassesAuditingData classesAuditingData)
+									  AuditEntityNameRegister auditEntityNameRegister)
 		{
 			Cfg = cfg;
 			GlobalCfg = globalCfg;
 			VerEntCfg = verEntCfg;
 			this.revisionInfoRelationMapping = revisionInfoRelationMapping;
-
 			BasicMetadataGenerator = new BasicMetadataGenerator();
 			componentMetadataGenerator = new ComponentMetadataGenerator(this);
 			idMetadataGenerator = new IdMetadataGenerator(this);
 			toOneRelationMetadataGenerator = new ToOneRelationMetadataGenerator(this);
-
 			AuditEntityNameRegister = auditEntityNameRegister;
-			ClassesAuditingData = classesAuditingData;
-
 			EntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
 			NotAuditedEntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
 			entitiesJoins = new Dictionary<string, IDictionary<Join, XmlElement>>();

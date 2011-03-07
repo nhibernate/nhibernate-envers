@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Configuration
 			classesAuditingData.UpdateCalculatedFields();
 
 			var auditMetaGen = new AuditMetadataGenerator(cfg, globalCfg, verEntCfg,
-					revisionInfoRelationMapping, auditEntityNameRegister, classesAuditingData);
+					revisionInfoRelationMapping, auditEntityNameRegister);
 
 			// First pass
 			foreach (var pcDatasEntry in classesAuditingData.AllClassAuditedData)
