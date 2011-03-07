@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_idDatas.Add(idData);
 		}
 
-		public IRelationQueryGenerator Build(ICollection<MiddleComponentData> componentDatas)
+		public IRelationQueryGenerator Build(IEnumerable<MiddleComponentData> componentDatas)
 		{
 			if (_idDatas.Count == 0) 
 			{

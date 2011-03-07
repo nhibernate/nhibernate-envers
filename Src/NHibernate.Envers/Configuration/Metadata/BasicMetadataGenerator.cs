@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return true;
 		}
 
-		private void AddSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		private static void AddSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
 								IValue value, ISimpleMapperBuilder mapper, bool insertable, bool key)
 		{
 			if (parent != null) 

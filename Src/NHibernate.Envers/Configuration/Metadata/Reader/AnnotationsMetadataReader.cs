@@ -102,7 +102,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
 		{
-			private System.Type typ;
+			private readonly System.Type typ;
 			private readonly AnnotationsMetadataReader parent;
 
 			public PersistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
