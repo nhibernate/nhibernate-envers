@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NUnit.Framework;
 
@@ -236,7 +237,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			CollectionAssert.AreEquivalent(new[] { p1 }, rev5.Parents);
 		}
 
-		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		protected override IEnumerable<string> Mappings
 		{
 			get
 			{

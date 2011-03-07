@@ -1,5 +1,3 @@
-using System;
-
 namespace NHibernate.Envers.Tests.Entities.CustomType
 {
 	public class Component

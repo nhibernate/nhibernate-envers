@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
 using NUnit.Framework;
 

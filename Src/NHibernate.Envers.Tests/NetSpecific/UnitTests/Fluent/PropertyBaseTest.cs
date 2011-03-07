@@ -4,8 +4,8 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
-using NUnit.Framework;
 using NHibernate.Envers.Tests.Tools;
+using NUnit.Framework;
 using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent

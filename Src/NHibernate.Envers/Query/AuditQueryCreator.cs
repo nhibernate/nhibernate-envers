@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Impl;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;

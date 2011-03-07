@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NHibernate.Envers.Entities.Mapper.Id;
-using NHibernate.Engine;
-using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Envers.Tools;
-using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Reader;
 using NHibernate.Collection;
+using NHibernate.Engine;
+using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Id;
+using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools;
+using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {

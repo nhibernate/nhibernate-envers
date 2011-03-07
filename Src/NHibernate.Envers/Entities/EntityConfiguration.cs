@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities
 {

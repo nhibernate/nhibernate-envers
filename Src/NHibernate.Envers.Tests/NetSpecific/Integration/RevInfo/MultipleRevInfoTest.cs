@@ -1,8 +1,8 @@
 using System.Reflection;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Event;
 using NUnit.Framework;
-using NHibernate.Cfg;
 using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo

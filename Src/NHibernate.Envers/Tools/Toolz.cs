@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using NHibernate.Proxy;
+﻿using System.Collections;
+using System.Collections.Generic;
 using NHibernate.Engine;
-using System.Collections;
+using NHibernate.Proxy;
 using NHibernate.Util;
 
 namespace NHibernate.Envers.Tools

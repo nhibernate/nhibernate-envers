@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Iesi.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
-using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Synchronization.Work
 {

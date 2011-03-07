@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using NHibernate.Mapping;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Tools;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
 {

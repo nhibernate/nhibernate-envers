@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne

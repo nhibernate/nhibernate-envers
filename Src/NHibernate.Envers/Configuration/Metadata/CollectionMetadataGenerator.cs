@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Xml;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Entities;
+using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Component;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tools;
-using NHibernate.Type;
 using NHibernate.Mapping;
-using NHibernate.Envers.Entities;
-using System.Xml;
-using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Type;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {

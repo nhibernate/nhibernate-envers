@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
 
@@ -238,7 +239,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			Assert.AreEqual("ed2_2 bis", rev4.Data);
 		}
 
-		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		protected override IEnumerable<string> Mappings
 		{
 			get
 			{

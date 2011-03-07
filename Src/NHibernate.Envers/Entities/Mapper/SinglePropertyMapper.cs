@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using NHibernate.Collection;
+using NHibernate.Engine;
+using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Exceptions;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
-using NHibernate.Envers.Exceptions;
-using NHibernate.Engine;
-using NHibernate.Envers.Reader;
-using NHibernate.Envers.Configuration;
-using NHibernate.Collection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {

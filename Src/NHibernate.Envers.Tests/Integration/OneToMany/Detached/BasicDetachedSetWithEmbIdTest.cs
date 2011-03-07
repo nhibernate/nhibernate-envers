@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.Ids;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached.Ids;
@@ -80,7 +81,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			Assert.AreEqual("coll1", rev4.Data);
 		}
 
-		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		protected override IEnumerable<string> Mappings
 		{
 			get
 			{

@@ -4,7 +4,6 @@ using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {

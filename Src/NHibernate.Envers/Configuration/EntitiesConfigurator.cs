@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using NHibernate.Envers.Configuration.Metadata;
-using NHibernate.Envers.Configuration.Store;
-using NHibernate.Envers.Tools.Graph;
-using NHibernate.Envers.Entities;
-using NHibernate.Mapping;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
+using NHibernate.Envers.Entities;
+using NHibernate.Envers.Tools.Graph;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
 {

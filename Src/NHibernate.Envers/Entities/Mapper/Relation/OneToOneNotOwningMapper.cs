@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NHibernate.Envers.Exceptions;
-using NHibernate.Envers.Query;
-using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Exceptions;
+using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
-using NHibernate.Collection;
+using NHibernate.Envers.Tools;
+using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {

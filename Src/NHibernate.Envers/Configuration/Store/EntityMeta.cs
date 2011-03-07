@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 namespace NHibernate.Envers.Configuration.Store
 {
 	public class EntityMeta : IEntityMeta
