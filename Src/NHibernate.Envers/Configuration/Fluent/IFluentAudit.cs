@@ -24,13 +24,13 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// </summary>
 		/// <param name="property"></param>
 		/// <returns></returns>
-		IFluentAudit<T> ExcludeRelation(Expression<Func<T, object>> property);
+		IFluentAudit<T> ExcludeRelationData(Expression<Func<T, object>> property);
 
 		/// <summary>
 		/// Excludes the property from tracking changes on related entity.
 		/// </summary>
 		/// <param name="property"></param>
 		/// <returns></returns>
-		IFluentAudit<T> ExcludeRelation(string property);
+		IFluentAudit<T> ExcludeRelationData(string property);
 	}
 }

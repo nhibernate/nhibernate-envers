@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit<NotAuditedOwnerEntity>()
-					.ExcludeRelation(s => s.Relation);
+					.ExcludeRelationData(s => s.Relation);
 			metas = cfg.CreateMetaData(null);
 		}
 
@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit<NotAuditedOwnerEntity>()
-					.ExcludeRelation("RelationField");
+					.ExcludeRelationData("RelationField");
 			metas = cfg.CreateMetaData(null);
 
 			var propInfo = typeof(NotAuditedOwnerEntity).GetField("RelationField");

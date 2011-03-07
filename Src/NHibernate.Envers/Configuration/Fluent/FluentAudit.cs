@@ -37,14 +37,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-		public IFluentAudit<T> ExcludeRelation(Expression<Func<T, object>> property)
+		public IFluentAudit<T> ExcludeRelationData(Expression<Func<T, object>> property)
 		{
 			var methodInfo = property.Body.MethodInfo("relation exclusion");
 			excludedRelations.Add(typeof(T).GetProperty(methodInfo.Name));
 			return this;
 		}
 
-		public IFluentAudit<T> ExcludeRelation(string property)
+		public IFluentAudit<T> ExcludeRelationData(string property)
 		{
 			var member = getMemberOrThrow(typeof(T), property);
 			excludedRelations.Add(member);
