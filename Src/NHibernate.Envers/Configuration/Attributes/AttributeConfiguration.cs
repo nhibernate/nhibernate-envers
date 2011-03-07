@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			return ret;
 		}
 
-		private void addForComponent(IEnumerable<Property> propertyIterator, Dictionary<System.Type, IEntityMeta> dicToFill)
+		private void addForComponent(IEnumerable<Property> propertyIterator, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (var property in propertyIterator)
 			{
@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			fillMembers(typ, props, dicToFill);
 		}
 
-		private void fillMembers(System.Type type, IEnumerable<Property> properties, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private static void fillMembers(System.Type type, IEnumerable<Property> properties, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (var propInfo in PropertyAndMemberInfo.PersistentInfo(type, properties))
 			{
