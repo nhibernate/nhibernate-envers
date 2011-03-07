@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tools
 			var id1 = GetIdentifier(session, obj1);
 			var id2 = GetIdentifier(session, obj2);
 
-			return ObjectsEqual(id1, id2);
+			return objectsEqual(id1, id2);
 		}
 
 		private static object GetIdentifier(ISessionImplementor session, object obj) 
@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Tools
 			}
 		}
 
-        public static bool ObjectsEqual(object obj1, object obj2)
+		private static bool objectsEqual(object obj1, object obj2)
         {
 			if (obj1 == null) 
             {

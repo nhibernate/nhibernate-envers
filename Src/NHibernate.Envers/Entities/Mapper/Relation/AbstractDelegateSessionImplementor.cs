@@ -82,9 +82,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			SessionDelegate.List(query, parameters, results);
 		}
 
-		public IList<T> List<T>(string query, QueryParameters queryParameters)
+		public IList<T> List<T>(string query, QueryParameters parameters)
 		{
-			return SessionDelegate.List<T>(query, queryParameters);
+			return SessionDelegate.List<T>(query, parameters);
 		}
 
 		public IList<T> List<T>(CriteriaImpl criteria)
@@ -107,9 +107,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return SessionDelegate.Enumerable(query, parameters);
 		}
 
-		public IEnumerable<T> Enumerable<T>(string query, QueryParameters queryParameters)
+		public IEnumerable<T> Enumerable<T>(string query, QueryParameters parameters)
 		{
-			return SessionDelegate.Enumerable<T>(query, queryParameters);
+			return SessionDelegate.Enumerable<T>(query, parameters);
 		}
 
 		public IList ListFilter(object collection, string filter, QueryParameters parameters)
