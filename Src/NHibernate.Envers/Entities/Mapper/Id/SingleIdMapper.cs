@@ -88,17 +88,6 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-		public void MapToEntityFromEntity(object objTo, object objFrom) 
-        {
-			if (objTo == null || objFrom == null) 
-            {
-				return;
-			}
-		    var getter = ReflectionTools.GetGetter(objFrom.GetType(), propertyData);
-		    var setter = ReflectionTools.GetSetter(objTo.GetType(), propertyData);
-            setter.Set(objTo, getter.Get(objFrom));
-		}
-
 		public override IIdMapper PrefixMappedProperties(string prefix) 
         {
 			return new SingleIdMapper(new PropertyData(prefix + propertyData.Name, propertyData));
@@ -106,9 +95,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override IList<QueryParameterData> MapToQueryParametersFromId(object obj)
 		{
-			IList<QueryParameterData> ret = new List<QueryParameterData> {new QueryParameterData(propertyData.Name, obj)};
-
-		    return ret;
+			return new List<QueryParameterData> {new QueryParameterData(propertyData.Name, obj)};
 		}
 	}
 }
