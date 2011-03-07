@@ -83,7 +83,6 @@
     <Compile Include="Configuration\Fluent\FluentConfiguration.cs" />
     <Compile Include="Configuration\Fluent\IAttributeProvider.cs" />
     <Compile Include="Configuration\Fluent\IFluentAudit.cs" />
-    <Compile Include="Configuration\Fluent\IMainConfiguration.cs" />
     <Compile Include="Configuration\GlobalConfiguration.cs" />
     <Compile Include="Configuration\Metadata\AuditEntityNameRegister.cs" />
     <Compile Include="Configuration\Metadata\AuditMetadataGenerator.cs" />
