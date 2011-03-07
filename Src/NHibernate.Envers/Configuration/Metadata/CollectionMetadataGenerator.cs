@@ -30,26 +30,27 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private readonly string referencingEntityName;
 		private readonly EntityXmlMappingData xmlMappingData;
 		private readonly PropertyAuditingData propertyAuditingData;
-
 		private readonly EntityConfiguration referencingEntityConfiguration;
-		private readonly CollectionMapperFactory collectionMapperFactory; //todo: make interface and make it injectable (?)
-		/**
-		 * Null if this collection isn't a relation to another entity.
-		 */
+		private readonly CollectionMapperFactory collectionMapperFactory;
+
+		/// <summary>
+		/// Null if this collection isn't a relation to another entity.
+		/// </summary>
 		private readonly string referencedEntityName;
 
-		/**
-		 * @param mainGenerator Main generator, giving access to configuration and the basic mapper.
-		 * @param propertyValue Value of the collection, as mapped by Hibernate.
-		 * @param currentMapper Mapper, to which the appropriate {@link org.hibernate.envers.entities.mapper.PropertyMapper}
-		 * will be added.
-		 * @param referencingEntityName Name of the entity that owns this collection.
-		 * @param xmlMappingData In case this collection requires a middle table, additional mapping documents will
-		 * be created using this object.
-		 * @param propertyAuditingData Property auditing (meta-)data. Among other things, holds the name of the
-		 * property that references the collection in the referencing entity, the user data for middle (join)
-		 * table and the value of the <code>@MapKey</code> annotation, if there was one.
-		 */
+		/// <summary>
+		/// Ctor
+		/// </summary>
+		/// <param name="mainGenerator">Main generator, giving access to configuration and the basic mapper.</param>
+		/// <param name="propertyValue">Value of the collection, as mapped by Hibernate.</param>
+		/// <param name="currentMapper">Mapper, to which the appropriate {@link org.hibernate.envers.entities.mapper.PropertyMapper} will be added.</param>
+		/// <param name="referencingEntityName">Name of the entity that owns this collection.</param>
+		/// <param name="xmlMappingData">In case this collection requires a middle table, additional mapping documents will be created using this object.</param>
+		/// <param name="propertyAuditingData">
+		/// Property auditing (meta-)data. Among other things, holds the name of the
+		/// property that references the collection in the referencing entity, the user data for middle (join)
+		/// table and the value of the <code>@MapKey</code> annotation, if there was one.
+		/// </param>
 		public CollectionMetadataGenerator(AuditMetadataGenerator mainGenerator,
 											Mapping.Collection propertyValue, 
 											ICompositeMapperBuilder currentMapper,
@@ -190,14 +191,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 					fakeBidirectionalRelationIndexMapper);
 		}
 
-		/**
-		 * Adds mapping of the id of a related entity to the given xml mapping, prefixing the id with the given prefix.
-		 * @param xmlMapping Mapping, to which to add the xml.
-		 * @param prefix Prefix for the names of properties which will be prepended to properties that form the id.
-		 * @param columnNameIterator Iterator over the column names that will be used for properties that form the id.
-		 * @param relatedIdMapping Id mapping data of the related entity.
-		 */
-		private void AddRelatedToXmlMapping(XmlElement xmlMapping, string prefix,
+		/// <summary>
+		/// Adds mapping of the id of a related entity to the given xml mapping, prefixing the id with the given prefix.
+		/// </summary>
+		/// <param name="xmlMapping">Mapping, to which to add the xml.</param>
+		/// <param name="prefix">Prefix for the names of properties which will be prepended to properties that form the id.</param>
+		/// <param name="columnNames">Column names that will be used for properties that form the id.</param>
+		/// <param name="relatedIdMapping">Id mapping data of the related entity.</param>
+		private static void addRelatedToXmlMapping(XmlElement xmlMapping, string prefix,
 											IEnumerator<string> columnNames,
 											IdMappingData relatedIdMapping) 
 		{
@@ -210,7 +211,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private string GetMiddleTableName(Mapping.Collection value, string entityName) 
+		private static string middleTableName(Mapping.Collection value, string entityName) 
 		{
 			// We check how Hibernate maps the collection.
 			if (value.Element is OneToMany && !value.IsInverse) 
@@ -240,7 +241,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else
 			{
-				var middleTableName = GetMiddleTableName(propertyValue, referencingEntityName);
+				var middleTableName = CollectionMetadataGenerator.middleTableName(propertyValue, referencingEntityName);
 				auditMiddleTableName = mainGenerator.VerEntCfg.GetAuditTableName(null, middleTableName);
 				auditMiddleEntityName = mainGenerator.VerEntCfg.GetAuditEntityName(middleTableName);
 			}
@@ -307,7 +308,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (middleEntityXml != null)
 			{
 				// Adding related-entity (in this case: the referencing's entity id) id mapping to the xml.
-				AddRelatedToXmlMapping(middleEntityXml, referencingPrefixRelated,
+				addRelatedToXmlMapping(middleEntityXml, referencingPrefixRelated,
 						MetadataTools.GetColumnNameEnumerator(propertyValue.Key.ColumnIterator),
 						referencingIdMapping);
 			}
@@ -315,7 +316,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// ******
 			// Generating the element mapping.
 			// ******
-			var elementComponentData = AddValueToMiddleTable(propertyValue.Element, middleEntityXml,
+			var elementComponentData = addValueToMiddleTable(propertyValue.Element, middleEntityXml,
 					queryGeneratorBuilder, referencedPrefix, propertyAuditingData.JoinTable.InverseJoinColumns);
 
 			// ******
@@ -369,7 +370,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 				if (!idMatch && referencedProperty == null)
 				{
-					return AddValueToMiddleTable(indexedValue.Index, middleEntityXml,
+					return addValueToMiddleTable(indexedValue.Index, middleEntityXml,
 							queryGeneratorBuilder, "mapkey", null);
 				}
 				var currentIndex = queryGeneratorBuilder == null ? 0 : queryGeneratorBuilder.CurrentIndex;
@@ -394,18 +395,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return new MiddleComponentData(new MiddleDummyComponentMapper(), 0);
 		}
 
-		/**
-		 *
-		 * @param value Value, which should be mapped to the middle-table, either as a relation to another entity,
-		 * or as a simple value.
-		 * @param xmlMapping If not <code>null</code>, xml mapping for this value is added to this element.
-		 * @param queryGeneratorBuilder In case <code>value</code> is a relation to another entity, information about it
-		 * should be added to the given.
-		 * @param prefix Prefix for proeprty names of related entities identifiers.
-		 * @param joinColumns Names of columns to use in the xml mapping, if this array isn't null and has any elements.
-		 * @return Data for mapping this component.
-		 */
-		private MiddleComponentData AddValueToMiddleTable(IValue value, XmlElement xmlMapping,
+		/// <summary>
+		/// Add value to middle table
+		/// </summary>
+		/// <param name="value">Value, which should be mapped to the middle-table, either as a relation to another entity, or as a simple value.</param>
+		/// <param name="xmlMapping">If not <code>null</code>, xml mapping for this value is added to this element.</param>
+		/// <param name="queryGeneratorBuilder">In case <code>value</code> is a relation to another entity, information about it should be added to the given.</param>
+		/// <param name="prefix">Prefix for proeprty names of related entities identifiers.</param>
+		/// <param name="joinColumns">Names of columns to use in the xml mapping, if this array isn't null and has any elements.</param>
+		/// <returns>Data for mapping this component.</returns>
+		private MiddleComponentData addValueToMiddleTable(IValue value, XmlElement xmlMapping,
 														  QueryGeneratorBuilder queryGeneratorBuilder,
 														  string prefix, string[] joinColumns) 
 		{
@@ -422,7 +421,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// relation isn't inverse (so when <code>xmlMapping</code> is not null).
 				if (xmlMapping != null) 
 				{
-					AddRelatedToXmlMapping(xmlMapping, prefixRelated,
+					addRelatedToXmlMapping(xmlMapping, prefixRelated,
 							joinColumns != null && joinColumns.Length > 0
 									? joinColumns.ToList().GetEnumerator()
 									: MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
