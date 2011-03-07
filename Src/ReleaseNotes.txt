@@ -5,3 +5,9 @@
 [NHE-4] - Structs as components - querying
 [NHE-6] - Bidirectional list support
 [NHE-7] - Exception in AuditSync.BeforeCompletion is swallowed by (NH) AdoTransaction
+
+
+=== ALPHA 2 (v 0.9.1.0), , NH 3.1.0 ===
+
+*** Breaking changes ***
+* Renamed IFluentAudit<T>.ExcludeRelation to ExcludeRelationData
