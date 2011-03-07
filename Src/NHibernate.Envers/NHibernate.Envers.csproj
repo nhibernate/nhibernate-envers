@@ -104,7 +104,7 @@
     <Compile Include="Configuration\Metadata\Reader\IAuditedPropertiesHolder.cs" />
     <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
     <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
-    <Compile Include="Configuration\Metadata\Reader\PropertyAndMemberInfo.cs" />
+    <Compile Include="Tools\Reflection\PropertyAndMemberInfo.cs" />
     <Compile Include="Configuration\Metadata\Reader\PropertyAuditingData.cs" />
     <Compile Include="Configuration\Metadata\ToOneRelationMetadataGenerator.cs" />
     <Compile Include="Configuration\NhConfigurationExtension.cs" />

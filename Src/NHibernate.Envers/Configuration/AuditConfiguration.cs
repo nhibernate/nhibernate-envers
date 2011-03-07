@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
@@ -19,8 +18,7 @@ namespace NHibernate.Envers.Configuration
 			var mds = new MetaDataStore(cfg, metaDataProvider);
 
 			var properties = cfg.Properties;
-			var propertyAndMemberInfo = new PropertyAndMemberInfo();
-			var revInfoCfg = new RevisionInfoConfiguration(mds, propertyAndMemberInfo);
+			var revInfoCfg = new RevisionInfoConfiguration(mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
@@ -28,7 +26,7 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg,
-			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping, propertyAndMemberInfo);
+			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
 		}
 
 		public GlobalConfiguration GlobalCfg { get; private set; }

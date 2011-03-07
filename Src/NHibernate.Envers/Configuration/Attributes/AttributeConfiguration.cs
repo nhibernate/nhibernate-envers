@@ -1,20 +1,13 @@
 using System;
 using System.Collections.Generic;
-using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
+using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Attributes
 {
 	public class AttributeConfiguration : IMetaDataProvider
 	{
-		private readonly PropertyAndMemberInfo propertyAndMemberInfo;
-
-		public AttributeConfiguration()
-		{
-			propertyAndMemberInfo = new PropertyAndMemberInfo();
-		}
-
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
 			var ret = new Dictionary<System.Type, IEntityMeta>();
@@ -53,7 +46,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 
 		private void fillMembers(System.Type type, IEnumerable<Property> properties, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
-			foreach (var propInfo in propertyAndMemberInfo.GetPersistentInfo(type, properties))
+			foreach (var propInfo in PropertyAndMemberInfo.PersistentInfo(type, properties))
 			{
 				foreach (var attr in Attribute.GetCustomAttributes(propInfo.Member))
 				{

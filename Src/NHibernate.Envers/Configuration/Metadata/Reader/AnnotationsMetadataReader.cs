@@ -12,22 +12,20 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	/// </summary>
 	public sealed class AnnotationsMetadataReader 
 	{
-		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
 		private readonly IMetaDataStore _metaDataStore;
 		private readonly GlobalConfiguration globalCfg;
 		private readonly PersistentClass pc;
 
 		/// <summary>
 		/// This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
-		/// method.</summary>
+		/// method.
+		/// </summary>
 		private readonly ClassAuditingData _auditData;
 
-		public AnnotationsMetadataReader(PropertyAndMemberInfo propertyAndMemberInfo, 
-									IMetaDataStore metaDataStore,
+		public AnnotationsMetadataReader(IMetaDataStore metaDataStore,
 									GlobalConfiguration globalCfg, 
 									PersistentClass pc)
 		{
-			_propertyAndMemberInfo = propertyAndMemberInfo;
 			_metaDataStore = metaDataStore;
 			this.globalCfg = globalCfg;
 			this.pc = pc;
@@ -51,7 +49,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					_auditData.SetDefaultAudited(true);
 				}
 
-				var ar = new AuditedPropertiesReader(_propertyAndMemberInfo, _metaDataStore, defaultStore,
+				var ar = new AuditedPropertiesReader(_metaDataStore, defaultStore,
 													 new PersistentClassPropertiesSource(typ, this), _auditData,
 													 globalCfg, string.Empty);
 				ar.Read();
@@ -105,7 +103,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
 		{
 			private System.Type typ;
-			private AnnotationsMetadataReader parent;
+			private readonly AnnotationsMetadataReader parent;
 
 			public PersistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
 			{ 

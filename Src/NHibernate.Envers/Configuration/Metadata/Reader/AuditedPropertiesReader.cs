@@ -2,6 +2,7 @@
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools;
+using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
 using System.Reflection;
 
@@ -16,7 +17,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	/// </summary>
 	public class AuditedPropertiesReader 
 	{
-		private readonly PropertyAndMemberInfo _propertyAndMemberInfo;
 		private readonly IMetaDataStore _metaDataStore;
 		private readonly ModificationStore _defaultStore;
 		private readonly IPersistentPropertiesSource _persistentPropertiesSource;
@@ -24,14 +24,13 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly GlobalConfiguration _globalCfg;
 		private readonly string _propertyNamePrefix;
 
-		public AuditedPropertiesReader(PropertyAndMemberInfo propertyAndMemberInfo,
-										IMetaDataStore metaDataStore,
+		public AuditedPropertiesReader(IMetaDataStore metaDataStore,
 										ModificationStore defaultStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
 										IAuditedPropertiesHolder auditedPropertiesHolder,
 										GlobalConfiguration globalCfg,
-										string propertyNamePrefix) {
-			_propertyAndMemberInfo = propertyAndMemberInfo;
+										string propertyNamePrefix) 
+		{
 			_metaDataStore = metaDataStore;
 			_defaultStore = defaultStore;
 			_persistentPropertiesSource = persistentPropertiesSource;
@@ -48,7 +47,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void AddPropertiesFromClass(System.Type clazz)
 		{
-			foreach (var declaredPersistentProperty in _propertyAndMemberInfo.GetPersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
+			foreach (var declaredPersistentProperty in PropertyAndMemberInfo.PersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
 			{
 				var propertyValue = declaredPersistentProperty.Property.Value;
 
@@ -64,8 +63,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 													declaredPersistentProperty.Property.PropertyAccessorName);
 
 					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(componentValue);
-					new AuditedPropertiesReader(_propertyAndMemberInfo, 
-												_metaDataStore,
+					new AuditedPropertiesReader(_metaDataStore,
 												ModificationStore.Full, componentPropertiesSource, componentData,
 												_globalCfg,
 												_propertyNamePrefix +
