@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Synchronization.Work
 	/// A work unit that handles "fake" bidirectional one-to-many relations (mapped with {@code @OneToMany+@JoinColumn} and
 	/// {@code @ManyToOne+@Column(insertable=false, updatable=false)}.
 	/// </summary>
-	public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit
+	public class FakeBidirectionalRelationWorkUnit: AbstractAuditWorkUnit
 	{
 		private readonly IDictionary<string, FakeRelationChange> fakeRelationChanges;
 

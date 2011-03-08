@@ -4,7 +4,7 @@ using NHibernate.Envers.Configuration;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public class CollectionChangeWorkUnit : AbstractAuditWorkUnit, IAuditWorkUnit 
+	public class CollectionChangeWorkUnit : AbstractAuditWorkUnit 
 	{
 		private readonly object entity;
 

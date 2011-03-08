@@ -7,7 +7,7 @@ using NHibernate.Util;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-	public class EmbeddedIdMapper : AbstractCompositeIdMapper, ISimpleIdMapperBuilder
+	public class EmbeddedIdMapper : AbstractCompositeIdMapper
 	{
 		private readonly PropertyData idPropertyData;
 

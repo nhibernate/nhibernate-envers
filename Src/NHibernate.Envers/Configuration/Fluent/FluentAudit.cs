@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
@@ -77,11 +78,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
 		{
-			var ret = new List<MemberInfoAndAttribute>();
-			foreach (var ex in excluded)
-			{
-				ret.Add(new MemberInfoAndAttribute(ex, new NotAuditedAttribute()));
-			}
+			var ret = excluded.Select(ex => new MemberInfoAndAttribute(ex, new NotAuditedAttribute())).ToList();
 			foreach (var ex in excludedRelations)
 			{
 				var attr = new AuditedAttribute

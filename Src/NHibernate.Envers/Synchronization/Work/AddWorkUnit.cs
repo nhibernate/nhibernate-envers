@@ -5,7 +5,7 @@ using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public class AddWorkUnit : AbstractAuditWorkUnit, IAuditWorkUnit 
+	public class AddWorkUnit : AbstractAuditWorkUnit 
 	{
 		private readonly IDictionary<string, object> data;
 

@@ -5,7 +5,7 @@ using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public class ModWorkUnit: AbstractAuditWorkUnit, IAuditWorkUnit 
+	public class ModWorkUnit: AbstractAuditWorkUnit 
 	{
 		private readonly bool changes;        
 
