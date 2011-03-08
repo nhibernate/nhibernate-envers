@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Configuration.Store
 			return null;
 		}
 
-		public T MemberMeta<T>(MemberInfo member) where T : Attribute //kanske behöver returnera en lista?
+		public T MemberMeta<T>(MemberInfo member) where T : Attribute
 		{
 			IEntityMeta entityMeta;
 			var attrType = typeof(T);
