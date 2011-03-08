@@ -5,7 +5,7 @@ using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public class DelWorkUnit : AbstractAuditWorkUnit, IAuditWorkUnit 
+	public class DelWorkUnit : AbstractAuditWorkUnit 
 	{
 		private readonly object[] state;
 		private readonly string[] propertyNames;

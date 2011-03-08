@@ -57,11 +57,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			entitiesJoins = new Dictionary<string, IDictionary<Join, XmlElement>>();
 		}
 
-		/**
-		 * Clones the revision info relation mapping, so that it can be added to other mappings. Also, the name of
-		 * the property and the column are set properly.
-		 * @return A revision info mapping, which can be added to other mappings (has no parent).
-		 */
+
+		/// <summary>
+		///  Clones the revision info relation mapping, so that it can be added to other mappings. Also, the name of
+		///  the property and the column are set properly.
+		/// </summary>
+		/// <param name="doc">The xml document</param>
+		/// <returns>A revision info mapping, which can be added to other mappings (has no parent).</returns>
 		private XmlElement CloneAndSetupRevisionInfoRelationMapping(XmlDocument doc)
 		{
 			var rev_mapping = (XmlElement)doc.ImportNode(revisionInfoRelationMapping, true);
@@ -93,8 +95,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// only first pass
 			if (firstPass)
 			{
-				if (BasicMetadataGenerator.AddBasic(parent, propertyAuditingData, value, currentMapper,
-						insertable, false))
+				if (BasicMetadataGenerator.AddBasic(parent, propertyAuditingData, value, currentMapper, insertable, false))
 				{
 					// The property was mapped by the basic generator.
 					return;
@@ -121,8 +122,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// only second pass
 				if (!firstPass)
 				{
-					var oneToOneType = (OneToOneType) type;
-					var oneToOneValue = (OneToOne) value;
+					var oneToOneType = (OneToOneType)type;
+					var oneToOneValue = (OneToOne)value;
 					if (oneToOneType.IsReferenceToPrimaryKey && oneToOneValue.IsConstrained)
 					{
 						//if pk onetoone is used, "value" has no corresponding columns
@@ -131,14 +132,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 						{
 							pkColumns.Add("Ref" + column.Name);
 						}
-						
+
 						toOneRelationMetadataGenerator.AddToOne(parent, propertyAuditingData, value, currentMapper,
-								entityName, insertable, pkColumns);					
+								entityName, insertable, pkColumns);
 					}
 					else
 					{
 						toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, oneToOneValue,
-								currentMapper, entityName);						
+								currentMapper, entityName);
 					}
 				}
 			}
@@ -292,7 +293,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var propertyMapper = new MultiPropertyMapper();
 
 			// Adding the id mapping
-			var xmlMp = class_mapping.OwnerDocument.ImportNode(idMapper.XmlMapping,true);
+			var xmlMp = class_mapping.OwnerDocument.ImportNode(idMapper.XmlMapping, true);
 			class_mapping.AppendChild(xmlMp);
 
 			// Checking if there is a discriminator column
@@ -420,7 +421,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					break;
 
 				default:
-					throw new AssertionFailure("Envers.NET: AuditMetadataGenerator.GenerateFirstPass: Impossible enum value.");
+					throw new AssertionFailure("AuditMetadataGenerator.GenerateFirstPass: Impossible enum value.");
 			}
 
 			var class_mapping = mappingData.First;
@@ -445,7 +446,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public void GenerateSecondPass(PersistentClass pc, ClassAuditingData auditingData,
-									   EntityXmlMappingData xmlMappingData) {
+									   EntityXmlMappingData xmlMappingData)
+		{
 			var entityName = pc.EntityName;
 			if (log.IsDebugEnabled)
 			{

@@ -5,7 +5,7 @@ using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
 {
-    public class AggregatedAuditExpression : IAuditCriterion, IExtendableCriterion 
+    public class AggregatedAuditExpression : IExtendableCriterion 
 	{
         private readonly IPropertyNameGetter propertyNameGetter;
         private readonly AggregatedMode mode;

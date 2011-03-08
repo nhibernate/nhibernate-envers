@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tools.Query
 	{
 		public const string AND = "and";
 		public const string OR = "or";
-    
+	
 		/// <summary>
 		/// Main alias of the entity.
 		/// </summary>
@@ -65,13 +65,13 @@ namespace NHibernate.Envers.Tools.Query
 			return "_p" + queryParamCounter.Get();
 		}
 
-		/**
-		 * Adds sub-parameters with a new connective. That is, the parameters will be grouped in parentheses in the
-		 * generated query, e.g.: ... and (exp1 or exp2) and ..., assuming the old connective is "and", and the
-		 * new connective is "or".
-		 * @param newConnective New connective of the parameters.
-		 * @return Sub-parameters with the given connective.
-		 */
+		/// <summary>
+		///  Adds sub-parameters with a new connective. That is, the parameters will be grouped in parentheses in the
+		///  generated query, e.g.: ... and (exp1 or exp2) and ..., assuming the old connective is "and", and the
+		///  new connective is "or".
+		/// </summary>
+		/// <param name="newConnective">New connective of the parameters.</param>
+		/// <returns>Sub-parameters with the given connective.</returns>
 		public Parameters AddSubParameters(string newConnective) 
 		{
 			if (connective.Equals(newConnective)) 
@@ -83,11 +83,11 @@ namespace NHibernate.Envers.Tools.Query
 			return newParams;
 		}
 
-		/**
-		 * Adds negated parameters, by default with the "and" connective. These paremeters will be grouped in parentheses
-		 * in the generated query and negated, e.g. ... not (exp1 and exp2) ...
-		 * @return Negated sub paremters.
-		 */
+		/// <summary>
+		///  Adds negated parameters, by default with the "and" connective. These paremeters will be grouped in parentheses
+		///  in the generated query and negated, e.g. ... not (exp1 and exp2) ...
+		/// </summary>
+		/// <returns>Negated sub paremters.</returns>
 		public Parameters AddNegatedParameters() 
 		{
 			var newParams = new Parameters(alias, AND, queryParamCounter);
@@ -205,14 +205,14 @@ namespace NHibernate.Envers.Tools.Query
 			{
 				pp.Append(expression);
 			}
-			foreach (Parameters sub in subParameters.Where(sub => subParameters.Count > 0))
+			foreach (var sub in subParameters.Where(sub => subParameters.Count > 0))
 			{
 				pp.Append("(");
 				sub.Build(sb, queryParamValues);
 				sb.Append(")");
 			}
 
-			foreach (Parameters negated in negatedParameters.Where(negated => negatedParameters.Count > 0))
+			foreach (var negated in negatedParameters.Where(negated => negatedParameters.Count > 0))
 			{
 				pp.Append("not (");
 				negated.Build(sb, queryParamValues);

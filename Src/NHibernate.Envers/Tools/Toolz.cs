@@ -52,9 +52,9 @@ namespace NHibernate.Envers.Tools
 		}
 
 		private static bool objectsEqual(object obj1, object obj2)
-        {
+		{
 			if (obj1 == null) 
-            {
+			{
 				return obj2 == null;
 			}
 
@@ -65,20 +65,14 @@ namespace NHibernate.Envers.Tools
 		public static bool IteratorsContentEqual(IEnumerator iter1, IEnumerator iter2)
 		{
 			while (iter1.MoveNext() && iter2.MoveNext()) 
-            {
+			{
 				if (!iter1.Current.Equals(iter2.Current)) 
-                {
+				{
 					return false;
 				}
 			}
 
-			//noinspection RedundantIfStatement
-			if (iter1.MoveNext() || iter2.MoveNext()) 
-            {
-				return false;
-			}
-
-			return true;
+			return !iter1.MoveNext() && !iter2.MoveNext();
 		}
 
 		/**
@@ -104,15 +98,15 @@ namespace NHibernate.Envers.Tools
 		 * @param defaultValue Default value returned if no value for {@code propertyName} is set.
 		 * @return The value of the property or the default value, if property is not set.
 		 */
-        public static string GetProperty(IDictionary<string, string> properties, string propertyName, string defaultValue)
+		public static string GetProperty(IDictionary<string, string> properties, string propertyName, string defaultValue)
 		{
-		    string ret;
-		    return properties.TryGetValue(propertyName, out ret) ? ret : defaultValue;
+			string ret;
+			return properties.TryGetValue(propertyName, out ret) ? ret : defaultValue;
 		}
 
 		public static System.Type ResolveDotnetType(string className)
-	    {
-	        return ReflectHelper.ClassForFullName(className);
+		{
+			return ReflectHelper.ClassForFullName(className);
 		}
 	}
 }
