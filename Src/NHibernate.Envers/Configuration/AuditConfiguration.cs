@@ -15,8 +15,10 @@ namespace NHibernate.Envers.Configuration
 
 		private AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
 		{
-			var mds = new MetaDataStore(cfg, metaDataProvider);
+			//this might be over kill - move back into MetaDataStore later if not needed for other stuff...
+			var metaDataAdders = new List<IMetaDataAdder> {new AuditMappedByMetaDataAdder(cfg)};
 
+			var mds = new MetaDataStore(cfg, metaDataProvider, metaDataAdders);
 			var properties = cfg.Properties;
 			var revInfoCfg = new RevisionInfoConfiguration(mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
