@@ -1,7 +1,5 @@
 ﻿* tests för overrideSattr
 * lägg till en Environmentklass med strängar för conf å annat
-* se över transaktioner (verkar som det biter även vid exception om flushmode never) - kolla detta genom att t ex droppa en av AUD-tabellerna... (de andra inserts ska då rullas tillbaka)
 fluent...
 * loggning för fluent
-* throw om property/field inte kan hittas, typ "kom ihåg att det är prylen som NH-mappningen använder som gäller!
-* Verifiera typ cfg.Audit<foo>().ExcludeRelation(foo => foo.MyComponent.Bar)
+* Verifiera typ cfg.Audit<foo>().ExcludeRelationData(foo => foo.MyComponent.Bar)
