@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Store
 {
@@ -13,17 +8,31 @@ namespace NHibernate.Envers.Configuration.Store
 	{
 		private readonly Cfg.Configuration _nhConfiguration;
 		private readonly IMetaDataProvider _metaDataProvider;
+		private readonly IEnumerable<IMetaDataAdder> _metaDataAdders;
 		private IDictionary<System.Type, IEntityMeta> _entityMetas;
 
-		public MetaDataStore(Cfg.Configuration nhConfiguration, IMetaDataProvider metaDataProvider)
+		public MetaDataStore(Cfg.Configuration nhConfiguration, 
+							IMetaDataProvider metaDataProvider,
+							IEnumerable<IMetaDataAdder> metaDataAdders)
 		{
 			_nhConfiguration = nhConfiguration;
 			_metaDataProvider = metaDataProvider;
+			_metaDataAdders = metaDataAdders;
 		}
 
 		public IDictionary<System.Type, IEntityMeta> EntityMetas
 		{
 			get { return _entityMetas ?? (_entityMetas = initializeMetas()); }
+		}
+
+		private IDictionary<System.Type, IEntityMeta> initializeMetas()
+		{
+			var metaData = _metaDataProvider.CreateMetaData(_nhConfiguration);
+			foreach (var metaDataAdder in _metaDataAdders)
+			{
+				metaDataAdder.AddMetaDataTo(metaData);
+			}
+			return metaData;
 		}
 
 		public T ClassMeta<T>(System.Type entityType) where T : Attribute
@@ -71,72 +80,5 @@ namespace NHibernate.Envers.Configuration.Store
 			}
 			return ret;
 		}
-
-		private IDictionary<System.Type, IEntityMeta> initializeMetas()
-		{
-			var definedMetas = _metaDataProvider.CreateMetaData(_nhConfiguration);
-			addBidirectionalInfo(definedMetas);
-			return definedMetas;
-		}
-
-		private void addBidirectionalInfo(IDictionary<System.Type, IEntityMeta> metas)
-		{
-			foreach (var type in metas.Keys)
-			{
-				var persistentClass = _nhConfiguration.GetClassMapping(type);
-				if (persistentClass == null) continue;
-				foreach (var property in persistentClass.PropertyIterator)
-				{
-					//is it a collection?
-					var collectionValue = property.Value as Mapping.Collection;
-					if (collectionValue == null) continue;
-
-					//find referenced entity name
-					var referencedEntity = MappingTools.ReferencedEntityName(property.Value);
-					if (referencedEntity == null) continue;
-
-
-					var refPersistentClass = _nhConfiguration.GetClassMapping(referencedEntity);
-					foreach (var refProperty in refPersistentClass.PropertyClosureIterator)
-					{
-						var attr = createAuditMappedByAttributeIfReferenceImmutable(collectionValue, refProperty);
-						if (attr == null) continue;
-						mightAddIndexToAttribute(attr, collectionValue, refPersistentClass.PropertyClosureIterator);
-						var entityMeta = (EntityMeta)metas[type];
-						var methodInfo = PropertyAndMemberInfo.PersistentInfo(type, new[] { property }).First().Member;
-						entityMeta.AddMemberMeta(methodInfo, attr);
-					}
-				}
-			}
-		}
-
-		private static AuditMappedByAttribute createAuditMappedByAttributeIfReferenceImmutable(Mapping.Collection collectionValue, Property referencedProperty)
-		{
-			//check key value
-			if (MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator))
-			{
-				if (!referencedProperty.IsUpdateable && !referencedProperty.IsInsertable)
-					return new AuditMappedByAttribute { MappedBy = referencedProperty.Name };
-			}
-
-			return null;
-		}
-
-		private static void mightAddIndexToAttribute(AuditMappedByAttribute auditMappedByAttribute, Mapping.Collection collectionValue, IEnumerable<Property> referencedProperties)
-		{
-			//check index value
-			var indexValue = collectionValue as IndexedCollection;
-			if (indexValue == null) return;
-			foreach (var referencedProperty in referencedProperties)
-			{
-				if (MappingTools.SameColumns(referencedProperty.ColumnIterator, indexValue.Index.ColumnIterator) &&
-												   !referencedProperty.IsUpdateable &&
-												   !referencedProperty.IsInsertable)
-				{
-					auditMappedByAttribute.PositionMappedBy = referencedProperty.Name;
-				}
-			}
-		}
-
 	}
 }
