@@ -19,20 +19,18 @@ namespace NHibernate.Envers.Configuration.Attributes
 			return ret;
 		}
 
-		private void addForComponent(IEnumerable<Property> propertyIterator, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private static void addForComponent(IEnumerable<Property> propertyIterator, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (var property in propertyIterator)
 			{
 				var propAsComponent = property.Value as Component;
-				if (propAsComponent != null)
-				{
-					fillType(propAsComponent.ComponentClass, dicToFill);
-					fillMembers(propAsComponent.ComponentClass, propAsComponent.PropertyIterator, dicToFill);
-				}
+				if (propAsComponent == null) continue;
+				fillType(propAsComponent.ComponentClass, dicToFill);
+				fillMembers(propAsComponent.ComponentClass, propAsComponent.PropertyIterator, dicToFill);
 			}
 		}
 
-		private void addForEntity(PersistentClass persistentClass, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private static void addForEntity(PersistentClass persistentClass, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			var typ = persistentClass.MappedClass;
 			fillType(typ, dicToFill);
