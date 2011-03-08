@@ -8,9 +8,7 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 	{
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
-		[AuditMappedBy(MappedBy = "Owner")]
 		public virtual IList<DoubleListJoinColumnBidirectionalRefEdEntity1> References1 { get; set; }
-		[AuditMappedBy(MappedBy = "Owner")]
 		public virtual IList<DoubleListJoinColumnBidirectionalRefEdEntity2> References2 { get; set; }
 
 		public DoubleListJoinColumnBidirectionalRefIngEntity()
