@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// It'll created in <see cref="MetaDataStore"/> if it's a biref collection with column insertable=false and updateable=false.
 	/// </remarks>
 	/// </summary>
-	internal class AuditMappedByAttribute:Attribute 
+	internal sealed class AuditMappedByAttribute:Attribute 
 	{
 		/// <summary>
 		/// Name of the property in the related entity which maps back to this entity. The property should be
