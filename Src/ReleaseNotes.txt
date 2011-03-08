@@ -11,3 +11,4 @@
 
 *** Breaking changes ***
 * Renamed IFluentAudit<T>.ExcludeRelation to ExcludeRelationData
+* AuditMappedByAttribute no longer public for users. Handled automatically internally.

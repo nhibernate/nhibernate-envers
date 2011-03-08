@@ -8,7 +8,6 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 	{
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
-		[AuditMappedBy(MappedBy = "Owner", PositionMappedBy = "Position")]
 		public virtual IList<IndexedListJoinColumnBidirectionalRefEdEntity> References { get; set; }
 
 		public override bool Equals(object obj)
