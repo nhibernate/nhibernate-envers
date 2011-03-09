@@ -84,6 +84,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var revTypeProperty = MetadataTools.AddProperty(any_mapping, VerEntCfg.RevisionTypePropName,
 					VerEntCfg.RevisionTypePropType, true, false);
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
+			revTypeProperty.SetAttribute("not-null", "true");
 		}
 
 		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
