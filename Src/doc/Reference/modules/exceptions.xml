@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<chapter id="exceptions">
+    <title>Mapping exceptions</title>
+
+    <section id="exceptions-wontbesupported">
+
+        <title>What isn't and will not be supported</title>
+
+        <para>
+            Bags (the corresponding Java type is List), as they can contain non-unique elements.
+            The reason is that persisting, for example a bag of String-s, violates a principle
+            of relational databases: that each table is a set of tuples. In case of bags,
+            however (which require a join table), if there is a duplicate element, the two
+            tuples corresponding to the elements will be the same. Hibernate allows this,
+            however Envers (or more precisely: the database connector) will throw an exception
+            when trying to persist two identical elements, because of a unique constraint violation.
+        </para>
+
+        <para>
+            There are at least two ways out if you need bag semantics:
+        </para>
+
+        <orderedlist>
+            <listitem>
+                <para>
+                    use an indexed collection, or
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    provide a unique id for your elements.
+                </para>
+            </listitem>
+        </orderedlist>
+
+    </section>
+
+    <section id="exceptions-willbesupported">
+
+        <title>What isn't and <emphasis>will</emphasis> be supported</title>
+
+        <orderedlist>
+            <listitem>
+                <para>
+                    collections of components
+                </para>
+            </listitem>
+        </orderedlist>
+
+    </section>
+
+</chapter>
