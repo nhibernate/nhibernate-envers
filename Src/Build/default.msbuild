@@ -10,7 +10,7 @@
 	<DocReferencePath>../doc/reference/</DocReferencePath>
 	<TempDirectory>$(BuildFolder)/temp</TempDirectory>
 	<TempDoc>$(TempDirectory)/doc.tmp</TempDoc>
-	<OutputDoc>$(TempDirectory)/documentation.pdf</OutputDoc>
+	<OutputDoc>$(TempDirectory)/EnversUserDoc.pdf</OutputDoc>
   </PropertyGroup>
   
   <ItemGroup Label="Extra files to deploy">
@@ -37,6 +37,7 @@
   <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
 
   <Target Name="MakeBuildDirectory">
+	<RemoveDir Directories="$(BuildFolder)" />
     <MakeDir Directories="$(BuildFolder)" />
     <MakeDir Directories="$(FullDeployFolder)" />
     <MakeDir Directories="$(DeployFolder)" />
@@ -61,9 +62,10 @@
 	<Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
 		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
 		<Copy SourceFiles="@(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
+		<RemoveDir Directories="$(TempDirectory)" />
 	</Target>
 	
-	<Target Name="RunPdfBuild" DependsOnTargets="PrepareDoc">
+	<Target Name="RunPdfBuild" DependsOnTargets="PrepareDoc;MakeBuildDirectory">
 		<exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(TempDoc) master.xml styles/fopdf.xsl"
 			WorkingDirectory="$(DocReferencePath)"/>
 		<exec command="java -classpath $(ClassPath) org.apache.fop.apps.Fop $(TempDoc) $(OutputDoc)"
