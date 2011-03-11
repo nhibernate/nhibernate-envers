@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("envers.store_data_at_delete", "true");
+			configuration.SetProperty("nhibernate.envers.store_data_at_delete", "true");
 		}
 
 		protected override void Initialize()

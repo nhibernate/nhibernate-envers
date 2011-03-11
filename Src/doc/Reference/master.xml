@@ -6,7 +6,7 @@
 <!ENTITY example				SYSTEM "modules/example.xml">
 <!ENTITY configuration			SYSTEM "modules/configuration.xml">
 <!ENTITY revisionlog			SYSTEM "modules/revisionlog.xml">
-
+<!ENTITY queries				SYSTEM "modules/queries.xml">
 
 <!ENTITY exceptions				SYSTEM "modules/exceptions.xml">
 
@@ -31,6 +31,8 @@
 	&configuration;
 	
 	&revisionlog;
+	
+	&queries;
 	
 	&exceptions;
 
