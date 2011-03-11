@@ -26,7 +26,7 @@
     <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Remotion.Data.Linq.dll" />
   </ItemGroup>
 
-  <Target Name="Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild;BuildPdf"/>
+  <Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
 
   <Target Name="RunBuild">
     <MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
@@ -61,7 +61,7 @@
   
 	<Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
 		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
-		<Copy SourceFiles="@(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
+		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
 		<RemoveDir Directories="$(TempDirectory)" />
 	</Target>
 	
