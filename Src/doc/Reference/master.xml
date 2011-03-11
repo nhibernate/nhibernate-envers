@@ -2,19 +2,29 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5b1//EN"
                "support/docbook-dtd/docbookx.dtd" [
 <!ENTITY preface                SYSTEM "modules/preface.xml">
+<!ENTITY quickstart				SYSTEM "modules/quickstart.xml">
+<!ENTITY example				SYSTEM "modules/example.xml">
+
+<!ENTITY exceptions				SYSTEM "modules/exceptions.xml">
+
 ]>
 
 
 <book lang="en">
 	<bookinfo>
-		<title>NHibernate - Relational Persistence for Idiomatic .NET</title>
-		<subtitle>NHibernate Reference Documentation</subtitle>
-		<releaseinfo>3.0.1</releaseinfo>
+		<title>NHibernate Envers - Audit trail for NHibernate</title>
+		<subtitle>NHibernate Envers Reference Documentation</subtitle>
+		<releaseinfo>1.0.0</releaseinfo>
 	</bookinfo>
 
 	<toc />
 
 	&preface;
-
+	
+	&quickstart;
+	
+	&example;
+	
+	&exceptions;
 
 </book>

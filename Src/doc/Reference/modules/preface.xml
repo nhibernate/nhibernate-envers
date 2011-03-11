@@ -1,35 +1,55 @@
-<preface id="preface" revision="1">
+<?xml version='1.0' encoding="UTF-8"?>
+<preface id="preface">
 	<title>Preface</title>
 
 	<para>
-		Working with object-oriented software and a relational database can be cumbersome
-		and time consuming in today's enterprise environments. NHibernate is an object/relational
-		mapping tool for .NET environments. The term object/relational mapping (ORM) refers to
-		the technique of mapping a data representation from an object model to a relational
-		data model with a SQL-based schema.
+        The Envers project aims to enable easy auditing of persistent classes. All that you
+        have to do is to configure Envers to audit some of your persistent classes. 
+		For each audited entity, a table will be created, which will hold the history of changes made to the entity. You
+        can then retrieve and query historical data without much effort.
 	</para>
 
 	<para>
-		NHibernate not only takes care of the mapping from .NET classes to
-		database tables (and from .NET data types to SQL data types), but also provides data
-		query and retrieval facilities and can significantly reduce development time otherwise
-		spent with manual data handling in SQL and ADO.NET.
+        Similarly to source control systems, the library has a concept of revisions. Basically, one
+        transaction is one revision (unless the transaction didn't modify any audited entities).
+        As the revisions are global, having a revision number, you can query for various
+        entities at that revision, retrieving a (partial) view of the database at that
+        revision. You can find a revision number having a date, and the other way round,
+        you can get the date at which a revision was commited.
 	</para>
 
 	<para>
-		NHibernate's goal is to relieve the developer from 95 percent of common data persistence
-		related programming tasks. NHibernate may not be the best solution for data-centric
-		applications that only use stored-procedures to implement the business logic in the
-		database, it is most useful with object-oriented domain models and business logic in
-		the .NET-based middle-tier. However, NHibernate can certainly help you to remove or
-		encapsulate vendor-specific SQL code and will help with the common task of result set
-		translation from a tabular representation to a graph of objects.
+        The library works with NHibernate version 3.1 or later.
+        For the auditing to work properly, the entities must have immutable unique
+        identifiers (primary keys).
 	</para>
 
 	<para>
-		If you are new to NHibernate and Object/Relational Mapping or even .NET Framework,
-		please follow these steps:
+		Some of the features:
 	</para>
 
-
+    <orderedlist>
+        <listitem>
+            <para>
+                auditing of all NHibernate mappings (except collection of components)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                auditing like custom types and
+                collections/maps of "simple" types (Strings, Integers, etc.)
+				(see also <xref linkend="exceptions"/>)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                logging data for each revision using a "revision entity"
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                querying historical data
+            </para>
+        </listitem>
+    </orderedlist>
 </preface>
