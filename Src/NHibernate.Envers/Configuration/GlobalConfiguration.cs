@@ -9,17 +9,17 @@ namespace NHibernate.Envers.Configuration
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
 			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties,
-					"envers.revision_on_collection_change",
+					"nhibernate.envers.revision_on_collection_change",
 					"true");
 			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
 
 			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties,
-					"envers.do_not_audit_optimistic_locking_field",
+					"nhibernate.envers.do_not_audit_optimistic_locking_field",
 					"true");
 			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
 
 			var storeDataDeletedEntityStr = Toolz.GetProperty(properties,
-					"envers.store_data_at_delete",
+					"nhibernate.envers.store_data_at_delete",
 					"false");
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 

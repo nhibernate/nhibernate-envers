@@ -16,20 +16,20 @@ namespace NHibernate.Envers.Configuration
 			revInfoEntityName = revisionInfoEntityName;
 
 			auditTablePrefix = Toolz.GetProperty(properties,
-					"NHibernate.envers.audit_table_prefix",
+					"nhibernate.envers.audit_table_prefix",
 					string.Empty);
 			auditTableSuffix = Toolz.GetProperty(properties,
-					"NHibernate.envers.audit_table_suffix",
+					"nhibernate.envers.audit_table_suffix",
 					"_AUD");
 
 			OriginalIdPropName = "originalId";
 
 			RevisionFieldName = Toolz.GetProperty(properties,
-					"NHibernate.envers.revision_field_name",
+					"nhibernate.envers.revision_field_name",
 					"REV");
 
 			RevisionTypePropName = Toolz.GetProperty(properties,
-					"NHibernate.envers.revision_type_field_name",
+					"nhibernate.envers.revision_type_field_name",
 					"REVTYPE");
 			RevisionTypePropType = "byte";
 
