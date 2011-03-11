@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<chapter id="source">
+    <title>Building from source and testing</title>
+
+    <para>
+        You can clone the source code
+        <ulink url="https://RogerKratz@bitbucket.org/RogerKratz/nhibernate.envers">from BitBucket</ulink>.
+    </para>
+
+    <para>
+        A configuration template for tests, hibernate.cfg.xml.template, can be found
+		in the root folder of the tests. Copy this file and rename it to hibernate.cfg.xml
+		and point to a database of your choice.
+    </para>
+
+    <para>
+        The test data is in most cases created in the "initialize" method (which is called once before
+        the tests from this class are executed), which normally creates a couple of revisions,
+        by persisting and updating entities. The tests first check if the revisions, in which
+        entities where modified are correct (the testRevisionCounts method), and if the historic
+        data is correct (the testHistoryOfXxx methods).
+    </para>
+
+</chapter>
+

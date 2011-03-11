@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<chapter id="links">
+    <title>Links</title>
+
+    <para>
+        Some useful links:
+    </para>
+
+    <orderedlist>
+        <listitem>
+            <para>
+                <ulink url="http://nhforge.org">NHibernate home page</ulink>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <ulink url="http://groups.google.com/group/nhusers">User mailing list (ask questions here)</ulink>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <ulink url="https://bitbucket.org/RogerKratz/nhibernate.envers">Source code</ulink>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <ulink url="jira.nhforge.org">JIRA issue tracker</ulink>
+                (when adding issues concerning Envers, be sure to select the "envers" component!)
+            </para>
+        </listitem>
+    </orderedlist>
+
+</chapter>
