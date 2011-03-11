@@ -4,6 +4,9 @@
 <!ENTITY preface                SYSTEM "modules/preface.xml">
 <!ENTITY quickstart				SYSTEM "modules/quickstart.xml">
 <!ENTITY example				SYSTEM "modules/example.xml">
+<!ENTITY configuration			SYSTEM "modules/configuration.xml">
+<!ENTITY revisionlog			SYSTEM "modules/revisionlog.xml">
+
 
 <!ENTITY exceptions				SYSTEM "modules/exceptions.xml">
 
@@ -24,6 +27,10 @@
 	&quickstart;
 	
 	&example;
+	
+	&configuration;
+	
+	&revisionlog;
 	
 	&exceptions;
 

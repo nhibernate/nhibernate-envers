@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<chapter id="configuration">
+	<title>Configuration</title>
+	
+	<section id="config-basics">
+		<title>Basic configuration</title>
+
+		<para>
+			To start working with Envers, all configuration that you must do is to call
+			the extension method IntegrateWithEnvers() on NH Configuration object, 
+			as described in the <xref linkend="quickstart"/>.
+		</para>
+
+		<para>
+			However, as Envers generates some entities, and maps them to tables, it is possible to set the prefix and suffix
+			that is added to the entity name to create an audit table for an entity, as well
+			as set the names of the fields that are generated.
+		</para>
+	</section>
+	
+	<section id="config-audit-strategy">
+
+		 <title>Choosing an audit strategy</title>
+
+		 <para>
+			After the basic configuration it is important to choose the audit strategy that will be used to persist and 
+			retrieve audit information. There is a trade-off is between the performance of persisting and the performance  
+			of querying the audit information. Currently there two audit strategies:
+
+			<orderedlist>
+			  <listitem>
+				 <para>
+					   The default audit strategy persists the audit data together with a start revision. For each row 
+					   inserted, updated or deleted in an audited table, one or more rows are inserted in the audit tables,
+					   together with the start revision of its validity. Rows in the audit tables are never updated after insertion. 
+					   Queries of audit information use subqueries to select the applicable rows in the audit tables.
+					   These subqueries are notoriously slow and difficult to index. 
+				 </para>
+			  </listitem>
+			  <listitem>
+				 <para>
+					   The alternative is a validity audit strategy. This strategy stores the start-revision and the end-revision 
+					   of audit information. For each row inserted, updated or deleted in an audited table, one or more rows
+					   are inserted in the audit tables, together with the start revision of its validity. But at the same time 
+					   the end-revision field of the previous audit rows (if available) are set to this revision. 
+					   Queries on the audit information can then use 'between start and end revision' instead of subqueries 
+					   as used by the default audit strategy. 
+					   The consequence of this strategy is that persisting audit information will be a bit slower, because of the  
+					   extra updates involved, but retrieving audit information will be a lot faster. This can be improved by
+					   adding extra indexes.
+				 </para>
+			  </listitem>
+			</orderedlist>
+		 </para>
+	</section>
+	
+  <section id="config-reference">
+    <title>Reference</title>
+
+    <para>
+        In more detail, here are the properties that you can set:
+    </para>
+
+    <table frame="topbot">
+        <title>Envers Configuration Properties</title>
+        <tgroup cols="3">
+            <colspec colname="c1" colwidth="1*"/>
+            <colspec colname="c2" colwidth="1*"/>
+            <colspec colname="c2" colwidth="1*"/>
+            <thead>
+                <row>
+                    <entry>Property name</entry>
+                    <entry>Default value</entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.audit_table_prefix</property>
+                    </entry>
+                    <entry>
+
+                    </entry>
+                    <entry>
+                        String that will be prepended to the name of an audited entity to create
+                        the name of the entity, that will hold audit information.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.audit_table_suffix</property>
+                    </entry>
+                    <entry>
+                        _AUD
+                    </entry>
+                    <entry>
+                        String that will be appended to the name of an audited entity to create
+                        the name of the entity, that will hold audit information. If you
+                        audit an entity with a table name Person, in the default setting Envers
+                        will generate a <literal>Person_AUD</literal> table to store historical data.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.revision_field_name</property>
+                    </entry>
+                    <entry>
+                        REV
+                    </entry>
+                    <entry>
+                        Name of a field in the audit entity that will hold the revision number.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.revision_type_field_name</property>
+                    </entry>
+                    <entry>
+                        REVTYPE
+                    </entry>
+                    <entry>
+                        Name of a field in the audit entity that will hold the type of the
+                        revision (currently, this can be: add, mod, del).
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.revision_on_collection_change</property>
+                    </entry>
+                    <entry>
+                        true
+                    </entry>
+                    <entry>
+                        Should a revision be generated when a not-owned relation field changes
+                        (this can be either a collection in a one-to-many relation, or the field
+                        using "mappedBy" attribute in a one-to-one relation).
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.do_not_audit_optimistic_locking_field</property>
+                    </entry>
+                    <entry>
+                        true
+                    </entry>
+                    <entry>
+                        When true, properties to be used for optimistic locking will be automatically not audited
+                        (their history won't be stored; it normally doesn't make sense to store it).
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.store_data_at_delete</property>
+                    </entry>
+                    <entry>
+                        false
+                    </entry>
+                    <entry>
+                        Should the entity data be stored in the revision when the entity is deleted (instead of only
+                        storing the id and all other properties as null). This is not normally needed, as the data is
+                        present in the last-but-one revision. Sometimes, however, it is easier and more efficient to
+                        access it in the last revision (then the data that the entity contained before deletion is
+                        stored twice).
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.default_schema</property>
+                    </entry>
+                    <entry>
+                        null (same as normal tables)
+                    </entry>
+                    <entry>
+                        The default schema name that should be used for audit tables. Can be overriden using the
+                        <literal>[AuditTable(schema="...")]</literal> attribute. If not present, the schema will
+                        be the same as the schema of the normal tables.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>nhibernate.envers.default_catalog</property>
+                    </entry>
+                    <entry>
+                        null (same as normal tables)
+                    </entry>
+                    <entry>
+                        The default catalog name that should be used for audit tables. Can be overriden using the
+                        <literal>[AuditTable(catalog="...")]</literal> attribute. If not present, the catalog will
+                        be the same as the catalog of the normal tables.                        
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>org.hibernate.envers.audit_strategy</property>
+                    </entry>
+                    <entry>
+                        org.hibernate.envers.strategy.DefaultAuditStrategy
+                    </entry>
+                    <entry>
+						NOT PORTED YET!
+					
+                        The audit strategy that should be used when persisting audit data. The default stores only the
+                        revision, at which an entity was modified. An alternative, the
+                        <literal>org.hibernate.envers.strategy.ValidityAuditStrategy</literal> stores both the
+                        start revision and the end revision. Together these define when an audit row was valid, hence 
+                        the name ValidityAuditStrategy. 
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>org.hibernate.envers.audit_strategy_validity_end_rev_field_name</property>
+                    </entry>
+                    <entry>
+                        REVEND
+                    </entry>
+                    <entry>
+						PORTED YET!
+
+                        The column name that will hold the end revision number in audit entities. This property is only 
+                        valid if the validity audit strategy is used.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>org.hibernate.envers.audit_strategy_validity_store_revend_timestamp</property>
+                    </entry>
+                    <entry>
+                        false
+                    </entry>
+                    <entry>
+						PORTED YET!
+
+                        Should the timestamp of the end revision be stored, until which the data was valid, in addition to the end revision itself. 
+                        This is useful to be able to purge old Audit records out of a relational database by using table partitioning. 
+                        Partitioning requires a column that exists within the table.
+                        This property is only evaluated if the ValidityAuditStrategy is used.
+                    </entry>
+                </row>
+                <row>
+                    <entry>
+                        <property>org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name</property>
+                    </entry>
+                    <entry>
+                        REVEND_TSTMP
+                    </entry>
+                    <entry>
+						NOT PORTED YET!
+					
+                        Column name of the timestamp of the end revision until which the data was valid.
+                        Only used if the ValidityAuditStrategy is used, and 
+                        org.hibernate.envers.audit_strategy_validity_store_revend_timestamp evaluates to true
+                    </entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+
+    <para>
+        To change the name of the revision table and its fields (the table, in which the
+        numbers of revisions and their timestamps are stored), you can use the
+        <literal>[RevisionEntity]</literal> attribute.
+        For more information, see <xref linkend="revisionlog"/>.
+    </para>
+
+    <para>
+        To set the value of any of the properties described above, simply add an entry to
+        your <literal>hibernate.cfg.xml</literal> (or to NH Configuration object). 
+    </para>
+
+    <para>
+        You can also set the name of the audit table on a per-entity basis, using the
+        <literal>[AuditTable]</literal> attribute. It may be tedious to add this
+        annotation to every audited entity, so if possible, it's better to use a prefix/suffix.
+    </para>
+
+    <para>
+        If you have a mapping with join tables, audit tables for them will be generated in
+        the same way (by adding the prefix and suffix). If you wish to overwrite this behaviour,
+        you can use the <literal>[JoinAuditTable]</literal> attribute.
+    </para>
+
+    <para>
+        If you'd like to override auditing behaviour of some fields/properties in an embedded component, you can use
+        the <literal>[AuditOverride]</literal> atttribute on the place where you use the component.
+    </para>
+
+    <para>
+        If you want to audit a relation, where the target entity is not audited (that is the case for example with
+        dictionary-like entities, which don't change and don't have to be audited), just annotate it with
+        <literal>[Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED]</literal> 
+		(or use fluent configuration: ExcludeRelationData()). Then, when reading historic
+        versions of your entity, the relation will always point to the "current" related entity.
+    </para>
+  </section>
+</chapter>
