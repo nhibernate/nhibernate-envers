@@ -12,41 +12,37 @@
 	</para>
 	<programlisting>nhConf.IntegrateWithEnvers(); //attribute config by default
 [...]
-
 [Audited]
 public class Person
-[...]
-	</programlisting>
+[...]</programlisting>
 		
 	<para>
 		Simple fluent configuration
 	</para>
 	<programlisting>var enversConf = new FluentConfiguration();
 enversConf.Audit&lt;Person&gt;();
-nhConf.IntegrateWithEnvers(enversConf);
-	</programlisting>
+nhConf.IntegrateWithEnvers(enversConf);</programlisting>
 	
 	<para>
         And that's it! You create, modify and delete the entites as always. If you look
         at the generated schema, you will notice that it is unchanged by adding auditing
-        for the Address and Person entities. Also, the data they hold is the same. There are,
+        for the Person entity. Also, the data they hold is the same. There are,
         however, new tables, which store the historical data, whenever you commit a transaction.
     </para>
 	
 	<para>
         Instead of annotating the whole class and auditing all properties, you can annotate
         only some persistent properties with <literal>[Audited]</literal> (attributes)
-		or use "Exclude" method to exclude non audited properties(fluent). 
+		or use "Exclude" method to exclude non audited properties (fluent). 
     </para>
 	
 	<para>
         You can access the audit (history) of an entity using the <literal>IAuditReader</literal> interface, which you
-        can obtain when having an open ISession.
+        can obtain when having an open <literal>ISession</literal>.
     </para>
 	
 	<programlisting>var reader = AuditReaderFactory.Get(session);
-var oldPerson = reader.Find(typeof(Person), personId, revision);
-	</programlisting>
+var oldPerson = reader.Find(typeof(Person), personId, revision);</programlisting>
 	
 	<para>
         The <literal>T Find&lt;T&gt;(object primaryKey, long revision)</literal>

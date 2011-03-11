@@ -43,7 +43,8 @@
             The entry point for this type of queries is:
         </para>
 
-        <programlisting><![CDATA[var query = AuditReader().CreateQuery().ForEntitiesAtRevision(typeof(MyEntity, revisionNumber);]]></programlisting>
+        <programlisting><![CDATA[var query = AuditReader().CreateQuery()
+	.ForEntitiesAtRevision(typeof(MyEntity, revisionNumber);]]></programlisting>
 
         <para>
             You can then specify constraints, which should be met by the entities returned, by
