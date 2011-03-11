@@ -6,6 +6,11 @@
     <ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
     <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
     <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
+	<ClassPath>"support/lib/*"</ClassPath>
+	<DocReferencePath>../doc/reference/</DocReferencePath>
+	<TempDirectory>$(BuildFolder)/temp</TempDirectory>
+	<TempDoc>$(TempDirectory)/doc.tmp</TempDoc>
+	<OutputDoc>$(TempDirectory)/documentation.pdf</OutputDoc>
   </PropertyGroup>
   
   <ItemGroup Label="Extra files to deploy">
@@ -21,7 +26,7 @@
     <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Remotion.Data.Linq.dll" />
   </ItemGroup>
 
-  <Target Name="Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
+  <Target Name="Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild;BuildPdf"/>
 
   <Target Name="RunBuild">
     <MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
@@ -52,4 +57,20 @@
   <Target Name="CopyNHibernateLibsToDeploy">
     <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
   </Target>
+  
+	<Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
+		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
+		<Copy SourceFiles="@(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
+	</Target>
+	
+	<Target Name="RunPdfBuild" DependsOnTargets="PrepareDoc">
+		<exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(TempDoc) master.xml styles/fopdf.xsl"
+			WorkingDirectory="$(DocReferencePath)"/>
+		<exec command="java -classpath $(ClassPath) org.apache.fop.apps.Fop $(TempDoc) $(OutputDoc)"
+			WorkingDirectory="$(DocReferencePath)"/>	
+	</Target>
+	
+	<Target Name="PrepareDoc">
+		<MakeDir Directories="$(TempDirectory)"/>
+	</Target>
 </Project>

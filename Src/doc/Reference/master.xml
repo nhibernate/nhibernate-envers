@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5b1//EN"
+               "support/docbook-dtd/docbookx.dtd" [
+<!ENTITY preface                SYSTEM "modules/preface.xml">
+]>
+
+
+<book lang="en">
+	<bookinfo>
+		<title>NHibernate - Relational Persistence for Idiomatic .NET</title>
+		<subtitle>NHibernate Reference Documentation</subtitle>
+		<releaseinfo>3.0.1</releaseinfo>
+	</bookinfo>
+
+	<toc />
+
+	&preface;
+
+
+</book>
