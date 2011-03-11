@@ -7,8 +7,11 @@
 <!ENTITY configuration			SYSTEM "modules/configuration.xml">
 <!ENTITY revisionlog			SYSTEM "modules/revisionlog.xml">
 <!ENTITY queries				SYSTEM "modules/queries.xml">
-
+<!ENTITY schema					SYSTEM "modules/schema.xml">
+<!ENTITY tables					SYSTEM "modules/tables.xml">
+<!ENTITY source					SYSTEM "modules/source.xml">
 <!ENTITY exceptions				SYSTEM "modules/exceptions.xml">
+<!ENTITY links					SYSTEM "modules/links.xml">
 
 ]>
 
@@ -34,6 +37,13 @@
 	
 	&queries;
 	
+	&schema;
+	
+	&tables;
+	
+	&source;
+	
 	&exceptions;
 
+	&links;
 </book>
