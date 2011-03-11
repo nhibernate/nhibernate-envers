@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("envers.do_not_audit_optimistic_locking_field", "false");
+			configuration.SetProperty("nhibernate.envers.do_not_audit_optimistic_locking_field", "false");
 		}
 
 		protected override void Initialize()

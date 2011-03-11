@@ -12,3 +12,6 @@
 *** Breaking changes ***
 * Renamed IFluentAudit<T>.ExcludeRelation to ExcludeRelationData
 * AuditMappedByAttribute no longer public for users. Handled automatically internally.
+* Renamed envers.store_data_at_delete to nhibernate.envers.store_data_at_delete
+* Renamed envers.do_not_audit_optimistic_locking_field to nhibernate.envers.do_not_audit_optimistic_locking_field
+

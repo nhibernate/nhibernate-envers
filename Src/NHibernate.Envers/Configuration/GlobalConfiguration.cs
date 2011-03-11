@@ -23,8 +23,8 @@ namespace NHibernate.Envers.Configuration
 					"false");
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			DefaultSchemaName = Toolz.GetProperty(properties,"envers.default_schema",string.Empty);
-			DefaultCatalogName = Toolz.GetProperty(properties, "envers.default_catalog", string.Empty);
+			DefaultSchemaName = Toolz.GetProperty(properties, "nhibernate.envers.default_schema", string.Empty);
+			DefaultCatalogName = Toolz.GetProperty(properties, "nhibernate.envers.default_catalog", string.Empty);
 
 			CorrelatedSubqueryOperator = "=";
 		}
