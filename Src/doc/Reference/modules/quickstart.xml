@@ -12,6 +12,7 @@
 	</para>
 	<programlisting>nhConf.IntegrateWithEnvers(); //attribute config by default
 [...]
+
 [Audited]
 public class Person
 [...]</programlisting>

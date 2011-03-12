@@ -265,7 +265,7 @@
 
     <para>
         To set the value of any of the properties described above, simply add an entry to
-        your <literal>hibernate.cfg.xml</literal> (or to NH Configuration object). 
+        your <literal>hibernate.cfg.xml</literal> (or to NH's <literal>Configuration</literal> object). 
     </para>
 
     <para>
@@ -289,7 +289,7 @@
         If you want to audit a relation, where the target entity is not audited (that is the case for example with
         dictionary-like entities, which don't change and don't have to be audited), just annotate it with
         <literal>[Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED]</literal> 
-		(or use fluent configuration: ExcludeRelationData()). Then, when reading historic
+		(or use fluent configuration: <literal>ExcludeRelationData()</literal>). Then, when reading historic
         versions of your entity, the relation will always point to the "current" related entity.
     </para>
   </section>
