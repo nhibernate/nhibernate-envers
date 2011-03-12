@@ -1,0 +1,1 @@
+To build docs, you need to have JRE (Java Runtime Environment) installed.

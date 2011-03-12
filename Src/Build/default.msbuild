@@ -6,11 +6,11 @@
     <ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
     <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
     <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
-	<ClassPath>"support/lib/*"</ClassPath>
-	<DocReferencePath>../doc/reference/</DocReferencePath>
-	<TempDirectory>$(BuildFolder)/temp</TempDirectory>
-	<TempDoc>$(TempDirectory)/doc.tmp</TempDoc>
-	<OutputDoc>$(TempDirectory)/EnversUserDoc.pdf</OutputDoc>
+	<ClassPath>"support\lib\*"</ClassPath>
+	<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
+	<TempDirectory>$(BuildFolder)\temp</TempDirectory>
+	<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
+	<OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
   </PropertyGroup>
   
   <ItemGroup Label="Extra files to deploy">
