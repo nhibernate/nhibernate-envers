@@ -37,7 +37,7 @@
         <listitem>
             <para>
                 auditing like custom types and
-                collections/maps of "simple" types (Strings, Integers, etc.)
+                collections/maps of "simple" types (strings, integers, etc.)
 				(see also <xref linkend="exceptions"/>)
             </para>
         </listitem>
