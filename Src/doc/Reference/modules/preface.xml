@@ -31,7 +31,7 @@
     <orderedlist>
         <listitem>
             <para>
-                auditing of all NHibernate mappings (except collection of components)
+                auditing of all NHibernate mappings
             </para>
         </listitem>
         <listitem>
