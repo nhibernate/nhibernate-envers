@@ -7,7 +7,7 @@
         <title>What isn't and will not be supported</title>
 
         <para>
-            Bags (the corresponding Java type is List), as they can contain non-unique elements.
+            Bags (the corresponding CLR type is IList&lt;T&gt;), as they can contain non-unique elements.
             The reason is that persisting, for example a bag of String-s, violates a principle
             of relational databases: that each table is a set of tuples. In case of bags,
             however (which require a join table), if there is a duplicate element, the two
