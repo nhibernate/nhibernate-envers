@@ -7,7 +7,9 @@
 [NHE-7] - Exception in AuditSync.BeforeCompletion is swallowed by (NH) AdoTransaction
 
 
-=== ALPHA 2 (v 0.9.1.0), , NH 3.1.0 ===
+=== ALPHA 2 (v 0.8.2.0), 2011-03-14, NH 3.1.0 ===
+
+[NHE-5] - Documentation
 
 *** Breaking changes ***
 * Renamed IFluentAudit<T>.ExcludeRelation to ExcludeRelationData
