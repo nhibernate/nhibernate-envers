@@ -198,8 +198,6 @@
                         org.hibernate.envers.strategy.DefaultAuditStrategy
                     </entry>
                     <entry>
-						NOT PORTED YET!
-					
                         The audit strategy that should be used when persisting audit data. The default stores only the
                         revision, at which an entity was modified. An alternative, the
                         <literal>org.hibernate.envers.strategy.ValidityAuditStrategy</literal> stores both the
@@ -215,8 +213,6 @@
                         REVEND
                     </entry>
                     <entry>
-						PORTED YET!
-
                         The column name that will hold the end revision number in audit entities. This property is only 
                         valid if the validity audit strategy is used.
                     </entry>
@@ -229,8 +225,6 @@
                         false
                     </entry>
                     <entry>
-						PORTED YET!
-
                         Should the timestamp of the end revision be stored, until which the data was valid, in addition to the end revision itself. 
                         This is useful to be able to purge old Audit records out of a relational database by using table partitioning. 
                         Partitioning requires a column that exists within the table.
@@ -245,8 +239,6 @@
                         REVEND_TSTMP
                     </entry>
                     <entry>
-						NOT PORTED YET!
-					
                         Column name of the timestamp of the end revision until which the data was valid.
                         Only used if the ValidityAuditStrategy is used, and 
                         org.hibernate.envers.audit_strategy_validity_store_revend_timestamp evaluates to true
