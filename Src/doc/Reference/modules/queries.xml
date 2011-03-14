@@ -191,7 +191,7 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
 		<title><literal>Auditer()</literal>, an extension method on <literal>ISession</literal></title>
 		
 		<para>
-            The extesion method <literal>Auditer()</literal> offers an alternative API to query Envers.
+            The extension method <literal>Auditer()</literal> offers an alternative API to query Envers.
 			
 			<programlisting><![CDATA[IEnumerable<long> example = session.Auditer().GetRevisions<MyEntity>(id);]]></programlisting>
         </para>
