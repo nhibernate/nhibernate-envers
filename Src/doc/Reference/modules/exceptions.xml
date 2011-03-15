@@ -4,14 +4,14 @@
 
     <section id="exceptions-wontbesupported">
 
-        <title>What isn't and will not be supported</title>
+        <title>What is not and will not be supported</title>
 
         <para>
             Bags (the corresponding CLR type is IList&lt;T&gt;), as they can contain non-unique elements.
             The reason is that persisting, for example a bag of String-s, violates a principle
             of relational databases: that each table is a set of tuples. In case of bags,
             however (which require a join table), if there is a duplicate element, the two
-            tuples corresponding to the elements will be the same. Hibernate allows this,
+            tuples corresponding to the elements will be the same. NHibernate allows this,
             however Envers (or more precisely: the database connector) will throw an exception
             when trying to persist two identical elements, because of a unique constraint violation.
         </para>
@@ -37,7 +37,7 @@
 
     <section id="exceptions-willbesupported">
 
-        <title>What isn't and <emphasis>will</emphasis> be supported</title>
+        <title>What is not and <emphasis>will</emphasis> be supported</title>
 
         <orderedlist>
             <listitem>

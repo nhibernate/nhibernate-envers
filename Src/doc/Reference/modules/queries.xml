@@ -25,7 +25,7 @@
     </para>
 
     <para>
-        Please note, that queries on the audited data will be in many cases much slower
+        Please note, that queries on the audited data are usually a lot slower
         than corresponding queries on "live" data, as they involve correlated subselects.
     </para>
 
@@ -103,13 +103,13 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
         <orderedlist>
             <listitem>
                 <para>
-                using <literal>AuditEntity.RevisionNumber</literal> you can specify constraints, projections
+                Using <literal>AuditEntity.RevisionNumber</literal> you can specify constraints, projections
                 and order on the revision number, in which the audited entity was modified
                 </para>
             </listitem>
             <listitem>
                 <para>
-                similarly, using <literal>AuditEntity.RevisionProperty(propertyName)</literal> you can specify constraints,
+                Similarly, using <literal>AuditEntity.RevisionProperty(propertyName)</literal> you can specify constraints,
                 projections and order on a property of the revision entity, corresponding to the revision
                 in which the audited entity was modified
                 </para>

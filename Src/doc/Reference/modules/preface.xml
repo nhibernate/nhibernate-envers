@@ -31,24 +31,24 @@
     <orderedlist>
         <listitem>
             <para>
-                auditing of all NHibernate mappings
+                Auditing of all NHibernate mappings
             </para>
         </listitem>
         <listitem>
             <para>
-                auditing like custom types and
+                Auditing like custom types and
                 collections/maps of "simple" types (strings, integers, etc.)
 				(see also <xref linkend="exceptions"/>)
             </para>
         </listitem>
         <listitem>
             <para>
-                logging data for each revision using a "revision entity"
+                Logging data for each revision using a "revision entity"
             </para>
         </listitem>
         <listitem>
             <para>
-                querying historical data
+                Querying historical data
             </para>
         </listitem>
     </orderedlist>
