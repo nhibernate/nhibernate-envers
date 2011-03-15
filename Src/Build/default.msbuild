@@ -22,8 +22,6 @@
 	<ItemGroup Label="NHibernate dependencies">
 		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\NHibernate.dll" />
 		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Iesi.Collections.dll" />
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Antlr3.Runtime.dll" />
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Remotion.Data.Linq.dll" />
 	</ItemGroup>
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>

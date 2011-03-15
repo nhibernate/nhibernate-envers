@@ -42,7 +42,7 @@
         flatNumber integer,
         houseNumber integer,
         streetName varchar(255),
-        REVTYPE tinyint,
+        REVTYPE tinyint not null,
         primary key (id, REV)
     );
 
@@ -59,7 +59,7 @@
         REV integer not null,
         name varchar(255),
         surname varchar(255),
-        REVTYPE tinyint,
+        REVTYPE tinyint not null,
         address_id integer,
         primary key (id, REV)
     );
