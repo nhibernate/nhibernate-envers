@@ -20,13 +20,13 @@
     <orderedlist>
         <listitem>
             <para>
-                an integer- or long-valued property, annotated with <literal>[RevisionNumber]</literal>. Most
+                An integer- or long-valued property, annotated with <literal>[RevisionNumber]</literal>. Most
                 often, this will be an auto-generated primary key.
             </para>
         </listitem>
         <listitem>
             <para>
-                a long- or date- valued property, annotated with <literal>[RevisionTimestamp]</literal>. Value of
+                A long- or date- valued property, annotated with <literal>[RevisionTimestamp]</literal>. Value of
                 this property will be automatically set by Envers.
             </para>
         </listitem>

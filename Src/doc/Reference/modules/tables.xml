@@ -17,22 +17,22 @@
     <orderedlist>
         <listitem>
             <para>
-                id of the original entity (this can be more then one column, if using an embedded or multiple id)
+                Id of the original entity (this can be more then one column, if using an embedded or multiple id)
             </para>
         </listitem>
         <listitem>
             <para>
-                revision number - an integer
+                Revision number - an integer
             </para>
         </listitem>
         <listitem>
             <para>
-                revision type - a small integer
+                Revision type - a small integer
             </para>
         </listitem>
         <listitem>
             <para>
-                audited fields from the original entity
+                Audited fields from the original entity
             </para>
         </listitem>
     </orderedlist>
@@ -46,7 +46,7 @@
     <para>
         The current entity data is stored in the original table and in the audit table.
         This is a duplication of data, however as this solution makes the query system much more
-        powerful, and as memory is cheap, hopefully this won't be a major drawback for the users.
+        powerful, and as storage is cheap, hopefully this won't be a major drawback for the users.
         A row in the audit table with entity id ID, revision N and data D means:
         entity with id ID has data D from revision N upwards. Hence, if we want to find an
         entity at revision M, we have to search for a row in the audit table, which has the
