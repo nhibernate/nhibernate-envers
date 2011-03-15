@@ -1,5 +1,3 @@
-﻿* tests för overrideSattr
-* lägg till en Environmentklass med strängar för conf å annat
-fluent...
-* loggning för fluent
-* Verifiera typ cfg.Audit<foo>().ExcludeRelationData(foo => foo.MyComponent.Bar)
+﻿* Probably AuditOverridesAttribute can be removed. Use AuditOverrideAttribute with allowmultiple instead. Test + impl for this.
+* Create something similar to NH's Environment type and add cfg strings there
+* Verify that cfg.Audit<foo>().ExcludeRelationData(foo => foo.MyComponent.Bar) works. If not -> JIRA -> impl + test
