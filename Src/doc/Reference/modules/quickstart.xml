@@ -4,7 +4,7 @@
 	
 	<para>
         Out of the box there are two ways to configure Envers,
-		by attributes or by code.
+		by attributes or by code (fluent).
     </para>
 	
 	<para>
@@ -48,7 +48,7 @@ var oldPerson = reader.Find(typeof(Person), personId, revision);</programlisting
 	<para>
         The <literal>T Find&lt;T&gt;(object primaryKey, long revision)</literal>
         method returns an entity with the given primary key, with the data it contained at
-        the given revision. If the entity didn't exist at this revision, <literal>null</literal>
+        the given revision. If the entity didn't exist at that revision, <literal>null</literal>
         is returned. Only the audited properties will be set on the returned entity.
         The rest will be <literal>null</literal>.
     </para>
