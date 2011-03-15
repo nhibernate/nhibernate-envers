@@ -6,8 +6,8 @@
 		<title>Basic configuration</title>
 
 		<para>
-			To start working with Envers, all configuration that you must do is to call
-			the extension method IntegrateWithEnvers() on NH Configuration object, 
+			To start working with Envers, all configuration needed is to call
+			the extension method IntegrateWithEnvers() on the NH Configuration object, 
 			as described in the <xref linkend="quickstart"/>.
 		</para>
 
@@ -24,7 +24,7 @@
 
 		 <para>
 			After the basic configuration it is important to choose the audit strategy that will be used to persist and 
-			retrieve audit information. There is a trade-off is between the performance of persisting and the performance  
+			retrieve audit information. There is a trade-off between the performance of persisting and the performance  
 			of querying the audit information. Currently there two audit strategies:
 
 			<orderedlist>
@@ -158,7 +158,7 @@
                     </entry>
                     <entry>
                         Should the entity data be stored in the revision when the entity is deleted (instead of only
-                        storing the id and all other properties as null). This is not normally needed, as the data is
+                        storing the id and all other properties as null). This is normally not needed, as the data is
                         present in the last-but-one revision. Sometimes, however, it is easier and more efficient to
                         access it in the last revision (then the data that the entity contained before deletion is
                         stored twice).
