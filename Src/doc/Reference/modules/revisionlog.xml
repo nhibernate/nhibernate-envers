@@ -34,7 +34,7 @@
 
     <para>
         You can either add these properties to your entity, or extend
-        <literal>org.hibernate.envers.DefaultRevisionEntity</literal>, which already has those two properties.
+        <literal>DefaultRevisionEntity</literal>, which already has those two properties.
     </para>
 
     <para>
