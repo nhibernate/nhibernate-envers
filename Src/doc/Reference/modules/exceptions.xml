@@ -23,12 +23,12 @@
         <orderedlist>
             <listitem>
                 <para>
-                    use an indexed collection, or
+                    Use an indexed collection, or
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    provide a unique id for your elements.
+                    Provide a unique id for your elements.
                 </para>
             </listitem>
         </orderedlist>
@@ -42,7 +42,7 @@
         <orderedlist>
             <listitem>
                 <para>
-                    collections of components
+                    Collections of components
                 </para>
             </listitem>
         </orderedlist>
