@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
-		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
-		<ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
-		<FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
-		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
-	<ClassPath>"support\lib\*"</ClassPath>
-	<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
-	<TempDirectory>$(BuildFolder)\temp</TempDirectory>
-	<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
-	<OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
-	</PropertyGroup>
+  <PropertyGroup>
+    <SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
+    <BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
+    <ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
+    <ToolsFolder>$(SourceDir)\..\Tools</ToolsFolder>
+    <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
+    <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
+    <ClassPath>"support\lib\*"</ClassPath>
+    <DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
+    <TempDirectory>$(BuildFolder)\temp</TempDirectory>
+    <TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
+    <OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
+  </PropertyGroup>
 	
 	<ItemGroup Label="Extra files to deploy">
 		<ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
@@ -25,8 +26,12 @@
 	</ItemGroup>
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
+  <Target Name="nuget" DependsOnTargets="Build">
+    <Exec Command="$(ToolsFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
+			WorkingDirectory="$(MSBuildProjectDirectory)"/>
+  </Target>
 
-	<Target Name="RunBuild">
+  <Target Name="RunBuild">
 		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
 			<Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
 		</MSBuild>
