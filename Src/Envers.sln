@@ -4,8 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34BA8295-3EBE-47B0-ABBF-0A7E9A8E6B35}"
 	ProjectSection(SolutionItems) = preProject
 		Build\build.bat = Build\build.bat
+		Build\buildDoc.bat = Build\buildDoc.bat
 		Build\buildRelease.bat = Build\buildRelease.bat
 		Build\default.msbuild = Build\default.msbuild
+		Build\NHibernate.Envers.nuspec = Build\NHibernate.Envers.nuspec
 		ReleaseNotes.txt = ReleaseNotes.txt
 	EndProjectSection
 EndProject

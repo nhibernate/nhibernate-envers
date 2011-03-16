@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>NHibernate.Envers</id>
+    <version>0.8.2.1</version>
+    <authors>NHibernate community, Hibernate community</authors>
+    <summary>Audit trail integrated with NHibernate.</summary>
+    <description>
+      Powerful audit trail integrated with NHibernate.
+    </description>
+    <language>en-US</language>
+    <tags>Audit, NHibernate</tags>
+    <dependencies>
+      <dependency id="NHibernate" version="3.1" />
+      <dependency id="Iesi.Collections" version="3.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Output\Deploy\NHibernate.Envers.dll" target="lib\Net35" />
+    <file src="Output\Deploy\NHibernate.Envers.xml" target="lib\Net35" />
+    <file src="Output\Deploy\EnversUserDoc.pdf" target="lib\Net35" />
+    <file src="Output\Deploy\LGPL_3.0.txt" target="lib\Net35" />
+    <file src="Output\Deploy\ReleaseNotes.txt" target="lib\Net35" />
+  </files>
+</package>
