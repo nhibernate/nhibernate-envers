@@ -1,4 +1,5 @@
 ﻿using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Property
 {
@@ -16,7 +17,7 @@ namespace NHibernate.Envers.Query.Property
 
 		public string Get(AuditConfiguration auditCfg) 
 		{
-			return propertyName;
+			return propertyName.Replace(".", MappingTools.RelationCharacter);
 		}
 	}
 }

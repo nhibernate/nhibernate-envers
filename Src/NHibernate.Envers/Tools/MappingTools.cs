@@ -6,6 +6,8 @@ namespace NHibernate.Envers.Tools
 {
 	public static class MappingTools
 	{
+		public const string RelationCharacter = "_";
+
 		/// <summary>
 		/// </summary>
 		/// <param name="componentName">Name of the component, that is, 
@@ -13,7 +15,7 @@ namespace NHibernate.Envers.Tools
 		/// <returns>A prefix for properties in the given component.</returns>
 		public static string CreateComponentPrefix(string componentName)
 		{
-			return componentName + "_";
+			return componentName + RelationCharacter;
 		}
 
 		/// <summary>
@@ -22,7 +24,7 @@ namespace NHibernate.Envers.Tools
 		/// <returns>A prefix which should be used to prefix an id mapper for the related entity.</returns>
 		public static string CreateToOneRelationPrefix(string referencePropertyName)
 		{
-			return referencePropertyName + "_";
+			return referencePropertyName + RelationCharacter;
 		}
 
 		public static string ReferencedEntityName(IValue value) 
