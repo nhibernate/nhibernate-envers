@@ -11,9 +11,9 @@ namespace NHibernate.Envers.Synchronization
 		private readonly IRevisionInfoGenerator revisionInfoGenerator;
 		private readonly ISessionImplementor session;
 
-		private LinkedList<IAuditWorkUnit> workUnits;
-		private Queue<IAuditWorkUnit> undoQueue;
-		private IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
+		private readonly LinkedList<IAuditWorkUnit> workUnits;
+		private readonly Queue<IAuditWorkUnit> undoQueue;
+		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
 
 		private object revisionData;
 
@@ -125,21 +125,21 @@ namespace NHibernate.Envers.Synchronization
 			{
 				return;
 			}
+			var castedSession = (ISession) session;
 
-			if (FlushMode.Never == session.FlushMode)
+			if (FlushMode.Never == castedSession.FlushMode)
 			{
-
-				using (var tempSession = session.Factory.OpenSession())
-				{
-					executeInSession(tempSession);
-					tempSession.Flush();
-				}
+				//need a "Envers session", as a user might have non flushed data in its session
+				//that shouldn't be persisted
+				var tempSession = castedSession.GetSession(EntityMode.Poco);
+				executeInSession(tempSession);
+				tempSession.Flush();
 			}
 			else
 			{
-				executeInSession((ISession)session);
+				executeInSession(castedSession);
 				// Explicity flushing the session, as the auto-flush may have already happened.
-				session.Flush();
+				castedSession.Flush();
 			}
 		}
 	}

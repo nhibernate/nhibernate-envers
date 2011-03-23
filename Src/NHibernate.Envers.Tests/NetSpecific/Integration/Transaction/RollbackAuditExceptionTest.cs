@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			verifyNoDataGotPeristed(intId);
 		}
 
-		[Test, Ignore("Bug NH-8")]
+		[Test]
 		public void WhenAuditPeristExceptionOccursTransactionShouldBeRolledBack_FlushModeNever()
 		{
 			int intId;
