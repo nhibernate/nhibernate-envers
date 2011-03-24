@@ -1,4 +1,5 @@
-﻿using NHibernate.Collection;
+﻿using System.Collections.Generic;
+using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
@@ -25,8 +26,8 @@ namespace NHibernate.Envers.Event
 		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess, 
 																	IEntityPersister entityPersister,
 																	string entityName, 
-																	object[] newState, 
-																	object[] oldState,
+																	IList<object> newState, 
+																	IList<object> oldState,
 																	ISessionImplementor session) 
 		{
 			// Checking if this is enabled in configuration ...
@@ -44,8 +45,10 @@ namespace NHibernate.Envers.Event
 			{
 				var propertyName = propertyNames[i];
 				var relDesc = VerCfg.EntCfg.GetRelationDescription(entityName, propertyName);
-				if (relDesc != null && relDesc.Bidirectional && relDesc.RelationType == RelationType.ToOne &&
-						relDesc.Insertable) 
+				if (relDesc != null && 
+					relDesc.Bidirectional && 
+					relDesc.RelationType == RelationType.ToOne &&
+					relDesc.Insertable) 
 				{
 					// Checking for changes
 					var oldValue = oldState == null ? null : oldState[i];
@@ -97,59 +100,48 @@ namespace NHibernate.Envers.Event
 		public virtual void OnPostInsert(PostInsertEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
-			if (VerCfg.EntCfg.IsVersioned(entityName)) 
+			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
+
+			var auditProcess = VerCfg.AuditProcessManager.Get(evt.Session);
+			var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
+			                               evt.Id, evt.Persister, evt.State);
+			auditProcess.AddWorkUnit(workUnit);
+			if (workUnit.ContainsWork()) 
 			{
-				var auditProcess = VerCfg.AuditProcessManager.Get(evt.Session);
-
-				var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
-						evt.Id, evt.Persister, evt.State);
-				auditProcess.AddWorkUnit(workUnit);
-
-				if (workUnit.ContainsWork()) 
-				{
-					GenerateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
-							null, evt.Session);
-				}
+				GenerateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
+				                                               null, evt.Session);
 			}
 		}
 
 		public virtual void OnPostUpdate(PostUpdateEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
+			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
 
-			if (VerCfg.EntCfg.IsVersioned(entityName)) 
+			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
+			var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
+			                               evt.Id, evt.Persister, evt.State, evt.OldState);
+			verSync.AddWorkUnit(workUnit);
+			if (workUnit.ContainsWork()) 
 			{
-				var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
-
-				var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
-						evt.Id, evt.Persister, evt.State, evt.OldState);
-				verSync.AddWorkUnit(workUnit);
-
-				if (workUnit.ContainsWork()) 
-				{
-					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
-							evt.OldState, evt.Session);
-				}
+				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
+				                                               evt.OldState, evt.Session);
 			}
 		}
 
 		public virtual void OnPostDelete(PostDeleteEvent evt) 
 		{
 			var entityName = evt.Persister.EntityName;
+			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
 
-			if (VerCfg.EntCfg.IsVersioned(entityName)) 
+			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
+			var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
+											evt.Id, evt.Persister, evt.DeletedState);
+			verSync.AddWorkUnit(workUnit);
+			if (workUnit.ContainsWork()) 
 			{
-				var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
-
-				var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
-						evt.Id, evt.Persister, evt.DeletedState);
-				verSync.AddWorkUnit(workUnit);
-
-				if (workUnit.ContainsWork()) 
-				{
-					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
-							evt.DeletedState, evt.Session);
-				}
+				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
+				                                               evt.DeletedState, evt.Session);
 			}
 		}
 
@@ -231,37 +223,34 @@ namespace NHibernate.Envers.Event
 										CollectionEntry collectionEntry) 
 		{
 			var entityName = evt.GetAffectedOwnerEntityName();
+			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
 
-			if (VerCfg.EntCfg.IsVersioned(entityName)) 
+			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
+			var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
+			var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
+
+			// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
+			// null in case of collections of non-entities.
+			var rd = VerCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
+			if (rd != null && rd.MappedByPropertyName != null) 
 			{
-				var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
+				GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
+				                                            referencingPropertyName, evt, rd);
+			} 
+			else 
+			{
+				var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
+				                                                      entityName, VerCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
+				                                                      referencingPropertyName);
+				verSync.AddWorkUnit(workUnit);
 
-				var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
-				var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
-
-				// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
-				// null in case of collections of non-entities.
-				var rd = VerCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
-				if (rd != null && rd.MappedByPropertyName != null) 
+				if (workUnit.ContainsWork()) 
 				{
-					GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
-							referencingPropertyName, evt, rd);
-				} 
-				else 
-				{
-					var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
-							entityName, VerCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
-							referencingPropertyName);
-					verSync.AddWorkUnit(workUnit);
+					// There are some changes: a revision needs also be generated for the collection owner
+					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
+					                                                 VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 
-					if (workUnit.ContainsWork()) 
-					{
-						// There are some changes: a revision needs also be generated for the collection owner
-						verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
-								VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
-
-						GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
-					}
+					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
 				}
 			}
 		}

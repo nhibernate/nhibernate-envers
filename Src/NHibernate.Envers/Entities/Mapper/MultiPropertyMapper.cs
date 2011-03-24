@@ -50,14 +50,15 @@ namespace NHibernate.Envers.Entities.Mapper
 			propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
-		private static object getAtIndexOrNull(object[] array, int index)
+		private static object getAtIndexOrNull(IList<object> array, int index)
 		{
 			return array == null ? null : array[index];
 		}
 
 		public bool Map(ISessionImplementor session, IDictionary<string, object> data, string[] propertyNames, 
-						object[] newState, object[] oldState) {
-			bool ret = false;
+						object[] newState, object[] oldState) 
+		{
+			var ret = false;
 			for (var i=0; i<propertyNames.Length; i++) 
 			{
 				var propertyName = propertyNames[i];
