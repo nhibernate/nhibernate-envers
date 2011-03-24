@@ -84,7 +84,8 @@ namespace NHibernate.Envers.Entities.Mapper
 		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
 																		 IPersistentCollection newColl,
 																		 object oldColl,
-																		 object id) {
+																		 object id) 
+		{
 			return null;
 		}
 	}
