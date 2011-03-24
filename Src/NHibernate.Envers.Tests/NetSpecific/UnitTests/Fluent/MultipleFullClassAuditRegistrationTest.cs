@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		public void WhenRegisterTypeThenIsAudited()
 		{
 			var cfg = new FluentConfiguration();
-			cfg.Audit(new[]{typeof(Animal)});
+			cfg.Audit(new[] { typeof(Animal) });
 			cfg.CreateMetaData(null).Keys.Should().Contain(typeof(Animal)).And.Have.Count.EqualTo(1);
 		}
 

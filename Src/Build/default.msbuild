@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
-		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
-		<ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
-		<ToolsFolder>$(SourceDir)\..\Tools</ToolsFolder>
-		<FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
-		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
-		<ClassPath>"support\lib\*"</ClassPath>
-		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
-		<TempDirectory>$(BuildFolder)\temp</TempDirectory>
-		<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
-		<OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
-	</PropertyGroup>
+  <PropertyGroup>
+    <SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
+    <BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
+    <ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
+    <ToolsFolder>$(SourceDir)\..\Tools</ToolsFolder>
+    <FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
+    <DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
+    <ClassPath>"support\lib\*"</ClassPath>
+    <DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
+    <TempDirectory>$(BuildFolder)\temp</TempDirectory>
+    <TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
+    <OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
+  </PropertyGroup>
 
-	<ItemGroup Label="Extra files to deploy">
-		<ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
-		<ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
-		<ExtraFiles Include="$(SourceDir)\ReleaseNotes.txt"/>
-	</ItemGroup>
+  <ItemGroup Label="Extra files to deploy">
+    <ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
+    <ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
+    <ExtraFiles Include="$(SourceDir)\ReleaseNotes.txt"/>
+  </ItemGroup>
 
-	<ItemGroup Label="NHibernate dependencies">
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\NHibernate.dll" />
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Iesi.Collections.dll" />
-	</ItemGroup>
+  <ItemGroup Label="NHibernate dependencies">
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\NHibernate.dll" />
+    <NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Iesi.Collections.dll" />
+  </ItemGroup>
 
-	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
-	<Target Name="nuget" DependsOnTargets="Build">
-		<Exec Command="$(ToolsFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
+  <Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
+  <Target Name="nuget" DependsOnTargets="Build">
+    <Exec Command="$(ToolsFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
 				WorkingDirectory="$(MSBuildProjectDirectory)"/>
-	</Target>
+  </Target>
 
-	<Target Name="RunBuild">
-		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
-			<Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
-		</MSBuild>
-	</Target>
+  <Target Name="RunBuild">
+    <MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
+      <Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+  </Target>
 
-	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
+  <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
 
-	<Target Name="MakeBuildDirectory">
-		<RemoveDir Directories="$(BuildFolder)" />
-		<MakeDir Directories="$(BuildFolder)" />
-		<MakeDir Directories="$(FullDeployFolder)" />
-		<MakeDir Directories="$(DeployFolder)" />
-	</Target>
+  <Target Name="MakeBuildDirectory">
+    <RemoveDir Directories="$(BuildFolder)" />
+    <MakeDir Directories="$(BuildFolder)" />
+    <MakeDir Directories="$(FullDeployFolder)" />
+    <MakeDir Directories="$(DeployFolder)" />
+  </Target>
 
-	<Target Name="CopyOutputsToBin">
-		<Copy SourceFiles="@(OutputFiles)"
+  <Target Name="CopyOutputsToBin">
+    <Copy SourceFiles="@(OutputFiles)"
 			DestinationFiles="@(OutputFiles->'$(FullDeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
-		<Copy SourceFiles="@(OutputFiles)"
+    <Copy SourceFiles="@(OutputFiles)"
 			DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
-	</Target>
+  </Target>
 
-	<Target Name="CopyExtraFiles">
-		<Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
-		<Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(FullDeployFolder)" />
-	</Target>
+  <Target Name="CopyExtraFiles">
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(FullDeployFolder)" />
+  </Target>
 
-	<Target Name="CopyNHibernateLibsToDeploy">
-		<Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
-	</Target>
+  <Target Name="CopyNHibernateLibsToDeploy">
+    <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
+  </Target>
 
-	<Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
-		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
-		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
-		<RemoveDir Directories="$(TempDirectory)" />
-	</Target>
+  <Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
+    <Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
+    <Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
+    <RemoveDir Directories="$(TempDirectory)" />
+  </Target>
 
-	<Target Name="RunPdfBuild" DependsOnTargets="PrepareDoc;MakeBuildDirectory">
-		<exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(TempDoc) master.xml styles/fopdf.xsl"
+  <Target Name="RunPdfBuild" DependsOnTargets="PrepareDoc;MakeBuildDirectory">
+    <exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(TempDoc) master.xml styles/fopdf.xsl"
 			WorkingDirectory="$(DocReferencePath)"/>
-		<exec command="java -classpath $(ClassPath) org.apache.fop.apps.Fop $(TempDoc) $(OutputDoc)"
+    <exec command="java -classpath $(ClassPath) org.apache.fop.apps.Fop $(TempDoc) $(OutputDoc)"
 			WorkingDirectory="$(DocReferencePath)"/>
-	</Target>
+  </Target>
 
-	<Target Name="PrepareDoc">
-		<MakeDir Directories="$(TempDirectory)"/>
-	</Target>
+  <Target Name="PrepareDoc">
+    <MakeDir Directories="$(TempDirectory)"/>
+  </Target>
 </Project>

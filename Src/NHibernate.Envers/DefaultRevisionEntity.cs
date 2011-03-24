@@ -4,15 +4,15 @@ using NHibernate.Envers.Configuration.Attributes;
 namespace NHibernate.Envers
 {
 	[Serializable]
-	public class DefaultRevisionEntity 
+	public class DefaultRevisionEntity
 	{
 		[RevisionNumber]
-		public virtual int Id {get; set;}
+		public virtual int Id { get; set; }
 
 		[RevisionTimestamp]
 		public virtual DateTime RevisionDate { get; set; }
 
-		public override bool Equals(object obj) 
+		public override bool Equals(object obj)
 		{
 			if (this == obj) return true;
 			var revisionEntity = obj as DefaultRevisionEntity;
@@ -24,10 +24,10 @@ namespace NHibernate.Envers
 			return RevisionDate == that.RevisionDate;
 		}
 
-		public override int GetHashCode() 
+		public override int GetHashCode()
 		{
 			var result = Id;
-			result = 31 * result + (int) (((ulong)RevisionDate.Ticks) ^ (((ulong)RevisionDate.Ticks) >> 32));
+			result = 31 * result + (int)(((ulong)RevisionDate.Ticks) ^ (((ulong)RevisionDate.Ticks) >> 32));
 			return result;
 		}
 	}
