@@ -18,7 +18,7 @@
 * Renamed envers.do_not_audit_optimistic_locking_field to nhibernate.envers.do_not_audit_optimistic_locking_field
 
 
-=== BETA 1 (v 0.9.1.0), ???, NH 3.1.0 ===
+=== BETA 1 (v 0.9.1.0), ???, ??? ===
 
 
 *** Breaking changes ***
