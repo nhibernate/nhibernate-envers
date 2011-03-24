@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
@@ -26,6 +27,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			Assert.AreEqual(1, metas.Count);
 		}
+
+        [Test]
+        public void RevisionEntityAttributeShouldHaveDefaultListenerSet()
+        {
+            var entMeta = metas[typeof(RevisionEntity)];
+            var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
+            revEntAttr.Listener = typeof(IRevisionListener);
+        }
 
 		[Test]
 		public void RevisionEntityShouldBeSet()
