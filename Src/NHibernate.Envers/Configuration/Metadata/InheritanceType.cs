@@ -23,13 +23,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public static InheritanceType GetInheritanceType(this PersistentClass source)
 		{
 			var superclass = source.Superclass;
-			if (superclass == null)
-			{
-				return InheritanceType.None;
-			}
-
 			// We assume that every subclass is of the same type.
-			return DoGetForSubclass(superclass.SubclassIterator.FirstOrDefault());
+			return superclass == null ? 
+				InheritanceType.None : DoGetForSubclass(superclass.SubclassIterator.FirstOrDefault());
 		}
 
 		private static InheritanceType DoGetForSubclass(Subclass subclass)

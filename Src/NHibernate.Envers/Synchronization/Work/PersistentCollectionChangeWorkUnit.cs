@@ -159,7 +159,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				this.ownerId = ownerId;
 				this.role = role;
 			}
-
+			
 			public override bool Equals(object o) 
 			{
 				if (this == o) return true;
