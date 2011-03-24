@@ -58,12 +58,28 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <typeparam name="T">The custom revision entity type</typeparam>
 		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
 		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
-		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, Expression<Func<T, object>> revisionTimestamp)
+		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, 
+                                        Expression<Func<T, object>> revisionTimestamp)
 		{
-			attributeFactories.Add(new FluentRevision(typeof (T), 
-								revisionNumber.Body.MethodInfo("revisionNumber"),
-								revisionTimestamp.Body.MethodInfo("revisionTimestamp")));
+            SetRevisionEntity(revisionNumber, revisionTimestamp, null);
 		}
+
+	    /// <summary>
+	    /// Defines a custom revision entity.
+	    /// </summary>
+	    /// <typeparam name="T">The custom revision entity type</typeparam>
+	    /// <param name="revisionNumber">Revision number property on custom revision entity</param>
+	    /// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+        /// <param name="listenerType">The listener type <see cref="IRevisionListener"/></param>
+	    public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, 
+                                        Expression<Func<T, object>> revisionTimestamp, 
+                                        System.Type listenerType)
+        {
+            attributeFactories.Add(new FluentRevision(typeof(T),
+                    revisionNumber.Body.MethodInfo("revisionNumber"),
+                    revisionTimestamp.Body.MethodInfo("revisionTimestamp"),
+                    listenerType));
+        }
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
