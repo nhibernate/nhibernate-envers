@@ -12,9 +12,7 @@ namespace NHibernate.Envers.Tools.Reflection
 
 		public static IGetter GetGetter(System.Type cls, string propertyName, string accessorType)
         {
-			var value = accessor(accessorType).GetGetter(cls, propertyName);
-
-            return value;
+			return accessor(accessorType).GetGetter(cls, propertyName);
         }
 
 		private static IPropertyAccessor accessor(string accessorType)
