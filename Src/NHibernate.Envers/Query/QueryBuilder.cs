@@ -128,28 +128,21 @@ namespace NHibernate.Envers.Query
             }
         }
 
-        /**
-         * Builds the given query, appending results to the given string buffer, and adding all query parameter values
-         * that are used to the map provided.
-         * @param sb String builder to which the query will be appended.
-         * @param queryParamValues Map to which name and values of parameters used in the query should be added.
-         */
+        /// <summary>
+        /// Builds the given query, appending results to the given string buffer, and adding all query parameter values
+        /// that are used to the map provided.
+        /// </summary>
+        /// <param name="sb">String builder to which the query will be appended.</param>
+        /// <param name="queryParamValues">Map to which name and values of parameters used in the query should be added.</param>
 		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
         {
-            sb.Append("select ");
-            if (projections.Count > 0)
-            {
-                // all projections separated with commas
-							sb.Append(string.Join(", ",projections.ToArray()));
-            }
-            else
-            {
-                // all aliases separated with commas
-							sb.Append(string.Join(", ",GetAliasList().ToArray()));
-            }
-            sb.Append(" from ");
+			sb.Append("select ");
+		    sb.Append(projections.Count > 0
+		                  ? string.Join(", ", projections.ToArray())
+		                  : string.Join(", ", GetAliasList().ToArray()));
+		    sb.Append(" from ");
             // all from entities with aliases, separated with commas
-						sb.Append(string.Join(", ", GetFromList().ToArray()));
+			sb.Append(string.Join(", ", GetFromList().ToArray()));
             // where part - rootParameters
             if (!rootParameters.IsEmpty())
             {
@@ -160,14 +153,14 @@ namespace NHibernate.Envers.Query
             if (orders.Count > 0)
             {
                 sb.Append(" order by ");
-								sb.Append(string.Join(", ", GetOrderList().ToArray()));
+				sb.Append(string.Join(", ", GetOrderList().ToArray()));
             }
         }
 
-		private IList<string> GetAliasList()
+		private IEnumerable<string> GetAliasList()
 		{
-			IList<string> aliasList = new List<string>();
-			foreach (var from in froms)
+			var aliasList = new List<string>();
+			foreach (var from in froms) 
 			{
                 aliasList.Add(from.Second);
             }
@@ -175,7 +168,7 @@ namespace NHibernate.Envers.Query
             return aliasList;
         }
 
-		private IList<string> GetFromList() 
+		private IEnumerable<string> GetFromList() 
 		{
 			var fromList = new List<string>();
             foreach (var from in froms) 
@@ -186,7 +179,7 @@ namespace NHibernate.Envers.Query
             return fromList;
         }
 
-		private IList<string> GetOrderList()
+		private IEnumerable<string> GetOrderList()
 		{
 			var orderList = new List<string>();
             foreach (var order in orders) 
