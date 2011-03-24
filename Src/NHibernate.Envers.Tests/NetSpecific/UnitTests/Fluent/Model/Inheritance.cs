@@ -13,5 +13,5 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model
 	{
 	}
 
-	public class Cat : Animal{}
+	public class Cat : Animal { }
 }

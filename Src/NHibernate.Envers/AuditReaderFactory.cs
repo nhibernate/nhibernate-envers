@@ -6,7 +6,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers
 {
-	public static class AuditReaderFactory 
+	public static class AuditReaderFactory
 	{
 		/// <summary>
 		/// Create an audit reader associated with an open session.
@@ -16,7 +16,7 @@ namespace NHibernate.Envers
 		/// <exception cref="AuditException">When the given required listeners aren't installed.</exception>
 		public static IAuditReader Get(ISession session)
 		{
-			var sessionImpl = session as ISessionImplementor 
+			var sessionImpl = session as ISessionImplementor
 						?? (ISessionImplementor)session.SessionFactory.GetCurrentSession();
 
 			var listeners = sessionImpl.Listeners;
@@ -26,9 +26,9 @@ namespace NHibernate.Envers
 				var auditEventListener = listener as AuditEventListener;
 				if (auditEventListener == null) continue;
 
-				var auditEventListenerType = typeof (AuditEventListener);
+				var auditEventListenerType = typeof(AuditEventListener);
 				if (listeners.PostUpdateEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType())) &&
-				    listeners.PostDeleteEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType()))) 
+					 listeners.PostDeleteEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType())))
 				{
 					return new AuditReader(auditEventListener.VerCfg, session, sessionImpl);
 				}

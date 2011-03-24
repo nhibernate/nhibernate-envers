@@ -7,11 +7,12 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
+	[TestFixture]
 	public class LooselyTypedFluentAuditTests
 	{
 		private class MyClass
 		{
-			
+
 		}
 		[Test]
 		public void WhenCreateWithNullThenThrows()

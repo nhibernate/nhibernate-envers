@@ -10,15 +10,15 @@ using NHibernate.Event;
 
 namespace NHibernate.Envers.Reader
 {
-	public class AuditReader : IAuditReaderImplementor 
+	public class AuditReader : IAuditReaderImplementor
 	{
 		private readonly AuditConfiguration verCfg;
-		public ISessionImplementor SessionImplementor{ get; private set;}
-		public ISession Session{ get; private set;}
-		public IFirstLevelCache FirstLevelCache{ get; private set;}
+		public ISessionImplementor SessionImplementor { get; private set; }
+		public ISession Session { get; private set; }
+		public IFirstLevelCache FirstLevelCache { get; private set; }
 
 		public AuditReader(AuditConfiguration verCfg, ISession session,
-								  ISessionImplementor sessionImplementor) 
+								  ISessionImplementor sessionImplementor)
 		{
 			this.verCfg = verCfg;
 			SessionImplementor = sessionImplementor;
@@ -27,17 +27,17 @@ namespace NHibernate.Envers.Reader
 			FirstLevelCache = new FirstLevelCache();
 		}
 
-		private void CheckSession() 
+		private void CheckSession()
 		{
-			if (!Session.IsOpen) 
+			if (!Session.IsOpen)
 			{
 				throw new Exception("The associated session is closed!");
 			}
 		}
 
-		public T Find<T> (object primaryKey, long revision)
+		public T Find<T>(object primaryKey, long revision)
 		{
-			return (T) Find(typeof (T), primaryKey, revision);
+			return (T)Find(typeof(T), primaryKey, revision);
 		}
 
 		public object Find(System.Type cls, object primaryKey, long revision)
@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity: class
+		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity : class
 		{
 			var cls = typeof(TEntity);
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Reader
 
 			var entityName = cls.FullName;
 
-			if (!verCfg.EntCfg.IsVersioned(entityName)) 
+			if (!verCfg.EntCfg.IsVersioned(entityName))
 			{
 				throw new NotAuditedException(entityName, entityName + " is not versioned!");
 			}
@@ -105,16 +105,16 @@ namespace NHibernate.Envers.Reader
 			var query = verCfg.RevisionInfoQueryCreator.RevisionDateQuery(Session, revision);
 
 			var timestampObject = query.UniqueResult();
-			if (timestampObject == null) 
+			if (timestampObject == null)
 			{
 				throw new RevisionDoesNotExistException(revision);
 			}
 
 			// The timestamp object is either a date or a long
-			return timestampObject is DateTime ? (DateTime) timestampObject : new DateTime((long) timestampObject);
+			return timestampObject is DateTime ? (DateTime)timestampObject : new DateTime((long)timestampObject);
 		}
 
-		public long GetRevisionNumberForDate(DateTime date) 
+		public long GetRevisionNumberForDate(DateTime date)
 		{
 			ArgumentsTools.CheckNotNull(date, "Date of revision");
 			CheckSession();
@@ -122,7 +122,7 @@ namespace NHibernate.Envers.Reader
 			var query = verCfg.RevisionInfoQueryCreator.RevisionNumberForDateQuery(Session, date);
 
 			var res = query.UniqueResult();
-			if (res == null) 
+			if (res == null)
 			{
 				throw new RevisionDoesNotExistException(date);
 			}
@@ -151,7 +151,7 @@ namespace NHibernate.Envers.Reader
 
 		public T FindRevision<T>(long revision)
 		{
-			return (T) FindRevision(revision);
+			return (T)FindRevision(revision);
 		}
 
 		public object GetCurrentRevision(bool persist)
@@ -170,10 +170,10 @@ namespace NHibernate.Envers.Reader
 
 		public T GetCurrentRevision<T>(bool persist)
 		{
-			return (T) GetCurrentRevision(persist);
+			return (T)GetCurrentRevision(persist);
 		}
 
-		public AuditQueryCreator CreateQuery() 
+		public AuditQueryCreator CreateQuery()
 		{
 			return new AuditQueryCreator(verCfg, this);
 		}

@@ -6,7 +6,7 @@
 	 * @author Simon Duduica, created interface that separes the first level cache implementation.
 	 * Default implementation will be FirstLevelCache to be ported in the phase 2
 	 */
-	public interface IFirstLevelCache 
+	public interface IFirstLevelCache
 	{
 		object this[string entityName, long revision, object id] { get; }
 		void Add(string entityName, long revision, object id, object entity);
