@@ -82,10 +82,9 @@ namespace NHibernate.Envers
 		/// <summary>
 		/// A helper method; should be used only if a custom revision entity is used.
 		/// </summary>
-		/// <param name="type">Class of the revision entity. Should be annotated with RevisionEntity.</param>
 		/// <param name="revision">Number of the revision for which to get the data.</param>
 		/// <returns>Entity containing data for the given revision.</returns>
-		object FindRevision(System.Type type, long revision);
+		object FindRevision(long revision);
 
 		/// <summary>
 		/// Gets an instance of the current revision entity, to which any entries in the audit tables will be bound.
@@ -108,14 +107,13 @@ namespace NHibernate.Envers
 		/// then the obtained revision entity instance won't be persisted. If {@code persist} is {@code true}, the revision
 		/// entity instance will always be persisted, regardless of whether audited entities are changed or not.
 		/// </summary>
-		/// <param name="type">Class of the revision entity. Should be annotated with {@link RevisionEntity}.</param>
 		/// <param name="persist">
 		/// If the revision entity is not yet persisted, should it become persisted. This way, the primary
 		/// identifier (id) will be filled (if it's assigned by the DB) and available, but the revision entity will be
 		/// persisted even if there are no changes to audited entities. Otherwise, the revision number (id) can be
 		/// null.</param>
 		/// <returns>The current revision entity, to which any entries in the audit tables will be bound.</returns>
-		object GetCurrentRevision(System.Type type, bool persist);
+		object GetCurrentRevision(bool persist);
 
 		/// <summary>
 		/// Creates a query

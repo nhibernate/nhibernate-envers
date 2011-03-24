@@ -131,7 +131,7 @@ namespace NHibernate.Envers.Reader
 		}
 
 
-		public object FindRevision(System.Type type, long revision)
+		public object FindRevision(long revision)
 		{
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
@@ -151,10 +151,10 @@ namespace NHibernate.Envers.Reader
 
 		public T FindRevision<T>(long revision)
 		{
-			return (T) FindRevision(typeof (T), revision);
+			return (T) FindRevision(revision);
 		}
 
-		public object GetCurrentRevision(System.Type type, bool persist)
+		public object GetCurrentRevision(bool persist)
 		{
 			if (!(Session is IEventSource))
 			{
@@ -170,7 +170,7 @@ namespace NHibernate.Envers.Reader
 
 		public T GetCurrentRevision<T>(bool persist)
 		{
-			return (T) GetCurrentRevision(typeof(T), persist);
+			return (T) GetCurrentRevision(persist);
 		}
 
 		public AuditQueryCreator CreateQuery() 
