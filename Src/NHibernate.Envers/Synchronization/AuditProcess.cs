@@ -10,11 +10,9 @@ namespace NHibernate.Envers.Synchronization
 	{
 		private readonly IRevisionInfoGenerator revisionInfoGenerator;
 		private readonly ISessionImplementor session;
-
 		private readonly LinkedList<IAuditWorkUnit> workUnits;
 		private readonly Queue<IAuditWorkUnit> undoQueue;
 		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
-
 		private object revisionData;
 
 		public AuditProcess(IRevisionInfoGenerator revisionInfoGenerator, ISessionImplementor session)
@@ -29,42 +27,40 @@ namespace NHibernate.Envers.Synchronization
 
 		public void AddWorkUnit(IAuditWorkUnit vwu)
 		{
-			if (vwu.ContainsWork())
-			{
-				var entityId = vwu.EntityId;
+			if (!vwu.ContainsWork()) return;
 
-				if (entityId == null)
+			var entityId = vwu.EntityId;
+			if (entityId == null)
+			{
+				// Just adding the work unit - it's not associated with any persistent entity.
+				//ORIG: workUnits.offer(vwu);
+				workUnits.AddLast(vwu);
+			}
+			else
+			{
+				var entityName = vwu.EntityName;
+				var usedIdsKey = Pair<string, object>.Make(entityName, entityId);
+
+				if (usedIds.ContainsKey(usedIdsKey))
 				{
-					// Just adding the work unit - it's not associated with any persistent entity.
-					//ORIG: workUnits.offer(vwu);
-					workUnits.AddLast(vwu);
+					var other = usedIds[usedIdsKey];
+					var result = vwu.Dispatch(other);
+
+					if (result != other)
+					{
+						removeWorkUnit(other);
+
+						if (result != null)
+						{
+							usedIds[usedIdsKey] = result;
+							workUnits.AddLast(result);
+						} // else: a null result means that no work unit should be kept
+					} // else: the result is the same as the work unit already added. No need to do anything.
 				}
 				else
 				{
-					var entityName = vwu.EntityName;
-					var usedIdsKey = Pair<string, object>.Make(entityName, entityId);
-
-					if (usedIds.ContainsKey(usedIdsKey))
-					{
-						var other = usedIds[usedIdsKey];
-						var result = vwu.Dispatch(other);
-
-						if (result != other)
-						{
-							removeWorkUnit(other);
-
-							if (result != null)
-							{
-								usedIds[usedIdsKey] = result;
-								workUnits.AddLast(result);
-							} // else: a null result means that no work unit should be kept
-						} // else: the result is the same as the work unit already added. No need to do anything.
-					}
-					else
-					{
-						usedIds[usedIdsKey] = vwu;
-						workUnits.AddLast(vwu);
-					}
+					usedIds[usedIdsKey] = vwu;
+					workUnits.AddLast(vwu);
 				}
 			}
 		}
@@ -85,18 +81,16 @@ namespace NHibernate.Envers.Synchronization
 			// Making sure the revision data is persisted.
 			CurrentRevisionData(session, true);
 
-			IAuditWorkUnit vwu;
-
 			// First undoing any performed work units
 			while (undoQueue.Count > 0)
 			{
-				vwu = undoQueue.Dequeue();
+				var vwu = undoQueue.Dequeue();
 				vwu.Undo(session);
 			}
 
 			while (workUnits.Count > 0)
 			{
-				vwu = workUnits.First.Value;
+				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
 				vwu.Perform(session, revisionData);
 			}
@@ -127,7 +121,7 @@ namespace NHibernate.Envers.Synchronization
 			}
 			var castedSession = (ISession) session;
 
-			if (FlushMode.Never == castedSession.FlushMode)
+			if (castedSession.FlushMode == FlushMode.Never)
 			{
 				//need a "Envers session", as a user might have non flushed data in its session
 				//that shouldn't be persisted
