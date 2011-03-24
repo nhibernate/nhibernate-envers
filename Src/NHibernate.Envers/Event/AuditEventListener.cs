@@ -12,15 +12,23 @@ using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Event
 {
-	public class AuditEventListener: IPostInsertEventListener, IPostUpdateEventListener,
-			IPostDeleteEventListener, IPreCollectionUpdateEventListener, IPreCollectionRemoveEventListener,
-			IPostCollectionRecreateEventListener, IInitializable 
+	public class AuditEventListener: IPostInsertEventListener, 
+									IPostUpdateEventListener,
+									IPostDeleteEventListener, 
+									IPreCollectionUpdateEventListener, 
+									IPreCollectionRemoveEventListener,
+									IPostCollectionRecreateEventListener, 
+									IInitializable 
 	{
 		public AuditConfiguration VerCfg { get; private set; }
 
-		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess, IEntityPersister entityPersister,
-																	string entityName, object[] newState, object[] oldState,
-																	ISessionImplementor session) {
+		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess, 
+																	IEntityPersister entityPersister,
+																	string entityName, 
+																	object[] newState, 
+																	object[] oldState,
+																	ISessionImplementor session) 
+		{
 			// Checking if this is enabled in configuration ...
 			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections) 
 			{
@@ -47,61 +55,43 @@ namespace NHibernate.Envers.Event
 					{
 						// We have to generate changes both in the old collection (size decreses) and new collection
 						// (size increases).
-
-						//<TODO Simon: doua if-uri cu cod duplicat, refact.
-						if (newValue != null) {
-							// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
-							// of subclasses, this will be root class, no the actual class. So it can't be used here.
-							string toEntityName;
-							
-							// Java: Serializable id
-							object id;
-
-							var newValueAsProxy = newValue as INHibernateProxy;
-							if (newValueAsProxy != null) 
-							{
-								toEntityName = session.BestGuessEntityName(newValue);
-								id = newValueAsProxy.HibernateLazyInitializer.Identifier;
-								// We've got to initialize the object from the proxy to later read its state.   
-								newValue = Toolz.GetTargetFromProxy(session.Factory, newValueAsProxy);
-							} 
-							else 
-							{
-								toEntityName =  session.GuessEntityName(newValue);
-
-								var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
-								id = idMapper.MapToIdFromEntity(newValue);
-							}
-
-							auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, newValue));
+						if (newValue != null) 
+						{
+							addCollectionChangeWorkUnitToAuditProcess(session, auditProcess, newValue);
 						}
-
 						if (oldValue != null) 
 						{
-							string toEntityName;
-							object id;
-
-							var oldValueAsProxy = oldValue as INHibernateProxy;
-							if (oldValueAsProxy != null) 
-							{
-								toEntityName = session.BestGuessEntityName(oldValue);
-								id = oldValueAsProxy.HibernateLazyInitializer.Identifier;
-								// We've got to initialize the object as we'll read it's state anyway.
-								oldValue = Toolz.GetTargetFromProxy(session.Factory, oldValueAsProxy);
-							} 
-							else 
-							{
-								toEntityName =  session.GuessEntityName(oldValue);
-
-								var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
-								id = idMapper.MapToIdFromEntity(oldValue);
-							}
-							
-							auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, oldValue));
+							addCollectionChangeWorkUnitToAuditProcess(session, auditProcess, oldValue);
 						}
 					}
 				}
 			}
+		}
+
+		private void addCollectionChangeWorkUnitToAuditProcess(ISessionImplementor session, AuditProcess auditProcess, object value)
+		{
+			// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
+			// of subclasses, this will be root class, no the actual class. So it can't be used here.
+			string toEntityName;
+			object id;
+
+			var newValueAsProxy = value as INHibernateProxy;
+			if (newValueAsProxy != null) 
+			{
+				toEntityName = session.BestGuessEntityName(value);
+				id = newValueAsProxy.HibernateLazyInitializer.Identifier;
+				// We've got to initialize the object from the proxy to later read its state.   
+				value = Toolz.GetTargetFromProxy(session.Factory, newValueAsProxy);
+			} 
+			else 
+			{
+				toEntityName =  session.GuessEntityName(value);
+
+				var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
+				id = idMapper.MapToIdFromEntity(value);
+			}
+
+			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, value));
 		}
 
 		public virtual void OnPostInsert(PostInsertEvent evt) 
@@ -120,14 +110,6 @@ namespace NHibernate.Envers.Event
 					GenerateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
 							null, evt.Session);
 				}
-
-				//Simon - TODO - Correct/clarify this:
-				// it appears that the AuditSyncManager's transaction.RegisterSynchronization(verSync);
-				// does not lead to calling the verSync's synchronization methods (Before and AfterCompletion
-				// so I will call this manually. The problem that I found is that AdoTransaction's Commit method
-				// is not called at all. Could this be because of Spring.NET?
-				// When corrected, change also in AuditSync the Flush in BeforeCompletion.
-				//verSync.BeforeCompletion();
 			}
 		}
 
@@ -148,8 +130,6 @@ namespace NHibernate.Envers.Event
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
 							evt.OldState, evt.Session);
 				}
-				//Simon - TODO - same as above
-				//verSync.BeforeCompletion();
 			}
 		}
 
@@ -173,7 +153,8 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess, AbstractCollectionEvent evt,
+		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess, 
+																	IDatabaseEventArgs evt,
 																	PersistentCollectionChangeWorkUnit workUnit,
 																	RelationDescription rd) 
 		{
@@ -202,10 +183,14 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private void GenerateFakeBidirecationalRelationWorkUnits(AuditProcess auditProcess, IPersistentCollection newColl, object oldColl,
-																 string collectionEntityName, string referencingPropertyName,
-																 AbstractCollectionEvent evt,
-																 RelationDescription rd) {
+		private void GenerateFakeBidirecationalRelationWorkUnits(AuditProcess auditProcess, 
+																IPersistentCollection newColl, 
+																object oldColl,
+																string collectionEntityName, 
+																string referencingPropertyName,
+																AbstractCollectionEvent evt,
+																RelationDescription rd) 
+		{
 			// First computing the relation changes
 			var collectionChanges = VerCfg.EntCfg[collectionEntityName].PropertyMapper
 					.MapCollectionChanges(referencingPropertyName, newColl, oldColl, evt.AffectedOwnerIdOrNull);
@@ -240,7 +225,9 @@ namespace NHibernate.Envers.Event
 					evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 		}
 
-		private void OnCollectionAction(AbstractCollectionEvent evt, IPersistentCollection newColl, object oldColl,
+		private void OnCollectionAction(AbstractCollectionEvent evt, 
+										IPersistentCollection newColl, 
+										object oldColl,
 										CollectionEntry collectionEntry) 
 		{
 			var entityName = evt.GetAffectedOwnerEntityName();
