@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 				te.Str = "y";
 
 				// Setting the data on the revision entity
-				var custom = (CustomDataRevEntity)AuditReader().GetCurrentRevision(typeof(CustomDataRevEntity), false);
+				var custom = (CustomDataRevEntity)AuditReader().GetCurrentRevision(false);
 				custom.Data = "data2";
 				tx.Commit();
 			}

@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			rev1timestamp.GreaterThan(timestamp1);
 			rev1timestamp.LessOrEqualTo(timestamp2);
 
-			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(typeof(CustomDateRevEntity), 2)).DateTimestamp;
+			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(2)).DateTimestamp;
 			rev2timestamp.GreaterThan(timestamp2);
 			rev2timestamp.LessOrEqualTo(timestamp3);
 		}

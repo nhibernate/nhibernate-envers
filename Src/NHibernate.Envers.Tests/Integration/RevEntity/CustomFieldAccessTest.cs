@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			Assert.IsTrue(rev1timestamp > timestamp1.Ticks);
 			Assert.IsTrue(rev1timestamp <= timestamp2.Ticks);
 
-			var rev2timestamp = ((CustomRevEntityField)AuditReader().FindRevision(typeof(CustomRevEntityField), 2)).CustomTimestamp;
+			var rev2timestamp = ((CustomRevEntityField)AuditReader().FindRevision(2)).CustomTimestamp;
 			Assert.IsTrue(rev2timestamp > timestamp2.Ticks);
 			Assert.IsTrue(rev2timestamp <= timestamp3.Ticks);
 		}

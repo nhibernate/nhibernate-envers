@@ -19,3 +19,8 @@
 
 
 === BETA 1 (v 0.9.1.0), ???, NH 3.1.0 ===
+
+
+*** Breaking changes ***
+* Changed signature: IAuditReader.FindRevision(Type, long) -> IAuditReader.FindRevision(long)
+* Changed signature: IAuditReader.GetCurrentRevision(Type, bool) -> IAuditReader.GetCurrentRevision(bool)
