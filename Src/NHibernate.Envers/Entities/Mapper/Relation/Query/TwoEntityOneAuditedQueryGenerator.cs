@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
 
 			var sb = new StringBuilder();
-			qb.Build(sb, EmptyDictionary<string, object>.Instance);
+			qb.Build(sb, null);
 			queryString = sb.ToString();
 		}
 

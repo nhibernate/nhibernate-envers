@@ -133,7 +133,10 @@ namespace NHibernate.Envers.Query
         /// that are used to the map provided.
         /// </summary>
         /// <param name="sb">String builder to which the query will be appended.</param>
-        /// <param name="queryParamValues">Map to which name and values of parameters used in the query should be added.</param>
+        /// <param name="queryParamValues">
+        /// Map to which name and values of parameters used in the query should be added.
+        /// <code>null</code> is allowed if no additional parameters are to be added.
+        /// </param>
 		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
         {
 			sb.Append("select ");
