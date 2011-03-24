@@ -61,14 +61,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var properties = (XmlElement)parent.OwnerDocument.ImportNode(idMapping.XmlRelationMapping,true);
 			properties.SetAttribute("name",propertyAuditingData.Name);
 
-			if (fixedColumnNames == null)
-			{
-				MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix, MetadataTools.GetColumnNameEnumerator(value.ColumnIterator), false, insertable);				
-			}
-			else
-			{
-				MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix, fixedColumnNames.GetEnumerator(), false, insertable);
-			}
+			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
+			                                           fixedColumnNames == null
+			                                           	? MetadataTools.GetColumnNameEnumerator(value.ColumnIterator)
+			                                           	: fixedColumnNames.GetEnumerator(), false, insertable);
 			parent.AppendChild(properties);
 
 
