@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace NHibernate.Envers.RevisionInfo
 {
 	public class RevisionInfoQueryCreator 
 	{
-		private const string RevisionNumberParameterName = "_revision_number";
+		private const string RevisionNumbersParameterName = "_revision_numbers";
+		private const string RevisionNumberForDateParamaterName = "_revision_number";
 		private const string RevisionDateParameterName = "_revision_date";
 		private readonly bool timestampAsDate;
 		private readonly string revisionDateQuery;
 		private readonly string revisionNumberForDateQuery;
-		private readonly string revisionQuery;
+		private readonly string revisionsQuery;
 
 		public RevisionInfoQueryCreator(string revisionInfoEntityName, 
 										string revisionInfoIdName,
@@ -22,7 +24,7 @@ namespace NHibernate.Envers.RevisionInfo
 			revisionDateQuery = new StringBuilder(512)
 					.Append("select rev.").Append(revisionInfoTimestampName)
 					.Append(" from ").Append(revisionInfoEntityName)
-					.Append(" rev where ").Append(revisionInfoIdName).Append(" = :").Append(RevisionNumberParameterName)
+                    .Append(" rev where ").Append(revisionInfoIdName).Append(" = :").Append(RevisionNumberForDateParamaterName)
 					.ToString();
 
 			revisionNumberForDateQuery = new StringBuilder(512)
@@ -31,16 +33,16 @@ namespace NHibernate.Envers.RevisionInfo
 					.Append(" rev where ").Append(revisionInfoTimestampName).Append(" <= :").Append(RevisionDateParameterName)
 					.ToString();
 
-			revisionQuery = new StringBuilder(512)
-					.Append("select rev from ").Append(revisionInfoEntityName)
-					.Append(" rev where ").Append(revisionInfoIdName)
-					.Append(" = :").Append(RevisionNumberParameterName)
-					.ToString();
+            revisionsQuery = new StringBuilder(512)
+                    .Append("select rev from ").Append(revisionInfoEntityName)
+                    .Append(" rev where ").Append(revisionInfoIdName)
+                    .Append(" in (:" + RevisionNumbersParameterName + ")")
+                    .ToString();
 		}
 
 		public IQuery RevisionDateQuery(ISession session, long revision) 
 		{
-			return session.CreateQuery(revisionDateQuery).SetInt64(RevisionNumberParameterName, revision);
+            return session.CreateQuery(revisionDateQuery).SetInt64(RevisionNumberForDateParamaterName, revision);
 		}
 
 		public IQuery RevisionNumberForDateQuery(ISession session, DateTime date) 
@@ -48,9 +50,9 @@ namespace NHibernate.Envers.RevisionInfo
 			return session.CreateQuery(revisionNumberForDateQuery).SetParameter(RevisionDateParameterName, timestampAsDate ? (object) date : date.Ticks);
 		}
 
-		public IQuery RevisionQuery(ISession session, long revision) 
-		{
-			return session.CreateQuery(revisionQuery).SetInt64(RevisionNumberParameterName, revision);
-		}
+        public IQuery RevisionsQuery(ISession session, IEnumerable<long> revisions)
+        {
+            return session.CreateQuery(revisionsQuery).SetParameterList(RevisionNumbersParameterName, revisions);
+        }
 	}
 }
