@@ -86,6 +86,22 @@ namespace NHibernate.Envers
 		/// <returns>Entity containing data for the given revision.</returns>
 		object FindRevision(long revision);
 
+
+		/// <summary>
+		/// Find a map of revisions using the revision numbers specified.
+		/// </summary>
+		/// <param name="revisions">Revision numbers of the revision for which to get the data.</param>
+		/// <returns>A map of revision number and the given revision entity.</returns>
+		IDictionary<long, object> FindRevisions(IEnumerable<long> revisions);
+
+		/// <summary>
+		/// Find a map of revisions using the revision numbers specified.
+		/// </summary>
+		/// <typeparam name="T">The revision type user has defined</typeparam>
+		/// <param name="revisions">Revision numbers of the revision for which to get the data.</param>
+		/// <returns>A map of revision number and the given revision entity.</returns>
+		IDictionary<long, T> FindRevisions<T>(IEnumerable<long> revisions);
+
 		/// <summary>
 		/// Gets an instance of the current revision entity, to which any entries in the audit tables will be bound.
 		/// Please note the if {@code persist} is {@code false}, and no audited entities are modified in this session,

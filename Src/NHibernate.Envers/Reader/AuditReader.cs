@@ -137,7 +137,8 @@ namespace NHibernate.Envers.Reader
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 			CheckSession();
 
-			var query = verCfg.RevisionInfoQueryCreator.RevisionQuery(Session, revision);
+			var revisions = new List<long>(1) { revision };
+			var query = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions);
 
 			var revisionData = query.UniqueResult();
 
@@ -152,6 +153,38 @@ namespace NHibernate.Envers.Reader
 		public T FindRevision<T>(long revision)
 		{
 			return (T)FindRevision(revision);
+		}
+
+		public IDictionary<long, object> FindRevisions(IEnumerable<long> revisions)
+		{
+			var res = new Dictionary<long, object>();
+			fillRevisionsResult(res, revisions);
+			return res;
+		}
+
+		public IDictionary<long, T> FindRevisions<T>(IEnumerable<long> revisions)
+		{
+			var res = new Dictionary<long, T>();
+			fillRevisionsResult(res, revisions);
+			return res;
+		}
+
+
+		private void fillRevisionsResult<T>(IDictionary<long, T> result, IEnumerable<long> revisions)
+		{
+			foreach (var revision in revisions)
+			{
+				ArgumentsTools.CheckNotNull(revision, "Entity revision");
+				ArgumentsTools.CheckPositive(revision, "Entity revision");
+			}
+			CheckSession();
+
+			var revisionList = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions).List();
+			foreach (T revision in revisionList)
+			{
+				var rev = verCfg.RevisionInfoNumberReader.RevisionNumber(revision);
+				result[rev] = revision;
+			}
 		}
 
 		public object GetCurrentRevision(bool persist)
