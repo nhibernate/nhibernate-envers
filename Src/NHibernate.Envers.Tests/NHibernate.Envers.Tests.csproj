@@ -359,6 +359,7 @@
     <Compile Include="NetSpecific\Integration\Query\FindRevisionsTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\Model.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
