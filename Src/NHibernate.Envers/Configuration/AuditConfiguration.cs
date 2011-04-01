@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
+using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
 
 namespace NHibernate.Envers.Configuration
@@ -25,6 +27,15 @@ namespace NHibernate.Envers.Configuration
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
+			try
+			{
+				AuditStrategy = (IAuditStrategy) Activator.CreateInstance(AuditEntCfg.AuditStrategyType);
+			}
+			catch (Exception)
+			{
+				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName));
+			}
+
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg,
@@ -37,6 +48,7 @@ namespace NHibernate.Envers.Configuration
 		public EntitiesConfigurations EntCfg { get; private set; }
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
+		public IAuditStrategy AuditStrategy;
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
