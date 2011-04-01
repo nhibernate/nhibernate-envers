@@ -151,7 +151,32 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			verifyRevEndTimeStamps(c1_2_List);
 			verifyRevEndTimeStamps(c2_1_List);
 			verifyRevEndTimeStamps(c2_2_List);
+		}
 
+		[Test]
+		public void VerifyHistoryOfParent1()
+		{
+			var c1_1 = Session.Get<Child1Entity>(c1_1_id);
+			var c1_2 = Session.Get<Child1Entity>(c1_2_id);
+			var c2_2 = Session.Get<Child2Entity>(c2_2_id);
+
+			var rev1 = AuditReader().Find<ParentEntity>(p1_id, 1);
+			var rev2 = AuditReader().Find<ParentEntity>(p1_id, 2);
+			var rev3 = AuditReader().Find<ParentEntity>(p1_id, 3);
+			var rev4 = AuditReader().Find<ParentEntity>(p1_id, 4);
+			var rev5 = AuditReader().Find<ParentEntity>(p1_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Children1);
+			CollectionAssert.AreEqual(new[] { c1_1 }, rev2.Children1);
+			CollectionAssert.AreEqual(new[] { c1_1, c1_2 }, rev3.Children1);
+			CollectionAssert.AreEqual(new[] { c1_2 }, rev4.Children1);
+			CollectionAssert.IsEmpty(rev5.Children1);
+
+			CollectionAssert.IsEmpty(rev1.Children2);
+			CollectionAssert.IsEmpty(rev2.Children2);
+			CollectionAssert.AreEqual(new[] { c2_2 }, rev3.Children2);
+			CollectionAssert.AreEqual(new[] { c2_2 }, rev4.Children2);
+			CollectionAssert.AreEqual(new[] { c2_2 }, rev5.Children2);
 		}
 
 		private IEnumerable<IDictionary> getRevisions(System.Type originalEntityClazz, int originalEntityId)
