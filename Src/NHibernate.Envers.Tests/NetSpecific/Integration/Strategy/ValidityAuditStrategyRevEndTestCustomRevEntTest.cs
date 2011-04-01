@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
 using NUnit.Framework;
@@ -18,6 +19,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 		private int c2_1_id;
 		private int c2_2_id;
 
+		protected override void AddToConfiguration(Cfg.Configuration configuration)
+		{
+			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(DefaultAuditStrategy).AssemblyQualifiedName);
+		}
 
 		protected override IEnumerable<string> Mappings
 		{
