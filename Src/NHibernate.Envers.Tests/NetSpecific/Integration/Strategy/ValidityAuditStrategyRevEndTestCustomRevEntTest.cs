@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 {
-	[TestFixture, Ignore("Continue later - not passing at the moment")]
+	[TestFixture]
 	public class ValidityAuditStrategyRevEndTestCustomRevEntTest : TestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";
