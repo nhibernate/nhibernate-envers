@@ -4,6 +4,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Query;
+using NHibernate.Envers.Tools.Query;
 using NHibernate.Properties;
 
 namespace NHibernate.Envers.Strategy
@@ -57,21 +58,59 @@ namespace NHibernate.Envers.Strategy
 			session.Save(auditedEntityName, data);
 		}
 
+		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		{
+			// Update the end date of the previous row if this operation is expected to have a previous row
+			if (revisionType(auditCfg, persistentCollectionChangeData.Data) != RevisionType.Added)
+			{
+				/*
+				 Constructing a query (there are multiple id fields):
+				 select e from audited_middle_ent e where e.end_rev is null and e.id1 = :id1 and e.id2 = :id2 ...
+				 */
+				var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, "e");
+
+				// Adding a parameter for each id component, except the rev number
+				var originalIdPropName = auditCfg.AuditEntCfg.OriginalIdPropName;
+				var originalId = (IDictionary<string, object>)persistentCollectionChangeData.Data[originalIdPropName];
+				foreach (var originalIdKeyValue in originalId)
+				{
+					if (!auditCfg.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
+					{
+						qb.RootParameters.AddWhereWithParam(originalIdPropName + "." + originalIdKeyValue.Key, true, "=", originalIdKeyValue.Value);
+					}
+				}
+
+				updateLastRevision(session, auditCfg, qb, originalId, persistentCollectionChangeData.EntityName, revision);
+			}
+
+			// Save the audit data
+			session.Save(persistentCollectionChangeData.EntityName, persistentCollectionChangeData.Data);
+		}
+
+		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
+		{
+			var rootParameters = rootQueryBuilder.RootParameters;
+			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
+		}
+
+		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas)
+		{
+			Parameters rootParameters = rootQueryBuilder.RootParameters;
+			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
+		}
+
 		public void SetRevisionTimestampGetter(IGetter revisionTimestampGetter)
 		{
 			this.revisionTimestampGetter = revisionTimestampGetter;
 		}
 
-		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		private static void addRevisionRestriction(Parameters rootParameters, string revisionProperty, string revisionEndProperty, bool addAlias)
 		{
-		}
-
-		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
-		{
-		}
-
-		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas)
-		{
+			// e.revision <= _revision and (e.endRevision > _revision or e.endRevision is null)
+			var subParm = rootParameters.AddSubParameters("or");
+			rootParameters.AddWhereWithNamedParam(revisionProperty, addAlias, "<=", "revision");
+			subParm.AddWhereWithNamedParam(revisionEndProperty + ".id", addAlias, ">", "revision");
+			subParm.AddWhere(revisionEndProperty, addAlias, "is", "null", false);
 		}
 
 		private static RevisionType revisionType(AuditConfiguration auditCfg, object data)

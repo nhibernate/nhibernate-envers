@@ -48,14 +48,20 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return prop_mapping;
 		}
 
+		public static XmlElement AddManyToOne(XmlElement parent, string name, string type)
+		{
+			var manyToOneMapping = parent.OwnerDocument.CreateElement("many-to-one");
+			parent.AppendChild(manyToOneMapping);
+			manyToOneMapping.SetAttribute("insert", "true");
+			manyToOneMapping.SetAttribute("update", "false");
+			manyToOneMapping.SetAttribute("name", name);
+			manyToOneMapping.SetAttribute("class", type);
+			return manyToOneMapping;
+		}
+
 		private static void AddOrModifyAttribute(XmlElement parent, string name, string value) 
 		{
 			parent.SetAttribute(name,value);
-			//if (attribute.Length == 0) {
-			//    parent.SetAttribute(name, value);
-			//} else {
-			//    attribute.setValue(value);
-			//}
 		}
 
 		public static XmlElement AddOrModifyColumn(XmlElement parent, string name) 
