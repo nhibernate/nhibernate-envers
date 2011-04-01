@@ -62,8 +62,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Setting the revision number
 				((IDictionary<string, object>) persistentCollectionChangeData.Data[entitiesCfg.OriginalIdPropName])
 						.Add(entitiesCfg.RevisionFieldName, revisionData);
-
-				session.Save(persistentCollectionChangeData.EntityName, persistentCollectionChangeData.Data);
+				AuditStrategy.PerformCollectionChange(session, VerCfg, persistentCollectionChangeData, revisionData);
 			}
 		}
 
@@ -123,14 +122,28 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Including only those original changes, which are not overshadowed by new ones.
 				foreach (var originalCollectionChangeData in original.CollectionChanges) 
 				{
-					if (!newChangesIdMap.ContainsKey(OriginalId(originalCollectionChangeData))) 
+					var originalOriginalId = OriginalId(originalCollectionChangeData);
+
+					if (!newChangesIdMap.ContainsKey(originalOriginalId)) 
 					{
 						mergedChanges.Add(originalCollectionChangeData);
+					}
+					else
+					{
+						// If the changes collide, checking if the first one isn't a DEL, and the second a subsequent ADD
+						// If so, removing the change alltogether.
+						var revTypePropName = VerCfg.AuditEntCfg.RevisionTypePropName;
+						if((RevisionType)newChangesIdMap[originalOriginalId].Data[revTypePropName] == RevisionType.Added &&
+							(RevisionType)originalCollectionChangeData.Data[revTypePropName] == RevisionType.Deleted)
+						{
+							newChangesIdMap.Remove(originalOriginalId);
+						}
 					}
 				}
 
 				// Finally adding all of the new changes to the end of the list
-				mergedChanges = mergedChanges.Concat(CollectionChanges).ToList();
+				// (the map values may differ from CollectionChanges because of the last operation above)
+				mergedChanges = mergedChanges.Concat(newChangesIdMap.Values).ToList();
 
 				return new PersistentCollectionChangeWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, mergedChanges, 
 						referencingPropertyName);
