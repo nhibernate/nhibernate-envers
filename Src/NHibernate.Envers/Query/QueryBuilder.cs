@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Envers.Tools;
@@ -34,15 +33,15 @@ namespace NHibernate.Envers.Query
         /**
          * A list of pairs (from entity name, alias name).
          */
-        private readonly List<Pair<String, String>> froms;
+		private readonly List<Pair<string, string>> froms;
         /**
          * A list of pairs (property name, order ascending?).
          */
-        private readonly List<Pair<String, Boolean>> orders;
+		private readonly List<Pair<string, bool>> orders;
         /**
          * A list of complete projection definitions: either a sole property name, or a function(property name).
          */
-        private readonly IList<String> projections;
+		private readonly IList<string> projections;
 
         /**
          *
@@ -64,8 +63,8 @@ namespace NHibernate.Envers.Query
 
             rootParameters = new Parameters(alias, "and", paramCounter);
 
-			froms = new List<Pair<string, String>>();
-			orders = new List<Pair<string, Boolean>>();
+			froms = new List<Pair<string, string>>();
+			orders = new List<Pair<string, bool>>();
 			projections = new List<string>();
 
             AddFrom(entityName, alias);
@@ -192,5 +191,20 @@ namespace NHibernate.Envers.Query
 
             return orderList;
         }
+
+		public IQuery ToQuery(ISession session)
+		{
+			var querySb = new StringBuilder();
+			var queryParamValues = new Dictionary<string, object>();
+
+			Build(querySb, queryParamValues);
+
+			var query = session.CreateQuery(querySb.ToString());
+			foreach (var queryParamValue in queryParamValues)
+			{
+				query.SetParameter(queryParamValue.Key, queryParamValue.Value);
+			}
+			return query;
+		}
     }
 }

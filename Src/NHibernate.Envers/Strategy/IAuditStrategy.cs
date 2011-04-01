@@ -1,0 +1,89 @@
+using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Query;
+
+namespace NHibernate.Envers.Strategy
+{
+	/// <summary>
+	/// Behaviours of different audit strategy for populating audit data.
+	/// </summary>
+	public interface IAuditStrategy
+	{
+		/// <summary>
+		/// Perform the persistence of audited data for regular entities.
+		/// </summary>
+		/// <param name="session">Session, which can be used to persist the data.</param>
+		/// <param name="entityName">Name of the entity, in which the audited change happens</param>
+		/// <param name="auditCfg">Audit configuration</param>
+		/// <param name="id">Id of the entity.</param>
+		/// <param name="data">Audit data to persist</param>
+		/// <param name="revision">Current revision data</param>
+		void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision);
+
+		/// <summary>
+		/// Perform the persistence of audited data for collection ("middle") entities.
+		/// </summary>
+		/// <param name="session">Session, which can be used to persist the data.</param>
+		/// <param name="auditCfg">Audit configuration</param>
+		/// <param name="persistentCollectionChangeData">Collection change data to be persisted.</param>
+		/// <param name="revision">Current revision data</param>
+		void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
+
+		/// <summary>
+		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a two-entity relation.
+		/// This WHERE clause depends on the AuditStrategy, as follows:
+		/// <ul>
+		/// <li>For {@link DefaultAuditStrategy} a subquery is created: 
+		/// <p><code>e.revision = (SELECT max(...) ...)</code></p>
+		/// </li>
+		/// <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
+		/// <p><code>e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)</code></p>
+		/// </li>
+		/// </ul>
+		/// </summary>
+		/// <param name="globalCfg">The <see cref="GlobalConfiguration"/></param>
+		/// <param name="rootQueryBuilder">The <see cref="QueryBuilder"/> that will be updated</param>
+		/// <param name="revisionProperty">Property of the revision column</param>
+		/// <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
+		/// <param name="idData">Id-information for the two-entity relation (only used for <see cref="DefaultAuditStrategy"/>)</param>
+		/// <param name="revisionPropertyPath">Path of the revision property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="alias1">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="alias2">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty,
+										string revisionEndProperty, bool addAlias, MiddleIdData idData,
+										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2);
+
+		/// <summary>
+		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a middle-entity 
+		/// association. This WHERE clause depends on the AuditStrategy, as follows:
+		/// <ul>
+		/// <li>For {@link DefaultAuditStrategy} a subquery is created: 
+		/// <p><code>e.revision = (SELECT max(...) ...)</code></p>
+		/// </li>
+		/// <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
+		/// <p><code>e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)</code></p>
+		/// </li>
+		/// </ul>
+		/// </summary>
+		/// <param name="rootQueryBuilder">The <see cref="QueryBuilder"/> that will be updated</param>
+		/// <param name="revisionProperty">Property of the revision column</param>
+		/// <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
+		/// <param name="referencingIdData">id-information for the middle-entity association (only used for <see cref="DefaultAuditStrategy"/>)</param>
+		/// <param name="versionsMiddleEntityName">name of the middle-entity</param>
+		/// <param name="eeOriginalIdPropertyPath">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="revisionPropertyPath">path of the revision property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="componentDatas">information about the middle-entity relation
+		/// <remarks>
+		/// <code>null</code> is accepted.
+		/// </remarks>
+		/// </param>
+		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty,
+									bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName,
+									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas);
+	}
+}
