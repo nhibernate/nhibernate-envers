@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Configuration
@@ -33,6 +34,24 @@ namespace NHibernate.Envers.Configuration
 					"REVTYPE");
 			RevisionTypePropType = "byte";
 
+			RevisionEndFieldName = Toolz.GetProperty(properties,
+			        "audit_strategy_validity_end_rev_field_name",
+			        "REVEND");
+
+			AuditStrategyType = System.Type.GetType(Toolz.GetProperty(properties,
+			                                      "nhibernate.envers.audit_strategy",
+			                                      typeof (DefaultAuditStrategy).AssemblyQualifiedName));
+
+			IsRevisionEndTimestampEnabled = bool.Parse(Toolz.GetProperty(properties,
+				                                   "nhibernate.envers.audit_strategy_validity_store_revend_timestamp",
+												   "false"));
+			if (IsRevisionEndTimestampEnabled)
+			{
+				RevisionEndTimestampFieldName = Toolz.GetProperty(properties,
+													"nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name",
+													"REVEND_TSTMP");
+			}
+
 			customAuditTablesNames = new Dictionary<string, string>();
 
 			RevisionNumberPath = OriginalIdPropName + "." + RevisionFieldName + ".id";
@@ -45,6 +64,10 @@ namespace NHibernate.Envers.Configuration
 		public string RevisionNumberPath { get; private set; }
 		public string RevisionTypePropName { get; private set; }
 		public string RevisionTypePropType { get; private set; }
+		public string RevisionEndFieldName { get; private set; }
+		public System.Type AuditStrategyType { get; private set; }
+		public bool IsRevisionEndTimestampEnabled { get; private set; }
+		public string RevisionEndTimestampFieldName { get; private set; }
 
 		/// <summary>
 		/// Returns the class name without the assembly name. Used for generating querries
