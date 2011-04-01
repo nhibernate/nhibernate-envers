@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
@@ -131,5 +134,61 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Child2Entity>(c2_1_id));
 			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions<Child2Entity>(c2_2_id));
 		}
+
+		[Test]
+		public void VerifyAllRevEndTimeStamps()
+		{
+			var p1RevList = getRevisions(typeof(ParentEntity), p1_id);
+			var p2RevList = getRevisions(typeof(ParentEntity), p2_id);
+			var c1_1_List = getRevisions(typeof(ParentEntity), c1_1_id);
+			var c1_2_List = getRevisions(typeof(ParentEntity), c1_2_id);
+			var c2_1_List = getRevisions(typeof(ParentEntity), c2_1_id);
+			var c2_2_List = getRevisions(typeof(ParentEntity), c2_2_id);
+
+			verifyRevEndTimeStamps(p1RevList);
+			verifyRevEndTimeStamps(p2RevList);
+			verifyRevEndTimeStamps(c1_1_List);
+			verifyRevEndTimeStamps(c1_2_List);
+			verifyRevEndTimeStamps(c2_1_List);
+			verifyRevEndTimeStamps(c2_2_List);
+
+		}
+
+		private IEnumerable<IDictionary> getRevisions(System.Type originalEntityClazz, int originalEntityId)
+		{
+			// Build the query:
+			// select auditEntity from
+			// org.hibernate.envers.test.entities.manytomany.sametable.ParentEntity_AUD
+			// auditEntity where auditEntity.originalId.id = :originalEntityId
+
+			var builder = new StringBuilder("select auditEntity from ");
+			builder.Append(originalEntityClazz.FullName).Append("_AUD auditEntity");
+			builder.Append(" where auditEntity.originalId.Id = :originalEntityId");
+
+			var qry = Session.CreateQuery(builder.ToString());
+			qry.SetParameter("originalEntityId", originalEntityId);
+
+			return qry.List<IDictionary>();
+		}
+
+		private static void verifyRevEndTimeStamps(IEnumerable<IDictionary> revisionEntities)
+		{
+			foreach (var revisionEntity in revisionEntities)
+			{
+
+				var revendTimestamp = revisionEntity[revendTimestampColumName];
+				var revEnd = (CustomDateRevEntity)revisionEntity["REVEND"];
+
+				if (revendTimestamp == null)
+				{
+					revEnd.Should().Be.Null();
+				}
+				else
+				{
+					revendTimestamp.Should().Be.EqualTo(revEnd.DateTimestamp);
+				}
+			}
+		}
+
 	}
 }
