@@ -167,7 +167,6 @@
     <Compile Include="Entities\Mapper\Relation\Query\IRelationQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\OneAuditEntityQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\OneEntityQueryGenerator.cs" />
-    <Compile Include="Entities\Mapper\Relation\Query\QueryGeneratorTools.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\ThreeEntityQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\TwoEntityOneAuditedQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\TwoEntityQueryGenerator.cs" />

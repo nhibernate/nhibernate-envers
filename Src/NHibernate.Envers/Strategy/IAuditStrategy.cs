@@ -38,7 +38,9 @@ namespace NHibernate.Envers.Strategy
 		/// <p><code>e.revision = (SELECT max(...) ...)</code></p>
 		/// </li>
 		/// <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
-		/// <p><code>e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)</code></p>
+		/// <p><code>
+		/// <![CDATA[e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)]]>
+		/// </code></p>
 		/// </li>
 		/// </ul>
 		/// </summary>
@@ -64,7 +66,7 @@ namespace NHibernate.Envers.Strategy
 		/// <p><code>e.revision = (SELECT max(...) ...)</code></p>
 		/// </li>
 		/// <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
-		/// <p><code>e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)</code></p>
+		/// <p><code><![CDATA[e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)]]></code></p>
 		/// </li>
 		/// </ul>
 		/// </summary>

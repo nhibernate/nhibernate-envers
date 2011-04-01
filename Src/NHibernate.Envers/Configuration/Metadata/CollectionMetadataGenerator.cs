@@ -133,14 +133,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var indexComponentData = AddIndex(null, null);
 
 			// Generating the query generator - it should read directly from the related entity.
-			var queryGenerator = new OneAuditEntityQueryGenerator(mainGenerator.GlobalCfg,
-					mainGenerator.VerEntCfg, referencingIdData, referencedEntityName,
-					referencedIdMapping.IdMapper);
+			var queryGenerator = new OneAuditEntityQueryGenerator(mainGenerator.GlobalCfg, mainGenerator.VerEntCfg,
+					mainGenerator.AuditStrategy, referencingIdData, referencedEntityName, referencedIdData);
 
 			// Creating common mapper data.
 			var commonCollectionMapperData = new CommonCollectionMapperData(
 					mainGenerator.VerEntCfg, referencedEntityName,
-					propertyAuditingData.GetPropertyData(),
+					propertyAuditingData.GetPropertyData(), 
 					referencingIdData, queryGenerator);
 
 			IPropertyMapper fakeBidirectionalRelationMapper;
@@ -302,7 +301,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// references some entities (either from the element or index). At the end, this will be used to build
 			// a query generator to read the raw data collection from the middle table.
 			var queryGeneratorBuilder = new QueryGeneratorBuilder(mainGenerator.GlobalCfg,
-					mainGenerator.VerEntCfg, referencingIdData, auditMiddleEntityName);
+					mainGenerator.VerEntCfg, mainGenerator.AuditStrategy, referencingIdData, auditMiddleEntityName);
 
 			// Adding the XML mapping for the referencing entity, if the relation isn't inverse.
 			if (middleEntityXml != null)

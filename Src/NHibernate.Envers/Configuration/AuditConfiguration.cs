@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Configuration
 
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
-			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg,
+			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
 			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
 		}
 

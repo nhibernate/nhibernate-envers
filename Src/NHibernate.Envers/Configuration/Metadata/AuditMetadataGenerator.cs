@@ -20,6 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public Cfg.Configuration Cfg { get; private set; }
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
+		public IAuditStrategy AuditStrategy { get; private set; }
 		private readonly XmlElement revisionInfoRelationMapping;
 
 		/*
@@ -41,13 +42,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
 
 		public AuditMetadataGenerator(Cfg.Configuration cfg, GlobalConfiguration globalCfg,
-									  AuditEntitiesConfiguration verEntCfg,
-									  XmlElement revisionInfoRelationMapping,
-									  AuditEntityNameRegister auditEntityNameRegister)
+										AuditEntitiesConfiguration verEntCfg,
+										IAuditStrategy auditStrategy,
+										XmlElement revisionInfoRelationMapping,
+										AuditEntityNameRegister auditEntityNameRegister)
 		{
 			Cfg = cfg;
 			GlobalCfg = globalCfg;
 			VerEntCfg = verEntCfg;
+			AuditStrategy = auditStrategy;
 			this.revisionInfoRelationMapping = revisionInfoRelationMapping;
 			BasicMetadataGenerator = new BasicMetadataGenerator();
 			componentMetadataGenerator = new ComponentMetadataGenerator(this);
@@ -95,7 +98,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Add the end-revision field, if the appropriate strategy is used.
 
 			//rk - don't like this if. put a flag on interface instead?
-			if (VerEntCfg.AuditStrategyType.Equals(typeof (ValidityAuditStrategy)))
+			if (VerEntCfg.AuditStrategyType.Equals(typeof(ValidityAuditStrategy)))
 			{
 				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName);
 			}

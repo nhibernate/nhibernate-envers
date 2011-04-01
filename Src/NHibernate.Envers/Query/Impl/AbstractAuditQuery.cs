@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Exceptions;
@@ -37,9 +36,15 @@ namespace NHibernate.Envers.Query.Impl
 
 		protected void BuildAndExecuteQuery(IList result) 
 		{
+			var query = BuildQuery();
+			query.List(result);
+		}
+
+		protected IQuery BuildQuery()
+		{
 			var query = QueryBuilder.ToQuery(_versionsReader.Session);
 			SetQueryProperties(query);
-			query.List(result);
+			return query;
 		}
 
 		protected abstract void FillResult(IList result);

@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class EntitiesAtRevisionQuery : AbstractAuditQuery 
+	public class EntitiesAtRevisionQuery : AbstractAuditQuery
 	{
 		private readonly long revision;
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
-										IAuditReaderImplementor versionsReader, 
+										IAuditReaderImplementor versionsReader,
 										System.Type cls,
-										long revision) : base(verCfg, versionsReader, cls)
+										long revision)
+			: base(verCfg, versionsReader, cls)
 		{
 			this.revision = revision;
 		}
@@ -20,46 +24,61 @@ namespace NHibernate.Envers.Query.Impl
 		protected override void FillResult(IList result)
 		{
 			/*
-			The query that should be executed in the versions table:
-			SELECT e FROM ent_ver e WHERE
-			  (all specified conditions, transformed, on the "e" entity) AND
-			  e.revision_type != DEL AND
-			  e.revision = (SELECT max(e2.revision) FROM ent_ver e2 WHERE
-				e2.revision <= :revision AND e2.originalId.id = e.originalId.id)
+			 * The query that we need to create:
+			 *   SELECT new list(e) FROM versionsReferencedEntity e
+			 *   WHERE
+			 * (all specified conditions, transformed, on the "e" entity) AND
+			 * (selecting e entities at revision :revision)
+			 *   --> for DefaultAuditStrategy:
+			 *     e.revision = (SELECT max(e2.revision) FROM versionsReferencedEntity e2
+			 *       WHERE e2.revision <= :revision AND e2.id = e.id) 
+			 *     
+			 *   --> for ValidityAuditStrategy:
+			 *     e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)
+			 *     
+			 *     AND
+			 * (only non-deleted entities)
+			 *     e.revision_type != DEL
 			 */
-			var maxRevQb = QueryBuilder.NewSubQueryBuilder(VersionsEntityName, "e2");
-			var verEntCfg = VerCfg.AuditEntCfg;
+
+			AuditEntitiesConfiguration verEntCfg = VerCfg.AuditEntCfg;
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
+			String originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
-			// SELECT max(e2.revision)
-			maxRevQb.AddProjection("max", revisionPropertyPath, false);
-			// e2.revision <= :revision
-			maxRevQb.RootParameters.AddWhereWithParam(revisionPropertyPath, "<=", revision);
-			// e2.id = e.id
-			VerCfg.EntCfg[EntityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
-																	   "e." + originalIdPropertyName,
-																	   "e2." + originalIdPropertyName);
+			var referencedIdData = new MiddleIdData(verEntCfg, VerCfg.EntCfg[EntityName].IdMappingData,
+					null, EntityName, VerCfg.EntCfg.IsVersioned(EntityName));
 
-			// e.revision_type != DEL AND
+			// (selecting e entities at revision :revision)
+			// --> based on auditStrategy (see above)
+			VerCfg.AuditStrategy.AddEntityAtRevisionRestriction(VerCfg.GlobalCfg, QueryBuilder, revisionPropertyPath,
+					verEntCfg.RevisionEndFieldName, true, referencedIdData,
+					revisionPropertyPath, originalIdPropertyName, "e", "e2");
+
+			// e.revision_type != DEL
 			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
-			// e.revision = (SELECT max(...) ...)
-			QueryBuilder.RootParameters.AddWhere(revisionPropertyPath, VerCfg.GlobalCfg.CorrelatedSubqueryOperator, maxRevQb);
+
 			// all specified conditions
 			foreach (var criterion in Criterions)
 			{
 				criterion.AddToQuery(VerCfg, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
+
+			var query = BuildQuery();
+			// add named parameter (only used for ValidAuditTimeStrategy) 
+			if (query.NamedParameters.Contains("revision"))
+			{
+				query.SetParameter("revision", revision);
+			}
+
 			if (HasProjection)
 			{
-				BuildAndExecuteQuery(result);
+				query.List(result);
 				return;
 			}
 			var queryResult = new List<IDictionary>();
-			BuildAndExecuteQuery(queryResult);
-			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result,
-																queryResult, revision);
+			query.List(queryResult);
+			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result, queryResult, revision);
 		}
 	}
 }
