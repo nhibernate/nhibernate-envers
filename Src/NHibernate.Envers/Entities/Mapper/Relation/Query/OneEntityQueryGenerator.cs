@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
@@ -15,9 +17,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		private readonly MiddleIdData _referencingIdData;
 
 		public OneEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
-									   string versionsMiddleEntityName,
-									   MiddleIdData referencingIdData,
-									   IEnumerable<MiddleComponentData> componentDatas) 
+										IAuditStrategy auditStrategy,
+										string versionsMiddleEntityName,
+										MiddleIdData referencingIdData,
+										IEnumerable<MiddleComponentData> componentDatas) 
 		{
 			_referencingIdData = referencingIdData;
 
@@ -27,8 +30,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 * (only entities referenced by the association; id_ref_ing = id of the referencing entity)
 			 *     ee.originalId.id_ref_ing = :id_ref_ing AND
 			 * (the association at revision :revision)
-			 *     ee.revision = (SELECT max(ee2.revision) FROM middleEntity ee2
-			 *       WHERE ee2.revision <= :revision AND ee2.originalId.* = ee.originalId.*) AND
+			 *	--> for DefaultAuditStrategy:
+			 *		ee.revision = (SELECT max(ee2.revision) FROM middleEntity ee2
+			 *       WHERE ee2.revision <= :revision AND ee2.originalId.* = ee.originalId.*) 
+			 *  --> for ValidityAuditStrategy
+			 *		ee.revision <= :revision and (ee.endRevision > :revision or ee.endRevision is null)
+			 *	AND
 			 * (only non-deleted entities and associations)
 			 *     ee.revision_type != DEL
 			 */
@@ -42,23 +49,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var rootParameters = qb.RootParameters;
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
-			// SELECT max(ee2.revision) FROM middleEntity ee2
-			var maxRevQb = qb.NewSubQueryBuilder(versionsMiddleEntityName, "ee2");
-			maxRevQb.AddProjection("max", revisionPropertyPath, false);
-			// WHERE
-			var maxRevQbParameters = maxRevQb.RootParameters;
-			// ee2.revision <= :revision
-			maxRevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", "revision");
-			// ee2.originalId.* = ee.originalId.*        
+
+
 			var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
-			var ee2OriginalIdPropertyPath = "ee2." + originalIdPropertyName;
-			referencingIdData.PrefixedMapper.AddIdsEqualToQuery(maxRevQbParameters, eeOriginalIdPropertyPath, ee2OriginalIdPropertyPath);
-			foreach (var componentData in componentDatas) 
-			{
-				componentData.ComponentMapper.AddMiddleEqualToQuery(maxRevQbParameters, eeOriginalIdPropertyPath, ee2OriginalIdPropertyPath);
-			}
-			// ee.revision = (SELECT max(...) ...)
-			rootParameters.AddWhere(revisionPropertyPath, "=", maxRevQb);       
+
+			// (with ee association at revision :revision)
+			// --> based on auditStrategy (see above)
+			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
+				verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName, 
+				eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
+
 			// ee.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
 

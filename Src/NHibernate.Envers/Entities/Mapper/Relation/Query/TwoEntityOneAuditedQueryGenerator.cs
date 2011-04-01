@@ -1,25 +1,27 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table and a related non-audited entity.
 	/// </summary>
-	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator 
+	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator
 	{
 		private readonly string queryString;
 		private readonly MiddleIdData referencingIdData;
 
-		public TwoEntityOneAuditedQueryGenerator(
-									   AuditEntitiesConfiguration verEntCfg,
-									   string versionsMiddleEntityName,
-									   MiddleIdData referencingIdData,
-									   MiddleIdData referencedIdData,
-									   IEnumerable<MiddleComponentData> componentDatas) 
+		public TwoEntityOneAuditedQueryGenerator(AuditEntitiesConfiguration verEntCfg,
+										IAuditStrategy auditStrategy,
+										string versionsMiddleEntityName,
+										MiddleIdData referencingIdData,
+										MiddleIdData referencedIdData,
+										IEnumerable<MiddleComponentData> componentDatas)
 		{
 			this.referencingIdData = referencingIdData;
 
@@ -31,9 +33,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 *     ee.id_ref_ed = e.id_ref_ed AND
 			 * (only entities referenced by the association; id_ref_ing = id of the referencing entity)
 			 *     ee.id_ref_ing = :id_ref_ing AND
+			 *     
 			 * (the association at revision :revision)
-			 *     ee.revision = (SELECT max(ee2.revision) FROM middleEntity ee2
-			 *       WHERE ee2.revision <= :revision AND ee2.originalId.* = ee.originalId.*) AND
+			 *	--> For DefaultAuditStrategy:
+			 *		ee.revision = (SELECT max(ee2.revision) FROM middleEntity ee2
+			 *			WHERE ee2.revision <= :revision AND ee2.originalId.* = ee.originalId.*) 
+			 *	--> for ValidityAuditStrategy:      
+			 *		ee.revision <= :revision and (ee.endRevision > :revision or ee.endRevision is null)
+			 * 
+			 * AND
+			 *       
 			 * (only non-deleted entities and associations)
 			 *     ee.revision_type != DEL
 			 */
@@ -54,9 +63,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
 
-			// ee.revision = (SELECT max(...) ...)
-			QueryGeneratorTools.AddAssociationAtRevision(qb, rootParameters, referencingIdData, versionsMiddleEntityName,
-					eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas);
+			// (with ee association at revision :revision)
+			// --> based on auditStrategy (see above)
+			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
+							verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName,
+							eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
 
 			// ee.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");

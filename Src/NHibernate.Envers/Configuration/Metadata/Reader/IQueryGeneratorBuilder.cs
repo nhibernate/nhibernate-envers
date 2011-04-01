@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
+using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -13,15 +14,17 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	{
 		private readonly GlobalConfiguration _globalCfg;
 		private readonly AuditEntitiesConfiguration _verEntCfg;
+		private readonly IAuditStrategy _auditStrategy;
 		private readonly MiddleIdData _referencingIdData;
 		private readonly string _auditMiddleEntityName;
 		private readonly IList<MiddleIdData> _idDatas;
 
-		public QueryGeneratorBuilder(GlobalConfiguration globalCfg, AuditEntitiesConfiguration verEntCfg,
+		public QueryGeneratorBuilder(GlobalConfiguration globalCfg, AuditEntitiesConfiguration verEntCfg, IAuditStrategy auditStrategy,
 							  MiddleIdData referencingIdData, string auditMiddleEntityName) 
 		{
 			_globalCfg = globalCfg;
 			_verEntCfg = verEntCfg;
+			_auditStrategy = auditStrategy;
 			_referencingIdData = referencingIdData;
 			_auditMiddleEntityName = auditMiddleEntityName;
 
@@ -37,16 +40,16 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			if (_idDatas.Count == 0) 
 			{
-				return new OneEntityQueryGenerator(_verEntCfg, _auditMiddleEntityName, _referencingIdData, componentDatas);
+				return new OneEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData, componentDatas);
 			}
 			if (_idDatas.Count == 1)
 			{
 				if (_idDatas[0].IsAudited()) 
 				{
-					return new TwoEntityQueryGenerator(_globalCfg, _verEntCfg, _auditMiddleEntityName, _referencingIdData,
+					return new TwoEntityQueryGenerator(_globalCfg, _verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
 													   _idDatas[0], componentDatas);
 				}
-				return new TwoEntityOneAuditedQueryGenerator(_verEntCfg, _auditMiddleEntityName, _referencingIdData,
+				return new TwoEntityOneAuditedQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
 															 _idDatas[0], componentDatas);
 			}
 			if (_idDatas.Count == 2) 
@@ -57,7 +60,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					throw new MappingException("Ternary relations using @Audited(targetAuditMode = NOT_AUDITED) are not supported.");
 				}
 
-				return new ThreeEntityQueryGenerator(_globalCfg, _verEntCfg, _auditMiddleEntityName, _referencingIdData,
+				return new ThreeEntityQueryGenerator(_globalCfg, _verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
 													 _idDatas[0], _idDatas[1], componentDatas);
 			}
 			throw new NotSupportedException("Illegal number of related entities.");
