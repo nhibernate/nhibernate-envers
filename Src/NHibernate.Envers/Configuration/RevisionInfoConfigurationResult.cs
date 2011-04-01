@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 
 namespace NHibernate.Envers.Configuration
@@ -6,11 +7,13 @@ namespace NHibernate.Envers.Configuration
 	public class RevisionInfoConfigurationResult 
 	{
 		public RevisionInfoConfigurationResult(IRevisionInfoGenerator revisionInfoGenerator,
-		                                       XmlDocument revisionInfoXmlMapping, 
-		                                       RevisionInfoQueryCreator revisionInfoQueryCreator,
-		                                       XmlElement revisionInfoRelationMapping,
-		                                       RevisionInfoNumberReader revisionInfoNumberReader, 
-		                                       string revisionInfoEntityName) 
+												XmlDocument revisionInfoXmlMapping, 
+												RevisionInfoQueryCreator revisionInfoQueryCreator,
+												XmlElement revisionInfoRelationMapping,
+												RevisionInfoNumberReader revisionInfoNumberReader, 
+												string revisionInfoEntityName,
+												System.Type revisionInfoClass,
+												PropertyData revisionInfoTimestampData) 
 		{
 			RevisionInfoGenerator = revisionInfoGenerator;
 			RevisionInfoXmlMapping = revisionInfoXmlMapping;
@@ -18,6 +21,8 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoRelationMapping = revisionInfoRelationMapping;
 			RevisionInfoNumberReader = revisionInfoNumberReader;
 			RevisionInfoEntityName = revisionInfoEntityName;
+			RevisionInfoClass = revisionInfoClass;
+			RevisionInfoTimestampData = revisionInfoTimestampData;
 		}
 
 		public IRevisionInfoGenerator RevisionInfoGenerator { get; private set; }
@@ -26,5 +31,7 @@ namespace NHibernate.Envers.Configuration
 		public XmlElement RevisionInfoRelationMapping { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public string RevisionInfoEntityName { get; private set; }
+		public System.Type RevisionInfoClass { get; set; }
+		public PropertyData RevisionInfoTimestampData { get; set; }
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using NHibernate.Envers.Configuration.Attributes;
@@ -96,11 +95,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private void addEndRevision(XmlElement anyMapping)
 		{
 			// Add the end-revision field, if the appropriate strategy is used.
-
-			//rk - don't like this if. put a flag on interface instead?
 			if (VerEntCfg.AuditStrategyType.Equals(typeof(ValidityAuditStrategy)))
 			{
-				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName);
+				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
+
+				if(VerEntCfg.IsRevisionEndTimestampEnabled)
+				{
+					const string revisionInfoTimestampSqlType = "Timestamp";
+					MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
+				}
 			}
 		}
 
