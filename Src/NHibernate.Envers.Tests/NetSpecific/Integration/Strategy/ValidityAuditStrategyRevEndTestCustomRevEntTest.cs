@@ -22,6 +22,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(ValidityAuditStrategy).AssemblyQualifiedName);
+			configuration.SetProperty("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "true");
+			configuration.SetProperty("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", revendTimestampColumName);
 		}
 
 		protected override IEnumerable<string> Mappings
@@ -99,7 +101,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 				Session.CreateSQLQuery("DROP TABLE children_aud").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV integer NOT NULL, REVEND integer, "
 										+ revendTimestampColumName
-										+ " timestamp, REVTYPE tinyint, "
+										+ " datetime, REVTYPE tinyint, "
 										+ "parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
 				tx.Commit();
 			}

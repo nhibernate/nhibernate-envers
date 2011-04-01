@@ -95,7 +95,7 @@ namespace NHibernate.Envers.Strategy
 
 		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas)
 		{
-			Parameters rootParameters = rootQueryBuilder.RootParameters;
+			var rootParameters = rootQueryBuilder.RootParameters;
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
 		}
 

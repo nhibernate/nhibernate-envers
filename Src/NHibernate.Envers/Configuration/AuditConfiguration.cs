@@ -7,6 +7,8 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
+using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Linq;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -27,6 +29,16 @@ namespace NHibernate.Envers.Configuration
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			GlobalCfg = new GlobalConfiguration(properties);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
+			initializeAuditStrategy(revInfoCfgResult);
+
+			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
+			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
+			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
+			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+		}
+
+		private void initializeAuditStrategy(RevisionInfoConfigurationResult revInfoCfgResult)
+		{
 			try
 			{
 				AuditStrategy = (IAuditStrategy) Activator.CreateInstance(AuditEntCfg.AuditStrategyType);
@@ -35,11 +47,13 @@ namespace NHibernate.Envers.Configuration
 			{
 				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName));
 			}
-
-			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
-			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
-			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
-			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
+			if(validityAuditStrategy!=null)
+			{
+				var revisionTimestampGetter = ReflectionTools.GetGetter(revInfoCfgResult.RevisionInfoClass,
+				                                                        revInfoCfgResult.RevisionInfoTimestampData);
+				validityAuditStrategy.SetRevisionTimestampGetter(revisionTimestampGetter);
+			}
 		}
 
 		public GlobalConfiguration GlobalCfg { get; private set; }

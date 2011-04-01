@@ -223,7 +223,7 @@ namespace NHibernate.Envers.Configuration
 					new RevisionInfoQueryCreator(revisionInfoEntityName, revisionInfoIdData.Name,
 							revisionInfoTimestampData.Name, isTimestampAsDate()),
 					generateRevisionInfoRelationMapping(),
-					new RevisionInfoNumberReader(revisionInfoClass, revisionInfoIdData), revisionInfoEntityName);
+					new RevisionInfoNumberReader(revisionInfoClass, revisionInfoIdData), revisionInfoEntityName, revisionInfoClass, revisionInfoTimestampData);
 		}
 
 		private bool isTimestampAsDate() 

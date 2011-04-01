@@ -23,24 +23,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return id_mapping;
 		}
 
-		public static XmlElement AddProperty(XmlElement parent, string name, string type, bool insertable, bool key) 
+		public static XmlElement AddProperty(XmlElement parent, string name, string type, bool insertable, bool updateable, bool key)
 		{
 			XmlElement prop_mapping;
-			if (key) 
+			if (key)
 			{
 				prop_mapping = parent.OwnerDocument.CreateElement("key-property");
-			} 
-			else 
+			}
+			else
 			{
 				prop_mapping = parent.OwnerDocument.CreateElement("property");
 				prop_mapping.SetAttribute("insert", insertable ? "true" : "false");
-				prop_mapping.SetAttribute("update", "false");
+				prop_mapping.SetAttribute("update", updateable ? "true" : "false");
 			}
 			parent.AppendChild(prop_mapping);
 
 			prop_mapping.SetAttribute("name", name);
-			
-			if (type != null) 
+
+			if (type != null)
 			{
 				prop_mapping.SetAttribute("type", type);
 			}
@@ -48,12 +48,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return prop_mapping;
 		}
 
-		public static XmlElement AddManyToOne(XmlElement parent, string name, string type)
+		public static XmlElement AddProperty(XmlElement parent, string name, string type, bool insertable, bool key)
+		{
+			return AddProperty(parent, name, type, insertable, false, key);
+		}
+
+		public static XmlElement AddManyToOne(XmlElement parent, string name, string type, bool insertable, bool updateable)
 		{
 			var manyToOneMapping = parent.OwnerDocument.CreateElement("many-to-one");
 			parent.AppendChild(manyToOneMapping);
-			manyToOneMapping.SetAttribute("insert", "true");
-			manyToOneMapping.SetAttribute("update", "false");
+			manyToOneMapping.SetAttribute("insert", insertable ? "true" : "false");
+			manyToOneMapping.SetAttribute("update", updateable ? "true" : "false");
 			manyToOneMapping.SetAttribute("name", name);
 			manyToOneMapping.SetAttribute("class", type);
 			return manyToOneMapping;
