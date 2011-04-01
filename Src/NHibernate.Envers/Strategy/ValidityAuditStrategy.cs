@@ -143,7 +143,6 @@ namespace NHibernate.Envers.Strategy
 					var revEndTimestampFieldName = auditCfg.AuditEntCfg.RevisionEndTimestampFieldName;
 					var revEndTimestampObj = revisionTimestampGetter.Get(revision);
 
-					// convert to a java.util.Date
 					if (revEndTimestampObj is DateTime)
 					{
 						revisionEndTimestamp = (DateTime)revEndTimestampObj;
