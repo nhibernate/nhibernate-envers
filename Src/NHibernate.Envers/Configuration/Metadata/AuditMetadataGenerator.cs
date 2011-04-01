@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
@@ -85,6 +87,18 @@ namespace NHibernate.Envers.Configuration.Metadata
 					VerEntCfg.RevisionTypePropType, true, false);
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
 			revTypeProperty.SetAttribute("not-null", "true");
+			addEndRevision(any_mapping);
+		}
+
+		private void addEndRevision(XmlElement anyMapping)
+		{
+			// Add the end-revision field, if the appropriate strategy is used.
+
+			//rk - don't like this if. put a flag on interface instead?
+			if (VerEntCfg.AuditStrategyType.Equals(typeof (ValidityAuditStrategy)))
+			{
+				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName);
+			}
 		}
 
 		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,

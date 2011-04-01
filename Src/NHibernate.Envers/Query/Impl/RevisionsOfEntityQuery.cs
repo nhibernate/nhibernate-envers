@@ -67,7 +67,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			if (!selectEntitiesOnly)
 			{
-				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName, "r");
+				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName(), "r");
 				QueryBuilder.RootParameters.AddWhere(VerCfg.AuditEntCfg.RevisionNumberPath, true, "=", "r.id", false);
 			}
 

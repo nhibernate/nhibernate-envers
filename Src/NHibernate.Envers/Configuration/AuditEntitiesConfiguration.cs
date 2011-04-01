@@ -9,12 +9,11 @@ namespace NHibernate.Envers.Configuration
 		private readonly string auditTablePrefix;
 		private readonly string auditTableSuffix;
 		private readonly string revisionPropBasePath;
-		private readonly string revInfoEntityName;
 		private readonly IDictionary<string, string> customAuditTablesNames;
 
 		public AuditEntitiesConfiguration(IDictionary<string, string> properties, string revisionInfoEntityName)
 		{
-			revInfoEntityName = revisionInfoEntityName;
+			RevisionInfoEntityAssemblyQualifiedName = revisionInfoEntityName;
 
 			auditTablePrefix = Toolz.GetProperty(properties,
 					"nhibernate.envers.audit_table_prefix",
@@ -68,16 +67,14 @@ namespace NHibernate.Envers.Configuration
 		public System.Type AuditStrategyType { get; private set; }
 		public bool IsRevisionEndTimestampEnabled { get; private set; }
 		public string RevisionEndTimestampFieldName { get; private set; }
+		public string RevisionInfoEntityAssemblyQualifiedName { get; private set; }
 
 		/// <summary>
 		/// Returns the class name without the assembly name. Used for generating querries
 		/// </summary>
-		public string RevisionInfoEntityFullClassName 
+		public string RevisionInfoEntityFullClassName()
 		{
-			get
-			{
-				return revInfoEntityName.Split(new[]{','})[0];
-			}
+			return RevisionInfoEntityAssemblyQualifiedName.Split(new[] {','})[0];
 		}
 
 		/// <summary>
