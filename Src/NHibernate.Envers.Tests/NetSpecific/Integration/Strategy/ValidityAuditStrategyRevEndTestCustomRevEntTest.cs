@@ -84,8 +84,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			}
 
 			// Rev 5 - (p1: c2_2, p2: c1_1, c2_1)
+			Session.Clear();
 			using (var tx = Session.BeginTransaction())
 			{
+				c1_2 = Session.Get<Child1Entity>(c1_2.Id);
+				c2_2 = Session.Get<Child2Entity>(c2_2.Id);
+
 				c2_2.Parents.Remove(p2);
 				c1_2.Parents.Remove(p1);
 				tx.Commit();

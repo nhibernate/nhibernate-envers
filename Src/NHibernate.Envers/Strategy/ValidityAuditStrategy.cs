@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
@@ -133,7 +134,7 @@ namespace NHibernate.Envers.Strategy
 			{
 				// Setting the end revision to be the current rev
 				var previousData = l[0];
-				((IDictionary<string, object>)previousData).Add(revisionEndFieldName, revision);
+				((IDictionary)previousData)[revisionEndFieldName] = revision;
 
 				if (auditCfg.AuditEntCfg.IsRevisionEndTimestampEnabled)
 				{
@@ -153,7 +154,7 @@ namespace NHibernate.Envers.Strategy
 					}
 
 					// Setting the end revision timestamp
-					((IDictionary<string, object>)previousData).Add(revEndTimestampFieldName, revisionEndTimestamp);
+					((IDictionary)previousData)[revEndTimestampFieldName] = revisionEndTimestamp;
 				}
 
 				// Saving the previous version
