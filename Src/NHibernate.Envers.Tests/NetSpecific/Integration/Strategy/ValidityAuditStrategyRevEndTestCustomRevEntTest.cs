@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(DefaultAuditStrategy).AssemblyQualifiedName);
+			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(ValidityAuditStrategy).AssemblyQualifiedName);
 		}
 
 		protected override IEnumerable<string> Mappings
