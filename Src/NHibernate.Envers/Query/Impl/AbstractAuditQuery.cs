@@ -37,19 +37,8 @@ namespace NHibernate.Envers.Query.Impl
 
 		protected void BuildAndExecuteQuery(IList result) 
 		{
-			var querySb = new StringBuilder();
-			var queryParamValues = new Dictionary<string, object>();
-
-			QueryBuilder.Build(querySb, queryParamValues);
-
-			var query = _versionsReader.Session.CreateQuery(querySb.ToString());
-			foreach (var paramValue in queryParamValues) 
-			{
-				query.SetParameter(paramValue.Key, paramValue.Value);
-			}
-
+			var query = QueryBuilder.ToQuery(_versionsReader.Session);
 			SetQueryProperties(query);
-
 			query.List(result);
 		}
 
