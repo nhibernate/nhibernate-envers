@@ -179,6 +179,106 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			CollectionAssert.AreEqual(new[] { c2_2 }, rev5.Children2);
 		}
 
+		[Test]
+		public void VerifyHistoryOfParent2()
+		{
+			var c1_1 = Session.Get<Child1Entity>(c1_1_id);
+			var c2_1 = Session.Get<Child2Entity>(c2_1_id);
+			var c2_2 = Session.Get<Child2Entity>(c2_2_id);
+
+			var rev1 = AuditReader().Find<ParentEntity>(p2_id, 1);
+			var rev2 = AuditReader().Find<ParentEntity>(p2_id, 2);
+			var rev3 = AuditReader().Find<ParentEntity>(p2_id, 3);
+			var rev4 = AuditReader().Find<ParentEntity>(p2_id, 4);
+			var rev5 = AuditReader().Find<ParentEntity>(p2_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Children1);
+			CollectionAssert.IsEmpty(rev2.Children1);
+			CollectionAssert.AreEqual(new[] { c1_1 }, rev3.Children1);
+			CollectionAssert.AreEqual(new[] { c1_1 }, rev4.Children1);
+			CollectionAssert.AreEqual(new[] { c1_1 }, rev5.Children1);
+
+			CollectionAssert.IsEmpty(rev1.Children2);
+			CollectionAssert.AreEqual(new[] { c2_1 }, rev2.Children2);
+			CollectionAssert.AreEqual(new[] { c2_1 }, rev3.Children2);
+			CollectionAssert.AreEqual(new[] { c2_1, c2_2 }, rev4.Children2);
+			CollectionAssert.AreEqual(new[] { c2_1 }, rev5.Children2);
+		}
+
+		[Test]
+		public void VerifyHistoryOfChild1_1()
+		{
+			var p1 = Session.Get<ParentEntity>(p1_id);
+			var p2 = Session.Get<ParentEntity>(p2_id);
+
+			var rev1 = AuditReader().Find<Child1Entity>(c1_1_id, 1);
+			var rev2 = AuditReader().Find<Child1Entity>(c1_1_id, 2);
+			var rev3 = AuditReader().Find<Child1Entity>(c1_1_id, 3);
+			var rev4 = AuditReader().Find<Child1Entity>(c1_1_id, 4);
+			var rev5 = AuditReader().Find<Child1Entity>(c1_1_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Parents);
+			CollectionAssert.AreEqual(new[] { p1 }, rev2.Parents);
+			CollectionAssert.AreEqual(new[] { p1, p2 }, rev3.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+		}
+
+		[Test]
+		public void VerifyHistoryOfChild1_2()
+		{
+			var p1 = Session.Get<ParentEntity>(p1_id);
+
+			var rev1 = AuditReader().Find<Child1Entity>(c1_2_id, 1);
+			var rev2 = AuditReader().Find<Child1Entity>(c1_2_id, 2);
+			var rev3 = AuditReader().Find<Child1Entity>(c1_2_id, 3);
+			var rev4 = AuditReader().Find<Child1Entity>(c1_2_id, 4);
+			var rev5 = AuditReader().Find<Child1Entity>(c1_2_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Parents);
+			CollectionAssert.IsEmpty(rev2.Parents);
+			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
+			CollectionAssert.AreEqual(new[] { p1 }, rev4.Parents);
+			CollectionAssert.IsEmpty(rev5.Parents);
+		}
+
+		[Test]
+		public void VerifyHistoryOfChild2_1()
+		{
+			var p2 = Session.Get<ParentEntity>(p2_id);
+
+			var rev1 = AuditReader().Find<Child2Entity>(c2_1_id, 1);
+			var rev2 = AuditReader().Find<Child2Entity>(c2_1_id, 2);
+			var rev3 = AuditReader().Find<Child2Entity>(c2_1_id, 3);
+			var rev4 = AuditReader().Find<Child2Entity>(c2_1_id, 4);
+			var rev5 = AuditReader().Find<Child2Entity>(c2_1_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev2.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev3.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
+			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+		}
+
+		[Test]
+		public void VerifyHistoryOfChild2_2()
+		{
+			var p1 = Session.Get<ParentEntity>(p1_id);
+			var p2 = Session.Get<ParentEntity>(p2_id);
+
+			var rev1 = AuditReader().Find<Child2Entity>(c2_2_id, 1);
+			var rev2 = AuditReader().Find<Child2Entity>(c2_2_id, 2);
+			var rev3 = AuditReader().Find<Child2Entity>(c2_2_id, 3);
+			var rev4 = AuditReader().Find<Child2Entity>(c2_2_id, 4);
+			var rev5 = AuditReader().Find<Child2Entity>(c2_2_id, 5);
+
+			CollectionAssert.IsEmpty(rev1.Parents);
+			CollectionAssert.IsEmpty(rev2.Parents);
+			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
+			CollectionAssert.AreEqual(new[] { p1, p2 }, rev4.Parents);
+			CollectionAssert.AreEqual(new[] { p1 }, rev5.Parents);
+		}
+
 		private IEnumerable<IDictionary> getRevisions(System.Type originalEntityClazz, int originalEntityId)
 		{
 			// Build the query:
