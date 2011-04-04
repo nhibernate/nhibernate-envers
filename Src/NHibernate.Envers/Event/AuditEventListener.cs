@@ -104,12 +104,12 @@ namespace NHibernate.Envers.Event
 
 			var auditProcess = VerCfg.AuditProcessManager.Get(evt.Session);
 			var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
-																		 evt.Id, evt.Persister, evt.State);
+																		evt.Id, evt.Persister, evt.State);
 			auditProcess.AddWorkUnit(workUnit);
 			if (workUnit.ContainsWork())
 			{
 				GenerateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
-																											 null, evt.Session);
+																		null, evt.Session);
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace NHibernate.Envers.Event
 			if (workUnit.ContainsWork())
 			{
 				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
-																											 evt.OldState, evt.Session);
+																	evt.OldState, evt.Session);
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace NHibernate.Envers.Event
 			if (workUnit.ContainsWork())
 			{
 				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
-																											 evt.DeletedState, evt.Session);
+																	evt.DeletedState, evt.Session);
 			}
 		}
 
@@ -235,20 +235,20 @@ namespace NHibernate.Envers.Event
 			if (rd != null && rd.MappedByPropertyName != null)
 			{
 				GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
-																										referencingPropertyName, evt, rd);
+															referencingPropertyName, evt, rd);
 			}
 			else
 			{
-				var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session,
-																															entityName, VerCfg, newColl, collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
-																															referencingPropertyName);
+				var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session, entityName, VerCfg, newColl, 
+																collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
+																referencingPropertyName);
 				verSync.AddWorkUnit(workUnit);
 
 				if (workUnit.ContainsWork())
 				{
 					// There are some changes: a revision needs also be generated for the collection owner
 					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
-																													 VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
+																VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
 				}
