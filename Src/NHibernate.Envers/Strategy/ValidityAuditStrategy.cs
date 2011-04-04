@@ -133,8 +133,8 @@ namespace NHibernate.Envers.Strategy
 			if (l.Count == 1)
 			{
 				// Setting the end revision to be the current rev
-				var previousData = l[0];
-				((IDictionary)previousData)[revisionEndFieldName] = revision;
+				var previousData = (IDictionary)l[0];
+				previousData[revisionEndFieldName] = revision;
 
 				if (auditCfg.AuditEntCfg.IsRevisionEndTimestampEnabled)
 				{
@@ -153,7 +153,7 @@ namespace NHibernate.Envers.Strategy
 					}
 
 					// Setting the end revision timestamp
-					((IDictionary)previousData)[revEndTimestampFieldName] = revisionEndTimestamp;
+					previousData[revEndTimestampFieldName] = revisionEndTimestamp;
 				}
 
 				// Saving the previous version
