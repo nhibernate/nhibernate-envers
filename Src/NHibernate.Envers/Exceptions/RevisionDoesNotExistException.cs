@@ -2,6 +2,7 @@
 
 namespace NHibernate.Envers.Exceptions
 {
+	[Serializable]
 	public class RevisionDoesNotExistException : AuditException 
 	{
 		public RevisionDoesNotExistException(long revision)
