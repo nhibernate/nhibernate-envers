@@ -1,10 +1,9 @@
-=== ALPHA 1 (v 0.8.1.0), 2011-03-05, NH 3.1.0 ===
+=== BETA 1 (v 0.9.1.0), ???, ??? ===
 
-[NHE-2] - Biref onetoone on pk
-[NHE-3] - Support access="readonly"
-[NHE-4] - Structs as components - querying
-[NHE-6] - Bidirectional list support
-[NHE-7] - Exception in AuditSync.BeforeCompletion is swallowed by (NH) AdoTransaction
+
+*** Breaking changes ***
+* Changed signature: IAuditReader.FindRevision(Type, long) -> IAuditReader.FindRevision(long)
+* Changed signature: IAuditReader.GetCurrentRevision(Type, bool) -> IAuditReader.GetCurrentRevision(bool)
 
 
 === ALPHA 2 (v 0.8.2.0), 2011-03-14, NH 3.1.0 ===
@@ -18,9 +17,11 @@
 * Renamed envers.do_not_audit_optimistic_locking_field to nhibernate.envers.do_not_audit_optimistic_locking_field
 
 
-=== BETA 1 (v 0.9.1.0), ???, ??? ===
+=== ALPHA 1 (v 0.8.1.0), 2011-03-05, NH 3.1.0 ===
 
+[NHE-2] - Biref onetoone on pk
+[NHE-3] - Support access="readonly"
+[NHE-4] - Structs as components - querying
+[NHE-6] - Bidirectional list support
+[NHE-7] - Exception in AuditSync.BeforeCompletion is swallowed by (NH) AdoTransaction
 
-*** Breaking changes ***
-* Changed signature: IAuditReader.FindRevision(Type, long) -> IAuditReader.FindRevision(long)
-* Changed signature: IAuditReader.GetCurrentRevision(Type, bool) -> IAuditReader.GetCurrentRevision(bool)
