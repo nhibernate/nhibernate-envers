@@ -16,6 +16,5 @@
     -->
 
     <property name="show_sql">false</property>
-    <property name="proxyfactory.factory_class">NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle</property>
   </session-factory>
 </hibernate-configuration>
