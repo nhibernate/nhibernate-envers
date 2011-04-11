@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NHibernate.Envers</id>
-    <version>0.8.2.1</version>
+    <version>0.9.1.0</version>
     <authors>NHibernate community, Hibernate community</authors>
     <summary>Audit trail integrated with NHibernate.</summary>
     <description>
@@ -11,8 +11,8 @@
     <language>en-US</language>
     <tags>Audit, NHibernate</tags>
     <dependencies>
-      <dependency id="NHibernate" version="3.1" />
-      <dependency id="Iesi.Collections" version="3.1" />
+      <dependency id="NHibernate" version="3.2" />
+      <dependency id="Iesi.Collections" version="1.0.1" />
     </dependencies>
   </metadata>
   <files>
