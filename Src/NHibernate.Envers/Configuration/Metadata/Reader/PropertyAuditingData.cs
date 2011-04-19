@@ -63,16 +63,5 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				}
 			}
 		}
-
-		public void addAuditingOverrides(AuditOverridesAttribute annotationOverrides)
-		{
-			if (annotationOverrides != null)
-			{
-				foreach (var attrib in annotationOverrides.value)
-				{
-					addAuditingOverride(attrib);
-				}
-			}
-		}
 	}
 }

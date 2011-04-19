@@ -3,6 +3,7 @@
 *** Breaking changes ***
 * Changed API: AuditJoinTableAttribute
 * Changed API: AuditOverrideAttribute
+* Changed API: Removed AuditOverridesAttribute, added allowmultiple on AuditOverrideAttribute instead
 
 
 

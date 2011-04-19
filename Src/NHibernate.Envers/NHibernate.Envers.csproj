@@ -65,7 +65,6 @@
     <Compile Include="Configuration\Attributes\AuditJoinTableAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditMappedByAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditOverrideAttribute.cs" />
-    <Compile Include="Configuration\Attributes\AuditOverridesAttribute.cs" />
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="Configuration\Attributes\AuditTableAttribute.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
