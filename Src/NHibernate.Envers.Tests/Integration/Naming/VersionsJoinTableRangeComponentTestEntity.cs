@@ -13,12 +13,17 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		}
 
 		public virtual int Id { get; set; }
+
 		[Audited]
+		[AuditOverride(PropertyName = "Range", TableName = "JOIN_TABLE_COMPONENT_1_AUD", InverseJoinColumns = new[] { "VJTRTE_ID" })]
 		public virtual VersionsJoinTableRangeComponent<VersionsJoinTableRangeTestEntity> Component1 { get; set; }
+		
 		[Audited]
+		[AuditOverride(PropertyName = "Range", TableName = "JOIN_TABLE_COMPONENT_2_AUD", InverseJoinColumns = new[] { "VJTRTAE_ID" })]
 		public virtual VersionsJoinTableRangeComponent<VersionsJoinTableRangeTestAlternateEntity> Component2 { get; set; }
+		
 		[Audited]
-		[AuditOverride(Name="Str2", IsAudited = false)]
+		[AuditOverride(PropertyName="Str2", IsAudited = false)]
 		public virtual Component1 Component3 { get; set; }
 
 		public override bool Equals(object obj)

@@ -233,10 +233,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Generating the name of the middle table
 			string auditMiddleTableName;
 			string auditMiddleEntityName;
-			if (!string.IsNullOrEmpty(propertyAuditingData.JoinTable.Name))
+			if (!string.IsNullOrEmpty(propertyAuditingData.JoinTable.TableName))
 			{
-				auditMiddleTableName = propertyAuditingData.JoinTable.Name;
-				auditMiddleEntityName = propertyAuditingData.JoinTable.Name;
+				auditMiddleTableName = propertyAuditingData.JoinTable.TableName;
+				auditMiddleEntityName = propertyAuditingData.JoinTable.TableName;
 			}
 			else
 			{

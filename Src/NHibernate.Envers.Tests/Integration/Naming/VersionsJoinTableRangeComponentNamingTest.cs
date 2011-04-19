@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private const string UNMODIFIED_COMPONENT_1_AUDIT_JOIN_TABLE_NAME = "VersionsJoinTableRangeComponentTestEntity_VersionsJoinTableRangeTestEntity_AUD";
 		private const string UNMODIFIED_COMPONENT_2_AUDIT_JOIN_TABLE_NAME = "VersionsJoinTableRangeComponentTestEntity_VersionsJoinTableRangeTestAlternateEntity_AUD";
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void ExpectedTableNamesForComponent1()
 		{
 			var auditClass = Cfg.GetClassMapping(COMPONENT_1_AUDIT_JOIN_TABLE_NAME);
@@ -82,7 +82,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			Assert.AreEqual(COMPONENT_1_AUDIT_JOIN_TABLE_NAME, auditClass.Table.Name);
 		}
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void ExpectedTableNamesForComponent2()
 		{
 			var auditClass = Cfg.GetClassMapping(COMPONENT_2_AUDIT_JOIN_TABLE_NAME);
@@ -90,21 +90,21 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			Assert.AreEqual(COMPONENT_2_AUDIT_JOIN_TABLE_NAME, auditClass.Table.Name);
 		}
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void WrongTableNamesForComponent1()
 		{
 			var auditClass = Cfg.GetClassMapping(UNMODIFIED_COMPONENT_1_AUDIT_JOIN_TABLE_NAME);
 			Assert.IsNull(auditClass);
 		}
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void WrongTableNamesForComponent2()
 		{
 			var auditClass = Cfg.GetClassMapping(UNMODIFIED_COMPONENT_2_AUDIT_JOIN_TABLE_NAME);
 			Assert.IsNull(auditClass);
 		}
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void VerifyColumnNamesForComponent1()
 		{
 			var auditClass = Cfg.GetClassMapping(COMPONENT_1_AUDIT_JOIN_TABLE_NAME);
@@ -121,7 +121,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			Assert.IsTrue(id1Found && id2Found);
 		}
 
-		[Test, Ignore("Cannot currently change audited component by attributes")]
+		[Test]
 		public void VerifyColumnNamesForComponent2()
 		{
 			var auditClass = Cfg.GetClassMapping(COMPONENT_2_AUDIT_JOIN_TABLE_NAME);

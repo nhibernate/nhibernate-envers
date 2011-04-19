@@ -3,11 +3,11 @@
 namespace NHibernate.Envers.Configuration.Attributes
 {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public sealed class AuditJoinTableAttribute : Attribute
+	public class AuditJoinTableAttribute : Attribute
 	{
 		public AuditJoinTableAttribute()
 		{
-			Name = string.Empty;
+			TableName = string.Empty;
 			Schema = string.Empty;
 			Catalog = string.Empty;
 			InverseJoinColumns = new string[0];
@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// Name of the join table. Defaults to a concatenation of the names of the primary table of the entity
 		/// owning the association and of the primary table of the entity referenced by the association.
 		/// </summary>
-		public string Name { get; set; }
+		public string TableName { get; set; }
 
 		/// <summary>
 		/// The schema of the join table. Defaults to the schema of the entity owning the association.
