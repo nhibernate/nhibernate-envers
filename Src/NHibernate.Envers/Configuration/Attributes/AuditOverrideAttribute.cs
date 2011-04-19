@@ -2,6 +2,10 @@
 
 namespace NHibernate.Envers.Configuration.Attributes
 {
+	/// <summary>
+	///  The AuditingOverrideAttribute is used to override the auditing
+	///  behavior of a field (or property) inside an embedded component.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 	public sealed class AuditOverrideAttribute : Attribute
 	{
@@ -18,12 +22,12 @@ namespace NHibernate.Envers.Configuration.Attributes
 		public string Name { get; set; }
 
 		/// <summary>
-		/// Indicates if the field (or property) is audited; defaults to {@code true}.
+		/// Indicates if the field (or property) is audited; defaults to <code>true</code>.
 		/// </summary>
 		public bool IsAudited { get; set; }
 
 		/// <summary>
-		/// @return New {@link AuditJoinTable} used for this field (or property). Its value
+		/// New {@link AuditJoinTable} used for this field (or property). Its value
 		/// is ignored if {@link #isAudited()} equals to {@code false}.
 		/// </summary>
 		public AuditJoinTableAttribute AuditJoinTable { get; set; }
