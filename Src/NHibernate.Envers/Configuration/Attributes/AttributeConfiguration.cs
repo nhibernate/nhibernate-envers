@@ -6,6 +6,9 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Attributes
 {
+	/// <summary>
+	/// Tells Envers that attribute configuration is used
+	/// </summary>
 	public class AttributeConfiguration : IMetaDataProvider
 	{
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
