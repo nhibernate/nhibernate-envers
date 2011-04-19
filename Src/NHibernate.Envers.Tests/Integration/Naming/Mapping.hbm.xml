@@ -58,7 +58,7 @@
 		</id>
 		<component name="Component1">
 			<bag name="Range" fetch="subselect" cascade="all-delete-orphan">
-				<key column="VJTRCTE_ID" update="false" />
+				<key column="VJTRCTE1_ID" update="false" />
 				<one-to-many class="VersionsJoinTableRangeTestEntity"/>
 			</bag>
 		</component>

@@ -8,7 +8,6 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 		[NotAudited]
 		public UnversionedStrTestEntity Entity { get; set; }
 
-		// override object.Equals
 		public override bool Equals(object obj)
 		{
 			var other = obj as NotAuditedManyToOneComponent;

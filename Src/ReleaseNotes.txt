@@ -1,3 +1,11 @@
+=== BETA 2 (v 0.9.2.0), ????, ??? ===
+
+*** Breaking changes ***
+* Changed API: AuditJoinTableAttribute
+* Changed API: AuditOverrideAttribute
+
+
+
 === BETA 1 (v 0.9.1.0), 2011-04-11, NH 3.2.0 Alpa 1 ===
 
 ** Bug

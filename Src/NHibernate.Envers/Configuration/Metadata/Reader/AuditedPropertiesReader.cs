@@ -203,24 +203,23 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 *            the Envers auditing data for this property
 		 * @return {@code false} if isAudited() of the override annotation was set to
 		 */
-		private bool ProcessPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData) 
+		private bool ProcessPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
+			var audPropHolderAsComponentAudData = _auditedPropertiesHolder as ComponentAuditingData;
 			// if this property is part of a component, process all override annotations
-			if (_auditedPropertiesHolder is ComponentAuditingData) {
-				var overrides = ((ComponentAuditingData) _auditedPropertiesHolder).AuditingOverrides;
+			if (audPropHolderAsComponentAudData != null) 
+			{
+				var overrides = audPropHolderAsComponentAudData.AuditingOverrides;
 				foreach (var ovr in overrides) 
 				{
-					if (property.Name.Equals(ovr.Name))
+					if (property.Name.Equals(ovr.PropertyName))
 					{
 						// the override applies to this property
 						if (!ovr.IsAudited) 
 						{
 							return false;
 						}
-						if (ovr.AuditJoinTable != null) 
-						{
-							propertyData.JoinTable = ovr.AuditJoinTable;
-						}
+						propertyData.JoinTable = ovr;
 					}
 				}
 			}

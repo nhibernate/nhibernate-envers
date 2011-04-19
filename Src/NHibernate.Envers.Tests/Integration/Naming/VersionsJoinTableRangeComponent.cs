@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
@@ -10,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			Range = new List<T>();
 		}
 
-		//[AuditJoinTable(Name = "JOIN_TABLE_COMPONENT_1_AUD", InverseJoinColumns = new[] { "VJTRTE_ID" })]
+		[AuditJoinTable(TableName = "JOIN_TABLE_COMPONENT_1_AUD", InverseJoinColumns = new[] { "VJTRTE_ID" })]
 		public IList<T> Range { get; set; }
 
 		public override bool Equals(object obj)

@@ -47,11 +47,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			if (annotation != null)
 			{
-				var overrideName = annotation.Name;
+				var overrideName = annotation.PropertyName;
 				var present = false;
 				foreach (AuditOverrideAttribute current in AuditingOverrides)
 				{
-					if (current.Name.Equals(overrideName))
+					if (current.PropertyName.Equals(overrideName))
 					{
 						present = true;
 						break;
