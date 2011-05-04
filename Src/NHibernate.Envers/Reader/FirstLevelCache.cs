@@ -20,18 +20,18 @@ namespace NHibernate.Envers.Reader
 		{
 			get
 			{
-				return cache[Triple<string, long, object>.Make(entityName, revision, id)];
+				return cache[new Triple<string, long, object>(entityName, revision, id)];
 			}
 		}
 
 		public void Add(string entityName, long revision, object id, object entity)
 		{
-			cache.Add(Triple<string, long, object>.Make(entityName, revision, id), entity);
+			cache.Add(new Triple<string, long, object>(entityName, revision, id), entity);
 		}
 
 		public bool Contains(string entityName, long revision, object id)
 		{
-			return cache.ContainsKey(Triple<string, long, object>.Make(entityName, revision, id));
+			return cache.ContainsKey(new Triple<string, long, object>(entityName, revision, id));
 		}
 	}
 }
