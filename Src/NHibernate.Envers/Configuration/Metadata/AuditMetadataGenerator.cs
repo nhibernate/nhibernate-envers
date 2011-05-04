@@ -99,7 +99,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
 
-				if(VerEntCfg.IsRevisionEndTimestampEnabled)
+				if (VerEntCfg.IsRevisionEndTimestampEnabled)
 				{
 					const string revisionInfoTimestampSqlType = "Timestamp";
 					MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
@@ -187,8 +187,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		private void AddProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
-								   ClassAuditingData auditingData, string entityName, EntityXmlMappingData xmlMappingData,
-								   bool firstPass)
+									ClassAuditingData auditingData, string entityName, EntityXmlMappingData xmlMappingData,
+									bool firstPass)
 		{
 			foreach (var property in properties)
 			{
@@ -329,7 +329,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Adding the "revision type" property
 			AddRevisionType(class_mapping);
 
-			return Triple<XmlElement, IExtendedPropertyMapper, string>.Make(class_mapping, propertyMapper, null);
+			return new Triple<XmlElement, IExtendedPropertyMapper, string>(class_mapping, propertyMapper, null);
 		}
 
 		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateInheritanceMappingData(
@@ -356,7 +356,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
 			var propertyMapper = new SubclassPropertyMapper(new MultiPropertyMapper(), parentPropertyMapper);
 
-			return Triple<XmlElement, IExtendedPropertyMapper, string>.Make(class_mapping, propertyMapper, parentEntityName);
+			return new Triple<XmlElement, IExtendedPropertyMapper, string>(class_mapping, propertyMapper, parentEntityName);
 		}
 
 		public void GenerateFirstPass(PersistentClass pc, ClassAuditingData auditingData,
@@ -467,7 +467,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public void GenerateSecondPass(PersistentClass pc, ClassAuditingData auditingData,
-									   EntityXmlMappingData xmlMappingData)
+										EntityXmlMappingData xmlMappingData)
 		{
 			var entityName = pc.EntityName;
 			if (log.IsDebugEnabled)

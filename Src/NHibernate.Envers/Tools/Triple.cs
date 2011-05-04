@@ -1,10 +1,12 @@
-﻿namespace NHibernate.Envers.Tools
+﻿using System;
+
+namespace NHibernate.Envers.Tools
 {
-	public class Triple<T1, T2, T3>
+	public class Triple<T1, T2, T3> : IEquatable<Triple<T1, T2, T3>>
 	{
 		private readonly int hashCode;
 
-		internal Triple(T1 first, T2 second, T3 third)
+		public Triple(T1 first, T2 second, T3 third)
 		{
 			First = first;
 			Second = second;
@@ -23,37 +25,21 @@
 
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
-			if (obj.GetType() != typeof (Triple<T1, T2, T3>))
-			{
-				return false;
-			}
-			return Equals((Triple<T1, T2, T3>) obj);
-		}
-
-		public static Triple<T1, T2, T3> Make(T1 first, T2 second, T3 third)
-		{
-			return new Triple<T1, T2, T3>(first, second, third);
+			var castedObj = obj as Triple<T1, T2, T3>;
+			return castedObj != null && Equals(castedObj);
 		}
 
 		public bool Equals(Triple<T1, T2, T3> other)
 		{
-			if (ReferenceEquals(null, other))
+			if (other == null)
 			{
 				return false;
 			}
-			if (ReferenceEquals(this, other))
+			if (this == other)
 			{
 				return true;
 			}
-			return Equals(other.First, First) && Equals(other.Second, Second) && Equals(other.Third, Third);
+			return other.First.Equals(First) && other.Second.Equals(Second) && other.Third.Equals(Third);
 		}
 
 		public override int GetHashCode()
