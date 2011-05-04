@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Synchronization
 			else
 			{
 				var entityName = vwu.EntityName;
-				var usedIdsKey = Pair<string, object>.Make(entityName, entityId);
+				var usedIdsKey = new Pair<string, object>(entityName, entityId);
 
 				if (usedIds.ContainsKey(usedIdsKey))
 				{

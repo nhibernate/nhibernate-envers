@@ -5,20 +5,20 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Order
 {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class PropertyAuditOrder : IAuditOrder {
-        private readonly IPropertyNameGetter propertyNameGetter;
-        private readonly bool asc;
+	public class PropertyAuditOrder : IAuditOrder
+	{
+		private readonly IPropertyNameGetter propertyNameGetter;
+		private readonly bool asc;
 
-        public PropertyAuditOrder(IPropertyNameGetter propertyNameGetter, bool asc) {
-            this.propertyNameGetter = propertyNameGetter;
-            this.asc = asc;
-        }
+		public PropertyAuditOrder(IPropertyNameGetter propertyNameGetter, bool asc)
+		{
+			this.propertyNameGetter = propertyNameGetter;
+			this.asc = asc;
+		}
 
-        public Pair<String, Boolean> getData(AuditConfiguration auditCfg) {
-            return Pair<String, Boolean>.Make(propertyNameGetter.Get(auditCfg), asc);
-        }
-    }
+		public Pair<String, Boolean> getData(AuditConfiguration auditCfg)
+		{
+			return new Pair<String, Boolean>(propertyNameGetter.Get(auditCfg), asc);
+		}
+	}
 }
