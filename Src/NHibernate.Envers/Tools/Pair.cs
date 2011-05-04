@@ -1,10 +1,12 @@
-﻿namespace NHibernate.Envers.Tools
+﻿using System;
+
+namespace NHibernate.Envers.Tools
 {
-	public class Pair<T1, T2> : IPair
+	public class Pair<T1, T2> : IPair, IEquatable<Pair<T1, T2>>
 	{
 		private readonly int hashCode;
 
-		internal Pair(T1 first, T2 second)
+		public Pair(T1 first, T2 second)
 		{
 			First = first;
 			Second = second;
@@ -18,8 +20,6 @@
 		public T1 First { get; private set; }
 		public T2 Second { get; private set; }
 
-		#region IPair Members
-
 		object IPair.First
 		{
 			get { return First; }
@@ -30,41 +30,23 @@
 			get { return Second; }
 		}
 
-		#endregion
-
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj))
-			{
-				return false;
-			}
-			if (ReferenceEquals(this, obj))
-			{
-				return true;
-			}
-			if (obj.GetType() != typeof (Pair<T1, T2>))
-			{
-				return false;
-			}
-			return Equals((Pair<T1, T2>) obj);
-		}
-
-		public static Pair<T1, T2> Make(T1 first, T2 second)
-		{
-			return new Pair<T1, T2>(first, second);
+			var castedPair = obj as Pair<T1, T2>;
+			return castedPair != null && Equals(castedPair);
 		}
 
 		public bool Equals(Pair<T1, T2> other)
 		{
-			if (ReferenceEquals(null, other))
+			if (other==null)
 			{
 				return false;
 			}
-			if (ReferenceEquals(this, other))
+			if (this == other)
 			{
 				return true;
 			}
-			return Equals(other.First, First) && Equals(other.Second, Second);
+			return other.First.Equals(First) && other.Second.Equals(Second);
 		}
 
 		public override int GetHashCode()

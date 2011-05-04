@@ -86,7 +86,7 @@ namespace NHibernate.Envers.Tools
 
 			for (var i = 0; i < list.Count; i++)
 			{
-				ret.Add(Pair<int,T>.Make(i, (T)list[i]));
+				ret.Add(new Pair<int,T>(i, (T)list[i]));
 			}
 
 			return ret;
