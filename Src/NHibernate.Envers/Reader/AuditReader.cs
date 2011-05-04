@@ -12,7 +12,6 @@ namespace NHibernate.Envers.Reader
 {
 	public class AuditReader : IAuditReaderImplementor
 	{
-
 		public AuditReader(AuditConfiguration verCfg, ISession session,
 								  ISessionImplementor sessionImplementor)
 		{
@@ -176,13 +175,14 @@ namespace NHibernate.Envers.Reader
 
 		public object GetCurrentRevision(bool persist)
 		{
-			if (!(Session is IEventSource))
+			var sessionAsEventSource = Session as IEventSource;
+			if (sessionAsEventSource == null)
 			{
 				throw new NotSupportedException("The provided session is not an EventSource!");
 			}
 
 			// Obtaining the current audit sync
-			var auditSync = verCfg.AuditProcessManager.Get((IEventSource)Session);
+			var auditSync = verCfg.AuditProcessManager.Get(sessionAsEventSource);
 
 			// And getting the current revision data
 			return auditSync.CurrentRevisionData(Session, persist);
