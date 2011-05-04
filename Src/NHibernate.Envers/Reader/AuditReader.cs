@@ -12,10 +12,6 @@ namespace NHibernate.Envers.Reader
 {
 	public class AuditReader : IAuditReaderImplementor
 	{
-		private readonly AuditConfiguration verCfg;
-		public ISessionImplementor SessionImplementor { get; private set; }
-		public ISession Session { get; private set; }
-		public IFirstLevelCache FirstLevelCache { get; private set; }
 
 		public AuditReader(AuditConfiguration verCfg, ISession session,
 								  ISessionImplementor sessionImplementor)
@@ -27,13 +23,10 @@ namespace NHibernate.Envers.Reader
 			FirstLevelCache = new FirstLevelCache();
 		}
 
-		private void CheckSession()
-		{
-			if (!Session.IsOpen)
-			{
-				throw new Exception("The associated session is closed!");
-			}
-		}
+		private readonly AuditConfiguration verCfg;
+		public ISessionImplementor SessionImplementor { get; private set; }
+		public ISession Session { get; private set; }
+		public IFirstLevelCache FirstLevelCache { get; private set; }
 
 		public T Find<T>(object primaryKey, long revision)
 		{
@@ -45,7 +38,6 @@ namespace NHibernate.Envers.Reader
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			CheckSession();
 
 			var entityName = cls.FullName;
 
@@ -80,7 +72,6 @@ namespace NHibernate.Envers.Reader
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
 			ArgumentsTools.CheckNotNull(cls, "Entity class");
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
-			CheckSession();
 
 			var entityName = cls.FullName;
 
@@ -100,7 +91,6 @@ namespace NHibernate.Envers.Reader
 		{
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			CheckSession();
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionDateQuery(Session, revision);
 
@@ -117,7 +107,6 @@ namespace NHibernate.Envers.Reader
 		public long GetRevisionNumberForDate(DateTime date)
 		{
 			ArgumentsTools.CheckNotNull(date, "Date of revision");
-			CheckSession();
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionNumberForDateQuery(Session, date);
 
@@ -135,7 +124,6 @@ namespace NHibernate.Envers.Reader
 		{
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			CheckSession();
 
 			var revisions = new List<long>(1) { revision };
 			var query = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions);
@@ -177,7 +165,6 @@ namespace NHibernate.Envers.Reader
 				ArgumentsTools.CheckNotNull(revision, "Entity revision");
 				ArgumentsTools.CheckPositive(revision, "Entity revision");
 			}
-			CheckSession();
 
 			var revisionList = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions).List();
 			foreach (T revision in revisionList)

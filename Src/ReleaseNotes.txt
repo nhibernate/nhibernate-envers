@@ -4,6 +4,7 @@
 * Changed API: AuditJoinTableAttribute
 * Changed API: AuditOverrideAttribute
 * Changed API: Removed AuditOverridesAttribute, added allowmultiple on AuditOverrideAttribute instead
+* Using IAuditReader with closed ISession not throws ObjectDisposedException (like NH Core) instead of a System.Exception
 
 
 
