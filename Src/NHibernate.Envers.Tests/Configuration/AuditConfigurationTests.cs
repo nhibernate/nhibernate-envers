@@ -16,6 +16,7 @@ namespace NHibernate.Envers.Tests.Configuration
 		public virtual string Data { get; set; }
 	}
 
+	[TestFixture]
 	public class AuditConfigurationTests
 	{
 		const string SimpleMapping = @"<?xml version='1.0' encoding='utf-8'?>
@@ -48,16 +49,16 @@ namespace NHibernate.Envers.Tests.Configuration
 
 			Executing.This(() =>
 										 {
-											 using (var sf = cfg.BuildSessionFactory()) //<< call by listener initialization
+											 using (cfg.BuildSessionFactory())
 											 {
-												 // build the session factory to run initialization of listeners and be completelly sure
-												 // there isn't problems
+											 	// build the session factory to run initialization of listeners and be completelly sure
+											 	// there isn't problems
 											 }
 										 }).Should().NotThrow();
 		}
 
 		[Test]
-		public void WhenCallIntegrationThenMappingsShouldBeAvailableimmediately()
+		public void WhenCallIntegrationThenMappingsShouldBeAvailableImmediately()
 		{
 			var cfg = new Cfg.Configuration();
 			cfg.Configure();
@@ -78,7 +79,7 @@ namespace NHibernate.Envers.Tests.Configuration
 
 			Executing.This(() =>
 			{
-				using (var sf = cfg.BuildSessionFactory())
+				using (cfg.BuildSessionFactory())
 				{
 					// build the session factory to run initialization of listeners and be completelly sure
 					// there isn't problems
