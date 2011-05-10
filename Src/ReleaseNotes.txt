@@ -1,4 +1,9 @@
-=== BETA 2 (v 0.9.2.0), ????, ??? ===
+=== 1.0 RC (v 0.9.9.0), ????, ???? ===
+
+
+
+
+=== BETA 2 (v 0.9.2.0), 2011-05-10, NH 3.2.0 Alpha 3 ===
 
 *** Breaking changes ***
 * Changed API: AuditJoinTableAttribute
@@ -8,7 +13,7 @@
 
 
 
-=== BETA 1 (v 0.9.1.0), 2011-04-11, NH 3.2.0 Alpa 1 ===
+=== BETA 1 (v 0.9.1.0), 2011-04-11, NH 3.2.0 Alpha 1 ===
 
 ** Bug
 [NHE-8] - Rollback of audit data if exception when flushmode.never is used
