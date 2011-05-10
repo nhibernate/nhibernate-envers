@@ -113,7 +113,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
             }
         }
 
-        public virtual bool IsDataSet { get; private set; }
+        public virtual bool IsDataSet { get; protected set; }
 
         public virtual void WriteData(string data)
         {

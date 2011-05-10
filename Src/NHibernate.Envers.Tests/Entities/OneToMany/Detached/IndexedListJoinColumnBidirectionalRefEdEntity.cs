@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
 		public virtual IndexedListJoinColumnBidirectionalRefIngEntity Owner { get; set; }
-		public virtual int Position { get; private set; }
+		public virtual int Position { get; protected set; }
 
 		public override bool Equals(object obj)
 		{
