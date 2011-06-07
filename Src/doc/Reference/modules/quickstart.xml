@@ -26,9 +26,9 @@ nhConf.IntegrateWithEnvers(enversConf);</programlisting>
 	
 	<para>
         And that's it! You create, modify and delete the entites as always. If you look
-        at the generated schema, you will notice that it is unchanged by adding auditing
-        for the Person entity. Also, the data they hold is the same. There are,
-        however, new tables, which store the historical data, whenever you commit a transaction.
+        at the generated schema, you will notice that current schema is unchanged. 
+		Also, the data they hold is the same. There are,
+        however, new tables which store the historical data whenever you commit a transaction.
     </para>
 	
 	<para>

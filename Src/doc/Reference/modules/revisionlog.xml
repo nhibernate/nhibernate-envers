@@ -26,7 +26,7 @@
         </listitem>
         <listitem>
             <para>
-                A long- or date- valued property, annotated with <literal>[RevisionTimestamp]</literal>. Value of
+                A long- or date-valued property, annotated with <literal>[RevisionTimestamp]</literal>. Value of
                 this property will be automatically set by Envers.
             </para>
         </listitem>
