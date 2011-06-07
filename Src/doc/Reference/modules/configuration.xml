@@ -12,7 +12,7 @@
 		</para>
 
 		<para>
-			However, as Envers generates some entities, and maps them to tables, it is possible to set the prefix and suffix
+			However, as Envers generates some entities and maps them to tables, it is possible to set the prefix and suffix
 			that is added to the entity name to create an audit table for an entity, as well
 			as set the names of the fields that are generated.
 		</para>
