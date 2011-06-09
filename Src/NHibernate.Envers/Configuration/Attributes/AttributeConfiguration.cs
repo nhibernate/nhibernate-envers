@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			foreach (var property in propertyIterator)
 			{
 				var propAsComponent = property.Value as Component;
-				if (propAsComponent == null) continue;
+				if (propAsComponent == null || propAsComponent.IsDynamic) continue;
 				fillType(propAsComponent.ComponentClass, dicToFill);
 				fillMembers(propAsComponent.ComponentClass, propAsComponent.PropertyIterator, dicToFill);
 			}
