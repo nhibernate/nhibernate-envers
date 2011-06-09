@@ -5,8 +5,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
     public interface IPersistentPropertiesSource
     {
-        IEnumerable<Property> PropertyEnumerator { get; }
-    	System.Type Clazz { get; }
+        IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
     	Property VersionedProperty { get; }
     }
 }
