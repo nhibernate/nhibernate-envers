@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 		protected override void Initialize()
 		{
 			var c = new DynamicTestEntity();
-			c.Properties["Name"] = "Test1";
+			c.Properties["Name"] = "1";
 
 			using (var tx = Session.BeginTransaction())
 			{
@@ -21,13 +21,14 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 
 			using(var tx = Session.BeginTransaction())
 			{
-				c.Properties["Name"] = "Test2";
+				c.Properties["Name"] = "2";
 				tx.Commit();
 			}
 
 			using(var tx = Session.BeginTransaction())
 			{
-				c.Properties["Name2"] = "Test";
+				c.Properties["Name2"] = "3";
+				c.Properties["Name3"] = "4";
 				c.Properties.Remove("Name");
 				tx.Commit();
 			}
@@ -49,11 +50,12 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 
 			rev1.Properties.Count.Should().Be.EqualTo(1);
 			rev2.Properties.Count.Should().Be.EqualTo(1);
-			rev3.Properties.Count.Should().Be.EqualTo(1);
+			rev3.Properties.Count.Should().Be.EqualTo(2);
 
-			rev1.Properties["Name"].Should().Be.EqualTo("Test1");
-			rev2.Properties["Name"].Should().Be.EqualTo("Test2");
-			rev3.Properties["Name2"].Should().Be.EqualTo("Test");
+			rev1.Properties["Name"].Should().Be.EqualTo("1");
+			rev2.Properties["Name"].Should().Be.EqualTo("2");
+			rev3.Properties["Name2"].Should().Be.EqualTo("3");
+			rev3.Properties["Name3"].Should().Be.EqualTo("4");
 		}
 	}
 }
