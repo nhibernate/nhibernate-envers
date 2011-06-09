@@ -12,22 +12,21 @@ namespace NHibernate.Envers.Entities.Mapper
 {
 	public class MultiPropertyMapper : IExtendedPropertyMapper 
 	{
-		private readonly IDictionary<string, PropertyData> propertyDatas;
-
 		public MultiPropertyMapper() 
 		{
 			Properties = new Dictionary<PropertyData, IPropertyMapper>();
-			propertyDatas = new Dictionary<string, PropertyData>();
+			PropertyDatas = new Dictionary<string, PropertyData>();
 		}
 
 		public IDictionary<PropertyData, IPropertyMapper> Properties { get; private set; }
+		private IDictionary<string, PropertyData> PropertyDatas { get; set; }
 
 		public void Add(PropertyData propertyData) 
 		{
 			var single = new SinglePropertyMapper();
 			single.Add(propertyData);
 			Properties.Add(propertyData, single);
-			propertyDatas.Add(propertyData.Name, propertyData);
+			PropertyDatas.Add(propertyData.Name, propertyData);
 		}
 
 		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
@@ -38,8 +37,18 @@ namespace NHibernate.Envers.Entities.Mapper
 				return (ICompositeMapperBuilder) Properties[propertyData];
 			}
 
-			var componentMapperBuilder = new ComponentPropertyMapper(propertyData, componentClassName);
-			AddComposite(propertyData, componentMapperBuilder);
+			ICompositeMapperBuilder componentMapperBuilder;
+			//todo: rk - not really reliable I think!
+			if(componentClassName==null)
+			{
+				componentMapperBuilder = new DynamicComponentPropertyMapper(propertyData);
+			}
+			else
+			{
+				componentMapperBuilder = new ComponentPropertyMapper(propertyData, componentClassName);				
+			}
+
+			AddComposite(propertyData, (IPropertyMapper) componentMapperBuilder);
 
 			return componentMapperBuilder;
 		}
@@ -47,7 +56,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) 
 		{
 			Properties.Add(propertyData, propertyMapper);
-			propertyDatas.Add(propertyData.Name, propertyData);
+			PropertyDatas.Add(propertyData.Name, propertyData);
 		}
 
 		private static object getAtIndexOrNull(IList<object> array, int index)
@@ -63,9 +72,9 @@ namespace NHibernate.Envers.Entities.Mapper
 			{
 				var propertyName = propertyNames[i];
 
-				if (propertyDatas.ContainsKey(propertyName)) 
+				if (PropertyDatas.ContainsKey(propertyName)) 
 				{
-					ret |= Properties[propertyDatas[propertyName]].MapToMapFromEntity(session, data,
+					ret |= Properties[PropertyDatas[propertyName]].MapToMapFromEntity(session, data,
 							getAtIndexOrNull(newState, i),
 							getAtIndexOrNull(oldState, i));
 				}
@@ -143,7 +152,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 
 			PropertyData propertyData;
-			if (propertyDatas.TryGetValue(referencingPropertyName, out propertyData))
+			if (PropertyDatas.TryGetValue(referencingPropertyName, out propertyData))
 			{
 				IPropertyMapper propertyMapper;
 				if(Properties.TryGetValue(propertyData, out propertyMapper))

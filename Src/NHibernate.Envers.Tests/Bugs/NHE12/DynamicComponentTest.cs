@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Bugs.NHE12
 {
-	[TestFixture, Ignore("Not yet solved")]
+	[TestFixture]
 	public class DynamicComponentTest : TestBase
 	{
 		private int id;
@@ -25,6 +25,7 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 				tx.Commit();
 			}
 
+			//only "Name" is mapped
 			using(var tx = Session.BeginTransaction())
 			{
 				c.Properties["Name2"] = "3";
@@ -50,12 +51,10 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 
 			rev1.Properties.Count.Should().Be.EqualTo(1);
 			rev2.Properties.Count.Should().Be.EqualTo(1);
-			rev3.Properties.Count.Should().Be.EqualTo(2);
+			rev3.Properties.Count.Should().Be.EqualTo(0);
 
 			rev1.Properties["Name"].Should().Be.EqualTo("1");
 			rev2.Properties["Name"].Should().Be.EqualTo("2");
-			rev3.Properties["Name2"].Should().Be.EqualTo("3");
-			rev3.Properties["Name3"].Should().Be.EqualTo("4");
 		}
 	}
 }

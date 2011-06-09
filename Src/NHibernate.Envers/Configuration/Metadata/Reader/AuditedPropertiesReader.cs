@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
@@ -15,7 +16,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	/// {@link org.hibernate.envers.configuration.metadata.reader.AuditedPropertiesHolder},
 	/// filling all the auditing data.
 	/// </summary>
-	public class AuditedPropertiesReader 
+	public class AuditedPropertiesReader
 	{
 		private readonly IMetaDataStore _metaDataStore;
 		private readonly ModificationStore _defaultStore;
@@ -29,7 +30,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 										IPersistentPropertiesSource persistentPropertiesSource,
 										IAuditedPropertiesHolder auditedPropertiesHolder,
 										GlobalConfiguration globalCfg,
-										string propertyNamePrefix) 
+										string propertyNamePrefix)
 		{
 			_metaDataStore = metaDataStore;
 			_defaultStore = defaultStore;
@@ -41,20 +42,19 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public void Read()
 		{
-			// Adding all properties from the given class.
-			AddPropertiesFromClass(_persistentPropertiesSource.Clazz);
+			addPropertiesFromClass();
 		}
 
-		private void AddPropertiesFromClass(System.Type clazz)
+		private void addPropertiesFromClass()
 		{
-			foreach (var declaredPersistentProperty in PropertyAndMemberInfo.PersistentInfo(clazz, _persistentPropertiesSource.PropertyEnumerator))
+			foreach (var declaredPersistentProperty in _persistentPropertiesSource.DeclaredPersistentProperties)
 			{
 				var propertyValue = declaredPersistentProperty.Property.Value;
 
 				PropertyAuditingData propertyData;
 				bool isAudited;
 				var componentValue = propertyValue as Component;
-				if (componentValue!=null)
+				if (componentValue != null)
 				{
 					var componentData = new ComponentAuditingData();
 					isAudited = FillPropertyData(declaredPersistentProperty.Member,
@@ -75,8 +75,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				else
 				{
 					propertyData = new PropertyAuditingData();
-					isAudited = FillPropertyData(declaredPersistentProperty.Member, 
-													declaredPersistentProperty.Property.Name, 
+					isAudited = FillPropertyData(declaredPersistentProperty.Member,
+													declaredPersistentProperty.Property.Name,
 													propertyData,
 													declaredPersistentProperty.Property.PropertyAccessorName);
 				}
@@ -100,38 +100,38 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private bool FillPropertyData(MemberInfo property,
 										string mappedPropertyName,
 										PropertyAuditingData propertyData,
-										string accessType) 
+										string accessType)
 		{
 
 			// check if a property is declared as not audited to exclude it
 			// useful if a class is audited but some properties should be excluded
-			if (_metaDataStore.MemberMeta<NotAuditedAttribute>(property) != null) 
+			if (_metaDataStore.MemberMeta<NotAuditedAttribute>(property) != null)
 			{
 				return false;
 			}
 			// if the optimistic locking field has to be unversioned and the current property
 			// is the optimistic locking field, don't audit it
-			if (_globalCfg.DoNotAuditOptimisticLockingField && 
+			if (_globalCfg.DoNotAuditOptimisticLockingField &&
 				_persistentPropertiesSource.VersionedProperty != null &&
 				_persistentPropertiesSource.VersionedProperty.Name.Equals(mappedPropertyName))
 			{
-				return false;			    
+				return false;
 			}
 
 			// Checking if this property is explicitly audited or if all properties are.
 			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);
-			if (aud != null) 
+			if (aud != null)
 			{
 				propertyData.Store = aud.ModStore;
 				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
-			} 
-			else 
+			}
+			else
 			{
-				if (_defaultStore != ModificationStore.None) 
+				if (_defaultStore != ModificationStore.None)
 				{
 					propertyData.Store = _defaultStore;
-				} 
-				else 
+				}
+				else
 				{
 					return false;
 				}
@@ -143,7 +143,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			AddPropertyJoinTables(property, propertyData);
 			AddPropertyAuditingOverrides(property, propertyData);
-			if (!ProcessPropertyAuditingOverrides(property, propertyData)) 
+			if (!ProcessPropertyAuditingOverrides(property, propertyData))
 			{
 				return false; // not audited due to AuditOverride annotation
 			}
@@ -152,14 +152,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return true;
 		}
 
-		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData) 
+		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)
 		{
 
 			var auditMappedBy = _metaDataStore.MemberMeta<AuditMappedByAttribute>(property);
-			if (auditMappedBy != null) 
+			if (auditMappedBy != null)
 			{
 				propertyData.AuditMappedBy = auditMappedBy.MappedBy;
-				if (!string.IsNullOrEmpty(auditMappedBy.PositionMappedBy)) 
+				if (!string.IsNullOrEmpty(auditMappedBy.PositionMappedBy))
 				{
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;
 				}
@@ -182,7 +182,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void AddPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
 			var annotationOverride = _metaDataStore.MemberMeta<AuditOverrideAttribute>(property);
-			if (annotationOverride != null) 
+			if (annotationOverride != null)
 			{
 				propertyData.addAuditingOverride(annotationOverride);
 			}
@@ -202,15 +202,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			var audPropHolderAsComponentAudData = _auditedPropertiesHolder as ComponentAuditingData;
 			// if this property is part of a component, process all override annotations
-			if (audPropHolderAsComponentAudData != null) 
+			if (audPropHolderAsComponentAudData != null)
 			{
 				var overrides = audPropHolderAsComponentAudData.AuditingOverrides;
-				foreach (var ovr in overrides) 
+				foreach (var ovr in overrides)
 				{
 					if (property.Name.Equals(ovr.PropertyName))
 					{
 						// the override applies to this property
-						if (!ovr.IsAudited) 
+						if (!ovr.IsAudited)
 						{
 							return false;
 						}
@@ -223,22 +223,29 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private static readonly AuditJoinTableAttribute DEFAULT_AUDIT_JOIN_TABLE = new AuditJoinTableAttribute();
 
-		private class ComponentPropertiesSource : IPersistentPropertiesSource 
+		private class ComponentPropertiesSource : IPersistentPropertiesSource
 		{
 			private readonly System.Type xclass;
-			private readonly Component component;
+			private readonly IEnumerable<DeclaredPersistentProperty> _declaredPersistentProperties;
 
-			public ComponentPropertiesSource(Component component) 
+			public ComponentPropertiesSource(Component component)
 			{
 				xclass = component.ComponentClass;
-				this.component = component;
+				_declaredPersistentProperties = component.IsDynamic ?
+					createDeclaredPersistentPropertyForDynamicComponent(component) : PropertyAndMemberInfo.PersistentInfo(xclass, component.PropertyIterator);
 			}
 
-			public IEnumerable<Property> PropertyEnumerator { get { return component.PropertyIterator; } }
-
-			public System.Type Clazz
+			private static IEnumerable<DeclaredPersistentProperty> createDeclaredPersistentPropertyForDynamicComponent(Component component)
 			{
-				get { return xclass; }
+				//todo: rk - using system.object.ToString here for now - just to get no "hit" when looking for attributes... 
+				//Fix this later. Probably by allowing asking for attributes on methodinfo "null" instead...
+				return component.PropertyIterator
+					.Select(property => new DeclaredPersistentProperty { Property = property, Member = typeof(object).GetMethod("ToString") }).ToList();
+			}
+
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties
+			{
+				get { return _declaredPersistentProperties; }
 			}
 
 			public Property VersionedProperty

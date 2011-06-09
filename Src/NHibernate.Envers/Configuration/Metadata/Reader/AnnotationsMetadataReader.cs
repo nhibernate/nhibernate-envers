@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
+using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -102,24 +103,20 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
 		{
-			private readonly System.Type typ;
 			private readonly AnnotationsMetadataReader parent;
+			private readonly IEnumerable<DeclaredPersistentProperty> _declaredPersistentProperties;
 
 			public PersistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
 			{ 
-				this.typ = typ; 
 				this.parent = parent;
+				_declaredPersistentProperties = PropertyAndMemberInfo.PersistentInfo(typ, parent.pc.PropertyIterator);
 			}
 
-			public IEnumerable<Property> PropertyEnumerator 
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties
 			{
-				get { return parent.pc.PropertyIterator; }
+				get { return _declaredPersistentProperties; }
 			}
 
-			public System.Type Clazz 
-			{ 
-				get { return typ; } 
-			}
 
 			public Property VersionedProperty
 			{
