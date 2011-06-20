@@ -1,5 +1,7 @@
-=== 1.0 CR 1 (v 0.9.9.0), ????, ???? ===
+=== 1.0 CR 1 (v 0.9.9.1), 2011-06-20, NH 3.2.0 Beta 2 ===
 
+* Bug 
+[NHE-12] - Dynamic Components cause envers to crash on initialization
 
 
 
