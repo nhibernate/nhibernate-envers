@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				// All entities must be audited.
 				if (!_idDatas[0].IsAudited() || !_idDatas[1].IsAudited()) 
 				{
-					throw new MappingException("Ternary relations using @Audited(targetAuditMode = NOT_AUDITED) are not supported.");
+					throw new MappingException("Ternary relations using @Audited(TargetAuditMode = NotAudited) are not supported.");
 				}
 
 				return new ThreeEntityQueryGenerator(_globalCfg, _verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,

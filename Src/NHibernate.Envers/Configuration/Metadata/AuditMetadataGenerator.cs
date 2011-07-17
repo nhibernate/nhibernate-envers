@@ -504,7 +504,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		 * @param propertyAuditingData Auditing data of the property that is the source of the relation.
 		 * @param allowNotAuditedTarget Are not-audited target entities allowed.
 		 * @throws MappingException If a relation from an audited to a non-audited entity is detected, which is not
-		 * mapped using {@link RelationTargetAuditMode#NOT_AUDITED}.
+		 * mapped using {@link RelationTargetAuditMode#NotAudited}.
 		 * @return The id mapping data of the related entity. 
 		 */
 		public IdMappingData GetReferencedIdMappingData(string entityName, string referencedEntityName,
@@ -524,7 +524,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					throw new MappingException("An audited relation from " + entityName + "."
 							+ propertyAuditingData.Name + " to a not audited entity " + referencedEntityName + "!"
 							+ (allowNotAuditedTarget ?
-								" Such mapping is possible, but has to be explicitly defined using [Audited(TargetAuditMode = RelationTargetAuditMode.NOT_AUDITED)]." :
+								" Such mapping is possible, but has to be explicitly defined using [Audited(TargetAuditMode = RelationTargetAuditMode.NotAudited)]." :
 								string.Empty));
 				}
 				configuration = NotAuditedEntitiesConfigurations[referencedEntityName];
