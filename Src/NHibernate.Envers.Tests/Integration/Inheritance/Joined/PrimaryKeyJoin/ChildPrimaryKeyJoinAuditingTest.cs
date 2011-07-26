@@ -68,7 +68,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 		[Test]
 		public void VerifyChildIdColumnName()
 		{
-			const string auditName = TestAssembly + ".Integration.Inheritance.Entities.ChildPrimaryKeyJoinEntity_AUD";
+			var auditName = TestAssembly + ".Integration.Inheritance.Entities.ChildPrimaryKeyJoinEntity_AUD";
 			var keyColumn = (Column)Cfg.GetClassMapping(auditName).Key.ColumnIterator.First();
 			Assert.AreEqual("OtherId", keyColumn.Name);
 		}

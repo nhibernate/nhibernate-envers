@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 		[Test]
 		public void VerifyTableNames()
 		{
-			const string auditName = TestAssembly + ".NetSpecific.Integration.JoinAuditTable.Animal_AUD";
+			var auditName = TestAssembly + ".NetSpecific.Integration.JoinAuditTable.Animal_AUD";
 			var joinAuditTables = Cfg.GetClassMapping(auditName).JoinIterator;
 
 			joinAuditTables.Count().Should().Be.EqualTo(2);

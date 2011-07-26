@@ -86,7 +86,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
         [Test]
         public void VerifyColumnNames()
         {
-            const string auditName = TestAssembly + ".Integration.Naming.Ids.JoinEmbIdNamingRefIngEntity_AUD";
+            var auditName = TestAssembly + ".Integration.Naming.Ids.JoinEmbIdNamingRefIngEntity_AUD";
             var columns = Cfg.GetClassMapping(auditName).GetProperty("Reference").ColumnIterator;
             var xxFound = false;
             var yyFound = false;

@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 		[Test]
 		public void VerifyMapping()
 		{
-			const string auditName = TestAssembly + ".Integration.Versioning.OptimisticLockEntity_AUD";
+			var auditName = TestAssembly + ".Integration.Versioning.OptimisticLockEntity_AUD";
 			foreach (var property in Cfg.GetClassMapping(auditName).PropertyIterator)
 			{
 				Assert.AreNotEqual("Version", property.Name);

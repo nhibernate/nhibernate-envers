@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		[Test]
 		public void VerifyTableName()
 		{
-			const string auditName = TestAssembly + ".Integration.Naming.NamingTestEntity1_AUD";
+			var auditName = TestAssembly + ".Integration.Naming.NamingTestEntity1_AUD";
 			Assert.AreEqual("naming_test_entity_1_versions", Cfg.GetClassMapping(auditName).Table.Name);
 		}
 
