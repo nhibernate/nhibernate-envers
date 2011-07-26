@@ -9,6 +9,25 @@ namespace NHibernate.Envers.Configuration.Metadata
 	public interface ICollectionProxyMapperFactory
 	{
 		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Array" />.
+		/// </summary>
+		IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData,
+		                      MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+
+		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an 
+		/// <see cref="System.Collections.Generic.IList{T}"/> with identifier bag semantics.
+		/// </summary>
+		IPropertyMapper IdBag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+
+		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an 
+		/// <see cref="System.Collections.IList"/> with identifier bag semantics.
+		/// </summary>
+		IPropertyMapper IdBag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+
+
+		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.Generic.ISet{T}" />.
 		/// </summary>
 		IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
