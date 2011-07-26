@@ -454,66 +454,66 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var isGenericType = type.ReturnedClass.IsGenericType;
 
 			IPropertyMapper collectionMapper;
-			ICollectionProxyTypeFactory collectionProxyTypeFactory = new DefaultCollectionProxyTypeFactory();
+			ICollectionProxyMapperFactory collectionProxyMapperFactory = new DefaultCollectionProxyMapperFactory();
 
 			if (type is SetType)
 			{
 				if (isGenericType)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Set", 
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Set", 
 																										type.ReturnedClass.GetGenericArguments(), 
 																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
 																							 new object[] { commonCollectionMapperData, elementComponentData });					
 				}
 				else
 				{
-					collectionMapper = collectionProxyTypeFactory.Set(commonCollectionMapperData, elementComponentData);
+					collectionMapper = collectionProxyMapperFactory.Set(commonCollectionMapperData, elementComponentData);
 				}
 			}
 			else if (type is ListType)
 			{
 				if (isGenericType)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("List", 
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("List", 
 																										type.ReturnedClass.GetGenericArguments(), 
 																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
 																							 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });
 				}
 				else
 				{
-					collectionMapper = collectionProxyTypeFactory.List(commonCollectionMapperData, elementComponentData, indexComponentData);
+					collectionMapper = collectionProxyMapperFactory.List(commonCollectionMapperData, elementComponentData, indexComponentData);
 				}
 			}
 			else if (type is MapType)
 			{
 				if (isGenericType)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Map",
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Map",
 																					type.ReturnedClass.GetGenericArguments(),
 																					new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
 																		 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });
 				}
 				else
 				{
-					collectionMapper = collectionProxyTypeFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
+					collectionMapper = collectionProxyMapperFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
 				}
 			}
 			else if (type is BagType)
 			{
 				if (isGenericType)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Bag",
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Bag",
 																										type.ReturnedClass.GetGenericArguments(),
 																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
 																							 new object[] { commonCollectionMapperData, elementComponentData });
 				}
 				else
 				{
-					collectionMapper = collectionProxyTypeFactory.Bag(commonCollectionMapperData, elementComponentData);
+					collectionMapper = collectionProxyMapperFactory.Bag(commonCollectionMapperData, elementComponentData);
 				}
 			
 			}

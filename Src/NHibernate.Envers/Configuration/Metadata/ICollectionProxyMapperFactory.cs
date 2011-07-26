@@ -3,7 +3,7 @@ using NHibernate.Envers.Entities.Mapper.Relation;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-	public interface ICollectionProxyTypeFactory
+	public interface ICollectionProxyMapperFactory
 	{
 		IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
 		IPropertyMapper Set(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
