@@ -71,8 +71,8 @@
     <Compile Include="Configuration\Fluent\FluentRevision.cs" />
     <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
-    <Compile Include="Configuration\Metadata\DefaultCollectionProxyTypeFactory.cs" />
-    <Compile Include="Configuration\Metadata\ICollectionProxyTypeFactory.cs" />
+    <Compile Include="Configuration\Metadata\DefaultCollectionProxyMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\ICollectionProxyMapperFactory.cs" />
     <Compile Include="Configuration\RevisionInfoConfigurationResult.cs" />
     <Compile Include="Configuration\Store\AuditMappedByMetaDataAdder.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
