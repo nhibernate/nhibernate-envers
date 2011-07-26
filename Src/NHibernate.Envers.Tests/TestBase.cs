@@ -9,9 +9,9 @@ namespace NHibernate.Envers.Tests
 {
 	public abstract class TestBase
 	{
-		public const string TestAssembly = "NHibernate.Envers.Tests";
+		public readonly static string TestAssembly = Assembly.GetCallingAssembly().GetName().Name;
 		protected Cfg.Configuration Cfg { get; private set; }
-		protected ISession Session { get; set; }
+		protected ISession Session { get; private set; }
 		private ISessionFactory SessionFactory { get; set; }
 		private IAuditReader _auditReader;
 

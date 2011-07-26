@@ -43,7 +43,7 @@ namespace NHibernate.Envers.Tests.Integration.Join
 		[Test]
 		public void VerifyTableNames()
 		{
-			const string auditName = TestAssembly + ".Integration.Join.JoinWithAuditNameEntity_AUD";
+			var auditName = TestAssembly + ".Integration.Join.JoinWithAuditNameEntity_AUD";
 			var joinTableAudit = Cfg.GetClassMapping(auditName).JoinIterator.First().Table.Name;
 			Assert.AreEqual("sec_versions", joinTableAudit);
 		}

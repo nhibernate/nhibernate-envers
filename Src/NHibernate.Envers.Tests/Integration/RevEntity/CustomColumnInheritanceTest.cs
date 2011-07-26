@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void ChildRevColumnTypeShouldBeOfIntType()
 		{
-			const string auditName = TestAssembly + ".Integration.Inheritance.Entities.ChildEntity_AUD";
+			var auditName = TestAssembly + ".Integration.Inheritance.Entities.ChildEntity_AUD";
 			var columns = Cfg.GetClassMapping(auditName).Key.ColumnIterator;
 			Assert.AreEqual("int", ((Column)columns.Last()).SqlType);
 		}

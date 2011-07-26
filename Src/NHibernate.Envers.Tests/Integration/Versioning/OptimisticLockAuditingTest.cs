@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 		[Test]
 		public void VerifyMapping()
 		{
-			const string auditName = TestAssembly + ".Integration.Versioning.OptimisticLockEntity_AUD";
+			var auditName = TestAssembly + ".Integration.Versioning.OptimisticLockEntity_AUD";
 			var versionColumnExists = false;
 			foreach (var property in Cfg.GetClassMapping(auditName).PropertyIterator)
 			{
