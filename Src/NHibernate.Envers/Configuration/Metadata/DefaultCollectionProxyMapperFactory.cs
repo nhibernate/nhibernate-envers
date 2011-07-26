@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -36,6 +38,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			throw new NotImplementedException("Non generic set is not supported by DefaultCollectionProxyMapperFactory");
 		}
 
+		public virtual IPropertyMapper SortedSet(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer)
+		{
+			throw new NotImplementedException("Non generic sorted set is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
+		public virtual IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
+		{
+			throw new NotImplementedException("Generic sorted set is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
 		public virtual IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
 			return new ListCollectionMapper<T>(commonCollectionMapperData, elementComponentData, indexComponentData);
@@ -54,6 +66,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public virtual IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
 			throw new NotImplementedException("Non generic map is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
+		public virtual IPropertyMapper SortedMap(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer comparer)
+		{
+			throw new NotImplementedException("Non generic sorted map is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
+		public virtual IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer)
+		{
+			throw new NotImplementedException("Generic sorted map is not supported by DefaultCollectionProxyMapperFactory");
 		}
 
 		public virtual IPropertyMapper Bag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
