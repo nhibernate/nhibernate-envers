@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests
 {
 	public abstract class TestBase
 	{
-		public readonly static string TestAssembly = Assembly.GetCallingAssembly().GetName().Name;
+		protected string TestAssembly { get; private set; }
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; private set; }
 		private ISessionFactory SessionFactory { get; set; }
@@ -18,6 +18,7 @@ namespace NHibernate.Envers.Tests
 		[SetUp]
 		public void BaseSetup()
 		{
+			TestAssembly = GetType().Assembly.GetName().Name;
 			Cfg = new Cfg.Configuration();
 			Cfg.Configure();
 			addMappings();
