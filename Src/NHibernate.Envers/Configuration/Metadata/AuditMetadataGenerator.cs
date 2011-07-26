@@ -40,7 +40,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
 		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
 
-		public AuditMetadataGenerator(Cfg.Configuration cfg, GlobalConfiguration globalCfg,
+		public AuditMetadataGenerator(Cfg.Configuration cfg, 
+										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
 										XmlElement revisionInfoRelationMapping,

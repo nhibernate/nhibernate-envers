@@ -15,6 +15,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernate.Envers", "NHiber
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernate.Envers.Tests", "NHibernate.Envers.Tests\NHibernate.Envers.Tests.csproj", "{D03CBC3B-37CF-4C06-BACE-3B2674399BEE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{C9C74EFE-506E-41A8-8359-88AB303E60DA}"
+	ProjectSection(SolutionItems) = preProject
+		doc\Reference\modules\configuration.xml = doc\Reference\modules\configuration.xml
+		doc\Reference\modules\example.xml = doc\Reference\modules\example.xml
+		doc\Reference\modules\exceptions.xml = doc\Reference\modules\exceptions.xml
+		doc\Reference\modules\links.xml = doc\Reference\modules\links.xml
+		doc\Reference\modules\preface.xml = doc\Reference\modules\preface.xml
+		doc\Reference\modules\queries.xml = doc\Reference\modules\queries.xml
+		doc\Reference\modules\quickstart.xml = doc\Reference\modules\quickstart.xml
+		doc\Reference\modules\revisionlog.xml = doc\Reference\modules\revisionlog.xml
+		doc\Reference\modules\schema.xml = doc\Reference\modules\schema.xml
+		doc\Reference\modules\source.xml = doc\Reference\modules\source.xml
+		doc\Reference\modules\tables.xml = doc\Reference\modules\tables.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +47,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C9C74EFE-506E-41A8-8359-88AB303E60DA} = {34BA8295-3EBE-47B0-ABBF-0A7E9A8E6B35}
 	EndGlobalSection
 EndGlobal

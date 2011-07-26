@@ -455,7 +455,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var isGenericType = type.ReturnedClass.IsGenericType;
 
 			IPropertyMapper collectionMapper;
-			ICollectionProxyMapperFactory collectionProxyMapperFactory = new DefaultCollectionProxyMapperFactory();
+			var collectionProxyMapperFactory = mainGenerator.GlobalCfg.CollectionProxyMapperFactory;
 
 			if (type is SortedSetType)
 			{
