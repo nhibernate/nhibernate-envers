@@ -8,6 +8,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 	/// <summary>
 	/// Mapper factory for collection proxies
 	/// </summary>
+	/// <remarks>
+	/// Implementations of this interface must have a public, default ctor
+	/// </remarks>
 	public interface ICollectionProxyMapperFactory
 	{
 		/// <summary>

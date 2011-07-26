@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Configuration
@@ -26,6 +27,11 @@ namespace NHibernate.Envers.Configuration
 			DefaultSchemaName = Toolz.GetProperty(properties, "nhibernate.envers.default_schema", string.Empty);
 			DefaultCatalogName = Toolz.GetProperty(properties, "nhibernate.envers.default_catalog", string.Empty);
 
+			var collectionProxyMapperFactoryTypeString = Toolz.GetProperty(properties,
+			                                                         "nhibernate.envers.collection_proxy_mapper_factory",
+			                                                         "NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory");
+			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
+			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
 			CorrelatedSubqueryOperator = "=";
 		}
 
@@ -63,5 +69,7 @@ namespace NHibernate.Envers.Configuration
 		/// The default name of the catalog of the audit tables.
 		/// </summary>
 		public string DefaultCatalogName { get; private set; }
+
+		public ICollectionProxyMapperFactory CollectionProxyMapperFactory { get; private set; }
 	}
 }
