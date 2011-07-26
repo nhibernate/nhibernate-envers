@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
@@ -13,11 +14,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly MiddleComponentData _indexComponentData;
 
 		public MapCollectionMapper(CommonCollectionMapperData commonCollectionMapperData, 
-									System.Type collectionType, 
-									System.Type proxyType,
 									MiddleComponentData elementComponentData, 
 									MiddleComponentData indexComponentData) 
-					: base(commonCollectionMapperData, collectionType, proxyType)
+					: base(commonCollectionMapperData, typeof (Dictionary<K, V>), typeof(MapProxy<K, V>))
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;

@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Component;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
-using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -31,7 +29,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private readonly EntityXmlMappingData xmlMappingData;
 		private readonly PropertyAuditingData propertyAuditingData;
 		private readonly EntityConfiguration referencingEntityConfiguration;
-		private readonly CollectionMapperFactory collectionMapperFactory;
 
 		/// <summary>
 		/// Null if this collection isn't a relation to another entity.
@@ -74,7 +71,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			referencedEntityName = MappingTools.ReferencedEntityName(propertyValue.Element);
-			collectionMapperFactory = new CollectionMapperFactory();
 		}
 
 		public void AddCollection() 
@@ -455,41 +451,71 @@ namespace NHibernate.Envers.Configuration.Metadata
 							   MiddleComponentData indexComponentData)
 		{
 			var type = propertyValue.Type;
-			if (!type.ReturnedClass.IsGenericType)
-				throw new AuditException("Only generic collections can currently be audited."); //rk - fix later
-			var genericArguments = type.ReturnedClass.GetGenericArguments();
+			var isGenericType = type.ReturnedClass.IsGenericType;
+
 			IPropertyMapper collectionMapper;
+			ICollectionProxyTypeFactory collectionProxyTypeFactory = new DefaultCollectionProxyTypeFactory();
+
 			if (type is SetType)
 			{
-				collectionMapper = collectionMapperFactory.CreateSetCollectionMapper(genericArguments[0],
-																				commonCollectionMapperData,
-																				typeof(HashedSet<>),
-																				typeof(SetProxy<>),
-																				elementComponentData);
+				if (isGenericType)
+				{
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Set", 
+																										type.ReturnedClass.GetGenericArguments(), 
+																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+																							 new object[] { commonCollectionMapperData, elementComponentData });					
+				}
+				else
+				{
+					collectionMapper = collectionProxyTypeFactory.Set(commonCollectionMapperData, elementComponentData);
+				}
 			}
 			else if (type is ListType)
 			{
-				collectionMapper = collectionMapperFactory.CreateListCollectionMapper(genericArguments[0],
-																				commonCollectionMapperData,
-																				elementComponentData,
-																				indexComponentData);
+				if (isGenericType)
+				{
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("List", 
+																										type.ReturnedClass.GetGenericArguments(), 
+																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+																							 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });
+				}
+				else
+				{
+					collectionMapper = collectionProxyTypeFactory.List(commonCollectionMapperData, elementComponentData, indexComponentData);
+				}
 			}
 			else if (type is MapType)
 			{
-				collectionMapper = collectionMapperFactory.CreateMapCollectionMapper(genericArguments[0],
-																					 genericArguments[1],
-																					 commonCollectionMapperData,
-																					 typeof (Dictionary<,>),
-																					 typeof (MapProxy<,>),
-																					 elementComponentData,
-																					 indexComponentData);
+				if (isGenericType)
+				{
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Map",
+																					type.ReturnedClass.GetGenericArguments(),
+																					new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+																		 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });
+				}
+				else
+				{
+					collectionMapper = collectionProxyTypeFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
+				}
 			}
 			else if (type is BagType)
 			{
-				collectionMapper = collectionMapperFactory.CreateBagCollectionMapper(genericArguments[0],
-																				commonCollectionMapperData,
-																				elementComponentData);
-				
+				if (isGenericType)
+				{
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyTypeFactory>("Bag",
+																										type.ReturnedClass.GetGenericArguments(),
+																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyTypeFactory,
+																							 new object[] { commonCollectionMapperData, elementComponentData });
+				}
+				else
+				{
+					collectionMapper = collectionProxyTypeFactory.Bag(commonCollectionMapperData, elementComponentData);
+				}
+			
 			}
 			else
 				throw new NotImplementedException();
