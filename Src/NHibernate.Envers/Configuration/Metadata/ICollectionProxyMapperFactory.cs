@@ -1,5 +1,7 @@
-﻿using NHibernate.Envers.Entities.Mapper;
+﻿using System.Collections;
+using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -38,6 +40,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 		IPropertyMapper Set(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
 
 		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
+		/// that is sorted by an <see cref="IComparer"/>.
+		/// </summary>
+		IPropertyMapper SortedSet(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer);
+
+		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
+		/// that is sorted by an <see cref="IComparer{T}"/>.
+		/// </summary>
+		IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer);
+
+
+		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Collections.Generic.IList{T}" />.
 		/// </summary>
 		IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
@@ -53,9 +68,22 @@ namespace NHibernate.Envers.Configuration.Metadata
 		IPropertyMapper Map<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
 
 		/// <summary>
-		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Collections.IDictionary" />.
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="IDictionary" />.
 		/// </summary>
 		IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+
+		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="IDictionary"/>
+		/// that is sorted by an <see cref="IComparer"/>.
+		/// </summary>
+		IPropertyMapper SortedMap(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer comparer);
+
+		/// <summary>
+		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="IDictionary{K, V}"/>
+		/// that is sorted by an <see cref="IComparer{K}"/>.
+		/// </summary>
+		IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer);
+
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an 

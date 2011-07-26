@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
+using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
@@ -456,7 +458,23 @@ namespace NHibernate.Envers.Configuration.Metadata
 			IPropertyMapper collectionMapper;
 			ICollectionProxyMapperFactory collectionProxyMapperFactory = new DefaultCollectionProxyMapperFactory();
 
-			if (type is SetType)
+			if (type is SortedSetType)
+			{
+				if (isGenericType)
+				{
+					var comparerType = createGenericComparerType(type);
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedSet",
+																										type.ReturnedClass.GetGenericArguments(),
+																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																							 new object[] { commonCollectionMapperData, elementComponentData, propertyValue.Comparer });
+				}
+				else
+				{
+					collectionMapper = collectionProxyMapperFactory.SortedSet(commonCollectionMapperData, elementComponentData, (IComparer) propertyValue.Comparer);
+				}
+			}
+			else if (type is SetType)
 			{
 				if (isGenericType)
 				{
@@ -484,6 +502,22 @@ namespace NHibernate.Envers.Configuration.Metadata
 				else
 				{
 					collectionMapper = collectionProxyMapperFactory.List(commonCollectionMapperData, elementComponentData, indexComponentData);
+				}
+			}
+			else if (type is SortedMapType)
+			{
+				if (isGenericType)
+				{
+					var comparerType = createGenericComparerType(type);
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedMap",
+																					type.ReturnedClass.GetGenericArguments(),
+																					new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType });
+					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																		 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData, propertyValue.Comparer });
+				}
+				else
+				{
+					collectionMapper = collectionProxyMapperFactory.SortedMap(commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)propertyValue.Comparer);
 				}
 			}
 			else if (type is MapType)
@@ -515,42 +549,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					collectionMapper = collectionProxyMapperFactory.Bag(commonCollectionMapperData, elementComponentData);
 				}
-			
+
 			}
 			else
-				throw new NotImplementedException();
-			/*
-			 * 
-			 *         if (type instanceof SortedSetType) {
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new BasicCollectionMapper<Set>(commonCollectionMapperData,
-					TreeSet.class, SortedSetProxy.class, elementComponentData));
-		} else if (type instanceof SetType) {
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new BasicCollectionMapper<Set>(commonCollectionMapperData,
-					HashSet.class, SetProxy.class, elementComponentData));
-		} else if (type instanceof SortedMapType) {
-			// Indexed collection, so <code>indexComponentData</code> is not null.
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new MapCollectionMapper<Map>(commonCollectionMapperData,
-					TreeMap.class, SortedMapProxy.class, elementComponentData, indexComponentData));
-		} else if (type instanceof MapType) {
-			// Indexed collection, so <code>indexComponentData</code> is not null.
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new MapCollectionMapper<Map>(commonCollectionMapperData,
-					HashMap.class, MapProxy.class, elementComponentData, indexComponentData));
-		} else if (type instanceof BagType) {
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new BasicCollectionMapper<List>(commonCollectionMapperData,
-					ArrayList.class, ListProxy.class, elementComponentData));
-		} else if (type instanceof ListType) {
-			// Indexed collection, so <code>indexComponentData</code> is not null.
-			currentMapper.addComposite(propertyAuditingData.getPropertyData(),
-					new ListCollectionMapper(commonCollectionMapperData,
-					elementComponentData, indexComponentData));
-			 */
+				throw new NotImplementedException("Mapped collection type " + type.Name + " is not currently supported in Envers");
 
 			currentMapper.AddComposite(propertyAuditingData.GetPropertyData(), collectionMapper);
+		}
+
+		private System.Type createGenericComparerType(IType type)
+		{
+			var genericArgs = type.ReturnedClass.GetGenericArguments();
+			var theGenericArg = genericArgs[0];
+			return typeof (IComparer<>).MakeGenericType(theGenericArg);
 		}
 
 		private void StoreMiddleEntityRelationInformation(string mappedBy) 
