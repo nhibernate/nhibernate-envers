@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
@@ -557,7 +556,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			currentMapper.AddComposite(propertyAuditingData.GetPropertyData(), collectionMapper);
 		}
 
-		private System.Type createGenericComparerType(IType type)
+		private static System.Type createGenericComparerType(IType type)
 		{
 			var genericArgs = type.ReturnedClass.GetGenericArguments();
 			var theGenericArg = genericArgs[0];
