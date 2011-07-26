@@ -8,6 +8,21 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class DefaultCollectionProxyMapperFactory : ICollectionProxyMapperFactory
 	{
+		public virtual IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
+		{
+			throw new NotImplementedException("Array is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
+		public virtual IPropertyMapper IdBag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
+		{
+			throw new NotImplementedException("Generic idbag is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
+		public virtual IPropertyMapper IdBag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
+		{
+			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionProxyMapperFactory");
+		}
+
 		public virtual IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
 			return new SetCollectionMapper<T>(commonCollectionMapperData, 
