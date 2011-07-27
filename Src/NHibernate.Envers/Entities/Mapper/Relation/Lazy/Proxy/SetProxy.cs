@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 	[Serializable]
 	public class SetProxy<T>: CollectionProxy<T, ISet<T>>, ISet<T> 
 	{
-		public SetProxy() 
+		protected SetProxy() 
 		{
 		}
 
