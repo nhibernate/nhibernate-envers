@@ -20,9 +20,9 @@ namespace NHibernate.Envers.Tests
 		{
 			TestAssembly = GetType().Assembly.GetName().Name;
 			Cfg = new Cfg.Configuration();
+			AddToConfiguration(Cfg);
 			Cfg.Configure();
 			addMappings();
-			AddToConfiguration(Cfg);
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), new AttributeConfiguration());
 			SessionFactory = Cfg.BuildSessionFactory();
 			Session = openSession(SessionFactory);
