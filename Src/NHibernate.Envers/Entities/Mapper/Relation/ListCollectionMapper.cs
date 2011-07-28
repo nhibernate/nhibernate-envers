@@ -9,7 +9,7 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public class ListCollectionMapper<T> : AbstractCollectionMapper<IList<T>> 
+	public class ListCollectionMapper<T> : AbstractCollectionMapper
 	{
 		private readonly MiddleComponentData _elementComponentData;
 		private readonly MiddleComponentData _indexComponentData;
@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_indexComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.First);
 		}
 
-		protected override IInitializor<IList<T>> GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override object GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new ListCollectionInitializor<T>(verCfg, 
 												versionsReader, 

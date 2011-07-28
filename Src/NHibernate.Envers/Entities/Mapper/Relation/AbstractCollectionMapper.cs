@@ -7,14 +7,13 @@ using Iesi.Collections;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public abstract class AbstractCollectionMapper<T> : IPropertyMapper
+	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
 		private readonly System.Type _proxyType;
 
@@ -131,7 +130,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return false;
 		}
 
-		protected abstract IInitializor<T> GetInitializor(AuditConfiguration verCfg,
+		protected abstract object GetInitializor(AuditConfiguration verCfg,
 														IAuditReaderImplementor versionsReader, 
 														object primaryKey,
 														long revision);
