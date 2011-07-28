@@ -9,7 +9,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
 	public class SetCollectionInitializor<T> : AbstractCollectionInitializor<ISet<T>>
 	{
-		private readonly System.Type collectionType;
 		private readonly MiddleComponentData elementComponentData;
 
 		public SetCollectionInitializor(AuditConfiguration verCfg,
@@ -20,13 +19,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 											MiddleComponentData elementComponentData) 
 								:base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
 		{
-			this.collectionType = collectionType;
+			CollectionType = collectionType;
 			this.elementComponentData = elementComponentData;
 		}
 
+		protected System.Type CollectionType { get; private set; }
+
 		protected override ISet<T> InitializeCollection(int size) 
 		{
-			return (ISet<T>) Activator.CreateInstance(collectionType);
+			return (ISet<T>) Activator.CreateInstance(CollectionType);
 		}
 
 		protected override void AddToCollection(ISet<T> collection, object collectionRow) 

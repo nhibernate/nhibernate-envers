@@ -7,9 +7,8 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
-	public class MapCollectionInitializor<K, V> : AbstractCollectionInitializor<IDictionary<K, V>>
+	public class MapCollectionInitializor<TKey, TValue> : AbstractCollectionInitializor<IDictionary<TKey, TValue>>
 	{
-		private readonly System.Type _collectionType;
 		private readonly MiddleComponentData _elementComponentData;
 		private readonly MiddleComponentData _indexComponentData;
 
@@ -23,28 +22,30 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 										MiddleComponentData indexComponentData) 
 						: base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
 		{
-			_collectionType = collectionType;
+			CollectionType = collectionType;
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;
 		}
 
-		protected override IDictionary<K, V> InitializeCollection(int size)
+		protected System.Type CollectionType { get; private set; }
+
+		protected override IDictionary<TKey, TValue> InitializeCollection(int size)
 		{
-			return (IDictionary<K, V>) Activator.CreateInstance(_collectionType);
+			return (IDictionary<TKey, TValue>) Activator.CreateInstance(CollectionType);
 		}
 
-		protected override void AddToCollection(IDictionary<K, V> collection, object collectionRow)
+		protected override void AddToCollection(IDictionary<TKey, TValue> collection, object collectionRow)
 		{
 			var listRow = (IList) collectionRow;
 			var elementData = listRow[_elementComponentData.ComponentIndex];
 			var indexData = listRow[_indexComponentData.ComponentIndex];
 
-			var element = (V)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
+			var element = (TValue)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) elementData,
 																				null,
 																				Revision);
 
-			var index = (K)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
+			var index = (TKey)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) indexData,
 																				element,
 																				Revision);

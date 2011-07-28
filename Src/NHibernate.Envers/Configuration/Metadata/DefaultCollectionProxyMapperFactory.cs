@@ -45,7 +45,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
 		{
-			throw new NotImplementedException("Generic sorted set is not supported by DefaultCollectionProxyMapperFactory");
+			return new SortedSetCollectionMapper<T>(commonCollectionMapperData,
+											 typeof(SortedSet<T>),
+											 typeof(SetProxy<T>),
+											 elementComponentData,
+											 comparer);
 		}
 
 		public virtual IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -60,7 +64,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Map<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new MapCollectionMapper<TKey, TValue>(commonCollectionMapperData, elementComponentData, indexComponentData);
+			return new MapCollectionMapper<TKey, TValue>(commonCollectionMapperData, typeof(Dictionary<TKey, TValue>), typeof(MapProxy<TKey, TValue>), elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -75,7 +79,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer)
 		{
-			throw new NotImplementedException("Generic sorted map is not supported by DefaultCollectionProxyMapperFactory");
+			return new SortedMapCollectionMapper<TKey, TValue>(commonCollectionMapperData, typeof(SortedDictionary<TKey, TValue>), typeof(MapProxy<TKey, TValue>), elementComponentData, indexComponentData, comparer);
 		}
 
 		public virtual IPropertyMapper Bag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)

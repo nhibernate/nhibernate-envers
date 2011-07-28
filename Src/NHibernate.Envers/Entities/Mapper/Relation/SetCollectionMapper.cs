@@ -7,18 +7,18 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public sealed class SetCollectionMapper<T> : AbstractCollectionMapper
+	public class SetCollectionMapper<T> : AbstractCollectionMapper
 	{
-		private readonly MiddleComponentData elementComponentData;
-
 		public SetCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 											System.Type collectionType,
 											System.Type proxyType,
 											MiddleComponentData elementComponentData)
 			: base(commonCollectionMapperData, collectionType, proxyType)
 		{
-			this.elementComponentData = elementComponentData;
+			ElementComponentData = elementComponentData;
 		}
+
+		protected MiddleComponentData ElementComponentData { get; private set; }
 
 		protected override object GetInitializor(AuditConfiguration verCfg,
 													 IAuditReaderImplementor versionsReader,
@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										primaryKey,
 										revision,
 										CollectionType,
-										elementComponentData);
+										ElementComponentData);
 		}
 
 		protected override IEnumerable GetNewCollectionContent(IPersistentCollection newCollection)
@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed)
 		{
-			elementComponentData.ComponentMapper.MapToMapFromObject(data, changed);
+			ElementComponentData.ComponentMapper.MapToMapFromObject(data, changed);
 		}
 	}
 }

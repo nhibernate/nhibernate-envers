@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap">
+	<class name="SortedSetEntity">
+		<id name="Id">
+			<generator class="guid"/>
+		</id>
+		<set name="SortedSet" sort="StrTestEntityComparer" cascade="all">
+			<key column="setparentid"/>
+			<one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</set>
+		
+		<map name="SortedMap" collection-type="sorted-dictionary" sort="StrTestEntityComparer" cascade="all">
+			<key column="mapparentId"/>
+			<map-key-many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" column="setmapid"/>
+			<element type="System.String" column="thestring"/>
+		</map>
+	</class>
+</hibernate-mapping>
+
