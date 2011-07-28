@@ -8,7 +8,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public class MapCollectionMapper<K, V> : AbstractCollectionMapper<IDictionary<K, V>>
+	public class MapCollectionMapper<K, V> : AbstractCollectionMapper
 	{
 		private readonly MiddleComponentData _elementComponentData;
 		private readonly MiddleComponentData _indexComponentData;
@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_indexComponentData.ComponentMapper.MapToMapFromObject(data, keyValue.Key);
 		}
 
-		protected override IInitializor<IDictionary<K, V>> GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override object GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new MapCollectionInitializor<K, V>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
 			                                          primaryKey, revision, CollectionType, _elementComponentData,

@@ -8,7 +8,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public sealed class SetCollectionMapper<T> : AbstractCollectionMapper<ISet<T>>
+	public sealed class SetCollectionMapper<T> : AbstractCollectionMapper
 	{
 		private readonly MiddleComponentData elementComponentData;
 
@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			this.elementComponentData = elementComponentData;
 		}
 
-		protected override IInitializor<ISet<T>> GetInitializor(AuditConfiguration verCfg,
+		protected override object GetInitializor(AuditConfiguration verCfg,
 													 IAuditReaderImplementor versionsReader,
 													 object primaryKey,
 													 long revision)
