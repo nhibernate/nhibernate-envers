@@ -35,3 +35,4 @@ _ReSharper*/
 glob:hibernate.cfg.xml
 glob:Build
 glob:Src/lint.db
+Src/Envers.sln.docstates
