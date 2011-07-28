@@ -452,45 +452,47 @@ namespace NHibernate.Envers.Configuration.Metadata
 							   MiddleComponentData indexComponentData)
 		{
 			var type = propertyValue.Type;
-			var isGenericType = type.ReturnedClass.IsGenericType;
 
 			IPropertyMapper collectionMapper;
 			var collectionProxyMapperFactory = mainGenerator.GlobalCfg.CollectionProxyMapperFactory;
 
-			if (type is SortedSetType)
+			if (type is SetType)
 			{
-				if (isGenericType)
+				if (propertyValue.IsGeneric)
 				{
-					var comparerType = createGenericComparerType(type);
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedSet",
-																										type.ReturnedClass.GetGenericArguments(),
-																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-																							 new object[] { commonCollectionMapperData, elementComponentData, propertyValue.Comparer });
+					if (propertyValue.IsSorted)
+					{
+						var comparerType = createGenericComparerType(type);
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedSet",
+																											type.ReturnedClass.GetGenericArguments(),
+																											new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType });
+						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																								 new object[] { commonCollectionMapperData, elementComponentData, propertyValue.Comparer });
+					}
+					else
+					{
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Set",
+																											type.ReturnedClass.GetGenericArguments(),
+																											new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																								 new object[] { commonCollectionMapperData, elementComponentData });											
+					}
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.SortedSet(commonCollectionMapperData, elementComponentData, (IComparer) propertyValue.Comparer);
-				}
-			}
-			else if (type is SetType)
-			{
-				if (isGenericType)
-				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Set", 
-																										type.ReturnedClass.GetGenericArguments(), 
-																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-																							 new object[] { commonCollectionMapperData, elementComponentData });					
-				}
-				else
-				{
-					collectionMapper = collectionProxyMapperFactory.Set(commonCollectionMapperData, elementComponentData);
+					if (propertyValue.IsSorted)
+					{
+						collectionMapper = collectionProxyMapperFactory.SortedSet(commonCollectionMapperData, elementComponentData, (IComparer)propertyValue.Comparer);
+					}
+					else
+					{
+						collectionMapper = collectionProxyMapperFactory.Set(commonCollectionMapperData, elementComponentData);						
+					}
 				}
 			}
 			else if (type is ListType)
 			{
-				if (isGenericType)
+				if (propertyValue.IsGeneric)
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("List", 
 																										type.ReturnedClass.GetGenericArguments(), 
@@ -503,40 +505,43 @@ namespace NHibernate.Envers.Configuration.Metadata
 					collectionMapper = collectionProxyMapperFactory.List(commonCollectionMapperData, elementComponentData, indexComponentData);
 				}
 			}
-			else if (type is SortedMapType)
-			{
-				if (isGenericType)
-				{
-					var comparerType = createGenericComparerType(type);
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedMap",
-																					type.ReturnedClass.GetGenericArguments(),
-																					new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-																		 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData, propertyValue.Comparer });
-				}
-				else
-				{
-					collectionMapper = collectionProxyMapperFactory.SortedMap(commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)propertyValue.Comparer);
-				}
-			}
 			else if (type is MapType)
 			{
-				if (isGenericType)
+				if (propertyValue.IsGeneric)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Map",
-																					type.ReturnedClass.GetGenericArguments(),
-																					new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-																		 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });
+					if (propertyValue.IsSorted)
+					{
+						var comparerType = createGenericComparerType(type);
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedMap",
+																						type.ReturnedClass.GetGenericArguments(),
+																						new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType });
+						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																			 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData, propertyValue.Comparer });	
+					}
+					else
+					{
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Map",
+																	type.ReturnedClass.GetGenericArguments(),
+																	new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+																			 new object[] { commonCollectionMapperData, elementComponentData, indexComponentData });		
+					}
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
+					if (propertyValue.IsSorted)
+					{
+						collectionMapper = collectionProxyMapperFactory.SortedMap(commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)propertyValue.Comparer);
+					}
+					else
+					{
+						collectionMapper = collectionProxyMapperFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
+					}
 				}
 			}
 			else if (type is BagType)
 			{
-				if (isGenericType)
+				if (propertyValue.IsGeneric)
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Bag",
 																										type.ReturnedClass.GetGenericArguments(),
