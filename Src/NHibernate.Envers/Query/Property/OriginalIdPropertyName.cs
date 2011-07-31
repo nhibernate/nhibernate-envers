@@ -1,22 +1,23 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 
 namespace NHibernate.Envers.Query.Property
 {
-    /**
-     * Used for specifying restrictions on the identifier.
-     * TODO: idPropertyName should be read basing on auditCfg + entityName
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class OriginalIdPropertyName : IPropertyNameGetter {
-        private readonly String idPropertyName;
+	/// <summary>
+	/// Used for specifying restrictions on the identifier.
+	/// TODO: idPropertyName should be read basing on auditCfg + entityName
+	/// </summary>
+	public class OriginalIdPropertyName : IPropertyNameGetter
+	{
+		private readonly string idPropertyName;
 
-        public OriginalIdPropertyName(String idPropertyName) {
-            this.idPropertyName = idPropertyName;
-        }
+		public OriginalIdPropertyName(string idPropertyName)
+		{
+			this.idPropertyName = idPropertyName;
+		}
 
-        public String Get(AuditConfiguration auditCfg) {
-            return auditCfg.AuditEntCfg.OriginalIdPropName + "." + idPropertyName;
-        }
-    }
+		public string Get(AuditConfiguration auditCfg)
+		{
+			return auditCfg.AuditEntCfg.OriginalIdPropName + "." + idPropertyName;
+		}
+	}
 }
