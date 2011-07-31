@@ -1,4 +1,16 @@
-=== 1.0 CR 2 (v 0.9.9.2), ???, ??? ===
+=== 1.0 GA (v 1.0.0.0), ???, ??? ===
+
+
+
+
+=== 1.0 CR 2 (v 0.9.9.2), 2011-07-31, NH 3.2 GA ===
+
+** Bug
+[NHE-15] - Support for <set> with sort="customComparer"
+[NHE-16] - Support for <map> with sort="customComparer"
+
+** Improvement
+[NHE-14] - Support custom (NH Core) CollectionTypeFactory
 
 
 
