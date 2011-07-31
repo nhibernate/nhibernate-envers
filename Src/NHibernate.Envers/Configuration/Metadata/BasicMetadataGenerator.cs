@@ -27,12 +27,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				AddCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, compType.UserType.GetType());
 			}
-			// TODO Simon: There is no equivalent of PrimitiveByteArrayBlobType in NHibernate, will see later if needed
-			// ORIG:
-			//else if ("org.hibernate.type.PrimitiveByteArrayBlobType".equals(type.getClass().getName()))
-			//{
-			//    AddSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
-			//}
 			else 
 			{
 				return false;
