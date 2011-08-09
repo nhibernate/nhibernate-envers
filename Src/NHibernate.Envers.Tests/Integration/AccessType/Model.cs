@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 	public class Country
 	{
 		private readonly int _code;
-		private string _name;
+		private readonly string _name;
 
 		protected Country()
 		{
