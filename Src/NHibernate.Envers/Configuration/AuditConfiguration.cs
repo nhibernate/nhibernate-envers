@@ -8,7 +8,6 @@ using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Linq;
 
 namespace NHibernate.Envers.Configuration
 {

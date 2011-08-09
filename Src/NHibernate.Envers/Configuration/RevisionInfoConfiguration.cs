@@ -41,12 +41,12 @@ namespace NHibernate.Envers.Configuration
 		{
 			var document = new XmlDocument();
 
-			var class_mapping = MetadataTools.CreateEntity(document, new AuditTableData(null, null, null, null), null);
+			var classMapping = MetadataTools.CreateEntity(document, new AuditTableData(null, null, null, null), null);
 
-			class_mapping.SetAttribute("name", revisionInfoEntityName);
-			class_mapping.SetAttribute("table", "REVINFO");
+			classMapping.SetAttribute("name", revisionInfoEntityName);
+			classMapping.SetAttribute("table", "REVINFO");
 
-			var idProperty = MetadataTools.AddNativelyGeneratedId(document,class_mapping, revisionInfoIdData.Name,
+			var idProperty = MetadataTools.AddNativelyGeneratedId(document,classMapping, revisionInfoIdData.Name,
 					revisionPropType);
 			//ORIG: MetadataTools.addColumn(idProperty, "REV", -1, 0, 0, null);
 			var col = idProperty.OwnerDocument.CreateElement("column");
@@ -54,7 +54,7 @@ namespace NHibernate.Envers.Configuration
 			//idProperty should have a "generator" node otherwise sth. is wrong.
 			idProperty.InsertBefore(col, idProperty.GetElementsByTagName("generator")[0]);
 
-			var timestampProperty = MetadataTools.AddProperty(class_mapping, revisionInfoTimestampData.Name,
+			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name,
 					revisionInfoTimestampType.Name, true, false);
 			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, 0, 0, SqlTypeFactory.DateTime.ToString());
 

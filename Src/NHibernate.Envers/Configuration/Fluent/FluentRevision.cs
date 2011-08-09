@@ -10,47 +10,47 @@ namespace NHibernate.Envers.Configuration.Fluent
 		private readonly System.Type _revisionEntityType;
 		private readonly MemberInfo _number;
 		private readonly MemberInfo _timestamp;
-	    private readonly System.Type _revisionListenerType;
+		private readonly System.Type _revisionListenerType;
 
-		public FluentRevision(System.Type revisionEntityType, 
-                                MemberInfo number, 
-                                MemberInfo timestamp,
-                                System.Type revisionListenerType)
+		public FluentRevision(System.Type revisionEntityType,
+										  MemberInfo number,
+										  MemberInfo timestamp,
+										  System.Type revisionListenerType)
 		{
 			_revisionEntityType = revisionEntityType;
 			_number = number;
 			_timestamp = timestamp;
-            listenerTypeMustBeNullOfRevisionListenerType(revisionListenerType);
-		    _revisionListenerType = revisionListenerType;
+			listenerTypeMustBeNullOfRevisionListenerType(revisionListenerType);
+			_revisionListenerType = revisionListenerType;
 		}
 
-	    public System.Type Type
+		public System.Type Type
 		{
 			get { return _revisionEntityType; }
 		}
 
 		public IEnumerable<Attribute> CreateClassAttributes()
 		{
-		    var revEntityAttribute = new RevisionEntityAttribute();
-            if (_revisionListenerType != null)
-                revEntityAttribute.Listener = _revisionListenerType;
+			var revEntityAttribute = new RevisionEntityAttribute();
+			if (_revisionListenerType != null)
+				revEntityAttribute.Listener = _revisionListenerType;
 			return new[] { revEntityAttribute };
 		}
 
 		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
 		{
 			return new[]
-			          	{
-			          		new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
-							new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute()), 
-			          	};
+							{
+								new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
+								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute()), 
+							};
 
 		}
 
-        private static void listenerTypeMustBeNullOfRevisionListenerType(System.Type revisionListenerType)
-        {
-            if (revisionListenerType != null && !typeof(IRevisionListener).IsAssignableFrom(revisionListenerType))
-                throw new FluentException("Specified revisionListenerType does not implement IRevisionListener!");
-        }
+		private static void listenerTypeMustBeNullOfRevisionListenerType(System.Type revisionListenerType)
+		{
+			if (revisionListenerType != null && !typeof(IRevisionListener).IsAssignableFrom(revisionListenerType))
+				throw new FluentException("Specified revisionListenerType does not implement IRevisionListener!");
+		}
 	}
 }

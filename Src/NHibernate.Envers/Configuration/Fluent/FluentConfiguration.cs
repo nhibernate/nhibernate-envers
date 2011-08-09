@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// </summary>
 	public class FluentConfiguration : IMetaDataProvider
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof (FluentConfiguration));
+		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(FluentConfiguration));
 		private readonly IList<IAttributeProvider> attributeFactories;
 		private readonly ICollection<System.Type> auditedTypes;
 
@@ -58,28 +58,28 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <typeparam name="T">The custom revision entity type</typeparam>
 		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
 		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
-		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, 
-                                        Expression<Func<T, object>> revisionTimestamp)
+		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
+													 Expression<Func<T, object>> revisionTimestamp)
 		{
-            SetRevisionEntity(revisionNumber, revisionTimestamp, null);
+			SetRevisionEntity(revisionNumber, revisionTimestamp, null);
 		}
 
-	    /// <summary>
-	    /// Defines a custom revision entity.
-	    /// </summary>
-	    /// <typeparam name="T">The custom revision entity type</typeparam>
-	    /// <param name="revisionNumber">Revision number property on custom revision entity</param>
-	    /// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
-        /// <param name="listenerType">The listener type <see cref="IRevisionListener"/></param>
-	    public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber, 
-                                        Expression<Func<T, object>> revisionTimestamp, 
-                                        System.Type listenerType)
-        {
-            attributeFactories.Add(new FluentRevision(typeof(T),
-                    revisionNumber.Body.MethodInfo("revisionNumber"),
-                    revisionTimestamp.Body.MethodInfo("revisionTimestamp"),
-                    listenerType));
-        }
+		/// <summary>
+		/// Defines a custom revision entity.
+		/// </summary>
+		/// <typeparam name="T">The custom revision entity type</typeparam>
+		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
+		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+		/// <param name="listenerType">The listener type <see cref="IRevisionListener"/></param>
+		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
+													Expression<Func<T, object>> revisionTimestamp,
+													System.Type listenerType)
+		{
+			attributeFactories.Add(new FluentRevision(typeof(T),
+					  revisionNumber.Body.MethodInfo("revisionNumber"),
+					  revisionTimestamp.Body.MethodInfo("revisionTimestamp"),
+					  listenerType));
+		}
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
@@ -128,12 +128,12 @@ namespace NHibernate.Envers.Configuration.Fluent
 				return;
 
 			IEntityMeta entMetaForBaseTypeTemp;
-			if(!ret.TryGetValue(baseType, out entMetaForBaseTypeTemp))
+			if (!ret.TryGetValue(baseType, out entMetaForBaseTypeTemp))
 			{
 				entMetaForBaseTypeTemp = new EntityMeta();
 			}
-			var entMetaForBaseType = (EntityMeta) entMetaForBaseTypeTemp;
-			if(!entityMetaIsAuditedClass(entMetaForBaseType))
+			var entMetaForBaseType = (EntityMeta)entMetaForBaseTypeTemp;
+			if (!entityMetaIsAuditedClass(entMetaForBaseType))
 			{
 				addClassMetaAndLog(baseType, new AuditedAttribute(), entMetaForBaseType);
 				ret[baseType] = entMetaForBaseType;
@@ -143,7 +143,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static bool entityMetaIsAuditedClass(IEntityMeta entMetaForBaseType)
 		{
-			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta.GetType().Equals(typeof (AuditedAttribute)));
+			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta.GetType().Equals(typeof(AuditedAttribute)));
 		}
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)

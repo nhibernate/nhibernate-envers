@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Configuration
 		public IList<PersistentClass> GetNeighbours(PersistentClass pc) 
 		{
 			var neighbours = new List<PersistentClass>();
-			AddNeighbours(neighbours, pc.SubclassIterator);
+			addNeighbours(neighbours, pc.SubclassIterator);
 			return neighbours;
 		}
 
@@ -39,12 +39,12 @@ namespace NHibernate.Envers.Configuration
 			return cfg.ClassMappings;
 		}
 
-		private void AddNeighbours(ICollection<PersistentClass> neighbours, IEnumerable<Subclass> subclasses)
+		private static void addNeighbours(ICollection<PersistentClass> neighbours, IEnumerable<Subclass> subclasses)
 		{
 			foreach (var subclass in subclasses)
 			{
 				neighbours.Add(subclass);
-				AddNeighbours(neighbours, subclass.SubclassIterator);
+				addNeighbours(neighbours, subclass.SubclassIterator);
 			}
 		}
 	}

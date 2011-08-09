@@ -13,7 +13,6 @@ namespace NHibernate.Envers.Configuration
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ClassesAuditingData));
 
 		private readonly IDictionary<string, ClassAuditingData> entityNameToAuditingData = new Dictionary<string, ClassAuditingData>();
-		//Simon 27/06/2010 - era new LinkedHashMap...
 		private readonly IDictionary<PersistentClass, ClassAuditingData> persistentClassToAuditingData = new Dictionary<PersistentClass, ClassAuditingData>();
 
 		/// <summary>
