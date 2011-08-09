@@ -6,6 +6,7 @@ using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NHibernate.Envers.Tests.Tools;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
@@ -33,7 +34,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var entMeta = metas[typeof(RevisionEntity)];
 			var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
-			revEntAttr.Listener = typeof(IRevisionListener);
+			revEntAttr.Listener
+				.Should().Be.EqualTo(typeof(IRevisionListener));
 		}
 
 		[Test]
