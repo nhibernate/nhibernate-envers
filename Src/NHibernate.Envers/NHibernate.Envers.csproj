@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Attributes\AttributeConfigurationWithRevisionListener.cs" />
     <Compile Include="Configuration\Attributes\AuditedAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditJoinTableAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditMappedByAttribute.cs" />

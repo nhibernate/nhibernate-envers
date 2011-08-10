@@ -13,21 +13,17 @@ namespace NHibernate.Envers.RevisionInfo
 		private readonly IRevisionListener _listener;
 		private readonly ISetter _revisionTimestampSetter;
 
-		public DefaultRevisionInfoGenerator(string revisionInfoEntityName, System.Type revisionInfoType,
-										   System.Type listenerClass,
+		public DefaultRevisionInfoGenerator(string revisionInfoEntityName, 
+											System.Type revisionInfoType,
+										   IRevisionListener revisionListener,
 										   PropertyData revisionInfoTimestampData,
 										   bool timestampAsDate) 
 		{
 			_revisionInfoEntityName = revisionInfoEntityName;
 			_revisionInfoType = revisionInfoType;
 			_timestampAsDate = timestampAsDate;
-
 			_revisionTimestampSetter = ReflectionTools.GetSetter(revisionInfoType, revisionInfoTimestampData);
-
-			if(!listenerClass.Equals(typeof(IRevisionListener)))
-			{
-				_listener = (IRevisionListener)Activator.CreateInstance(listenerClass);
-			}
+			_listener = revisionListener;
 		}
 
 		public void SaveRevisionData(ISession session, object revisionData) 

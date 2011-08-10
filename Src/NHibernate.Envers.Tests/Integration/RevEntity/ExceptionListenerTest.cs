@@ -8,7 +8,6 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 	[TestFixture]
 	public class ExceptionListenerTest : TestBase
 	{
-
 		protected override IEnumerable<string> Mappings
 		{
 			get

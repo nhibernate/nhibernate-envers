@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
@@ -22,7 +23,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			return ret;
 		}
 
-		private static void addForComponent(IEnumerable<Property> propertyIterator, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private void addForComponent(IEnumerable<Property> propertyIterator, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (var property in propertyIterator)
 			{
@@ -33,7 +34,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			}
 		}
 
-		private static void addForEntity(PersistentClass persistentClass, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private void addForEntity(PersistentClass persistentClass, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			var typ = persistentClass.MappedClass;
 			fillType(typ, dicToFill);
@@ -45,7 +46,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			fillMembers(typ, props, dicToFill);
 		}
 
-		private static void fillMembers(System.Type type, IEnumerable<Property> properties, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private void fillMembers(System.Type type, IEnumerable<Property> properties, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (var propInfo in PropertyAndMemberInfo.PersistentInfo(type, properties))
 			{
@@ -53,19 +54,32 @@ namespace NHibernate.Envers.Configuration.Attributes
 				{
 					if (!dicToFill.ContainsKey(type))
 						dicToFill[type] = new EntityMeta();
-					((EntityMeta)dicToFill[type]).AddMemberMeta(propInfo.Member, attr);
+					AddMemberAttribute(dicToFill, attr, type, propInfo);
 				}
 			}
 		}
 
-		private static void fillType(System.Type typ, IDictionary<System.Type, IEntityMeta> dicToFill)
+		protected virtual void AddMemberAttribute(IDictionary<System.Type, IEntityMeta> dictionaryToFill, 
+																Attribute attribute, 
+																System.Type type, 
+																DeclaredPersistentProperty persistentProperty)
 		{
-			foreach (Attribute attr in typ.GetCustomAttributes(false))
+			((EntityMeta)dictionaryToFill[type]).AddMemberMeta(persistentProperty.Member, attribute);
+		}
+
+		private void fillType(System.Type type, IDictionary<System.Type, IEntityMeta> dicToFill)
+		{
+			foreach (Attribute attr in type.GetCustomAttributes(false))
 			{
-				if (!dicToFill.ContainsKey(typ))
-					dicToFill[typ] = new EntityMeta();
-				((EntityMeta)dicToFill[typ]).AddClassMeta(attr);
+				if (!dicToFill.ContainsKey(type))
+					dicToFill[type] = new EntityMeta();
+				AddClassAttribute(dicToFill, attr, type);
 			}
+		}
+
+		protected virtual void AddClassAttribute(IDictionary<System.Type, IEntityMeta> dictionaryToFill, Attribute attribute, System.Type type)
+		{
+			((EntityMeta)dictionaryToFill[type]).AddClassMeta(attribute);
 		}
 	}
 }

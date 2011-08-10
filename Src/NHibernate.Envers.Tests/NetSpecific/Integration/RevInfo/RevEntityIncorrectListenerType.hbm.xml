@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo">
+	<class name="RevEntityIncorrectListenerType">
+		<id name="Id">
+			<generator class="identity" />
+		</id>
+		<property name="Timestamp" />
+	</class>
+</hibernate-mapping>

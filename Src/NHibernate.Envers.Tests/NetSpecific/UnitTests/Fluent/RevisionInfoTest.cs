@@ -30,12 +30,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		}
 
 		[Test]
-		public void RevisionEntityAttributeShouldHaveDefaultListenerSet()
+		public void RevisionEntityAttributeShouldNotHaveDefaultListenerSet()
 		{
 			var entMeta = metas[typeof(RevisionEntity)];
 			var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
 			revEntAttr.Listener
-				.Should().Be.EqualTo(typeof(IRevisionListener));
+				.Should().Be.Null();
 		}
 
 		[Test]

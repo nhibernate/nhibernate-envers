@@ -14,12 +14,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 	public class RevisionInfoWithListenerTest
 	{
 		private IDictionary<System.Type, IEntityMeta> metas;
+		private IRevisionListener revisionListener;
 
 		[SetUp]
 		public void Setup()
 		{
+			revisionListener = new RevListener();
 			var cfg = new FluentConfiguration();
-			cfg.SetRevisionEntity<RevisionEntity>(e => e.Number, e => e.Timestamp, typeof(RevListener));
+			cfg.SetRevisionEntity<RevisionEntity>(e => e.Number, e => e.Timestamp, revisionListener);
 			metas = cfg.CreateMetaData(null);
 		}
 
@@ -42,7 +44,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			var entMeta = metas[typeof(RevisionEntity)];
 			var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
 			revEntAttr.Listener
-					.Should().Be.EqualTo(typeof(RevListener));
+					.Should().Be.SameInstanceAs(revisionListener);
 		}
 
 		[Test]
@@ -54,14 +56,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			Assert.AreEqual(2, propMeta.Count);
 			propMeta[revType.GetProperty("Number")].OnlyContains<RevisionNumberAttribute>();
 			propMeta[revType.GetProperty("Timestamp")].OnlyContains<RevisionTimestampAttribute>();
-		}
-
-		[Test]
-		public void ListenerShouldImplementRevisionInterface()
-		{
-			var cfg = new FluentConfiguration();
-			Assert.Throws<FluentException>(() =>
-					cfg.SetRevisionEntity<RevisionEntity>(e => e.Number, e => e.Timestamp, typeof(string)));
 		}
 	}
 }

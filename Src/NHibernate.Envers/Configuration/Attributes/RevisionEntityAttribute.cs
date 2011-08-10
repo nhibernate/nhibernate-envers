@@ -7,21 +7,49 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// an integer-valued unique property (preferrably the primary id) annotated with <see cref="RevisionNumberAttribute"/>
 	/// and a long-valued property annotated with <see cref="RevisionTimestampAttribute"/>. 
 	/// The <see cref="DefaultRevisionEntity"/> already has those two fields, so you may extend it, 
-	/// but you may also write your own revision entity  from scratch.
+	/// but you may also write your own revision entity from scratch.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class RevisionEntityAttribute : Attribute
 	{
+		private readonly System.Type _listenerType;
+		private IRevisionListener _listener;
+
 		public RevisionEntityAttribute()
 		{
-			Listener = typeof (IRevisionListener);
 		}
 
-		public RevisionEntityAttribute(System.Type listener)
+		public RevisionEntityAttribute(System.Type listenerType)
 		{
-			Listener = listener;
+			_listenerType = listenerType;
 		}
 
-		public System.Type Listener { get; set; }
+		public IRevisionListener Listener
+		{
+			get
+			{
+				if (_listener == null && _listenerType != null)
+				{
+					initListenerFromListenerType();
+				}
+				return _listener;
+			}
+			set
+			{
+				_listener = value;
+			}
+		}
+
+		private void initListenerFromListenerType()
+		{
+			try
+			{
+				_listener = (IRevisionListener) Activator.CreateInstance(_listenerType);
+			}
+			catch (MissingMethodException)
+			{
+				throw new MappingException(string.Format("Revision listener must be of type IRevisionListener (but is: {0})", _listenerType));
+			}
+		}
 	}
 }

@@ -23,12 +23,17 @@ namespace NHibernate.Envers.Tests
 			AddToConfiguration(Cfg);
 			Cfg.Configure();
 			addMappings();
-			Cfg.IntegrateWithEnvers(new AuditEventListener(), new AttributeConfiguration());
+			Cfg.IntegrateWithEnvers(new AuditEventListener(), AttributeConfiguration());
 			SessionFactory = Cfg.BuildSessionFactory();
 			Session = openSession(SessionFactory);
 			Initialize();
 			closeSessionAndAuditReader();
 			Session = openSession(SessionFactory);
+		}
+
+		protected virtual AttributeConfiguration AttributeConfiguration()
+		{
+			return new AttributeConfiguration();
 		}
 
 		protected IAuditReader AuditReader()

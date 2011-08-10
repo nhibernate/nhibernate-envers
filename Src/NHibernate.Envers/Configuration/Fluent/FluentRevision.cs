@@ -10,18 +10,17 @@ namespace NHibernate.Envers.Configuration.Fluent
 		private readonly System.Type _revisionEntityType;
 		private readonly MemberInfo _number;
 		private readonly MemberInfo _timestamp;
-		private readonly System.Type _revisionListenerType;
+		private readonly IRevisionListener _revisionListener;
 
 		public FluentRevision(System.Type revisionEntityType,
 										  MemberInfo number,
 										  MemberInfo timestamp,
-										  System.Type revisionListenerType)
+										  IRevisionListener revisionListener)
 		{
 			_revisionEntityType = revisionEntityType;
 			_number = number;
 			_timestamp = timestamp;
-			listenerTypeMustBeNullOfRevisionListenerType(revisionListenerType);
-			_revisionListenerType = revisionListenerType;
+			_revisionListener = revisionListener;
 		}
 
 		public System.Type Type
@@ -31,9 +30,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IEnumerable<Attribute> CreateClassAttributes()
 		{
-			var revEntityAttribute = new RevisionEntityAttribute();
-			if (_revisionListenerType != null)
-				revEntityAttribute.Listener = _revisionListenerType;
+			var revEntityAttribute = new RevisionEntityAttribute {Listener = _revisionListener};
 			return new[] { revEntityAttribute };
 		}
 
@@ -45,12 +42,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute()), 
 							};
 
-		}
-
-		private static void listenerTypeMustBeNullOfRevisionListenerType(System.Type revisionListenerType)
-		{
-			if (revisionListenerType != null && !typeof(IRevisionListener).IsAssignableFrom(revisionListenerType))
-				throw new FluentException("Specified revisionListenerType does not implement IRevisionListener!");
 		}
 	}
 }
