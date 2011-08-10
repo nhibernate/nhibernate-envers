@@ -1,5 +1,15 @@
 === 1.0 GA (v 1.0.0.0), ???, ??? ===
 
+*** Breaking changes ***
+* Attribute API: RevisionEntityAttribute
+[RevisionEntity(Listener=typeof(MyListener))] no longer available. 
+Use [RevisionEntity(typeof(MyListener))] instead.
+
+* Fluent API: 
+fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timestamp, typeof(RevListener));
+...changed to...
+fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timestamp, new RevListener());
+
 
 
 

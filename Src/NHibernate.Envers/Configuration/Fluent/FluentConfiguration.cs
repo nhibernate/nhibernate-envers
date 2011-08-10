@@ -70,15 +70,15 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <typeparam name="T">The custom revision entity type</typeparam>
 		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
 		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
-		/// <param name="listenerType">The listener type <see cref="IRevisionListener"/></param>
+		/// <param name="revisionListener">The listener singleton</param>
 		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
 													Expression<Func<T, object>> revisionTimestamp,
-													System.Type listenerType)
+													IRevisionListener revisionListener)
 		{
 			attributeFactories.Add(new FluentRevision(typeof(T),
 					  revisionNumber.Body.MethodInfo("revisionNumber"),
 					  revisionTimestamp.Body.MethodInfo("revisionTimestamp"),
-					  listenerType));
+					  revisionListener));
 		}
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)

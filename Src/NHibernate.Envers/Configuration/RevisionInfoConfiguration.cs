@@ -171,7 +171,7 @@ namespace NHibernate.Envers.Configuration
 						revisionInfoClass = typeof(DefaultRevisionEntity);
 						revisionAssQName = revisionInfoClass.AssemblyQualifiedName;
 						revisionInfoGenerator = new DefaultRevisionInfoGenerator(revisionInfoEntityName, revisionInfoClass,
-								typeof(IRevisionListener), revisionInfoTimestampData, isTimestampAsDate());
+								null, revisionInfoTimestampData, isTimestampAsDate());
 						revisionInfoXmlMapping = generateDefaultRevisionInfoXmlMapping();
 						break;
 					}

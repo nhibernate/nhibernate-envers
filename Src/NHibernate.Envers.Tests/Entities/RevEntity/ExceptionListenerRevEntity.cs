@@ -2,7 +2,7 @@ using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.RevEntity
 {
-	[RevisionEntity(Listener = typeof(TestExceptionRevisionListener))]
+	[RevisionEntity(typeof(TestExceptionRevisionListener))]
 	public class ExceptionListenerRevEntity
 	{
 		[RevisionNumber]

@@ -354,7 +354,10 @@
     <Compile Include="NetSpecific\Integration\Query\ComponentQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\FindRevisionsTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\Model.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\ChangeListenerInstanceTest.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\IncorrectListenerTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetEntity.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetAndMapTest.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\StrTestEntityComparer.cs" />
@@ -391,6 +394,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\Query\Mapping.hbm.xml" />
     <EmbeddedResource Include="Bugs\NHE12\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\SortedSetAndMap\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.hbm.xml" />
     <Content Include="todo.txt" />
     <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />
