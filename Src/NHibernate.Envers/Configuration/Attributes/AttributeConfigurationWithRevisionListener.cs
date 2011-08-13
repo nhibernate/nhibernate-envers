@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Attributes
 {
@@ -12,19 +11,10 @@ namespace NHibernate.Envers.Configuration.Attributes
 			this.revisionListener = revisionListener;
 		}
 
-		protected override void AddClassAttribute(IDictionary<System.Type, Store.IEntityMeta> dictionaryToFill, 
-																Attribute attribute, 
-																System.Type type)
+		protected override Attribute ClassAttribute(Attribute attribute, System.Type type)
 		{
-			if (attribute.GetType().Equals(typeof(RevisionEntityAttribute)))
-			{
-				var replacedAttribute = new RevisionEntityAttribute {Listener = revisionListener};
-				base.AddClassAttribute(dictionaryToFill, replacedAttribute, type);
-			}
-			else
-			{
-				base.AddClassAttribute(dictionaryToFill, attribute, type);				
-			}
+			return attribute.GetType().Equals(typeof(RevisionEntityAttribute)) ? 
+				new RevisionEntityAttribute {Listener = revisionListener} : attribute;
 		}
 	}
 }

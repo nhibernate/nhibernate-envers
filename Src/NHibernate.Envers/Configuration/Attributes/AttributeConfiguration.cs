@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			{
 				var propAsComponent = property.Value as Component;
 				if (propAsComponent == null || propAsComponent.IsDynamic) continue;
-				fillType(propAsComponent.ComponentClass, dicToFill);
+				fillClass(propAsComponent.ComponentClass, dicToFill);
 				fillMembers(propAsComponent.ComponentClass, propAsComponent.PropertyIterator, dicToFill);
 			}
 		}
@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		private void addForEntity(PersistentClass persistentClass, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			var typ = persistentClass.MappedClass;
-			fillType(typ, dicToFill);
+			fillClass(typ, dicToFill);
 			var props = new List<Property>();
 			props.AddRange(persistentClass.PropertyIterator);
 			if (persistentClass.IdentifierProperty != null && !persistentClass.IdentifierProperty.IsComposite)
@@ -54,32 +54,31 @@ namespace NHibernate.Envers.Configuration.Attributes
 				{
 					if (!dicToFill.ContainsKey(type))
 						dicToFill[type] = new EntityMeta();
-					AddMemberAttribute(dicToFill, attr, type, propInfo);
+					var memberAttributeToAdd = MemberAttribute(attr, type, propInfo);
+					((EntityMeta)dicToFill[type]).AddMemberMeta(propInfo.Member, memberAttributeToAdd);
 				}
 			}
 		}
 
-		protected virtual void AddMemberAttribute(IDictionary<System.Type, IEntityMeta> dictionaryToFill, 
-																Attribute attribute, 
-																System.Type type, 
-																DeclaredPersistentProperty persistentProperty)
+		protected virtual Attribute MemberAttribute(Attribute attribute, System.Type type, DeclaredPersistentProperty persistentProperty)
 		{
-			((EntityMeta)dictionaryToFill[type]).AddMemberMeta(persistentProperty.Member, attribute);
+			return attribute;
 		}
 
-		private void fillType(System.Type type, IDictionary<System.Type, IEntityMeta> dicToFill)
+		private void fillClass(System.Type type, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
 			foreach (Attribute attr in type.GetCustomAttributes(false))
 			{
 				if (!dicToFill.ContainsKey(type))
 					dicToFill[type] = new EntityMeta();
-				AddClassAttribute(dicToFill, attr, type);
+				var classAttributeToAdd = ClassAttribute(attr, type);
+				((EntityMeta)dicToFill[type]).AddClassMeta(classAttributeToAdd);
 			}
 		}
 
-		protected virtual void AddClassAttribute(IDictionary<System.Type, IEntityMeta> dictionaryToFill, Attribute attribute, System.Type type)
+		protected virtual Attribute ClassAttribute(Attribute attribute, System.Type type)
 		{
-			((EntityMeta)dictionaryToFill[type]).AddClassMeta(attribute);
+			return attribute;
 		}
 	}
 }
