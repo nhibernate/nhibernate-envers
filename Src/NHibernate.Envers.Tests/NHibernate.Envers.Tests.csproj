@@ -58,6 +58,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +365,7 @@
     <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
     <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
+    <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
