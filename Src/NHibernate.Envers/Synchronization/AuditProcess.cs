@@ -113,7 +113,7 @@ namespace NHibernate.Envers.Synchronization
 			return revisionData;
 		}
 
-		public void doBeforeTransactionCompletion()
+		public void DoBeforeTransactionCompletion()
 		{
 			if (workUnits.Count == 0 && undoQueue.Count == 0)
 			{

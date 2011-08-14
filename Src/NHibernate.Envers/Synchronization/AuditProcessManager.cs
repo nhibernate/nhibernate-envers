@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Synchronization
 				auditProcess = new AuditProcess(revisionInfoGenerator, session);
 				auditProcesses[transaction] = auditProcess;
 
-				session.ActionQueue.RegisterProcess(auditProcess.doBeforeTransactionCompletion);
+				session.ActionQueue.RegisterProcess(auditProcess.DoBeforeTransactionCompletion);
 				session.ActionQueue.RegisterProcess(success => auditProcesses.Remove(transaction));
 			}
 
