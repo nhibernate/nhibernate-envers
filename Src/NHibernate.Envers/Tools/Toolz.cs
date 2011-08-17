@@ -28,27 +28,19 @@ namespace NHibernate.Envers.Tools
 			return objAsProxy!=null ? objAsProxy.HibernateLazyInitializer.Identifier : session.GetEntityPersister(null, obj).GetIdentifier(obj, session.EntityMode);
 		}
 
-		public static object GetTargetFromProxy(ISessionFactoryImplementor sessionFactoryImplementor, INHibernateProxy proxy) 
+		public static object GetTargetFromProxy(ISession session, INHibernateProxy proxy) 
 		{
 			if (!proxy.HibernateLazyInitializer.IsUninitialized) 
-			{
 				return proxy.HibernateLazyInitializer.GetImplementation();
-			}
 
-			var sessionImplementor = proxy.HibernateLazyInitializer.Session;
-			//ORIG: ISession tempSession = sessionImplementor==null ? sessionFactoryImplementor.openTemporarySession() : sessionImplementor.Factory.openTemporarySession();
-			var tempSession = sessionImplementor == null ? sessionFactoryImplementor.OpenSession(null, false, false, ConnectionReleaseMode.AfterStatement) :
-																sessionImplementor.Factory.OpenSession(null, false, false, ConnectionReleaseMode.AfterStatement);
-			try 
-			{
-				proxy.HibernateLazyInitializer.Session = (ISessionImplementor) tempSession;
-				proxy.HibernateLazyInitializer.Initialize();
-				return proxy.HibernateLazyInitializer.GetImplementation();
-			} 
-			finally 
-			{
-				tempSession.Close();
-			}
+			var lazyInitializer = proxy.HibernateLazyInitializer;
+			var proxySession = (ISession)lazyInitializer.Session;
+			var tempSession = proxySession == null ? 
+								session.GetSession(EntityMode.Poco) :
+								proxySession.GetSession(EntityMode.Poco);
+
+			return tempSession.Get(lazyInitializer.EntityName,
+									lazyInitializer.Identifier);
 		}
 
 		private static bool objectsEqual(object obj1, object obj2)
