@@ -352,6 +352,7 @@
     <Compile Include="NetSpecific\Integration\Component\SimpleStructTest.cs" />
     <Compile Include="NetSpecific\Integration\Component\StructComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\StructComponent2.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\NoRevisionOnCollectionChangeTest.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\Animal.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
@@ -483,6 +484,7 @@
       <Name>NHibernate.Envers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
