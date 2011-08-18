@@ -340,7 +340,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var extendsEntityName = VerEntCfg.GetAuditEntityName(pc.Superclass.EntityName);
 			var hasDiscriminator = pc.Discriminator != null;
-			var class_mapping = MetadataTools.CreateSubclassEntity(xmlMappingData.MainXmlMapping,
+			var classMapping = MetadataTools.CreateSubclassEntity(xmlMappingData.MainXmlMapping,
 					inheritanceMappingType, auditTableData, extendsEntityName, hasDiscriminator ? pc.DiscriminatorValue : null);
 
 			// The id and revision type is already mapped in the parent
@@ -358,7 +358,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
 			var propertyMapper = new SubclassPropertyMapper(new MultiPropertyMapper(), parentPropertyMapper);
 
-			return new Triple<XmlElement, IExtendedPropertyMapper, string>(class_mapping, propertyMapper, parentEntityName);
+			return new Triple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, parentEntityName);
 		}
 
 		public void GenerateFirstPass(PersistentClass pc, ClassAuditingData auditingData,
