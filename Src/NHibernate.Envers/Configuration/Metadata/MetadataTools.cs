@@ -86,30 +86,35 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return column_mapping;
 		}
 
+		public static void AddFormula(XmlElement element, Formula formula)
+		{
+			element.SetAttribute("formula", formula.Text);
+		}
+
 		public static XmlElement AddColumn(XmlElement parent, string name, int length, int scale, int precision, string sqlType) 
 		{
-			var column_mapping = parent.OwnerDocument.CreateElement("column");
-			parent.AppendChild(column_mapping);
+			var columnMapping = parent.OwnerDocument.CreateElement("column");
+			parent.AppendChild(columnMapping);
 
-			column_mapping.SetAttribute("name", name);
+			columnMapping.SetAttribute("name", name);
 			if (length != -1) 
 			{
-				column_mapping.SetAttribute("length", length.ToString());
+				columnMapping.SetAttribute("length", length.ToString());
 			}
 			if (scale != 0) 
 			{
-				column_mapping.SetAttribute("scale", scale.ToString());
+				columnMapping.SetAttribute("scale", scale.ToString());
 			}
 			if (precision != 0) 
 			{
-				column_mapping.SetAttribute("precision", precision.ToString());
+				columnMapping.SetAttribute("precision", precision.ToString());
 			}
 			if (!string.IsNullOrEmpty(sqlType)) 
 			{
-				column_mapping.SetAttribute("sql-type", sqlType);
+				columnMapping.SetAttribute("sql-type", sqlType);
 			}
 
-			return column_mapping;
+			return columnMapping;
 		}
 
 		private static XmlElement CreateEntityCommon(XmlDocument document, string type, AuditTableData auditTableData, string discriminatorValue) 
@@ -191,14 +196,31 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <summary>
 		/// Adds the columns in the enumerator to the any_mapping XmlElement
 		/// </summary>
-		/// <param name="any_mapping"></param>
+		/// <param name="anyMapping"></param>
 		/// <param name="columns">should contain elements of Column type</param>
-		public static void AddColumns(XmlElement any_mapping, IEnumerable<Column> columns)
+		public static void AddColumns(XmlElement anyMapping, IEnumerable<Column> columns)
 		{
 			foreach (var column in columns)
 			{
-				AddColumn(any_mapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : 0,
-						column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType);
+				AddColumn(anyMapping, column);
+			}
+		}
+
+		public static void AddColumn(XmlElement anyMapping, Column column)
+		{
+			AddColumn(anyMapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : 0,
+					column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType);
+		}
+
+		public static void AddColumnsOrFormulas(XmlElement element, IEnumerable<ISelectable> columnIterator)
+		{
+			foreach (var selectable in columnIterator)
+			{
+				var column = selectable as Column;
+				if (column != null)
+					AddColumn(element, column);
+				else
+					AddFormula(element, (Formula) selectable);
 			}
 		}
 
