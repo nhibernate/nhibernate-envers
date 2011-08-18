@@ -32,9 +32,7 @@ namespace NHibernate.Envers.Event
 		{
 			// Checking if this is enabled in configuration ...
 			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections)
-			{
 				return;
-			}
 
 			// Checks every property of the entity, if it is an "owned" to-one relation to another entity.
 			// If the value of that property changed, and the relation is bi-directional, a new revision
@@ -152,9 +150,7 @@ namespace NHibernate.Envers.Event
 		{
 			// Checking if this is enabled in configuration ...
 			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections)
-			{
 				return;
-			}
 
 			// Checking if this is not a bidirectional relation - then, a revision needs also be generated for
 			// the other side of the relation.
@@ -222,6 +218,8 @@ namespace NHibernate.Envers.Event
 										object oldColl,
 										CollectionEntry collectionEntry)
 		{
+			if (!VerCfg.GlobalCfg.GenerateRevisionsForCollections)
+				return;
 			var entityName = evt.GetAffectedOwnerEntityName();
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
 
