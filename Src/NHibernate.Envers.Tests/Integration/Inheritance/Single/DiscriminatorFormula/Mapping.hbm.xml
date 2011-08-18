@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	assembly="NHibernate.Envers.Tests"
+	namespace="NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFormula">
+
+	<class name="ParentEntity" discriminator-value="parent">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<discriminator column="disc" 
+					   type="string" 
+					   formula="(SELECT c.type FROM ClassTypeEntity c WHERE c.id = typeId)"/>
+		<property name="Data"/>
+		<property name="TypeId"/>
+	</class>
+	<subclass name="ChildEntity" extends="ParentEntity" discriminator-value="child">
+		<property name="SpecificData" />
+	</subclass>
+	<class name="ClassTypeEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Type"/>
+	</class>
+</hibernate-mapping>

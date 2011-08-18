@@ -218,6 +218,10 @@
     <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\UnidirectionalDoubleAbstractTest.cs" />
     <Compile Include="Integration\Inheritance\Single\ChildAuditingTest.cs" />
     <Compile Include="Integration\Inheritance\Single\ChildRelation\ChildReferencingTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\DiscriminatorFormula\ChildEntity.cs" />
+    <Compile Include="Integration\Inheritance\Single\DiscriminatorFormula\ClassTypeEntity.cs" />
+    <Compile Include="Integration\Inheritance\Single\DiscriminatorFormula\DiscriminatorFormulaTest.cs" />
+    <Compile Include="Integration\Inheritance\Single\DiscriminatorFormula\ParentEntity.cs" />
     <Compile Include="Integration\Inheritance\Single\NotOwnedRelation\NotOwnBidirectionalTest.cs" />
     <Compile Include="Integration\Inheritance\Single\ParentAuditingTest.cs" />
     <Compile Include="Integration\Inheritance\Single\Relation\PolymorphicCollectionTest.cs" />
@@ -398,6 +402,7 @@
     <EmbeddedResource Include="Bugs\NHE12\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\SortedSetAndMap\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\DiscriminatorFormula\Mapping.hbm.xml" />
     <Content Include="todo.txt" />
     <EmbeddedResource Include="Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Mapping.hbm.xml" />

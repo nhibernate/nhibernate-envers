@@ -310,27 +310,28 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var hasDiscriminator = pc.Discriminator != null;
 
-			var class_mapping = MetadataTools.CreateEntity(xmlMappingData.MainXmlMapping, auditTableData,
+			var classMapping = MetadataTools.CreateEntity(xmlMappingData.MainXmlMapping, auditTableData,
 					hasDiscriminator ? pc.DiscriminatorValue : null);
 			var propertyMapper = new MultiPropertyMapper();
 
 			// Adding the id mapping
-			var xmlMp = class_mapping.OwnerDocument.ImportNode(idMapper.XmlMapping, true);
-			class_mapping.AppendChild(xmlMp);
+			var xmlMp = classMapping.OwnerDocument.ImportNode(idMapper.XmlMapping, true);
+			classMapping.AppendChild(xmlMp);
 
 			// Checking if there is a discriminator column
 			if (hasDiscriminator)
 			{
-				var discriminator_element = class_mapping.OwnerDocument.CreateElement("discriminator");
-				class_mapping.AppendChild(discriminator_element);
-				MetadataTools.AddColumns(discriminator_element, pc.Discriminator.ColumnIterator.OfType<Column>());
-				discriminator_element.SetAttribute("type", pc.Discriminator.Type.Name);
+				var discriminatorElement = classMapping.OwnerDocument.CreateElement("discriminator");
+				classMapping.AppendChild(discriminatorElement);
+				// Database column or SQL formula allowed to distinguish entity types
+				MetadataTools.AddColumnsOrFormulas(discriminatorElement, pc.Discriminator.ColumnIterator);
+				discriminatorElement.SetAttribute("type", pc.Discriminator.Type.Name);
 			}
 
 			// Adding the "revision type" property
-			AddRevisionType(class_mapping);
+			AddRevisionType(classMapping);
 
-			return new Triple<XmlElement, IExtendedPropertyMapper, string>(class_mapping, propertyMapper, null);
+			return new Triple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
 		}
 
 		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateInheritanceMappingData(
