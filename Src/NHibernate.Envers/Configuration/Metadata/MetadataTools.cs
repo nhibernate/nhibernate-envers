@@ -9,43 +9,43 @@ namespace NHibernate.Envers.Configuration.Metadata
 	{
 		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, string type) 
 		{
-			var id_mapping = doc.CreateElement("id");
-			parent.AppendChild(id_mapping);
-			id_mapping.SetAttribute("name", name);
-			id_mapping.SetAttribute("type", type);
+			var idMapping = doc.CreateElement("id");
+			parent.AppendChild(idMapping);
+			idMapping.SetAttribute("name", name);
+			idMapping.SetAttribute("type", type);
 
-			var generator_mapping = doc.CreateElement("generator");
-			id_mapping.AppendChild(generator_mapping);
-			generator_mapping.SetAttribute("class", "native");
+			var generatorMapping = doc.CreateElement("generator");
+			idMapping.AppendChild(generatorMapping);
+			generatorMapping.SetAttribute("class", "native");
 			/*generator_mapping.SetAttribute("class", "sequence");
 			generator_mapping.addElement("param").SetAttribute("name", "sequence").setText("custom");*/
 
-			return id_mapping;
+			return idMapping;
 		}
 
 		public static XmlElement AddProperty(XmlElement parent, string name, string type, bool insertable, bool updateable, bool key)
 		{
-			XmlElement prop_mapping;
+			XmlElement propMapping;
 			if (key)
 			{
-				prop_mapping = parent.OwnerDocument.CreateElement("key-property");
+				propMapping = parent.OwnerDocument.CreateElement("key-property");
 			}
 			else
 			{
-				prop_mapping = parent.OwnerDocument.CreateElement("property");
-				prop_mapping.SetAttribute("insert", insertable ? "true" : "false");
-				prop_mapping.SetAttribute("update", updateable ? "true" : "false");
+				propMapping = parent.OwnerDocument.CreateElement("property");
+				propMapping.SetAttribute("insert", insertable ? "true" : "false");
+				propMapping.SetAttribute("update", updateable ? "true" : "false");
 			}
-			parent.AppendChild(prop_mapping);
+			parent.AppendChild(propMapping);
 
-			prop_mapping.SetAttribute("name", name);
+			propMapping.SetAttribute("name", name);
 
 			if (type != null)
 			{
-				prop_mapping.SetAttribute("type", type);
+				propMapping.SetAttribute("type", type);
 			}
 
-			return prop_mapping;
+			return propMapping;
 		}
 
 		public static XmlElement AddProperty(XmlElement parent, string name, string type, bool insertable, bool key)
@@ -166,31 +166,31 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public static XmlElement CreateSubclassEntity(XmlDocument document, string subclassType, AuditTableData auditTableData,
 												   string extendsEntityName, string discriminatorValue) 
 		{
-			var class_mapping = CreateEntityCommon(document, subclassType, auditTableData, discriminatorValue);
-			class_mapping.SetAttribute("extends", extendsEntityName);
+			var classMapping = CreateEntityCommon(document, subclassType, auditTableData, discriminatorValue);
+			classMapping.SetAttribute("extends", extendsEntityName);
 
-			return class_mapping;
+			return classMapping;
 		}
 
 		public static XmlElement CreateJoin(XmlElement parent, string tableName,
 										 string schema, string catalog) 
 		{
-			var join_mapping = parent.OwnerDocument.CreateElement("join");
-			parent.AppendChild(join_mapping);
+			var joinMapping = parent.OwnerDocument.CreateElement("join");
+			parent.AppendChild(joinMapping);
 
-			join_mapping.SetAttribute("table", tableName);
+			joinMapping.SetAttribute("table", tableName);
 
 			if (!string.IsNullOrEmpty(schema)) 
 			{
-				join_mapping.SetAttribute("schema", schema);
+				joinMapping.SetAttribute("schema", schema);
 			}
 
 			if (!string.IsNullOrEmpty(catalog)) 
 			{
-				join_mapping.SetAttribute("catalog", catalog);
+				joinMapping.SetAttribute("catalog", catalog);
 			}
 
-			return join_mapping;
+			return joinMapping;
 		}
 
 		/// <summary>

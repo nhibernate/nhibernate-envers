@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using NHibernate.Criterion;
 using NHibernate.Mapping;
 using NUnit.Framework;
 using SharpTestsEx;
