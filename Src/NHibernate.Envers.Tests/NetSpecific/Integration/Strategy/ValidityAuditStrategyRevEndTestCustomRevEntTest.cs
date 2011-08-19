@@ -23,9 +23,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(ValidityAuditStrategy).AssemblyQualifiedName);
-			configuration.SetProperty("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "true");
-			configuration.SetProperty("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", revendTimestampColumName);
+			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(ValidityAuditStrategy).AssemblyQualifiedName)
+				.SetProperty("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "true")
+				.SetProperty("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", revendTimestampColumName);
 		}
 
 		protected override IEnumerable<string> Mappings
