@@ -23,10 +23,10 @@ namespace NHibernate.Envers.Configuration
 
 			var mds = new MetaDataStore(cfg, metaDataProvider, metaDataAdders);
 			var properties = cfg.Properties;
-			var revInfoCfg = new RevisionInfoConfiguration(mds);
+			GlobalCfg = new GlobalConfiguration(properties);
+			var revInfoCfg = new RevisionInfoConfiguration(GlobalCfg, mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
-			GlobalCfg = new GlobalConfiguration(properties);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
 			initializeAuditStrategy(revInfoCfgResult);
 

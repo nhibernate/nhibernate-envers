@@ -372,6 +372,7 @@
     <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\DifferentSchemaAndCatalogTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
