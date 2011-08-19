@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests
 		{
 			TestAssembly = GetType().Assembly.GetName().Name;
 			Cfg = new Cfg.Configuration();
-			AddToConfiguration();
+			AddToConfiguration(Cfg);
 			Cfg.Configure();
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), AttributeConfiguration());
@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Tests
 			return _auditReader ?? (_auditReader = Session.Auditer());
 		}
 
-		protected virtual void AddToConfiguration(){}
+		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
 
 		private ISession openSession(ISessionFactory sessionFactory)
 		{
