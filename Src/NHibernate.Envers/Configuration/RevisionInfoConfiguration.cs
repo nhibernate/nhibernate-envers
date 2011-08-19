@@ -17,6 +17,7 @@ namespace NHibernate.Envers.Configuration
 {
 	public class RevisionInfoConfiguration 
 	{
+		private readonly GlobalConfiguration _globalCfg;
 		private readonly IMetaDataStore _metaDataStore;
 		private string revisionInfoEntityName;
 		private PropertyData revisionInfoIdData;
@@ -26,14 +27,14 @@ namespace NHibernate.Envers.Configuration
 		private string revisionPropSqlType;
 		private string revisionAssQName;
 
-		public RevisionInfoConfiguration(IMetaDataStore metaDataStore) 
+		public RevisionInfoConfiguration(GlobalConfiguration globalCfg, IMetaDataStore metaDataStore) 
 		{
+			_globalCfg = globalCfg;
 			_metaDataStore = metaDataStore;
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
 			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.None);
 			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.None);
 			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
-
 			revisionPropType = "integer";
 		}
 
@@ -41,7 +42,9 @@ namespace NHibernate.Envers.Configuration
 		{
 			var document = new XmlDocument();
 
-			var classMapping = MetadataTools.CreateEntity(document, new AuditTableData(null, null, null, null), null);
+			var classMapping = MetadataTools.CreateEntity(document, 
+									new AuditTableData(null, null, _globalCfg.DefaultSchemaName,  _globalCfg.DefaultCatalogName), 
+									null);
 
 			classMapping.SetAttribute("name", revisionInfoEntityName);
 			classMapping.SetAttribute("table", "REVINFO");
