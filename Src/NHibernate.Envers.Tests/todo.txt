@@ -1,3 +1,0 @@
-﻿* Probably AuditOverridesAttribute can be removed. Use AuditOverrideAttribute with allowmultiple instead. Test + impl for this.
-* Create something similar to NH's Environment type and add cfg strings there
-* Verify that cfg.Audit<foo>().ExcludeRelationData(foo => foo.MyComponent.Bar) works. If not -> JIRA -> impl + test
