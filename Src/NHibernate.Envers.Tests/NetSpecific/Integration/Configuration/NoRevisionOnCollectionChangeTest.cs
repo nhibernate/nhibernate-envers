@@ -53,9 +53,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 				.Should().Have.Count.EqualTo(1);
 		}
 
-		protected override void AddToConfiguration()
+		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			Cfg.SetProperty("nhibernate.envers.revision_on_collection_change", "false");
+			configuration.SetProperty("nhibernate.envers.revision_on_collection_change", "false");
 		}
 
 		protected override IEnumerable<string> Mappings
