@@ -10,6 +10,8 @@ fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timesta
 ...changed to...
 fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timestamp, new RevListener());
 
+* DefaultRevisionEntity now takes nhiberate.envers.default_schema into consideration (NHE-32)
+
 
 
 
