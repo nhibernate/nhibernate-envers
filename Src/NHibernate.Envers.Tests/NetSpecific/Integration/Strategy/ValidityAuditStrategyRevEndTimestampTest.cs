@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
@@ -24,9 +25,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.audit_strategy", typeof(ValidityAuditStrategy).AssemblyQualifiedName)
-				.SetProperty("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "true")
-				.SetProperty("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", revendTimestampColumName);
+			configuration.SetProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy).AssemblyQualifiedName)
+				.SetProperty(ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp, "true")
+				.SetProperty(ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName, revendTimestampColumName);
 		}
 
 		protected override IEnumerable<string> Mappings

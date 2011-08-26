@@ -1,3 +1,4 @@
+using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Versioning
@@ -9,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.do_not_audit_optimistic_locking_field", "false");
+			configuration.SetProperty(ConfigurationKey.DoNotAuditOptimisticLockingField, "false");
 		}
 
 		protected override void Initialize()

@@ -9,26 +9,20 @@ namespace NHibernate.Envers.Configuration
 	{
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
-			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties,
-					"nhibernate.envers.revision_on_collection_change",
-					"true");
+			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties, ConfigurationKey.RevisionOnCollectionChange, "true");
 			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
 
-			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties,
-					"nhibernate.envers.do_not_audit_optimistic_locking_field",
-					"true");
+			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties, ConfigurationKey.DoNotAuditOptimisticLockingField, "true");
 			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
 
-			var storeDataDeletedEntityStr = Toolz.GetProperty(properties,
-					"nhibernate.envers.store_data_at_delete",
-					"false");
+			var storeDataDeletedEntityStr = Toolz.GetProperty(properties, ConfigurationKey.StoreDataAtDelete, "false");
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			DefaultSchemaName = Toolz.GetProperty(properties, "nhibernate.envers.default_schema", string.Empty);
-			DefaultCatalogName = Toolz.GetProperty(properties, "nhibernate.envers.default_catalog", string.Empty);
+			DefaultSchemaName = Toolz.GetProperty(properties, ConfigurationKey.DefaultSchema, string.Empty);
+			DefaultCatalogName = Toolz.GetProperty(properties, ConfigurationKey.DefaultCatalog, string.Empty);
 
 			var collectionProxyMapperFactoryTypeString = Toolz.GetProperty(properties,
-			                                                         "nhibernate.envers.collection_proxy_mapper_factory",
+																	 ConfigurationKey.CollectionProxyMapperFactory,
 			                                                         "NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory");
 			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
 			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);

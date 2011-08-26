@@ -58,7 +58,8 @@
 		<title>Reference</title>
 
 		<para>
-			In more detail, here are the properties that you can set:
+			In more detail, below are the properties that you can pass to NHibernate.Cfg.Configuration.
+			The property names are, from code, also available on ConfigurationKey class.
 		</para>
 
 		<table frame="topbot">
@@ -69,7 +70,9 @@
 				<colspec colname="c2" colwidth="1*"/>
 				<thead>
 					<row>
-						<entry>Property name</entry>
+						<entry>
+							Property name
+						</entry>
 						<entry>Default value</entry>
 						<entry>Description</entry>
 					</row>
@@ -77,7 +80,7 @@
 				<tbody>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_table_prefix</property>
+							nhibernate.envers.audit_table_prefix
 						</entry>
 						<entry>
 
@@ -89,7 +92,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_table_suffix</property>
+							nhibernate.envers.audit_table_suffix
 						</entry>
 						<entry>
 							_AUD
@@ -103,7 +106,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.revision_field_name</property>
+							nhibernate.envers.revision_field_name
 						</entry>
 						<entry>
 							REV
@@ -114,7 +117,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.revision_type_field_name</property>
+							nhibernate.envers.revision_type_field_name
 						</entry>
 						<entry>
 							REVTYPE
@@ -126,7 +129,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.revision_on_collection_change</property>
+							nhibernate.envers.revision_on_collection_change
 						</entry>
 						<entry>
 							true
@@ -139,7 +142,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.do_not_audit_optimistic_locking_field</property>
+							nhibernate.envers.do_not_audit_optimistic_locking_field
 						</entry>
 						<entry>
 							true
@@ -151,7 +154,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.store_data_at_delete</property>
+							nhibernate.envers.store_data_at_delete
 						</entry>
 						<entry>
 							false
@@ -166,7 +169,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.default_schema</property>
+							nhibernate.envers.default_schema
 						</entry>
 						<entry>
 							null (same as normal tables)
@@ -179,7 +182,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.default_catalog</property>
+							nhibernate.envers.default_catalog
 						</entry>
 						<entry>
 							null (same as normal tables)
@@ -192,7 +195,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_strategy</property>
+							nhibernate.envers.audit_strategy
 						</entry>
 						<entry>
 							NHibernate.Envers.Strategy.DefaultAuditStrategy
@@ -207,7 +210,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_strategy_validity_end_rev_field_name</property>
+							nhibernate.envers.audit_strategy_validity_end_rev_field_name
 						</entry>
 						<entry>
 							REVEND
@@ -219,7 +222,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_strategy_validity_store_revend_timestamp</property>
+							nhibernate.envers.audit_strategy_validity_store_revend_timestamp
 						</entry>
 						<entry>
 							false
@@ -233,7 +236,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name</property>
+							nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name
 						</entry>
 						<entry>
 							REVEND_TSTMP
@@ -246,7 +249,7 @@
 					</row>
 					<row>
 						<entry>
-							<property>nhibernate.envers.collection_proxy_mapper_factory</property>
+							nhibernate.envers.collection_proxy_mapper_factory
 						</entry>
 						<entry>
 							NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory

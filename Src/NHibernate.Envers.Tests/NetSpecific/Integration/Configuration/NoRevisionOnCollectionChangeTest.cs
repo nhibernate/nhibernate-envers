@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -55,7 +56,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.revision_on_collection_change", "false");
+			configuration.SetProperty(ConfigurationKey.RevisionOnCollectionChange, "false");
 		}
 
 		protected override IEnumerable<string> Mappings
