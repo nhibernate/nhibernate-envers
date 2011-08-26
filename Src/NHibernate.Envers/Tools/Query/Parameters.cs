@@ -95,6 +95,26 @@ namespace NHibernate.Envers.Tools.Query
 			return newParams;
 		}
 
+		/// <summary>
+		/// Adds <code>IS NULL</code> restriction.
+		/// </summary>
+		/// <param name="propertyName">Property name.</param>
+		/// <param name="addAlias">Positive if alias to property name shall be added.</param>
+		public void AddNullRestriction(string propertyName, bool addAlias)
+		{
+			AddWhere(propertyName, addAlias, "is", "null", false);
+		}
+
+		/// <summary>
+		/// Adds <code>IS NOT NULL</code> restriction.
+		/// </summary>
+		/// <param name="propertyName">Property name.</param>
+		/// <param name="addAlias">Positive if alias to property name shall be added.</param>
+		public void AddNotNullRestriction(string propertyName, bool addAlias)
+		{
+			AddWhere(propertyName, addAlias, "is not", "null", false);
+		}
+
 		public void AddWhere(string left, string op, string right) 
 		{
 			AddWhere(left, true, op, right, true);
