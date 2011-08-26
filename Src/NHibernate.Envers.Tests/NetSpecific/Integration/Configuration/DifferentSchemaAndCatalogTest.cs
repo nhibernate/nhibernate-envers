@@ -1,4 +1,5 @@
 ﻿using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -19,8 +20,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 			var assembly = GetType().Assembly;
 			assemblyName = assembly.GetName().Name;
 			configuration = new Cfg.Configuration()
-							.SetProperty("nhibernate.envers.default_schema", enversSchema)
-							.SetProperty("nhibernate.envers.default_catalog", enversCatalog)
+							.SetProperty(ConfigurationKey.DefaultSchema, enversSchema)
+							.SetProperty(ConfigurationKey.DefaultCatalog, enversCatalog)
 							.Configure()
 							.AddResource(assemblyName + ".Entities.Mapping.hbm.xml", assembly)
 							.IntegrateWithEnvers();

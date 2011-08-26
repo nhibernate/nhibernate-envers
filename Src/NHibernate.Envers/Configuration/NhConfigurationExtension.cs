@@ -1,5 +1,6 @@
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
 using NHibernate.Event;
@@ -39,7 +40,7 @@ namespace NHibernate.Cfg
 		/// and after integrate NHibernate with all others packages as NHibernate.Validator, NHibernate.Search, NHibernate.Spatial.
 		/// </remarks>
 		/// <seealso cref="AttributeConfiguration"/>
-		/// <seealso cref="NHibernate.Envers.Configuration.Fluent.FluentConfiguration"/>
+		/// <seealso cref="FluentConfiguration"/>
 		public static Configuration IntegrateWithEnvers(this Configuration configuration, IMetaDataProvider metaDataProvider)
 		{
 			return IntegrateWithEnvers(configuration, new AuditEventListener(), metaDataProvider);

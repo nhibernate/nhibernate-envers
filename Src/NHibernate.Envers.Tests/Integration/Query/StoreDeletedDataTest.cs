@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty("nhibernate.envers.store_data_at_delete", "true");
+			configuration.SetProperty(ConfigurationKey.StoreDataAtDelete, "true");
 		}
 
 		protected override void Initialize()

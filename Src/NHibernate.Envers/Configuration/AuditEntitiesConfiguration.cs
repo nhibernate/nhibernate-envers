@@ -15,40 +15,20 @@ namespace NHibernate.Envers.Configuration
 		{
 			RevisionInfoEntityAssemblyQualifiedName = revisionInfoEntityName;
 
-			auditTablePrefix = Toolz.GetProperty(properties,
-					"nhibernate.envers.audit_table_prefix",
-					string.Empty);
-			auditTableSuffix = Toolz.GetProperty(properties,
-					"nhibernate.envers.audit_table_suffix",
-					"_AUD");
-
+			auditTablePrefix = Toolz.GetProperty(properties, ConfigurationKey.AuditTablePrefix, string.Empty);
+			auditTableSuffix = Toolz.GetProperty(properties, ConfigurationKey.AuditTableSuffix, "_AUD");
 			OriginalIdPropName = "originalId";
-
-			RevisionFieldName = Toolz.GetProperty(properties,
-					"nhibernate.envers.revision_field_name",
-					"REV");
-
-			RevisionTypePropName = Toolz.GetProperty(properties,
-					"nhibernate.envers.revision_type_field_name",
-					"REVTYPE");
+			RevisionFieldName = Toolz.GetProperty(properties, ConfigurationKey.RevisionFieldName, "REV");
+			RevisionTypePropName = Toolz.GetProperty(properties, ConfigurationKey.RevisionTypeFieldName, "REVTYPE");
 			RevisionTypePropType = "byte";
 
-			RevisionEndFieldName = Toolz.GetProperty(properties,
-			        "audit_strategy_validity_end_rev_field_name",
-			        "REVEND");
+			RevisionEndFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityEndRevFieldName, "REVEND");
+			AuditStrategyType = System.Type.GetType(Toolz.GetProperty(properties, ConfigurationKey.AuditStrategy, typeof (DefaultAuditStrategy).AssemblyQualifiedName));
 
-			AuditStrategyType = System.Type.GetType(Toolz.GetProperty(properties,
-			                                      "nhibernate.envers.audit_strategy",
-			                                      typeof (DefaultAuditStrategy).AssemblyQualifiedName));
-
-			IsRevisionEndTimestampEnabled = bool.Parse(Toolz.GetProperty(properties,
-				                                   "nhibernate.envers.audit_strategy_validity_store_revend_timestamp",
-												   "false"));
+			IsRevisionEndTimestampEnabled = bool.Parse(Toolz.GetProperty(properties,ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp, "false"));
 			if (IsRevisionEndTimestampEnabled)
 			{
-				RevisionEndTimestampFieldName = Toolz.GetProperty(properties,
-													"nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name",
-													"REVEND_TSTMP");
+				RevisionEndTimestampFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName, "REVEND_TSTMP");
 			}
 
 			customAuditTablesNames = new Dictionary<string, string>();
