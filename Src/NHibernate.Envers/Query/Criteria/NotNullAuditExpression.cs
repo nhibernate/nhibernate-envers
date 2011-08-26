@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Query.Criteria
 
 			if (relatedEntity == null)
 			{
-				parameters.AddWhereWithParam(propertyName, "<>", null);
+				parameters.AddNotNullRestriction(propertyName, true);
 			}
 			else
 			{

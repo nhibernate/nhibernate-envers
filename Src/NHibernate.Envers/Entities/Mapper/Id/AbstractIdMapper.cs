@@ -43,7 +43,26 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var paramData in paramDatas) 
 			{
-				parametersToUse.AddWhereWithParam(paramData.GetProperty(prefix) , equals ? "=" : "<>", paramData.Value);
+				if (paramData.Value == null)
+				{
+					handleNullValue(parametersToUse, paramData.GetProperty(prefix), equals);
+				}
+				else
+				{
+					parametersToUse.AddWhereWithParam(paramData.GetProperty(prefix), equals ? "=" : "<>", paramData.Value);					
+				}
+			}
+		}
+
+		private void handleNullValue(Parameters parameters, string propertyName, bool equals)
+		{
+			if (equals)
+			{
+				parameters.AddNullRestriction(propertyName, equals);
+			}
+			else
+			{
+				parameters.AddNotNullRestriction(propertyName, equals);
 			}
 		}
 
