@@ -76,8 +76,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 													IRevisionListener revisionListener)
 		{
 			attributeFactories.Add(new FluentRevision(typeof(T),
-					  revisionNumber.Body.MethodInfo("revisionNumber"),
-					  revisionTimestamp.Body.MethodInfo("revisionTimestamp"),
+					  revisionNumber.MethodInfo("revisionNumber"),
+					  revisionTimestamp.MethodInfo("revisionTimestamp"),
 					  revisionListener));
 		}
 
