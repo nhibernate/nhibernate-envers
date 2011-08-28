@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IFluentAudit<T> Exclude(Expression<Func<T, object>> property)
 		{
-			var methodInfo = property.Body.MethodInfo("exclusion"); 
+			var methodInfo = property.MethodInfo("exclusion");
 			excluded.Add(typeof(T).GetProperty(methodInfo.Name));
 			return this;
 		}
@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IFluentAudit<T> ExcludeRelationData(Expression<Func<T, object>> property)
 		{
-			var methodInfo = property.Body.MethodInfo("relation exclusion");
+			var methodInfo = property.MethodInfo("relation exclusion");
 			excludedRelations.Add(typeof(T).GetProperty(methodInfo.Name));
 			return this;
 		}
@@ -73,7 +73,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public IEnumerable<Attribute> CreateClassAttributes()
 		{
-			return new[] {new AuditedAttribute()};
+			return new[] { new AuditedAttribute() };
 		}
 
 		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
