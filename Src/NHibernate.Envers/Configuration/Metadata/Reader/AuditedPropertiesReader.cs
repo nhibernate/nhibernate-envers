@@ -184,7 +184,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			var annotationOverride = _metaDataStore.MemberMeta<AuditOverrideAttribute>(property);
 			if (annotationOverride != null)
 			{
-				propertyData.addAuditingOverride(annotationOverride);
+				propertyData.AddAuditingOverride(annotationOverride);
 			}
 		}
 

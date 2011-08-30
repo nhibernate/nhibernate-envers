@@ -13,6 +13,5 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public MemberInfo MemberInfo { get; private set; }
 		public Attribute Attribute { get; private set; }
-
 	}
 }

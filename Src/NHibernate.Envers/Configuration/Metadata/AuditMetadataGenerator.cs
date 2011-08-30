@@ -71,26 +71,26 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <returns>A revision info mapping, which can be added to other mappings (has no parent).</returns>
 		private XmlElement CloneAndSetupRevisionInfoRelationMapping(XmlDocument doc)
 		{
-			var rev_mapping = (XmlElement)doc.ImportNode(revisionInfoRelationMapping, true);
-			rev_mapping.SetAttribute("name", VerEntCfg.RevisionFieldName);
+			var revMapping = (XmlElement)doc.ImportNode(revisionInfoRelationMapping, true);
+			revMapping.SetAttribute("name", VerEntCfg.RevisionFieldName);
 
-			MetadataTools.AddOrModifyColumn(rev_mapping, VerEntCfg.RevisionFieldName);
+			MetadataTools.AddOrModifyColumn(revMapping, VerEntCfg.RevisionFieldName);
 
-			return rev_mapping;
+			return revMapping;
 		}
 
-		public void AddRevisionInfoRelation(XmlElement any_mapping)
+		public void AddRevisionInfoRelation(XmlElement anyMapping)
 		{
-			any_mapping.AppendChild(CloneAndSetupRevisionInfoRelationMapping(any_mapping.OwnerDocument));
+			anyMapping.AppendChild(CloneAndSetupRevisionInfoRelationMapping(anyMapping.OwnerDocument));
 		}
 
-		public void AddRevisionType(XmlElement any_mapping)
+		public void AddRevisionType(XmlElement anyMapping)
 		{
-			var revTypeProperty = MetadataTools.AddProperty(any_mapping, VerEntCfg.RevisionTypePropName,
+			var revTypeProperty = MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionTypePropName,
 					VerEntCfg.RevisionTypePropType, true, false);
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
 			revTypeProperty.SetAttribute("not-null", "true");
-			addEndRevision(any_mapping);
+			addEndRevision(anyMapping);
 		}
 
 		private void addEndRevision(XmlElement anyMapping)

@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tools.Graph
 	/// A graph vertex - stores its representation, neighbours, start and end time in (D|B)FS.
 	/// </summary>
 	/// <typeparam name="R"></typeparam>
-    public class Vertex<R> 
+	public class Vertex<R> 
 	{
 		public Vertex(R representation)
 		{
@@ -17,14 +17,14 @@ namespace NHibernate.Envers.Tools.Graph
 		}
 
 		public R Representation { get; private set; }
-        public IList<Vertex<R>> Neighbours { get; private set; }
+		public IList<Vertex<R>> Neighbours { get; private set; }
 
-        public int StartTime { get; set; }
-        public int EndTime { get; set; }
+		public int StartTime { get; set; }
+		public int EndTime { get; set; }
 
-        public void addNeighbour(Vertex<R> n) 
+		public void AddNeighbour(Vertex<R> n) 
 		{
-            Neighbours.Add(n);
-        }
-    }
+			Neighbours.Add(n);
+		}
+	}
 }

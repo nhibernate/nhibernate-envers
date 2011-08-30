@@ -61,7 +61,7 @@ namespace NHibernate.Envers.Configuration
 		public EntitiesConfigurations EntCfg { get; private set; }
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
-		public IAuditStrategy AuditStrategy;
+		public IAuditStrategy AuditStrategy { get; private set; }
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
