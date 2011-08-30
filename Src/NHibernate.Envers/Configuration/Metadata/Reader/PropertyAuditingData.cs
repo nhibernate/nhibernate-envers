@@ -43,7 +43,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return new PropertyData(Name, BeanName, AccessType, Store);
 		}
 
-		public void addAuditingOverride(AuditOverrideAttribute annotation)
+		public void AddAuditingOverride(AuditOverrideAttribute annotation)
 		{
 			if (annotation != null)
 			{

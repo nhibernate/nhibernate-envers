@@ -25,12 +25,12 @@ namespace NHibernate.Envers.Tools.Graph
 			{
                 foreach (var vn in definer.GetNeighbours(v)) 
 				{
-                    vertices[definer.GetRepresentation(v)].addNeighbour(vertices[definer.GetRepresentation(vn)]);
+                    vertices[definer.GetRepresentation(v)].AddNeighbour(vertices[definer.GetRepresentation(vn)]);
                 }
             }
 
             // Sorting the representations
-            var sortedReps = new TopologicalSort<R>().sort(vertices.Values);
+            var sortedReps = new TopologicalSort<R>().Sort(vertices.Values);
 
             // Transforming the sorted representations to sorted values 
             var sortedValues = new List<V>(sortedReps.Count);

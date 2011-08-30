@@ -54,7 +54,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 		}
 
-		private void handleNullValue(Parameters parameters, string propertyName, bool equals)
+		private static void handleNullValue(Parameters parameters, string propertyName, bool equals)
 		{
 			if (equals)
 			{

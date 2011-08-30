@@ -27,20 +27,19 @@ namespace NHibernate.Envers.Tools
 			return referencePropertyName + RelationCharacter;
 		}
 
-		public static string ReferencedEntityName(IValue value) 
+		public static string ReferencedEntityName(IValue value)
 		{
-			if (value is ToOne) 
-			{
-				return ((ToOne) value).ReferencedEntityName;
-			}
-			if (value is OneToMany) 
-			{
-				return ((OneToMany) value).ReferencedEntityName;
-			}
-			if (value is Mapping.Collection) 
-			{
-				return ReferencedEntityName(((Mapping.Collection)value).Element);
-			}
+			var valueToOne = value as ToOne;
+			if (valueToOne!=null) 
+				return valueToOne.ReferencedEntityName;
+
+			var valueOneToMany = value as OneToMany;
+			if (valueOneToMany != null)
+				return valueOneToMany.ReferencedEntityName;
+
+			var valueCollection = value as Mapping.Collection;
+			if (valueCollection != null)
+				return ReferencedEntityName(valueCollection.Element);
 
 			return null;
 		}
