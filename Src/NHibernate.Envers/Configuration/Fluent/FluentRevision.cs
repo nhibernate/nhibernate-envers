@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return new[]
 							{
 								new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
-								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute()), 
+								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute())
 							};
 
 		}

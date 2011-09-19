@@ -1,21 +1,20 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
-    {
-    /**
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class NotAuditExpression : IAuditCriterion {
-        private IAuditCriterion criterion;
+{
+	public class NotAuditExpression : IAuditCriterion
+	{
+		private readonly IAuditCriterion criterion;
 
-        public NotAuditExpression(IAuditCriterion criterion) {
-            this.criterion = criterion;
-        }
+		public NotAuditExpression(IAuditCriterion criterion)
+		{
+			this.criterion = criterion;
+		}
 
-        public void AddToQuery(AuditConfiguration verCfg, String entityName, QueryBuilder qb, Parameters parameters) {
-            criterion.AddToQuery(verCfg, entityName, qb, parameters.AddNegatedParameters());
-        }
-    }
+		public void AddToQuery(AuditConfiguration verCfg, string entityName, QueryBuilder qb, Parameters parameters)
+		{
+			criterion.AddToQuery(verCfg, entityName, qb, parameters.AddNegatedParameters());
+		}
+	}
 }

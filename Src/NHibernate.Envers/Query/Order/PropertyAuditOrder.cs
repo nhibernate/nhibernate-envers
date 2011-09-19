@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Query.Order
 			this.asc = asc;
 		}
 
-		public Pair<String, Boolean> getData(AuditConfiguration auditCfg)
+		public Pair<String, Boolean> GetData(AuditConfiguration auditCfg)
 		{
 			return new Pair<String, Boolean>(propertyNameGetter.Get(auditCfg), asc);
 		}

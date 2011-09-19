@@ -9,14 +9,8 @@ namespace NHibernate.Envers.Query.Impl
 			Operation = operation;
 		}
 
-		#region IRevisionEntityInfo<TEntity,TRevisionEntity> Members
-
 		public TEntity Entity { get; private set; }
-
 		public TRevisionEntity RevisionEntity { get; private set; }
-
 		public RevisionType Operation { get; private set; }
-
-		#endregion
 	}
 }

@@ -104,7 +104,7 @@ namespace NHibernate.Envers.Query.Impl
 		public IAuditQuery AddOrder(IAuditOrder order) 
 		{
 			HasOrder = true;
-			var orderData = order.getData(VerCfg);
+			var orderData = order.GetData(VerCfg);
 			QueryBuilder.AddOrder(orderData.First, orderData.Second);
 			return this;
 		}

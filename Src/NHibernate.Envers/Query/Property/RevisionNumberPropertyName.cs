@@ -1,15 +1,15 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 
 namespace NHibernate.Envers.Query.Property
 {
-    /**
-     * Used for specifying restrictions on the revision number, corresponding to an audit entity.
-     * @author Adam Warski (adam at warski dot org)
-     */
-    public class RevisionNumberPropertyName : IPropertyNameGetter {
-        public String Get(AuditConfiguration auditCfg) {
-            return auditCfg.AuditEntCfg.RevisionNumberPath;
-        }
-    }
+	/// <summary>
+	/// Used for specifying restrictions on the revision number, corresponding to an audit entity.
+	/// </summary>
+	public class RevisionNumberPropertyName : IPropertyNameGetter
+	{
+		public string Get(AuditConfiguration auditCfg)
+		{
+			return auditCfg.AuditEntCfg.RevisionNumberPath;
+		}
+	}
 }

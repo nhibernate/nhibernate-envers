@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Configuration
 		public XmlElement RevisionInfoRelationMapping { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public string RevisionInfoEntityName { get; private set; }
-		public System.Type RevisionInfoClass { get; set; }
-		public PropertyData RevisionInfoTimestampData { get; set; }
+		public System.Type RevisionInfoClass { get; private set; }
+		public PropertyData RevisionInfoTimestampData { get; private set; }
 	}
 }

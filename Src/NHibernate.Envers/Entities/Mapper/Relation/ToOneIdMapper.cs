@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_delegat.MapToMapFromEntity(newData, _nonInsertableFake ? oldObj : newObj);
 
 			//noinspection SimplifiableConditionalExpression
-			return _nonInsertableFake ? false : !Toolz.EntitiesEqual(session, newObj, oldObj);
+			return !_nonInsertableFake && !Toolz.EntitiesEqual(session, newObj, oldObj);
 		}
 
 		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
