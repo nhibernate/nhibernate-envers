@@ -23,8 +23,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.Save(ing1);
-				ed1.Reffering = new HashedSet<SetRefIngEntity>();
-				ed1.Reffering.Add(ing1);
+				ed1.Reffering = new HashedSet<SetRefIngEntity> {ing1};
 				tx.Commit();
 			}
 		}

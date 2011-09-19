@@ -109,7 +109,7 @@ namespace NHibernate.Envers.Query.Impl
 		public IEntityAuditQuery<TEntity> AddOrder(IAuditOrder order)
 		{
 			hasOrder = true;
-			Pair<string, bool> orderData = order.getData(auditConfiguration);
+			Pair<string, bool> orderData = order.GetData(auditConfiguration);
 			queryBuilder.AddOrder(orderData.First, orderData.Second);
 			return this;
 		}

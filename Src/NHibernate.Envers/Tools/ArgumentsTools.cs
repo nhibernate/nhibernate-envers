@@ -4,7 +4,7 @@ namespace NHibernate.Envers.Tools
 {
     public static class ArgumentsTools
     {
-        public static void CheckNotNull(Object o, String paramName)
+        public static void CheckNotNull(object o, string paramName)
         {
             if (o == null)
             {
@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tools
             }
         }
 
-        public static void CheckPositive(long i, String paramName)
+        public static void CheckPositive(long i, string paramName)
         {
             if (i <= 0)
             {

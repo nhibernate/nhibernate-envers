@@ -34,8 +34,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 		[Test]
 		public void VerifyHistoryOfOwning()
 		{
-			var ver1 = new Animal(){ Id = id};
-			var ver2 = new Animal(){ Id = id, Height = 14, Weight = 45};
+			var ver1 = new Animal { Id = id};
+			var ver2 = new Animal { Id = id, Height = 14, Weight = 45};
 
 			AuditReader().Find<Animal>(id, 1)
 				.Should().Be.EqualTo(ver1);

@@ -480,14 +480,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 				else
 				{
-					if (propertyValue.IsSorted)
-					{
-						collectionMapper = collectionProxyMapperFactory.SortedSet(commonCollectionMapperData, elementComponentData, (IComparer)propertyValue.Comparer);
-					}
-					else
-					{
-						collectionMapper = collectionProxyMapperFactory.Set(commonCollectionMapperData, elementComponentData);						
-					}
+					collectionMapper = propertyValue.IsSorted ? 
+								collectionProxyMapperFactory.SortedSet(commonCollectionMapperData, elementComponentData, (IComparer)propertyValue.Comparer) : 
+								collectionProxyMapperFactory.Set(commonCollectionMapperData, elementComponentData);
 				}
 			}
 			else if (type is ListType)
@@ -529,14 +524,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 				else
 				{
-					if (propertyValue.IsSorted)
-					{
-						collectionMapper = collectionProxyMapperFactory.SortedMap(commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)propertyValue.Comparer);
-					}
-					else
-					{
-						collectionMapper = collectionProxyMapperFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
-					}
+					collectionMapper = propertyValue.IsSorted ? 
+								collectionProxyMapperFactory.SortedMap(commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)propertyValue.Comparer) : 
+								collectionProxyMapperFactory.Map(commonCollectionMapperData, elementComponentData, indexComponentData);
 				}
 			}
 			else if (type is BagType)

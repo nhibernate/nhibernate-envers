@@ -147,7 +147,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 			try 
 			{
-				var coll = Activator.CreateInstance(_proxyType, new object[]{GetInitializor(verCfg, versionsReader, primaryKey, revision)});
+				var coll = Activator.CreateInstance(_proxyType, new[]{GetInitializor(verCfg, versionsReader, primaryKey, revision)});
 				setter.Set(obj, coll);
 			} 
 			catch (InstantiationException e) 

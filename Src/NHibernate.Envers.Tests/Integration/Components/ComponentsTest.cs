@@ -48,10 +48,8 @@ namespace NHibernate.Envers.Tests.Integration.Components
 				cte1.Comp1 = new Component1 {Str1 = "a'", Str2 = "b'"};
 				cte2.Comp1.Str1 = "a2'";
 				cte3.Comp2.Str6 = "y3'";
-				cte4.Comp1 = new Component1();
-				cte4.Comp1.Str1 = "n";
-				cte4.Comp2 = new Component2();
-				cte4.Comp2.Str5 = "m";
+				cte4.Comp1 = new Component1 {Str1 = "n"};
+				cte4.Comp2 = new Component2 {Str5 = "m"};
 				tx.Commit();
 			}
 			using(var tx = Session.BeginTransaction())
