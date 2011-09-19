@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tests.Entities;
@@ -21,18 +22,18 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			get
 			{
-				return new[]{"Entities.Mapping.hbm.xml", "Entities.RevEntity.CustomRevEntity.hbm.xml"};
+				return new[] { "Entities.Mapping.hbm.xml", "Entities.RevEntity.CustomRevEntity.hbm.xml" };
 			}
 		}
 
 		protected override void Initialize()
 		{
-			var te = new StrTestEntity {Str = "x"};
+			var te = new StrTestEntity { Str = "x" };
 
 			timestamp1 = DateTime.Now.AddSeconds(-1);
 			using (var tx = Session.BeginTransaction())
 			{
-				id = (int) Session.Save(te);
+				id = (int)Session.Save(te);
 				tx.Commit();
 			}
 
@@ -92,14 +93,24 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[]{1,2}, AuditReader().GetRevisions<StrTestEntity>( id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<StrTestEntity>(id));
+		}
+
+
+		[Test]
+		public void VerifyHistoryOf()
+		{
+			var rev1timestamp = AuditReader().CreateQuery().ForHistoryOf<StrTestEntity, CustomRevEntity>().Results().First()
+				.RevisionEntity.CustomTimestamp;
+			Assert.IsTrue(rev1timestamp > timestamp1.Ticks);
+			Assert.IsTrue(rev1timestamp <= timestamp2.Ticks);
 		}
 
 		[Test]
 		public void VerifyHistoryOfId()
 		{
-			var ver1 = new StrTestEntity {Id = id, Str = "x"};
-			var ver2 = new StrTestEntity {Id = id, Str = "y"};
+			var ver1 = new StrTestEntity { Id = id, Str = "x" };
+			var ver2 = new StrTestEntity { Id = id, Str = "y" };
 
 			Assert.AreEqual(ver1, AuditReader().Find<StrTestEntity>(id, 1));
 			Assert.AreEqual(ver2, AuditReader().Find<StrTestEntity>(id, 2));
