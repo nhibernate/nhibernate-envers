@@ -1,0 +1,15 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Ctor">
+	<class name="NonPublicCtorEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<component name="Component">
+			<property name="Name"/>
+		</component>
+		<component name="StructComponent">
+			<property name="Value" access="field.camelcase-underscore"/>
+		</component>
+	</class>
+</hibernate-mapping>
