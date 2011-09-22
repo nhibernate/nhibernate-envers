@@ -359,6 +359,8 @@
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
+    <Compile Include="NetSpecific\Integration\PropertyNull\EntityWithPrimitiveNullAsCamelcaseUnderscore.cs" />
+    <Compile Include="NetSpecific\Integration\PropertyNull\PrimitiveNullTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\ComponentQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\FindRevisionsTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\Model.cs" />
@@ -398,6 +400,9 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\PropertyNull\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Component\Mapping.hbm.xml" />
