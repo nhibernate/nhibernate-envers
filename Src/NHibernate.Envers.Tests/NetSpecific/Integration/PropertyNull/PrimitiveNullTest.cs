@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.PropertyNull
 
 		protected override void Initialize()
 		{
-			var entity = new EntityWithPrimitiveNullAsCamelcaseUnderscore();
+			var entity = new EntityWithPrimitiveNullAsCamelcaseUnderscore{Value = 1};
 
 			using (var tx = Session.BeginTransaction())
 			{
@@ -22,8 +22,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.PropertyNull
 		[Test]
 		public void ShouldBeAbleToFindAuditedEntity()
 		{
-			AuditReader().Find<EntityWithPrimitiveNullAsCamelcaseUnderscore>(id, 1).Id
-				.Should().Be.EqualTo(id);
+			var rev = AuditReader().Find<EntityWithPrimitiveNullAsCamelcaseUnderscore>(id, 1);
+			rev.Id.Should().Be.EqualTo(id);
+			rev.Value.Should().Be.EqualTo(1);
 		}
 	}
 }
