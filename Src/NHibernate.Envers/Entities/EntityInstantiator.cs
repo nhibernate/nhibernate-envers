@@ -5,7 +5,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
-using NHibernate.Util;
+using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities
 {
@@ -58,8 +58,7 @@ namespace NHibernate.Envers.Entities
 			try 
 			{
 				var cls = Toolz.ResolveDotnetType(entityName);
-				ret = ReflectHelper.GetDefaultConstructor(cls).Invoke(null);
-				
+				ret = ReflectionTools.CreateInstanceByDefaultConstructor(cls);				
 			} 
 			catch (Exception e) 
 			{

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Util;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
@@ -47,7 +46,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			try 
 			{
-				var subObj = ReflectHelper.GetDefaultConstructor(getter.ReturnType).Invoke(null); 
+				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(getter.ReturnType);  
 				setter.Set(obj, subObj);
 
 				foreach(var idMapper in Ids.Values) 
