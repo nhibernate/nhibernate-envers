@@ -1,44 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Properties;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
 	public class SinglePropertyMapper : IPropertyMapper, ISimpleMapperBuilder 
 	{
-		private PropertyData propertyData;
-
-		//rk - why not IsPrimitive instead?
-		private static readonly List<System.Type> primitiveTypesList = new List<System.Type>{ typeof(bool), typeof(byte), 
-						typeof(char), typeof(short), typeof(int), typeof(long), typeof(float), typeof(double)};
+		private PropertyData _propertyData;
 
 		public SinglePropertyMapper(PropertyData propertyData) 
 		{
-			this.propertyData = propertyData;
+			_propertyData = propertyData;
 		}
 
 		public SinglePropertyMapper() { }
 
 		public void Add(PropertyData propertyData) 
 		{
-			if (this.propertyData != null) 
+			if (_propertyData != null) 
 			{
 				throw new AuditException("Only one property can be added!");
 			}
 
-			this.propertyData = propertyData;
+			_propertyData = propertyData;
 		}
 
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) 
 		{
-			data[propertyData.Name] = newObj;
+			data[_propertyData.Name] = newObj;
 			if (newObj == null)
 			{
 				return oldObj != null;
@@ -54,31 +48,13 @@ namespace NHibernate.Envers.Entities.Mapper
 				return;
 			}
 			var objType = obj.GetType();
-			var setter = ReflectionTools.GetSetter(objType, propertyData);
+			var setter = ReflectionTools.GetSetter(objType, _propertyData);
 
-			var value = data[propertyData.Name];
-			// We only set a null value if the field is not primitive. Otherwise, we leave it intact.
-			if (value != null || !isPrimitive(setter, objType)) 
+			var value = data[_propertyData.Name];
+			if (value != null) 
 			{
 				setter.Set(obj, value);
 			}
-		}
-
-		private bool isPrimitive(ISetter setter, System.Type cls) 
-		{
-			if (cls == null) 
-			{
-				throw new HibernateException("No field found for property: " + setter.PropertyName);
-			}
-			//rk: I'm not sure about this one...
-			if (setter.Method == null)
-			{
-				var field = cls.GetField(propertyData.BeanName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-				if (field != null)
-					return field.GetType().IsPrimitive;
-				return isPrimitive(setter, cls.BaseType);
-			}
-			return primitiveTypesList.Contains(setter.Method.GetParameters()[0].ParameterType);
 		}
 
 		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
