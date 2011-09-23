@@ -99,7 +99,21 @@ namespace NHibernate.Envers.Configuration.Fluent
 				}
 			}
 			addBaseTypesForAuditAttribute(ret, auditedTypes);
+			throwIfUsingNonMappedRevisionEntity(nhConfiguration);
 			return ret;
+		}
+
+		private void throwIfUsingNonMappedRevisionEntity(Cfg.Configuration nhConfiguration)
+		{
+			//mh conf is never null in runtime. Allows null for easier unit testing
+			if (nhConfiguration == null)
+				return;
+
+			foreach (var revAttr in attributeFactories.OfType<FluentRevision>()
+										.Where(revAttr => nhConfiguration.GetClassMapping(revAttr.Type) == null))
+			{
+				throw new MappingException("Custom revision entity " + revAttr.Type + " must be mapped!");
+			}			
 		}
 
 		private static void addMemberMetaAndLog(System.Type type, MemberInfoAndAttribute memberInfoAndAttribute, EntityMeta entMeta)
