@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
@@ -40,10 +39,9 @@ namespace NHibernate.Envers.Query.Impl
 			 * (only non-deleted entities)
 			 *     e.revision_type != DEL
 			 */
-
-			AuditEntitiesConfiguration verEntCfg = VerCfg.AuditEntCfg;
+			var verEntCfg = VerCfg.AuditEntCfg;
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-			String originalIdPropertyName = verEntCfg.OriginalIdPropName;
+			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
 			var referencedIdData = new MiddleIdData(verEntCfg, VerCfg.EntCfg[EntityName].IdMappingData,
 					null, EntityName, VerCfg.EntCfg.IsVersioned(EntityName));
