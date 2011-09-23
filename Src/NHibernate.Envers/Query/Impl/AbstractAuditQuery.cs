@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Query.Impl
 	{
 		private readonly IAuditReaderImplementor _versionsReader;
 
-		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls) 
+		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls)
 		{
 			VerCfg = verCfg;
 			_versionsReader = versionsReader;
@@ -23,6 +23,11 @@ namespace NHibernate.Envers.Query.Impl
 			EntityName = cls.FullName;
 			VersionsEntityName = verCfg.AuditEntCfg.GetAuditEntityName(EntityName);
 			QueryBuilder = new QueryBuilder(VersionsEntityName, "e");
+
+			if (!VerCfg.EntCfg.IsVersioned(EntityName))
+			{
+				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
+			}
 		}
 
 		protected EntityInstantiator EntityInstantiator { get; private set; }

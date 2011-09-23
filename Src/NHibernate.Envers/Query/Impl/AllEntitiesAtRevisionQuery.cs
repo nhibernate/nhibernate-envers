@@ -10,7 +10,8 @@ namespace NHibernate.Envers.Query.Impl
 	{
 		private readonly long revision;
 
-		public AllEntitiesAtRevisionQuery(AuditConfiguration auditConfiguration, IAuditReaderImplementor versionsReader, long revision) : base(auditConfiguration, versionsReader, false, typeof(TEntity).FullName)
+		public AllEntitiesAtRevisionQuery(AuditConfiguration auditConfiguration, IAuditReaderImplementor versionsReader, long revision) 
+							: base(auditConfiguration, versionsReader, false, typeof(TEntity).FullName)
 		{
 			this.revision = revision;
 		}

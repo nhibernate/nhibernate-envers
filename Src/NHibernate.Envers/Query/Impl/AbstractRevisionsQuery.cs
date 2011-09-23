@@ -50,6 +50,12 @@ namespace NHibernate.Envers.Query.Impl
 
 			queryBuilder = new QueryBuilder(versionsEntityName, "e");
 			this.includesDeletations = includesDeletations;
+
+			if (!auditConfiguration.EntCfg.IsVersioned(EntityName))
+			{
+				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
+			}
+
 		}
 
 		public EntityInstantiator EntityInstantiator
