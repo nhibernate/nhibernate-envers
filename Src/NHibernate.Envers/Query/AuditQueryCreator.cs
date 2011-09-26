@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using System;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Impl;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
@@ -109,6 +110,7 @@ namespace NHibernate.Envers.Query
 		/// The results of the query will be sorted in ascending order by the revision number,
 		/// unless an order or projection is added.		
 		/// </returns>
+		[Obsolete("Specify revision entity type explicitly instead, using ForHistoryOf<TEntity, TRevisionEntity>()")]
 		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, DefaultRevisionEntity>> ForHistoryOf<TEntity>() where TEntity : class
 		{
 			return ForHistoryOf<TEntity>(true);
@@ -136,16 +138,17 @@ namespace NHibernate.Envers.Query
 		/// Creates a query, which selects the revisions, at which the given entity was modified.
 		/// </summary>
 		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
-		/// <param name="includesDeleted">If true, also revisions where entities were deleted will be returned.</param> 
+		/// <param name="includeDeleted">If true, also revisions where entities were deleted will be returned.</param> 
 		/// <returns>
 		/// A query for revisions at which instances of the given entity were modified, to which
 		/// conditions can be added (for example - a specific id of the entity) and which can then be executed.
 		/// The results of the query will be sorted in ascending order by the revision number,
 		/// unless an order or projection is added.		
 		/// </returns>
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, DefaultRevisionEntity>> ForHistoryOf<TEntity>(bool includesDeleted) where TEntity : class
+		[Obsolete("Specify revision entity type explicitly instead, using ForHistoryOf<TEntity, TRevisionEntity>(includeDeleted)")]
+		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, DefaultRevisionEntity>> ForHistoryOf<TEntity>(bool includeDeleted) where TEntity : class
 		{
-			return new HistoryQuery<TEntity, DefaultRevisionEntity>(auditCfg, auditReaderImplementor, includesDeleted);
+			return new HistoryQuery<TEntity, DefaultRevisionEntity>(auditCfg, auditReaderImplementor, includeDeleted);
 		}
 
 		/// <summary>
@@ -153,18 +156,18 @@ namespace NHibernate.Envers.Query
 		/// </summary>
 		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
 		/// <typeparam name="TRevisionEntity">The <see cref="System.Type"/> of the revision entity</typeparam>
-		/// <param name="includesDeleted">If true, also revisions where entities were deleted will be returned.</param> 
+		/// <param name="includeDeleted">If true, also revisions where entities were deleted will be returned.</param> 
 		/// <returns>
 		/// A query for revisions at which instances of the given entity were modified, to which
 		/// conditions can be added (for example - a specific id of the entity) and which can then be executed.
 		/// The results of the query will be sorted in ascending order by the revision number,
 		/// unless an order or projection is added.		
 		/// </returns>
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>(bool includesDeleted) 
+		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>(bool includeDeleted) 
 																												where TEntity : class
 																												where TRevisionEntity : class
 		{
-			return new HistoryQuery<TEntity, TRevisionEntity>(auditCfg, auditReaderImplementor, includesDeleted);
+			return new HistoryQuery<TEntity, TRevisionEntity>(auditCfg, auditReaderImplementor, includeDeleted);
 		}
 	}
 }

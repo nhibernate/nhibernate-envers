@@ -157,15 +157,15 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void RevisionsPropertyEqQueryForHistory()
 		{
-			var revs_id1 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+			var revs_id1 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity, DefaultRevisionEntity>()
 						.Add(AuditEntity.Property("Str").Le("a"))
 						.Add(AuditEntity.Id().Eq(id1))
 						.Results().Select(x=> x.RevisionEntity.Id);
-			var revs_id2 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+			var revs_id2 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity, DefaultRevisionEntity>()
 						.Add(AuditEntity.Property("Str").Le("a"))
 						.Add(AuditEntity.Id().Eq(id2))
 						.Results().Select(x => x.RevisionEntity.Id);
-			var revs_id3 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+			var revs_id3 = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity, DefaultRevisionEntity>()
 						.Add(AuditEntity.Property("Str").Le("a"))
 						.Add(AuditEntity.Id().Eq(id3))
 						.Results().Select(x => x.RevisionEntity.Id);
@@ -226,7 +226,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void SelectRevisionTypeQueryUsingRevisionInfo()
 		{
-			var result = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity>()
+			var result = AuditReader().CreateQuery().ForHistoryOf<StrIntTestEntity, DefaultRevisionEntity>()
 				.Add(AuditEntity.Id().Eq(id1))
 				.Results();
 			result.Select(x => x.Operation).Should().Have.SameSequenceAs(RevisionType.Added, RevisionType.Modified, RevisionType.Deleted);
