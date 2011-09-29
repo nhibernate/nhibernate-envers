@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Envers.Query;
@@ -165,7 +166,7 @@ namespace NHibernate.Envers.Tools.Query
 			expressions.Add(expression.ToString());
 		}
 
-		public void AddWhereWithParams(string left, string opStart, object[] paramValues, string opEnd) 
+		public void AddWhereWithParams(string left, string opStart, object[] paramValues, string opEnd)
 		{
 			var expression = new StringBuilder(1024);
 			var paramValuesLength = paramValues.Length;
