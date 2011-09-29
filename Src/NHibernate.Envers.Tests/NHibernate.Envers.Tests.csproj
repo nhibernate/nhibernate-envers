@@ -366,10 +366,13 @@
     <Compile Include="NetSpecific\Integration\PropertyNull\EntityWithPrimitiveNullAsCamelcaseUnderscore.cs" />
     <Compile Include="NetSpecific\Integration\PropertyNull\PrimitiveNullTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\ComponentQueryTest.cs" />
-    <Compile Include="NetSpecific\Integration\Query\EnumerableInTest.cs" />
+    <Compile Include="NetSpecific\Integration\Query\ComponentInTest.cs" />
+    <Compile Include="NetSpecific\Integration\Query\EntityReferingEmbEntity.cs" />
     <Compile Include="NetSpecific\Integration\Query\FindRevisionsTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\Model.cs" />
     <Compile Include="NetSpecific\Integration\Query\QueryForNonAuditEntityTest.cs" />
+    <Compile Include="NetSpecific\Integration\Query\RelationEmbInTest.cs" />
+    <Compile Include="NetSpecific\Integration\Query\RelationInTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\ChangeListenerInstanceTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\IncorrectListenerTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\MultipleRevInfoTest.cs" />

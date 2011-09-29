@@ -6,7 +6,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 {
 	[TestFixture]
-	public class EnumerableInTest : TestBase
+	public class ComponentInTest : TestBase
 	{
 		protected override void Initialize()
 		{
