@@ -15,9 +15,9 @@ namespace NHibernate.Envers.Query
 		/// </summary>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
-		public static AuditProperty<object> Property(string propertyName) 
+		public static AuditProperty Property(string propertyName) 
 		{
-			return new AuditProperty<object>(new EntityPropertyName(propertyName));
+			return new AuditProperty(new EntityPropertyName(propertyName));
 		}
 
 
@@ -25,9 +25,9 @@ namespace NHibernate.Envers.Query
 		/// Create restrictions, projections and specify order for the revision number, corresponding to an audited entity.
 		/// </summary>
 		/// <returns></returns>
-		public static AuditProperty<long> RevisionNumber() 
+		public static AuditProperty RevisionNumber() 
 		{
-			return new AuditProperty<long>(new RevisionNumberPropertyName());
+			return new AuditProperty(new RevisionNumberPropertyName());
 		}
 
 		/// <summary>
@@ -35,18 +35,18 @@ namespace NHibernate.Envers.Query
 		/// </summary>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
-		public static AuditProperty<object> RevisionProperty(string propertyName) 
+		public static AuditProperty RevisionProperty(string propertyName) 
 		{
-			return new AuditProperty<object>(new RevisionPropertyPropertyName(propertyName));
+			return new AuditProperty(new RevisionPropertyPropertyName(propertyName));
 		}
 
 		/// <summary>
 		/// Create restrictions, projections and specify order for the revision type, corresponding to an audited entity.
 		/// </summary>
 		/// <returns></returns>
-		public static AuditProperty<RevisionType> RevisionType() 
+		public static AuditProperty RevisionType() 
 		{
-			return new AuditProperty<RevisionType>(new RevisionTypePropertyName());
+			return new AuditProperty(new RevisionTypePropertyName());
 		}
 
 		/// <summary>

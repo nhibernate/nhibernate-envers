@@ -168,23 +168,28 @@ namespace NHibernate.Envers.Tools.Query
 		public void AddWhereWithParams(string left, string opStart, object[] paramValues, string opEnd) 
 		{
 			var expression = new StringBuilder(1024);
-
-			expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
-
-			for (var i=0; i<paramValues.Length; i++) 
+			var paramValuesLength = paramValues.Length;
+			if (paramValuesLength == 0)
 			{
-				var paramValue = paramValues[i];
-				var paramName = GenerateQueryParam();
-				localQueryParamValues.Add(paramName, paramValue);
-				expression.Append(":").Append(paramName);
-
-				if (i != paramValues.Length - 1)
-				{
-					expression.Append(", ");
-				}
+				expression.Append("1=0");
 			}
+			else
+			{
+				expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
+				for (var i = 0; i < paramValuesLength; i++)
+				{
+					var paramValue = paramValues[i];
+					var paramName = GenerateQueryParam();
+					localQueryParamValues.Add(paramName, paramValue);
+					expression.Append(":").Append(paramName);
 
-			expression.Append(opEnd);
+					if (i != paramValues.Length - 1)
+					{
+						expression.Append(", ");
+					}
+				}
+				expression.Append(opEnd);	
+			}
 
 			expressions.Add(expression.ToString());
 		}
