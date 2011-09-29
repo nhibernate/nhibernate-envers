@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Xml.Schema;
 using NHibernate.Envers.Query;
 using NUnit.Framework;
 using SharpTestsEx;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Order;
@@ -65,9 +66,21 @@ namespace NHibernate.Envers.Query.Criteria
 			return new BetweenAuditExpression(_propertyNameGetter, lo, hi);
 		}
 
-		public IAuditCriterion In(ICollection values)
+		public IAuditCriterion In(object[] values)
 		{
 			return new InAuditExpression(_propertyNameGetter, values);
+		}
+
+		public IAuditCriterion In<T>(IEnumerable<T> values)
+		{
+			var array = new object[values.Count()];
+			var i = 0;
+			foreach (var item in values)
+			{
+				array[i] = item;
+				i++;
+			}
+			return new InAuditExpression(_propertyNameGetter, array);
 		}
 
 		public IAuditCriterion IsNull()
