@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
+	[TestFixture]
 	public class CustomRevEntityQueryTest : TestBase
 	{
 		private int id1;
