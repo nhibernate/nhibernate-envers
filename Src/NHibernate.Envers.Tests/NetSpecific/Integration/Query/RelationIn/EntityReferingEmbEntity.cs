@@ -1,7 +1,7 @@
 ﻿using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Entities.Ids;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
 	[Audited]
 	public class EntityReferingEmbEntity 

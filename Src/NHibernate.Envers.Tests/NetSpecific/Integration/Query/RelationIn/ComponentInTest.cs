@@ -3,7 +3,7 @@ using NHibernate.Envers.Query;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
 	[TestFixture]
 	public class ComponentInTest : TestBase
@@ -55,6 +55,11 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 			Session.Auditer().CreateQuery().ForEntitiesAtRevision<Person>(1)
 				.Add(AuditEntity.Property("Weight.Kilo").In(new object[0]))
 				.Results().Should().Be.Empty();
+		}
+
+		protected override IEnumerable<string> Mappings
+		{
+			get { return new[] { "NetSpecific.Integration.Query.Mapping.hbm.xml" }; }
 		}
 	}
 }

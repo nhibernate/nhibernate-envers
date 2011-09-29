@@ -4,7 +4,7 @@ using NHibernate.Envers.Tests.Entities.Ids;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
 	[TestFixture]
 	public class RelationEmbInTest : TestBase
@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 		{
 			get
 			{
-				return new[] { "NetSpecific.Integration.Query.Mapping.hbm.xml", "Entities.Ids.Mapping.hbm.xml" };
+				return new[] { "NetSpecific.Integration.Query.RelationIn.Mapping.hbm.xml", "Entities.Ids.Mapping.hbm.xml" };
 			}
 		}
 
