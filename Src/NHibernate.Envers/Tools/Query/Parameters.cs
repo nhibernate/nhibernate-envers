@@ -170,28 +170,19 @@ namespace NHibernate.Envers.Tools.Query
 		{
 			var expression = new StringBuilder(1024);
 			var paramValuesLength = paramValues.Length;
-			if (paramValuesLength == 0)
+			expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
+			for (var i = 0; i < paramValuesLength; i++)
 			{
-				expression.Append("1=0");
-			}
-			else
-			{
-				expression.Append(alias).Append(".").Append(left).Append(" ").Append(opStart);
-				for (var i = 0; i < paramValuesLength; i++)
+				var paramValue = paramValues[i];
+				var paramName = GenerateQueryParam();
+				localQueryParamValues.Add(paramName, paramValue);
+				expression.Append(":").Append(paramName);
+				if (i != paramValues.Length - 1)
 				{
-					var paramValue = paramValues[i];
-					var paramName = GenerateQueryParam();
-					localQueryParamValues.Add(paramName, paramValue);
-					expression.Append(":").Append(paramName);
-
-					if (i != paramValues.Length - 1)
-					{
-						expression.Append(", ");
-					}
+					expression.Append(", ");
 				}
-				expression.Append(opEnd);	
 			}
-
+			expression.Append(opEnd);	
 			expressions.Add(expression.ToString());
 		}
 

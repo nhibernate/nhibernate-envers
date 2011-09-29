@@ -10,5 +10,17 @@
 			<property name="Kilo" />
 		</component>
 	</class>
+
+	<class name="EntityReferingEmbEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Data"/>
+		<many-to-one name="Reference"
+						class="NHibernate.Envers.Tests.Entities.Ids.EmbIdTestEntity">
+				<column name="keyX" />
+				<column name="keyY" />
+		</many-to-one>
+	</class>
 </hibernate-mapping>
 
