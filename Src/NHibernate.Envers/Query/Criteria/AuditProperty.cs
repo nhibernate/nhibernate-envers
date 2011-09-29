@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Order;
@@ -12,8 +11,7 @@ namespace NHibernate.Envers.Query.Criteria
 	/// <summary>
 	/// Create restrictions, projections and specify order for a property of an audited entity.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public class AuditProperty<T> : IAuditProjection
+	public class AuditProperty : IAuditProjection
 	{
 		private readonly IPropertyNameGetter _propertyNameGetter;
 
@@ -22,17 +20,17 @@ namespace NHibernate.Envers.Query.Criteria
 			_propertyNameGetter = propertyNameGetter;
 		}
 
-		public IAuditCriterion Eq(T value)
+		public IAuditCriterion Eq(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "=");
 		}
 
-		public IAuditCriterion Ne(T value)
+		public IAuditCriterion Ne(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "<>");
 		}
 
-		public IAuditCriterion Like(T value)
+		public IAuditCriterion Like(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, " like ");
 		}
@@ -42,34 +40,34 @@ namespace NHibernate.Envers.Query.Criteria
 			return new SimpleAuditExpression(_propertyNameGetter, matchMode.ToMatchString(value), " like ");
 		}
 
-		public IAuditCriterion Gt(T value)
+		public IAuditCriterion Gt(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, ">");
 		}
 
-		public IAuditCriterion Lt(T value)
+		public IAuditCriterion Lt(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "<");
 		}
 
-		public IAuditCriterion Le(T value)
+		public IAuditCriterion Le(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "<=");
 		}
 
-		public IAuditCriterion Ge(T value)
+		public IAuditCriterion Ge(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, ">=");
 		}
 
-		public IAuditCriterion Between(T lo, T hi)
+		public IAuditCriterion Between(object lo, object hi)
 		{
 			return new BetweenAuditExpression(_propertyNameGetter, lo, hi);
 		}
 
-		public IAuditCriterion In(IEnumerable<T> values)
+		public IAuditCriterion In(ICollection values)
 		{
-			return new InAuditExpression(_propertyNameGetter, values.Cast<object>().ToArray());
+			return new InAuditExpression(_propertyNameGetter, values);
 		}
 
 		public IAuditCriterion IsNull()

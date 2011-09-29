@@ -366,6 +366,7 @@
     <Compile Include="NetSpecific\Integration\PropertyNull\EntityWithPrimitiveNullAsCamelcaseUnderscore.cs" />
     <Compile Include="NetSpecific\Integration\PropertyNull\PrimitiveNullTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\ComponentQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Query\EnumerableInTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\FindRevisionsTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\Model.cs" />
     <Compile Include="NetSpecific\Integration\Query\QueryForNonAuditEntityTest.cs" />
