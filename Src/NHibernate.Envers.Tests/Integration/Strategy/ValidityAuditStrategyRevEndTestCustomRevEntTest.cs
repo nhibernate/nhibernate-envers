@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +8,10 @@ using NHibernate.Envers.Tests.Entities.RevEntity;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
+namespace NHibernate.Envers.Tests.Integration.Strategy
 {
 	[TestFixture]
-	public class ValidityAuditStrategyRevEndTimestampTest : TestBase
+	public class ValidityAuditStrategyRevEndTestCustomRevEntTest : TestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";
 
@@ -35,7 +34,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			get
 			{
 				return new[] { "Entities.ManyToMany.SameTable.Mapping.hbm.xml",
-								"Entities.RevEntity.CustomRevEntity.hbm.xml"};
+								"Entities.RevEntity.CustomDateRevEntity.hbm.xml"};
 			}
 		}
 
@@ -119,7 +118,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 		public void FindRevisions()
 		{
 			var revNumbers = new List<long> { 1, 2, 3, 4, 5 };
-			AuditReader().FindRevisions<CustomRevEntity>(revNumbers)
+			AuditReader().FindRevisions<CustomDateRevEntity>(revNumbers)
 				.Should().Have.Count.EqualTo(5);
 		}
 
@@ -303,7 +302,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 			{
 
 				var revendTimestamp = revisionEntity[revendTimestampColumName];
-				var revEnd = (CustomRevEntity)revisionEntity["REVEND"];
+				var revEnd = (CustomDateRevEntity)revisionEntity["REVEND"];
 
 				if (revendTimestamp == null)
 				{
@@ -311,12 +310,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 				}
 				else
 				{
-					var exactDate = new DateTime(revEnd.CustomTimestamp);
-					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Date.Should().Be.EqualTo(exactDate.Date);
-					revendDate.Second.Should().Be.EqualTo(exactDate.Second);
+					revendTimestamp.Should().Be.EqualTo(revEnd.DateTimestamp);
 				}
 			}
 		}
+
 	}
 }

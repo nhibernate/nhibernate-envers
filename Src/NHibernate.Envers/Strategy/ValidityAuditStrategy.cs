@@ -52,7 +52,11 @@ namespace NHibernate.Envers.Strategy
 				var idMapper = auditCfg.EntCfg[entityName].IdMapper;
 				idMapper.AddIdEqualsToQuery(qb.RootParameters, id, auditCfg.AuditEntCfg.OriginalIdPropName, true);
 
-				updateLastRevision(session, auditCfg, qb, id, auditedEntityName, revision);
+				addEndRevisionNullRestriction(auditCfg, qb);
+
+				var l = qb.ToQuery(session).SetLockMode("e", LockMode.Upgrade).List();
+
+				updateLastRevision(session, auditCfg, l, id, auditedEntityName, revision);
 			}
 
 			// Save the audit data
@@ -61,31 +65,36 @@ namespace NHibernate.Envers.Strategy
 
 		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
-			// Update the end date of the previous row if this operation is expected to have a previous row
-			if (revisionType(auditCfg, persistentCollectionChangeData.Data) != RevisionType.Added)
+			var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, "e");
+
+			// Adding a parameter for each id component, except the rev number
+			var originalIdPropName = auditCfg.AuditEntCfg.OriginalIdPropName;
+			var originalId = (IDictionary)persistentCollectionChangeData.Data[originalIdPropName];
+			foreach (DictionaryEntry originalIdKeyValue in originalId)
 			{
-				/*
-				 Constructing a query (there are multiple id fields):
-				 select e from audited_middle_ent e where e.end_rev is null and e.id1 = :id1 and e.id2 = :id2 ...
-				 */
-				var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, "e");
-
-				// Adding a parameter for each id component, except the rev number
-				var originalIdPropName = auditCfg.AuditEntCfg.OriginalIdPropName;
-				var originalId = (IDictionary<string, object>)persistentCollectionChangeData.Data[originalIdPropName];
-				foreach (var originalIdKeyValue in originalId)
+				if (!auditCfg.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
 				{
-					if (!auditCfg.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
-					{
-						qb.RootParameters.AddWhereWithParam(originalIdPropName + "." + originalIdKeyValue.Key, true, "=", originalIdKeyValue.Value);
-					}
+					qb.RootParameters.AddWhereWithParam(originalIdPropName + "." + originalIdKeyValue.Key, true, "=", originalIdKeyValue.Value);
 				}
+			}
 
-				updateLastRevision(session, auditCfg, qb, originalId, persistentCollectionChangeData.EntityName, revision);
+			addEndRevisionNullRestriction(auditCfg, qb);
+
+			var l = qb.ToQuery(session).SetLockMode("e", LockMode.Upgrade).List();
+
+			if (l.Count > 0)
+			{
+				updateLastRevision(session, auditCfg, l, originalId, persistentCollectionChangeData.EntityName, revision);
 			}
 
 			// Save the audit data
 			session.Save(persistentCollectionChangeData.EntityName, persistentCollectionChangeData.Data);
+		}
+
+		private void addEndRevisionNullRestriction(AuditConfiguration auditCfg, QueryBuilder qb)
+		{
+			// e.end_rev is null
+			qb.RootParameters.AddWhere(auditCfg.AuditEntCfg.RevisionEndFieldName, true, "is", "null", false);
 		}
 
 		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
@@ -119,22 +128,16 @@ namespace NHibernate.Envers.Strategy
 			return (RevisionType)((IDictionary<string, object>)data)[auditCfg.AuditEntCfg.RevisionTypePropName];
 		}
 
-		private void updateLastRevision(ISession session, AuditConfiguration auditCfg, QueryBuilder qb,
+		private void updateLastRevision(ISession session, AuditConfiguration auditCfg, IList l,
 									object id, string auditedEntityName, object revision)
 		{
-			var revisionEndFieldName = auditCfg.AuditEntCfg.RevisionEndFieldName;
-
-			// e.end_rev is null
-			qb.RootParameters.AddWhere(revisionEndFieldName, true, "is", "null", false);
-
-			var l = qb.ToQuery(session).List();
-
 			// There should be one entry
 			if (l.Count == 1)
 			{
 				// Setting the end revision to be the current rev
-				var previousData = (IDictionary)l[0];
-				previousData[revisionEndFieldName] = revision;
+				var previousData = l[0];
+				var revisionEndFieldName = auditCfg.AuditEntCfg.RevisionEndFieldName;
+				((IDictionary)previousData)[revisionEndFieldName] = revision;
 
 				if (auditCfg.AuditEntCfg.IsRevisionEndTimestampEnabled)
 				{
@@ -143,6 +146,7 @@ namespace NHibernate.Envers.Strategy
 					var revEndTimestampFieldName = auditCfg.AuditEntCfg.RevisionEndTimestampFieldName;
 					var revEndTimestampObj = revisionTimestampGetter.Get(revision);
 
+					// convert to a java.util.Date
 					if (revEndTimestampObj is DateTime)
 					{
 						revisionEndTimestamp = (DateTime)revEndTimestampObj;
@@ -153,12 +157,11 @@ namespace NHibernate.Envers.Strategy
 					}
 
 					// Setting the end revision timestamp
-					previousData[revEndTimestampFieldName] = revisionEndTimestamp;
+					((IDictionary)previousData)[revEndTimestampFieldName] = revisionEndTimestamp;
 				}
 
 				// Saving the previous version
 				session.Save(auditedEntityName, previousData);
-
 			}
 			else
 			{
