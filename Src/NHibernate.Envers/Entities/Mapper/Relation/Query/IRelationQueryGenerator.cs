@@ -7,8 +7,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// for mapping relations). The query can select, apart from selecting the content of the relation table, also data of
 	/// other "related" entities.
 	/// </summary>
-    public interface IRelationQueryGenerator
-    {
-        IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision);
-    }
+	public interface IRelationQueryGenerator
+	{
+		IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision);
+	}
 }

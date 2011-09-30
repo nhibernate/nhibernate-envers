@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
 {
+	//NHE-32
 	[TestFixture]
 	public class SetOfValuesTest : TestBase
 	{

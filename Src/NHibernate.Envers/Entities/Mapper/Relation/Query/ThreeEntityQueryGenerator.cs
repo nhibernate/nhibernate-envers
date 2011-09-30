@@ -96,10 +96,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 							referencedIdData, revisionPropertyPath, originalIdPropertyName, "f", "f2");
 
 			// (with ee association at revision :revision)
- 	 	 	// --> based on auditStrategy (see above)
- 	 	 	auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
- 	 	 	                verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName,
- 	 	 	                eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
+			// --> based on auditStrategy (see above)
+			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
+								 verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName,
+								 eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
 
 
 			// ee.revision_type != DEL
