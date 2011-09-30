@@ -338,6 +338,7 @@
     <Compile Include="Integration\Join\JoinTestEntity.cs" />
     <Compile Include="Integration\Join\JoinWithAuditNameEntity.cs" />
     <Compile Include="Integration\Serialization\SerializingCollectionTest.cs" />
+    <Compile Include="Integration\Strategy\ValidityAuditStrategyManyToManyTest.cs" />
     <Compile Include="Integration\SuperClass\MappedSubclassingTest.cs" />
     <Compile Include="Integration\SuperClass\SubclassEntity.cs" />
     <Compile Include="Integration\SuperClass\SuperclassOfEntity.cs" />
@@ -380,8 +381,10 @@
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetEntity.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetAndMapTest.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\StrTestEntityComparer.cs" />
-    <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
-    <Compile Include="NetSpecific\Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\SetOfValuesTest.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\SetOfValuesTestEntity.cs" />
+    <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
+    <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\DifferentSchemaAndCatalogTest.cs" />
@@ -410,6 +413,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Strategy\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\RelationIn\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Ctor\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\PropertyNull\Mapping.hbm.xml">

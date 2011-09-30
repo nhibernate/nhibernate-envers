@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<hibernate-mapping namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Strategy"
+							assembly="NHibernate.Envers.Tests"
+							xmlns="urn:nhibernate-mapping-2.2">
+	<class name="SetOfValuesTestEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<set name="ChildValues" table="ChildValues">
+			<key column="ParentId"/>
+			<element column="Value" type="string"/>
+		</set>
+	</class>
+</hibernate-mapping>
