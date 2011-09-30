@@ -11,8 +11,8 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 	[TestFixture]
 	public class ValidityAuditStrategyManyToManyTest : TestBase
 	{
-		private int ingId = 1;
-		private int edId = 2;
+		private const int ingId = 1;
+		private const int edId = 2;
 
 		protected override void Initialize()
 		{
@@ -75,57 +75,14 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		[Test]
 		public void VerifyHistoryOfEd()
 		{
+			var ing = new SetOwningEntity { Id = ingId, Data = "parent" };
 
+			AuditReader().Find<SetOwnedEntity>(edId, 1).Referencing.Should().Be.Empty();
+			AuditReader().Find<SetOwnedEntity>(edId, 2).Referencing.Should().Have.SameSequenceAs(ing);
+			AuditReader().Find<SetOwnedEntity>(edId, 3).Referencing.Should().Be.Empty();
+			AuditReader().Find<SetOwnedEntity>(edId, 4).Referencing.Should().Have.SameSequenceAs(ing);
+			AuditReader().Find<SetOwnedEntity>(edId, 5).Referencing.Should().Be.Empty();
 		}
-/*
-
-	@Test
-	public void testHistoryOfIng1() {
-		SetOwningEntity ver_empty = createOwningEntity();
-		SetOwningEntity ver_child = createOwningEntity(new SetOwnedEntity(ed_id, "child"));
-
-		  assertEquals(getAuditReader().find(SetOwningEntity.class, ing_id, 1), ver_empty);
-		  assertEquals(getAuditReader().find(SetOwningEntity.class, ing_id, 2), ver_child);
-		  assertEquals(getAuditReader().find(SetOwningEntity.class, ing_id, 3), ver_empty);
-		  assertEquals(getAuditReader().find(SetOwningEntity.class, ing_id, 4), ver_child);
-		  assertEquals(getAuditReader().find(SetOwningEntity.class, ing_id, 5), ver_empty);
-	}
-
-	 @Test
-	public void testHistoryOfEd1() {
-		SetOwnedEntity ver_empty = createOwnedEntity();
-		SetOwnedEntity ver_child = createOwnedEntity(new SetOwningEntity(ing_id, "parent"));
-
-		  assertEquals(getAuditReader().find(SetOwnedEntity.class, ed_id, 1), ver_empty);
-		  assertEquals(getAuditReader().find(SetOwnedEntity.class, ed_id, 2), ver_child);
-		  assertEquals(getAuditReader().find(SetOwnedEntity.class, ed_id, 3), ver_empty);
-		  assertEquals(getAuditReader().find(SetOwnedEntity.class, ed_id, 4), ver_child);
-		  assertEquals(getAuditReader().find(SetOwnedEntity.class, ed_id, 5), ver_empty);
-	}
-
-	 private SetOwningEntity createOwningEntity(SetOwnedEntity... owned) {
-		  SetOwningEntity result = new SetOwningEntity(ing_id, "parent");
-		  result.setReferences(new HashSet<SetOwnedEntity>());
-		  for (SetOwnedEntity setOwnedEntity : owned) {
-				result.getReferences().add(setOwnedEntity);
-		  }
-
-		  return result;
-	 }
-
-	 private SetOwnedEntity createOwnedEntity(SetOwningEntity... owning) {
-		  SetOwnedEntity result = new SetOwnedEntity(ed_id, "child");
-		  result.setReferencing(new HashSet<SetOwningEntity>());
-		  for (SetOwningEntity setOwningEntity : owning) {
-				result.getReferencing().add(setOwningEntity);
-		  }
-
-		  return result;
-	 }
-		 * 
-		 * 
-		 * 
-		 */
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
