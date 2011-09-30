@@ -6,20 +6,20 @@ using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
-	public class SingleIdMapper : AbstractIdMapper, ISimpleIdMapperBuilder 
+	public class SingleIdMapper : AbstractIdMapper, ISimpleIdMapperBuilder
 	{
 		private PropertyData propertyData;
 
-		public SingleIdMapper() {}
+		public SingleIdMapper() { }
 
-		public SingleIdMapper(PropertyData propertyData) 
+		public SingleIdMapper(PropertyData propertyData)
 		{
 			this.propertyData = propertyData;
 		}
 
-		public void Add(PropertyData propertyData) 
+		public void Add(PropertyData propertyData)
 		{
-			if (this.propertyData != null) 
+			if (this.propertyData != null)
 			{
 				throw new AuditException("Only one property can be added!");
 			}
@@ -29,8 +29,8 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override void MapToEntityFromMap(object obj, IDictionary data)
 		{
-			if (data == null || obj == null) 
-            {
+			if (data == null || obj == null)
+			{
 				return;
 			}
 			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
@@ -39,19 +39,19 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override object MapToIdFromMap(IDictionary data)
 		{
-		    return data == null ? null : data[propertyData.Name];
+			return data == null ? null : data[propertyData.Name];
 		}
 
-	    public override object MapToIdFromEntity(object data)
+		public override object MapToIdFromEntity(object data)
 		{
-			if (data == null) 
-            {
+			if (data == null)
+			{
 				return null;
 			}
 
 			var proxy = data as INHibernateProxy;
 
-			if(proxy != null) 
+			if (proxy != null)
 			{
 				return proxy.HibernateLazyInitializer.Identifier;
 			}
@@ -61,41 +61,41 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override void MapToMapFromId(IDictionary<string, object> data, object obj)
 		{
-			if (data != null) 
-            {
+			if (data != null)
+			{
 				data.Add(propertyData.Name, obj);
 			}
 		}
 
 		public override void MapToMapFromEntity(IDictionary<string, object> data, object obj)
 		{
-			if (obj == null) 
-            {
-				data.Add(propertyData.Name,null);
-			} 
-            else
+			if (obj == null)
 			{
-			    var proxy = obj as INHibernateProxy;
-				if(proxy!=null) 
-                {
+				data.Add(propertyData.Name, null);
+			}
+			else
+			{
+				var proxy = obj as INHibernateProxy;
+				if (proxy != null)
+				{
 					data.Add(propertyData.Name, proxy.HibernateLazyInitializer.Identifier);
-				} 
-                else 
-                {
-                    var getter = ReflectionTools.GetGetter(obj.GetType(), propertyData);
-                    data.Add(propertyData.Name, getter.Get(obj));
+				}
+				else
+				{
+					var getter = ReflectionTools.GetGetter(obj.GetType(), propertyData);
+					data.Add(propertyData.Name, getter.Get(obj));
 				}
 			}
 		}
 
-		public override IIdMapper PrefixMappedProperties(string prefix) 
-        {
+		public override IIdMapper PrefixMappedProperties(string prefix)
+		{
 			return new SingleIdMapper(new PropertyData(prefix + propertyData.Name, propertyData));
 		}
 
 		public override IList<QueryParameterData> MapToQueryParametersFromId(object obj)
 		{
-			return new List<QueryParameterData> {new QueryParameterData(propertyData.Name, obj)};
+			return new List<QueryParameterData> { new QueryParameterData(propertyData.Name, obj) };
 		}
 	}
 }
