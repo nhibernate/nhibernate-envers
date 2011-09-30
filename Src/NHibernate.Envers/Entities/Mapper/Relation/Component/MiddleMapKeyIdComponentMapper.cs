@@ -11,33 +11,33 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 	///  doesn't have an effect on the data stored in the versions tables, so <code>mapToMapFromObject</code> is
 	///  empty.
 	/// </summary>
-    public sealed class MiddleMapKeyIdComponentMapper : IMiddleComponentMapper
+	public sealed class MiddleMapKeyIdComponentMapper : IMiddleComponentMapper
 	{
-        private readonly AuditEntitiesConfiguration verEntCfg;
-        private readonly IIdMapper relatedIdMapper;
+		private readonly AuditEntitiesConfiguration verEntCfg;
+		private readonly IIdMapper relatedIdMapper;
 
-        public MiddleMapKeyIdComponentMapper(AuditEntitiesConfiguration verEntCfg, IIdMapper relatedIdMapper) 
+		public MiddleMapKeyIdComponentMapper(AuditEntitiesConfiguration verEntCfg, IIdMapper relatedIdMapper)
 		{
-            this.verEntCfg = verEntCfg;
-            this.relatedIdMapper = relatedIdMapper;
-        }
+			this.verEntCfg = verEntCfg;
+			this.relatedIdMapper = relatedIdMapper;
+		}
 
-        public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, 
-											IDictionary data,
-                                            object dataObject, 
-											long revision) 
+		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator,
+										 IDictionary data,
+														object dataObject,
+										 long revision)
 		{
-            return relatedIdMapper.MapToIdFromMap((IDictionary) data[verEntCfg.OriginalIdPropName]);
-        }
+			return relatedIdMapper.MapToIdFromMap((IDictionary)data[verEntCfg.OriginalIdPropName]);
+		}
 
-        public void MapToMapFromObject(IDictionary<string, object> data, object obj) 
+		public void MapToMapFromObject(IDictionary<string, object> data, object obj)
 		{
-            // Doing nothing.
-        }
+			// Doing nothing.
+		}
 
-        public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2) 
+		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)
 		{
-            // Doing nothing.
-        }
-    }
+			// Doing nothing.
+		}
+	}
 }

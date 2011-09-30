@@ -5,11 +5,10 @@ using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
-	/**
-	 * A mapper for reading and writing a property straight to/from maps. This mapper cannot be used with middle tables,
-	 * but only with "fake" bidirectional indexed relations. 
-	 * @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
-	 */
+	/// <summary>
+	/// A mapper for reading and writing a property straight to/from maps. This mapper cannot be used with middle tables,
+	/// but only with "fake" bidirectional indexed relations. 
+	/// </summary>
 	public sealed class MiddleStraightComponentMapper : IMiddleComponentMapper 
 	{
 		private readonly string _propertyName;
