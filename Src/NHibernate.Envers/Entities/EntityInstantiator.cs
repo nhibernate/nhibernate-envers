@@ -47,14 +47,14 @@ namespace NHibernate.Envers.Entities
 
 			var primaryKey = idMapper.MapToIdFromMap(originalId);
 
+			object ret;
 			// Checking if the entity is in cache
-			if (versionsReader.FirstLevelCache.Contains(entityName, revision, primaryKey)) 
+			if (versionsReader.FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out ret)) 
 			{
-				return versionsReader.FirstLevelCache[entityName, revision, primaryKey];
+				return ret;
 			}
 
 			// If it is not in the cache, creating a new entity instance
-			object ret;
 			try 
 			{
 				var cls = Toolz.ResolveDotnetType(entityName);
