@@ -55,13 +55,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			}
 			else
 			{
-				if (versionsReader.FirstLevelCache.Contains(_referencedEntityName, revision, entityId))
+				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					value = versionsReader.FirstLevelCache[_referencedEntityName, revision, entityId];
-				}
-				else
-				{
-					//java: Class<?> entityClass = ReflectionTools.loadClass(referencedEntityName); 
 					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName).CreateProxy(
 						entityId, new ToOneDelegateSessionImplementor(versionsReader, Toolz.ResolveDotnetType(_referencedEntityName), entityId, revision, verCfg));
 				}

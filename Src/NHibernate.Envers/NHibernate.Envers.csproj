@@ -241,7 +241,6 @@
     <Compile Include="Reader\AuditReader.cs" />
     <Compile Include="Reader\FirstLevelCache.cs" />
     <Compile Include="Reader\IAuditReaderImplementor.cs" />
-    <Compile Include="Reader\IFirstLevelCache.cs" />
     <Compile Include="Configuration\Attributes\RelationTargetAuditMode.cs" />
     <Compile Include="Configuration\Attributes\RevisionEntityAttribute.cs" />
     <Compile Include="RevisionInfo\DefaultRevisionInfoGenerator.cs" />

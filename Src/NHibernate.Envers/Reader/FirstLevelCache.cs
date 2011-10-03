@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Reader
 	/// First level cache for versioned entities, versions reader-scoped. Each entity is uniquely identified by a
 	/// revision number and entity id.
 	/// </summary>
-	public class FirstLevelCache : IFirstLevelCache
+	public class FirstLevelCache
 	{
 		private readonly IDictionary<Triple<string, long, object>, object> cache;
 
@@ -16,22 +16,18 @@ namespace NHibernate.Envers.Reader
 			cache = new Dictionary<Triple<string, long, object>, object>();
 		}
 
-		public object this[string entityName, long revision, object id]
-		{
-			get
-			{
-				return cache[new Triple<string, long, object>(entityName, revision, id)];
-			}
-		}
-
 		public void Add(string entityName, long revision, object id, object entity)
 		{
 			cache.Add(new Triple<string, long, object>(entityName, revision, id), entity);
 		}
 
-		public bool Contains(string entityName, long revision, object id)
+		public bool TryGetValue(string entityName, long revision, object id, out object value)
 		{
-			return cache.ContainsKey(new Triple<string, long, object>(entityName, revision, id));
+			if (cache.TryGetValue(new Triple<string, long, object>(entityName, revision, id), out value))
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }

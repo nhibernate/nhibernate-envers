@@ -9,6 +9,6 @@ namespace NHibernate.Envers.Reader
 	{
 		ISessionImplementor SessionImplementor { get; }
 		ISession Session { get; }
-		IFirstLevelCache FirstLevelCache { get; }
+		FirstLevelCache FirstLevelCache { get; }
 	}
 }

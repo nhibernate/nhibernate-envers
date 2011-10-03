@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Reader
 		private readonly AuditConfiguration verCfg;
 		public ISessionImplementor SessionImplementor { get; private set; }
 		public ISession Session { get; private set; }
-		public IFirstLevelCache FirstLevelCache { get; private set; }
+		public FirstLevelCache FirstLevelCache { get; private set; }
 
 		public T Find<T>(object primaryKey, long revision)
 		{
@@ -45,12 +45,12 @@ namespace NHibernate.Envers.Reader
 				throw new NotAuditedException(entityName, entityName + " is not versioned!");
 			}
 
-			if (FirstLevelCache.Contains(entityName, revision, primaryKey))
+			object result;
+			if (FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out result))
 			{
-				return FirstLevelCache[entityName, revision, primaryKey];
+				return result;
 			}
 
-			object result;
 			try
 			{
 				// The result is put into the cache by the entity instantiator called from the query
