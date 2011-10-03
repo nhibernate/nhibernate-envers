@@ -162,6 +162,11 @@
     <Compile Include="Integration\Collection\MapKey\ComponentMapKeyEntity.cs" />
     <Compile Include="Integration\Collection\MapKey\IdMapKeyEntity.cs" />
     <Compile Include="Integration\Collection\MapKey\IdMapKeyTest.cs" />
+    <Compile Include="Integration\Collection\NoRevision\AbstractCollectionChangeTest.cs" />
+    <Compile Include="Integration\Collection\NoRevision\CollectionChangeNoRevisionTest.cs" />
+    <Compile Include="Integration\Collection\NoRevision\CollectionChangeRevisionTest.cs" />
+    <Compile Include="Integration\Collection\NoRevision\Name.cs" />
+    <Compile Include="Integration\Collection\NoRevision\Person.cs" />
     <Compile Include="Integration\Collection\StringListTest.cs" />
     <Compile Include="Integration\Collection\StringMapTest.cs" />
     <Compile Include="Integration\Collection\StringSetTest.cs" />
@@ -495,6 +500,7 @@
     <EmbeddedResource Include="Integration\SameIds\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Join\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Collection\NoRevision\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

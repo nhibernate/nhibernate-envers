@@ -1,0 +1,27 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Collection.NoRevision">
+	<class name="Person">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<set name="Names"
+			  cascade="all">
+			<key column="personId"/>
+			<one-to-many class="Name"/>
+		</set>
+		
+	</class>
+
+	<class name="Name">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="TheName"/>
+		<many-to-one name="Person"
+						 class="Person"
+						 column="personId"
+						 update="false"
+						 insert="false"/>
+	</class>
+</hibernate-mapping>
