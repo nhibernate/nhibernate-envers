@@ -378,8 +378,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					// will be thrown later on.
 					if (log.IsDebugEnabled)
 					{
-						log.Debug("Unable to create auditing id mapping for entity " + entityName +
-							", because of an unsupported Hibernate id mapping (e.g. key-many-to-one).");
+						log.DebugFormat("Unable to create auditing id mapping for entity {0}" +
+							", because of an unsupported Hibernate id mapping (e.g. key-many-to-one).", entityName);
 					}
 					return;
 				}
@@ -394,7 +394,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			if (log.IsDebugEnabled)
 			{
-				log.Debug("Generating first-pass auditing mapping for entity " + entityName + ".");
+				log.DebugFormat("Generating first-pass auditing mapping for entity {0}.", entityName);
 			}
 
 			var auditEntityName = VerEntCfg.GetAuditEntityName(entityName);
@@ -474,7 +474,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var entityName = pc.EntityName;
 			if (log.IsDebugEnabled)
 			{
-				log.Debug("Generating second-pass auditing mapping for entity " + entityName + ".");
+				log.DebugFormat("Generating second-pass auditing mapping for entity {0}.", entityName);
 			}
 
 			var propertyMapper = EntitiesConfigurations[entityName].PropertyMapper;

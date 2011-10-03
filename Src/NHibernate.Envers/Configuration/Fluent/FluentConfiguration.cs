@@ -118,13 +118,16 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static void addMemberMetaAndLog(System.Type type, MemberInfoAndAttribute memberInfoAndAttribute, EntityMeta entMeta)
 		{
-			log.Debug("Adding " + memberInfoAndAttribute.Attribute.GetType().Name + " to member " + memberInfoAndAttribute.MemberInfo.Name + " on type " + type.FullName);
+			log.DebugFormat("Adding {0} to member {1} on type {2}.", 
+							memberInfoAndAttribute.Attribute.GetType().Name, 
+							memberInfoAndAttribute.MemberInfo.Name,
+							type.FullName);
 			entMeta.AddMemberMeta(memberInfoAndAttribute.MemberInfo, memberInfoAndAttribute.Attribute);
 		}
 
 		private static void addClassMetaAndLog(System.Type type, Attribute classAttribute, EntityMeta entMeta)
 		{
-			log.Debug("Adding " + classAttribute.GetType().Name + " to type " + type.FullName);
+			log.DebugFormat("Adding {0} to type {1}.", classAttribute.GetType().Name, type.FullName);
 			entMeta.AddClassMeta(classAttribute);
 		}
 

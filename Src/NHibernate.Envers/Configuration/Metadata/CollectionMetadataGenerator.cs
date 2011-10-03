@@ -102,8 +102,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void AddOneToManyAttached(bool fakeOneToManyBidirectional) 
 		{
-			log.Debug("Adding audit mapping for property " + referencingEntityName + "." + propertyName +
-					": one-to-many collection, using a join column on the referenced entity.");
+			log.DebugFormat("Adding audit mapping for property {0}. {1}" +
+					": one-to-many collection, using a join column on the referenced entity.", referencingEntityName, propertyName);
 
 			var mappedBy = GetMappedBy(propertyValue);
 
@@ -224,8 +224,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void AddWithMiddleTable() 
 		{
-			log.Debug("Adding audit mapping for property " + referencingEntityName + "." + propertyName +
-					": collection with a join table.");
+			log.DebugFormat("Adding audit mapping for property {0}. {1}" + 
+					": collection with a join table.", referencingEntityName, propertyName);
 
 			// Generating the name of the middle table
 			string auditMiddleTableName;
@@ -242,7 +242,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				auditMiddleEntityName = mainGenerator.VerEntCfg.GetAuditEntityName(middleTableName);
 			}
 
-			log.Debug("Using join table name: " + auditMiddleTableName);
+			log.DebugFormat("Using join table name: {0}", auditMiddleTableName);
 
 			// Generating the XML mapping for the middle entity, only if the relation isn't inverse.
 			// If the relation is inverse, will be later checked by comparing middleEntityXml with null.
