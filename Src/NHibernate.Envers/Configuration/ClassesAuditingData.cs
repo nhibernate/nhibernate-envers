@@ -76,10 +76,8 @@ namespace NHibernate.Envers.Configuration
 					throw new MappingException("@AuditMappedBy points to a property that doesn't exist: " +
 						referencedEntityName + "." + propertyName);
 				}
-
-				log.Debug("Non-insertable property " + referencedEntityName + "." + propertyName +
-						" will be made insertable because a matching @AuditMappedBy was found in the " +
-						entityName + " entity.");
+				log.DebugFormat("Non-insertable property {0}, {1} will be made insertable because a matching @AuditMappedBy was found in the {2} entity.",
+					referencedEntityName, propertyName, entityName);
 
 				classAuditingData
 						.GetPropertyAuditingData(propertyName)

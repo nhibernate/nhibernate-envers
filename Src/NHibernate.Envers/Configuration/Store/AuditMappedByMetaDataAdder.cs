@@ -60,9 +60,8 @@ namespace NHibernate.Envers.Configuration.Store
 
 		private static void addToEntityMeta(AuditMappedByAttribute attribute, EntityMeta entityMeta, MemberInfo memberInfo)
 		{
-			var logText = string.Format("Adding AuditMappedByAttribute [MappedBy={0}, PositionMappedBy={1}] to member {2}",
-			                            attribute.MappedBy, attribute.PositionMappedBy, memberInfo);
-			log.Debug(logText);
+			log.DebugFormat("Adding AuditMappedByAttribute [MappedBy={0}, PositionMappedBy={1}] to member {2}",
+												 attribute.MappedBy, attribute.PositionMappedBy, memberInfo);
 			entityMeta.AddMemberMeta(memberInfo, attribute);
 		}
 
