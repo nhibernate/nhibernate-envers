@@ -364,6 +364,9 @@
     <Compile Include="NetSpecific\Integration\Ctor\NonPublicCtorEntity.cs" />
     <Compile Include="NetSpecific\Integration\Ctor\NonPublicCtorTest.cs" />
     <Compile Include="NetSpecific\Integration\Ctor\StructComponentWithDefinedCtor.cs" />
+    <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
+    <Compile Include="NetSpecific\Integration\InsertUpdateFalse\InsertUpdateFalseComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ParentEntity.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\Animal.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
@@ -418,6 +421,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\InsertUpdateFalse\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Strategy\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\RelationIn\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Ctor\Mapping.hbm.xml" />

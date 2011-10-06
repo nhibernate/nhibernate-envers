@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse">
+	<class name="ParentEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<component name="Component"
+					  update="false"
+					  insert="false">
+			<property name="NoUpdateInsert" column="shared"/>
+		</component>
+
+		<component name="ComponentSetter">
+			<property name="NoUpdateInsert" column="shared"/>
+		</component>
+	</class>
+</hibernate-mapping>

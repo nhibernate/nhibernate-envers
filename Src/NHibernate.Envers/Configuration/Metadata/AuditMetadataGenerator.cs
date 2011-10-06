@@ -128,7 +128,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				// both passes
 				componentMetadataGenerator.AddComponent(parent, propertyAuditingData, value, currentMapper,
-						entityName, xmlMappingData, firstPass);
+						entityName, xmlMappingData, firstPass, insertable);
 			}
 			else if (type is ManyToOneType)
 			{
