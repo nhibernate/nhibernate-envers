@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public void AddComponent(XmlElement parent, PropertyAuditingData propertyAuditingData,
 								 IValue value, ICompositeMapperBuilder mapper, string entityName,
-								 EntityXmlMappingData xmlMappingData, bool firstPass) 
+								 EntityXmlMappingData xmlMappingData, bool firstPass, bool insertable) 
 		{
 			var propComponent = (Component) value;
 
@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (componentPropertyAuditingData != null)
 				{
 					mainGenerator.AddValue(parent, property.Value, componentMapper, entityName, xmlMappingData,
-							componentPropertyAuditingData, property.IsInsertable, firstPass);
+							componentPropertyAuditingData, property.IsInsertable && insertable, firstPass);
 				}
 			}
 		}
