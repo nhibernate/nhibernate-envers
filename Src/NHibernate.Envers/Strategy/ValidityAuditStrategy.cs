@@ -5,6 +5,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Query;
+using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Properties;
 
@@ -61,6 +62,7 @@ namespace NHibernate.Envers.Strategy
 
 			// Save the audit data
 			session.Save(auditedEntityName, data);
+			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
 		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
@@ -88,7 +90,9 @@ namespace NHibernate.Envers.Strategy
 			}
 
 			// Save the audit data
-			session.Save(persistentCollectionChangeData.EntityName, persistentCollectionChangeData.Data);
+			var data = persistentCollectionChangeData.Data;
+			session.Save(persistentCollectionChangeData.EntityName, data);
+			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
 		private void addEndRevisionNullRestriction(AuditConfiguration auditCfg, QueryBuilder qb)
@@ -146,7 +150,7 @@ namespace NHibernate.Envers.Strategy
 					var revEndTimestampFieldName = auditCfg.AuditEntCfg.RevisionEndTimestampFieldName;
 					var revEndTimestampObj = revisionTimestampGetter.Get(revision);
 
-					// convert to a java.util.Date
+					// convert to a DateTime
 					if (revEndTimestampObj is DateTime)
 					{
 						revisionEndTimestamp = (DateTime)revEndTimestampObj;
@@ -162,6 +166,7 @@ namespace NHibernate.Envers.Strategy
 
 				// Saving the previous version
 				session.Save(auditedEntityName, previousData);
+				SessionCacheCleaner.ScheduleAuditDataRemoval(session, previousData);
 			}
 			else
 			{

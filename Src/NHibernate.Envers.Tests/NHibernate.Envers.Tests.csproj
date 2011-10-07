@@ -372,6 +372,9 @@
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
+    <Compile Include="NetSpecific\Integration\Performance\EvictAfterTx\EvictAfterTransUsingDefaultAuditStrategyTest.cs" />
+    <Compile Include="NetSpecific\Integration\Performance\EvictAfterTx\EvictAfterTransUsingValidityAuditStrategyTest.cs" />
+    <Compile Include="NetSpecific\Integration\Performance\EvictAfterTx\EvictAuditDataAfterCommitTest.cs" />
     <Compile Include="NetSpecific\Integration\PropertyNull\EntityWithPrimitiveNullAsCamelcaseUnderscore.cs" />
     <Compile Include="NetSpecific\Integration\PropertyNull\PrimitiveNullTest.cs" />
     <Compile Include="NetSpecific\Integration\Query\ComponentQueryTest.cs" />

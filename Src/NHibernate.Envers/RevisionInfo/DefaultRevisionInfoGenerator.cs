@@ -1,11 +1,12 @@
 ﻿using System;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
 
 namespace NHibernate.Envers.RevisionInfo
 {
-	public class DefaultRevisionInfoGenerator : IRevisionInfoGenerator 
+	public class DefaultRevisionInfoGenerator : IRevisionInfoGenerator
 	{
 		private readonly string _revisionInfoEntityName;
 		private readonly System.Type _revisionInfoType;
@@ -13,11 +14,11 @@ namespace NHibernate.Envers.RevisionInfo
 		private readonly IRevisionListener _listener;
 		private readonly ISetter _revisionTimestampSetter;
 
-		public DefaultRevisionInfoGenerator(string revisionInfoEntityName, 
+		public DefaultRevisionInfoGenerator(string revisionInfoEntityName,
 											System.Type revisionInfoType,
-										   IRevisionListener revisionListener,
-										   PropertyData revisionInfoTimestampData,
-										   bool timestampAsDate) 
+											IRevisionListener revisionListener,
+											PropertyData revisionInfoTimestampData,
+											bool timestampAsDate)
 		{
 			_revisionInfoEntityName = revisionInfoEntityName;
 			_revisionInfoType = revisionInfoType;
@@ -26,16 +27,17 @@ namespace NHibernate.Envers.RevisionInfo
 			_listener = revisionListener;
 		}
 
-		public void SaveRevisionData(ISession session, object revisionData) 
+		public void SaveRevisionData(ISession session, object revisionData)
 		{
 			session.Save(_revisionInfoEntityName, revisionData);
+			SessionCacheCleaner.ScheduleAuditDataRemoval(session, revisionData);
 		}
 
-		public object Generate() 
+		public object Generate()
 		{
 			var revisionInfo = Activator.CreateInstance(_revisionInfoType);
 
-			var value = _timestampAsDate ? (object) DateTime.Now : DateTime.Now.Ticks;
+			var value = _timestampAsDate ? (object)DateTime.Now : DateTime.Now.Ticks;
 
 			_revisionTimestampSetter.Set(revisionInfo, value);
 
