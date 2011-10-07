@@ -2,6 +2,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Query;
+using NHibernate.Envers.Synchronization;
 
 namespace NHibernate.Envers.Strategy
 {
@@ -13,11 +14,14 @@ namespace NHibernate.Envers.Strategy
 		public void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision)
 		{
 			session.Save(auditCfg.AuditEntCfg.GetAuditEntityName(entityName), data);
+			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
 		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
-			session.Save(persistentCollectionChangeData.EntityName, persistentCollectionChangeData.Data);
+			var data = persistentCollectionChangeData.Data;
+			session.Save(persistentCollectionChangeData.EntityName, data);
+			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
 		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)

@@ -116,6 +116,7 @@
     <Compile Include="Strategy\DefaultAuditStrategy.cs" />
     <Compile Include="Strategy\IAuditStrategy.cs" />
     <Compile Include="Strategy\ValidityAuditStrategy.cs" />
+    <Compile Include="Synchronization\SessionCacheCleaner.cs" />
     <Compile Include="Tools\Reflection\PropertyAndMemberInfo.cs" />
     <Compile Include="Configuration\Metadata\Reader\PropertyAuditingData.cs" />
     <Compile Include="Configuration\Metadata\ToOneRelationMetadataGenerator.cs" />
