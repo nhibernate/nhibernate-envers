@@ -1,4 +1,29 @@
-=== 1.0 GA (v 1.0.0.0), ???, ??? ===
+=== 1.0 GA (v 1.0.0.0), 2011-10-14, NH 3.2 GA ===
+
+** Bug
+[NHE-18] - Discriminator formula support
+[NHE-19] - Cannot associate proxy with two open sessions
+[NHE-20] - turning off nhibernate.envers.revision_on_collection_change doesn't affect coll modifications
+[NHE-21] - REVINFO doesn't use nhibernate.envers.default_schema
+[NHE-23] - AuditProperty.IsNull()/IsNotNull() generates wrong sql
+[NHE-24] - Cannot use inherited DefaultRevisionEntity with FluentConfiguration
+[NHE-25] - Inconsistent API - ForHistoryOf demands DefaultRevisionEntity or subclass, configuration supports a custom revision entity
+[NHE-26] - nullable primitivetype + field.camelcase-underscore generates exception when read
+[NHE-27] - Allow components to have a non public ctor
+[NHE-30] - AuditProperty.In(IEnumerable<T>) must not be generic
+[NHE-32] - When using ValidityAuditStrategy, when an entity has audited set of child values, the same value cannot be added/removed from set twice
+[NHE-33] - Support <component> with insert false
+
+** Improvement
+[NHE-22] - Offer a type safe way to configure global settings
+[NHE-28] - Consisten exceptions when querying non audited entities
+[NHE-29] - Using non mapped entity as custom revision entity should throw
+[NHE-31] - Support AuditEntity.Property("ReferencingProperty").In(....)
+[NHE-34] - Remove audit entities and revision from 1st level cache at the end of tx
+
+** New Feature
+[NHE-17] - Establish a way to configure an Envers RevisionListener via DI
+
 
 *** Breaking changes ***
 * Attribute API: RevisionEntityAttribute
@@ -11,7 +36,6 @@ fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timesta
 fluentConfiguration.SetRevisionEntity<MyRevEntity>(e => e.Number, e => e.Timestamp, new RevListener());
 
 * DefaultRevisionEntity now takes nhiberate.envers.default_schema into consideration (NHE-21)
-
 
 
 
