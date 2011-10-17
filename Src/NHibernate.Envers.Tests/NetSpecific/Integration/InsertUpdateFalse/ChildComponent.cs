@@ -11,5 +11,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 				return false;
 			return NoUpdateInsert == casted.NoUpdateInsert;
 		}
+
+		public override int GetHashCode()
+		{
+			return NoUpdateInsert;
+		}
 	}
 }

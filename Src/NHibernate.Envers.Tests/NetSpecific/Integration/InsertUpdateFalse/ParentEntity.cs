@@ -18,5 +18,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 			       Component.Equals(casted.Component) &&
 			       ComponentSetter.Equals(casted.ComponentSetter);
 		}
+
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode();
+		}
 	}
 }

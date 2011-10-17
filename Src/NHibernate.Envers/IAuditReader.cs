@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Query;
 
@@ -140,5 +141,10 @@ namespace NHibernate.Envers
 		/// is closed.
 		/// </returns>
 		AuditQueryCreator CreateQuery();
+
+		IEnumerable<System.Type> FindEntityTypesChangedInRevision(long revision);
+		IEnumerable FindEntitiesChangedInRevision(long revision, RevisionType revisionType);
+		IDictionary<RevisionType, IEnumerable> FindEntitiesChangedInRevisionGroupByRevisionType(long revision);
+		IEnumerable FindEntitiesChangedInRevision(long revision);
 	}
 }

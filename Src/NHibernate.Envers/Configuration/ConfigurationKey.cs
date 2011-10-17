@@ -10,6 +10,11 @@ namespace NHibernate.Envers.Configuration
 	public static class ConfigurationKey
 	{
 		/// <summary>
+		/// Should Envers track (persist) entity types that have been changed during each revision.
+		/// </summary>
+		public const string TrackEntitiesChangedInRevision = "nhibernate.envers.track_entities_changed_in_revision";
+
+		/// <summary>
 		/// Should a revision be generated when a not-owned relation
 		/// field changes (this can be either a collection in a
 		/// one-to-many relation, or the field using "mappedBy"

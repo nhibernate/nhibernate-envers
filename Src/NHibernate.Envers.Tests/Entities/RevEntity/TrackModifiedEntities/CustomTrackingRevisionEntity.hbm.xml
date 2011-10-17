@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities">
+	<class name="CustomTrackingRevisionEntity">
+		<id name="CustomId">
+			<generator class="identity" />
+		</id>
+		<property name="CustomTimestamp" />
+		<set name="ModifiedEntityNames" cascade="all">
+			<key column="revision"/>
+			<one-to-many class="ModifiedEntityNameEntity"/>
+		</set>
+	</class>
+
+	<class name="ModifiedEntityNameEntity">
+		<id name="Id">
+			<generator class="identity" />
+		</id>
+		<property name="EntityName"/>
+		<many-to-one name="Revision" column="revision" />
+	</class>
+</hibernate-mapping>
+

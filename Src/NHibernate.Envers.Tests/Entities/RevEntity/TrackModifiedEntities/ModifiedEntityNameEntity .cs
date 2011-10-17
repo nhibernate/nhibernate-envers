@@ -1,0 +1,22 @@
+﻿namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
+{
+	public class ModifiedEntityNameEntity 
+	{
+		public virtual int Id { get; set; }
+		public virtual CustomTrackingRevisionEntity Revision { get; set; }
+		public virtual string EntityName { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			var casted = obj as ModifiedEntityNameEntity;
+			if (casted == null)
+				return false;
+			return EntityName == casted.EntityName;
+		}
+
+		public override int GetHashCode()
+		{
+			return EntityName.GetHashCode();
+		}
+	}
+}

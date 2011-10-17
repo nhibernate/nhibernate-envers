@@ -17,6 +17,11 @@ namespace NHibernate.Envers.Query
 			this.auditReaderImplementor = auditReaderImplementor;
 		}
 
+		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
+		{
+			return ForEntitiesAtRevision(c, revision, false);
+		}
+
 		/// <summary>
 		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
 		/// </summary>
@@ -24,11 +29,11 @@ namespace NHibernate.Envers.Query
 		/// <param name="revision">Revision number at which to execute the query.</param>
 		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
 		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
-		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
+		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision, bool selectDeletedEntities)
 		{
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision, selectDeletedEntities);
 		}
 
 		/// <summary>

@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
+using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Tools;
 using NHibernate.Event;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Reader
 {
@@ -121,8 +125,7 @@ namespace NHibernate.Envers.Reader
 
 		public object FindRevision(long revision)
 		{
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
-			ArgumentsTools.CheckPositive(revision, "Entity revision");
+			ArgumentsTools.CheckPositive(revision, "revision");
 
 			var revisions = new List<long>(1) { revision };
 			var query = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions);
@@ -156,6 +159,65 @@ namespace NHibernate.Envers.Reader
 			return res;
 		}
 
+		public IEnumerable FindEntitiesChangedInRevision(long revision)
+		{
+			var clazz = FindEntityTypesChangedInRevision(revision);
+			var result = new ArrayList();
+			foreach (var type in clazz)
+			{
+				result.AddRange(CreateQuery().ForEntitiesAtRevision(type, revision, true).GetResultList());
+			}
+			return result;
+		}
+
+
+		public IEnumerable FindEntitiesChangedInRevision(long revision, RevisionType revisionType)
+		{
+			var clazz = FindEntityTypesChangedInRevision(revision);
+			var result = new ArrayList();
+			foreach (var type in clazz)
+			{
+				result.AddRange(CreateQuery().ForEntitiesAtRevision(type, revision, true).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList());
+			}
+			return result;
+		}
+
+		public IDictionary<RevisionType, IEnumerable> FindEntitiesChangedInRevisionGroupByRevisionType(long revision)
+		{
+			var clazz = FindEntityTypesChangedInRevision(revision);
+			var result = new Dictionary<RevisionType, IEnumerable>();
+			foreach (var revType in Enum.GetValues(typeof(RevisionType)))
+			{
+				var revisionType = (RevisionType)revType;
+				var tempList = new ArrayList();
+				foreach (var type in clazz)
+				{
+					var list = CreateQuery().ForEntitiesAtRevision(type, revision, true).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList();
+					tempList.AddRange(list);
+				}
+				result[revisionType] = tempList;
+			}
+			return result;
+		}
+
+		public IEnumerable<System.Type> FindEntityTypesChangedInRevision(long revision)
+		{
+			ArgumentsTools.CheckPositive(revision, "revision");
+			if (!verCfg.GlobalCfg.IsTrackEntitiesChangedInRevisionEnabled)
+			{
+				throw new AuditException(@"This query is designed for Envers default mechanism of tracking entities modified in a given revision." +
+											 " Extend DefaultTrackingModifiedTypesRevisionEntity, utilize ModifiedEntityNamesAttribute or set " +
+											 "'nhibernate.envers.track_entities_changed_in_revision' parameter to true.");
+			}
+			var query = verCfg.RevisionInfoQueryCreator.EntitiesChangedInRevisionQuery(Session, revision);
+			var modifiedEntityNames = new HashSet<String>(query.List<string>());
+			var result = new List<System.Type>(modifiedEntityNames.Count);
+			foreach (var modifiedEntityName in modifiedEntityNames)
+			{
+				result.Add(ReflectHelper.ClassForFullName(modifiedEntityName));
+			}
+			return result;
+		}
 
 		private void fillRevisionsResult<T>(IDictionary<long, T> result, IEnumerable<long> revisions)
 		{
