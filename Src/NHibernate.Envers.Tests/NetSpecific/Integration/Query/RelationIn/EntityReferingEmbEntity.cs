@@ -17,5 +17,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 				return false;
 			return (casted.Id == Id && string.Equals(casted.Data, Data));
 		}
+
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode();
+		}
 	}
 }

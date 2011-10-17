@@ -79,13 +79,14 @@ namespace NHibernate.Envers.Synchronization
 		private void executeInSession(ISession session)
 		{
 			// Making sure the revision data is persisted.
-			CurrentRevisionData(session, true);
+			var currentRevisionData = CurrentRevisionData(session, true);
 
 			// First undoing any performed work units
 			while (undoQueue.Count > 0)
 			{
 				var vwu = undoQueue.Dequeue();
 				vwu.Undo(session);
+				revisionInfoGenerator.RemoveEntityFromRevision(vwu.EntityName, currentRevisionData);
 			}
 
 			while (workUnits.Count > 0)
@@ -93,6 +94,7 @@ namespace NHibernate.Envers.Synchronization
 				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
 				vwu.Perform(session, revisionData);
+				revisionInfoGenerator.AddEntityToRevision(vwu.EntityName, currentRevisionData);
 			}
 		}
 

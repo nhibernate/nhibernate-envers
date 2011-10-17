@@ -249,6 +249,22 @@
 					</row>
 					<row>
 						<entry>
+							nhibernate.envers.track_entities_changed_in_revision
+						</entry>
+						<entry>
+							false
+						</entry>
+						<entry>
+							Should entity types, that have been modified during each revision, be tracked. The default
+							implementation creates <literal>REVENTITY</literal> table that stores fully qualified names
+							of .Net classes changed in a specified revision. Each record encapsulates the revision
+							identifier (foreign key to <literal>REVINFO</literal> table) and a string value. For more
+							information refer to <xref linkend="envers-tracking-modified-entities-reventity"/> and
+							<xref linkend="envers-tracking-modified-entities-queries"/>.
+						</entry>
+					</row>
+					<row>
+						<entry>
 							nhibernate.envers.collection_proxy_mapper_factory
 						</entry>
 						<entry>

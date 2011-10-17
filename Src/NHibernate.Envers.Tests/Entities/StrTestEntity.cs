@@ -4,6 +4,11 @@ namespace NHibernate.Envers.Tests.Entities
 {
 	public class StrTestEntity
 	{
+		public StrTestEntity()
+		{
+			Str = string.Empty;
+		}
+
 		public virtual int Id { get; set; }
 		[Audited]
 		public virtual string Str { get; set; }

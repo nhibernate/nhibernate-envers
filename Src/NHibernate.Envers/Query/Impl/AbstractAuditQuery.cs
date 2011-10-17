@@ -15,8 +15,14 @@ namespace NHibernate.Envers.Query.Impl
 		private readonly IAuditReaderImplementor _versionsReader;
 
 		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls)
+				: this(verCfg, versionsReader, cls, cls.FullName)
+		{
+		}
+
+		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls, string entityName)
 		{
 			VerCfg = verCfg;
+			EntityName = entityName;
 			_versionsReader = versionsReader;
 			Criterions = new List<IAuditCriterion>();
 			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);

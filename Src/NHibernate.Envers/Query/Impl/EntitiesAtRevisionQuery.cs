@@ -9,15 +9,40 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public class EntitiesAtRevisionQuery : AbstractAuditQuery
 	{
-		private readonly long revision;
+		private readonly long _revision;
+		private readonly bool _selectDeletedEntities;
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
 										IAuditReaderImplementor versionsReader,
 										System.Type cls,
+										string entityName,
 										long revision)
+				: this(verCfg, versionsReader, cls, entityName, revision, false)
+		{
+			
+		}
+
+		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
+										IAuditReaderImplementor versionsReader,
+										System.Type cls,
+										long revision,
+										bool selectDeletedEntities)
 			: base(verCfg, versionsReader, cls)
 		{
-			this.revision = revision;
+			_revision = revision;
+			_selectDeletedEntities = selectDeletedEntities;
+		}
+
+		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
+										IAuditReaderImplementor versionsReader,
+										System.Type cls,
+										string entityName,
+										long revision,
+										bool selectDeletedEntities)
+			: base(verCfg, versionsReader, cls, entityName)
+		{
+			_revision = revision;
+			_selectDeletedEntities = selectDeletedEntities;
 		}
 
 		protected override void FillResult(IList result)
@@ -52,8 +77,11 @@ namespace NHibernate.Envers.Query.Impl
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
 					revisionPropertyPath, originalIdPropertyName, "e", "e2");
 
-			// e.revision_type != DEL
-			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
+			if (!_selectDeletedEntities)
+			{
+				// e.revision_type != DEL
+				QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
+			}
 
 			// all specified conditions
 			foreach (var criterion in Criterions)
@@ -66,7 +94,7 @@ namespace NHibernate.Envers.Query.Impl
 			// add named parameter (only used for ValidAuditTimeStrategy) 
 			if (query.NamedParameters.Contains("revision"))
 			{
-				query.SetParameter("revision", revision);
+				query.SetParameter("revision", _revision);
 			}
 
 			if (HasProjection)
@@ -76,7 +104,7 @@ namespace NHibernate.Envers.Query.Impl
 			}
 			var queryResult = new List<IDictionary>();
 			query.List(queryResult);
-			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result, queryResult, revision);
+			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result, queryResult, _revision);
 		}
 	}
 }

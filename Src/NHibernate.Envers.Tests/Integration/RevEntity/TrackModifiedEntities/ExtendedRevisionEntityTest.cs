@@ -1,0 +1,30 @@
+﻿using System.Collections.Generic;
+using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities;
+using NUnit.Framework;
+using SharpTestsEx;
+
+namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
+{
+	[TestFixture]
+	public class ExtendedRevisionEntityTest : DefaultTrackingEntitiesTest 
+	{
+		protected override IEnumerable<string> Mappings
+		{
+			get { return new[] { "Entities.Mapping.hbm.xml", "Entities.RevEntity.TrackModifiedEntities.ExtendedRevisionEntity.hbm.xml" }; }
+		}
+
+		protected override void AddToConfiguration(Cfg.Configuration configuration)
+		{
+			configuration.SetProperty(ConfigurationKey.TrackEntitiesChangedInRevision, "false");
+		}
+
+		[Test]
+		public void ShouldCommentPropertyValue()
+		{
+			var ere = AuditReader().FindRevision<ExtendedRevisionEntity>(1);
+			ere.Comment
+				.Should().Be.EqualTo(ExtendedRevisionListener.CommentValue);
+		}
+	}
+}

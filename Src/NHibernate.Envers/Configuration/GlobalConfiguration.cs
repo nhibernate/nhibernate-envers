@@ -18,6 +18,9 @@ namespace NHibernate.Envers.Configuration
 			var storeDataDeletedEntityStr = Toolz.GetProperty(properties, ConfigurationKey.StoreDataAtDelete, "false");
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
+			var trackEntityChangesStr = Toolz.GetProperty(properties, ConfigurationKey.TrackEntitiesChangedInRevision, "false");
+			IsTrackEntitiesChangedInRevisionEnabled = Boolean.Parse(trackEntityChangesStr);
+
 			DefaultSchemaName = Toolz.GetProperty(properties, ConfigurationKey.DefaultSchema, string.Empty);
 			DefaultCatalogName = Toolz.GetProperty(properties, ConfigurationKey.DefaultCatalog, string.Empty);
 
@@ -33,6 +36,13 @@ namespace NHibernate.Envers.Configuration
 		/// Should a revision be generated when a not-owned relation field changes
 		/// </summary>
 		public bool GenerateRevisionsForCollections { get; private set; }
+
+		public bool IsTrackEntitiesChangedInRevisionEnabled { get; private set; }
+
+		public void SetTrackEntitiesChangedInRevisionEnabled()
+		{
+			IsTrackEntitiesChangedInRevisionEnabled = true;
+		}
 
 		/// <summary>
 		/// Should the optimistic locking property of an entity be considered unversioned

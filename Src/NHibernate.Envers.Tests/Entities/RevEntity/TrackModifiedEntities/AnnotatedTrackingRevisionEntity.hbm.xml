@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities">
+	<class name="AnnotatedTrackingRevisionEntity">
+		<id name="CustomId">
+			<generator class="identity" />
+		</id>
+		<property name="CustomTimestamp" />
+		<set name="ModifiedEntityNames" table="REVENTITY">
+			<key column="REV"/>
+			<element column="ENTITYNAME" type="string"/>
+		</set>
+	</class>
+</hibernate-mapping>

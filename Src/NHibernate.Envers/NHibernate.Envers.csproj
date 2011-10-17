@@ -108,11 +108,16 @@
     <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
     <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
     <Compile Include="Configuration\Store\IMetaDataAdder.cs" />
+    <Compile Include="DefaultTrackingModifiedTypesRevisionEntity.cs" />
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedSetCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedMapCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedSetCollectionMapper.cs" />
+    <Compile Include="IEntityTrackingRevisionListener .cs" />
+    <Compile Include="Configuration\Attributes\ModifiedEntityNamesAttribute.cs" />
+    <Compile Include="Query\Criteria\RevisionTypeAuditExpression.cs" />
+    <Compile Include="RevisionInfo\DefaultTrackingModifiedTypesRevisionInfoGenerator .cs" />
     <Compile Include="Strategy\DefaultAuditStrategy.cs" />
     <Compile Include="Strategy\IAuditStrategy.cs" />
     <Compile Include="Strategy\ValidityAuditStrategy.cs" />
