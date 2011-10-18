@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Mapping;
@@ -9,6 +7,10 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
+	/// <summary>
+	/// Tests proper behavior of tracking modified entity types when <code>nhibernate.envers.track_entities_changed_in_revision</code>
+	/// parameter is set to <code>true</code>.
+	/// </summary>
 	[TestFixture]
 	public class DefaultTrackingEntitiesTest : TestBase
 	{
@@ -68,7 +70,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity {Str = "y", Number = 1, Id = siteId};
 
 			AuditReader().FindEntitiesChangedInRevision(1)
-				.OfType<object>().Should().Have.SameValuesAs(ste, site);
+				.Should().Have.SameValuesAs(ste, site);
 		}
 
 		[Test]
@@ -77,7 +79,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity { Str = "y", Number = 2, Id = siteId };
 
 			AuditReader().FindEntitiesChangedInRevision(2)
-				.OfType<object>().Should().Have.SameValuesAs(site);		
+				.Should().Have.SameValuesAs(site);		
 		}
 
 		[Test]
@@ -87,14 +89,14 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity { Id = siteId };
 
 			AuditReader().FindEntitiesChangedInRevision(3)
-				.OfType<object>().Should().Have.SameValuesAs(site, ste);	
+				.Should().Have.SameValuesAs(site, ste);	
 		}
 
 		[Test]
 		public void ShouldNotFindChangesInInvalidRevision()
 		{
 			AuditReader().FindEntitiesChangedInRevision(4)
-				.OfType<object>().Should().Be.Empty();
+				.Should().Be.Empty();
 		}
 
 		[Test]
@@ -103,11 +105,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Str = "x", Id = steId };
 			var site = new StrIntTestEntity { Str = "y", Number = 1, Id = siteId };
 
-			IDictionary<RevisionType, IEnumerable> result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(1);
+			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(1);
 
-			result[RevisionType.Added].OfType<object>().Should().Have.SameValuesAs(site, ste);
-			result[RevisionType.Modified].OfType<object>().Should().Be.Empty();
-			result[RevisionType.Deleted].OfType<object>().Should().Be.Empty();
+			result[RevisionType.Added].Should().Have.SameValuesAs(site, ste);
+			result[RevisionType.Modified].Should().Be.Empty();
+			result[RevisionType.Deleted].Should().Be.Empty();
 		}
 
 		[Test]
@@ -117,9 +119,9 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 
 			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(2);
 
-			result[RevisionType.Added].OfType<object>().Should().Be.Empty();
-			result[RevisionType.Modified].OfType<object>().Should().Have.SameValuesAs(site);
-			result[RevisionType.Deleted].OfType<object>().Should().Be.Empty();
+			result[RevisionType.Added].Should().Be.Empty();
+			result[RevisionType.Modified].Should().Have.SameValuesAs(site);
+			result[RevisionType.Deleted].Should().Be.Empty();
 		}
 
 		[Test]
@@ -130,9 +132,9 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 
 			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(3);
 
-			result[RevisionType.Added].OfType<object>().Should().Be.Empty();
-			result[RevisionType.Modified].OfType<object>().Should().Be.Empty();
-			result[RevisionType.Deleted].OfType<object>().Should().Have.SameValuesAs(ste, site);
+			result[RevisionType.Added].Should().Be.Empty();
+			result[RevisionType.Modified].Should().Be.Empty();
+			result[RevisionType.Deleted].Should().Have.SameValuesAs(ste, site);
 		}
 
 		[Test]
@@ -142,7 +144,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity { Str = "y", Number = 1, Id = siteId };
 
 			AuditReader().FindEntitiesChangedInRevision(1, RevisionType.Added)
-				.OfType<object>().Should().Have.SameValuesAs(ste, site);
+				.Should().Have.SameValuesAs(ste, site);
 		}
 
 		[Test]
@@ -151,7 +153,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity { Str = "y", Number = 2, Id = siteId };
 
 			AuditReader().FindEntitiesChangedInRevision(2, RevisionType.Modified)
-				.OfType<object>().Should().Have.SameValuesAs(site);
+				.Should().Have.SameValuesAs(site);
 		}
 
 		[Test]
@@ -161,7 +163,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var site = new StrIntTestEntity { Id = siteId };
 
 			AuditReader().FindEntitiesChangedInRevision(3, RevisionType.Deleted)
-				.OfType<object>().Should().Have.SameValuesAs(site, ste);
+				.Should().Have.SameValuesAs(site, ste);
 		}
 
 		[Test]
@@ -171,7 +173,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 				.Should().Have.SameValuesAs(typeof(StrTestEntity), typeof(StrIntTestEntity));
 
 			AuditReader().FindEntityTypesChangedInRevision(2)
-							.Should().Have.SameValuesAs(typeof(StrIntTestEntity));
+				.Should().Have.SameValuesAs(typeof(StrIntTestEntity));
 
 			AuditReader().FindEntityTypesChangedInRevision(3)
 				.Should().Have.SameValuesAs(typeof(StrTestEntity), typeof(StrIntTestEntity));

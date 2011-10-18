@@ -3,6 +3,9 @@ using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 {
+	/// <summary>
+	/// Revision entity which <see cref="ModifiedEntityNames"/> property is manually populated by <see cref="CustomEntityTrackingRevisionListener"/>.
+	/// </summary>
 	[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))]
 	public class CustomTrackingRevisionEntity 
 	{
@@ -22,11 +25,6 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 		public virtual void AddModifiedEntityName(string entityName)
 		{
 			ModifiedEntityNames.Add(new ModifiedEntityNameEntity {Revision = this, EntityName = entityName});
-		}
-
-		public virtual void RemoveModifiedEntityName(string entityName)
-		{
-			ModifiedEntityNames.Remove(new ModifiedEntityNameEntity {Revision = this, EntityName = entityName});
 		}
 
 		public override bool Equals(object obj)

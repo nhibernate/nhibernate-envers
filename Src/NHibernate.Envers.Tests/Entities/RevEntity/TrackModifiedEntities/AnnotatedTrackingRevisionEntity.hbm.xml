@@ -7,7 +7,7 @@
 			<generator class="identity" />
 		</id>
 		<property name="CustomTimestamp" />
-		<set name="ModifiedEntityNames" table="REVENTITY">
+		<set name="EntityNames" table="REVENTITY">
 			<key column="REV"/>
 			<element column="ENTITYNAME" type="string"/>
 		</set>

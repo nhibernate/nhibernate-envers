@@ -6,6 +6,9 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
+	/// <summary>
+	/// Tests proper behavior of revision entity that extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/>.
+	/// </summary>
 	[TestFixture]
 	public class ExtendedRevisionEntityTest : DefaultTrackingEntitiesTest 
 	{

@@ -6,14 +6,9 @@
 		{
 		}
 
-		public void AddEntityToRevision(string entityName, object revisionEntity)
+		public void EntityChanged(System.Type entityClass, string entityName, object entityId, RevisionType revisionType, object revisionEntity)
 		{
-			((CustomTrackingRevisionEntity) revisionEntity).AddModifiedEntityName(entityName);
-		}
-
-		public void RemoveEntityFromRevision(string entityName, object revisionEntity)
-		{
-			((CustomTrackingRevisionEntity)revisionEntity).RemoveModifiedEntityName(entityName);
+			((CustomTrackingRevisionEntity)revisionEntity).AddModifiedEntityName(entityClass.FullName);
 		}
 	}
 }
