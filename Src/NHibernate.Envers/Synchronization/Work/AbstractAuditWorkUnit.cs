@@ -12,29 +12,32 @@ namespace NHibernate.Envers.Synchronization.Work
 		protected AbstractAuditWorkUnit(ISessionImplementor sessionImplementor,			
 										string entityName, 
 										AuditConfiguration verCfg,
-										object id) 
+										object id,
+										RevisionType revisionType) 
 		{
 			SessionImplementor = sessionImplementor;
 			VerCfg = verCfg;
 			EntityId = id;
+			RevisionType = revisionType;
 			EntityName = entityName;
 			AuditStrategy = verCfg.AuditStrategy;
 		}
 
 		public object EntityId { get; private set; }
 		public string EntityName { get; private set; }
+		public RevisionType RevisionType { get; private set; }
 		protected ISessionImplementor SessionImplementor { get; private set; }
 		protected AuditConfiguration VerCfg { get; private set; }
 		protected IAuditStrategy AuditStrategy { get; private set; }
 
-		protected void FillDataWithId(IDictionary<string, object> data, object revision, RevisionType revisionType) 
+		protected void FillDataWithId(IDictionary<string, object> data, object revision) 
 		{
 			var entitiesCfg = VerCfg.AuditEntCfg;
 
 			var originalId = new Dictionary<string, object> {{entitiesCfg.RevisionFieldName, revision}};
 
 			VerCfg.EntCfg[EntityName].IdMapper.MapToMapFromId(originalId, EntityId);
-			data.Add(entitiesCfg.RevisionTypePropName, revisionType);
+			data.Add(entitiesCfg.RevisionTypePropName, RevisionType);
 			data.Add(entitiesCfg.OriginalIdPropName, originalId);
 		}
 

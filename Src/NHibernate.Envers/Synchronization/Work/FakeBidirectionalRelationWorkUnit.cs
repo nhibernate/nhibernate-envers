@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Synchronization.Work
 												 RelationDescription rd, RevisionType revisionType,
 												 object index,
 												 IAuditWorkUnit nestedWorkUnit) 
-			:base(sessionImplementor, entityName, verCfg, id)
+			:base(sessionImplementor, entityName, verCfg, id, revisionType)
 		{
 			NestedWorkUnit = nestedWorkUnit;
 
@@ -50,14 +50,14 @@ namespace NHibernate.Envers.Synchronization.Work
 		private FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original,
 												 IDictionary<string, FakeRelationChange> fakeRelationChanges,
 												 IAuditWorkUnit nestedWorkUnit)
-			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId)
+			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId, original.RevisionType)
 		{
 			this.fakeRelationChanges = fakeRelationChanges;
 			NestedWorkUnit = nestedWorkUnit;
 		}
 
 		private FakeBidirectionalRelationWorkUnit(FakeBidirectionalRelationWorkUnit original, IAuditWorkUnit nestedWorkUnit)
-			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId)
+			: base(original.SessionImplementor, original.EntityName, original.VerCfg, original.EntityId, original.RevisionType)
 		{
 			NestedWorkUnit = nestedWorkUnit;
 			fakeRelationChanges = new Dictionary<string, FakeRelationChange>(original.fakeRelationChanges);

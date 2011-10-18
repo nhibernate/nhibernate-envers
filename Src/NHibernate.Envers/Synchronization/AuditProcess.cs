@@ -76,26 +76,36 @@ namespace NHibernate.Envers.Synchronization
 			}
 		}
 
-		private void executeInSession(ISession session)
+		private void executeInSession(ISession executeSession)
 		{
 			// Making sure the revision data is persisted.
-			var currentRevisionData = CurrentRevisionData(session, true);
+			var currentRevisionData = CurrentRevisionData(executeSession, true);
 
 			// First undoing any performed work units
 			while (undoQueue.Count > 0)
 			{
 				var vwu = undoQueue.Dequeue();
-				vwu.Undo(session);
-				revisionInfoGenerator.RemoveEntityFromRevision(vwu.EntityName, currentRevisionData);
+				vwu.Undo(executeSession);
 			}
 
 			while (workUnits.Count > 0)
 			{
 				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
-				vwu.Perform(session, revisionData);
-				revisionInfoGenerator.AddEntityToRevision(vwu.EntityName, currentRevisionData);
+				vwu.Perform(executeSession, revisionData);
+				if (!(vwu is PersistentCollectionChangeWorkUnit))
+				{
+					var entClass = entityClass(session, executeSession, vwu.EntityName);
+					revisionInfoGenerator.EntityChanged(entClass, vwu.EntityName, vwu.EntityId, vwu.RevisionType, currentRevisionData);
+				}
 			}
+		}
+
+		//todo: fix session handling
+		private static System.Type entityClass(ISessionImplementor sessionImplementor, ISession executeSession, string entityName)
+		{
+			var entityPersister = sessionImplementor.Factory.GetEntityPersister(entityName);
+			return entityPersister.ClassMetadata.GetMappedClass(((ISessionImplementor)executeSession).EntityMode);
 		}
 
 		public object CurrentRevisionData(ISession session, bool persist)

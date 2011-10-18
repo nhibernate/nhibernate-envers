@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public DelWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
 						   object id, IEntityPersister entityPersister, object[] state)
-			: base(sessionImplementor, entityName, verCfg, id)
+			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Deleted)
 		{
 			this.state = state;
 			propertyNames = entityPersister.PropertyNames;
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public override IDictionary<string, object> GenerateData(object revisionData)
 		{
 			IDictionary<string, object> data = new Dictionary<string, object>();
-			FillDataWithId(data, revisionData, RevisionType.Deleted);
+			FillDataWithId(data, revisionData);
 
 			if (VerCfg.GlobalCfg.StoreDataAtDelete) {
 				VerCfg.EntCfg[EntityName].PropertyMapper.Map(SessionImplementor, data,

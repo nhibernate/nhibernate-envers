@@ -6,7 +6,7 @@ using NHibernate.Envers.Reader;
 namespace NHibernate.Envers.Query.Impl
 {
 	/// <summary>
-	/// In comparison to <see cref="EntitiesAtRevisionQuery"/> this query will return an empty collection if an entity
+	/// In comparison to <see cref="EntitiesAtRevisionQuery"/> this query returns an empty collection if an entity
 	/// of a certain type has not been changed in a given revision.
 	/// </summary>
 	public class EntitiesModifiedAtRevisionQuery : AbstractAuditQuery

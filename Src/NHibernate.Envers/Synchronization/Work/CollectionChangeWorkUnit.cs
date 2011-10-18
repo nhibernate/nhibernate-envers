@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public CollectionChangeWorkUnit(ISessionImplementor session, string entityName, AuditConfiguration verCfg,
 										object id, object entity)
-			: base(session, entityName, verCfg, id)
+			: base(session, entityName, verCfg, id, RevisionType.Modified)
 		{
 			this.entity = entity;
 		}
@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public override IDictionary<string, object> GenerateData(object revisionData)
 		{
 			IDictionary<string, object> data = new Dictionary<string, object>();
-			FillDataWithId(data, revisionData, RevisionType.Modified);
+			FillDataWithId(data, revisionData);
 
 			VerCfg.EntCfg[EntityName].PropertyMapper.MapToMapFromEntity(SessionImplementor,
 					data, entity, null);
