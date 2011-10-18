@@ -158,7 +158,7 @@ namespace NHibernate.Envers.Configuration
 					}
 					else
 					{
-						throw new MappingException("The property annotated with ModifiedEntityTypesAttribute must be of type ISet<string>.");
+						throw new MappingException("The property annotated with ModifiedEntityTypesAttribute must be of ISet<string> type.");
 					}
 				}
 			}
