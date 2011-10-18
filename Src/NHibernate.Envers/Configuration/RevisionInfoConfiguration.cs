@@ -65,7 +65,7 @@ namespace NHibernate.Envers.Configuration
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
-				generateEntityTypesTrackingTableMapping(classMapping, "ModifiedEntityTypes", "REVENTITY", "REV", "ENTITYTYPE", "string");
+				generateEntityTypesTrackingTableMapping(classMapping, "ModifiedEntityTypes", "REVCHANGES", "REV", "ENTITYTYPE", "string");
 			}
 
 			return document;

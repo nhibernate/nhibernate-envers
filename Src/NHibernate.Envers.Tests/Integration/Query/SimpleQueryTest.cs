@@ -260,5 +260,78 @@ namespace NHibernate.Envers.Tests.Integration.Query
 				.GetResultList();
 			Assert.AreEqual(0, result.Count);
 		}
+
+		[Test]
+		public void ShouldFindEntitiesAddedAtRevision()
+		{
+			var result = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof (StrIntTestEntity), typeof (StrIntTestEntity).FullName, 1)
+				.GetResultList<StrIntTestEntity>();
+			var revisionType = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 1)
+				.AddProjection(AuditEntity.RevisionType())
+				.Add(AuditEntity.Id().Eq(id1))
+				.GetSingleResult<RevisionType>();
+
+			result.Should().Have.SameValuesAs(new StrIntTestEntity {Id = id1, Str = "a", Number = 10},
+			                                    new StrIntTestEntity {Id = id2, Str = "a", Number = 10},
+			                                    new StrIntTestEntity {Id = id3, Str = "b", Number = 5});
+
+			revisionType.Should().Be.EqualTo(RevisionType.Added);
+		}
+
+		[Test]
+		public void ShouldFindEntitiesModifiedAtRevision()
+		{
+			var result = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 2)
+				.GetResultList<StrIntTestEntity>();
+			var revisionType = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 2)
+				.AddProjection(AuditEntity.RevisionType())
+				.Add(AuditEntity.Id().Eq(id1))
+				.GetSingleResult<RevisionType>();
+
+			result.Should().Have.SameValuesAs(new StrIntTestEntity { Id = id1, Str = "c", Number = 10 },
+															new StrIntTestEntity { Id = id2, Str = "a", Number = 20 });
+
+			revisionType.Should().Be.EqualTo(RevisionType.Modified);
+		}
+
+		[Test]
+		public void ShouldFindEntitiesRemovedAtRevision()
+		{
+			var result = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 4)
+				.GetResultList<StrIntTestEntity>();
+			var revisionType = AuditReader().CreateQuery()
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 4)
+				.AddProjection(AuditEntity.RevisionType())
+				.Add(AuditEntity.Id().Eq(id1))
+				.GetSingleResult<RevisionType>();
+
+			result.Should().Have.SameValuesAs(new StrIntTestEntity { Id = id1 });
+
+			revisionType.Should().Be.EqualTo(RevisionType.Deleted);
+		}
+
+		[Test]
+		public void VerifyEntityNotModifiedAtRevision()
+		{
+			var result = AuditReader().CreateQuery()
+						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 3)
+						.Add(AuditEntity.Id().Eq(id1))
+						.GetResultList<StrIntTestEntity>();
+			result.Should().Be.Empty();
+		}
+
+		[Test]
+		public void VerifyNoEntitiesModifiedAtRevision()
+		{
+			var result = AuditReader().CreateQuery()
+						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 5)
+						.GetResultList<StrIntTestEntity>();
+			result.Should().Be.Empty();
+		}
 	}
 }

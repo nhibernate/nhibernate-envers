@@ -14,6 +14,13 @@ namespace NHibernate.Envers.Query.Impl
 		private readonly long _revision;
 
 		public EntitiesModifiedAtRevisionQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader,
+															System.Type cls, string entityName, long revision)
+			: base(verCfg, versionsReader, cls, entityName)
+		{
+			_revision = revision;
+		}
+
+		public EntitiesModifiedAtRevisionQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader,
 															System.Type cls, long revision)
 			: base(verCfg, versionsReader, cls)
 		{

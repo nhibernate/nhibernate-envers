@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			foreach (var classMapping in Cfg.CollectionMappings)
 			{
 				var table = classMapping.CollectionTable;
-				if ("REVENTITY".Equals(table.Name))
+				if ("REVCHANGES".Equals(table.Name))
 				{
 					table.ColumnSpan.Should().Be.EqualTo(2);
 					table.GetColumn(new Column("REV")).Should().Not.Be.Null();
