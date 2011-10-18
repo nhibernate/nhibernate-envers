@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public AddWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
 						   object id, IEntityPersister entityPersister, object[] state) 
-			: base(sessionImplementor, entityName, verCfg, id)
+			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Added)
 		{
 			State = state;
 			data = new Dictionary<string, object>();
@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		private AddWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
 						   object id, IDictionary<string, object> data)
-			: base(sessionImplementor, entityName, verCfg, id)
+			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Added)
 		{
 			this.data = data;
 		}
@@ -35,7 +35,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IDictionary<string, object> GenerateData(object revisionData)
 		{
-			FillDataWithId(data, revisionData, RevisionType.Added);
+			FillDataWithId(data, revisionData);
 			return data;
 		}
 

@@ -4,7 +4,8 @@
 	{
 		void SaveRevisionData(ISession session, object revisionData);
 		object Generate();
-		void AddEntityToRevision(string entityName, object revisionInfo);
-		void RemoveEntityFromRevision(string entityName, object revisionInfo);
+
+		/// <see cref="IEntityTrackingRevisionListener.EntityChanged"/>
+		void EntityChanged(System.Type entityClass, string entityName, object entityId, RevisionType revisionType, object revisionEntity);
 	}
 }

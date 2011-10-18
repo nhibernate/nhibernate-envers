@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Synchronization.Work
 												object id,
 												string referencingPropertyName) 
 			: base(sessionImplementor, entityName, auditCfg, 
-					new PersistentCollectionChangeWorkUnitId(id, collectionEntry.Role))
+					new PersistentCollectionChangeWorkUnitId(id, collectionEntry.Role), RevisionType.Modified)
 		{
 			this.referencingPropertyName = referencingPropertyName;
 
@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Synchronization.Work
 												object id,
 												IList<PersistentCollectionChangeData> collectionChanges,
 												string referencingPropertyName) 
-			:base(sessionImplementor, entityName, verCfg, id)
+			:base(sessionImplementor, entityName, verCfg, id, RevisionType.Modified)
 		{
 			this.collectionChanges = collectionChanges;
 			this.referencingPropertyName = referencingPropertyName;

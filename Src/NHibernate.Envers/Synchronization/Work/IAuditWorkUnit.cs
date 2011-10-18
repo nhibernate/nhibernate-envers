@@ -27,5 +27,10 @@ namespace NHibernate.Envers.Synchronization.Work
 		/// <param name="revisionData">The current revision data, which will be used to populate the work unit with the correct revision relation.</param>
 		/// <returns>Generates data that should be saved when performing this work unit.</returns>
 		IDictionary<string, object> GenerateData(object revisionData);
+
+		/// <summary>
+		/// Performed modification type.
+		/// </summary>
+		RevisionType RevisionType { get; }
 	}
 }

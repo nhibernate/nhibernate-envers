@@ -283,9 +283,11 @@ namespace NHibernate.Envers.Configuration
 						revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
 
 						if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled ||
-							modifiedEntityNamesFound ||
-							typeof(DefaultTrackingModifiedTypesRevisionEntity).IsAssignableFrom(revisionInfoClass))
+								modifiedEntityNamesFound ||
+								typeof(DefaultTrackingModifiedTypesRevisionEntity).IsAssignableFrom(revisionInfoClass))
 						{
+							// If tracking modified entities parameter is enabled, custom revision info entity is a subtype
+							// of DefaultTrackingModifiedTypesRevisionEntity class, or @ModifiedEntityNames annotation is used.
 							revisionInfoGenerator = new DefaultTrackingModifiedTypesRevisionInfoGenerator(revisionInfoEntityName,
 							                                                                              revisionInfoClass,
 							                                                                              revEntityAttr.Listener,

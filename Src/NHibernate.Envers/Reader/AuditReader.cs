@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
@@ -159,40 +157,40 @@ namespace NHibernate.Envers.Reader
 			return res;
 		}
 
-		public IEnumerable FindEntitiesChangedInRevision(long revision)
+		public IEnumerable<object> FindEntitiesChangedInRevision(long revision)
 		{
 			var clazz = FindEntityTypesChangedInRevision(revision);
-			var result = new ArrayList();
+			var result = new List<object>();
 			foreach (var type in clazz)
 			{
-				result.AddRange(CreateQuery().ForEntitiesAtCertainRevision(type, revision).GetResultList());
+				result.AddRange(CreateQuery().ForEntitiesModifiedAtRevision(type, revision).GetResultList<object>());
 			}
 			return result;
 		}
 
 
-		public IEnumerable FindEntitiesChangedInRevision(long revision, RevisionType revisionType)
+		public IEnumerable<object> FindEntitiesChangedInRevision(long revision, RevisionType revisionType)
 		{
 			var clazz = FindEntityTypesChangedInRevision(revision);
-			var result = new ArrayList();
+			var result = new List<object>();
 			foreach (var type in clazz)
 			{
-				result.AddRange(CreateQuery().ForEntitiesAtCertainRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList());
+				result.AddRange(CreateQuery().ForEntitiesModifiedAtRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>());
 			}
 			return result;
 		}
 
-		public IDictionary<RevisionType, IEnumerable> FindEntitiesChangedInRevisionGroupByRevisionType(long revision)
+		public IDictionary<RevisionType, IEnumerable<object>> FindEntitiesChangedInRevisionGroupByRevisionType(long revision)
 		{
 			var clazz = FindEntityTypesChangedInRevision(revision);
-			var result = new Dictionary<RevisionType, IEnumerable>();
+			var result = new Dictionary<RevisionType, IEnumerable<object>>();
 			foreach (var revType in Enum.GetValues(typeof(RevisionType)))
 			{
 				var revisionType = (RevisionType)revType;
-				var tempList = new ArrayList();
+				var tempList = new List<object>();
 				foreach (var type in clazz)
 				{
-					var list = CreateQuery().ForEntitiesAtCertainRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList();
+					var list = CreateQuery().ForEntitiesModifiedAtRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>();
 					tempList.AddRange(list);
 				}
 				result[revisionType] = tempList;
@@ -214,7 +212,7 @@ namespace NHibernate.Envers.Reader
 			var result = new List<System.Type>(modifiedEntityNames.Count);
 			foreach (var modifiedEntityName in modifiedEntityNames)
 			{
-				result.Add(ReflectHelper.ClassForFullName(modifiedEntityName));
+				result.Add(Toolz.ResolveEntityClass(SessionImplementor, modifiedEntityName));
 			}
 			return result;
 		}

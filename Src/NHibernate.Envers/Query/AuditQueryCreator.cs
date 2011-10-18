@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Query
 		}
 
 		/// <summary>
-		/// In comparison to <seealso cref="ForEntitiesAtRevision(Type, long)"/> this method will return an empty
+		/// In comparison to <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> this method will return an empty
 		/// collection if an entity of a certain type has not been changed in a given revision.
 		/// </summary>
 		/// <param name="c">Class of the entities for which to query.</param>
@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Query
 		/// A query for entities changed at a given revision, to which conditions can be added and which
 		/// can then be executed.
 		/// </returns>
-		public IAuditQuery ForEntitiesAtCertainRevision(System.Type c, long revision)
+		public IAuditQuery ForEntitiesModifiedAtRevision(System.Type c, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
 			return new EntitiesModifiedAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);

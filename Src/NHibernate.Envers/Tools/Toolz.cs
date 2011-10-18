@@ -100,5 +100,11 @@ namespace NHibernate.Envers.Tools
 		{
 			return ReflectHelper.ClassForFullName(className);
 		}
+
+		public static System.Type ResolveEntityClass(ISessionImplementor sessionImplementor, string entityName)
+		{
+			var entityPersister = sessionImplementor.Factory.GetEntityPersister(entityName);
+			return entityPersister.GetMappedClass(sessionImplementor.EntityMode);
+		}
 	}
 }

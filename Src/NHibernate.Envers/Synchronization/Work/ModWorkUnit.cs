@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public ModWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg, 
 						   object id, IEntityPersister entityPersister, object[] newState, object[] oldState)
-			: base(sessionImplementor, entityName, verCfg, id)
+			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Modified)
 		{
 			Data = new Dictionary<string, object>();
 			changes = verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, Data,
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IDictionary<string, object> GenerateData(object revisionData)
 		{
-			FillDataWithId(Data, revisionData, RevisionType.Modified);
+			FillDataWithId(Data, revisionData);
 
 			return Data;
 		}

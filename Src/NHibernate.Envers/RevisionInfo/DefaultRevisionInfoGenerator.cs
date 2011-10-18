@@ -49,21 +49,12 @@ namespace NHibernate.Envers.RevisionInfo
 			return revisionInfo;
 		}
 
-		public virtual void AddEntityToRevision(string entityName, object revisionInfo)
+		public virtual void EntityChanged(System.Type entityClass, string entityName, object entityId, RevisionType revisionType, object revisionEntity)
 		{
 			var castedListener = _listener as IEntityTrackingRevisionListener;
 			if (castedListener != null)
 			{
-				castedListener.AddEntityToRevision(entityName, revisionInfo);
-			}
-		}
-
-		public virtual void RemoveEntityFromRevision(string entityName, object revisionInfo)
-		{
-			var castedListener = _listener as IEntityTrackingRevisionListener;
-			if (castedListener != null)
-			{
-				castedListener.RemoveEntityFromRevision(entityName, revisionInfo);
+				castedListener.EntityChanged(entityClass, entityName, entityId, revisionType, revisionEntity);
 			}
 		}
 	}
