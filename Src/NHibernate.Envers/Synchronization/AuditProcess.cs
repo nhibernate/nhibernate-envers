@@ -93,11 +93,15 @@ namespace NHibernate.Envers.Synchronization
 				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
 				vwu.Perform(executeSession, revisionData);
-				if (!(vwu is PersistentCollectionChangeWorkUnit))
+				var entityId = vwu.EntityId;
+				var entityIdAsPersistentColl = entityId as PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId;
+				if (entityIdAsPersistentColl != null)
 				{
-					var entClass = entityClass(session, executeSession, vwu.EntityName);
-					revisionInfoGenerator.EntityChanged(entClass, vwu.EntityName, vwu.EntityId, vwu.RevisionType, currentRevisionData);
+					entityId = entityIdAsPersistentColl.OwnerId;
 				}
+
+				var entClass = entityClass(session, executeSession, vwu.EntityName);
+				revisionInfoGenerator.EntityChanged(entClass, vwu.EntityName, entityId, vwu.RevisionType, currentRevisionData);
 			}
 		}
 
