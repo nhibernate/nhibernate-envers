@@ -17,10 +17,6 @@ namespace NHibernate.Envers.Query
 			this.auditReaderImplementor = auditReaderImplementor;
 		}
 
-		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
-		{
-			return ForEntitiesAtRevision(c, revision, false);
-		}
 
 		/// <summary>
 		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
@@ -29,11 +25,26 @@ namespace NHibernate.Envers.Query
 		/// <param name="revision">Revision number at which to execute the query.</param>
 		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
 		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
-		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision, bool selectDeletedEntities)
+		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
 		{
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
-			ArgumentsTools.CheckPositive(revision, "Entity revision");
-			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision, selectDeletedEntities);
+			ArgumentsTools.CheckPositive(revision, "revision");
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
+		}
+
+		/// <summary>
+		/// In comparison to <seealso cref="ForEntitiesAtRevision(Type, long)"/> this method will return an empty
+		/// collection if an entity of a certain type has not been changed in a given revision.
+		/// </summary>
+		/// <param name="c">Class of the entities for which to query.</param>
+		/// <param name="revision">Revision number at which to execute the query.</param>
+		/// <returns>
+		/// A query for entities changed at a given revision, to which conditions can be added and which
+		/// can then be executed.
+		/// </returns>
+		public IAuditQuery ForEntitiesAtCertainRevision(System.Type c, long revision)
+		{
+			ArgumentsTools.CheckPositive(revision, "revision");
+			return new EntitiesModifiedAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
 		}
 
 		/// <summary>
@@ -132,9 +143,9 @@ namespace NHibernate.Envers.Query
 		/// The results of the query will be sorted in ascending order by the revision number,
 		/// unless an order or projection is added.		
 		/// </returns>
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>() 
-																												where TEntity : class
-																												where TRevisionEntity : class
+		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>()
+			where TEntity : class
+			where TRevisionEntity : class
 		{
 			return ForHistoryOf<TEntity, TRevisionEntity>(true);
 		}
@@ -168,9 +179,9 @@ namespace NHibernate.Envers.Query
 		/// The results of the query will be sorted in ascending order by the revision number,
 		/// unless an order or projection is added.		
 		/// </returns>
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>(bool includeDeleted) 
-																												where TEntity : class
-																												where TRevisionEntity : class
+		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>> ForHistoryOf<TEntity, TRevisionEntity>(bool includeDeleted)
+			where TEntity : class
+			where TRevisionEntity : class
 		{
 			return new HistoryQuery<TEntity, TRevisionEntity>(auditCfg, auditReaderImplementor, includeDeleted);
 		}
