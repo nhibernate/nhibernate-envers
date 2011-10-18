@@ -204,10 +204,8 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 		<para>
 			The basic query allows retrieving entity names and corresponding CLR classes changed in a specified revision:
 		</para>
-		<programlisting>
-			<![CDATA[ISet<Pair<string,Type>> modifiedEntityTypes = AuditReader()
-		 .CrossTypeRevisionChangesReader().FindEntityTypes(revisionNumber);]]>
-		</programlisting>
+		<programlisting><![CDATA[ISet<Pair<string,Type>> modifiedEntityTypes = AuditReader()
+	.CrossTypeRevisionChangesReader().FindEntityTypes(revisionNumber);]]></programlisting>
 		<para>
 			Other queries (accessible from <interfacename>NHibernate.Envers.ICrossTypeRevisionChangesReader</interfacename>):
 		</para>
