@@ -343,9 +343,12 @@
     <Compile Include="Integration\RevEntity\InheritedTest.cs" />
     <Compile Include="Integration\RevEntity\ListenerTest.cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\AnnotatedTrackingEntitiesTest.cs" />
+    <Compile Include="Integration\RevEntity\TrackModifiedEntities\Car.cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\CustomTrackingEntitiesTest .cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\DefaultTrackingEntitiesTest.cs" />
+    <Compile Include="Integration\RevEntity\TrackModifiedEntities\EntityNamesTest.cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\ExtendedRevisionEntityTest.cs" />
+    <Compile Include="Integration\RevEntity\TrackModifiedEntities\Person.cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\TrackingEntitiesMultipleChangesTest .cs" />
     <Compile Include="Integration\RevForDate\RevisionForDateTest.cs" />
     <Compile Include="Integration\SameIds\SameIdsTest.cs" />
@@ -522,6 +525,7 @@
     <EmbeddedResource Include="Integration\Join\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Collection\NoRevision\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\RevEntity\TrackModifiedEntities\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

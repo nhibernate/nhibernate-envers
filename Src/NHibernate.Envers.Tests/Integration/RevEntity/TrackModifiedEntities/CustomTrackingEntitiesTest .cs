@@ -7,12 +7,14 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
+	/// <summary>
+	/// Tests proper behavior of entity listener that implements <see cref="IEntityTrackingRevisionListener"/>.
+	/// interface. <see cref="CustomEntityTrackingRevisionListener"/> shall be notified whenever an entity instance has been
+	/// added, modified or removed, so that changed entity type can be persisted.
+	/// </summary>
 	[TestFixture]
 	public class CustomTrackingEntitiesTest : TestBase
 	{
-		private int steId;
-		private int siteId;
-
 		protected override void Initialize()
 		{
 			var ste = new StrTestEntity{Str = "x"};
@@ -21,8 +23,8 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			// Revision 1 - Adding two entities
 			using (var tx = Session.BeginTransaction())
 			{
-				steId = (int)Session.Save(ste);
-				siteId = (int)Session.Save(site);
+				Session.Save(ste);
+				Session.Save(site);
 				tx.Commit();
 			}
 

@@ -1,5 +1,8 @@
 ﻿namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 {
+	/// <summary>
+	/// Custom detail of revision entity.
+	/// </summary>
 	public class ModifiedEntityNameEntity 
 	{
 		public virtual int Id { get; set; }
