@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// This annotation expects property of <code><![CDATA[ISet<string>]]></code> type.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public sealed class ModifiedEntityNamesAttribute : Attribute
+	public sealed class ModifiedEntityTypesAttribute : Attribute
 	{
 	}
 }

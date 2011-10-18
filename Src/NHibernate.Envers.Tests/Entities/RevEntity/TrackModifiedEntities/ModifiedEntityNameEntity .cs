@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Custom detail of revision entity.
 	/// </summary>
-	public class ModifiedEntityNameEntity 
+	public class ModifiedEntityTypeEntity 
 	{
 		public virtual int Id { get; set; }
 		public virtual CustomTrackingRevisionEntity Revision { get; set; }
@@ -11,7 +11,7 @@
 
 		public override bool Equals(object obj)
 		{
-			var casted = obj as ModifiedEntityNameEntity;
+			var casted = obj as ModifiedEntityTypeEntity;
 			if (casted == null)
 				return false;
 			return EntityName == casted.EntityName;

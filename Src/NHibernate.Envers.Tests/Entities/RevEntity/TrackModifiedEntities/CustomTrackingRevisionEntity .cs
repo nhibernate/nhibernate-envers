@@ -4,14 +4,14 @@ using NHibernate.Envers.Configuration.Attributes;
 namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 {
 	/// <summary>
-	/// Revision entity which <see cref="ModifiedEntityNames"/> property is manually populated by <see cref="CustomEntityTrackingRevisionListener"/>.
+	/// Revision entity which <see cref="ModifiedEntityTypes"/> property is manually populated by <see cref="CustomTrackingRevisionListener"/>.
 	/// </summary>
-	[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))]
+	[RevisionEntity(typeof(CustomTrackingRevisionListener))]
 	public class CustomTrackingRevisionEntity 
 	{
 		public CustomTrackingRevisionEntity()
 		{
-			ModifiedEntityNames = new HashedSet<ModifiedEntityNameEntity>();
+			ModifiedEntityTypes = new HashedSet<ModifiedEntityTypeEntity>();
 		}
 
 		[RevisionNumber]
@@ -20,11 +20,11 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 		[RevisionTimestamp]
 		public virtual long CustomTimestamp { get; set; }
 
-		public virtual ISet<ModifiedEntityNameEntity> ModifiedEntityNames { get; set; }
+		public virtual ISet<ModifiedEntityTypeEntity> ModifiedEntityTypes { get; set; }
 
-		public virtual void AddModifiedEntityName(string entityName)
+		public virtual void AddModifiedEntityType(string entityName)
 		{
-			ModifiedEntityNames.Add(new ModifiedEntityNameEntity {Revision = this, EntityName = entityName});
+			ModifiedEntityTypes.Add(new ModifiedEntityTypeEntity {Revision = this, EntityName = entityName});
 		}
 
 		public override bool Equals(object obj)

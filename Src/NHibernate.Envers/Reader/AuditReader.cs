@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Iesi.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
@@ -197,23 +198,24 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IEnumerable<System.Type> FindEntityTypesChangedInRevision(long revision)
+		public ISet<System.Type> FindEntityTypesChangedInRevision(long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
 			if (!verCfg.GlobalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
 				throw new AuditException(@"This query is designed for Envers default mechanism of tracking entities modified in a given revision." +
-											 " Extend DefaultTrackingModifiedTypesRevisionEntity, utilize ModifiedEntityNamesAttribute or set " +
+											 " Extend DefaultTrackingModifiedTypesRevisionEntity, utilize ModifiedEntityTypesAttribute or set " +
 											 "'nhibernate.envers.track_entities_changed_in_revision' parameter to true.");
 			}
-			var query = verCfg.RevisionInfoQueryCreator.EntitiesChangedInRevisionQuery(Session, revision);
-			var modifiedEntityNames = new HashSet<String>(query.List<string>());
-			var result = new List<System.Type>(modifiedEntityNames.Count);
-			foreach (var modifiedEntityName in modifiedEntityNames)
+			var revisions = new HashedSet<long> {revision};
+			var query = verCfg.RevisionInfoQueryCreator.RevisionsQuery(Session, revisions);
+			var revisionInfo = query.UniqueResult();
+			if (revisionInfo != null)
 			{
-				result.Add(Toolz.ResolveEntityClass(SessionImplementor, modifiedEntityName));
+				// If revision exists
+				return verCfg.ModifiedEntityTypesReader.ModifiedEntityTypes(SessionImplementor, revisionInfo);
 			}
-			return result;
+			return new HashedSet<System.Type>();
 		}
 
 		private void fillRevisionsResult<T>(IDictionary<long, T> result, IEnumerable<long> revisions)

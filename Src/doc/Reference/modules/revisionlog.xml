@@ -129,27 +129,24 @@
 				Create a custom revision entity that extends
 				<classname>nhibernate.envers.DefaultTrackingModifiedTypesRevisionEntity</classname> class.
 				<programlisting>
-					<![CDATA[@Entity
-	@RevisionEntity
-	public class ExtendedRevisionEntity extends DefaultTrackingModifiedTypesRevisionEntity {
+					<![CDATA[
+	[RevisionEntity]
+	public class ExtendedRevisionEntity : DefaultTrackingModifiedTypesRevisionEntity {
 		 ...
 	}]]>
 				</programlisting>
 			</listitem>
 			<listitem>
 				Mark an appropriate field of a custom revision entity with
-				<interfacename>@org.hibernate.envers.ModifiedEntityNames</interfacename> annotation. The property is
+				<interfacename>nhibernate.envers.ModifiedEntityTypes</interfacename> annotation. The property is
 				required to be of <literal><![CDATA[Set<String>]]></literal> type.
 				<programlisting>
-					<![CDATA[@Entity
-	@RevisionEntity
+					<![CDATA[
+	[RevisionEntity]
 	public class AnnotatedTrackingRevisionEntity {
 		 ...
 	
-		 @ElementCollection
-		 @JoinTable(name = "REVENTITY", joinColumns = @JoinColumn(name = "REV"))
-		 @Column(name = "ENTITYNAME")
-		 @ModifiedEntityNames
+		 [ModifiedEntityTypes]
 		 private Set<String> modifiedEntityNames;
 		 
 		 ...
@@ -173,7 +170,7 @@
 		<example>
 			<title>Custom implementation of tracking entity classes modified in revision</title>
 			<programlisting>
-				<filename>CustomEntityTrackingRevisionListener.java</filename>
+				<filename>CustomEntityTrackingRevisionListener.cs</filename>
 				<![CDATA[
 	public class CustomEntityTrackingRevisionListener : IEntityTrackingRevisionListener 
 	{
@@ -188,28 +185,23 @@
 	}]]>
 			</programlisting>
 			<programlisting>
-				<filename>CustomTrackingRevisionEntity.java</filename>
+				<filename>CustomTrackingRevisionEntity.cs</filename>
 				<![CDATA[
-	@Entity
-	@RevisionEntity(CustomEntityTrackingRevisionListener.class)
+	[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))
 	public class CustomTrackingRevisionEntity {
-		 @Id
-		 @GeneratedValue
-		 @RevisionNumber
 		 private int customId;
 	
-		 @RevisionTimestamp
+		 [RevisionTimestamp]
 		 private long customTimestamp;
 	
-		 @OneToMany(mappedBy="revision", cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-		 private Set<ModifiedEntityNameEntity> modifiedEntityNames = new HashSet<ModifiedEntityNameEntity>();
+		 private ISet<ModifiedEntityTypeEntity> modifiedEntityTypes = new HashSet<ModifiedEntityTypeEntity>();
 		 
-		 public void addModifiedEntityName(String entityName) {
-			  modifiedEntityNames.add(new ModifiedEntityNameEntity(this, entityName));
+		 public void addModifiedEntityType(string entityName) {
+			  modifiedEntityTypes.add(new ModifiedEntityTypesEntity(this, entityName));
 		 }
 	
-		 public void removeModifiedEntityName(String entityName) {
-			  modifiedEntityNames.remove(new ModifiedEntityNameEntity(this, entityName));
+		 public void removeModifiedEntityType(string entityName) {
+			  modifiedEntityTypes.remove(new ModifiedEntityTypeEntity(this, entityName));
 		 }
 		 
 		 ...
@@ -217,27 +209,22 @@
 	]]>
 			</programlisting>
 			<programlisting>
-				<filename>ModifiedEntityNameEntity.java</filename>
+				<filename>ModifiedEntityNameEntity.cs</filename>
 				<![CDATA[
-	@Entity
-	public class ModifiedEntityNameEntity {
-		 @Id
-		 @GeneratedValue
+	public class ModifiedEntityTypeEntity {
 		 private Integer id;
 	
-		 @ManyToOne
 		 private CustomTrackingRevisionEntity revision;
 		 
-		 private String entityName;
+		 private string entityName;
 		 
 		 ...
 	}
 	]]>
 			</programlisting>
 			<programlisting>
-				<![CDATA[CustomTrackingRevisionEntity revEntity =
-		 getAuditReader().findRevision(CustomTrackingRevisionEntity.class, revisionNumber);
-	List<String> modifiedEntityNames = revEntity.getModifiedEntityNames()]]>
+				<![CDATA[var revEntity = AuditReader().FindRevision(typeof(CustomTrackingRevisionEntity), revisionNumber);
+	var modifiedEntityTypes = revEntity.ModifiedEntityNames]]>
 			</programlisting>
 		</example>
 	</section>

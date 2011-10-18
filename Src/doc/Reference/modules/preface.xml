@@ -3,52 +3,52 @@
 	<title>Preface</title>
 
 	<para>
-        The Envers project aims to enable easy auditing of persistent classes. All that you
-        have to do is to configure Envers to audit some of your persistent classes. 
+		The Envers project aims to enable easy auditing of persistent classes. All that you
+		have to do is to configure Envers to audit some of your persistent classes.
 		For each audited entity, a table will be created which will hold the history of changes made to the entity. You
-        can then retrieve and query historical data without much effort.
+		can then retrieve and query historical data without much effort.
 	</para>
 
 	<para>
-        Similarly to source control systems, the library has a concept of revisions. Basically, one
-        transaction is one revision (unless the transaction didn't modify any audited entities).
-        As the revisions are global and having a revision number, you can query for various
-        entities at that revision, retrieving a (partial) view of the database at that
-        revision. You can find a revision number having a date, and the other way round,
-        you can get the date at which a revision was commited.
+		Similarly to source control systems, the library has a concept of revisions. Basically, one
+		transaction is one revision (unless the transaction didn't modify any audited entities).
+		As the revisions are global and having a revision number, you can query for various
+		entities at that revision, retrieving a (partial) view of the database at that
+		revision. You can find a revision number having a date, and the other way round,
+		you can get the date at which a revision was commited.
 	</para>
 
 	<para>
-        The library works with NHibernate version 3.1 or later.
-        For the auditing to work properly, the entities must have immutable unique
-        identifiers (primary keys).
+		The library works with NHibernate version 3.1 or later.
+		For the auditing to work properly, the entities must have immutable unique
+		identifiers (primary keys).
 	</para>
 
 	<para>
 		Some of the features:
 	</para>
 
-    <orderedlist>
-        <listitem>
-            <para>
-                Auditing of all NHibernate mappings
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Auditing custom types and collections/maps of "simple" types (strings, integers, etc.)
+	<orderedlist>
+		<listitem>
+			<para>
+				Auditing of all NHibernate mappings
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Auditing custom types and collections/maps of "simple" types (strings, integers, etc.)
 				(see also <xref linkend="exceptions"/>)
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Logging data for each revision using a "revision entity"
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Querying historical data
-            </para>
-        </listitem>
-    </orderedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Logging data for each revision using a "revision entity"
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Querying historical data
+			</para>
+		</listitem>
+	</orderedlist>
 </preface>

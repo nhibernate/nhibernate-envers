@@ -6,10 +6,10 @@ namespace NHibernate.Envers
 	{
 		public DefaultTrackingModifiedTypesRevisionEntity()
 		{
-			ModifiedEntityNames = new HashedSet<string>();
+			ModifiedEntityTypes = new HashedSet<string>();
 		}
 
-		public virtual ISet<string> ModifiedEntityNames { get; protected set; }
+		public virtual ISet<string> ModifiedEntityTypes { get; protected set; }
 
 		public override bool Equals(object obj)
 		{
@@ -20,12 +20,12 @@ namespace NHibernate.Envers
 				return false;
 			if (!base.Equals(obj))
 				return false;
-			return ModifiedEntityNames.Equals(casted.ModifiedEntityNames);
+			return ModifiedEntityTypes.Equals(casted.ModifiedEntityTypes);
 		}
 
 		public override int GetHashCode()
 		{
-			return base.GetHashCode() ^ ModifiedEntityNames.GetHashCode();
+			return base.GetHashCode() ^ ModifiedEntityTypes.GetHashCode();
 		}
 	}
 }

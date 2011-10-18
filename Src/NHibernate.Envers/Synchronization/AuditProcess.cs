@@ -13,6 +13,7 @@ namespace NHibernate.Envers.Synchronization
 		private readonly LinkedList<IAuditWorkUnit> workUnits;
 		private readonly Queue<IAuditWorkUnit> undoQueue;
 		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
+		private readonly EntityChangeNotifier entityChangeNotifier;
 		private object revisionData;
 
 		public AuditProcess(IRevisionInfoGenerator revisionInfoGenerator, ISessionImplementor session)
@@ -23,6 +24,7 @@ namespace NHibernate.Envers.Synchronization
 			workUnits = new LinkedList<IAuditWorkUnit>();
 			undoQueue = new Queue<IAuditWorkUnit>();
 			usedIds = new Dictionary<Pair<string, object>, IAuditWorkUnit>();
+			entityChangeNotifier = new EntityChangeNotifier(revisionInfoGenerator, session);
 		}
 
 		public void AddWorkUnit(IAuditWorkUnit vwu)
@@ -93,26 +95,12 @@ namespace NHibernate.Envers.Synchronization
 				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
 				vwu.Perform(executeSession, revisionData);
-				var entityId = vwu.EntityId;
-				var entityIdAsPersistentColl = entityId as PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId;
-				if (entityIdAsPersistentColl != null)
-				{
-					entityId = entityIdAsPersistentColl.OwnerId;
-				}
-
-				var entClass = entityClass(session, executeSession, vwu.EntityName);
-				revisionInfoGenerator.EntityChanged(entClass, vwu.EntityName, entityId, vwu.RevisionType, currentRevisionData);
+				entityChangeNotifier.EntityChanged(executeSession, currentRevisionData, vwu);
 			}
 		}
 
-		//todo: fix session handling
-		private static System.Type entityClass(ISessionImplementor sessionImplementor, ISession executeSession, string entityName)
-		{
-			var entityPersister = sessionImplementor.Factory.GetEntityPersister(entityName);
-			return entityPersister.ClassMetadata.GetMappedClass(((ISessionImplementor)executeSession).EntityMode);
-		}
 
-		public object CurrentRevisionData(ISession session, bool persist)
+		public object CurrentRevisionData(ISession executeSession, bool persist)
 		{
 			// Generating the revision data if not yet generated
 			if (revisionData == null)
@@ -121,9 +109,9 @@ namespace NHibernate.Envers.Synchronization
 			}
 
 			// Saving the revision data, if not yet saved and persist is true
-			if (!session.Contains(revisionData) && persist)
+			if (!executeSession.Contains(revisionData) && persist)
 			{
-				revisionInfoGenerator.SaveRevisionData(session, revisionData);
+				revisionInfoGenerator.SaveRevisionData(executeSession, revisionData);
 			}
 
 			return revisionData;

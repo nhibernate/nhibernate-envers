@@ -56,7 +56,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 				{
 					table.ColumnSpan.Should().Be.EqualTo(2);
 					table.GetColumn(new Column("REV")).Should().Not.Be.Null();
-					table.GetColumn(new Column("ENTITYNAME")).Should().Not.Be.Null();
+					table.GetColumn(new Column("ENTITYTYPE")).Should().Not.Be.Null();
 					return;
 				}
 			}
