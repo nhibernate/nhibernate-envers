@@ -1,6 +1,7 @@
 ﻿using NHibernate.Engine;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Synchronization.Work;
+using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -33,14 +34,8 @@ namespace NHibernate.Envers.Synchronization
 			{
 				entityId = idAsPersistentColl.OwnerId;
 			}
-			var entClass = entityClass(session, vwu.EntityName);
+			var entClass = Toolz.ResolveEntityClass(_sessionImplementor, vwu.EntityName);
 			_revisionInfoGenerator.EntityChanged(entClass, vwu.EntityName, entityId, vwu.RevisionType, currentRevisionData);
-		}
-
-		private System.Type entityClass(ISession session, string entityName)
-		{
-			var entityPersister = _sessionImplementor.Factory.GetEntityPersister(entityName);
-			return entityPersister.ClassMetadata.GetMappedClass(((ISessionImplementor)session).EntityMode);
 		}
 	}
 }

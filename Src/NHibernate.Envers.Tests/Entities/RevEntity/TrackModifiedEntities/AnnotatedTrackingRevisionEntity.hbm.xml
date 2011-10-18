@@ -7,9 +7,9 @@
 			<generator class="identity" />
 		</id>
 		<property name="CustomTimestamp" />
-		<set name="EntityTypes" table="REVCHANGES">
+		<set name="EntityNames" table="REVCHANGES">
 			<key column="REV"/>
-			<element column="ENTITYTYPE" type="string"/>
+			<element column="ENTITYNAME" type="string"/>
 		</set>
 	</class>
 </hibernate-mapping>

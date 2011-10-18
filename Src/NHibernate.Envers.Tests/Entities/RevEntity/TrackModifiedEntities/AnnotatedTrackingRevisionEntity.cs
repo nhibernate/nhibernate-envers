@@ -4,7 +4,7 @@ using NHibernate.Envers.Configuration.Attributes;
 namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 {
 	/// <summary>
-	/// Sample revision entity that uses <see cref="ModifiedEntityTypesAttribute"/> annotation.
+	/// Sample revision entity that uses <see cref="ModifiedEntityNamesAttribute"/> annotation.
 	/// </summary>
 	[RevisionEntity]
 	public class AnnotatedTrackingRevisionEntity
@@ -15,8 +15,8 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 		[RevisionTimestamp]
 		public virtual long CustomTimestamp { get; set; }
 
-		[ModifiedEntityTypes]
-		public virtual ISet<string> EntityTypes { get; set; }
+		[ModifiedEntityNames]
+		public virtual ISet<string> EntityNames { get; set; }
 
 		public override bool Equals(object obj)
 		{

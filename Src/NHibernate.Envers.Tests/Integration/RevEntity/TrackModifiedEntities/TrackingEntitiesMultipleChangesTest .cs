@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste1 = new StrTestEntity { Str = "x", Id = steId1 };
 			var ste2 = new StrTestEntity { Str = "y", Id = steId2 };
 
-			AuditReader().FindEntitiesChangedInRevision(1)
+			crossTypeRevisionChangesReader().FindEntities(1)
 				.Should().Have.SameValuesAs(ste1, ste2);
 		}
 
@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste1 = new StrTestEntity { Str = "z", Id = steId1 };
 			var ste2 = new StrTestEntity { Id = steId2 };
 
-			AuditReader().FindEntitiesChangedInRevision(2)
+			crossTypeRevisionChangesReader().FindEntities(2)
 				.Should().Have.SameValuesAs(ste1, ste2);
 		}
 
@@ -67,8 +67,13 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		{
 			var ste1 = new StrTestEntity { Id = steId1 };
 
-			AuditReader().FindEntitiesChangedInRevision(3)
+			crossTypeRevisionChangesReader().FindEntities(3)
 				.Should().Have.SameValuesAs(ste1);
+		}
+
+		private ICrossTypeRevisionChangesReader crossTypeRevisionChangesReader()
+		{
+			return AuditReader().CrossTypeRevisionChangesReader();
 		}
 
 		protected override IEnumerable<string> Mappings

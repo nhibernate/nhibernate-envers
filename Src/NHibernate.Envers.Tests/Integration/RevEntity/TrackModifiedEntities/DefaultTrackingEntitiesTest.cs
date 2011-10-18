@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
+using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -56,7 +57,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 				{
 					table.ColumnSpan.Should().Be.EqualTo(2);
 					table.GetColumn(new Column("REV")).Should().Not.Be.Null();
-					table.GetColumn(new Column("ENTITYTYPE")).Should().Not.Be.Null();
+					table.GetColumn(new Column("ENTITYNAME")).Should().Not.Be.Null();
 					return;
 				}
 			}
@@ -69,7 +70,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity{Str = "x", Id = steId};
 			var site = new StrIntTestEntity {Str = "y", Number = 1, Id = siteId};
 
-			AuditReader().FindEntitiesChangedInRevision(1)
+			crossTypeRevisionChangesReader().FindEntities(1)
 				.Should().Have.SameValuesAs(ste, site);
 		}
 
@@ -78,7 +79,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		{
 			var site = new StrIntTestEntity { Str = "y", Number = 2, Id = siteId };
 
-			AuditReader().FindEntitiesChangedInRevision(2)
+			crossTypeRevisionChangesReader().FindEntities(2)
 				.Should().Have.SameValuesAs(site);		
 		}
 
@@ -88,14 +89,14 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Id = steId };
 			var site = new StrIntTestEntity { Id = siteId };
 
-			AuditReader().FindEntitiesChangedInRevision(3)
+			crossTypeRevisionChangesReader().FindEntities(3)
 				.Should().Have.SameValuesAs(site, ste);	
 		}
 
 		[Test]
 		public void ShouldNotFindChangesInInvalidRevision()
 		{
-			AuditReader().FindEntitiesChangedInRevision(4)
+			crossTypeRevisionChangesReader().FindEntities(4)
 				.Should().Be.Empty();
 		}
 
@@ -105,7 +106,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Str = "x", Id = steId };
 			var site = new StrIntTestEntity { Str = "y", Number = 1, Id = siteId };
 
-			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(1);
+			var result = crossTypeRevisionChangesReader().FindEntitiesGroupByRevisionType(1);
 
 			result[RevisionType.Added].Should().Have.SameValuesAs(site, ste);
 			result[RevisionType.Modified].Should().Be.Empty();
@@ -117,7 +118,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		{
 			var site = new StrIntTestEntity { Str = "y", Number = 2, Id = siteId };
 
-			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(2);
+			var result = crossTypeRevisionChangesReader().FindEntitiesGroupByRevisionType(2);
 
 			result[RevisionType.Added].Should().Be.Empty();
 			result[RevisionType.Modified].Should().Have.SameValuesAs(site);
@@ -130,7 +131,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Id = steId };
 			var site = new StrIntTestEntity { Id = siteId };
 
-			var result = AuditReader().FindEntitiesChangedInRevisionGroupByRevisionType(3);
+			var result = crossTypeRevisionChangesReader().FindEntitiesGroupByRevisionType(3);
 
 			result[RevisionType.Added].Should().Be.Empty();
 			result[RevisionType.Modified].Should().Be.Empty();
@@ -143,7 +144,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Str = "x", Id = steId };
 			var site = new StrIntTestEntity { Str = "y", Number = 1, Id = siteId };
 
-			AuditReader().FindEntitiesChangedInRevision(1, RevisionType.Added)
+			crossTypeRevisionChangesReader().FindEntities(1, RevisionType.Added)
 				.Should().Have.SameValuesAs(ste, site);
 		}
 
@@ -152,7 +153,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		{
 			var site = new StrIntTestEntity { Str = "y", Number = 2, Id = siteId };
 
-			AuditReader().FindEntitiesChangedInRevision(2, RevisionType.Modified)
+			crossTypeRevisionChangesReader().FindEntities(2, RevisionType.Modified)
 				.Should().Have.SameValuesAs(site);
 		}
 
@@ -162,21 +163,26 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			var ste = new StrTestEntity { Id = steId };
 			var site = new StrIntTestEntity { Id = siteId };
 
-			AuditReader().FindEntitiesChangedInRevision(3, RevisionType.Deleted)
+			crossTypeRevisionChangesReader().FindEntities(3, RevisionType.Deleted)
 				.Should().Have.SameValuesAs(site, ste);
 		}
 
 		[Test]
 		public void ShouldFindEntityTypesChangedInRevision()
 		{
-			AuditReader().FindEntityTypesChangedInRevision(1)
-				.Should().Have.SameValuesAs(typeof(StrTestEntity), typeof(StrIntTestEntity));
+			crossTypeRevisionChangesReader().FindEntityTypes(1)
+				.Should().Have.SameValuesAs(createPair(typeof(StrTestEntity)), createPair(typeof(StrIntTestEntity)));
 
-			AuditReader().FindEntityTypesChangedInRevision(2)
-				.Should().Have.SameValuesAs(typeof(StrIntTestEntity));
+			crossTypeRevisionChangesReader().FindEntityTypes(2)
+				.Should().Have.SameValuesAs(createPair(typeof(StrIntTestEntity)));
 
-			AuditReader().FindEntityTypesChangedInRevision(3)
-				.Should().Have.SameValuesAs(typeof(StrTestEntity), typeof(StrIntTestEntity));
+			crossTypeRevisionChangesReader().FindEntityTypes(3)
+				.Should().Have.SameValuesAs(createPair(typeof(StrTestEntity)), createPair(typeof(StrIntTestEntity)));
+		}
+
+		private ICrossTypeRevisionChangesReader crossTypeRevisionChangesReader()
+		{
+			return AuditReader().CrossTypeRevisionChangesReader();
 		}
 
 		protected override IEnumerable<string> Mappings
@@ -187,6 +193,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetProperty(ConfigurationKey.TrackEntitiesChangedInRevision, "true");
+		}
+
+		private Pair<string, System.Type> createPair(System.Type type)
+		{
+			return new Pair<string, System.Type>(type.FullName, type);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Tools;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -40,11 +41,13 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		[Test]
 		public void ShouldFindModifiedEntityTypes()
 		{
-			AuditReader().FindEntityTypesChangedInRevision(1)
-				.Should().Have.SameValuesAs(typeof(Car), typeof(Person));
+			AuditReader().CrossTypeRevisionChangesReader().FindEntityTypes(1)
+				.Should().Have.SameValuesAs(new Pair<string, System.Type>(typeof(Car).FullName, typeof(Car)),
+													new Pair<string, System.Type>("Personaje", typeof(Person)));
 
-			AuditReader().FindEntityTypesChangedInRevision(2)
-							.Should().Have.SameValuesAs(typeof(Car), typeof(Person));
+			AuditReader().CrossTypeRevisionChangesReader().FindEntityTypes(2)
+							.Should().Have.SameValuesAs(new Pair<string, System.Type>(typeof(Car).FullName, typeof(Car)),
+													new Pair<string, System.Type>("Personaje", typeof(Person)));
 		}
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)

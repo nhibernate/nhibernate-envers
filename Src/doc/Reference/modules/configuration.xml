@@ -256,12 +256,10 @@
 						</entry>
 						<entry>
 							Should entity types, that have been modified during each revision, be tracked. The default
-							implementation creates <literal>REVCHANGES</literal> table that stores fully qualified names
-							of .Net classes modified in a specified revision. Single record encapsulates the revision
-							identifier (foreign key to <literal>REVINFO</literal> table) and a string value. This
-							feature shall be used when entity name can be clearly identified by a .net class type. Otherwise
-							extend <interfacename>IEntityTrackingRevisionListener</interfacename>
-							interface. For more information refer to <xref linkend="envers-tracking-modified-entities-revchanges"/>
+							implementation creates <literal>REVCHANGES</literal> table that stores entity names
+							of modified persistent objects. Single record encapsulates the revision identifier
+							(foreign key to <literal>REVINFO</literal> table) and a string value. For more
+							information refer to <xref linkend="envers-tracking-modified-entities-revchanges"/>
 							and <xref linkend="envers-tracking-modified-entities-queries"/>.
 						</entry>
 					</row>
