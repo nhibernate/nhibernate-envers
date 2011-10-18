@@ -27,7 +27,6 @@ namespace NHibernate.Envers.Configuration
 		private IType revisionInfoTimestampType;
 		private System.Type revisionPropType;
 		private string revisionPropSqlType;
-		private string revisionAssQName;
 
 		public RevisionInfoConfiguration(GlobalConfiguration globalCfg, IMetaDataStore metaDataStore)
 		{
@@ -99,7 +98,7 @@ namespace NHibernate.Envers.Configuration
 			column.SetAttribute("name", joinTableValueColumnName);
 		}
 
-		private XmlElement generateRevisionInfoRelationMapping()
+		private XmlElement generateRevisionInfoRelationMapping(string revisionAssQName)
 		{
 			var document = new XmlDocument();
 			var revRelMapping = document.CreateElement("key-many-to-one");
@@ -222,6 +221,7 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoConfigurationResult Configure(Cfg.Configuration cfg)
 		{
 			IRevisionInfoGenerator revisionInfoGenerator;
+			string revisionAssQName;
 			XmlDocument revisionInfoXmlMapping = null;
 			System.Type revisionInfoClass;
 
@@ -320,7 +320,7 @@ namespace NHibernate.Envers.Configuration
 					revisionInfoGenerator, 
 					revisionInfoXmlMapping,
 					new RevisionInfoQueryCreator(revisionInfoEntityName, revisionInfoIdData.Name, revisionInfoTimestampData.Name, isTimestampAsDate(), revisionPropType),
-					generateRevisionInfoRelationMapping(),
+					generateRevisionInfoRelationMapping(revisionAssQName),
 					new RevisionInfoNumberReader(revisionInfoClass, revisionInfoIdData), 
 					_globalCfg.IsTrackEntitiesChangedInRevisionEnabled ? new ModifiedEntityNamesReader(revisionInfoClass, modifiedEntityNamesData) : null,
 					revisionInfoEntityName, 

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers
 {
