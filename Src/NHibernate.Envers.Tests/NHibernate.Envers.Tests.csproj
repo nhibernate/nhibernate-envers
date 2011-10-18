@@ -346,6 +346,7 @@
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\CustomTrackingEntitiesTest .cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\DefaultTrackingEntitiesTest.cs" />
     <Compile Include="Integration\RevEntity\TrackModifiedEntities\ExtendedRevisionEntityTest.cs" />
+    <Compile Include="Integration\RevEntity\TrackModifiedEntities\TrackingEntitiesMultipleChangesTest .cs" />
     <Compile Include="Integration\RevForDate\RevisionForDateTest.cs" />
     <Compile Include="Integration\SameIds\SameIdsTest.cs" />
     <Compile Include="Integration\SameIds\SameIdTestEntity1.cs" />

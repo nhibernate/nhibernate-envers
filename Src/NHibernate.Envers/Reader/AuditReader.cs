@@ -165,7 +165,7 @@ namespace NHibernate.Envers.Reader
 			var result = new ArrayList();
 			foreach (var type in clazz)
 			{
-				result.AddRange(CreateQuery().ForEntitiesAtRevision(type, revision, true).GetResultList());
+				result.AddRange(CreateQuery().ForEntitiesAtCertainRevision(type, revision).GetResultList());
 			}
 			return result;
 		}
@@ -177,7 +177,7 @@ namespace NHibernate.Envers.Reader
 			var result = new ArrayList();
 			foreach (var type in clazz)
 			{
-				result.AddRange(CreateQuery().ForEntitiesAtRevision(type, revision, true).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList());
+				result.AddRange(CreateQuery().ForEntitiesAtCertainRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList());
 			}
 			return result;
 		}
@@ -192,7 +192,7 @@ namespace NHibernate.Envers.Reader
 				var tempList = new ArrayList();
 				foreach (var type in clazz)
 				{
-					var list = CreateQuery().ForEntitiesAtRevision(type, revision, true).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList();
+					var list = CreateQuery().ForEntitiesAtCertainRevision(type, revision).Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList();
 					tempList.AddRange(list);
 				}
 				result[revisionType] = tempList;

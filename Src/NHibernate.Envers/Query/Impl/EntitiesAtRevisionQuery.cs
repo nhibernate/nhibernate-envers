@@ -10,39 +10,24 @@ namespace NHibernate.Envers.Query.Impl
 	public class EntitiesAtRevisionQuery : AbstractAuditQuery
 	{
 		private readonly long _revision;
-		private readonly bool _selectDeletedEntities;
+
+		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
+										IAuditReaderImplementor versionsReader,
+										System.Type cls,
+										long revision)
+			: base(verCfg, versionsReader, cls)
+		{
+			_revision = revision;
+		}
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
 										IAuditReaderImplementor versionsReader,
 										System.Type cls,
 										string entityName,
 										long revision)
-				: this(verCfg, versionsReader, cls, entityName, revision, false)
-		{
-			
-		}
-
-		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
-										IAuditReaderImplementor versionsReader,
-										System.Type cls,
-										long revision,
-										bool selectDeletedEntities)
-			: base(verCfg, versionsReader, cls)
-		{
-			_revision = revision;
-			_selectDeletedEntities = selectDeletedEntities;
-		}
-
-		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
-										IAuditReaderImplementor versionsReader,
-										System.Type cls,
-										string entityName,
-										long revision,
-										bool selectDeletedEntities)
 			: base(verCfg, versionsReader, cls, entityName)
 		{
 			_revision = revision;
-			_selectDeletedEntities = selectDeletedEntities;
 		}
 
 		protected override void FillResult(IList result)
@@ -77,11 +62,8 @@ namespace NHibernate.Envers.Query.Impl
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
 					revisionPropertyPath, originalIdPropertyName, "e", "e2");
 
-			if (!_selectDeletedEntities)
-			{
-				// e.revision_type != DEL
-				QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
-			}
+			// e.revision_type != DEL
+			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
 
 			// all specified conditions
 			foreach (var criterion in Criterions)
