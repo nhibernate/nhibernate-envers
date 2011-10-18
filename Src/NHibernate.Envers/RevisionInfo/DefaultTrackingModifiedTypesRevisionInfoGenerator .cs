@@ -7,7 +7,7 @@ using NHibernate.Properties;
 namespace NHibernate.Envers.RevisionInfo
 {
 	/// <summary>
-	/// Automatically adds entity names changed during current revision.
+	/// Automatically adds entity class names that have been changed during current revision to revision entity.
 	/// <see cref="ModifiedEntityTypesAttribute"/>
 	/// <see cref="DefaultTrackingModifiedTypesRevisionEntity"/>
 	/// </summary>

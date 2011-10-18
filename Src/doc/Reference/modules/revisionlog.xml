@@ -168,7 +168,7 @@
 		</para>
 
 		<example>
-			<title>Custom implementation of tracking entity classes modified in revision</title>
+			<title>Custom implementation of tracking entity classes modified during revisions</title>
 			<programlisting>
 				<filename>CustomEntityTrackingRevisionListener.cs</filename>
 				<![CDATA[

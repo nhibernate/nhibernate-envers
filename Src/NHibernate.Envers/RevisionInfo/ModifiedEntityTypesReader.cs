@@ -21,7 +21,7 @@ namespace NHibernate.Envers.RevisionInfo
 
 		public ISet<System.Type> ModifiedEntityTypes(ISessionImplementor sessionImplementor, object revisionEntity)
 		{
-			// The default mechanism of tracking entity types that have been changed during each revision, stores
+			// The default mechanism of tracking entity types that have been changed during each revision stores
 			// fully qualified CLR class names.
 			var result = new HashedSet<System.Type>();
 			var modifiedEntityClassNames = (ISet<string>)modifiedEntityTypesGetter.Get(revisionEntity);

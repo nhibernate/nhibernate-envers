@@ -65,13 +65,13 @@ namespace NHibernate.Envers.Configuration
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
-				generateEntityNamesTrackingTableMapping(classMapping, "ModifiedEntityTypes", "REVENTITY", "REV", "ENTITYTYPE", "string");
+				generateEntityTypesTrackingTableMapping(classMapping, "ModifiedEntityTypes", "REVENTITY", "REV", "ENTITYTYPE", "string");
 			}
 
 			return document;
 		}
 
-		private void generateEntityNamesTrackingTableMapping(XmlElement classMapping, string propertyName,
+		private void generateEntityTypesTrackingTableMapping(XmlElement classMapping, string propertyName,
 																				string joinTableName, string joinTablePrimaryKeyColumnName,
 																				string joinTableValueColumnName, string joinTableValueColumnType)
 		{
