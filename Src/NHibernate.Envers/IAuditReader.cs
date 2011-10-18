@@ -187,7 +187,7 @@ namespace NHibernate.Envers
 		/// </summary>
 		/// <param name="revision">Revision number.</param>
 		/// <param name="revisionType">Type of modification</param>
-		/// <returns>Snapshots of all audited entities changed in a given revision.</returns>
+		/// <returns>Snapshots of all audited entities changed in a given revision and filtered by modification type.</returns>
 		/// <exception cref="AuditException">
 		/// If none of the following conditions is satisfied:
 		/// <ul>
