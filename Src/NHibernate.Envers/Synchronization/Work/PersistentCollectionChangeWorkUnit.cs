@@ -162,16 +162,18 @@ namespace NHibernate.Envers.Synchronization.Work
 		/// the entity plus the name of the field (the role). This is needed because such collections aren't entities
 		/// in the "normal" mapping, but they are entities for Envers.
 		/// </summary>
-		private class PersistentCollectionChangeWorkUnitId
+		[Serializable]
+		public class PersistentCollectionChangeWorkUnitId
 		{
-			private readonly object ownerId;
 			private readonly string role;
 
 			public PersistentCollectionChangeWorkUnitId(object ownerId, string role) 
 			{
-				this.ownerId = ownerId;
+				OwnerId = ownerId;
 				this.role = role;
 			}
+
+			public object OwnerId { get; private set; }
 			
 			public override bool Equals(object o) 
 			{
@@ -180,7 +182,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 				var that = (PersistentCollectionChangeWorkUnitId) o;
 
-				if (ownerId != null ? !ownerId.Equals(that.ownerId) : that.ownerId != null) return false;
+				if (OwnerId != null ? !OwnerId.Equals(that.OwnerId) : that.OwnerId != null) return false;
 				if (role != null ? !role.Equals(that.role) : that.role != null) return false;
 
 				return true;
@@ -188,7 +190,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 			public override int GetHashCode() 
 			{
-				var result = ownerId != null ? ownerId.GetHashCode() : 0;
+				var result = OwnerId != null ? OwnerId.GetHashCode() : 0;
 				result = 31 * result + (role != null ? role.GetHashCode() : 0);
 				return result;
 			}
