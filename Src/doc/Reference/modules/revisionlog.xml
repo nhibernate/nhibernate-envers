@@ -104,14 +104,16 @@
 	</para>
 
 	<section id="envers-tracking-modified-entities-reventity">
-		<title>Tracking entity types modified in revision</title>
+		<title>Tracking entity classes modified in revision</title>
 		<para>
 			By default entity types that have been changed in each revision are not being tracked. This implies the
 			necessity to query all tables storing audited data in order to retrieve changes made during
 			specified revision. Envers provides a simple mechanism that creates <literal>REVENTITY</literal>
 			table which stores fully qualified names of .Net classes changed in each revision.
 			Single record encapsulates the revision identifier (foreign key to <literal>REVINFO</literal> table)
-			and a string value.
+			and a string value. Note that this mechanism shall be used when entity name can be clearly identified
+			by Java class type. Otherwise extend <interfacename>IEntityTrackingRevisionListener</interfacename>
+			interface (described further).
 		</para>
 		<para>
 			Tracking of modified entity types can be enabled in three different ways:
@@ -156,38 +158,32 @@
 			</listitem>
 		</orderedlist>
 		<para>
-			Users utilizing one of the approaches listed above can retrieve all entities modified in each revision
-			by using API described in <xref linkend="envers-tracking-modified-entities-queries"/>.
+			Users, that have chosen one of the approaches listed above, can retrieve all entities modified in
+			specified revision by utilizing API described in <xref linkend="envers-tracking-modified-entities-queries"/>.
 		</para>
 		<para>
 			Users are also allowed to implement custom mechanism of tracking modified entity types. In this case, they
 			shall pass their own implementation of
-			<interfacename>org.hibernate.envers.EntityTrackingRevisionListener</interfacename> interface as the value
-			of <interfacename>@org.hibernate.envers.RevisionEntity</interfacename> annotation.
-			<interfacename>org.hibernate.envers.EntityTrackingRevisionListener</interfacename> interface exposes two
-			methods that notify user whenever tracking of each audited entity instance is started
-			(<methodname>addEntityToRevision</methodname>) or stopped (<methodname>removeEntityFromRevision</methodname>)
-			within the current revision boundaries.
+			<interfacename>IEntityTrackingRevisionListener</interfacename> interface as the value
+			of <code>RevisionEntityAttribute</code> annotation.
+			<interfacename>IEntityTrackingRevisionListener</interfacename> interface exposes one method that notifies
+			whenever audited entity instance has been added, modified or removed within current revision boundaries.
 		</para>
 
 		<example>
-			<title>Custom implementation of tracking entity types modified in revision</title>
+			<title>Custom implementation of tracking entity classes modified in revision</title>
 			<programlisting>
 				<filename>CustomEntityTrackingRevisionListener.java</filename>
 				<![CDATA[
-	public class CustomEntityTrackingRevisionListener implements EntityTrackingRevisionListener {
-		 @Override
-		 public void addEntityToRevision(String entityName, Object revisionEntity) {
-			  ((CustomTrackingRevisionEntity)revisionEntity).addModifiedEntityName(entityName);
-		 }
+	public class CustomEntityTrackingRevisionListener : IEntityTrackingRevisionListener 
+	{
+		 public void EntityChanged(Type entityClass, string entityName, object entityId, RevisionType revisionType,
+											object revisionEntity) 
+											{
+			  ((CustomTrackingRevisionEntity)revisionEntity).AddModifiedEntityName(entityClass.FullName);
+	 }
 	
-		 @Override
-		 public void removeEntityFromRevision(String entityName, Object revisionEntity) {
-			  ((CustomTrackingRevisionEntity)revisionEntity).removeModifiedEntityName(entityName);
-		 }
-	
-		 @Override
-		 public void newRevision(Object revisionEntity) {
+		 public void newRevision(object revisionEntity) {
 		 }
 	}]]>
 			</programlisting>

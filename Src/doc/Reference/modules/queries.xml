@@ -200,7 +200,7 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 	</section>
 
 	<section id="envers-tracking-modified-entities-queries">
-		<title>Querying for entities modified at a given revision</title>
+		<title>Querying for entities modified in a given revision</title>
 		<para>
 			The basic query allows retrieving entity classes modified in a specified revision:
 		</para>
@@ -214,28 +214,32 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 		<orderedlist>
 			<listitem>
 				<firstterm>
-					<methodname>List findEntitiesChangedInRevision(Number)</methodname>
+					<methodname>IEnumerable<![CDATA[<object>]]> FindEntitiesChangedInRevision(Number)</methodname>
 				</firstterm>
 				- Returns snapshots of all audited entities changed (added, updated and removed) in a given revision.
+				Executes <literal>n+1</literal> SQL queries, where <literal>n</literal> is a number of different entity
+				classes modified within specified revision.
 			</listitem>
 			<listitem>
 				<firstterm>
-					<methodname>List findEntitiesChangedInRevision(Number, RevisionType)</methodname>
+					<methodname>IEnumerable<![CDATA[<object>]]> FindEntitiesChangedInRevision(Number, RevisionType)</methodname>
 				</firstterm>
 				- Returns snapshots of all audited entities changed (added, updated or removed) in a given revision
-				filtered by modification type.
+				filtered by modification type. Executes <literal>n+1</literal> SQL queries, where <literal>n</literal>
+				is a number of different entity classes modified within specified revision.
 			</listitem>
 			<listitem>
 				<firstterm>
-					<methodname><![CDATA[Map<RevisionType, List>]]> findEntitiesChangedInRevisionGroupByRevisionType(Number)</methodname>
+					<methodname><![CDATA[IDictionary<RevisionType, IEnumerable<object>>]]> FindEntitiesChangedInRevisionGroupByRevisionType(long)</methodname>
 				</firstterm>
 				- Returns a map containing lists of entity snapshots grouped by modification operation (e.g.
-				addition, update and removal).
+				addition, update and removal). Executes <literal>3n+1</literal> SQL queries, where <literal>n</literal>
+				is a number of different entity classes modified within specified revision.
 			</listitem>
 		</orderedlist>
 		<para>
 			Note that methods described above can be legally used only when default mechanism of
-			tracking changed entity names is enabled (see <xref linkend="envers-tracking-modified-entities-reventity"/>).
+			tracking changed entity classes is enabled (see <xref linkend="envers-tracking-modified-entities-reventity"/>).
 		</para>
 	</section>
 

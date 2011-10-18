@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Exceptions;
@@ -163,8 +162,8 @@ namespace NHibernate.Envers
 		IEnumerable<System.Type> FindEntityTypesChangedInRevision(long revision);
 
 		/// <summary>
-		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> queries,
-		/// where <i>n</i> is a number of entity classes modified within specified revision.
+		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
+		/// where <i>n</i> is a number of different entity classes modified within specified revision.
 		/// </summary>
 		/// <param name="revision">Revision number.</param>
 		/// <returns>Snapshots of all audited entities changed in a given revision.</returns>
@@ -182,8 +181,8 @@ namespace NHibernate.Envers
 		IEnumerable<object> FindEntitiesChangedInRevision(long revision);
 
 		/// <summary>
-		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> queries,
-		/// where <i>n</i> is a number of entity classes modified within specified revision.
+		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
+		/// where <i>n</i> is a number of different entity classes modified within specified revision.
 		/// </summary>
 		/// <param name="revision">Revision number.</param>
 		/// <param name="revisionType">Type of modification</param>
@@ -203,9 +202,9 @@ namespace NHibernate.Envers
 
 		/// <summary>
 		/// Find all entities changed (added, updated and removed) in a given revision grouped by modification type.
-		/// Executes <i>mn+1</i> queries, where:
+		/// Executes <i>mn+1</i> SQL queries, where:
 		/// <ul>
-		/// <li><i>n</i> - number of entity classes modified within specified revision.</li>
+		/// <li><i>n</i> - number of different entity classes modified within specified revision.</li>
 		/// <li><i>m</i> - number of different revision types. See <see cref="RevisionType"/> enum.</li>
 		/// </ul>
 		/// </summary>
