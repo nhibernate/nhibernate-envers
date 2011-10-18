@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
 	/// <summary>
 	/// Tests proper behavior of entity listener that implements <see cref="IEntityTrackingRevisionListener"/>.
-	/// interface. <see cref="CustomEntityTrackingRevisionListener"/> shall be notified whenever an entity instance has been
+	/// interface. <see cref="CustomTrackingRevisionListener"/> shall be notified whenever an entity instance has been
 	/// added, modified or removed, so that changed entity type can be persisted.
 	/// </summary>
 	[TestFixture]
@@ -47,35 +47,35 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		[Test]
 		public void ShouldTrackAddedEntities()
 		{
-			var steDescriptor = new ModifiedEntityNameEntity {EntityName = typeof (StrTestEntity).FullName};
-			var siteDescriptor = new ModifiedEntityNameEntity {EntityName = typeof (StrIntTestEntity).FullName};
+			var steDescriptor = new ModifiedEntityTypeEntity {EntityName = typeof (StrTestEntity).FullName};
+			var siteDescriptor = new ModifiedEntityTypeEntity {EntityName = typeof (StrIntTestEntity).FullName};
 
 			var ctre = AuditReader().FindRevision<CustomTrackingRevisionEntity>(1);
 
-			ctre.ModifiedEntityNames
+			ctre.ModifiedEntityTypes
 				.Should().Have.SameValuesAs(steDescriptor, siteDescriptor);
 		}
 
 		[Test]
 		public void ShouldTrackModifiedEntities()
 		{
-			var siteDescriptor = new ModifiedEntityNameEntity { EntityName = typeof(StrIntTestEntity).FullName };
+			var siteDescriptor = new ModifiedEntityTypeEntity { EntityName = typeof(StrIntTestEntity).FullName };
 
 			var ctre = AuditReader().FindRevision<CustomTrackingRevisionEntity>(2);
 
-			ctre.ModifiedEntityNames
+			ctre.ModifiedEntityTypes
 				.Should().Have.SameValuesAs(siteDescriptor);
 		}
 
 		[Test]
 		public void ShouldTrackDeletedEntities()
 		{
-			var steDescriptor = new ModifiedEntityNameEntity { EntityName = typeof(StrTestEntity).FullName };
-			var siteDescriptor = new ModifiedEntityNameEntity { EntityName = typeof(StrIntTestEntity).FullName };
+			var steDescriptor = new ModifiedEntityTypeEntity { EntityName = typeof(StrTestEntity).FullName };
+			var siteDescriptor = new ModifiedEntityTypeEntity { EntityName = typeof(StrIntTestEntity).FullName };
 
 			var ctre = AuditReader().FindRevision<CustomTrackingRevisionEntity>(3);
 
-			ctre.ModifiedEntityNames
+			ctre.ModifiedEntityTypes
 				.Should().Have.SameValuesAs(steDescriptor, siteDescriptor);
 		}
 

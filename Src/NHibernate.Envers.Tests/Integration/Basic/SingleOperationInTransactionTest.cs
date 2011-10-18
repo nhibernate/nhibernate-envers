@@ -74,7 +74,6 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Test]
 		public void IllegalRevisionShouldThrow()
 		{
-			//rk: IllegalArgumentException in Java Envers
 			Assert.Throws<ArgumentOutOfRangeException>(() =>
 				AuditReader().GetRevisionDate(0)
 						 );

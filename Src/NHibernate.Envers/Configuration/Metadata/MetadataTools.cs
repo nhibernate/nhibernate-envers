@@ -7,18 +7,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public static class MetadataTools 
 	{
-		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, string type) 
+		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, System.Type type) 
 		{
 			var idMapping = doc.CreateElement("id");
 			parent.AppendChild(idMapping);
 			idMapping.SetAttribute("name", name);
-			idMapping.SetAttribute("type", type);
+			idMapping.SetAttribute("type", type.Name);
 
 			var generatorMapping = doc.CreateElement("generator");
 			idMapping.AppendChild(generatorMapping);
 			generatorMapping.SetAttribute("class", "native");
-			/*generator_mapping.SetAttribute("class", "sequence");
-			generator_mapping.addElement("param").SetAttribute("name", "sequence").setText("custom");*/
 
 			return idMapping;
 		}

@@ -23,9 +23,9 @@ namespace NHibernate.Envers.Configuration
 		private string revisionInfoEntityName;
 		private PropertyData revisionInfoIdData;
 		private PropertyData revisionInfoTimestampData;
-		private PropertyData modifiedEntityNamesData;
+		private PropertyData modifiedEntityTypesData;
 		private IType revisionInfoTimestampType;
-		private string revisionPropType;
+		private System.Type revisionPropType;
 		private string revisionPropSqlType;
 		private string revisionAssQName;
 
@@ -36,9 +36,9 @@ namespace NHibernate.Envers.Configuration
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
 			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.None);
 			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.None);
-			modifiedEntityNamesData = new PropertyData("ModifiedEntityNames", "ModifiedEntityNames", "property", ModificationStore.None);
+			modifiedEntityTypesData = new PropertyData("ModifiedEntityTypes", "ModifiedEntityTypes", "property", ModificationStore.None);
 			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
-			revisionPropType = "integer";
+			revisionPropType = typeof(int);
 		}
 
 		private XmlDocument generateDefaultRevisionInfoXmlMapping()
@@ -52,8 +52,7 @@ namespace NHibernate.Envers.Configuration
 			classMapping.SetAttribute("name", revisionInfoEntityName);
 			classMapping.SetAttribute("table", "REVINFO");
 
-			var idProperty = MetadataTools.AddNativelyGeneratedId(document, classMapping, revisionInfoIdData.Name,
-					revisionPropType);
+			var idProperty = MetadataTools.AddNativelyGeneratedId(document, classMapping, revisionInfoIdData.Name, revisionPropType);
 			//ORIG: MetadataTools.addColumn(idProperty, "REV", -1, 0, 0, null);
 			var col = idProperty.OwnerDocument.CreateElement("column");
 			col.SetAttribute("name", "REV");
@@ -66,7 +65,7 @@ namespace NHibernate.Envers.Configuration
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
-				generateEntityNamesTrackingTableMapping(classMapping, "ModifiedEntityNames", "REVENTITY", "REV", "ENTITYNAME", "string");
+				generateEntityNamesTrackingTableMapping(classMapping, "ModifiedEntityTypes", "REVENTITY", "REV", "ENTITYTYPE", "string");
 			}
 
 			return document;
@@ -81,6 +80,8 @@ namespace NHibernate.Envers.Configuration
 			set.SetAttribute("name", propertyName);
 			set.SetAttribute("table", joinTableName);
 			set.SetAttribute("cascade", "persist, delete");
+			set.SetAttribute("fetch", "join");
+			set.SetAttribute("lazy", "false");
 			var key = set.OwnerDocument.CreateElement("key");
 			set.AppendChild(key);
 			key.SetAttribute("column", joinTablePrimaryKeyColumnName);
@@ -145,19 +146,19 @@ namespace NHibernate.Envers.Configuration
 			{
 				var member = persistentProperty.Member;
 				var property = persistentProperty.Property;
-				var entityName = _metaDataStore.MemberMeta<ModifiedEntityNamesAttribute>(member);
+				var entityName = _metaDataStore.MemberMeta<ModifiedEntityTypesAttribute>(member);
 				if (entityName != null)
 				{
 					if (found)
-						throw new MappingException("Only one property may be annotated with ModifiedEntityNamesAttribute!");
+						throw new MappingException("Only one property may be annotated with ModifiedEntityTypesAttribute!");
 					if (property.Type.ReturnedClass.Equals(typeof(ISet<string>)))
 					{
-						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
+						modifiedEntityTypesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						found = true;
 					}
 					else
 					{
-						throw new MappingException("The property annotated with ModifiedEntityNamesAttribute must be of type ISet<string>.");
+						throw new MappingException("The property annotated with ModifiedEntityTypesAttribute must be of type ISet<string>.");
 					}
 				}
 			}
@@ -191,7 +192,7 @@ namespace NHibernate.Envers.Configuration
 						revisionNumberFound = true;
 
 						// The default is integer
-						revisionPropType = "long";
+						revisionPropType = typeof(long);
 					}
 					else
 					{
@@ -234,7 +235,7 @@ namespace NHibernate.Envers.Configuration
 																										null,
 																										revisionInfoTimestampData,
 																										isTimestampAsDate(),
-																										modifiedEntityNamesData);
+																										modifiedEntityTypesData);
 						}
 						else
 						{
@@ -274,7 +275,7 @@ namespace NHibernate.Envers.Configuration
 														"with [RevisionTimestamp]!");
 						}
 
-						var modifiedEntityNamesFound = searchForEntityNamesCfg(persistentProperties);
+						var modifiedEntityTypesFound = searchForEntityNamesCfg(persistentProperties);
 
 						revisionInfoEntityName = pc.EntityName;
 						revisionAssQName = pc.MappedClass.AssemblyQualifiedName;
@@ -283,17 +284,17 @@ namespace NHibernate.Envers.Configuration
 						revisionInfoTimestampType = pc.GetProperty(revisionInfoTimestampData.Name).Type;
 
 						if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled ||
-								modifiedEntityNamesFound ||
+								modifiedEntityTypesFound ||
 								typeof(DefaultTrackingModifiedTypesRevisionEntity).IsAssignableFrom(revisionInfoClass))
 						{
 							// If tracking modified entities parameter is enabled, custom revision info entity is a subtype
-							// of DefaultTrackingModifiedTypesRevisionEntity class, or @ModifiedEntityNames annotation is used.
+							// of DefaultTrackingModifiedTypesRevisionEntity class, or @ModifiedEntityTypes annotation is used.
 							revisionInfoGenerator = new DefaultTrackingModifiedTypesRevisionInfoGenerator(revisionInfoEntityName,
 							                                                                              revisionInfoClass,
 							                                                                              revEntityAttr.Listener,
 							                                                                              revisionInfoTimestampData,
 							                                                                              isTimestampAsDate(),
-							                                                                              modifiedEntityNamesData);
+							                                                                              modifiedEntityTypesData);
 							_globalCfg.SetTrackEntitiesChangedInRevisionEnabled();
 						}
 						else
@@ -310,11 +311,15 @@ namespace NHibernate.Envers.Configuration
 			}
 
 			return new RevisionInfoConfigurationResult(
-					revisionInfoGenerator, revisionInfoXmlMapping,
-					new RevisionInfoQueryCreator(revisionInfoEntityName, revisionInfoIdData.Name,
-							revisionInfoTimestampData.Name, isTimestampAsDate(), modifiedEntityNamesData.Name),
+					revisionInfoGenerator, 
+					revisionInfoXmlMapping,
+					new RevisionInfoQueryCreator(revisionInfoEntityName, revisionInfoIdData.Name, revisionInfoTimestampData.Name, isTimestampAsDate(), revisionPropType),
 					generateRevisionInfoRelationMapping(),
-					new RevisionInfoNumberReader(revisionInfoClass, revisionInfoIdData), revisionInfoEntityName, revisionInfoClass, revisionInfoTimestampData);
+					new RevisionInfoNumberReader(revisionInfoClass, revisionInfoIdData), 
+					_globalCfg.IsTrackEntitiesChangedInRevisionEnabled ? new ModifiedEntityTypesReader(revisionInfoClass, modifiedEntityTypesData) : null,
+					revisionInfoEntityName, 
+					revisionInfoClass, 
+					revisionInfoTimestampData);
 		}
 
 		private bool isTimestampAsDate()

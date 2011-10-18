@@ -205,8 +205,8 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 			The basic query allows retrieving entity classes modified in a specified revision:
 		</para>
 		<programlisting>
-			<![CDATA[List<Class> modifiedEntities = getAuditReader()
-		 .findEntityTypesChangedInRevision(revisionNumber);]]>
+			<![CDATA[ISet<Type> modifiedEntities = AuditReader()
+		 .FindEntityTypesChangedInRevision(revisionNumber);]]>
 		</programlisting>
 		<para>
 			Other queries (accessible from <interfacename>org.hibernate.envers.AuditReader</interfacename>):

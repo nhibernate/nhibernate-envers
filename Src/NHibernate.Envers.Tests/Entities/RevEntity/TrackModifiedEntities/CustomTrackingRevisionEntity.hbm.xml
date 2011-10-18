@@ -7,13 +7,13 @@
 			<generator class="identity" />
 		</id>
 		<property name="CustomTimestamp" />
-		<set name="ModifiedEntityNames" cascade="all">
+		<set name="ModifiedEntityTypes" cascade="all">
 			<key column="revision"/>
-			<one-to-many class="ModifiedEntityNameEntity"/>
+			<one-to-many class="ModifiedEntityTypeEntity"/>
 		</set>
 	</class>
 
-	<class name="ModifiedEntityNameEntity">
+	<class name="ModifiedEntityTypeEntity">
 		<id name="Id">
 			<generator class="identity" />
 		</id>

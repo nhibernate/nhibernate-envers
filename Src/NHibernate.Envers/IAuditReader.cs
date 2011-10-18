@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
@@ -144,10 +145,10 @@ namespace NHibernate.Envers
 		AuditQueryCreator CreateQuery();
 
 		/// <summary>
-		/// Returns list of entity classes modified in a given revision.
+		/// Returns set of entity classes modified in a given revision.
 		/// </summary>
 		/// <param name="revision">Revision number.</param>
-		/// <returns>List of classes modified in a given revision.</returns>
+		/// <returns>Set of classes modified in a given revision.</returns>
 		/// <exception cref="AuditException">
 		/// If none of the following conditions is satisfied:
 		/// <ul>
@@ -156,10 +157,10 @@ namespace NHibernate.Envers
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
 		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityNamesAttribute"/> attribute.</li>
+		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
 		/// </ul>
 		/// </exception>
-		IEnumerable<System.Type> FindEntityTypesChangedInRevision(long revision);
+		ISet<System.Type> FindEntityTypesChangedInRevision(long revision);
 
 		/// <summary>
 		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
@@ -175,7 +176,7 @@ namespace NHibernate.Envers
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
 		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityNamesAttribute"/> attribute.</li>
+		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
 		/// </ul>
 		/// </exception>
 		IEnumerable<object> FindEntitiesChangedInRevision(long revision);
@@ -195,7 +196,7 @@ namespace NHibernate.Envers
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
 		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityNamesAttribute"/> attribute.</li>
+		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
 		/// </ul>
 		/// </exception>
 		IEnumerable<object> FindEntitiesChangedInRevision(long revision, RevisionType revisionType);
@@ -218,7 +219,7 @@ namespace NHibernate.Envers
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
 		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityNamesAttribute"/> attribute.</li>
+		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
 		/// </ul>
 		/// </exception>
 		IDictionary<RevisionType, IEnumerable<object>> FindEntitiesChangedInRevisionGroupByRevisionType(long revision);
