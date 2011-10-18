@@ -2,6 +2,11 @@
 
 namespace NHibernate.Envers
 {
+	/// <summary>
+	/// Extension of <see cref="DefaultRevisionEntity"/> that allows tracking entity types changed in each revision. This revision
+	/// entity is implicitly used when <code>nhibernate.envers.track_entities_changed_in_revision</code> parameter
+	/// is set to <code>true</code>.
+	/// </summary>
 	public class DefaultTrackingModifiedTypesRevisionEntity : DefaultRevisionEntity
 	{
 		public DefaultTrackingModifiedTypesRevisionEntity()
