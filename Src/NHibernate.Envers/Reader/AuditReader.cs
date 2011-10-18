@@ -8,7 +8,6 @@ using NHibernate.Envers.Query;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Tools;
 using NHibernate.Event;
-using NHibernate.Util;
 
 namespace NHibernate.Envers.Reader
 {
