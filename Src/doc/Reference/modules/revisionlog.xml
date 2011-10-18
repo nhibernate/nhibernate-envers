@@ -108,8 +108,8 @@
 		<para>
 			By default entity types that have been changed in each revision are not being tracked. This implies the
 			necessity to query all tables storing audited data in order to retrieve changes made during
-			specified revision. Envers provides a simple mechanism that creates <literal>REVENTITY</literal>
-			table which stores fully qualified names of .Net classes changed in each revision.
+			specified revision. Envers provides a simple mechanism that creates <literal>REVCHANGES</literal>
+			table which stores fully qualified names of .Net classes modified in each revision.
 			Single record encapsulates the revision identifier (foreign key to <literal>REVINFO</literal> table)
 			and a string value. Note that this mechanism shall be used when entity name can be clearly identified
 			by Java class type. Otherwise extend <interfacename>IEntityTrackingRevisionListener</interfacename>
