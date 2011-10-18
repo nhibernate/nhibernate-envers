@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Configuration
 												RevisionInfoQueryCreator revisionInfoQueryCreator,
 												XmlElement revisionInfoRelationMapping,
 												RevisionInfoNumberReader revisionInfoNumberReader,
-												ModifiedEntityTypesReader modifiedEntityTypesReader,
+												ModifiedEntityNamesReader modifiedEntityNamesReader,
 												string revisionInfoEntityName,
 												System.Type revisionInfoClass,
 												PropertyData revisionInfoTimestampData) 
@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoQueryCreator = revisionInfoQueryCreator;
 			RevisionInfoRelationMapping = revisionInfoRelationMapping;
 			RevisionInfoNumberReader = revisionInfoNumberReader;
-			ModifiedEntityTypesReader = modifiedEntityTypesReader;
+			ModifiedEntityNamesReader = modifiedEntityNamesReader;
 			RevisionInfoEntityName = revisionInfoEntityName;
 			RevisionInfoClass = revisionInfoClass;
 			RevisionInfoTimestampData = revisionInfoTimestampData;
@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public XmlElement RevisionInfoRelationMapping { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
-		public ModifiedEntityTypesReader ModifiedEntityTypesReader { get; private set; }
+		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
 		public string RevisionInfoEntityName { get; private set; }
 		public System.Type RevisionInfoClass { get; private set; }
 		public PropertyData RevisionInfoTimestampData { get; private set; }

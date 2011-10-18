@@ -482,7 +482,9 @@
     <EmbeddedResource Include="Entities\RevEntity\InheritedRevEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\ListenerRevEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\AnnotatedTrackingRevisionEntity.hbm.xml" />
-    <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\CustomTrackingRevisionEntity.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\CustomTrackingRevisionEntity.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\ExtendedRevisionEntity.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

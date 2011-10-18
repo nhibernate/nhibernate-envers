@@ -4,6 +4,7 @@ using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
+using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers
 {
@@ -144,84 +145,21 @@ namespace NHibernate.Envers
 		/// </returns>
 		AuditQueryCreator CreateQuery();
 
-		/// <summary>
-		/// Returns set of entity classes modified in a given revision.
-		/// </summary>
-		/// <param name="revision">Revision number.</param>
-		/// <returns>Set of classes modified in a given revision.</returns>
-		/// <exception cref="AuditException">
+		/// <returns>
+		/// 	Basic implementation of &amp;lt;see cref=&amp;quot;ICrossTypeRevisionChangesReader&amp;quot;/&amp;gt; interface. Raises an exception if the default
+		/// 	mechanism of tracking entity names modified during revisions has not been enabled.
+		/// </returns>
+		///<exception cref="AuditException">
 		/// If none of the following conditions is satisfied:
 		/// <ul>
 		///	<li><code>nhibernate.envers.track_entities_changed_in_revision</code>
 		///   parameter is set to <code>true</code>.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
-		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
+		///	extends <see cref="DefaultTrackingModifiedEntitiesRevisionEntity"/> base class.</li>
 		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
+		///   marked with <see cref="ModifiedEntityNamesAttribute"/> attribute.</li>
 		/// </ul>
 		/// </exception>
-		ISet<System.Type> FindEntityTypesChangedInRevision(long revision);
-
-		/// <summary>
-		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
-		/// where <i>n</i> is a number of different entity classes modified within specified revision.
-		/// </summary>
-		/// <param name="revision">Revision number.</param>
-		/// <returns>Snapshots of all audited entities changed in a given revision.</returns>
-		/// <exception cref="AuditException">
-		/// If none of the following conditions is satisfied:
-		/// <ul>
-		///	<li><code>nhibernate.envers.track_entities_changed_in_revision</code>
-		///   parameter is set to <code>true</code>.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
-		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
-		/// </ul>
-		/// </exception>
-		IEnumerable<object> FindEntitiesChangedInRevision(long revision);
-
-		/// <summary>
-		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
-		/// where <i>n</i> is a number of different entity classes modified within specified revision.
-		/// </summary>
-		/// <param name="revision">Revision number.</param>
-		/// <param name="revisionType">Type of modification</param>
-		/// <returns>Snapshots of all audited entities changed in a given revision and filtered by modification type.</returns>
-		/// <exception cref="AuditException">
-		/// If none of the following conditions is satisfied:
-		/// <ul>
-		///	<li><code>nhibernate.envers.track_entities_changed_in_revision</code>
-		///   parameter is set to <code>true</code>.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
-		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
-		/// </ul>
-		/// </exception>
-		IEnumerable<object> FindEntitiesChangedInRevision(long revision, RevisionType revisionType);
-
-		/// <summary>
-		/// Find all entities changed (added, updated and removed) in a given revision grouped by modification type.
-		/// Executes <i>mn+1</i> SQL queries, where:
-		/// <ul>
-		/// <li><i>n</i> - number of different entity classes modified within specified revision.</li>
-		/// <li><i>m</i> - number of different revision types. See <see cref="RevisionType"/> enum.</li>
-		/// </ul>
-		/// </summary>
-		/// <param name="revision">Revision number.</param>
-		/// <returns>Map containing lists of entity snapshots grouped by modification operation (e.g. addition, update, removal).</returns>
-		/// <exception cref="AuditException">
-		/// If none of the following conditions is satisfied:
-		/// <ul>
-		///	<li><code>nhibernate.envers.track_entities_changed_in_revision</code>
-		///   parameter is set to <code>true</code>.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>)
-		///	extends <see cref="DefaultTrackingModifiedTypesRevisionEntity"/> base class.</li>
-		///   <li>Custom revision entity (annotated with <see cref="RevisionEntityAttribute"/>) encapsulates a field
-		///   marked with <see cref="ModifiedEntityTypesAttribute"/> attribute.</li>
-		/// </ul>
-		/// </exception>
-		IDictionary<RevisionType, IEnumerable<object>> FindEntitiesChangedInRevisionGroupByRevisionType(long revision);
+		ICrossTypeRevisionChangesReader CrossTypeRevisionChangesReader();
 	}
 }

@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		[ExpectedException(typeof(AuditException))]
 		public void ShouldThrowFindEntitiesChangedInRevision()
 		{
-			AuditReader().FindEntitiesChangedInRevision(1);
+			AuditReader().CrossTypeRevisionChangesReader();
 		}
 
 		protected override IEnumerable<string> Mappings

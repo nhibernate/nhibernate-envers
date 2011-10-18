@@ -8,15 +8,15 @@ namespace NHibernate.Envers.RevisionInfo
 {
 	/// <summary>
 	/// Automatically adds entity class names, that have been changed during current revision, to revision entity.
-	/// <see cref="ModifiedEntityTypesAttribute"/>
-	/// <see cref="DefaultTrackingModifiedTypesRevisionEntity"/>
+	/// <see cref="ModifiedEntityNamesAttribute"/>
+	/// <see cref="DefaultTrackingModifiedEntitiesRevisionEntity"/>
 	/// </summary>
-	public class DefaultTrackingModifiedTypesRevisionInfoGenerator : DefaultRevisionInfoGenerator
+	public class DefaultTrackingModifiedEntitiesRevisionInfoGenerator : DefaultRevisionInfoGenerator
 	{
 		private readonly ISetter modifiedEntityTypesSetter;
 		private readonly IGetter modifiedEntityTypesGetter;
 
-		public DefaultTrackingModifiedTypesRevisionInfoGenerator(string revisionInfoEntityName, 
+		public DefaultTrackingModifiedEntitiesRevisionInfoGenerator(string revisionInfoEntityName, 
 																		System.Type revisionInfoType, 
 																		IRevisionListener revisionListener, 
 																		PropertyData revisionInfoTimestampData, 

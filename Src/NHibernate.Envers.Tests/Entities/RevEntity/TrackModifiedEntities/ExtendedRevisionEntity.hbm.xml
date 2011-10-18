@@ -7,9 +7,9 @@
 			<generator class="identity" />
 		</id>
 		<property name="RevisionDate" />
-		<set name="ModifiedEntityTypes" table="REVCHANGES" cascade="all">
+		<set name="ModifiedEntityNames" table="REVCHANGES" cascade="all">
 			<key column="REV"/>
-			<element column="ENTITYTYPE" type="string"/>
+			<element column="ENTITYNAME" type="string"/>
 		</set>
 		<property name="Comment" />
 	</class>

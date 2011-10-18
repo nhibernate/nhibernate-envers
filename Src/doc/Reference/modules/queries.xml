@@ -202,14 +202,14 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 	<section id="envers-tracking-modified-entities-queries">
 		<title>Querying for entities modified in a given revision</title>
 		<para>
-			The basic query allows retrieving entity types changed in a specified revision:
+			The basic query allows retrieving entity names and corresponding CLR classes changed in a specified revision:
 		</para>
 		<programlisting>
-			<![CDATA[ISet<Type> modifiedEntityTypes = AuditReader()
-		 .FindEntityTypesChangedInRevision(revisionNumber);]]>
+			<![CDATA[ISet<Pair<string,Type>> modifiedEntityTypes = AuditReader()
+		 .CrossTypeRevisionChangesReader().FindEntityTypes(revisionNumber);]]>
 		</programlisting>
 		<para>
-			Other queries (accessible from <interfacename>org.hibernate.envers.AuditReader</interfacename>):
+			Other queries (accessible from <interfacename>NHibernate.Envers.ICrossTypeRevisionChangesReader</interfacename>):
 		</para>
 		<orderedlist>
 			<listitem>
@@ -239,7 +239,7 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 		</orderedlist>
 		<para>
 			Note that methods described above can be legally used only when default mechanism of
-			tracking changed entity types is enabled (see <xref linkend="envers-tracking-modified-entities-revchanges"/>).
+			tracking changed entity names is enabled (see <xref linkend="envers-tracking-modified-entities-revchanges"/>).
 		</para>
 	</section>
 

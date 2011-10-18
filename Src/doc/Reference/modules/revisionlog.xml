@@ -104,41 +104,38 @@
 	</para>
 
 	<section id="envers-tracking-modified-entities-revchanges">
-		<title>Tracking entity classes modified in revision</title>
+		<title>Tracking entity names modified during revisions</title>
 		<para>
 			By default entity types that have been changed in each revision are not being tracked. This implies the
 			necessity to query all tables storing audited data in order to retrieve changes made during
 			specified revision. Envers provides a simple mechanism that creates <literal>REVCHANGES</literal>
-			table which stores fully qualified names of .Net classes modified in each revision.
-			Single record encapsulates the revision identifier (foreign key to <literal>REVINFO</literal> table)
-			and a string value. Note that this mechanism shall be used when entity name can be clearly identified
-			by Java class type. Otherwise extend <interfacename>IEntityTrackingRevisionListener</interfacename>
-			interface (described further).
+			table which stores entity names of modified persistent objects. Single record encapsulates the revision
+			identifier (foreign key to <literal>REVINFO</literal> table) and a string value.
 		</para>
 		<para>
-			Tracking of modified entity types can be enabled in three different ways:
+			Tracking of modified entity names can be enabled in three different ways:
 		</para>
 		<orderedlist>
 			<listitem>
 				Set <property>nhibernate.envers.track_entities_changed_in_revision</property> parameter to
 				<literal>true</literal>. In this case
-				<classname>nhibernate.envers.DefaultTrackingModifiedTypesRevisionEntity</classname> will
+				<classname>NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity</classname> will
 				be implicitly used as the revision log entity.
 			</listitem>
 			<listitem>
 				Create a custom revision entity that extends
-				<classname>nhibernate.envers.DefaultTrackingModifiedTypesRevisionEntity</classname> class.
+				<classname>NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity</classname> class.
 				<programlisting>
 					<![CDATA[
 	[RevisionEntity]
-	public class ExtendedRevisionEntity : DefaultTrackingModifiedTypesRevisionEntity {
+	public class ExtendedRevisionEntity : DefaultTrackingModifiedEntitiesRevisionEntity {
 		 ...
 	}]]>
 				</programlisting>
 			</listitem>
 			<listitem>
 				Mark an appropriate field of a custom revision entity with
-				<interfacename>nhibernate.envers.ModifiedEntityTypes</interfacename> annotation. The property is
+				<interfacename>NHibernate.Envers.ModifiedEntityNames</interfacename> annotation. The property is
 				required to be of <literal><![CDATA[Set<String>]]></literal> type.
 				<programlisting>
 					<![CDATA[
@@ -155,7 +152,7 @@
 			</listitem>
 		</orderedlist>
 		<para>
-			Users, that have chosen one of the approaches listed above, can retrieve all entities modified in
+			Users, that have chosen one of the approaches listed above, can retrieve all entities modified in a
 			specified revision by utilizing API described in <xref linkend="envers-tracking-modified-entities-queries"/>.
 		</para>
 		<para>
@@ -172,7 +169,8 @@
 			<programlisting>
 				<filename>CustomEntityTrackingRevisionListener.cs</filename>
 				<![CDATA[
-	public class CustomEntityTrackingRevisionListener : IEntityTrackingRevisionListener 
+	public class CustomEntityTrackingRevisionListener 
+				: IEntityTrackingRevisionListener 
 	{
 		 public void EntityChanged(Type entityClass, string entityName, object entityId, RevisionType revisionType,
 											object revisionEntity) 
@@ -194,7 +192,8 @@
 		 [RevisionTimestamp]
 		 private long customTimestamp;
 	
-		 private ISet<ModifiedEntityTypeEntity> modifiedEntityTypes = new HashSet<ModifiedEntityTypeEntity>();
+		 private ISet<ModifiedEntityTypeEntity> modifiedEntityTypes = 
+											new HashSet<ModifiedEntityTypeEntity>();
 		 
 		 public void addModifiedEntityType(string entityName) {
 			  modifiedEntityTypes.add(new ModifiedEntityTypesEntity(this, entityName));
