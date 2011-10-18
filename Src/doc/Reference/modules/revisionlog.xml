@@ -76,20 +76,20 @@
 	</para>
 
 	<programlisting>
-		[Entity]
-		[RevisionEntity(typeof(ExampleListener))]
-		public class ExampleRevEntity
-		{
-		[RevisionNumber]
-		private int id;
+[Entity]
+[RevisionEntity(typeof(ExampleListener))]
+public class ExampleRevEntity
+{
+	[RevisionNumber]
+	private int id;
 
-		[RevisionTimestamp]
-		private long timestamp;
+	[RevisionTimestamp]
+	private long timestamp;
 
-		private string username;
+	private string username;
 
-		// Getters, setters, equals, hashCode ...
-		}
+	// Getters, setters, equals, hashCode ...
+}
 	</programlisting>
 
 	<para>
@@ -125,30 +125,26 @@
 			<listitem>
 				Create a custom revision entity that extends
 				<classname>NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity</classname> class.
-				<programlisting>
-					<![CDATA[
-	[RevisionEntity]
-	public class ExtendedRevisionEntity : DefaultTrackingModifiedEntitiesRevisionEntity {
-		 ...
-	}]]>
-				</programlisting>
+				<programlisting><![CDATA[[RevisionEntity]
+public class ExtendedRevisionEntity : DefaultTrackingModifiedEntitiesRevisionEntity 
+{
+	 ...
+}]]></programlisting>
 			</listitem>
 			<listitem>
 				Mark an appropriate field of a custom revision entity with
 				<interfacename>NHibernate.Envers.ModifiedEntityNames</interfacename> annotation. The property is
-				required to be of <literal><![CDATA[Set<String>]]></literal> type.
-				<programlisting>
-					<![CDATA[
-	[RevisionEntity]
-	public class AnnotatedTrackingRevisionEntity {
-		 ...
+				required to be of <literal><![CDATA[ISet<string>]]></literal> type.
+				<programlisting><![CDATA[[RevisionEntity]
+public class AnnotatedTrackingRevisionEntity 
+{
+	...
 	
-		 [ModifiedEntityTypes]
-		 private Set<String> modifiedEntityNames;
+	[ModifiedEntityTypes]
+	private Set<String> modifiedEntityNames;
 		 
-		 ...
-	}]]>
-				</programlisting>
+	...
+}]]></programlisting>
 			</listitem>
 		</orderedlist>
 		<para>
@@ -168,63 +164,66 @@
 			<title>Custom implementation of tracking entity classes modified during revisions</title>
 			<programlisting>
 				<filename>CustomEntityTrackingRevisionListener.cs</filename>
-				<![CDATA[
-	public class CustomEntityTrackingRevisionListener 
-				: IEntityTrackingRevisionListener 
+<![CDATA[
+public class CustomEntityTrackingRevisionListener 
+	: IEntityTrackingRevisionListener 
+{
+	public void EntityChanged(Type entityClass, string entityName, object entityId, 
+		RevisionType revisionType, object revisionEntity) 
 	{
-		 public void EntityChanged(Type entityClass, string entityName, object entityId, RevisionType revisionType,
-											object revisionEntity) 
-											{
-			  ((CustomTrackingRevisionEntity)revisionEntity).AddModifiedEntityName(entityClass.FullName);
-	 }
+		((CustomTrackingRevisionEntity)revisionEntity)
+			.AddModifiedEntityName(entityClass.FullName);
+	}
 	
-		 public void newRevision(object revisionEntity) {
-		 }
-	}]]>
+	public void newRevision(object revisionEntity) 
+	{
+	}
+}]]>
 			</programlisting>
 			<programlisting>
 				<filename>CustomTrackingRevisionEntity.cs</filename>
-				<![CDATA[
-	[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))
-	public class CustomTrackingRevisionEntity {
-		 private int customId;
+<![CDATA[
+[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))
+public class CustomTrackingRevisionEntity 
+{
+	private int customId;
 	
-		 [RevisionTimestamp]
-		 private long customTimestamp;
+	[RevisionTimestamp]
+	private long customTimestamp;
 	
-		 private ISet<ModifiedEntityTypeEntity> modifiedEntityTypes = 
-											new HashSet<ModifiedEntityTypeEntity>();
+	private ISet<ModifiedEntityTypeEntity> modifiedEntityTypes 
+						= new HashSet<ModifiedEntityTypeEntity>();
 		 
-		 public void addModifiedEntityType(string entityName) {
-			  modifiedEntityTypes.add(new ModifiedEntityTypesEntity(this, entityName));
-		 }
-	
-		 public void removeModifiedEntityType(string entityName) {
-			  modifiedEntityTypes.remove(new ModifiedEntityTypeEntity(this, entityName));
-		 }
-		 
-		 ...
+	public void addModifiedEntityType(string entityName) 
+	{
+		modifiedEntityTypes.add(new ModifiedEntityTypesEntity(this, entityName));
 	}
-	]]>
+	
+	public void removeModifiedEntityType(string entityName) 
+	{
+		modifiedEntityTypes.remove(new ModifiedEntityTypeEntity(this, entityName));
+	}
+		 
+	...
+}]]>
 			</programlisting>
 			<programlisting>
 				<filename>ModifiedEntityNameEntity.cs</filename>
-				<![CDATA[
-	public class ModifiedEntityTypeEntity {
-		 private Integer id;
+<![CDATA[
+public class ModifiedEntityTypeEntity 
+{
+	private Integer id;
 	
-		 private CustomTrackingRevisionEntity revision;
+	private CustomTrackingRevisionEntity revision;
 		 
-		 private string entityName;
+	private string entityName;
 		 
-		 ...
-	}
-	]]>
+	...
+}]]>
 			</programlisting>
-			<programlisting>
-				<![CDATA[var revEntity = AuditReader().FindRevision(typeof(CustomTrackingRevisionEntity), revisionNumber);
-	var modifiedEntityTypes = revEntity.ModifiedEntityNames]]>
-			</programlisting>
+			<programlisting><![CDATA[var revEntity = AuditReader()
+	.FindRevision(typeof(CustomTrackingRevisionEntity), revisionNumber);
+var modifiedEntityTypes = revEntity.ModifiedEntityNames]]></programlisting>
 		</example>
 	</section>
 </chapter>
