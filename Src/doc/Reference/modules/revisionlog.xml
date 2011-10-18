@@ -103,7 +103,7 @@
 		table will be generated, with the name <literal>REVINFO</literal>.
 	</para>
 
-	<section id="envers-tracking-modified-entities-reventity">
+	<section id="envers-tracking-modified-entities-revchanges">
 		<title>Tracking entity classes modified in revision</title>
 		<para>
 			By default entity types that have been changed in each revision are not being tracked. This implies the
