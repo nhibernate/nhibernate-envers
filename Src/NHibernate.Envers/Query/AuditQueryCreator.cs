@@ -32,8 +32,9 @@ namespace NHibernate.Envers.Query
 		}
 
 		/// <summary>
-		/// In comparison to <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> this method will return an empty
-		/// collection if an entity of a certain type has not been changed in a given revision.
+		/// Creates a query, which will return entities modified at the specified revision.
+		/// In comparison, the <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> query takes into all entities
+		/// which were present at a given revision, even if they were not modified.
 		/// </summary>
 		/// <param name="c">Class of the entities for which to query.</param>
 		/// <param name="revision">Revision number at which to execute the query.</param>
@@ -48,8 +49,9 @@ namespace NHibernate.Envers.Query
 		}
 
 		/// <summary>
-		/// In comparison to <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> this method will return an empty
-		/// collection if an entity of a certain type has not been changed in a given revision.
+		/// Creates a query, which will return entities modified at the specified revision.
+		/// In comparison, the <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> query takes into all entities
+		/// which were present at a given revision, even if they were not modified.
 		/// </summary>
 		/// <param name="c">Class of the entities for which to query.</param>
 		/// <param name="entityName">Name of the entity (if can't be guessed basing on the <paramref name="c"/>.</param>

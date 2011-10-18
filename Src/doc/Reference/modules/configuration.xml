@@ -261,7 +261,7 @@
 							identifier (foreign key to <literal>REVINFO</literal> table) and a string value. This
 							feature shall be used when entity name can be clearly identified by a .net class type. Otherwise
 							extend <interfacename>IEntityTrackingRevisionListener</interfacename>
-							interface. For more information refer to <xref linkend="envers-tracking-modified-entities-reventity"/>
+							interface. For more information refer to <xref linkend="envers-tracking-modified-entities-revchanges"/>
 							and <xref linkend="envers-tracking-modified-entities-queries"/>.
 						</entry>
 					</row>
@@ -281,6 +281,16 @@
 				</tbody>
 			</tgroup>
 		</table>
+		<important>
+			<para>
+				The following configuration options have been added recently and should be regarded as experimental:
+				<orderedlist>
+					<listitem>
+						org.hibernate.envers.track_entities_changed_in_revision
+					</listitem>
+				</orderedlist>
+			</para>
+		</important>
 
 		<para>
 			To change the name of the revision table and its fields (the table, in which the
