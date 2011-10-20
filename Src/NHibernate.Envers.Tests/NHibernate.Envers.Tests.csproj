@@ -427,11 +427,12 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevListener.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\SomePropsEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\MultipleFullClassAuditRegistrationTest.cs" />
-    <Compile Include="NetSpecific\UnitTests\Fluent\NonMappedRevisionEntity.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\NonMappedRevisionEntityTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\PropertyBaseTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\InheritedRevisionInfoTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\RevisionInfoTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\RevisionInfoWithListenerTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\TableNameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />

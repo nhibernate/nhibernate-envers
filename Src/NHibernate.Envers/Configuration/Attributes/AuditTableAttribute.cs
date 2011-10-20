@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			Catalog = string.Empty;
 		}
 
-		public string Value { get; private set; }
+		public string Value { get; set; }
 		public string Schema { get; set; }
 		public string Catalog { get; set; }
 	}
