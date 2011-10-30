@@ -201,6 +201,9 @@
     <Compile Include="Integration\EntityNames\ManyToManyAudited\Car.cs" />
     <Compile Include="Integration\EntityNames\ManyToManyAudited\Person.cs" />
     <Compile Include="Integration\EntityNames\ManyToManyAudited\ReadEntityWithAuditedManyToManyTest.cs" />
+    <Compile Include="Integration\EntityNames\OneToManyAudited\Car.cs" />
+    <Compile Include="Integration\EntityNames\OneToManyAudited\Person.cs" />
+    <Compile Include="Integration\EntityNames\OneToManyAudited\ReadEntityWithAuditedCollectionTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddDelTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddModTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushModDelTest.cs" />
@@ -546,6 +549,7 @@
     <EmbeddedResource Include="Integration\Basic\NonAuditedEntity.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\AuditedEntity\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\ManyToManyAudited\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\EntityNames\OneToManyAudited\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
