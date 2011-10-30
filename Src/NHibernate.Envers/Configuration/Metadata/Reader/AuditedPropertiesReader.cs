@@ -11,9 +11,9 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
 	/// <summary>
 	/// Reads persistent properties form a
-	/// {@link org.hibernate.envers.configuration.metadata.reader.PersistentPropertiesSource}
+	/// <see cref="IPersistentPropertiesSource"/>
 	/// and adds the ones that are audited to a
-	/// {@link org.hibernate.envers.configuration.metadata.reader.AuditedPropertiesHolder},
+	/// <see cref="IAuditedPropertiesHolder"/>
 	/// filling all the auditing data.
 	/// </summary>
 	public class AuditedPropertiesReader

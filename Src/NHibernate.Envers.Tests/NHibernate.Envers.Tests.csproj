@@ -79,6 +79,8 @@
     <Compile Include="Entities\Components\Relations\NotAuditedManyToOneComponentTestEntity.cs" />
     <Compile Include="Entities\Components\Relations\OneToManyComponent.cs" />
     <Compile Include="Entities\Components\Relations\OneToManyComponentTestEntity.cs" />
+    <Compile Include="Entities\Components\UniquePropsEntity.cs" />
+    <Compile Include="Entities\Components\UniquePropsNotAuditedEntity.cs" />
     <Compile Include="Entities\CustomType\Component.cs" />
     <Compile Include="Entities\CustomType\CompositeCustomTypeEntity.cs" />
     <Compile Include="Entities\CustomType\CompositeTestUserType.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Integration\Collection\StringSetTest.cs" />
     <Compile Include="Integration\Components\Collections\CollectionOfComponentsTest.cs" />
     <Compile Include="Integration\Components\ComponentsTest.cs" />
+    <Compile Include="Integration\Components\PropertiesGroupTest.cs" />
     <Compile Include="Integration\Components\Relations\ManyToOneInComponentTest.cs" />
     <Compile Include="Integration\Components\Relations\NotAuditedManyToOneInComponentTest.cs" />
     <Compile Include="Integration\Components\Relations\OneToManyInComponentTest.cs" />
@@ -488,6 +491,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\ExtendedRevisionEntity.hbm.xml" />
+    <EmbeddedResource Include="Entities\Components\UniqueProps.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
