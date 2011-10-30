@@ -5,6 +5,11 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
 	[Audited]
 	public class ParentEntity
 	{
+		public ParentEntity()
+		{
+			Data = string.Empty;
+		}
+
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
 

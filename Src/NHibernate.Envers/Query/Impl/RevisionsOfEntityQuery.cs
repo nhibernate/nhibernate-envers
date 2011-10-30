@@ -24,6 +24,20 @@ namespace NHibernate.Envers.Query.Impl
 			this.selectDeletedEntities = selectDeletedEntities;
 		}
 
+		public RevisionsOfEntityQuery(AuditConfiguration verCfg,
+							IAuditReaderImplementor versionsReader,
+							System.Type cls,
+							string entityName,
+							bool selectEntitiesOnly,
+							bool selectDeletedEntities)
+			: base(verCfg, versionsReader, cls, entityName)
+		{
+
+
+			this.selectEntitiesOnly = selectEntitiesOnly;
+			this.selectDeletedEntities = selectDeletedEntities;
+		}
+
 		private long GetRevisionNumber(IDictionary versionsEntity) 
 		{
 			var verEntCfg = VerCfg.AuditEntCfg;

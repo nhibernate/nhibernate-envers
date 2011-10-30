@@ -101,5 +101,12 @@ namespace NHibernate.Envers.Tests
 			}
 			_auditReader = null;
 		}
+
+		protected void ForceNewSession()
+		{
+			Session.Close();
+			Session = SessionFactory.OpenSession();
+			_auditReader = null;
+		}
 	}
 }

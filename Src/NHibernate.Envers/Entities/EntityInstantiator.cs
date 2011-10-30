@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Entities
 			// If it is not in the cache, creating a new entity instance
 			try 
 			{
-				var cls = Toolz.ResolveDotnetType(entityName);
+				var cls = Toolz.ResolveEntityClass(versionsReader.SessionImplementor, entityName);
 				ret = ReflectionTools.CreateInstanceByDefaultConstructor(cls);				
 			} 
 			catch (Exception e) 
@@ -71,6 +71,9 @@ namespace NHibernate.Envers.Entities
 
 			verCfg.EntCfg[entityName].PropertyMapper.MapToEntityFromMap(verCfg, ret, versionsEntity, primaryKey, versionsReader, revision);
 			idMapper.MapToEntityFromMap(ret, originalId);
+
+			// Put entity on entityName cache after mapping it from the map representation
+			versionsReader.FirstLevelCache.AddEntityName(primaryKey, revision, ret, entityName);
 
 			return ret;
 		}

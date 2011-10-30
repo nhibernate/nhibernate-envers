@@ -22,6 +22,21 @@ namespace NHibernate.Envers
 		T Find<T>(object primaryKey, long revision);
 
 		/// <summary>
+		/// Find an entity by primary key at the given revision with the specified entityName.
+		/// </summary>
+		/// <typeparam name="T">Type of entity</typeparam>
+		/// <param name="entityName">Name of the entity (if can't be guessed basing on the {@code cls}).</param>
+		/// <param name="primaryKey">Primary key of the entity.</param>
+		/// <param name="revision">Revision in which to get the entity</param>
+		/// <returns>
+		/// The found entity instance at the given revision (its properties may be partially filled
+		/// if not all properties are audited) or null, if an entity with that id didn't exist at that
+		/// revision.
+		/// </returns>
+		T Find<T>(string entityName, object primaryKey, long revision);
+
+
+		/// <summary>
 		/// Find an entity by primary key at the given revision.
 		/// </summary>
 		/// <param name="cls">Type of entity</param>
@@ -34,6 +49,8 @@ namespace NHibernate.Envers
 		/// </returns>
 		object Find(System.Type cls, object primaryKey, long revision);
 
+		object Find(System.Type cls, string entityName, object primaryKey, long revision);
+
 		/// <summary>
 		/// Get a list of revision numbers, at which an entity was modified.
 		/// </summary>
@@ -44,6 +61,18 @@ namespace NHibernate.Envers
 		/// revisions come first).
 		/// </returns>
 		IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity : class;
+
+		/// <summary>
+		/// Get a list of revision numbers, at which an entity was modified, looking by entityName.
+		/// </summary>
+		/// <typeparam name="TEntity">The entity type.</typeparam>
+		/// <param name="entityName">Name of the entity </param>
+		/// <param name="primaryKey">Primary key of the entity.</param>
+		/// <returns>
+		/// A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
+		/// revisions come first).
+		/// </returns>
+		IEnumerable<long> GetRevisions<TEntity>(string entityName, object primaryKey);
 
 		/// <summary>
 		/// Get the date, at which a revision was created. 
@@ -159,5 +188,17 @@ namespace NHibernate.Envers
 		/// </ul>
 		/// </exception>
 		ICrossTypeRevisionChangesReader CrossTypeRevisionChangesReader();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="primaryKey"></param>
+		/// <param name="revision"></param>
+		/// <param name="entity">entity that was obtained previously from the same AuditReader.</param>
+		/// <returns>
+		/// the entityName for the given entity, null in case the entity is
+		/// not associated with this AuditReader instance.
+		/// </returns>
+		string GetEntityName(object primaryKey, long revision, object entity);
 	}
 }

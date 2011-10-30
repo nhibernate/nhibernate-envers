@@ -26,11 +26,11 @@ namespace NHibernate.Envers.Query.Impl
 			_versionsReader = versionsReader;
 			Criterions = new List<IAuditCriterion>();
 			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
-			EntityName = cls.FullName;
+			EntityName = entityName;
 			VersionsEntityName = verCfg.AuditEntCfg.GetAuditEntityName(EntityName);
 			QueryBuilder = new QueryBuilder(VersionsEntityName, "e");
 
-			if (!VerCfg.EntCfg.IsVersioned(EntityName))
+			if (!verCfg.EntCfg.IsVersioned(EntityName))
 			{
 				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
 			}

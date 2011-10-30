@@ -196,6 +196,8 @@
     <Compile Include="Integration\Data\SerializableTest.cs" />
     <Compile Include="Integration\Data\SerializableTestEntity.cs" />
     <Compile Include="Integration\Data\SerObj.cs" />
+    <Compile Include="Integration\EntityNames\AuditedEntity\Person.cs" />
+    <Compile Include="Integration\EntityNames\AuditedEntity\ReadEntityWithEntityNameTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddDelTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddModTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushModDelTest.cs" />
@@ -539,6 +541,7 @@
     <EmbeddedResource Include="Integration\Collection\NoRevision\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\RevEntity\TrackModifiedEntities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Basic\NonAuditedEntity.hbm.xml" />
+    <EmbeddedResource Include="Integration\EntityNames\AuditedEntity\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
