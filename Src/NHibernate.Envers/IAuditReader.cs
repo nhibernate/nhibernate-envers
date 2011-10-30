@@ -200,5 +200,19 @@ namespace NHibernate.Envers
 		/// not associated with this AuditReader instance.
 		/// </returns>
 		string GetEntityName(object primaryKey, long revision, object entity);
+
+		/// <summary>
+		/// Checks if the entityClass was configured to be audited.
+		/// </summary>
+		/// <param name="entityClass">Class of the entity asking for audit support</param>
+		/// <returns>true if the entityClass is audited.</returns>
+		bool IsEntityClassAudited(System.Type entityClass);
+
+		/// <summary>
+		/// Checks if the entityName was configured to be audited.
+		/// </summary>
+		/// <param name="entityName">EntityName of the entity asking for audit support.</param>
+		/// <returns>true if the entityName is audited.</returns>
+		bool IsEntityNameAudited(string entityName);
 	}
 }

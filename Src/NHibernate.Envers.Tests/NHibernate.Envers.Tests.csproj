@@ -152,6 +152,9 @@
     <Compile Include="Integration\AccessType\Model.cs" />
     <Compile Include="Integration\AccessType\NoSetterTest.cs" />
     <Compile Include="Integration\AccessType\PropertyAccessTest.cs" />
+    <Compile Include="Integration\AuditReader\AuditedTestEntity.cs" />
+    <Compile Include="Integration\AuditReader\AuditReaderAPITest.cs" />
+    <Compile Include="Integration\AuditReader\NotAuditedTestEntity.cs" />
     <Compile Include="Integration\Basic\DeleteTest.cs" />
     <Compile Include="Integration\Basic\GlobalVersionedTest.cs" />
     <Compile Include="Integration\Basic\ManyOperationsInTransactionTest.cs" />
@@ -563,6 +566,7 @@
     <EmbeddedResource Include="Integration\EntityNames\OneToManyNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedNotAudited\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\AuditReader\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
