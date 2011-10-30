@@ -154,6 +154,7 @@
     <Compile Include="Integration\Basic\GlobalVersionedTest.cs" />
     <Compile Include="Integration\Basic\ManyOperationsInTransactionTest.cs" />
     <Compile Include="Integration\Basic\Model.cs" />
+    <Compile Include="Integration\Basic\NoneAuditedTest.cs" />
     <Compile Include="Integration\Basic\NonVersionedTest.cs" />
     <Compile Include="Integration\Basic\NullPropertiesTest.cs" />
     <Compile Include="Integration\Basic\SimpleTest.cs" />
@@ -529,6 +530,7 @@
     <EmbeddedResource Include="Integration\SuperClass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Collection\NoRevision\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\RevEntity\TrackModifiedEntities\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Basic\NonAuditedEntity.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
