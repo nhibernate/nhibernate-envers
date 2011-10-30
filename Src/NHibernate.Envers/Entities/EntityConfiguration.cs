@@ -6,23 +6,25 @@ namespace NHibernate.Envers.Entities
 {
 	public class EntityConfiguration
 	{
-		public string VersionsEntityName { get; private set; }
-		public IdMappingData IdMappingData { get; private set; }
-		public IExtendedPropertyMapper PropertyMapper { get; private set; }
-		// Maps from property name
-		private readonly IDictionary<string, RelationDescription> relations;
-		public string ParentEntityName { get; private set; }
-
-		public EntityConfiguration(string versionsEntityName, IdMappingData idMappingData,
-								   IExtendedPropertyMapper propertyMapper, string parentEntityName)
+		public EntityConfiguration(string versionsEntityName, string entityClassName, IdMappingData idMappingData,
+							IExtendedPropertyMapper propertyMapper, string parentEntityName)
 		{
 			VersionsEntityName = versionsEntityName;
+			EntityClassName = entityClassName;
 			IdMappingData = idMappingData;
 			PropertyMapper = propertyMapper;
 			ParentEntityName = parentEntityName;
 
 			relations = new Dictionary<string, RelationDescription>();
 		}
+	
+		public string VersionsEntityName { get; private set; }
+		public string EntityClassName { get; private set; }
+		public IdMappingData IdMappingData { get; private set; }
+		public IExtendedPropertyMapper PropertyMapper { get; private set; }
+		// Maps from property name
+		private readonly IDictionary<string, RelationDescription> relations;
+		public string ParentEntityName { get; private set; }
 
 		public IIdMapper IdMapper
 		{

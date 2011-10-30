@@ -157,7 +157,7 @@
     <Compile Include="Entities\Mapper\MultiPropertyMapper.cs" />
     <Compile Include="Entities\Mapper\PersistentCollectionChangeData.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
-    <Compile Include="Entities\Mapper\Relation\AbstractDelegateSessionImplementor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\AbstractDelegateSessionImplementor.cs" />
     <Compile Include="Entities\Mapper\Relation\BagCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\BagCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\SetCollectionMapper.cs" />
@@ -189,7 +189,7 @@
     <Compile Include="Entities\Mapper\Relation\Query\ThreeEntityQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\TwoEntityOneAuditedQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\TwoEntityQueryGenerator.cs" />
-    <Compile Include="Entities\Mapper\Relation\ToOneDelegateSessionImplementor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\ToOneDelegateSessionImplementor.cs" />
     <Compile Include="Entities\Mapper\Relation\ToOneIdMapper.cs" />
     <Compile Include="Entities\Mapper\SinglePropertyMapper.cs" />
     <Compile Include="Entities\Mapper\SubclassPropertyMapper.cs" />
