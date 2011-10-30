@@ -165,8 +165,11 @@ namespace NHibernate.Envers.Event
 					var relatedObj = changeData.GetChangedElement();
 					var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
 
-					auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, relatedEntityName, VerCfg,
-							relatedId, relatedObj));
+					auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session,
+																							evt.Session.BestGuessEntityName(relatedObj), 
+																							VerCfg, 
+																							relatedId, 
+																							relatedObj));
 				}
 			}
 		}

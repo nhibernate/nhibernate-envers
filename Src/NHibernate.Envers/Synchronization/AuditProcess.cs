@@ -43,9 +43,9 @@ namespace NHibernate.Envers.Synchronization
 				var entityName = vwu.EntityName;
 				var usedIdsKey = new Pair<string, object>(entityName, entityId);
 
-				if (usedIds.ContainsKey(usedIdsKey))
+				var other = alreadyScheduledWorkUnit(usedIdsKey);
+				if(other!=null)
 				{
-					var other = usedIds[usedIdsKey];
 					var result = vwu.Dispatch(other);
 
 					if (result != other)
@@ -67,6 +67,29 @@ namespace NHibernate.Envers.Synchronization
 			}
 		}
 
+		/// <summary>
+		/// Checks if another work unit associated with the same entity hierarchy and identifier has already been scheduled.
+		/// </summary>
+		/// <param name="idKey"> Work unit's identifier.</param>
+		/// <returns>Corresponding work unit or <code>null</code> if no satisfying result was found.</returns>
+		private IAuditWorkUnit alreadyScheduledWorkUnit(Pair<string, object> idKey)
+		{
+			var entityMetamodel = session.Factory.GetEntityPersister(idKey.First).EntityMetamodel;
+			var rootEntityName = entityMetamodel.RootName;
+			var rootEntityMetamodel = session.Factory.GetEntityPersister(rootEntityName).EntityMetamodel;
+
+			// Checking all possible subtypes, supertypes and the actual class.
+			foreach (var entityName in rootEntityMetamodel.SubclassEntityNames)
+			{
+				var key = new Pair<string, object>(entityName, idKey.Second);
+				if (usedIds.ContainsKey(key))
+				{
+					return usedIds[key];
+				}
+			}
+
+			return null;
+		}
 
 		private void removeWorkUnit(IAuditWorkUnit vwu)
 		{
@@ -123,7 +146,7 @@ namespace NHibernate.Envers.Synchronization
 			{
 				return;
 			}
-			var castedSession = (ISession) session;
+			var castedSession = (ISession)session;
 
 			if (castedSession.FlushMode == FlushMode.Never)
 			{
