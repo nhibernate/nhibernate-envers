@@ -210,6 +210,10 @@
     <Compile Include="Integration\EntityNames\SingleAssociatedAudited\Car.cs" />
     <Compile Include="Integration\EntityNames\SingleAssociatedAudited\Person.cs" />
     <Compile Include="Integration\EntityNames\SingleAssociatedAudited\ReadEntityAssociatedAuditedTest.cs" />
+    <Compile Include="Integration\EntityNames\SingleAssociatedAudited\SingleDomainObjectToMultipleTablesTest.cs" />
+    <Compile Include="Integration\EntityNames\SingleAssociatedNotAudited\Car.cs" />
+    <Compile Include="Integration\EntityNames\SingleAssociatedNotAudited\Person.cs" />
+    <Compile Include="Integration\EntityNames\SingleAssociatedNotAudited\ReadEntityAssociatedNotAuditedTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddDelTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushAddModTest.cs" />
     <Compile Include="Integration\Flush\DoubleFlushModDelTest.cs" />
@@ -558,6 +562,7 @@
     <EmbeddedResource Include="Integration\EntityNames\OneToManyAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\OneToManyNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedAudited\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedNotAudited\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
