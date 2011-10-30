@@ -205,6 +205,9 @@
     <Compile Include="Integration\HashCode\WikiImage.cs" />
     <Compile Include="Integration\HashCode\WikiPage.cs" />
     <Compile Include="Integration\Ids\CompositeIdTest.cs" />
+    <Compile Include="Integration\Inheritance\Entities\Person.cs" />
+    <Compile Include="Integration\Inheritance\Entities\RightsSubject.cs" />
+    <Compile Include="Integration\Inheritance\Entities\Role.cs" />
     <Compile Include="Integration\Inheritance\Joined\ChildAuditingTest.cs" />
     <Compile Include="Integration\Inheritance\Entities\ChildEntity.cs" />
     <Compile Include="Integration\Inheritance\Joined\ChildNullAuditingTest.cs" />
@@ -224,6 +227,7 @@
     <Compile Include="Integration\Inheritance\Entities\ChildPrimaryKeyJoinEntity.cs" />
     <Compile Include="Integration\Inheritance\Entities\ChildNotIngEntity.cs" />
     <Compile Include="Integration\Inheritance\Entities\ParentIngEntity.cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\ParentReferencingChildTest .cs" />
     <Compile Include="Integration\Inheritance\Joined\Relation\PolymorphicCollectionTest.cs" />
     <Compile Include="Integration\Inheritance\Entities\ReferencedToParentEntity.cs" />
     <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\AbstractContainedEntity.cs" />
