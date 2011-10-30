@@ -3,9 +3,9 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
-    public interface IPersistentPropertiesSource
-    {
-        IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
-    	Property VersionedProperty { get; }
-    }
+	public interface IPersistentPropertiesSource
+	{
+		IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
+		Property VersionedProperty { get; }
+	}
 }

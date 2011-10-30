@@ -51,41 +51,82 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				var propertyValue = declaredPersistentProperty.Property.Value;
 
-				PropertyAuditingData propertyData;
-				bool isAudited;
 				var componentValue = propertyValue as Component;
 				if (componentValue != null)
 				{
-					var componentData = new ComponentAuditingData();
-					isAudited = FillPropertyData(declaredPersistentProperty.Member,
-													declaredPersistentProperty.Property.Name,
-													componentData,
-													declaredPersistentProperty.Property.PropertyAccessorName);
-
-					IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(componentValue);
-					new AuditedPropertiesReader(_metaDataStore,
-												ModificationStore.Full, componentPropertiesSource, componentData,
-												_globalCfg,
-												_propertyNamePrefix +
-												MappingTools.CreateComponentPrefix(declaredPersistentProperty.Property.Name))
-						.Read();
-
-					propertyData = componentData;
+					if (declaredPersistentProperty.Member.Equals(DeclaredPersistentProperty.NotAvailableMemberInfo))
+					{
+						addFromPropertiesGroup(declaredPersistentProperty, componentValue);
+					}
+					else
+					{
+						addFromComponentProperty(declaredPersistentProperty, componentValue);						
+					}
 				}
 				else
 				{
-					propertyData = new PropertyAuditingData();
-					isAudited = FillPropertyData(declaredPersistentProperty.Member,
-													declaredPersistentProperty.Property.Name,
-													propertyData,
-													declaredPersistentProperty.Property.PropertyAccessorName);
+					addFromNotComponentProperty(declaredPersistentProperty);
 				}
+			}
+		}
 
-				if (isAudited)
-				{
-					// Now we know that the property is audited
-					_auditedPropertiesHolder.AddPropertyAuditingData(declaredPersistentProperty.Property.Name, propertyData);
-				}
+		private void addFromPropertiesGroup(DeclaredPersistentProperty property, Component componentValue)
+		{
+			var componentData = new ComponentAuditingData();
+			var isAudited = FillPropertyData(property.Member,
+											property.Property.Name,
+											componentData,
+											property.Property.PropertyAccessorName);
+			if (isAudited)
+			{
+				componentData.BeanName = null;
+				componentData.Name = property.Property.Name;
+				var componentPropertiesSource = new ComponentPropertiesSource(componentValue);
+				var audPropReader = new AuditedPropertiesReader(_metaDataStore,
+											ModificationStore.Full, componentPropertiesSource, componentData,
+											_globalCfg,
+											_propertyNamePrefix +
+											MappingTools.CreateComponentPrefix(property.Property.Name));
+				audPropReader.Read();
+
+				_auditedPropertiesHolder.AddPropertyAuditingData(property.Property.Name, componentData);
+			}
+		}
+
+		private void addFromComponentProperty(DeclaredPersistentProperty property, Component componentValue)
+		{
+			var componentData = new ComponentAuditingData();
+			var isAudited = FillPropertyData(property.Member,
+											property.Property.Name,
+											componentData,
+											property.Property.PropertyAccessorName);
+
+			IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(componentValue);
+			var audPropReader = new AuditedPropertiesReader(_metaDataStore,
+										ModificationStore.Full, componentPropertiesSource, componentData,
+										_globalCfg,
+										_propertyNamePrefix +
+										MappingTools.CreateComponentPrefix(property.Property.Name));
+			audPropReader.Read();
+
+			if (isAudited)
+			{
+				// Now we know that the property is audited
+				_auditedPropertiesHolder.AddPropertyAuditingData(property.Property.Name, componentData);
+			}
+		}
+
+		private void addFromNotComponentProperty(DeclaredPersistentProperty property)
+		{
+			var propertyData = new PropertyAuditingData();
+			var isAudited = FillPropertyData(property.Member,
+													property.Property.Name,
+													propertyData,
+													property.Property.PropertyAccessorName);
+			if (isAudited)
+			{
+				// Now we know that the property is audited
+				_auditedPropertiesHolder.AddPropertyAuditingData(property.Property.Name, propertyData);
 			}
 		}
 
@@ -237,10 +278,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			private static IEnumerable<DeclaredPersistentProperty> createDeclaredPersistentPropertyForDynamicComponent(Component component)
 			{
-				//todo: rk - using system.object.ToString here for now - just to get no "hit" when looking for attributes... 
-				//Fix this later. Probably by allowing asking for attributes on methodinfo "null" instead...
 				return component.PropertyIterator
-					.Select(property => new DeclaredPersistentProperty { Property = property, Member = typeof(object).GetMethod("ToString") }).ToList();
+					.Select(property => new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo)).ToList();
 			}
 
 			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties

@@ -24,6 +24,12 @@ namespace NHibernate.Envers.Tools.Reflection
 
 		public static IEnumerable<DeclaredPersistentProperty> PersistentInfo(System.Type @class, IEnumerable<Property> properties)
 		{
+			return PersistentInfo(@class, properties, false);
+		}
+
+
+		public static IEnumerable<DeclaredPersistentProperty> PersistentInfo(System.Type @class, IEnumerable<Property> properties, bool includeEmbedded)
+		{
 			// a persistent property can be anything including a noop "property" declared in the mapping
 			// for query only. In this case I will apply some trick to get the MemberInfo.
 			var candidateMembers =
@@ -31,12 +37,14 @@ namespace NHibernate.Envers.Tools.Reflection
 			var candidateMembersNames = candidateMembers.Select(m => m.Name).ToList();
 			foreach (var property in properties)
 			{
+				if(includeEmbedded && property.PropertyAccessorName=="embedded")
+					yield return new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo);
 				var exactMemberIdx = candidateMembersNames.IndexOf(property.Name);
 				if (exactMemberIdx >= 0)
 				{
 					// No metter which is the accessor the audit-attribute should be in the property where available and not
 					// to the member used to read-write the value. (This method work even for access="field").
-					yield return new DeclaredPersistentProperty { Member = candidateMembers[exactMemberIdx], Property = property };
+					yield return new DeclaredPersistentProperty(property, candidateMembers[exactMemberIdx]);
 				}
 				else
 				{
@@ -48,7 +56,7 @@ namespace NHibernate.Envers.Tools.Reflection
 					var exactFieldIdx = GetMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
 					if (exactFieldIdx >= 0)
 					{
-						yield return new DeclaredPersistentProperty { Member = candidateMembers[exactFieldIdx], Property = property };
+						yield return new DeclaredPersistentProperty(property, candidateMembers[exactFieldIdx]);
 					}
 				}
 			}
