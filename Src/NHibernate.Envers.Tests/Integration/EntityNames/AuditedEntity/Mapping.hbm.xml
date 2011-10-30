@@ -1,0 +1,11 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity">
+	<class name="Person" entity-name="Personaje">
+		<id name="Id" column="ID_person" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="Name" not-null="true" column="NAME"/>
+		<property name="Age" column="AGE"/>
+	</class>
+</hibernate-mapping>

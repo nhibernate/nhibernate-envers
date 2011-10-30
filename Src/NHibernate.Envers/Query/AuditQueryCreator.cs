@@ -31,6 +31,12 @@ namespace NHibernate.Envers.Query
 			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
 		}
 
+		public IAuditQuery ForEntitiesAtRevision(System.Type c, string entityName, long revision)
+		{
+			ArgumentsTools.CheckPositive(revision, "revision");
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, entityName, revision);
+		}
+
 		/// <summary>
 		/// Creates a query, which will return entities modified at the specified revision.
 		/// In comparison, the <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> query takes into all entities
@@ -107,6 +113,11 @@ namespace NHibernate.Envers.Query
 		public IAuditQuery ForRevisionsOfEntity(System.Type c, bool selectEntitiesOnly, bool selectDeletedEntities)
 		{
 			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly, selectDeletedEntities);
+		}
+
+		public IAuditQuery ForRevisionsOfEntity(System.Type c, string entityName, bool selectEntitiesOnly, bool selectDeletedEntities)
+		{
+			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, entityName, selectEntitiesOnly, selectDeletedEntities);
 		}
 
 		/// <summary>

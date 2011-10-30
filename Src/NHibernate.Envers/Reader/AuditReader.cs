@@ -7,6 +7,7 @@ using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tools;
 using NHibernate.Event;
+using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Reader
 {
@@ -34,13 +35,21 @@ namespace NHibernate.Envers.Reader
 			return (T)Find(typeof(T), primaryKey, revision);
 		}
 
+		public T Find<T>(string entityName, object primaryKey, long revision)
+		{
+			return (T) Find(typeof(T), entityName, primaryKey, revision);
+		}
+
 		public object Find(System.Type cls, object primaryKey, long revision)
+		{
+			return Find(cls, cls.FullName, primaryKey, revision);
+		}
+
+		public object Find(System.Type cls, string entityName, object primaryKey, long revision)
 		{
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
-
-			var entityName = cls.FullName;
 
 			if (!verCfg.EntCfg.IsVersioned(entityName))
 			{
@@ -56,7 +65,7 @@ namespace NHibernate.Envers.Reader
 			try
 			{
 				// The result is put into the cache by the entity instantiator called from the query
-				result = CreateQuery().ForEntitiesAtRevision(cls, revision)
+				result = CreateQuery().ForEntitiesAtRevision(cls, entityName, revision)
 					.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
 			}
 			catch (NoResultException)
@@ -70,18 +79,24 @@ namespace NHibernate.Envers.Reader
 		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity : class
 		{
 			var cls = typeof(TEntity);
+			var entityName = cls.FullName;
+			return GetRevisions<TEntity>(entityName, primaryKey);
+		}
+
+		public IEnumerable<long> GetRevisions<TEntity>(string entityName, object primaryKey)
+		{
+			var cls = typeof(TEntity);
 			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
 			ArgumentsTools.CheckNotNull(cls, "Entity class");
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 
-			var entityName = cls.FullName;
 
 			if (!verCfg.EntCfg.IsVersioned(entityName))
 			{
 				throw new NotAuditedException(entityName, entityName + " is not versioned!");
 			}
 
-			var resultList = CreateQuery().ForRevisionsOfEntity(cls, false, true)
+			var resultList = CreateQuery().ForRevisionsOfEntity(cls, entityName, false, true)
 				.AddProjection(AuditEntity.RevisionNumber())
 				.Add(AuditEntity.Id().Eq(primaryKey))
 				.GetResultList();
@@ -209,6 +224,22 @@ namespace NHibernate.Envers.Reader
 				                         + "'nhibernate.envers.track_entities_changed_in_revision' parameter to true.");
 			}
 			return _crossTypeRevisionChangesReader;
+		}
+
+		public string GetEntityName(object primaryKey, long revision, object entity)
+		{
+			string ret;
+			var proxy = entity as INHibernateProxy;
+			if (proxy!=null)
+			{
+				entity = proxy.HibernateLazyInitializer.GetImplementation();
+			}
+			if (FirstLevelCache.TryGetEntityName(primaryKey, revision, entity, out ret))
+			{
+				return ret;
+			}
+			throw new HibernateException(
+				"Envers can't resolve entityName for historic entity. The id, revision and entity is not on envers first level cache.");
 		}
 	}
 }

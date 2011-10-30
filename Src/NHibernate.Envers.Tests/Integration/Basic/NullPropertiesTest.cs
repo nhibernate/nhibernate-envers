@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		public void VerifyHistoryOf1()
 		{
 			var ver1 = new BasicTestEntity1 { Id = id1, Str1 = "x", Long1 = 1 };
-			var ver2 = new BasicTestEntity1 { Id = id1, Str1 = null, Long1 = 1 };
+			var ver2 = new BasicTestEntity1 { Id = id1, Long1 = 1 };
 
 			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id1, 1));
 			Assert.AreEqual(ver1, AuditReader().Find<BasicTestEntity1>(id1, 2));
@@ -61,7 +61,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Test]
 		public void VerifyHistoryOf2()
 		{
-			var ver1 = new BasicTestEntity1 { Id = id2, Str1 = null, Long1 = 20 };
+			var ver1 = new BasicTestEntity1 { Id = id2, Long1 = 20 };
 			var ver2 = new BasicTestEntity1 { Id = id2, Str1 = "y2", Long1 = 20 };
 
 			Assert.IsNull(AuditReader().Find<BasicTestEntity1>(id2, 1));

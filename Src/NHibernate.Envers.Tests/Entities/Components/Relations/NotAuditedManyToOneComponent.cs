@@ -4,6 +4,11 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 {
 	public class NotAuditedManyToOneComponent
 	{
+		public NotAuditedManyToOneComponent()
+		{
+			Data = string.Empty;
+		}
+
 		public string Data { get; set; }
 		[NotAudited]
 		public UnversionedStrTestEntity Entity { get; set; }
@@ -21,6 +26,8 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 
 		public override int GetHashCode()
 		{
+			if (Entity == null)
+				return Data.GetHashCode();
 			return Data.GetHashCode() ^ Entity.GetHashCode();
 		}
 	}

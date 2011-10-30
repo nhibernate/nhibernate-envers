@@ -55,7 +55,6 @@ namespace NHibernate.Envers.Query.Impl
 			{
 				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
 			}
-
 		}
 
 		public EntityInstantiator EntityInstantiator

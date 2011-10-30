@@ -33,8 +33,8 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 		[Test]
 		public void VerifyHistoryOfChild()
 		{
-			var ver1 = new ChildEntity { Id = id1, Data = "x", Number = null };
-			var ver2 = new ChildEntity { Id = id1, Data = null, Number = 2 };
+			var ver1 = new ChildEntity { Id = id1, Data = "x"};
+			var ver2 = new ChildEntity { Id = id1, Number = 2 };
 
 			Assert.AreEqual(ver1, AuditReader().Find<ChildEntity>(id1, 1));
 			Assert.AreEqual(ver2, AuditReader().Find<ChildEntity>(id1, 2));

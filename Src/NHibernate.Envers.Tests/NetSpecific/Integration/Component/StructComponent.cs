@@ -17,6 +17,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 
 		public override int GetHashCode()
 		{
+			if (Data1 == null)
+				return NestedComponent.GetHashCode();
 			return Data1.GetHashCode() ^ NestedComponent.GetHashCode();
 		}
 	}
