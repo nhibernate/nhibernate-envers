@@ -88,7 +88,7 @@ namespace NHibernate.Envers.Configuration
 			}
 
 			// Only if there are any versioned classes
-			if (classesAuditingData.AllClassAuditedData.Count > 0)
+			if (auditMetaGen.EntitiesConfigurations.Count > 0)
 			{
 				if (revisionInfoXmlMapping !=  null) 
 				{
