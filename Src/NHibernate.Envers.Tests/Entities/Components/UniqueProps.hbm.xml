@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.Entities.Components">
+	<class name="UniquePropsEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<properties name="UniqueProps" unique="true">
+			<property name="Data1"/>
+			<property name="Data2"/>
+		</properties>
+	</class>
+
+	<class name="UniquePropsNotAuditedEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<properties name="UniqueProps" unique="true">
+			<property name="Data1"/>
+			<property name="Data2"/>
+		</properties>
+	</class>
+</hibernate-mapping>
+
