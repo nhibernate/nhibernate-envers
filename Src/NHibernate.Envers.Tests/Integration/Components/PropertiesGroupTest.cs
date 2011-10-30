@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Components
 {
-	[TestFixture, Ignore("Not yet implemented")]
+	[TestFixture]
 	public class PropertiesGroupTest : TestBase
 	{
 		private long auditedId;

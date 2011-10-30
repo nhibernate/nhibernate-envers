@@ -51,6 +51,14 @@ namespace NHibernate.Envers.Entities.Mapper
 				return;
 			}
 
+			if (propertyData.BeanName == null)
+			{
+				// If properties are not encapsulated in a component but placed directly in a class
+				// (e.g. by applying <properties> tag).
+				_delegate.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
+				return;
+			}
+
 			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
 
 			// If all properties are null and single, then the component has to be null also.
