@@ -241,5 +241,15 @@ namespace NHibernate.Envers.Reader
 			throw new HibernateException(
 				"Envers can't resolve entityName for historic entity. The id, revision and entity is not on envers first level cache.");
 		}
+
+		public bool IsEntityClassAudited(System.Type entityClass)
+		{
+			return IsEntityNameAudited(entityClass.FullName);
+		}
+
+		public bool IsEntityNameAudited(string entityName)
+		{
+			return verCfg.EntCfg.IsVersioned(entityName);
+		}
 	}
 }
