@@ -14,7 +14,7 @@ using NHibernate.Persister.Entity;
 using NHibernate.Transaction;
 using NHibernate.Type;
 
-namespace NHibernate.Envers.Entities.Mapper.Relation
+namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 {
 	public abstract class AbstractDelegateSessionImplementor : ISessionImplementor 
 	{

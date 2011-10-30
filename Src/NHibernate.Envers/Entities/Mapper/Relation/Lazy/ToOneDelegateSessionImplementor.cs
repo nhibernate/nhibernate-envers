@@ -1,7 +1,7 @@
 ﻿using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
 
-namespace NHibernate.Envers.Entities.Mapper.Relation
+namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 {
 	public class ToOneDelegateSessionImplementor : AbstractDelegateSessionImplementor 
 	{
@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly System.Type entityClass; 
 		private readonly object entityId;
 		private readonly long revision;
-		private readonly EntityConfiguration notVersionedEntityConfiguration;
+		private readonly EntitiesConfigurations entCfg;
 
 		public ToOneDelegateSessionImplementor(IAuditReaderImplementor versionsReader,
 											   System.Type entityClass,
@@ -21,14 +21,18 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			this.entityClass = entityClass;
 			this.entityId = entityId;
 			this.revision = revision;
-			var entCfg = verCfg.EntCfg;
-			notVersionedEntityConfiguration = entCfg.GetNotVersionEntityConfiguration(entityClass.FullName);
+			entCfg = verCfg.EntCfg;
 		}
 
 		protected override object DoImmediateLoad(string entityName)
 		{
-			return notVersionedEntityConfiguration == null ? 
-				versionsReader.Find(entityClass, entityId, revision) : SessionDelegate.ImmediateLoad(entityName, entityId);
+			if (entCfg.GetNotVersionEntityConfiguration(entityName) == null)
+			{
+				// audited relation, look up entity with envers
+				return versionsReader.Find(entityClass, entityName, entityId, revision);
+			}
+			// notAudited relation, look up entity with hibernate
+			return SessionDelegate.ImmediateLoad(entityName, entityId);
 		}
 	}
 

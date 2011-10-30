@@ -4,6 +4,7 @@ using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
@@ -57,8 +58,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
+					var entCfg = verCfg.EntCfg[_referencedEntityName] ??
+					             verCfg.EntCfg.GetNotVersionEntityConfiguration(_referencedEntityName);
+					var entityClass = Toolz.ResolveDotnetType(entCfg.EntityClassName);
 					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName).CreateProxy(
-						entityId, new ToOneDelegateSessionImplementor(versionsReader, Toolz.ResolveDotnetType(_referencedEntityName), entityId, revision, verCfg));
+						entityId, new ToOneDelegateSessionImplementor(versionsReader, entityClass, entityId, revision, verCfg));
 				}
 			}
 			var setter = ReflectionTools.GetSetter(obj.GetType(), _propertyData);

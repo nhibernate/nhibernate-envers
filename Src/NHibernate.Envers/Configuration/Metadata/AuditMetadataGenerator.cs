@@ -387,7 +387,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				//ORIG:
 				//IExtendedPropertyMapper propertyMapper = null;
 				//String parentEntityName = null;
-				var _entityCfg = new EntityConfiguration(entityName, _idMapper, null, null);
+				var _entityCfg = new EntityConfiguration(entityName, pc.ClassName, _idMapper, null, null);
 				NotAuditedEntitiesConfigurations.Add(entityName, _entityCfg);
 				return;
 			}
@@ -463,7 +463,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			AddJoins(pc, propertyMapper, auditingData, pc.EntityName, xmlMappingData, true);
 
 			// Storing the generated configuration
-			var entityCfg = new EntityConfiguration(auditEntityName, idMapper,
+			var entityCfg = new EntityConfiguration(auditEntityName, pc.ClassName, idMapper,
 					propertyMapper, parentEntityName);
 			EntitiesConfigurations.Add(pc.EntityName, entityCfg);
 		}
