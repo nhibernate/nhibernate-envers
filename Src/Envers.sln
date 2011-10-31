@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{C9C74EFE-506
 		doc\Reference\modules\example.xml = doc\Reference\modules\example.xml
 		doc\Reference\modules\exceptions.xml = doc\Reference\modules\exceptions.xml
 		doc\Reference\modules\links.xml = doc\Reference\modules\links.xml
+		doc\Reference\master.xml = doc\Reference\master.xml
 		doc\Reference\modules\preface.xml = doc\Reference\modules\preface.xml
 		doc\Reference\modules\queries.xml = doc\Reference\modules\queries.xml
 		doc\Reference\modules\quickstart.xml = doc\Reference\modules\quickstart.xml
