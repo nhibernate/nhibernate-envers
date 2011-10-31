@@ -1,4 +1,4 @@
-=== 1.1, ???? ===
+=== 1.1 Beta 1, ???? ===
 
 *** Breaking changes ***
 * Removed obsolute methods; AuditQueryCreator.ForHistoryOf<TEntity> and ForHistoryOf<TEntity>(bool)
