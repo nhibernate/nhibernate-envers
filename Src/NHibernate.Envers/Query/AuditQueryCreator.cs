@@ -1,5 +1,4 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Impl;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
@@ -16,7 +15,6 @@ namespace NHibernate.Envers.Query
 			this.auditCfg = auditCfg;
 			this.auditReaderImplementor = auditReaderImplementor;
 		}
-
 
 		/// <summary>
 		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
@@ -150,22 +148,6 @@ namespace NHibernate.Envers.Query
 		/// Creates a query, which selects the revisions, at which the given entity was modified.
 		/// </summary>
 		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
-		/// <returns>
-		/// A query for revisions at which instances of the given entity were modified (including deletation), to which
-		/// conditions can be added (for example - a specific id of the entity) and which can then be executed.
-		/// The results of the query will be sorted in ascending order by the revision number,
-		/// unless an order or projection is added.		
-		/// </returns>
-		[Obsolete("Specify revision entity type explicitly instead, using ForHistoryOf<TEntity, TRevisionEntity>()")]
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, DefaultRevisionEntity>> ForHistoryOf<TEntity>() where TEntity : class
-		{
-			return ForHistoryOf<TEntity>(true);
-		}
-
-		/// <summary>
-		/// Creates a query, which selects the revisions, at which the given entity was modified.
-		/// </summary>
-		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
 		/// <typeparam name="TRevisionEntity">The <see cref="System.Type"/> of the revision entity</typeparam>
 		/// <returns>
 		/// A query for revisions at which instances of the given entity were modified (including deletation), to which
@@ -178,23 +160,6 @@ namespace NHibernate.Envers.Query
 			where TRevisionEntity : class
 		{
 			return ForHistoryOf<TEntity, TRevisionEntity>(true);
-		}
-
-		/// <summary>
-		/// Creates a query, which selects the revisions, at which the given entity was modified.
-		/// </summary>
-		/// <typeparam name="TEntity">The <see cref="System.Type"/> of the entities for which to query.</typeparam>
-		/// <param name="includeDeleted">If true, also revisions where entities were deleted will be returned.</param> 
-		/// <returns>
-		/// A query for revisions at which instances of the given entity were modified, to which
-		/// conditions can be added (for example - a specific id of the entity) and which can then be executed.
-		/// The results of the query will be sorted in ascending order by the revision number,
-		/// unless an order or projection is added.		
-		/// </returns>
-		[Obsolete("Specify revision entity type explicitly instead, using ForHistoryOf<TEntity, TRevisionEntity>(includeDeleted)")]
-		public IEntityAuditQuery<IRevisionEntityInfo<TEntity, DefaultRevisionEntity>> ForHistoryOf<TEntity>(bool includeDeleted) where TEntity : class
-		{
-			return new HistoryQuery<TEntity, DefaultRevisionEntity>(auditCfg, auditReaderImplementor, includeDeleted);
 		}
 
 		/// <summary>
