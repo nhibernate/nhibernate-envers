@@ -8,23 +8,21 @@
 		two new <literal>Address</literal> entities:
 	</para>
 
-	<programlisting>
-		using(var tx = session.BeginTransaction())
-		{
-		var address1 = new Address("Privet Drive", 4);
-		var person1 = new Person("Harry", "Potter", address1);
+	<programlisting><![CDATA[using(var tx = session.BeginTransaction())
+{
+	var address1 = new Address("Privet Drive", 4);
+	var person1 = new Person("Harry", "Potter", address1);
 
-		var address2 = new Address("Grimmauld Place", 12);
-		var person2 = new Person("Hermione", "Granger", address2);
+	var address2 = new Address("Grimmauld Place", 12);
+	var person2 = new Person("Hermione", "Granger", address2);
 
-		session.Save(address1);
-		session.Save(address2);
-		session.Save(person1);
-		session.Save(person2);
+	session.Save(address1);
+	session.Save(address2);
+	session.Save(person1);
+	session.Save(person2);
 
-		tx.Commit();
-		}
-	</programlisting>
+	tx.Commit();
+}]]></programlisting>
 
 	<para>
 		Now we change some entities. This will generate revision number 2, which will contain
@@ -32,35 +30,31 @@
 		persons living at <literal>address2</literal> and <literal>address1</literal> changes):
 	</para>
 
-	<programlisting>
-		using(var tx = session.BeginTransaction())
-		{
-		var address1 = session.Get&lt;Address&gt;(address1.Id);
-		var person2 = session.Get&lt;Person&gt;(person2.Id);
+	<programlisting><![CDATA[using(var tx = session.BeginTransaction())
+{
+	var address1 = session.Get<Address>(address1.Id);
+	var person2 = session.Get<Person>(person2.Id);
 
-		// Changing the address's house number
-		address1.setHouseNumber(5)
+	// Changing the address's house number
+	address1.setHouseNumber(5)
 
-		// And moving Hermione to Harry
-		person2.setAddress(address1);
+	// And moving Hermione to Harry
+	person2.setAddress(address1);
 
-		tx.Commit();
-		}
-	</programlisting>
+	tx.Commit();
+}]]></programlisting>
 
 	<para>
 		We can retrieve the old versions (the audit) easily:
 	</para>
 
-	<programlisting>
-		var reader = AuditReaderFactory.Get(session);
+	<programlisting><![CDATA[var reader = AuditReaderFactory.Get(session);
 
-		var person2_rev1 = reader.Find&lt;Person&gt;(person2.Id, 1);
-		Assert.AreEqual(person2_rev1.Address, new Address("Grimmauld Place", 12));
+var person2_rev1 = reader.Find&lt;Person&gt;(person2.Id, 1);
+Assert.AreEqual(person2_rev1.Address, new Address("Grimmauld Place", 12));
 
-		var address1_rev1 = reader.Find&lt;Address&gt;(address1.Id, 1);
-		Assert.AreEqual(address1_rev1.Persons.Count, 1);
-
-		// and so on
-	</programlisting>
+var address1_rev1 = reader.Find&lt;Address&gt;(address1.Id, 1);
+Assert.AreEqual(address1_rev1.Persons.Count, 1);
+		
+// and so on]]></programlisting>
 </chapter>

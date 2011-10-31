@@ -43,10 +43,8 @@
 			The entry point for this type of queries is:
 		</para>
 
-		<programlisting>
-			<![CDATA[var query = AuditReader().CreateQuery()
-	.ForEntitiesAtRevision(typeof(MyEntity, revisionNumber);]]>
-		</programlisting>
+		<programlisting><![CDATA[var query = AuditReader().CreateQuery()
+	.ForEntitiesAtRevision(typeof(MyEntity, revisionNumber);]]></programlisting>
 
 		<para>
 			You can then specify constraints, which should be met by the entities returned, by
@@ -61,11 +59,9 @@
 			And to select only entites that are related to a given entity:
 		</para>
 
-		<programlisting>
-			<![CDATA[query.Add(AuditEntity.Property("address").Eq(relatedEntityInstance));
+		<programlisting><![CDATA[query.Add(AuditEntity.Property("address").Eq(relatedEntityInstance));
 // or
-query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
-		</programlisting>
+query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlisting>
 
 		<para>
 			You can limit the number of results, order them, and set aggregations and projections
@@ -78,15 +74,13 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 			A full query, can look for example like this:
 		</para>
 
-		<programlisting>
-			<![CDATA[var personsAtAddress = AuditReader().CreateQuery()
+		<programlisting><![CDATA[var personsAtAddress = AuditReader().CreateQuery()
 	 .ForEntitiesAtRevision(typeof(Person), 12)
 	 .AddOrder(AuditEntity.property("surname").desc())
 	 .Add(AuditEntity.relatedId("address").eq(addressId))
 	 .SetFirstResult(4)
 	 .SetMaxResults(2)
-	 .ResultList();]]>
-		</programlisting>
+	 .ResultList();]]></programlisting>
 
 	</section>
 
@@ -98,10 +92,8 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 			The entry point for this type of queries is:
 		</para>
 
-		<programlisting>
-			<![CDATA[var query = AuditReader().CreateQuery()
-	 .ForRevisionsOfEntity(typeof(MyEntity), false, true);]]>
-		</programlisting>
+		<programlisting><![CDATA[var query = AuditReader().CreateQuery()
+	 .ForRevisionsOfEntity(typeof(MyEntity), false, true);]]></programlisting>
 
 		<para>
 			You can add constraints to this query in the same way as to the previous one.
@@ -139,14 +131,12 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 			number 42:
 		</para>
 
-		<programlisting>
-			<![CDATA[var revision = AuditReader().CreateQuery()
+		<programlisting><![CDATA[var revision = AuditReader().CreateQuery()
 	 .ForRevisionsOfEntity(typeof(MyEntity), false, true)
 	 .SetProjection(AuditEntity.RevisionNumber.Min())
 	 .Add(AuditEntity.Id.Eq(entityId))
 	 .Add(AuditEntity.RevisionNumber().Gt(42))
-	 .SingleResult();]]>
-		</programlisting>
+	 .SingleResult();]]></programlisting>
 
 		<para>
 			The second additional feature you can use in queries for revisions is the ability
@@ -155,8 +145,7 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 			was larger then a given value, but as small as possible:
 		</para>
 
-		<programlisting>
-			<![CDATA[var revision = AuditReader().CreateQuery()
+		<programlisting><![CDATA[var revision = AuditReader().CreateQuery()
 	 .ForRevisionsOfEntity(typeof(MyEntity), false, true)
 	 // We are only interested in the first revision
 	 .SetProjection(AuditEntity.RevisionNumber().Min())
@@ -164,8 +153,7 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]>
 		  .Add(AuditEntity.Property("actualDate").Ge(givenDate))
 		  .Add(AuditEntity.Id().Eq(givenEntityId)))
 	 .SingleResult();
-]]>
-		</programlisting>
+]]></programlisting>
 
 		<para>
 			The <literal>Minimize()</literal> and <literal>Maximize()</literal> methods return a criteria,
