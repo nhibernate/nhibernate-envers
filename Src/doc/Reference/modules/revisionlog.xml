@@ -62,21 +62,18 @@
 		username of the user making the change is:
 	</para>
 
-	<programlisting>
-		[Entity]
-		[RevisionEntity(typeof(ExampleListener))]
-		public class ExampleRevEntity : DefaultRevisionEntity
-		{
-		public virtual string UserName {get;set;}
-		}
-	</programlisting>
+	<programlisting><![CDATA[[Entity]
+[RevisionEntity(typeof(ExampleListener))]
+public class ExampleRevEntity : DefaultRevisionEntity
+{
+	public virtual string UserName {get;set;}
+}]]></programlisting>
 
 	<para>
 		Or, if you don't want to extend any class:
 	</para>
 
-	<programlisting>
-[Entity]
+	<programlisting><![CDATA[[Entity]
 [RevisionEntity(typeof(ExampleListener))]
 public class ExampleRevEntity
 {
@@ -88,9 +85,8 @@ public class ExampleRevEntity
 
 	private string username;
 
-	// Getters, setters, equals, hashCode ...
-}
-	</programlisting>
+	// Getters, setters, Equals, GetHashCode ...
+}]]></programlisting>
 
 	<para>
 		Having an "empty" revision entity - that is, with no additional properties except the
@@ -162,10 +158,8 @@ public class AnnotatedTrackingRevisionEntity
 
 		<example>
 			<title>Custom implementation of tracking entity classes modified during revisions</title>
-			<programlisting>
-				<filename>CustomEntityTrackingRevisionListener.cs</filename>
-<![CDATA[
-public class CustomEntityTrackingRevisionListener 
+			<programlisting><filename>CustomEntityTrackingRevisionListener.cs</filename>
+<![CDATA[public class CustomEntityTrackingRevisionListener 
 	: IEntityTrackingRevisionListener 
 {
 	public void EntityChanged(Type entityClass, string entityName, object entityId, 
@@ -178,12 +172,9 @@ public class CustomEntityTrackingRevisionListener
 	public void newRevision(object revisionEntity) 
 	{
 	}
-}]]>
-			</programlisting>
-			<programlisting>
-				<filename>CustomTrackingRevisionEntity.cs</filename>
-<![CDATA[
-[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))
+}]]></programlisting>
+			<programlisting><filename>CustomTrackingRevisionEntity.cs</filename>
+<![CDATA[[RevisionEntity(typeof(CustomEntityTrackingRevisionListener))
 public class CustomTrackingRevisionEntity 
 {
 	private int customId;
@@ -205,12 +196,9 @@ public class CustomTrackingRevisionEntity
 	}
 		 
 	...
-}]]>
-			</programlisting>
-			<programlisting>
-				<filename>ModifiedEntityNameEntity.cs</filename>
-<![CDATA[
-public class ModifiedEntityTypeEntity 
+}]]></programlisting>
+			<programlisting><filename>ModifiedEntityNameEntity.cs</filename>
+<![CDATA[public class ModifiedEntityTypeEntity 
 {
 	private Integer id;
 	
@@ -219,8 +207,7 @@ public class ModifiedEntityTypeEntity
 	private string entityName;
 		 
 	...
-}]]>
-			</programlisting>
+}]]></programlisting>
 			<programlisting><![CDATA[var revEntity = AuditReader()
 	.FindRevision(typeof(CustomTrackingRevisionEntity), revisionNumber);
 var modifiedEntityTypes = revEntity.ModifiedEntityNames]]></programlisting>

@@ -10,23 +10,19 @@
 	<para>
 		Simple attribute configuration
 	</para>
-	<programlisting>
-		nhConf.IntegrateWithEnvers(new AttributeConfiguration());
-		[...]
+	<programlisting><![CDATA[nhConf.IntegrateWithEnvers(new AttributeConfiguration());
+[...]
 
-		[Audited]
-		public class Person
-		[...]
-	</programlisting>
+[Audited]
+public class Person
+[...]]]></programlisting>
 
 	<para>
 		Simple fluent configuration
 	</para>
-	<programlisting>
-		var enversConf = new FluentConfiguration();
-		enversConf.Audit&lt;Person&gt;();
-		nhConf.IntegrateWithEnvers(enversConf);
-	</programlisting>
+	<programlisting><![CDATA[var enversConf = new FluentConfiguration();
+enversConf.Audit<Person>();
+nhConf.IntegrateWithEnvers(enversConf);]]></programlisting>
 
 	<para>
 		And that's it! You create, modify and delete the entites as always. If you look
@@ -46,10 +42,8 @@
 		can obtain when having an open <literal>ISession</literal>.
 	</para>
 
-	<programlisting>
-		var reader = AuditReaderFactory.Get(session);
-		var oldPerson = reader.Find(typeof(Person), personId, revision);
-	</programlisting>
+	<programlisting><![CDATA[var reader = AuditReaderFactory.Get(session);
+var oldPerson = reader.Find(typeof(Person), personId, revision);]]></programlisting>
 
 	<para>
 		The <literal>T Find&lt;T&gt;(object primaryKey, long revision)</literal>
