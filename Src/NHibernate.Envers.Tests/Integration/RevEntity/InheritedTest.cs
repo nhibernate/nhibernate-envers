@@ -92,7 +92,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[]{1,2}, AuditReader().GetRevisions<StrTestEntity>( id));
+			CollectionAssert.AreEquivalent(new[]{1,2}, AuditReader().GetRevisions(typeof(StrTestEntity), id));
 		}
 
 		[Test]

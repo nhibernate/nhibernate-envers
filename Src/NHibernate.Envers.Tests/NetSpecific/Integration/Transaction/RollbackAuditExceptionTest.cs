@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 					.Should().Be.EqualTo(0);
 				Session.CreateQuery("select count(s) from IntTestEntity s ").UniqueResult<long>()
 					.Should().Be.EqualTo(0);			
-				Session.Auditer().GetRevisions<IntTestEntity>(id)
+				Session.Auditer().GetRevisions(typeof(IntTestEntity),id)
 					.Should().Be.Empty();
 			}
 		}

@@ -46,9 +46,9 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<DoubleSetRefCollEntity>( coll1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<StrTestEntity>( str1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<StrTestEntity>( str2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(DoubleSetRefCollEntity), coll1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(StrTestEntity), str2_id));
 		}
 
 

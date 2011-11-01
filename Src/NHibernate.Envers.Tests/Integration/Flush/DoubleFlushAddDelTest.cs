@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.IsEmpty(AuditReader().GetRevisions<StrTestEntity>( id1));
+			CollectionAssert.IsEmpty(AuditReader().GetRevisions(typeof(StrTestEntity), id1));
 		}
 
 		[Test]

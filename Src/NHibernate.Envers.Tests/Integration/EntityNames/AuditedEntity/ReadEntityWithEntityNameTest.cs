@@ -44,9 +44,9 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 		[Test]
 		public void ShouldRetrieveRevisionsWithEntityName()
 		{
-			var pers1Revs = AuditReader().GetRevisions<Person>("Personaje", id_pers1);
-			var pers2Revs = AuditReader().GetRevisions<Person>("Personaje", id_pers2);
-			var pers3Revs = AuditReader().GetRevisions<Person>("Personaje", id_pers3);
+			var pers1Revs = AuditReader().GetRevisions("Personaje", id_pers1);
+			var pers2Revs = AuditReader().GetRevisions("Personaje", id_pers2);
+			var pers3Revs = AuditReader().GetRevisions("Personaje", id_pers3);
 
 			pers1Revs.Should().Have.Count.EqualTo(3);
 			pers2Revs.Should().Have.Count.EqualTo(2);

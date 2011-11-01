@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<OptimisticLockEntity>( id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(OptimisticLockEntity), id));
 		}
 
 		[Test]

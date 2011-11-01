@@ -58,8 +58,8 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions<EmbIdTestEntity>( id1));
-			CollectionAssert.AreEquivalent(new[] { 2, 3, 4, 5 }, AuditReader().GetRevisions<EmbIdTestEntity>( id2));
+			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(EmbIdTestEntity), id1));
+			CollectionAssert.AreEquivalent(new[] { 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(EmbIdTestEntity), id2));
 		}
 
 

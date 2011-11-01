@@ -80,8 +80,8 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFo
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<ChildEntity>(childVer1.Id));
-			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader().GetRevisions<ParentEntity>(parentVer1.Id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(ChildEntity),childVer1.Id));
+			CollectionAssert.AreEquivalent(new[] { 2, 4 }, AuditReader().GetRevisions(typeof(ParentEntity),parentVer1.Id));
 		}
 
 		[Test]

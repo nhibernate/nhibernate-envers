@@ -41,9 +41,9 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
         [Test]
         public void VerifyRevisionCount()
         {
-            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<NotInsertableEntityType>( type_id1));
-            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<NotInsertableEntityType>( type_id2));
-            CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions<ManyToOneNotInsertableEntity>( mto_id1));
+            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(NotInsertableEntityType), type_id1));
+            CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(NotInsertableEntityType), type_id2));
+            CollectionAssert.AreEquivalent(new[] { 2, 3 }, AuditReader().GetRevisions(typeof(ManyToOneNotInsertableEntity), mto_id1));
         }
 
         [Test]

@@ -59,13 +59,13 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions<SetRefEdEntity>( ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions<SetRefEdEntity>( ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4, 5 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(SetRefEdEntity), ed2_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<SetRefIngEntity>( ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions<SetRefIngEntity>( ing2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions<SetRefIngEntity>( ing3_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions<SetRefIngEntity>( ing4_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing3_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(SetRefIngEntity), ing4_id));
 		}
 
 		[Test]

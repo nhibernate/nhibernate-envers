@@ -34,11 +34,11 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.NotOwnedRelatio
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<Contact>( pc_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<PersonalContact>( pc_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(Contact), pc_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(PersonalContact), pc_id));
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Address>( a1_id));
-			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions<Address>( a2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Address), a1_id));
+			CollectionAssert.AreEquivalent(new[] { 2 }, AuditReader().GetRevisions(typeof(Address), a2_id));
 		}
 
 		[Test]

@@ -41,7 +41,7 @@ namespace NHibernate.Envers.Tests.Integration.CustomType
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<CompositeCustomTypeEntity>( ccte_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(CompositeCustomTypeEntity), ccte_id));
 		}
 
 		[Test]
