@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NHibernate.Envers.Tools.Graph
 {
@@ -21,7 +22,7 @@ namespace NHibernate.Envers.Tools.Graph
 
 			v.StartTime = time++;
 
-			foreach (Vertex<R> n in v.Neighbours)
+			foreach (var n in v.Neighbours)
 			{
 				process(n);
 			}
@@ -37,12 +38,9 @@ namespace NHibernate.Envers.Tools.Graph
 
 			time = 1;
 
-			foreach (Vertex<R> v in vertices)
+			foreach (var v in vertices.Where(v => v.EndTime == 0))
 			{
-				if (v.EndTime == 0)
-				{
-					process(v);
-				}
+				process(v);
 			}
 
 			sorted.Reverse();

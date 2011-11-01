@@ -206,12 +206,14 @@ namespace NHibernate.Envers.Query.Impl
 		protected long GetRevisionNumberFromDynamicEntity(IDictionary versionsEntity)
 		{
 			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
-			string originalId = auditEntitiesConfiguration.OriginalIdPropName;
-			string revisionPropertyName = auditEntitiesConfiguration.RevisionFieldName;
-			object revisionInfoObject = ((IDictionary)versionsEntity[originalId])[revisionPropertyName];
-			var proxy = revisionInfoObject as INHibernateProxy; // TODO: usage of proxyfactory IsProxy
+			var originalId = auditEntitiesConfiguration.OriginalIdPropName;
+			var revisionPropertyName = auditEntitiesConfiguration.RevisionFieldName;
+			var revisionInfoObject = ((IDictionary)versionsEntity[originalId])[revisionPropertyName];
+			var proxy = revisionInfoObject as INHibernateProxy; 
 
-			return proxy != null ? Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier) : AuditConfiguration.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject);
+			return proxy == null ? 
+				AuditConfiguration.RevisionInfoNumberReader.RevisionNumber(revisionInfoObject) : 
+				Convert.ToInt64(proxy.HibernateLazyInitializer.Identifier);
 		}
 
 		protected IList<TResult> BuildAndExecuteQuery<TResult>()
@@ -221,7 +223,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			queryBuilder.Build(querySb, queryParamValues);
 
-			IQuery query = versionsReader.Session.CreateQuery(querySb.ToString());
+			var query = versionsReader.Session.CreateQuery(querySb.ToString());
 			foreach (var paramValue in queryParamValues)
 			{
 				query.SetParameter(paramValue.Key, paramValue.Value);
@@ -233,17 +235,17 @@ namespace NHibernate.Envers.Query.Impl
 
 		private void SetQueryProperties(IQuery query)
 		{
-			if (maxResults != null)
+			if (maxResults.HasValue)
 			{
-				query.SetMaxResults((int) maxResults);
+				query.SetMaxResults(maxResults.Value);
 			}
-			if (firstResult != null)
+			if (firstResult.HasValue)
 			{
-				query.SetFirstResult((int) firstResult);
+				query.SetFirstResult(firstResult.Value);
 			}
-			if (cacheable != null)
+			if (cacheable.HasValue)
 			{
-				query.SetCacheable((bool) cacheable);
+				query.SetCacheable(cacheable.Value);
 			}
 			if (cacheRegion != null)
 			{
@@ -255,9 +257,9 @@ namespace NHibernate.Envers.Query.Impl
 			}
 			query.SetFlushMode(flushMode);
 			query.SetCacheMode(cacheMode);
-			if (timeout != null)
+			if (timeout.HasValue)
 			{
-				query.SetTimeout((int) timeout);
+				query.SetTimeout(timeout.Value);
 			}
 			if (lockMode != null)
 			{

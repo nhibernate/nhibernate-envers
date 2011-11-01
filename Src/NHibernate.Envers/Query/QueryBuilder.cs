@@ -161,35 +161,17 @@ namespace NHibernate.Envers.Query
 
 		private IEnumerable<string> GetAliasList()
 		{
-			var aliasList = new List<string>();
-			foreach (var from in froms)
-			{
-				aliasList.Add(from.Second);
-			}
-
-			return aliasList;
+			return froms.Select(theFrom => theFrom.Second).ToList();
 		}
 
 		private IEnumerable<string> GetFromList()
 		{
-			var fromList = new List<string>();
-			foreach (var from in froms)
-			{
-				fromList.Add(from.First + " " + from.Second);
-			}
-
-			return fromList;
+			return froms.Select(theFrom => theFrom.First + " " + theFrom.Second).ToList();
 		}
 
 		private IEnumerable<string> GetOrderList()
 		{
-			var orderList = new List<string>();
-			foreach (var order in orders)
-			{
-				orderList.Add(alias + "." + order.First + " " + (order.Second ? "asc" : "desc"));
-			}
-
-			return orderList;
+			return orders.Select(theOrder => alias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
 		}
 
 		public IQuery ToQuery(ISession session)

@@ -77,7 +77,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			queryString = sb.ToString();
 		}
 
-
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			var query = versionsReader.Session.CreateQuery(queryString);

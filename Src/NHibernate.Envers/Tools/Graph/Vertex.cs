@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tools.Graph
 		}
 
 		public R Representation { get; private set; }
-		public IList<Vertex<R>> Neighbours { get; private set; }
+		public ICollection<Vertex<R>> Neighbours { get; private set; }
 
 		public int StartTime { get; set; }
 		public int EndTime { get; set; }
