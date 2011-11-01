@@ -16,12 +16,10 @@ namespace NHibernate.Envers.Configuration.Fluent
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(FluentConfiguration));
 		private readonly IList<IAttributeProvider> attributeFactories;
-		private readonly ICollection<System.Type> auditedTypes;
 
 		public FluentConfiguration()
 		{
 			attributeFactories = new List<IAttributeProvider>();
-			auditedTypes = new List<System.Type>();
 		}
 
 		/// <summary>
@@ -33,7 +31,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var ret = new FluentAudit<T>();
 			attributeFactories.Add(ret);
-			auditedTypes.Add(typeof(T));
 			return ret;
 		}
 
@@ -49,7 +46,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			foreach (var type in types)
 			{
 				attributeFactories.Add(new LooselyTypedFluentAudit(type));
-				auditedTypes.Add(type);
 			}
 		}
 
@@ -85,6 +81,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
 			var ret = new Dictionary<System.Type, IEntityMeta>();
+			var auditedTypes = new HashSet<System.Type>();
 			foreach (var attributeFactory in attributeFactories)
 			{
 				foreach (var memberInfoAndAttribute in attributeFactory.Attributes())
@@ -95,6 +92,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 						addClassMetaAndLog(type, memberInfoAndAttribute.Attribute, entMeta);
 					else
 						addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
+					if (memberInfoAndAttribute.Attribute.GetType().Equals(typeof(AuditedAttribute)))
+						auditedTypes.Add(type);
 				}
 			}
 			addBaseTypesForAuditAttribute(ret, auditedTypes);
