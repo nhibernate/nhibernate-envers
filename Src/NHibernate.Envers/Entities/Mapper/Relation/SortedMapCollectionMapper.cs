@@ -8,12 +8,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly IComparer<TKey> _comparer;
 
 		public SortedMapCollectionMapper(CommonCollectionMapperData commonCollectionMapperData, 
-													System.Type collectionType, 
 													System.Type proxyType, 
 													MiddleComponentData elementComponentData, 
 													MiddleComponentData indexComponentData,
 													IComparer<TKey> comparer) 
-			: base(commonCollectionMapperData, collectionType, proxyType, elementComponentData, indexComponentData)
+			: base(commonCollectionMapperData, proxyType, elementComponentData, indexComponentData)
 		{
 			_comparer = comparer;
 		}
@@ -21,7 +20,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected override object GetInitializor(Configuration.AuditConfiguration verCfg, Reader.IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new SortedMapCollectionInitializor<TKey, TValue>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
-																	primaryKey, revision, CollectionType, ElementComponentData,
+																	primaryKey, revision, ElementComponentData,
 																	IndexComponentData, _comparer);
 		}
 	}

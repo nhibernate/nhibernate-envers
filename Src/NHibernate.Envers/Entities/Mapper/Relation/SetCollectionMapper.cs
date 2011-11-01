@@ -10,10 +10,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	public class SetCollectionMapper<T> : AbstractCollectionMapper
 	{
 		public SetCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
-											System.Type collectionType,
 											System.Type proxyType,
 											MiddleComponentData elementComponentData)
-			: base(commonCollectionMapperData, collectionType, proxyType)
+			: base(commonCollectionMapperData, proxyType)
 		{
 			ElementComponentData = elementComponentData;
 		}
@@ -30,7 +29,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										CommonCollectionMapperData.QueryGenerator,
 										primaryKey,
 										revision,
-										CollectionType,
 										ElementComponentData);
 		}
 

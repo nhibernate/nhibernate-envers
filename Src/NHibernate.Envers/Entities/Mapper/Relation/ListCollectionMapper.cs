@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public ListCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 									MiddleComponentData elementComponentData, 
 									MiddleComponentData indexComponentData) 
-						: base(commonCollectionMapperData, typeof(List<>), typeof(ListProxy<T>))
+						: base(commonCollectionMapperData, typeof(ListProxy<T>))
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;

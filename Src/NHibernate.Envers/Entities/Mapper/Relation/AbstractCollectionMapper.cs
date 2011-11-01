@@ -18,16 +18,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly System.Type _proxyType;
 
 		protected AbstractCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
-											System.Type collectionType, 
 											System.Type proxyType) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
-			CollectionType = collectionType;
 			_proxyType = proxyType;
 		}
 
 		protected CommonCollectionMapperData CommonCollectionMapperData { get; private set; }
-		protected System.Type CollectionType { get; private set; }
 
 		protected abstract IEnumerable GetNewCollectionContent(IPersistentCollection newCollection);
 		protected abstract IEnumerable GetOldCollectionContent(object oldCollection);

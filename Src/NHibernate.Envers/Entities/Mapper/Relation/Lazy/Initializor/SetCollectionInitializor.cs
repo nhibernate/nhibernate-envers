@@ -15,19 +15,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 											IAuditReaderImplementor versionsReader,
 											IRelationQueryGenerator queryGenerator,
 											object primaryKey, long revision,
-											System.Type collectionType,
 											MiddleComponentData elementComponentData) 
 								:base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
 		{
-			CollectionType = collectionType;
 			this.elementComponentData = elementComponentData;
 		}
 
-		protected System.Type CollectionType { get; private set; }
-
 		protected override ISet<T> InitializeCollection(int size) 
 		{
-			return (ISet<T>) Activator.CreateInstance(CollectionType);
+			return new HashedSet<T>();
 		}
 
 		protected override void AddToCollection(ISet<T> collection, object collectionRow) 
