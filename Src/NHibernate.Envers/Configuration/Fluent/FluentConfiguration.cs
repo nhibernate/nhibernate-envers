@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 
@@ -87,15 +88,13 @@ namespace NHibernate.Envers.Configuration.Fluent
 			foreach (var attributeFactory in attributeFactories)
 			{
 				var type = attributeFactory.Type;
-				foreach (var classAttribute in attributeFactory.CreateClassAttributes())
+				foreach (var memberInfoAndAttribute in attributeFactory.Attributes())
 				{
 					var entMeta = createOrGetEntityMeta(ret, type);
-					addClassMetaAndLog(type, classAttribute, entMeta);
-				}
-				foreach (var memberInfoAndAttribute in attributeFactory.CreateMemberAttributes())
-				{
-					var entMeta = createOrGetEntityMeta(ret, type);
-					addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
+					if(memberInfoAndAttribute.MemberInfo.MemberType == MemberTypes.TypeInfo)
+						addClassMetaAndLog(type, memberInfoAndAttribute.Attribute, entMeta);
+					else
+						addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
 				}
 			}
 			addBaseTypesForAuditAttribute(ret, auditedTypes);

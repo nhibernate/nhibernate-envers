@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Fluent
@@ -14,15 +13,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 		System.Type Type { get; }
 
 		/// <summary>
-		/// Creates corresponding class attributes
-		/// </summary>
-		/// <returns>The attributes</returns>
-		IEnumerable<Attribute> CreateClassAttributes();
-
-		/// <summary>
 		/// Creates corresponding member attributes
 		/// </summary>
 		/// <returns>The attributes</returns>
-		IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes();
+		IEnumerable<MemberInfoAndAttribute> Attributes();
 	}
 }

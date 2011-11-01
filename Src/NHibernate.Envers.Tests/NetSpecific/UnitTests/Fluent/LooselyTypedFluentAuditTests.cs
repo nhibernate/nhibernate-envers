@@ -38,14 +38,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		public void WhenGetClassAttributeThenSingleAuditedAttribute()
 		{
 			var attributeProvider = new LooselyTypedFluentAudit(typeof(MyClass));
-			attributeProvider.CreateClassAttributes().Single().Should().Be.InstanceOf<AuditedAttribute>();
-		}
-
-		[Test]
-		public void WhenGetMemberAttributesThenEmpty()
-		{
-			var attributeProvider = new LooselyTypedFluentAudit(typeof(MyClass));
-			attributeProvider.CreateMemberAttributes().Should().Be.Empty();
+			attributeProvider.Attributes().Single().Attribute.Should().Be.InstanceOf<AuditedAttribute>();
 		}
 	}
 }
