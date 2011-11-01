@@ -103,10 +103,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private void throwIfUsingNonMappedRevisionEntity(Cfg.Configuration nhConfiguration)
 		{
-			//mh conf is never null in runtime. Allows null for easier unit testing
-			if (nhConfiguration == null)
-				return;
-
 			foreach (var revAttr in attributeFactories.OfType<FluentRevision>()
 										.Where(revAttr => nhConfiguration.GetClassMapping(revAttr.RevisionEntityType) == null))
 			{
