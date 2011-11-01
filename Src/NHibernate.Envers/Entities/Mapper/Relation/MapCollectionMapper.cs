@@ -10,11 +10,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	public class MapCollectionMapper<TKey, TValue> : AbstractCollectionMapper
 	{
 		public MapCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
-											System.Type collectionType,
 											System.Type proxyType,
 											MiddleComponentData elementComponentData, 
 											MiddleComponentData indexComponentData) 
-					: base(commonCollectionMapperData, collectionType, proxyType)
+					: base(commonCollectionMapperData, proxyType)
 		{
 			ElementComponentData = elementComponentData;
 			IndexComponentData = indexComponentData;
@@ -43,7 +42,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected override object GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new MapCollectionInitializor<TKey, TValue>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
-			                                          primaryKey, revision, CollectionType, ElementComponentData,
+			                                          primaryKey, revision, ElementComponentData,
 			                                          IndexComponentData);
 		}
 	}

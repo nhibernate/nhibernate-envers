@@ -17,21 +17,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 										IRelationQueryGenerator queryGenerator, 
 										object primaryKey, 
 										long revision,
-										System.Type collectionType,
 										MiddleComponentData elementComponentData,
 										MiddleComponentData indexComponentData) 
 						: base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
 		{
-			CollectionType = collectionType;
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;
 		}
 
-		protected System.Type CollectionType { get; private set; }
-
 		protected override IDictionary<TKey, TValue> InitializeCollection(int size)
 		{
-			return (IDictionary<TKey, TValue>) Activator.CreateInstance(CollectionType);
+			return new Dictionary<TKey, TValue>(size);
 		}
 
 		protected override void AddToCollection(IDictionary<TKey, TValue> collection, object collectionRow)

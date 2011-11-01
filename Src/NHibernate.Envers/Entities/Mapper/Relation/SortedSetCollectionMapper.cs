@@ -10,11 +10,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly IComparer<T> _comparer;
 
 		public SortedSetCollectionMapper(CommonCollectionMapperData commonCollectionMapperData, 
-													System.Type collectionType, 
 													System.Type proxyType, 
 													MiddleComponentData elementComponentData,
 													IComparer<T> comparer) 
-			: base(commonCollectionMapperData, collectionType, proxyType, elementComponentData)
+			: base(commonCollectionMapperData, proxyType, elementComponentData)
 		{
 			_comparer = comparer;
 		}
@@ -25,8 +24,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 																	versionsReader, 
 																	CommonCollectionMapperData.QueryGenerator,
 																	primaryKey, 
-																	revision, 
-																	CollectionType, 
+																	revision,
 																	ElementComponentData, 
 																	_comparer);
 		}

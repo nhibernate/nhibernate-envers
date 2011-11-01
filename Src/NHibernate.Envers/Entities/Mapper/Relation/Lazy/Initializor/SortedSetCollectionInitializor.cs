@@ -16,16 +16,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 														IRelationQueryGenerator queryGenerator, 
 														object primaryKey, 
 														long revision, 
-														System.Type collectionType, 
 														MiddleComponentData elementComponentData,
-														IComparer<T> comparer) : base(verCfg, versionsReader, queryGenerator, primaryKey, revision, collectionType, elementComponentData)
+														IComparer<T> comparer) : 
+				base(verCfg, versionsReader, queryGenerator, primaryKey, revision, elementComponentData)
 		{
 			_comparer = comparer;
 		}
 
 		protected override ISet<T> InitializeCollection(int size)
 		{
-			return (ISet<T>)Activator.CreateInstance(CollectionType, _comparer);
+			return new SortedSet<T>(_comparer);
 		}
 	}
 }

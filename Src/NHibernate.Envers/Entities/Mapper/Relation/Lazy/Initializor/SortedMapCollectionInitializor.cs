@@ -15,18 +15,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 													IRelationQueryGenerator queryGenerator, 
 													object primaryKey, 
 													long revision, 
-													System.Type collectionType, 
 													MiddleComponentData elementComponentData, 
 													MiddleComponentData indexComponentData,
 													IComparer<TKey> comparer) 
-			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, collectionType, elementComponentData, indexComponentData)
+			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, elementComponentData, indexComponentData)
 		{
 			_comparer = comparer;
 		}
 
 		protected override IDictionary<TKey, TValue> InitializeCollection(int size)
 		{
-			return (IDictionary<TKey, TValue>)Activator.CreateInstance(CollectionType, _comparer);
+			return new SortedDictionary<TKey, TValue>(_comparer);
 		}
 	}
 }
