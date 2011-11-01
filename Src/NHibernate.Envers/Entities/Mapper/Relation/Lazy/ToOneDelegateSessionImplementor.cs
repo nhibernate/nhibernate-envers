@@ -6,19 +6,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 	public class ToOneDelegateSessionImplementor : AbstractDelegateSessionImplementor 
 	{
 		private readonly IAuditReaderImplementor versionsReader;
-		private readonly System.Type entityClass; 
 		private readonly object entityId;
 		private readonly long revision;
 		private readonly EntitiesConfigurations entCfg;
 
 		public ToOneDelegateSessionImplementor(IAuditReaderImplementor versionsReader,
-											   System.Type entityClass,
 											   object entityId, long revision, 
 											   AuditConfiguration verCfg) 
 			: base(versionsReader.SessionImplementor)
 		{
 			this.versionsReader = versionsReader;
-			this.entityClass = entityClass;
 			this.entityId = entityId;
 			this.revision = revision;
 			entCfg = verCfg.EntCfg;

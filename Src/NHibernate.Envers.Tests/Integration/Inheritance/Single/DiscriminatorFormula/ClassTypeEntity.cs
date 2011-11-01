@@ -2,8 +2,8 @@
 {
 	public class ClassTypeEntity
 	{
-		public static string ParentType = "parent";
-		public static string ChildType = "child";
+		public const string ParentType = "parent";
+		public const string ChildType = "child";
 		public virtual long Id { get; set; }
 		public virtual string Type { get; set; }
 
