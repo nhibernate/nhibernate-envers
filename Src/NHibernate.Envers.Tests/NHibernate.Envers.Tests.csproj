@@ -445,6 +445,7 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\FakeNHibernateConfiguration.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\InheritanceTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\LooselyTypedFluentAuditTests.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\FieldEntity.cs" />

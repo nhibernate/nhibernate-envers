@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.SetRevisionEntity<RevisionEntity>(e => e.Number, e => e.Timestamp);
-			metas = cfg.CreateMetaData(null);
+			metas = cfg.CreateMetaData(FakeNHibernateConfiguration.For<RevisionEntity>());
 		}
 
 		[Test]

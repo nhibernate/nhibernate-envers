@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Cfg;
+using NHibernate.Dialect;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NHibernate.Envers.Tests.Tools;
+using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -20,7 +24,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.SetRevisionEntity<InheritedRevisionEntity>(e => e.Id, e => e.RevisionDate);
-			metas = cfg.CreateMetaData(null);
+			
+			metas = cfg.CreateMetaData(FakeNHibernateConfiguration.For<InheritedRevisionEntity>());
 		}
 
 		[Test]
