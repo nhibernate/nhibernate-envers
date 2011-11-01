@@ -29,6 +29,13 @@ namespace NHibernate.Envers.Query
 			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
 		}
 
+		/// <summary>
+		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+		/// </summary>
+		/// <param name="entityName">Name of entity</param>
+		/// <param name="revision">Revision number at which to execute the query.</param>
+		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
 		public IAuditQuery ForEntitiesAtRevision(string entityName, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
@@ -112,6 +119,31 @@ namespace NHibernate.Envers.Query
 			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly, selectDeletedEntities);
 		}
 
+		/// <summary>
+		/// Creates a query, which selects the revisions, at which the given entity was modified.
+		/// Unless an explicit projection is set, the result will be a list of three-element arrays, containing:
+		/// <ol>
+		/// <li>the entity instance</li>
+		/// <li>revision entity, corresponding to the revision at which the entity was modified. If no custom
+		/// revision entity is used, this will be an instance of <see cref="DefaultRevisionEntity"/></li>
+		/// <li>type of the revision (an enum instance of class <see cref="RevisionType"/></li>.
+		/// </ol>
+		/// Additional conditions that the results must satisfy may be specified. 
+		/// </summary>
+		/// <param name="entityName">Name of the entity</param>
+		/// <param name="selectEntitiesOnly">
+		/// If true, instead of a list of three-element arrays, a list of entites will be returned as a result of executing this query.
+		/// </param>
+		/// <param name="selectDeletedEntities">
+		/// If true, also revisions where entities were deleted will be returned. 
+		/// The additional entities will have revision type "delete", and contain no data (all fields null), except for the id field.
+		/// </param>
+		/// <returns>
+		/// A query for revisions at which instances of the given entity were modified, to which
+		/// conditions can be added (for example - a specific id of an entity of class <code>c</code>), and which
+		/// can then be executed. The results of the query will be sorted in ascending order by the revision number,
+		/// unless an order or projection is added.
+		/// </returns>
 		public IAuditQuery ForRevisionsOfEntity(string entityName, bool selectEntitiesOnly, bool selectDeletedEntities)
 		{
 			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, entityName, selectEntitiesOnly, selectDeletedEntities);

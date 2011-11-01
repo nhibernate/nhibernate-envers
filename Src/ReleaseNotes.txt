@@ -4,6 +4,9 @@
 * Removed obsolute methods; AuditQueryCreator.ForHistoryOf<TEntity> and ForHistoryOf<TEntity>(bool)
 * Changed IAuditReader.GetRevisions to be non generic. Instead having Type as inparameter.
 
+*** Possible breaking change ***
+* AbstractCollectionMapper.Ctor changed
+
 
 === 1.0 GA (v 1.0.0.0), 2011-10-14, NH 3.2 GA ===
 

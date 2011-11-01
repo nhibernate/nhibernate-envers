@@ -30,7 +30,6 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-
 		public IEnumerable<object> FindEntities(long revision, RevisionType revisionType)
 		{
 			var entityTypes = FindEntityTypes(revision);
@@ -93,6 +92,5 @@ namespace NHibernate.Envers.Reader
 			}
 			return new HashedSet<Pair<string, System.Type>>();
 		}
-
 	}
 }
