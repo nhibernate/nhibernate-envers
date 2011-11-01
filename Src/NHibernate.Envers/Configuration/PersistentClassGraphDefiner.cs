@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Configuration
 			return cfg.GetClassMapping(entityName);
 		}
 
-		public IList<PersistentClass> GetNeighbours(PersistentClass pc) 
+		public IEnumerable<PersistentClass> GetNeighbours(PersistentClass pc) 
 		{
 			var neighbours = new List<PersistentClass>();
 			addNeighbours(neighbours, pc.SubclassIterator);
