@@ -68,7 +68,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return this;
 		}
 
-
 		private static MemberInfo getMemberOrThrow(System.Type entityType, string propertyName)
 		{
 			var member = entityType.GetField(propertyName, bindingFlags) ?? entityType.GetProperty(propertyName, bindingFlags) as MemberInfo;

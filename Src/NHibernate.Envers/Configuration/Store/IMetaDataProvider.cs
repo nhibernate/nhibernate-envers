@@ -8,9 +8,9 @@ namespace NHibernate.Envers.Configuration.Store
 	public interface IMetaDataProvider
 	{
 		/// <summary>
-		/// Creates the meta data
+		/// Creates the meta data. Normally not used by user.
 		/// </summary>
-		/// <param name="nhConfiguration">The NH Configuration. Note - remove this?</param>
+		/// <param name="nhConfiguration">The NH Configuration.</param>
 		/// <returns>
 		/// A dictionary of <see cref="IEntityMeta"/>, keyed by entity type
 		/// </returns>

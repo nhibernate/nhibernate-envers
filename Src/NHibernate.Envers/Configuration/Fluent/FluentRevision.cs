@@ -31,7 +31,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 								new MemberInfoAndAttribute(RevisionEntityType, _number, new RevisionNumberAttribute()),
 								new MemberInfoAndAttribute(RevisionEntityType, _timestamp, new RevisionTimestampAttribute())
 							};
-
 		}
 	}
 }
