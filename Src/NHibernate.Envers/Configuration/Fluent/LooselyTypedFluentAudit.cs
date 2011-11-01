@@ -14,6 +14,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// <seealso cref="FluentAudit{T}"/>
 	public class LooselyTypedFluentAudit : IAttributeProvider
 	{
+		private readonly System.Type _entityType;
+
 		public LooselyTypedFluentAudit(System.Type entityType)
 		{
 			if (entityType == null)
@@ -24,14 +26,12 @@ namespace NHibernate.Envers.Configuration.Fluent
 			{
 				throw new ArgumentOutOfRangeException("entityType", "Expected class type found:" + entityType);
 			}
-			Type = entityType;
+			_entityType = entityType;
 		}
-
-		public System.Type Type { get; private set; }
 
 		public IEnumerable<MemberInfoAndAttribute> Attributes()
 		{
-			yield return new MemberInfoAndAttribute(Type, new AuditedAttribute());
+			yield return new MemberInfoAndAttribute(_entityType, new AuditedAttribute());
 		}
 	}
 }
