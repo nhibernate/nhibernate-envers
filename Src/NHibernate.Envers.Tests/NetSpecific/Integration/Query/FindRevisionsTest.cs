@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,9 +7,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
     [TestFixture]
     public class FindRevisionsTest : TestBase
     {
-        private int id = 13;
+    	private const int id = 13;
 
-        protected override void Initialize()
+    	protected override void Initialize()
         {
             var person = new Person { Id = id };
 

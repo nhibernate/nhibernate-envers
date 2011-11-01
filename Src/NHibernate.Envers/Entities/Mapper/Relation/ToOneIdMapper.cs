@@ -58,11 +58,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					var entCfg = verCfg.EntCfg[_referencedEntityName] ??
-					             verCfg.EntCfg.GetNotVersionEntityConfiguration(_referencedEntityName);
-					var entityClass = Toolz.ResolveDotnetType(entCfg.EntityClassName);
-					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName).CreateProxy(
-						entityId, new ToOneDelegateSessionImplementor(versionsReader, entityClass, entityId, revision, verCfg));
+					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName)
+						.CreateProxy(entityId, new ToOneDelegateSessionImplementor(versionsReader, entityId, revision, verCfg));
 				}
 			}
 			var setter = ReflectionTools.GetSetter(obj.GetType(), _propertyData);

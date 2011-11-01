@@ -1,6 +1,4 @@
-﻿using NHibernate.Envers.Configuration.Attributes;
-
-namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyNotAudited
+﻿namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyNotAudited
 {
 	public class Person
 	{

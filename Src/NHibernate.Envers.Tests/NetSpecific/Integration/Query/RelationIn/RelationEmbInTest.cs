@@ -26,8 +26,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 		{
 			embEnt = new EmbIdTestEntity{Id = new EmbId{X = 3,Y = 4}};
 			ent = new EntityReferingEmbEntity { Data = "data", Reference = embEnt };
-			embEntNoRef1 = new EmbIdTestEntity { Id = new EmbId { X = 4, Y = 3 } }; ;
-			embEntNoRef2 = new EmbIdTestEntity { Id = new EmbId { X = 12, Y = 15 } }; ;
+			embEntNoRef1 = new EmbIdTestEntity { Id = new EmbId { X = 4, Y = 3 } };
+			embEntNoRef2 = new EmbIdTestEntity { Id = new EmbId { X = 12, Y = 15 } };
 
 			using (var tx = Session.BeginTransaction())
 			{
