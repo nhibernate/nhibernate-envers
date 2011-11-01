@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 		public void ShouldRetrieveAuditedEntityWithEntityName()
 		{
 			AuditReader().Find<Person>("Personaje", id_pers1, 1).Should().Not.Be.Null();
-			AuditReader().Find(typeof(Person),"Personaje", id_pers1, 2).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 2).Should().Not.Be.Null();
 			AuditReader().Find<Person>("Personaje", id_pers1, 3).Should().Not.Be.Null();
 		}
 
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 			ForceNewSession();
 
 			AuditReader().Find<Person>("Personaje", id_pers1, 1).Should().Not.Be.Null();
-			AuditReader().Find(typeof(Person), "Personaje", id_pers1, 2).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 2).Should().Not.Be.Null();
 			AuditReader().Find<Person>("Personaje", id_pers1, 3).Should().Not.Be.Null();
 		}
 	}

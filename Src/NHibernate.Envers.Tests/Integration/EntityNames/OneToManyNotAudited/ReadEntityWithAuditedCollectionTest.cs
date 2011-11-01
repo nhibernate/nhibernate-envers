@@ -10,8 +10,6 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyNotAudited
 	{
 		private long id_car1;
 		private long id_car2;
-		private long id_pers1;
-		private Person person1_1;
 		private Car car1_1;
 
 		protected override void Initialize()
@@ -27,7 +25,6 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyNotAudited
 				var car1 = new Car { Number = 5, Owners = owners };
 				id_car1 = (long)Session.Save(car1);
 				tx.Commit();
-				id_pers1 = pers1.Id;
 			}
 
 			//rev 2

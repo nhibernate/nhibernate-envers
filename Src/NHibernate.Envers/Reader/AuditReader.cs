@@ -37,15 +37,15 @@ namespace NHibernate.Envers.Reader
 
 		public T Find<T>(string entityName, object primaryKey, long revision)
 		{
-			return (T) Find(typeof(T), entityName, primaryKey, revision);
+			return (T) Find(entityName, primaryKey, revision);
 		}
 
 		public object Find(System.Type cls, object primaryKey, long revision)
 		{
-			return Find(cls, cls.FullName, primaryKey, revision);
+			return Find(cls.FullName, primaryKey, revision);
 		}
 
-		public object Find(System.Type cls, string entityName, object primaryKey, long revision)
+		public object Find(string entityName, object primaryKey, long revision)
 		{
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 			ArgumentsTools.CheckNotNull(revision, "Entity revision");
@@ -65,7 +65,7 @@ namespace NHibernate.Envers.Reader
 			try
 			{
 				// The result is put into the cache by the entity instantiator called from the query
-				result = CreateQuery().ForEntitiesAtRevision(cls, entityName, revision)
+				result = CreateQuery().ForEntitiesAtRevision(entityName, revision)
 					.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
 			}
 			catch (NoResultException)
@@ -85,18 +85,14 @@ namespace NHibernate.Envers.Reader
 
 		public IEnumerable<long> GetRevisions<TEntity>(string entityName, object primaryKey)
 		{
-			var cls = typeof(TEntity);
-			// todo: if a class is not versioned from the beginning, there's a missing ADD rev - what then?
-			ArgumentsTools.CheckNotNull(cls, "Entity class");
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
-
 
 			if (!verCfg.EntCfg.IsVersioned(entityName))
 			{
 				throw new NotAuditedException(entityName, entityName + " is not versioned!");
 			}
 
-			var resultList = CreateQuery().ForRevisionsOfEntity(cls, entityName, false, true)
+			var resultList = CreateQuery().ForRevisionsOfEntity(entityName, false, true)
 				.AddProjection(AuditEntity.RevisionNumber())
 				.Add(AuditEntity.Id().Eq(primaryKey))
 				.GetResultList();

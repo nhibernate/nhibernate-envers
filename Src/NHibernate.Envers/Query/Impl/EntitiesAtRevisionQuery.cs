@@ -22,10 +22,9 @@ namespace NHibernate.Envers.Query.Impl
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
 										IAuditReaderImplementor versionsReader,
-										System.Type cls,
 										string entityName,
 										long revision)
-			: base(verCfg, versionsReader, cls, entityName)
+			: base(verCfg, versionsReader, entityName)
 		{
 			_revision = revision;
 		}

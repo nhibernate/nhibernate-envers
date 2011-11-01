@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Reader
 			var result = new List<object>();
 			foreach (var type in entityTypes)
 			{
-				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Second, type.First, revision).GetResultList<object>());
+				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision).GetResultList<object>());
 			}
 			return result;
 		}
@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Reader
 			var result = new List<object>();
 			foreach (var type in entityTypes)
 			{
-				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Second, type.First, revision)
+				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision)
 												.Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>());
 			}
 			return result;
@@ -53,7 +53,7 @@ namespace NHibernate.Envers.Reader
 				var tempList = new List<object>();
 				foreach (var type in entityTypes)
 				{
-					var list = _auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Second, type.First, revision)
+					var list = _auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision)
 										.Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>();
 					tempList.AddRange(list);
 				}

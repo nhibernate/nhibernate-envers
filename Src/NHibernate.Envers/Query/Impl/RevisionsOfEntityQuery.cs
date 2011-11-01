@@ -26,11 +26,10 @@ namespace NHibernate.Envers.Query.Impl
 
 		public RevisionsOfEntityQuery(AuditConfiguration verCfg,
 							IAuditReaderImplementor versionsReader,
-							System.Type cls,
 							string entityName,
 							bool selectEntitiesOnly,
 							bool selectDeletedEntities)
-			: base(verCfg, versionsReader, cls, entityName)
+			: base(verCfg, versionsReader, entityName)
 		{
 
 
