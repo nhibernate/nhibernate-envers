@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tools.Reflection;
 
@@ -88,14 +89,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			var data = new Dictionary<string, object>();
 			MapToMapFromId(data, obj);
 
-			var ret = new List<QueryParameterData>();
-
-			foreach (var propertyData in data) 
-			{
-				ret.Add(new QueryParameterData(propertyData.Key, propertyData.Value));
-			}
-
-			return ret;
+			return data.Select(propertyData => new QueryParameterData(propertyData.Key, propertyData.Value)).ToList();
 		}
 	}
 }

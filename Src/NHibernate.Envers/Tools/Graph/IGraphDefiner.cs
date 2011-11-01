@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tools.Graph
     {
         R GetRepresentation(V v);
         V GetValue(R r);
-        IList<V> GetNeighbours(V v);
+        IEnumerable<V> GetNeighbours(V v);
         IEnumerable<V> GetValues();
     }
 }

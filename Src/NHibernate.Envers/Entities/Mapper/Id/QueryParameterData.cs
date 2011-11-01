@@ -31,10 +31,9 @@
 			var casted = obj as QueryParameterData;
 			if (casted == null) return false;
 
-			if (QueryParameterName != null ? !QueryParameterName.Equals(casted.QueryParameterName) : casted.QueryParameterName != null)
-				return false;
-
-			return true;
+			return QueryParameterName == null ? 
+					casted.QueryParameterName == null : 
+					QueryParameterName.Equals(casted.QueryParameterName);
 		}
 
 		public override int GetHashCode()

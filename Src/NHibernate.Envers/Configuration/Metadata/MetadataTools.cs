@@ -117,43 +117,43 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private static XmlElement CreateEntityCommon(XmlDocument document, string type, AuditTableData auditTableData, string discriminatorValue) 
 		{
-			var hibernate_mapping = document.CreateElement("hibernate-mapping");
-			hibernate_mapping.SetAttribute("assembly", "NHibernate.Envers");
-			hibernate_mapping.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
-			hibernate_mapping.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			hibernate_mapping.SetAttribute("xmlns", "urn:nhibernate-mapping-2.2"); 
-			hibernate_mapping.SetAttribute("auto-import", "false");
-			document.AppendChild(hibernate_mapping);
+			var hibernateMapping = document.CreateElement("hibernate-mapping");
+			hibernateMapping.SetAttribute("assembly", "NHibernate.Envers");
+			hibernateMapping.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+			hibernateMapping.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			hibernateMapping.SetAttribute("xmlns", "urn:nhibernate-mapping-2.2"); 
+			hibernateMapping.SetAttribute("auto-import", "false");
+			document.AppendChild(hibernateMapping);
 
-			var class_mapping = document.CreateElement(type);
-			hibernate_mapping.AppendChild(class_mapping);
+			var classMapping = document.CreateElement(type);
+			hibernateMapping.AppendChild(classMapping);
 
 			if (auditTableData.AuditEntityName != null) 
 			{
-				class_mapping.SetAttribute("entity-name", auditTableData.AuditEntityName);
+				classMapping.SetAttribute("entity-name", auditTableData.AuditEntityName);
 			}
 
 			if (discriminatorValue != null) 
 			{
-				class_mapping.SetAttribute("discriminator-value", discriminatorValue);
+				classMapping.SetAttribute("discriminator-value", discriminatorValue);
 			}
 
 			if (!string.IsNullOrEmpty(auditTableData.AuditTableName)) 
 			{
-				class_mapping.SetAttribute("table", auditTableData.AuditTableName);
+				classMapping.SetAttribute("table", auditTableData.AuditTableName);
 			}
 
 			if (!string.IsNullOrEmpty(auditTableData.Schema)) 
 			{
-				class_mapping.SetAttribute("schema", auditTableData.Schema);
+				classMapping.SetAttribute("schema", auditTableData.Schema);
 			}
 
 			if (!string.IsNullOrEmpty(auditTableData.Catalog)) 
 			{
-				class_mapping.SetAttribute("catalog", auditTableData.Catalog);
+				classMapping.SetAttribute("catalog", auditTableData.Catalog);
 			}
 
-			return class_mapping;
+			return classMapping;
 		}
 
 		public static XmlElement CreateEntity(XmlDocument document, AuditTableData auditTableData, string discriminatorValue) 
