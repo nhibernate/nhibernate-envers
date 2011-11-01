@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			var ver2 = new IntTestEntity { Id = id1, Number = 20 };
 
 			Assert.AreEqual(ver1, AuditReader().Find<IntTestEntity>(id1, 1));
-			Assert.AreEqual(ver2, AuditReader().Find<IntTestEntity>(id1, 2));
+			Assert.AreEqual(ver2, AuditReader().Find(typeof(IntTestEntity),id1, 2));
 		}
 
 		protected override IEnumerable<string> Mappings

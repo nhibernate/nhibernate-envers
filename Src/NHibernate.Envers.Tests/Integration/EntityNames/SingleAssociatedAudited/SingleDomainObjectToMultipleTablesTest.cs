@@ -28,8 +28,8 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudite
 		public void VerifySingleDomainObjectToMultipleTablesMapping()
 		{
 			var carVer1 = AuditReader().Find<Car>(carId, 1);
-			var ownerVer1 = AuditReader().Find<Person>("Personaje", ownerId, 1);
-			var driverVer1 = AuditReader().Find<Person>("Driveraje", driverId, 1);
+			var ownerVer1 = (Person)AuditReader().Find("Personaje", ownerId, 1);
+			var driverVer1 = (Person)AuditReader().Find("Driveraje", driverId, 1);
 
 			carVer1.Owner.Id.Should().Be.EqualTo(ownerVer1.Id);
 			carVer1.Driver.Id.Should().Be.EqualTo(driverVer1.Id);

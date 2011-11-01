@@ -22,20 +22,6 @@ namespace NHibernate.Envers
 		T Find<T>(object primaryKey, long revision);
 
 		/// <summary>
-		/// Find an entity by primary key at the given revision with the specified entityName.
-		/// </summary>
-		/// <typeparam name="T">Type of entity</typeparam>
-		/// <param name="entityName">Name of the entity (if can't be guessed basing on the {@code cls}).</param>
-		/// <param name="primaryKey">Primary key of the entity.</param>
-		/// <param name="revision">Revision in which to get the entity</param>
-		/// <returns>
-		/// The found entity instance at the given revision (its properties may be partially filled
-		/// if not all properties are audited) or null, if an entity with that id didn't exist at that
-		/// revision.
-		/// </returns>
-		T Find<T>(string entityName, object primaryKey, long revision);
-
-		/// <summary>
 		/// Find an entity by primary key at the given revision.
 		/// </summary>
 		/// <param name="cls">Type of entity</param>
@@ -48,6 +34,17 @@ namespace NHibernate.Envers
 		/// </returns>
 		object Find(System.Type cls, object primaryKey, long revision);
 
+		/// <summary>
+		/// Find an entity by primary key at the given revision with the specified entityName.
+		/// </summary>
+		/// <param name="entityName">Name of the entity (if can't be guessed basing on the {@code cls}).</param>
+		/// <param name="primaryKey">Primary key of the entity.</param>
+		/// <param name="revision">Revision in which to get the entity</param>
+		/// <returns>
+		/// The found entity instance at the given revision (its properties may be partially filled
+		/// if not all properties are audited) or null, if an entity with that id didn't exist at that
+		/// revision.
+		/// </returns>
 		object Find(string entityName, object primaryKey, long revision);
 
 		/// <summary>
@@ -115,7 +112,6 @@ namespace NHibernate.Envers
 		/// <param name="revision">Number of the revision for which to get the data.</param>
 		/// <returns>Entity containing data for the given revision.</returns>
 		object FindRevision(long revision);
-
 
 		/// <summary>
 		/// Find a map of revisions using the revision numbers specified.

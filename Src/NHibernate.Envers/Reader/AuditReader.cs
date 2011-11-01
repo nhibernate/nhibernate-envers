@@ -35,11 +35,6 @@ namespace NHibernate.Envers.Reader
 			return (T)Find(typeof(T), primaryKey, revision);
 		}
 
-		public T Find<T>(string entityName, object primaryKey, long revision)
-		{
-			return (T) Find(entityName, primaryKey, revision);
-		}
-
 		public object Find(System.Type cls, object primaryKey, long revision)
 		{
 			return Find(cls.FullName, primaryKey, revision);

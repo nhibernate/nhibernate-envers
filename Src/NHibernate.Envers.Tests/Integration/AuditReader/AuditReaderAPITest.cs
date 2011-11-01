@@ -30,6 +30,8 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 		{
 			AuditReader().IsEntityClassAudited(typeof (AuditedTestEntity))
 				.Should().Be.True();
+			AuditReader().IsEntityNameAudited(typeof(AuditedTestEntity).FullName)
+				.Should().Be.True();
 			foreach (var revision in AuditReader().GetRevisions<AuditedTestEntity>(1))
 			{
 				var foo = revision;
@@ -43,6 +45,8 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 		public void ShouldNotAudit()
 		{
 			AuditReader().IsEntityClassAudited(typeof(NotAuditedTestEntity))
+				.Should().Be.False();
+			AuditReader().IsEntityNameAudited(typeof(NotAuditedTestEntity).FullName)
 				.Should().Be.False();
 
 			Assert.Throws<NotAuditedException>(() =>

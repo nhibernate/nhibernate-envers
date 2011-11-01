@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.ManyToManyAudited
 			}
 
 			car1 = Session.Get<Car>(id_car1);
-			person1_1 = AuditReader().Find<Person>("Personaje", id_pers1, 1);
+			person1_1 = (Person) AuditReader().Find("Personaje", id_pers1, 1);
 		}
 
 		private void checkEntityNames()
