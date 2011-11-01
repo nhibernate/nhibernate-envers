@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyAudited
 
 		private void loadDataOnSessionAndAuditReader()
 		{
-			person1_1 = AuditReader().Find<Person>("Personaje", id_pers1, 1);
+			person1_1 = (Person)AuditReader().Find("Personaje", id_pers1, 1);
 			car1_1 = AuditReader().Find<Car>(id_car1, 2);
 			var car2 = AuditReader().Find<Car>(id_car2, 2);
 

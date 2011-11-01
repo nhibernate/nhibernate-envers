@@ -56,17 +56,17 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 		[Test]
 		public void ShouldRetrieveAuditedEntityWithEntityName()
 		{
-			AuditReader().Find<Person>("Personaje", id_pers1, 1).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 1).Should().Not.Be.Null();
 			AuditReader().Find("Personaje", id_pers1, 2).Should().Not.Be.Null();
-			AuditReader().Find<Person>("Personaje", id_pers1, 3).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 3).Should().Not.Be.Null();
 		}
 
 		[Test]
 		public void ShouldObtainEntityNameAuditedEntityWithEntityName()
 		{
-			var person1_1 = AuditReader().Find<Person>("Personaje", id_pers1, 1);
-			var person1_2 = AuditReader().Find<Person>("Personaje", id_pers1, 2);
-			var person1_3 = AuditReader().Find<Person>("Personaje", id_pers1, 3);
+			var person1_1 = AuditReader().Find("Personaje", id_pers1, 1);
+			var person1_2 = AuditReader().Find("Personaje", id_pers1, 2);
+			var person1_3 = AuditReader().Find("Personaje", id_pers1, 3);
 
 			var person1EN = AuditReader().GetEntityName(id_pers1, 1, person1_1);
 			var person2EN = AuditReader().GetEntityName(id_pers1, 2, person1_2);
@@ -82,9 +82,9 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 		{
 			ForceNewSession();
 
-			AuditReader().Find<Person>("Personaje", id_pers1, 1).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 1).Should().Not.Be.Null();
 			AuditReader().Find("Personaje", id_pers1, 2).Should().Not.Be.Null();
-			AuditReader().Find<Person>("Personaje", id_pers1, 3).Should().Not.Be.Null();
+			AuditReader().Find("Personaje", id_pers1, 3).Should().Not.Be.Null();
 		}
 	}
 }
