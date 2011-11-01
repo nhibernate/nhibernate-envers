@@ -13,27 +13,25 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// <seealso cref="LooselyTypedFluentAudit"/>
 	public class FluentAudit<T> : IFluentAudit<T>, IAttributeProvider
 	{
-		private readonly ICollection<Attribute> classAttributes;
-		private readonly ICollection<MemberInfoAndAttribute> memberAttributes;
+		private readonly ICollection<MemberInfoAndAttribute> attributes;
 		private const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
 
 		public FluentAudit()
 		{
-			classAttributes = new List<Attribute> {new AuditedAttribute()};
-			memberAttributes = new List<MemberInfoAndAttribute>();
+			attributes = new List<MemberInfoAndAttribute>{new MemberInfoAndAttribute(typeof(T), new AuditedAttribute())};
 		}
 
 		public IFluentAudit<T> Exclude(Expression<Func<T, object>> property)
 		{
 			var methodInfo = property.MethodInfo("exclusion");
-			memberAttributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), new NotAuditedAttribute()));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), new NotAuditedAttribute()));
 			return this;
 		}
 
 		public IFluentAudit<T> Exclude(string property)
 		{
 			var member = getMemberOrThrow(typeof(T), property);
-			memberAttributes.Add(new MemberInfoAndAttribute(member, new NotAuditedAttribute()));
+			attributes.Add(new MemberInfoAndAttribute(member, new NotAuditedAttribute()));
 			return this;
 		}
 
@@ -41,7 +39,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var methodInfo = property.MethodInfo("relation exclusion");
 			var attr = new AuditedAttribute {TargetAuditMode = RelationTargetAuditMode.NotAudited};
-			memberAttributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), attr));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), attr));
 			return this;
 		}
 
@@ -49,7 +47,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var member = getMemberOrThrow(typeof(T), property);
 			var attr = new AuditedAttribute { TargetAuditMode = RelationTargetAuditMode.NotAudited };
-			memberAttributes.Add(new MemberInfoAndAttribute(member, attr));
+			attributes.Add(new MemberInfoAndAttribute(member, attr));
 			return this;
 		}
 
@@ -57,7 +55,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var attr = new AuditTableAttribute(string.Empty);
 			tableInfo(attr);
-			classAttributes.Add(attr);
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), attr));
 			return this;
 		}
 
@@ -66,7 +64,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var methodInfo = property.MethodInfo("table info");
 			var attr = new AuditJoinTableAttribute();
 			tableInfo(attr);
-			memberAttributes.Add(new MemberInfoAndAttribute(methodInfo, attr));
+			attributes.Add(new MemberInfoAndAttribute(methodInfo, attr));
 			return this;
 		}
 
@@ -89,14 +87,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 			get { return typeof(T); }
 		}
 
-		public IEnumerable<Attribute> CreateClassAttributes()
+		public IEnumerable<MemberInfoAndAttribute> Attributes()
 		{
-			return classAttributes;
-		}
-
-		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
-		{
-			return memberAttributes;
+			return attributes;
 		}
 	}
 }

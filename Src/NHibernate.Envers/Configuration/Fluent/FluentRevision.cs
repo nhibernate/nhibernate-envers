@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
@@ -27,17 +26,12 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			get { return _revisionEntityType; }
 		}
-
-		public IEnumerable<Attribute> CreateClassAttributes()
-		{
-			var revEntityAttribute = new RevisionEntityAttribute {Listener = _revisionListener};
-			return new[] { revEntityAttribute };
-		}
-
-		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
+		
+		public IEnumerable<MemberInfoAndAttribute> Attributes()
 		{
 			return new[]
 							{
+								new MemberInfoAndAttribute(_revisionEntityType, new RevisionEntityAttribute {Listener = _revisionListener}), 
 								new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
 								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute())
 							};

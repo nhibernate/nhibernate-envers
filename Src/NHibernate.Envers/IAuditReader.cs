@@ -50,7 +50,6 @@ namespace NHibernate.Envers
 		/// <summary>
 		/// Get a list of revision numbers, at which an entity was modified.
 		/// </summary>
-		/// <typeparam name="TEntity">The entity type.</typeparam>
 		/// <param name="cls">Type of entity</param>
 		/// <param name="primaryKey">Primary key of the entity.</param>
 		/// <returns>

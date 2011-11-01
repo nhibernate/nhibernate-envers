@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Configuration.Fluent
@@ -15,8 +14,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// <seealso cref="FluentAudit{T}"/>
 	public class LooselyTypedFluentAudit : IAttributeProvider
 	{
-		private readonly AuditedAttribute createClassAttributes = new AuditedAttribute();
-
 		public LooselyTypedFluentAudit(System.Type entityType)
 		{
 			if (entityType == null)
@@ -30,20 +27,11 @@ namespace NHibernate.Envers.Configuration.Fluent
 			Type = entityType;
 		}
 
-		#region IAttributeProvider Members
-
 		public System.Type Type { get; private set; }
 
-		public IEnumerable<Attribute> CreateClassAttributes()
+		public IEnumerable<MemberInfoAndAttribute> Attributes()
 		{
-			yield return createClassAttributes;
+			yield return new MemberInfoAndAttribute(Type, new AuditedAttribute());
 		}
-
-		public IEnumerable<MemberInfoAndAttribute> CreateMemberAttributes()
-		{
-			return Enumerable.Empty<MemberInfoAndAttribute>();
-		}
-
-		#endregion
 	}
 }
