@@ -87,9 +87,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var ret = new Dictionary<System.Type, IEntityMeta>();
 			foreach (var attributeFactory in attributeFactories)
 			{
-				var type = attributeFactory.Type;
 				foreach (var memberInfoAndAttribute in attributeFactory.Attributes())
 				{
+					var type = memberInfoAndAttribute.Type;
 					var entMeta = createOrGetEntityMeta(ret, type);
 					if(memberInfoAndAttribute.MemberInfo.MemberType == MemberTypes.TypeInfo)
 						addClassMetaAndLog(type, memberInfoAndAttribute.Attribute, entMeta);
@@ -109,9 +109,9 @@ namespace NHibernate.Envers.Configuration.Fluent
 				return;
 
 			foreach (var revAttr in attributeFactories.OfType<FluentRevision>()
-										.Where(revAttr => nhConfiguration.GetClassMapping(revAttr.Type) == null))
+										.Where(revAttr => nhConfiguration.GetClassMapping(revAttr.RevisionEntityType) == null))
 			{
-				throw new MappingException("Custom revision entity " + revAttr.Type + " must be mapped!");
+				throw new MappingException("Custom revision entity " + revAttr.RevisionEntityType + " must be mapped!");
 			}			
 		}
 

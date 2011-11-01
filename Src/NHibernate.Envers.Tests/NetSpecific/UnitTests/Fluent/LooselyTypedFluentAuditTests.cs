@@ -27,14 +27,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		}
 
 		[Test]
-		public void WhenCreatedThenHasType()
-		{
-			var expected = typeof(MyClass);
-			var attributeProvider = new LooselyTypedFluentAudit(expected);
-			attributeProvider.Type.Should().Be(expected);
-		}
-
-		[Test]
 		public void WhenGetClassAttributeThenSingleAuditedAttribute()
 		{
 			var attributeProvider = new LooselyTypedFluentAudit(typeof(MyClass));

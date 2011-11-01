@@ -24,14 +24,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public IFluentAudit<T> Exclude(Expression<Func<T, object>> property)
 		{
 			var methodInfo = property.MethodInfo("exclusion");
-			attributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), new NotAuditedAttribute()));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), typeof(T).GetProperty(methodInfo.Name), new NotAuditedAttribute()));
 			return this;
 		}
 
 		public IFluentAudit<T> Exclude(string property)
 		{
 			var member = getMemberOrThrow(typeof(T), property);
-			attributes.Add(new MemberInfoAndAttribute(member, new NotAuditedAttribute()));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), member, new NotAuditedAttribute()));
 			return this;
 		}
 
@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var methodInfo = property.MethodInfo("relation exclusion");
 			var attr = new AuditedAttribute {TargetAuditMode = RelationTargetAuditMode.NotAudited};
-			attributes.Add(new MemberInfoAndAttribute(typeof(T).GetProperty(methodInfo.Name), attr));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), typeof(T).GetProperty(methodInfo.Name), attr));
 			return this;
 		}
 
@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			var member = getMemberOrThrow(typeof(T), property);
 			var attr = new AuditedAttribute { TargetAuditMode = RelationTargetAuditMode.NotAudited };
-			attributes.Add(new MemberInfoAndAttribute(member, attr));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), member, attr));
 			return this;
 		}
 
@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var methodInfo = property.MethodInfo("table info");
 			var attr = new AuditJoinTableAttribute();
 			tableInfo(attr);
-			attributes.Add(new MemberInfoAndAttribute(methodInfo, attr));
+			attributes.Add(new MemberInfoAndAttribute(typeof(T), methodInfo, attr));
 			return this;
 		}
 
@@ -80,11 +80,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
 			}
 			return member;
-		}
-
-		public System.Type Type
-		{
-			get { return typeof(T); }
 		}
 
 		public IEnumerable<MemberInfoAndAttribute> Attributes()

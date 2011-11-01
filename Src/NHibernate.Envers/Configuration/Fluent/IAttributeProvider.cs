@@ -8,11 +8,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 	public interface IAttributeProvider
 	{
 		/// <summary>
-		/// The entity type this configuration is for
-		/// </summary>
-		System.Type Type { get; }
-
-		/// <summary>
 		/// Creates corresponding member attributes
 		/// </summary>
 		/// <returns>The attributes</returns>

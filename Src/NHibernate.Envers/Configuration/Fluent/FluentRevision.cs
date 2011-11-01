@@ -6,7 +6,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 {
 	public class FluentRevision : IAttributeProvider
 	{
-		private readonly System.Type _revisionEntityType;
 		private readonly MemberInfo _number;
 		private readonly MemberInfo _timestamp;
 		private readonly IRevisionListener _revisionListener;
@@ -16,24 +15,21 @@ namespace NHibernate.Envers.Configuration.Fluent
 										  MemberInfo timestamp,
 										  IRevisionListener revisionListener)
 		{
-			_revisionEntityType = revisionEntityType;
+			RevisionEntityType = revisionEntityType;
 			_number = number;
 			_timestamp = timestamp;
 			_revisionListener = revisionListener;
 		}
 
-		public System.Type Type
-		{
-			get { return _revisionEntityType; }
-		}
+		public System.Type RevisionEntityType { get; private set; }
 		
 		public IEnumerable<MemberInfoAndAttribute> Attributes()
 		{
 			return new[]
 							{
-								new MemberInfoAndAttribute(_revisionEntityType, new RevisionEntityAttribute {Listener = _revisionListener}), 
-								new MemberInfoAndAttribute(_number, new RevisionNumberAttribute()),
-								new MemberInfoAndAttribute(_timestamp, new RevisionTimestampAttribute())
+								new MemberInfoAndAttribute(RevisionEntityType, new RevisionEntityAttribute {Listener = _revisionListener}), 
+								new MemberInfoAndAttribute(RevisionEntityType, _number, new RevisionNumberAttribute()),
+								new MemberInfoAndAttribute(RevisionEntityType, _timestamp, new RevisionTimestampAttribute())
 							};
 
 		}
