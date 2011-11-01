@@ -25,8 +25,8 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidir
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<ContainedEntity>( cce1_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<SetEntity>( cse1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(ContainedEntity), cce1_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(SetEntity), cse1_id));
 		}
 
 		[Test]

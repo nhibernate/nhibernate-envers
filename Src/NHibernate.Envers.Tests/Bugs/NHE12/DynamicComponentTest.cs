@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Tests.Bugs.NHE12
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<DynamicTestEntity>(id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(DynamicTestEntity),id));
 		}
 
 		[Test]

@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ParentEntity>(id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ParentEntity),id));
 		}
 
 		[Test]

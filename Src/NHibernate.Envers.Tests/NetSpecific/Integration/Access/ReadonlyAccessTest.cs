@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions<ReadonlyEntity>( id));
+			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ReadonlyEntity), id));
 		}
 
 		[Test]

@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<Animal>(id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(Animal),id));
 		}
 
 		[Test]

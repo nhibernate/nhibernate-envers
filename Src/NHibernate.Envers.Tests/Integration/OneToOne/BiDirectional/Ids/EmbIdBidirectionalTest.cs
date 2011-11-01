@@ -36,9 +36,9 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.Ids
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<BiEmbIdRefEdEntity>( ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<BiEmbIdRefEdEntity>( ed2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<BiEmbIdRefIngEntity>( ing1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiEmbIdRefEdEntity), ed1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiEmbIdRefEdEntity), ed2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(BiEmbIdRefIngEntity), ing1_id));
 		}
 
 		[Test]

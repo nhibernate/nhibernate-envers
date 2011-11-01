@@ -32,12 +32,12 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 				.Should().Be.True();
 			AuditReader().IsEntityNameAudited(typeof(AuditedTestEntity).FullName)
 				.Should().Be.True();
-			foreach (var revision in AuditReader().GetRevisions<AuditedTestEntity>(1))
+			foreach (var revision in AuditReader().GetRevisions(typeof(AuditedTestEntity),1))
 			{
 				var foo = revision;
 			}
 
-			AuditReader().GetRevisions<AuditedTestEntity>(1)
+			AuditReader().GetRevisions(typeof(AuditedTestEntity),1)
 				.Should().Have.SameSequenceAs(1, 2);
 		}
 
@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 				.Should().Be.False();
 
 			Assert.Throws<NotAuditedException>(() =>
-			   AuditReader().GetRevisions<NotAuditedTestEntity>(1));
+			   AuditReader().GetRevisions(typeof(NotAuditedTestEntity), 1));
 		}
 	}
 }

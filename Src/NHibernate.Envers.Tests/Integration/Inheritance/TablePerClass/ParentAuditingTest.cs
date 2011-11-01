@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ParentEntity>( id1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ParentEntity), id1));
 		}
 
 		[Test]

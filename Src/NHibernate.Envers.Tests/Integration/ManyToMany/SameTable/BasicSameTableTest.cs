@@ -103,12 +103,12 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<ParentEntity>( p1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions<ParentEntity>( p2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Child1Entity>( c1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions<Child1Entity>( c1_2_id));
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions<Child2Entity>( c2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions<Child2Entity>( c2_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity), p1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity), p2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child1Entity), c1_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child1Entity), c1_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child2Entity), c2_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child2Entity), c2_2_id));
 		}
 
 		[Test]

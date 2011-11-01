@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Ctor
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<NonPublicCtorEntity>(id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(NonPublicCtorEntity),id));
 		}
 
 		[Test]

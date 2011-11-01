@@ -70,10 +70,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions<ComponentTestEntity>( id1));
-			CollectionAssert.AreEqual(new[] { 1, 2, 4 }, AuditReader().GetRevisions<ComponentTestEntity>( id2));
-			CollectionAssert.AreEqual(new[] { 1, 3 }, AuditReader().GetRevisions<ComponentTestEntity>( id3));
-			CollectionAssert.AreEqual(new[] { 1, 2, 3 }, AuditReader().GetRevisions<ComponentTestEntity>( id4));
+			CollectionAssert.AreEqual(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id1));
+			CollectionAssert.AreEqual(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id2));
+			CollectionAssert.AreEqual(new[] { 1, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id3));
+			CollectionAssert.AreEqual(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(ComponentTestEntity), id4));
 		}
 
 		[Test]

@@ -51,24 +51,24 @@ namespace NHibernate.Envers
 		/// Get a list of revision numbers, at which an entity was modified.
 		/// </summary>
 		/// <typeparam name="TEntity">The entity type.</typeparam>
+		/// <param name="cls">Type of entity</param>
 		/// <param name="primaryKey">Primary key of the entity.</param>
 		/// <returns>
 		/// A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
 		/// revisions come first).
 		/// </returns>
-		IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity : class;
+		IEnumerable<long> GetRevisions(System.Type cls, object primaryKey);
 
 		/// <summary>
 		/// Get a list of revision numbers, at which an entity was modified, looking by entityName.
 		/// </summary>
-		/// <typeparam name="TEntity">The entity type.</typeparam>
 		/// <param name="entityName">Name of the entity </param>
 		/// <param name="primaryKey">Primary key of the entity.</param>
 		/// <returns>
 		/// A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
 		/// revisions come first).
 		/// </returns>
-		IEnumerable<long> GetRevisions<TEntity>(string entityName, object primaryKey);
+		IEnumerable<long> GetRevisions(string entityName, object primaryKey);
 
 		/// <summary>
 		/// Get the date, at which a revision was created. 

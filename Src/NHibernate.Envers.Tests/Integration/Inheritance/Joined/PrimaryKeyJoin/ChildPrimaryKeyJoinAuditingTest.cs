@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions<ChildPrimaryKeyJoinEntity>(id1));
+			CollectionAssert.AreEquivalent(new[] {1, 2}, AuditReader().GetRevisions(typeof(ChildPrimaryKeyJoinEntity),id1));
 		}
 
 		[Test]

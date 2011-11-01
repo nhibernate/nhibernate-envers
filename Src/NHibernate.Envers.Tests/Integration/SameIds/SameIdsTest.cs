@@ -26,8 +26,8 @@ namespace NHibernate.Envers.Tests.Integration.SameIds
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<SameIdTestEntity1>( 1));
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<SameIdTestEntity2>( 1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(SameIdTestEntity1), 1));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(SameIdTestEntity2), 1));
 		}
 
 		[Test]

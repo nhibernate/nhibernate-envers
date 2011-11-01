@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions<SortedSetEntity>(id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(SortedSetEntity), id));
 		}
 
 		[Test]

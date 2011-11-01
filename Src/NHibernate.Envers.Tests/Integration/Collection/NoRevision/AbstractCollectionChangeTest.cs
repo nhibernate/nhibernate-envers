@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 		[Test]
 		public void VerifyPersonRevisionCount() 
 		{
-			AuditReader().GetRevisions<Person>(PersonId)
+			AuditReader().GetRevisions(typeof(Person),PersonId)
 				.Should().Have.SameSequenceAs(ExpectedPersonRevisions);
 		}
 

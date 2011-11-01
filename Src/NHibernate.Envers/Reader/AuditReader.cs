@@ -71,14 +71,13 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public IEnumerable<long> GetRevisions<TEntity>(object primaryKey) where TEntity : class
+		public IEnumerable<long> GetRevisions(System.Type cls, object primaryKey)
 		{
-			var cls = typeof(TEntity);
 			var entityName = cls.FullName;
-			return GetRevisions<TEntity>(entityName, primaryKey);
+			return GetRevisions(entityName, primaryKey);
 		}
 
-		public IEnumerable<long> GetRevisions<TEntity>(string entityName, object primaryKey)
+		public IEnumerable<long> GetRevisions(string entityName, object primaryKey)
 		{
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 

@@ -77,17 +77,17 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			AuditReader().GetRevisions<Person>(expLukaszRev1.Id).Should().Have.SameSequenceAs(1, 2, 3);
-			AuditReader().GetRevisions<RightsSubject>(expLukaszRev1.Id).Should().Have.SameSequenceAs(1, 2, 3);
+			AuditReader().GetRevisions(typeof(Person),expLukaszRev1.Id).Should().Have.SameSequenceAs(1, 2, 3);
+			AuditReader().GetRevisions(typeof(RightsSubject),expLukaszRev1.Id).Should().Have.SameSequenceAs(1, 2, 3);
 
-			AuditReader().GetRevisions<Person>(expAdamRev4.Id).Should().Have.SameSequenceAs(4, 5, 6);
-			AuditReader().GetRevisions<RightsSubject>(expAdamRev4.Id).Should().Have.SameSequenceAs(4, 5, 6);
+			AuditReader().GetRevisions(typeof(Person),expAdamRev4.Id).Should().Have.SameSequenceAs(4, 5, 6);
+			AuditReader().GetRevisions(typeof(RightsSubject),expAdamRev4.Id).Should().Have.SameSequenceAs(4, 5, 6);
 
-			AuditReader().GetRevisions<Role>(expAdminRev1.Id).Should().Have.SameSequenceAs(1, 2, 5);
-			AuditReader().GetRevisions<RightsSubject>(expAdminRev1.Id).Should().Have.SameSequenceAs(1, 2, 5);
+			AuditReader().GetRevisions(typeof(Role),expAdminRev1.Id).Should().Have.SameSequenceAs(1, 2, 5);
+			AuditReader().GetRevisions(typeof(RightsSubject),expAdminRev1.Id).Should().Have.SameSequenceAs(1, 2, 5);
 
-			AuditReader().GetRevisions<Role>(expDirectorRev3.Id).Should().Have.SameSequenceAs(3, 4);
-			AuditReader().GetRevisions<RightsSubject>(expDirectorRev3.Id).Should().Have.SameSequenceAs(3, 4);
+			AuditReader().GetRevisions(typeof(Role),expDirectorRev3.Id).Should().Have.SameSequenceAs(3, 4);
+			AuditReader().GetRevisions(typeof(RightsSubject),expDirectorRev3.Id).Should().Have.SameSequenceAs(3, 4);
 		}
 
 		[Test]

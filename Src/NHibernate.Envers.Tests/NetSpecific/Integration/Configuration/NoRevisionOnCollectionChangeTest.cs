@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 		[Test]
 		public void ShouldOnlyCreatedOneRevisionForParent()
 		{
-			AuditReader().GetRevisions<IndexedListJoinColumnBidirectionalRefIngEntity>(parentId)
+			AuditReader().GetRevisions(typeof(IndexedListJoinColumnBidirectionalRefIngEntity), parentId)
 				.Should().Have.Count.EqualTo(1);
 		}
 

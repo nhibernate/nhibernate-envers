@@ -86,10 +86,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 			// Although it would seem that when modifying references both entities should be marked as modified, because
 			// ownly the owning side is notified (because of the bi-owning mapping), a revision is created only for
 			// the entity where the collection was directly modified.
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions<ListBiOwning1Entity>( o1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 5 }, AuditReader().GetRevisions<ListBiOwning1Entity>( o1_2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions<ListBiOwning2Entity>( o2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions<ListBiOwning2Entity>( o2_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 5 }, AuditReader().GetRevisions(typeof(ListBiOwning1Entity), o1_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2, 5 }, AuditReader().GetRevisions(typeof(ListBiOwning1Entity), o1_2_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(ListBiOwning2Entity), o2_1_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 4 }, AuditReader().GetRevisions(typeof(ListBiOwning2Entity), o2_2_id));
 		}
 
 		[Test]

@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions<ComponentMapKeyEntity>( cmke_id));
+			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(ComponentMapKeyEntity), cmke_id));
 		}
 
 		[Test]
