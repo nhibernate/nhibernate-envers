@@ -29,10 +29,10 @@ namespace NHibernate.Envers.Query
 			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
 		}
 
-		public IAuditQuery ForEntitiesAtRevision(System.Type c, string entityName, long revision)
+		public IAuditQuery ForEntitiesAtRevision(string entityName, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
-			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, entityName, revision);
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, entityName, revision);
 		}
 
 		/// <summary>
@@ -57,17 +57,16 @@ namespace NHibernate.Envers.Query
 		/// In comparison, the <seealso cref="ForEntitiesAtRevision(System.Type, long)"/> query takes into all entities
 		/// which were present at a given revision, even if they were not modified.
 		/// </summary>
-		/// <param name="c">Class of the entities for which to query.</param>
-		/// <param name="entityName">Name of the entity (if can't be guessed basing on the <paramref name="c"/>.</param>
+		/// <param name="entityName">Name of the entity.</param>
 		/// <param name="revision">Revision number at which to execute the query.</param>
 		/// <returns>
 		/// A query for entities changed at a given revision, to which conditions can be added and which
 		/// can then be executed.
 		/// </returns>
-		public IAuditQuery ForEntitiesModifiedAtRevision(System.Type c, string entityName, long revision)
+		public IAuditQuery ForEntitiesModifiedAtRevision(string entityName, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
-			return new EntitiesModifiedAtRevisionQuery(auditCfg, auditReaderImplementor, c, entityName, revision);
+			return new EntitiesModifiedAtRevisionQuery(auditCfg, auditReaderImplementor, entityName, revision);
 		}
 
 		/// <summary>
@@ -113,9 +112,9 @@ namespace NHibernate.Envers.Query
 			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, selectEntitiesOnly, selectDeletedEntities);
 		}
 
-		public IAuditQuery ForRevisionsOfEntity(System.Type c, string entityName, bool selectEntitiesOnly, bool selectDeletedEntities)
+		public IAuditQuery ForRevisionsOfEntity(string entityName, bool selectEntitiesOnly, bool selectDeletedEntities)
 		{
-			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, c, entityName, selectEntitiesOnly, selectDeletedEntities);
+			return new RevisionsOfEntityQuery(auditCfg, auditReaderImplementor, entityName, selectEntitiesOnly, selectDeletedEntities);
 		}
 
 		/// <summary>

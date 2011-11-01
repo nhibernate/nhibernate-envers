@@ -265,7 +265,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void ShouldFindEntitiesAddedAtRevision()
 		{
 			var result = AuditReader().CreateQuery()
-				.ForEntitiesModifiedAtRevision(typeof (StrIntTestEntity), typeof (StrIntTestEntity).FullName, 1)
+				.ForEntitiesModifiedAtRevision(typeof (StrIntTestEntity).FullName, 1)
 				.GetResultList<StrIntTestEntity>();
 			var revisionType = AuditReader().CreateQuery()
 				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 1)
@@ -284,7 +284,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void ShouldFindEntitiesModifiedAtRevision()
 		{
 			var result = AuditReader().CreateQuery()
-				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 2)
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 2)
 				.GetResultList<StrIntTestEntity>();
 			var revisionType = AuditReader().CreateQuery()
 				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 2)
@@ -302,7 +302,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void ShouldFindEntitiesRemovedAtRevision()
 		{
 			var result = AuditReader().CreateQuery()
-				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 4)
+				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity).FullName, 4)
 				.GetResultList<StrIntTestEntity>();
 			var revisionType = AuditReader().CreateQuery()
 				.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 4)
@@ -319,7 +319,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void VerifyEntityNotModifiedAtRevision()
 		{
 			var result = AuditReader().CreateQuery()
-						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 3)
+						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), 3)
 						.Add(AuditEntity.Id().Eq(id1))
 						.GetResultList<StrIntTestEntity>();
 			result.Should().Be.Empty();
@@ -329,7 +329,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		public void VerifyNoEntitiesModifiedAtRevision()
 		{
 			var result = AuditReader().CreateQuery()
-						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity), typeof(StrIntTestEntity).FullName, 5)
+						.ForEntitiesModifiedAtRevision(typeof(StrIntTestEntity).FullName, 5)
 						.GetResultList<StrIntTestEntity>();
 			result.Should().Be.Empty();
 		}

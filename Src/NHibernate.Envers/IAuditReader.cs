@@ -35,7 +35,6 @@ namespace NHibernate.Envers
 		/// </returns>
 		T Find<T>(string entityName, object primaryKey, long revision);
 
-
 		/// <summary>
 		/// Find an entity by primary key at the given revision.
 		/// </summary>
@@ -49,7 +48,7 @@ namespace NHibernate.Envers
 		/// </returns>
 		object Find(System.Type cls, object primaryKey, long revision);
 
-		object Find(System.Type cls, string entityName, object primaryKey, long revision);
+		object Find(string entityName, object primaryKey, long revision);
 
 		/// <summary>
 		/// Get a list of revision numbers, at which an entity was modified.

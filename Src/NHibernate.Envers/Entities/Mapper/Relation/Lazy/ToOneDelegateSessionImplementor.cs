@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 			if (entCfg.GetNotVersionEntityConfiguration(entityName) == null)
 			{
 				// audited relation, look up entity with envers
-				return versionsReader.Find(entityClass, entityName, entityId, revision);
+				return versionsReader.Find(entityName, entityId, revision);
 			}
 			// notAudited relation, look up entity with hibernate
 			return SessionDelegate.ImmediateLoad(entityName, entityId);
