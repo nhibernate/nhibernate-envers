@@ -95,7 +95,7 @@ namespace NHibernate.Envers.Tests
 
 		private void closeSessionAndAuditReader()
 		{
-			if (Session != null)
+			if (Session != null && Session.IsOpen)
 			{
 				Session.Close();
 			}

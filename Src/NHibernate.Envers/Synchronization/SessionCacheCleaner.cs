@@ -16,7 +16,13 @@ namespace NHibernate.Envers.Synchronization
 		/// <param name="data">Audit data that shall be evicted (e.g. revision data or entity snapshot)</param>
 		public static void ScheduleAuditDataRemoval(ISession session, object data)
 		{
-			((IEventSource)session).ActionQueue.RegisterProcess(success => session.Evict(data));
+			((IEventSource)session).ActionQueue.RegisterProcess(success =>
+			                                                    	{
+																						if(session.IsOpen)
+																						{
+																							session.Evict(data);
+																						}
+			                                                    	});
 		}
 	}
 }
