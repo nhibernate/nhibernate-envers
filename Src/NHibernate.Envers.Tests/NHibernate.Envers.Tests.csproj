@@ -440,6 +440,7 @@
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
+    <Compile Include="NetSpecific\Integration\Transaction\SessionClosedWhenCommitingTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\DifferentSchemaAndCatalogTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
