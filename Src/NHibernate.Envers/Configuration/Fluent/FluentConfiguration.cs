@@ -58,11 +58,11 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
 													 Expression<Func<T, object>> revisionTimestamp)
 		{
-			SetRevisionEntity(revisionNumber, revisionTimestamp, null);
+			setRevisionEntity(revisionNumber, revisionTimestamp, null, null);
 		}
 
 		/// <summary>
-		/// Defines a custom revision entity.
+		/// Defines a custom revision entity with a custom <see cref="IRevisionListener"/>.
 		/// </summary>
 		/// <typeparam name="T">The custom revision entity type</typeparam>
 		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
@@ -72,10 +72,36 @@ namespace NHibernate.Envers.Configuration.Fluent
 													Expression<Func<T, object>> revisionTimestamp,
 													IRevisionListener revisionListener)
 		{
+			setRevisionEntity(revisionNumber, revisionTimestamp, null, revisionListener);
+		}
+
+		/// <summary>
+		/// Defines a custom revision entity.
+		/// </summary>
+		/// <typeparam name="T">The custom revision entity type</typeparam>
+		/// <param name="revisionNumber">Revision number property on custom revision entity</param>
+		/// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+		/// <param name="modifiedEntityNames">
+		/// Modified entity names property on custom revision entity.
+		/// Must be of type <code>ISet{string}</code>.
+		/// </param>
+		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
+													Expression<Func<T, object>> revisionTimestamp,
+													Expression<Func<T, object>> modifiedEntityNames)
+		{
+			setRevisionEntity(revisionNumber, revisionTimestamp, modifiedEntityNames, null);
+		}
+
+		private void setRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
+													Expression<Func<T, object>> revisionTimestamp,
+													Expression<Func<T, object>> modifiedEntityNames,
+													IRevisionListener revisionListener)
+		{
 			attributeFactories.Add(new FluentRevision(typeof(T),
-					  revisionNumber.MethodInfo("revisionNumber"),
-					  revisionTimestamp.MethodInfo("revisionTimestamp"),
-					  revisionListener));
+								  revisionNumber.MethodInfo("revisionNumber"),
+								  revisionTimestamp.MethodInfo("revisionTimestamp"),
+								  modifiedEntityNames.MethodInfo("modifiedEntityNames"),
+								  revisionListener));
 		}
 
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
@@ -88,7 +114,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 				{
 					var type = memberInfoAndAttribute.Type;
 					var entMeta = createOrGetEntityMeta(ret, type);
-					if(memberInfoAndAttribute.MemberInfo.MemberType == MemberTypes.TypeInfo)
+					if (memberInfoAndAttribute.MemberInfo.MemberType == MemberTypes.TypeInfo)
 						addClassMetaAndLog(type, memberInfoAndAttribute.Attribute, entMeta);
 					else
 						addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
@@ -107,13 +133,13 @@ namespace NHibernate.Envers.Configuration.Fluent
 										.Where(revAttr => nhConfiguration.GetClassMapping(revAttr.RevisionEntityType) == null))
 			{
 				throw new MappingException("Custom revision entity " + revAttr.RevisionEntityType + " must be mapped!");
-			}			
+			}
 		}
 
 		private static void addMemberMetaAndLog(System.Type type, MemberInfoAndAttribute memberInfoAndAttribute, EntityMeta entMeta)
 		{
-			log.DebugFormat("Adding {0} to member {1} on type {2}.", 
-							memberInfoAndAttribute.Attribute.GetType().Name, 
+			log.DebugFormat("Adding {0} to member {1} on type {2}.",
+							memberInfoAndAttribute.Attribute.GetType().Name,
 							memberInfoAndAttribute.MemberInfo.Name,
 							type.FullName);
 			entMeta.AddMemberMeta(memberInfoAndAttribute.MemberInfo, memberInfoAndAttribute.Attribute);
