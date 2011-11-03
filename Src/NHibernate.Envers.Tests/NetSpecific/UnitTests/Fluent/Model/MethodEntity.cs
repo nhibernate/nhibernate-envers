@@ -1,8 +1,7 @@
 ﻿namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model
 {
-	public class PublicFieldAndMethodEntity
+	public class MethodEntity
 	{
-		public int SomeField;
 		public int SomeMethod()
 		{
 			return 0;
