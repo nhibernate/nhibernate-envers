@@ -6,6 +6,7 @@
 
 *** Possible breaking change ***
 * AbstractCollectionMapper.Ctor changed
+* FluentConfiguration.Exclude/ExcludeRelationData now throws FluentException and not ArgumentException if property/field cannot be found.
 
 
 === 1.0 GA (v 1.0.0.0), 2011-10-14, NH 3.2 GA ===

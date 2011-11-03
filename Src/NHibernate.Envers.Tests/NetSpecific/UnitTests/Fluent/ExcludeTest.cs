@@ -19,7 +19,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			var cfg = new FluentConfiguration();
 			cfg.Audit<SomePropsEntity>()
 					.Exclude(s => s.Number)
-					.Exclude(s => s.String);
+					.Exclude(s => s.String)
+					.Exclude(s => s.FieldNumber);
 			metas = cfg.CreateMetaData(null);
 		}
 
@@ -41,10 +42,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var propInfo = typeof(SomePropsEntity).GetProperty("Number");
 			var propInfo2 = typeof(SomePropsEntity).GetProperty("String");
+			var fieldInfo = typeof (SomePropsEntity).GetField("FieldNumber");
 			var entMeta = metas[typeof(SomePropsEntity)];
-			Assert.AreEqual(2, entMeta.MemberMetas.Count);
+			Assert.AreEqual(3, entMeta.MemberMetas.Count);
 			entMeta.MemberMetas[propInfo].OnlyContains<NotAuditedAttribute>();
 			entMeta.MemberMetas[propInfo2].OnlyContains<NotAuditedAttribute>();
+			entMeta.MemberMetas[fieldInfo].OnlyContains<NotAuditedAttribute>();
 		}
 	}
 }
