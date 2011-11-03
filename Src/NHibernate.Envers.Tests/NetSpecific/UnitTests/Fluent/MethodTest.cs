@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			Assert.Throws<FluentException>(() =>
-				cfg.Audit<PublicFieldAndMethodEntity>()
+				cfg.Audit<MethodEntity>()
 					.Exclude(obj => obj.SomeMethod()));
 		} 
 	}

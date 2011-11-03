@@ -454,7 +454,7 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\Inheritance.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\NotAuditedEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\NotAuditedOwnerEntity.cs" />
-    <Compile Include="NetSpecific\UnitTests\Fluent\Model\PublicFieldAndMethodEntity.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\Model\MethodEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevisionEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\InheritedRevisionEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevisionEntityWithEntityNames.cs" />
