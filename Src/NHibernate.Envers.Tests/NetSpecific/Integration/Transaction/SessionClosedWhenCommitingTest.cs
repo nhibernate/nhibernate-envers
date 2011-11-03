@@ -14,7 +14,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 		protected override void Initialize()
 		{
 			entity = new StrTestEntity {Str = "data"};
-			Session.Dispose();
 
 			using (var distrTx = new TransactionScope())
 			{
@@ -26,7 +25,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 				}
 				distrTx.Complete();
 			}
-
 		}
 
 		[Test]
