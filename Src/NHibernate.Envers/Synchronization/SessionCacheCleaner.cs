@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Synchronization
 	{
 		/// <summary>
 		/// Schedules audit data removal from session level cache after transaction completion. 
-		/// The operation is performed regardless of commit success.
+		/// The operation is performed regardless of commit success if session still is open.
 		/// </summary>
 		/// <param name="session">Active NHibernate session</param>
 		/// <param name="data">Audit data that shall be evicted (e.g. revision data or entity snapshot)</param>
