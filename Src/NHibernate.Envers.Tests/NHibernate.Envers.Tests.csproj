@@ -62,9 +62,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bugs\NHE12\DynamicComponentTest.cs" />
-    <Compile Include="Bugs\NHE12\DynamicTestEntity.cs" />
-    <Compile Include="Configuration\AuditConfigurationTests.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
+    <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\AuditConfigurationTests.cs" />
     <Compile Include="Entities\Collection\EnumSetEntity.cs" />
     <Compile Include="Entities\Collection\StringListEntity.cs" />
     <Compile Include="Entities\Collection\StringMapEntity.cs" />
@@ -489,7 +490,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\Access\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\JoinAuditTable\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\Mapping.hbm.xml" />
-    <EmbeddedResource Include="Bugs\NHE12\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\SortedSetAndMap\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Single\DiscriminatorFormula\Mapping.hbm.xml" />

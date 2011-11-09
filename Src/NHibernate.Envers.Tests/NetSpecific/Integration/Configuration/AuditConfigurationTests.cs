@@ -7,25 +7,18 @@ using NHibernate.Event;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.Configuration
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 {
-	[Audited]
-	public class SimpleAuiditableForConf
-	{
-		public virtual int Id { get; set; }
-		public virtual string Data { get; set; }
-	}
-
 	[TestFixture]
 	public class AuditConfigurationTests
 	{
 		const string SimpleMapping = @"<?xml version='1.0' encoding='utf-8'?>
-<hibernate-mapping namespace='NHibernate.Envers.Tests.Configuration' assembly='NHibernate.Envers.Tests' xmlns='urn:nhibernate-mapping-2.2'>
-  <class name='SimpleAuiditableForConf'>
-    <id name='Id' type='Int32'>
-      <generator class='assigned'/>
-    </id>
-    <property name='Data' />
+<hibernate-mapping namespace='NHibernate.Envers.Tests.NetSpecific.Integration.Configuration' assembly='NHibernate.Envers.Tests' xmlns='urn:nhibernate-mapping-2.2'>
+  <class name='SimpleAuiditableForConfEntity'>
+	 <id name='Id' type='Int32'>
+		<generator class='assigned'/>
+	 </id>
+	 <property name='Data' />
   </class>
 </hibernate-mapping>";
 
@@ -51,8 +44,8 @@ namespace NHibernate.Envers.Tests.Configuration
 										 {
 											 using (cfg.BuildSessionFactory())
 											 {
-											 	// build the session factory to run initialization of listeners and be completelly sure
-											 	// there isn't problems
+												 // build the session factory to run initialization of listeners and be completelly sure
+												 // there isn't problems
 											 }
 										 }).Should().NotThrow();
 		}
@@ -65,7 +58,7 @@ namespace NHibernate.Envers.Tests.Configuration
 			cfg.AddXml(SimpleMapping);
 			cfg.IntegrateWithEnvers();
 
-			cfg.ClassMappings.Where(cm => cm.EntityName.Contains("SimpleAuiditableForConf")).Should().Have.Count.EqualTo(2);
+			cfg.ClassMappings.Where(cm => cm.EntityName.Contains("SimpleAuiditableForConfEntity")).Should().Have.Count.EqualTo(2);
 		}
 
 		[Test]
@@ -86,6 +79,5 @@ namespace NHibernate.Envers.Tests.Configuration
 				}
 			}).Should().NotThrow();
 		}
-
 	}
 }

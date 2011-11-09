@@ -1,8 +1,9 @@
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.Bugs.NHE12
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 {
+	//NHE-12
 	[TestFixture]
 	public class DynamicComponentTest : TestBase
 	{

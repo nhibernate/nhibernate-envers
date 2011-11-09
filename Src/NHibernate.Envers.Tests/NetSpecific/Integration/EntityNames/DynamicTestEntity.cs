@@ -1,7 +1,7 @@
 using System.Collections;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.Bugs.NHE12
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 {
 	[Audited]
 	public class DynamicTestEntity

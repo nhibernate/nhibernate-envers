@@ -1,6 +1,6 @@
 ﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
     assembly="NHibernate.Envers.Tests"
-    namespace="NHibernate.Envers.Tests.Bugs.NHE12">
+    namespace="NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames">
 
 	<class name="DynamicTestEntity">
 		<id name="Id">
