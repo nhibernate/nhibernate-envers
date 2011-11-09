@@ -294,6 +294,8 @@
     <Compile Include="Integration\ManyToMany\UniDirectional\BasicUniSetTest.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MRelationNotAuditedTargetTest.cs" />
     <Compile Include="Integration\ManyToOne\UniDirectional\RelationNotAuditedTargetTest.cs" />
+    <Compile Include="Integration\Merge\AddDelTest.cs" />
+    <Compile Include="Integration\Merge\GivenIdStrEntity.cs" />
     <Compile Include="Integration\Naming\BasicNamingTest.cs" />
     <Compile Include="Integration\Naming\DetachedNamingTestEntity.cs" />
     <Compile Include="Integration\Naming\Ids\EmbIdNaming.cs" />
@@ -573,6 +575,7 @@
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\AuditReader\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Merge\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
