@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Tools;
 using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
@@ -40,8 +41,9 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(AddWorkUnit second)
 		{
-			//needed to get onetoone pk work. What should happen with "normal" entities?
-			return new ModWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, entityPersister, second.State, state);
+			return Toolz.ArraysEqual(second.State, state) ? 
+					null : 
+					new ModWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, entityPersister, second.State, state);
 		}
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)

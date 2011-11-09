@@ -106,5 +106,37 @@ namespace NHibernate.Envers.Tools
 			var entityPersister = sessionImplementor.Factory.GetEntityPersister(entityName);
 			return entityPersister.GetMappedClass(sessionImplementor.EntityMode);
 		}
+
+		public static bool ArraysEqual(object[] array1, object[] array2)
+		{
+			if (array1 == null) 
+				return array2 == null;
+			if (array2 == null || array1.Length != array2.Length) 
+				return false;
+			for (var i = 0; i < array1.Length; ++i)
+			{
+				if (array1[i] == null ? array2[i] != null : !array1[i].Equals(array2[i]))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Converts map's value set to an array. <paramref name="keys"/> parameter specifies requested elements and their order. 
+		/// </summary>
+		/// <param name="data">Source dictionary</param>
+		/// <param name="keys">Array of keys that represent requested map values.</param>
+		/// <returns></returns>
+		public static object[] MapToArray(IDictionary<string, object> data, string[] keys)
+		{
+			var ret = new object[keys.Length];
+			for (var i = 0; i < keys.Length; i++)
+			{
+				ret[i] = data[keys[i]];
+			}
+			return ret;
+		}
 	}
 }
