@@ -62,6 +62,8 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integration\OneToOne\UniDirectional\UnidirectionalMulIdWithNullsTest.cs" />
+    <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngMulIdEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />

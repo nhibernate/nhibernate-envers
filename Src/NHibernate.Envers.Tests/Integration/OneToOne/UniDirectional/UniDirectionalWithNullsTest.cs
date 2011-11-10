@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
@@ -75,6 +76,14 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 			Assert.IsNull(rev1.Reference);
 			Assert.AreEqual(ed2, rev2.Reference);
 			Assert.AreEqual(ed2, rev3.Reference);
+		}
+
+		protected override IEnumerable<string> Mappings
+		{
+			get
+			{
+				return new[] { "Entities.Ids.Mapping.hbm.xml", "Integration.OneToOne.UniDirectional.Mapping.hbm.xml" };
+			}
 		}
 	}
 }
