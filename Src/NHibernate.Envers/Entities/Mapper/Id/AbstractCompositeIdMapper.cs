@@ -23,6 +23,8 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override object MapToIdFromMap(IDictionary data)
 		{
+			if (data == null)
+				return null;
 			object ret;
 			try 
 			{
