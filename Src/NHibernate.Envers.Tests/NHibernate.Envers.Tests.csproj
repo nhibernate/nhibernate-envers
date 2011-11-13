@@ -62,6 +62,16 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass.cs" />
+    <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass2.cs" />
+    <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
+    <Compile Include="Integration\ManyToMany\InverseToSuperclass\ManyToManyInverseToSuperclassTest.cs" />
+    <Compile Include="Integration\ManyToMany\InverseToSuperclass\Master.cs" />
+    <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSubclass.cs" />
+    <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSubclass2.cs" />
+    <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSuperclass.cs" />
+    <Compile Include="Integration\OneToMany\InverseToSuperclass\OneToManyInverseToSuperclassTest.cs" />
+    <Compile Include="Integration\OneToMany\InverseToSuperclass\Master.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UnidirectionalMulIdWithNullsTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngMulIdEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
@@ -580,6 +590,8 @@
     <EmbeddedResource Include="Integration\AuditReader\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Merge\Mapping.hbm.xml" />
     <Content Include="HOW_TO_RUN_TESTS.txt" />
+    <EmbeddedResource Include="Integration\ManyToMany\InverseToSuperclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\OneToMany\InverseToSuperclass\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
