@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.Integration.OneToMany.InverseToSuperclass">
+
+	<class name="Master">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Str"/>
+		<bag name="Items" lazy="true" cascade="all" inverse="true">
+			<key column="ID_MASTER"/>
+			<one-to-many class="DetailSubclass2" />
+		</bag>
+	</class>
+
+	<class name="DetailSuperclass" abstract="true">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<discriminator column="DISCRIMINATOR" type="string" />
+		
+		<many-to-one name="Master" column="ID_MASTER" class="Master" />
+
+		<subclass name="DetailSubclass" discriminator-value="SUB">
+			<property name="Str2" />
+			
+			<subclass name="DetailSubclass2"
+				discriminator-value="SUB2"
+				extends="DetailSubclass">
+				<property name="Str3" />
+			</subclass>
+
+		</subclass>
+	</class>
+</hibernate-mapping>

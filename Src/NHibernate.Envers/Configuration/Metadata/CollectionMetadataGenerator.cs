@@ -614,6 +614,26 @@ namespace NHibernate.Envers.Configuration.Metadata
 				return auditMappedBy;
 			}
 
+			var mappedBy = searchMappedBy(referencedClass, collectionValue);
+
+			if (mappedBy == null)
+			{
+				log.Debug("Going to search the mapped by attribute for " + propertyName + " in superclasses of entity: " + referencedClass.ClassName);
+				var tempClass = referencedClass;
+				while (mappedBy == null && tempClass.Superclass != null)
+				{
+					log.Debug("Searching in superclass: " + tempClass.Superclass.ClassName);
+					mappedBy = searchMappedBy(tempClass.Superclass, collectionValue);
+					tempClass = tempClass.Superclass;
+				}
+			}
+			if(mappedBy==null)
+				throw new MappingException("Unable to read the mapped by attribute for " + propertyName + " in " + referencingEntityName + "!");
+			return mappedBy;
+		}
+
+		private string searchMappedBy(PersistentClass referencedClass, Mapping.Collection collectionValue)
+		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
 				if (Toolz.IteratorsContentEqual(property.Value.ColumnIterator.GetEnumerator(),
@@ -622,9 +642,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					return property.Name;
 				}
 			}
-
-			throw new MappingException("Unable to read the mapped by attribute for " + propertyName + " in "
-					+ referencingEntityName + "!");
+			return null;
 		}
 
 		private string GetMappedBy(Table collectionTable, PersistentClass referencedClass) 
@@ -636,6 +654,28 @@ namespace NHibernate.Envers.Configuration.Metadata
 				return auditMappedBy;
 			}
 
+			var mappedBy = searchMappedBy(referencedClass, collectionTable);
+
+			// not found on referenced class, searching on superclasses
+			if (mappedBy == null)
+			{
+				log.Debug("Going to search the mapped by attribute for " + propertyName + " in superclases of entity: " + referencedClass.ClassName);
+				var tempClass = referencedClass;
+				while (mappedBy == null && tempClass.Superclass != null)
+				{
+					log.Debug("Searching in superclass: " + tempClass.Superclass.ClassName);
+					mappedBy = searchMappedBy(tempClass.Superclass, collectionTable);
+					tempClass = tempClass.Superclass;
+				}
+			}
+
+			if(mappedBy==null)
+				throw new MappingException("Unable to read the mapped by attribute for " + propertyName + " in "+ referencingEntityName + "!");
+			return mappedBy;
+		}
+
+		private string searchMappedBy(PersistentClass referencedClass, Table collectionTable)
+		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
 				var propValueAsColl = property.Value as Mapping.Collection;
@@ -648,8 +688,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					}
 				}
 			}
-
-			throw new MappingException("Unable to read the mapped by attribute for " + propertyName + " in "+ referencingEntityName + "!");
+			return null;
 		}
 	}
 }
