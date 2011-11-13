@@ -579,6 +579,7 @@
     <EmbeddedResource Include="Integration\EntityNames\SingleAssociatedNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\AuditReader\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Merge\Mapping.hbm.xml" />
+    <Content Include="HOW_TO_RUN_TESTS.txt" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
