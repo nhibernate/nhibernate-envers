@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var propertyType = property.Type;
 				if (!"_identifierMapper".Equals(property.Name))
 				{
-					if (propertyType is ImmutableType)
+					if (!propertyType.IsMutable)
 					{
 						// Last but one parameter: ids are always insertable
 						mainGenerator.BasicMetadataGenerator.AddBasic(parent,

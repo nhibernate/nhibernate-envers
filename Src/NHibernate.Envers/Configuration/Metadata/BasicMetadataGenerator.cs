@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (parent != null) 
 			{
 				var prop_mapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
-						null, insertable, key);
+						typeOfUserImplementation.AssemblyQualifiedName, insertable, key);
 				MetadataTools.AddColumns(prop_mapping, value.ColumnIterator.OfType<Column>());
 				var typeElement = parent.OwnerDocument.CreateElement("type");
 				typeElement.SetAttribute("name", typeOfUserImplementation.AssemblyQualifiedName);
