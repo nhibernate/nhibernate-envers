@@ -72,11 +72,15 @@ namespace NHibernate.Envers.Entities.Mapper
 				}
 			}
 
-			// And we don't have to set anything on the object - the default value is null
-			if (!allNullAndSingle)
+			if (allNullAndSingle)
+			{
+				// single property, but default value need not be null, so we'll set it to null anyway 
+				setter.Set(obj, null);	
+			}
+			else
 			{
 				var componentType = Toolz.ResolveDotnetType(componentClassName);
-				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(componentType); 
+				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(componentType);
 				_delegate.MapToEntityFromMap(verCfg, subObj, data, primaryKey, versionsReader, revision);
 				setter.Set(obj, subObj);
 			}

@@ -51,10 +51,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			var setter = ReflectionTools.GetSetter(objType, _propertyData);
 
 			var value = data[_propertyData.Name];
-			if (value != null) 
-			{
-				setter.Set(obj, value);
-			}
+			setter.Set(obj, value);
 		}
 
 		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
