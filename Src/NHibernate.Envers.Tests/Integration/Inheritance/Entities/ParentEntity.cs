@@ -5,11 +5,6 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
 	[Audited]
 	public class ParentEntity
 	{
-		public ParentEntity()
-		{
-			Data = string.Empty;
-		}
-
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
 
@@ -18,12 +13,17 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
 			var casted = obj as ParentEntity;
 			if (casted == null)
 				return false;
-			return (Id == casted.Id && Data == casted.Data);
+			if (Id != casted.Id)
+				return false;
+			if (Data != null ? !Data.Equals(casted.Data) : casted.Data != null)
+				return false;
+			return true;
 		}
 
 		public override int GetHashCode()
 		{
-			return Id ^ Data.GetHashCode();
+			var dataHash = (Data == null) ? 0 : Data.GetHashCode();
+			return Id ^ dataHash;
 		}
 	}
 }
