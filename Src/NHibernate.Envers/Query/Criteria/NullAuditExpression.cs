@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Query.Criteria
 			}
 			else
 			{
-				relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, null, propertyName, true);
+				relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, null, null, true);
 			}
 		}
 	}

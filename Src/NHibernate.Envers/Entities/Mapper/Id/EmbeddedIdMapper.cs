@@ -35,25 +35,28 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			MapToMapFromId(data, getter.Get(obj));
 		}
 
-		public override void MapToEntityFromMap(object obj, IDictionary data)
+		public override bool MapToEntityFromMap(object obj, IDictionary data)
 		{
 			if (data == null || obj == null) 
-			{
-				return;
-			}
+				return false;
+
 			var objType = obj.GetType();
 			var getter = ReflectionTools.GetGetter(objType, idPropertyData);
 			var setter = ReflectionTools.GetSetter(objType, idPropertyData);
 
 			try 
 			{
-				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(getter.ReturnType);  
-				setter.Set(obj, subObj);
-
-				foreach(var idMapper in Ids.Values) 
+				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(getter.ReturnType);
+				var ret = true;
+				foreach(var idMapper in Ids.Values)
 				{
-					idMapper.MapToEntityFromMap(subObj, data);
+					ret &= idMapper.MapToEntityFromMap(subObj, data);
 				}
+				if (ret)
+				{
+					setter.Set(obj, subObj);
+				}
+				return ret;
 			} 
 			catch (Exception e) 
 			{

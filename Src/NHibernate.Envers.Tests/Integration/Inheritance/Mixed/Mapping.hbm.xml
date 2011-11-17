@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.Integration.Inheritance.Mixed">
+	
+	<class name="AbstractActivity" abstract="true">
+		<composite-id name="Id">
+			<key-property name="Id1"/>
+			<key-property name="Id2"/>
+		</composite-id>
+		<discriminator column="disc" type="string"/>
+		<property name="SequenceNumber" />
+
+		<subclass name="NormalActivity" discriminator-value ="NORMAL">
+		</subclass>
+
+		<subclass name="AbstractCheckActivity" abstract="true" discriminator-value="CHECK">
+			<join table ="ACTIVITY_CHECK">
+				<key>
+					<column name="ACTIVITY_ID1"/>
+					<column name="ACTIVITY_ID2"/>
+				</key>
+				<property name="DurationInMinutes"/>
+				<many-to-one name="RelatedActivity" class="AbstractActivity" cascade="all" fetch="select">
+					<column name="Id1" />
+					<column name="Id2" />
+				</many-to-one>
+			</join>
+
+			<subclass name="CheckInActivity" discriminator-value="CHECK_IN">
+			</subclass>
+		</subclass>
+	</class>
+</hibernate-mapping>

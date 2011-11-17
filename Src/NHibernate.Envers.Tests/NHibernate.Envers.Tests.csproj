@@ -70,6 +70,13 @@
     <Compile Include="Entities\Ids\EmbIdWithCustomType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomTypeTestEntity.cs" />
     <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\AbstractCheckActivity.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\AbstractActivity.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\IActivity.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\ActivityId.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\CheckInActivity.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\MixedInheritanceStrategiesEntityTest.cs" />
+    <Compile Include="Integration\Inheritance\Mixed\NormalActivity.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass2.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
@@ -600,6 +607,7 @@
     <Content Include="HOW_TO_RUN_TESTS.txt" />
     <EmbeddedResource Include="Integration\ManyToMany\InverseToSuperclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToMany\InverseToSuperclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Mixed\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

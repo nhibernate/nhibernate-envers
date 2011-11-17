@@ -8,7 +8,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 	{
 		void MapToMapFromId(IDictionary<string, object> data, object obj);
 		void MapToMapFromEntity(IDictionary<string, object> data, object obj);
-		void MapToEntityFromMap(object obj, IDictionary data);
+		/// <summary>
+		/// </summary>
+		/// <param name="obj">Object to map to.</param>
+		/// <param name="data">Data to map.</param>
+		/// <returns>True if data was mapped; false otherwise (when the id is <code>null</code>).</returns>
+		bool MapToEntityFromMap(object obj, IDictionary data);
 		object MapToIdFromEntity(object data);
 		object MapToIdFromMap(IDictionary data);
 

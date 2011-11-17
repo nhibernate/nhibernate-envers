@@ -239,10 +239,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		public static void PrefixNamesInPropertyElement(XmlElement element, string prefix, IEnumerator<string> columnNames,
+		public static void PrefixNamesInPropertyElement(XmlElement element, string prefix, IEnumerable<string> columnNames,
 														bool changeToKey, bool insertable) 
 		{
 			var nodeList = element.ChildNodes;
+			//need to reverse names because looping backwards
+			var columnNamesReversed = columnNames.Reverse().GetEnumerator();
 
 			for (var i = nodeList.Count - 1; i >= 0; i--)
 			{
@@ -254,7 +256,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					{
 						property.SetAttribute("name", prefix + value);
 					}
-					ChangeNamesInColumnElement(property, columnNames);
+					ChangeNamesInColumnElement(property, columnNamesReversed);
 
 					if (changeToKey)
 					{
@@ -286,9 +288,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			parent.AppendChild(newElement);
 		}
 
-		public static IEnumerator<string> GetColumnNameEnumerator(IEnumerable<ISelectable> columns)
+		public static IEnumerable<string> GetColumnNameEnumerator(IEnumerable<ISelectable> columns)
 		{
-			return (from Column column in columns select column.Name).GetEnumerator();
+			return (from Column column in columns select column.Name);
 		}
 	}
 }

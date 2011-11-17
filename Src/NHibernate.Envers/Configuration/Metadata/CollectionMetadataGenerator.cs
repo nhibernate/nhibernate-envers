@@ -195,7 +195,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <param name="columnNames">Column names that will be used for properties that form the id.</param>
 		/// <param name="relatedIdMapping">Id mapping data of the related entity.</param>
 		private static void addRelatedToXmlMapping(XmlElement xmlMapping, string prefix,
-											IEnumerator<string> columnNames,
+											IEnumerable<string> columnNames,
 											IdMappingData relatedIdMapping) 
 		{
 			var properties = (XmlElement) relatedIdMapping.XmlRelationMapping.Clone();
@@ -419,7 +419,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					addRelatedToXmlMapping(xmlMapping, prefixRelated,
 							joinColumns != null && joinColumns.Length > 0
-									? joinColumns.ToList().GetEnumerator()
+									? joinColumns.ToList()
 									: MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
 							referencedIdMapping);
 				}

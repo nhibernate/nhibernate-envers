@@ -27,14 +27,17 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			this.propertyData = propertyData;
 		}
 
-		public override void MapToEntityFromMap(object obj, IDictionary data)
+		public override bool MapToEntityFromMap(object obj, IDictionary data)
 		{
 			if (data == null || obj == null)
-			{
-				return;
-			}
+				return false;
+			var value = data[propertyData.Name];
+			if (value == null)
+				return false;
+
 			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
-			setter.Set(obj, data[propertyData.Name]);
+			setter.Set(obj, value);
+			return true;
 		}
 
 		public override object MapToIdFromMap(IDictionary data)
