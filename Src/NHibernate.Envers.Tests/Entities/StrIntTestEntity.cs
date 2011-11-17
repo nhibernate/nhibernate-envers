@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.Entities
 		public override int GetHashCode()
 		{
 			var strValue = Str == null ? 0 : Str.GetHashCode();
-			return Id.GetHashCode() ^ strValue ^Number;
+			return Id.GetHashCode() ^ strValue ^ Number;
 		}
 	}
 }
