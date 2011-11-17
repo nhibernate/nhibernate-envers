@@ -4,11 +4,6 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 {
 	public class BasicTestEntity1
 	{
-		public BasicTestEntity1()
-		{
-			Str1 = string.Empty;
-		}
-
 		public virtual int Id { get; set; }
 		[Audited]
 		public virtual string Str1 { get; set; }
@@ -25,7 +20,8 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 
 		public override int GetHashCode()
 		{
-			return Id ^ Str1.GetHashCode() ^ Long1.GetHashCode();
+			var strHash = (Str1 == null ? 0 : Str1.GetHashCode());
+			return Id ^ strHash^ Long1.GetHashCode();
 		}
 	}
 
