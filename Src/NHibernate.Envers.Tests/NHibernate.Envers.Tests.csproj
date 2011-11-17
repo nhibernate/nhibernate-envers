@@ -62,10 +62,14 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Components\DefaultValueComponent1.cs" />
+    <Compile Include="Entities\Components\DefaultValueComponent2.cs" />
+    <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
     <Compile Include="Entities\Ids\CustomEnum.cs" />
     <Compile Include="Entities\Ids\CustomEnumUserType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomTypeTestEntity.cs" />
+    <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass2.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
