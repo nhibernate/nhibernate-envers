@@ -43,13 +43,13 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		[Test]
 		public void VerifyRevisionsPropertyEqQuery()
 		{
-			var revs_id1 = AuditReader().CreateQuery()
+			var revsId1 = AuditReader().CreateQuery()
 							.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 							.Add(AuditEntity.Id().Eq(id1))
 							.GetResultList<IList>();
-			Assert.AreEqual(2, revs_id1.Count);
-			Assert.AreEqual(new StrIntTestEntity { Str = "a", Number = 10, Id=id1 }, revs_id1[0][0]);
-			Assert.AreEqual(new StrIntTestEntity { Str = "a", Number = 10, Id = id1 }, revs_id1[1][0]);
+			Assert.AreEqual(2, revsId1.Count);
+			Assert.AreEqual(new StrIntTestEntity { Str = "a", Number = 10, Id=id1 }, revsId1[0][0]);
+			Assert.AreEqual(new StrIntTestEntity { Str = "a", Number = 10, Id = id1 }, revsId1[1][0]);
 		}
 	}
 }

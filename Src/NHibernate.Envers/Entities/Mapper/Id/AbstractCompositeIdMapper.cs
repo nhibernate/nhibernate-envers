@@ -37,7 +37,8 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 			foreach (var mapper in Ids.Values) 
 			{
-				mapper.MapToEntityFromMap(ret, data);
+				if (!mapper.MapToEntityFromMap(ret, data))
+					return null;
 			}
 
 			return ret;

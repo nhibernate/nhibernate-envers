@@ -29,12 +29,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
 			var newData = new Dictionary<string, object>();
-			data[_propertyData.Name] = newData;
 
 			// If this property is originally non-insertable, but made insertable because it is in a many-to-one "fake"
 			// bi-directional relation, we always store the "old", unchaged data, to prevent storing changes made
 			// to this field. It is the responsibility of the collection to properly update it if it really changed.
 			_delegat.MapToMapFromEntity(newData, _nonInsertableFake ? oldObj : newObj);
+
+			foreach (var entry in newData)
+			{
+				data[entry.Key] = entry.Value;
+			}
 
 			//noinspection SimplifiableConditionalExpression
 			return !_nonInsertableFake && !Toolz.EntitiesEqual(session, newObj, oldObj);
@@ -44,11 +48,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 									   IAuditReaderImplementor versionsReader, long revision)
 		{
 			if (obj == null)
-			{
 				return;
-			}
 
-			var entityId = _delegat.MapToIdFromMap((IDictionary)data[_propertyData.Name]);
+			var entityId = _delegat.MapToIdFromMap(data);
+
 			object value;
 			if (entityId == null)
 			{

@@ -62,11 +62,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			properties.SetAttribute("name",propertyAuditingData.Name);
 
 			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
-			                                           fixedColumnNames == null
-			                                           	? MetadataTools.GetColumnNameEnumerator(value.ColumnIterator)
-			                                           	: fixedColumnNames.GetEnumerator(), false, insertable);
-			parent.AppendChild(properties);
+			                                           fixedColumnNames ?? MetadataTools.GetColumnNameEnumerator(value.ColumnIterator)
+																	 ,false, insertable);
 
+			// Extracting related id properties from properties tag
+			foreach (XmlElement element in properties.ChildNodes)
+			{
+				parent.AppendChild(element.Clone());
+			}
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();

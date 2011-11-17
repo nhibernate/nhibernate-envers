@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Query.Criteria
 				}
 				foreach (var paramNameAndValue in dic)
 				{
-					parameters.AddWhereWithParams(paramNameAndValue.Key.GetProperty(propertyName), "in (", paramNameAndValue.Value.ToArray(), ")");					
+					parameters.AddWhereWithParams(paramNameAndValue.Key.GetProperty(null), "in (", paramNameAndValue.Value.ToArray(), ")");					
 				}
 			}
 		}

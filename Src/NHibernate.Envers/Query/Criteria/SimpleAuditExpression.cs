@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Query.Criteria
 
 				var id = relatedEntity.IdMapper.MapToIdFromEntity(value);
 
-				relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, id, propertyName, "=".Equals(op));
+				relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, id, null, "=".Equals(op));
 			}
 		}
 	}

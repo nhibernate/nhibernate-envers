@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Query.Criteria
 				throw new AuditException("This criterion can only be used on a property that is " +
 						"a relation to another property.");
 			}
-			relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, id, propertyName, equals);
+			relatedEntity.IdMapper.AddIdEqualsToQuery(parameters, id, null, equals);
 		}
 	}
 }

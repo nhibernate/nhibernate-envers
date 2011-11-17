@@ -80,7 +80,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 		public abstract IList<QueryParameterData> MapToQueryParametersFromId(object obj);
 		public abstract void MapToMapFromId(IDictionary<string, object> data, object obj);
 		public abstract void MapToMapFromEntity(IDictionary<string, object> data, object obj);
-		public abstract void MapToEntityFromMap(object obj, IDictionary data);
+		public abstract bool MapToEntityFromMap(object obj, IDictionary data);
 		public abstract object MapToIdFromEntity(object data);
 		public abstract object MapToIdFromMap(IDictionary data);
 		public abstract IIdMapper PrefixMappedProperties(string prefix);

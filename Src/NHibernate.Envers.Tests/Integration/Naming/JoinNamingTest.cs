@@ -77,7 +77,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		public void VerifyJoinColumnName()
 		{
 			var auditName = TestAssembly + ".Integration.Naming.JoinNamingRefIngEntity_AUD";
-			var columns = Cfg.GetClassMapping(auditName).GetProperty("Reference").ColumnIterator;
+			var columns = Cfg.GetClassMapping(auditName).GetProperty("Reference_Id").ColumnIterator;
 			Assert.AreEqual(1, columns.Count());
 			Assert.AreEqual("jnree_column_reference", ((Column)columns.First()).Name);
 		}
