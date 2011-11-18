@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.AllAudited">
+
+	<class name="ISimple" discriminator-value="SIMPLE_INTERFACE">
+		<id name="Id">
+			<generator class="increment" />
+		</id>
+		<discriminator column="DISCRIMINATOR" />
+		<property name="Data" />
+	</class>
+
+	<subclass name="AuditedImplementor"	extends="ISimple"
+				discriminator-value="AUDITED_IMPLEMENTOR" >
+		<property name="AuditedImplementorData" />
+	</subclass>
+
+	<subclass name="NonAuditedImplementor"	extends="ISimple"
+				discriminator-value="NON_AUDITED_IMPLEMENTOR" >
+		<property name="NonAuditedImplementorData" />
+	</subclass>
+</hibernate-mapping>

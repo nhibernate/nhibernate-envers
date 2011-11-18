@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// When applied to a class, indicates that all of its properties should be audited.
 	/// When applied to a field, indicates that this field should be audited.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property |  AttributeTargets.Field)]
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property |  AttributeTargets.Field | AttributeTargets.Interface)]
 	public sealed class AuditedAttribute : Attribute
 	{
 		public AuditedAttribute()
