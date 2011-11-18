@@ -313,8 +313,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 				{
 					var exactDate = new DateTime(revEnd.CustomTimestamp);
 					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Date.Should().Be.EqualTo(exactDate.Date);
-					revendDate.Second.Should().Be.EqualTo(exactDate.Second);
+					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-100), exactDate.AddMilliseconds(100));
 				}
 			}
 		}
