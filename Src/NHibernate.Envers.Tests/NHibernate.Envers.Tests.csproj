@@ -84,6 +84,13 @@
     <Compile Include="Integration\Interfaces\Inheritance\AllAudited\NonAuditedImplementor.cs" />
     <Compile Include="Integration\Interfaces\Inheritance\AllAudited\Subclass\SubclassAllAuditedTest.cs" />
     <Compile Include="Integration\Interfaces\Inheritance\AllAudited\Union\UnionAllAuditedTest.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\AbstractAllAuditedTest.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\AuditedImplementor.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\ISimple.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\Joined\JoinedAllAuditedTest.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\NonAuditedImplementor.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\Subclass\SubclassAllAuditedTest.cs" />
+    <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\Union\UnionAllAuditedTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass2.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
@@ -618,6 +625,9 @@
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\AllAudited\Union\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\AllAudited\Subclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\AllAudited\Joined\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited\Joined\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited\Subclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited\Union\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
