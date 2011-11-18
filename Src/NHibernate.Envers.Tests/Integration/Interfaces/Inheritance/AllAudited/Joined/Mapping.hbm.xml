@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.AllAudited">
+
+	<class name="ISimple" table="INTERFACE" abstract="true">
+		<id name="Id" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="Data" />
+	</class>
+
+	<joined-subclass name="AuditedImplementor" extends="ISimple" table="AUDITED_IMPLEMENTOR">
+		<key column="ID"/>
+		<property name="AuditedImplementorData" />
+	</joined-subclass>
+
+	<joined-subclass name="NonAuditedImplementor" extends="ISimple" table="NON_AUDITED_IMPLEMENTOR">
+		<key column="ID"/>
+		<property name="NonAuditedImplementorData" />
+	</joined-subclass>
+</hibernate-mapping>
