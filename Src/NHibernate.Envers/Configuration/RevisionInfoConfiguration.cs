@@ -52,15 +52,14 @@ namespace NHibernate.Envers.Configuration
 			classMapping.SetAttribute("table", "REVINFO");
 
 			var idProperty = MetadataTools.AddNativelyGeneratedId(document, classMapping, revisionInfoIdData.Name, revisionPropType);
-			//ORIG: MetadataTools.addColumn(idProperty, "REV", -1, 0, 0, null);
+
 			var col = idProperty.OwnerDocument.CreateElement("column");
 			col.SetAttribute("name", "REV");
 			//idProperty should have a "generator" node otherwise sth. is wrong.
 			idProperty.InsertBefore(col, idProperty.GetElementsByTagName("generator")[0]);
 
-			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name,
-					revisionInfoTimestampType.Name, true, false);
-			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, 0, 0, SqlTypeFactory.DateTime.ToString());
+			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false);
+			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, 0, 0, SqlTypeFactory.DateTime.ToString(), false);
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
@@ -107,7 +106,7 @@ namespace NHibernate.Envers.Configuration
 			if (revisionPropSqlType != null)
 			{
 				// Putting a fake name to make Hibernate happy. It will be replaced later anyway.
-				MetadataTools.AddColumn(revRelMapping, "*", -1, 0, 0, revisionPropSqlType);
+				MetadataTools.AddColumn(revRelMapping, "*", -1, 0, 0, revisionPropSqlType, false);
 			}
 
 			return revRelMapping;

@@ -103,6 +103,8 @@
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\ManyToManyInverseToSuperclassTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\Master.cs" />
+    <Compile Include="Integration\Naming\Quotation\QuotedFieldsEntity.cs" />
+    <Compile Include="Integration\Naming\Quotation\QuotedFieldsTest.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSubclass.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSubclass2.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSuperclass.cs" />
@@ -638,6 +640,7 @@
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Joined\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Subclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Union\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Naming\Quotation\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
