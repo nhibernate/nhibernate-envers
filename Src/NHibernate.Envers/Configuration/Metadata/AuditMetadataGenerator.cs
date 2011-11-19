@@ -285,7 +285,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var joinKey = joinElement.OwnerDocument.CreateElement("key");
 				joinElement.AppendChild(joinKey);
 				MetadataTools.AddColumns(joinKey, join.Key.ColumnIterator.OfType<Column>());
-				MetadataTools.AddColumn(joinKey, VerEntCfg.RevisionFieldName, -1, 0, 0, null);
+				MetadataTools.AddColumn(joinKey, VerEntCfg.RevisionFieldName, -1, 0, 0, null, false);
 			}
 		}
 

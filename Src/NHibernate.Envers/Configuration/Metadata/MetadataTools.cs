@@ -5,9 +5,9 @@ using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-	public static class MetadataTools 
+	public static class MetadataTools
 	{
-		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, System.Type type) 
+		public static XmlElement AddNativelyGeneratedId(XmlDocument doc, XmlElement parent, string name, System.Type type)
 		{
 			var idMapping = doc.CreateElement("id");
 			parent.AppendChild(idMapping);
@@ -62,21 +62,27 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return manyToOneMapping;
 		}
 
-		private static void AddOrModifyAttribute(XmlElement parent, string name, string value) 
+		private static void AddOrModifyAttribute(XmlElement parent, string name, string value)
 		{
-			parent.SetAttribute(name,value);
+			parent.SetAttribute(name, value);
 		}
 
-		public static XmlElement AddOrModifyColumn(XmlElement parent, string name) 
+		/// <summary>
+		/// Column name shall be wrapped with '`' signs if quotation required.
+		/// </summary>
+		/// <param name="parent"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static XmlElement AddOrModifyColumn(XmlElement parent, string name)
 		{
 			var column_mapping = (XmlElement)parent.SelectSingleNode("column");
 
-			if (column_mapping == null) 
+			if (column_mapping == null)
 			{
-				return AddColumn(parent, name, -1, 0, 0, null);
+				return AddColumn(parent, name, -1, 0, 0, null, false);
 			}
 
-			if (!string.IsNullOrEmpty(name)) 
+			if (!string.IsNullOrEmpty(name))
 			{
 				AddOrModifyAttribute(column_mapping, "name", name);
 			}
@@ -89,25 +95,25 @@ namespace NHibernate.Envers.Configuration.Metadata
 			element.SetAttribute("formula", formula.Text);
 		}
 
-		public static XmlElement AddColumn(XmlElement parent, string name, int length, int scale, int precision, string sqlType) 
+		public static XmlElement AddColumn(XmlElement parent, string name, int length, int scale, int precision, string sqlType, bool quoted)
 		{
 			var columnMapping = parent.OwnerDocument.CreateElement("column");
 			parent.AppendChild(columnMapping);
 
-			columnMapping.SetAttribute("name", name);
-			if (length != -1) 
+			columnMapping.SetAttribute("name", quoted ? "`" + name + "`" : name);
+			if (length != -1)
 			{
 				columnMapping.SetAttribute("length", length.ToString());
 			}
-			if (scale != 0) 
+			if (scale != 0)
 			{
 				columnMapping.SetAttribute("scale", scale.ToString());
 			}
-			if (precision != 0) 
+			if (precision != 0)
 			{
 				columnMapping.SetAttribute("precision", precision.ToString());
 			}
-			if (!string.IsNullOrEmpty(sqlType)) 
+			if (!string.IsNullOrEmpty(sqlType))
 			{
 				columnMapping.SetAttribute("sql-type", sqlType);
 			}
@@ -115,40 +121,40 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return columnMapping;
 		}
 
-		private static XmlElement CreateEntityCommon(XmlDocument document, string type, AuditTableData auditTableData, string discriminatorValue) 
+		private static XmlElement CreateEntityCommon(XmlDocument document, string type, AuditTableData auditTableData, string discriminatorValue)
 		{
 			var hibernateMapping = document.CreateElement("hibernate-mapping");
 			hibernateMapping.SetAttribute("assembly", "NHibernate.Envers");
 			hibernateMapping.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
 			hibernateMapping.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			hibernateMapping.SetAttribute("xmlns", "urn:nhibernate-mapping-2.2"); 
+			hibernateMapping.SetAttribute("xmlns", "urn:nhibernate-mapping-2.2");
 			hibernateMapping.SetAttribute("auto-import", "false");
 			document.AppendChild(hibernateMapping);
 
 			var classMapping = document.CreateElement(type);
 			hibernateMapping.AppendChild(classMapping);
 
-			if (auditTableData.AuditEntityName != null) 
+			if (auditTableData.AuditEntityName != null)
 			{
 				classMapping.SetAttribute("entity-name", auditTableData.AuditEntityName);
 			}
 
-			if (discriminatorValue != null) 
+			if (discriminatorValue != null)
 			{
 				classMapping.SetAttribute("discriminator-value", discriminatorValue);
 			}
 
-			if (!string.IsNullOrEmpty(auditTableData.AuditTableName)) 
+			if (!string.IsNullOrEmpty(auditTableData.AuditTableName))
 			{
 				classMapping.SetAttribute("table", auditTableData.AuditTableName);
 			}
 
-			if (!string.IsNullOrEmpty(auditTableData.Schema)) 
+			if (!string.IsNullOrEmpty(auditTableData.Schema))
 			{
 				classMapping.SetAttribute("schema", auditTableData.Schema);
 			}
 
-			if (!string.IsNullOrEmpty(auditTableData.Catalog)) 
+			if (!string.IsNullOrEmpty(auditTableData.Catalog))
 			{
 				classMapping.SetAttribute("catalog", auditTableData.Catalog);
 			}
@@ -156,13 +162,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return classMapping;
 		}
 
-		public static XmlElement CreateEntity(XmlDocument document, AuditTableData auditTableData, string discriminatorValue) 
+		public static XmlElement CreateEntity(XmlDocument document, AuditTableData auditTableData, string discriminatorValue)
 		{
 			return CreateEntityCommon(document, "class", auditTableData, discriminatorValue);
 		}
 
 		public static XmlElement CreateSubclassEntity(XmlDocument document, string subclassType, AuditTableData auditTableData,
-												   string extendsEntityName, string discriminatorValue) 
+													string extendsEntityName, string discriminatorValue)
 		{
 			var classMapping = CreateEntityCommon(document, subclassType, auditTableData, discriminatorValue);
 			classMapping.SetAttribute("extends", extendsEntityName);
@@ -171,19 +177,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public static XmlElement CreateJoin(XmlElement parent, string tableName,
-										 string schema, string catalog) 
+										 string schema, string catalog)
 		{
 			var joinMapping = parent.OwnerDocument.CreateElement("join");
 			parent.AppendChild(joinMapping);
 
 			joinMapping.SetAttribute("table", tableName);
 
-			if (!string.IsNullOrEmpty(schema)) 
+			if (!string.IsNullOrEmpty(schema))
 			{
 				joinMapping.SetAttribute("schema", schema);
 			}
 
-			if (!string.IsNullOrEmpty(catalog)) 
+			if (!string.IsNullOrEmpty(catalog))
 			{
 				joinMapping.SetAttribute("catalog", catalog);
 			}
@@ -207,7 +213,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public static void AddColumn(XmlElement anyMapping, Column column)
 		{
 			AddColumn(anyMapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : 0,
-					column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType);
+					column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType, column.IsQuoted);
 		}
 
 		public static void AddColumnsOrFormulas(XmlElement element, IEnumerable<ISelectable> columnIterator)
@@ -218,16 +224,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (column != null)
 					AddColumn(element, column);
 				else
-					AddFormula(element, (Formula) selectable);
+					AddFormula(element, (Formula)selectable);
 			}
 		}
 
-		private static void ChangeNamesInColumnElement(XmlElement element, IEnumerator<string> columnEnumerator) 
+		private static void ChangeNamesInColumnElement(XmlElement element, IEnumerator<string> columnEnumerator)
 		{
 			var nodeList = element.ChildNodes;
 			foreach (XmlElement property in nodeList)
 			{
-				if ("column".Equals(property.Name)) 
+				if ("column".Equals(property.Name))
 				{
 					var value = property.GetAttribute("name");
 					if (!string.IsNullOrEmpty(value))
@@ -240,7 +246,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public static void PrefixNamesInPropertyElement(XmlElement element, string prefix, IEnumerable<string> columnNames,
-														bool changeToKey, bool insertable) 
+														bool changeToKey, bool insertable)
 		{
 			var nodeList = element.ChildNodes;
 			//need to reverse names because looping backwards
@@ -248,7 +254,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			for (var i = nodeList.Count - 1; i >= 0; i--)
 			{
-				var property = (XmlElement) nodeList[i];
+				var property = (XmlElement)nodeList[i];
 				if ("property".Equals(property.Name))
 				{
 					var value = property.GetAttribute("name");
@@ -279,7 +285,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (!attrName.Equals("insert") && !attrName.Equals("update"))
 					newElement.SetAttributeNode((XmlAttribute)attribute.CloneNode(true));
 			}
-			for (var i = 0; i < element.ChildNodes.Count; i++) 
+			for (var i = 0; i < element.ChildNodes.Count; i++)
 			{
 				newElement.AppendChild(element.ChildNodes[i].CloneNode(true));
 			}
