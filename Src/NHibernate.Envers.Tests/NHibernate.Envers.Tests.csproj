@@ -112,6 +112,10 @@
     <Compile Include="Integration\OneToMany\InverseToSuperclass\Master.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UnidirectionalMulIdWithNullsTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngMulIdEntity.cs" />
+    <Compile Include="Integration\Properties\PropertiesTestEntity.cs" />
+    <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldEntity.cs" />
+    <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldTest.cs" />
+    <Compile Include="Integration\Properties\VersionsPropertiesTEst.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
@@ -641,6 +645,7 @@
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Subclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Union\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Naming\Quotation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Properties\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
