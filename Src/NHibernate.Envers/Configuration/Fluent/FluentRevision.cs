@@ -26,8 +26,10 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		public System.Type RevisionEntityType { get; private set; }
 
-		public IEnumerable<MemberInfoAndAttribute> Attributes()
+		public IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration)
 		{
+			if(nhConfiguration.GetClassMapping(RevisionEntityType)==null)
+				throw new FluentException("Revision entity " + RevisionEntityType.FullName + " must be mapped!");
 			var ret = new List<MemberInfoAndAttribute>
 							{
 								new MemberInfoAndAttribute(RevisionEntityType, new RevisionEntityAttribute {Listener = _revisionListener}), 

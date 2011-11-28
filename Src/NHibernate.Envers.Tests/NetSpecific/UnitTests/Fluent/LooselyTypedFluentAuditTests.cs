@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		public void WhenGetClassAttributeThenSingleAuditedAttribute()
 		{
 			var attributeProvider = new LooselyTypedFluentAudit(typeof(MyClass));
-			attributeProvider.Attributes().Single().Attribute.Should().Be.InstanceOf<AuditedAttribute>();
+			attributeProvider.Attributes(null).Single().Attribute.Should().Be.InstanceOf<AuditedAttribute>();
 		}
 	}
 }

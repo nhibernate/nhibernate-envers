@@ -81,7 +81,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			return member;
 		}
 
-		public IEnumerable<MemberInfoAndAttribute> Attributes()
+		public IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration)
 		{
 			return attributes;
 		}

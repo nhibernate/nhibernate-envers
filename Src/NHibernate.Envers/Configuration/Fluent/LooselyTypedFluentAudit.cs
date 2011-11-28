@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			_entityType = entityType;
 		}
 
-		public IEnumerable<MemberInfoAndAttribute> Attributes()
+		public IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration)
 		{
 			yield return new MemberInfoAndAttribute(_entityType, new AuditedAttribute());
 		}

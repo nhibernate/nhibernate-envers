@@ -7,28 +7,22 @@ namespace NHibernate.Envers.Configuration.Store
 	public class MetaDataStore : IMetaDataStore
 	{
 		private readonly Cfg.Configuration _nhConfiguration;
-		private readonly IMetaDataProvider _metaDataProvider;
-		private readonly IEnumerable<IMetaDataAdder> _metaDataAdders;
-		private IDictionary<System.Type, IEntityMeta> _entityMetas;
 
 		public MetaDataStore(Cfg.Configuration nhConfiguration, 
 							IMetaDataProvider metaDataProvider,
 							IEnumerable<IMetaDataAdder> metaDataAdders)
 		{
 			_nhConfiguration = nhConfiguration;
-			_metaDataProvider = metaDataProvider;
-			_metaDataAdders = metaDataAdders;
+			EntityMetas = initializeMetas(metaDataProvider, metaDataAdders);
 		}
 
-		public IDictionary<System.Type, IEntityMeta> EntityMetas
-		{
-			get { return _entityMetas ?? (_entityMetas = initializeMetas()); }
-		}
+		public IDictionary<System.Type, IEntityMeta> EntityMetas { get; private set; }
 
-		private IDictionary<System.Type, IEntityMeta> initializeMetas()
+		private IDictionary<System.Type, IEntityMeta> initializeMetas(IMetaDataProvider metaDataProvider,
+																				IEnumerable<IMetaDataAdder> metaDataAdders)
 		{
-			var metaData = _metaDataProvider.CreateMetaData(_nhConfiguration);
-			foreach (var metaDataAdder in _metaDataAdders)
+			var metaData = metaDataProvider.CreateMetaData(_nhConfiguration);
+			foreach (var metaDataAdder in metaDataAdders)
 			{
 				metaDataAdder.AddMetaDataTo(metaData);
 			}
@@ -65,20 +59,6 @@ namespace NHibernate.Envers.Configuration.Store
 					return (T)enversAttribute;
 			}
 			return null;
-		}
-
-		public IEnumerable<System.Type> EntitiesDeclaredWith<T>() where T : Attribute
-		{
-			var ret = new HashSet<System.Type>();
-			foreach (var keyValueMeta in EntityMetas)
-			{
-				foreach (var classMeta in keyValueMeta.Value.ClassMetas)
-				{
-					if (classMeta.GetType().Equals(typeof(T)))
-						ret.Add(keyValueMeta.Key);
-				}
-			}
-			return ret;
 		}
 	}
 }

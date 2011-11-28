@@ -1,0 +1,12 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Inheritance">
+	<class name="Super">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<property name="Number" />
+	</class>
+</hibernate-mapping>
+

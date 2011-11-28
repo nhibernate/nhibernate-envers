@@ -116,6 +116,8 @@
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldEntity.cs" />
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldTest.cs" />
     <Compile Include="Integration\Properties\VersionsPropertiesTEst.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Inheritance\AttributesOnBaseTypeTest.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
@@ -531,6 +533,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Configuration\Inheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\InsertUpdateFalse\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Strategy\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\RelationIn\Mapping.hbm.xml" />

@@ -113,7 +113,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var auditedTypes = new HashSet<System.Type>();
 			foreach (var attributeFactory in attributeFactories)
 			{
-				foreach (var memberInfoAndAttribute in attributeFactory.Attributes())
+				foreach (var memberInfoAndAttribute in attributeFactory.Attributes(nhConfiguration))
 				{
 					var type = memberInfoAndAttribute.Type;
 					var entMeta = createOrGetEntityMeta(ret, type);
