@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					_auditData.SetDefaultAudited(true);
 				}
 
-				var ar = new AuditedPropertiesReader(_metaDataStore, defaultStore,
+				var ar = new AuditedPropertiesReader(_metaDataStore, 
 													 new PersistentClassPropertiesSource(typ, this), _auditData,
 													 globalCfg, string.Empty);
 				ar.Read();

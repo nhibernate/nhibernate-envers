@@ -19,21 +19,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	public class AuditedPropertiesReader
 	{
 		private readonly IMetaDataStore _metaDataStore;
-		private readonly ModificationStore _defaultStore;
 		private readonly IPersistentPropertiesSource _persistentPropertiesSource;
 		private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
 		private readonly GlobalConfiguration _globalCfg;
 		private readonly string _propertyNamePrefix;
 
 		public AuditedPropertiesReader(IMetaDataStore metaDataStore,
-										ModificationStore defaultStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
 										IAuditedPropertiesHolder auditedPropertiesHolder,
 										GlobalConfiguration globalCfg,
 										string propertyNamePrefix)
 		{
 			_metaDataStore = metaDataStore;
-			_defaultStore = defaultStore;
 			_persistentPropertiesSource = persistentPropertiesSource;
 			_auditedPropertiesHolder = auditedPropertiesHolder;
 			_globalCfg = globalCfg;
@@ -169,7 +166,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void addFromPropertiesGroup(DeclaredPersistentProperty property, Component componentValue, AuditedAttribute allClassAudited)
 		{
 			var componentData = new ComponentAuditingData();
-			var isAudited = FillPropertyData(property.Member,
+			var isAudited = fillPropertyData(property.Member,
 											property.Property.Name,
 											componentData,
 											property.Property.PropertyAccessorName,
@@ -180,7 +177,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				componentData.Name = property.Property.Name;
 				var componentPropertiesSource = new ComponentPropertiesSource(componentValue);
 				var audPropReader = new AuditedPropertiesReader(_metaDataStore,
-											ModificationStore.Full, componentPropertiesSource, componentData,
+											componentPropertiesSource, componentData,
 											_globalCfg,
 											_propertyNamePrefix +
 											MappingTools.CreateComponentPrefix(property.Property.Name));
@@ -193,7 +190,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void addFromComponentProperty(DeclaredPersistentProperty property, Component componentValue, AuditedAttribute allClassAudited)
 		{
 			var componentData = new ComponentAuditingData();
-			var isAudited = FillPropertyData(property.Member,
+			var isAudited = fillPropertyData(property.Member,
 											property.Property.Name,
 											componentData,
 											property.Property.PropertyAccessorName,
@@ -201,7 +198,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			var componentPropertiesSource = new ComponentPropertiesSource(componentValue);
 			var audPropReader = new ComponentAuditedPropertiesReader(_metaDataStore,
-										ModificationStore.Full, componentPropertiesSource, componentData,
+										componentPropertiesSource, componentData,
 										_globalCfg,
 										_propertyNamePrefix +
 										MappingTools.CreateComponentPrefix(property.Property.Name));
@@ -217,7 +214,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private void addFromNotComponentProperty(DeclaredPersistentProperty property, AuditedAttribute allClassAudited)
 		{
 			var propertyData = new PropertyAuditingData();
-			var isAudited = FillPropertyData(property.Member,
+			var isAudited = fillPropertyData(property.Member,
 													property.Property.Name,
 													propertyData,
 													property.Property.PropertyAccessorName,
@@ -236,8 +233,9 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// <param name="mappedPropertyName">NH Property name</param>
 		/// <param name="propertyData">Property data, on which to set this property's modification store.</param>
 		/// <param name="accessType">Access type for the property.</param>
+		/// <param name="allClassAudited">Is class fully audited</param>
 		/// <returns>False if this property is not audited.</returns>
-		private bool FillPropertyData(MemberInfo property,
+		private bool fillPropertyData(MemberInfo property,
 										string mappedPropertyName,
 										PropertyAuditingData propertyData,
 										string accessType,
