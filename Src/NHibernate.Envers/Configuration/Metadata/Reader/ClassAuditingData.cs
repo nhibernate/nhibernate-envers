@@ -34,6 +34,16 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return properties.TryGetValue(propertyName, out ret) ? ret : null;
 		}
 
+		public bool IsEmpty()
+		{
+			return properties.Count == 0;
+		}
+
+		public bool Contains(string propertyName)
+		{
+			return properties.ContainsKey(propertyName);
+		}
+
 		public IEnumerable<string> PropertyNames
 		{
 			get { return properties.Keys; }

@@ -7,5 +7,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	{
 		IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
 		Property VersionedProperty { get; }
+		System.Type Class { get; }
 	}
 }

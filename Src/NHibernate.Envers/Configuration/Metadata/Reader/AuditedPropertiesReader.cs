@@ -42,13 +42,109 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public void Read()
 		{
-			addPropertiesFromClass();
+			// Retrieve classes that are explicitly marked for auditing process by any superclass of currently mapped
+			// entity or itself.
+			var clazz = _persistentPropertiesSource.Class;
+			var declaredAuditedSuperclasses = new HashSet<System.Type>();
+			doGetDeclaredAuditedSuperclasses(clazz, declaredAuditedSuperclasses);
+
+			addPropertiesFromClass(clazz, declaredAuditedSuperclasses);
 		}
 
-		private void addPropertiesFromClass()
+		/// <summary>
+		/// Recursively constructs a set of classes that have been declared for auditing process.
+		/// </summary>
+		/// <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
+		/// <param name="declaredAuditedSuperclasses">
+		/// Total collection of classes listed in <see cref="AuditedAttribute.AuditParents"/> property
+		/// by any superclass starting with class specified as the first argument.
+		/// </param>
+		private void doGetDeclaredAuditedSuperclasses(System.Type clazz, HashSet<System.Type> declaredAuditedSuperclasses)
+		{
+			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
+			if(allClassAudited != null)
+			{
+				foreach (var parentClass in allClassAudited.AuditParents)
+				{
+					checkSuperclass(clazz, parentClass);
+					declaredAuditedSuperclasses.Add(parentClass);
+				}	
+			}
+			var superClazz = clazz.BaseType;
+			if(!clazz.IsInterface && !typeof(object).Equals(superClazz))
+				doGetDeclaredAuditedSuperclasses(superClazz, declaredAuditedSuperclasses);
+		}
+
+		/// <summary>
+		/// Checks whether one class is assignable from another. If not <see cref="MappingException"/> is thrown.
+		/// </summary>
+		/// <param name="child">Subclass.</param>
+		/// <param name="parent">Superclass.</param>
+		private static void checkSuperclass(System.Type child, System.Type parent)
+		{
+			if(!parent.IsAssignableFrom(child))
+				throw new MappingException("Class " + parent.FullName + " is not assignable from " + child.FullName + ". " +
+										"Please revise AuditedAttribute.AuditParents  value in " + child.FullName + " type.");
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="clazz">Class which properties are currently being added.</param>
+		/// <param name="declaredAuditedSuperclasses">Collection of superclasses that have been explicitly declared to be audited.</param>
+		/// <returns>
+		/// <see cref="AuditedAttribute"/> of specified class. If processed type hasn't been explicitly marked, method
+		/// checks whether given class exists in collection passed as the second argument. In case of success,
+		/// <see cref="AuditedAttribute"/> configuration of currently mapped entity is returned, otherwise <code>null</code>.
+		/// </returns>
+		private AuditedAttribute computeAuditConfiguration(System.Type clazz, ICollection<System.Type> declaredAuditedSuperclasses)
+		{
+			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
+			// If processed class is not explicitly marked with @Audited annotation, check whether auditing is
+			// forced by any of its child entities configuration (@Audited.auditParents).
+			if (allClassAudited == null && declaredAuditedSuperclasses.Contains(clazz))
+			{
+				// Declared audited parent copies @Audited.modStore and @Audited.targetAuditMode configuration from
+				// currently mapped entity.
+				allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(_persistentPropertiesSource.Class);
+			}
+			return allClassAudited;
+		}
+
+		/// <summary>
+		/// Recursively adds all audited properties of entity class and its superclasses.
+		/// </summary>
+		/// <param name="clazz">Currently processed class.</param>
+		/// <param name="declaredAuditedSuperclasses">
+		/// Collection of classes that are declared to be audited
+		/// (see <see cref="AuditedAttribute.AuditParents"/>).
+		/// </param>
+		private void addPropertiesFromClass(System.Type clazz, ICollection<System.Type> declaredAuditedSuperclasses)
+		{
+			var allClassAudited = computeAuditConfiguration(clazz, declaredAuditedSuperclasses);
+			addFromProperties(allClassAudited, clazz);
+			if (allClassAudited != null || !_auditedPropertiesHolder.IsEmpty())
+			{
+				var superclazz = clazz.BaseType;
+				if (!clazz.IsInterface && !typeof(object).Equals(superclazz))
+				{
+					addPropertiesFromClass(superclazz, declaredAuditedSuperclasses);
+				}
+			}
+		}
+
+		private void addFromProperties(AuditedAttribute allClassAudited, System.Type currentClass)
 		{
 			foreach (var declaredPersistentProperty in _persistentPropertiesSource.DeclaredPersistentProperties)
 			{
+				// If the property was already defined by the subclass, is ignored by superclasses
+				if(_auditedPropertiesHolder.Contains(declaredPersistentProperty.Property.Name))
+					continue;
+
+				//only get the property on specific class, if no <properties>-mapping or dynamic entity
+				if (!declaredPersistentProperty.Member.DeclaringType.Equals(currentClass) &&
+					!declaredPersistentProperty.Member.Equals(DeclaredPersistentProperty.NotAvailableMemberInfo))
+					continue;
+
 				var propertyValue = declaredPersistentProperty.Property.Value;
 
 				var componentValue = propertyValue as Component;
@@ -56,27 +152,28 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				{
 					if (declaredPersistentProperty.Member.Equals(DeclaredPersistentProperty.NotAvailableMemberInfo))
 					{
-						addFromPropertiesGroup(declaredPersistentProperty, componentValue);
+						addFromPropertiesGroup(declaredPersistentProperty, componentValue, allClassAudited);
 					}
 					else
 					{
-						addFromComponentProperty(declaredPersistentProperty, componentValue);						
+						addFromComponentProperty(declaredPersistentProperty, componentValue, allClassAudited);						
 					}
 				}
 				else
 				{
-					addFromNotComponentProperty(declaredPersistentProperty);
+					addFromNotComponentProperty(declaredPersistentProperty, allClassAudited);
 				}
 			}
 		}
 
-		private void addFromPropertiesGroup(DeclaredPersistentProperty property, Component componentValue)
+		private void addFromPropertiesGroup(DeclaredPersistentProperty property, Component componentValue, AuditedAttribute allClassAudited)
 		{
 			var componentData = new ComponentAuditingData();
 			var isAudited = FillPropertyData(property.Member,
 											property.Property.Name,
 											componentData,
-											property.Property.PropertyAccessorName);
+											property.Property.PropertyAccessorName,
+											allClassAudited);
 			if (isAudited)
 			{
 				componentData.BeanName = null;
@@ -93,16 +190,17 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 		}
 
-		private void addFromComponentProperty(DeclaredPersistentProperty property, Component componentValue)
+		private void addFromComponentProperty(DeclaredPersistentProperty property, Component componentValue, AuditedAttribute allClassAudited)
 		{
 			var componentData = new ComponentAuditingData();
 			var isAudited = FillPropertyData(property.Member,
 											property.Property.Name,
 											componentData,
-											property.Property.PropertyAccessorName);
+											property.Property.PropertyAccessorName,
+											allClassAudited);
 
-			IPersistentPropertiesSource componentPropertiesSource = new ComponentPropertiesSource(componentValue);
-			var audPropReader = new AuditedPropertiesReader(_metaDataStore,
+			var componentPropertiesSource = new ComponentPropertiesSource(componentValue);
+			var audPropReader = new ComponentAuditedPropertiesReader(_metaDataStore,
 										ModificationStore.Full, componentPropertiesSource, componentData,
 										_globalCfg,
 										_propertyNamePrefix +
@@ -116,13 +214,14 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 		}
 
-		private void addFromNotComponentProperty(DeclaredPersistentProperty property)
+		private void addFromNotComponentProperty(DeclaredPersistentProperty property, AuditedAttribute allClassAudited)
 		{
 			var propertyData = new PropertyAuditingData();
 			var isAudited = FillPropertyData(property.Member,
 													property.Property.Name,
 													propertyData,
-													property.Property.PropertyAccessorName);
+													property.Property.PropertyAccessorName,
+													allClassAudited);
 			if (isAudited)
 			{
 				// Now we know that the property is audited
@@ -141,7 +240,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private bool FillPropertyData(MemberInfo property,
 										string mappedPropertyName,
 										PropertyAuditingData propertyData,
-										string accessType)
+										string accessType,
+										AuditedAttribute allClassAudited)
 		{
 
 			// check if a property is declared as not audited to exclude it
@@ -159,23 +259,9 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				return false;
 			}
 
-			// Checking if this property is explicitly audited or if all properties are.
-			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);
-			if (aud != null)
+			if (!CheckAudited(property, propertyData, allClassAudited))
 			{
-				propertyData.Store = aud.ModStore;
-				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
-			}
-			else
-			{
-				if (_defaultStore != ModificationStore.None)
-				{
-					propertyData.Store = _defaultStore;
-				}
-				else
-				{
-					return false;
-				}
+				return false;
 			}
 
 			propertyData.Name = _propertyNamePrefix + mappedPropertyName;
@@ -191,6 +277,19 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			SetPropertyAuditMappedBy(property, propertyData);
 
 			return true;
+		}
+
+		protected virtual bool CheckAudited(MemberInfo property, PropertyAuditingData propertyData, AuditedAttribute allClassAudited)
+		{
+			// Checking if this property is explicitly audited or if all properties are.
+			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property) ?? allClassAudited;
+			if (aud != null)
+			{
+				propertyData.Store = aud.ModStore;
+				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
+				return true;
+			}
+			return false;
 		}
 
 		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)
@@ -266,14 +365,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private class ComponentPropertiesSource : IPersistentPropertiesSource
 		{
-			private readonly System.Type xclass;
-			private readonly IEnumerable<DeclaredPersistentProperty> _declaredPersistentProperties;
-
 			public ComponentPropertiesSource(Component component)
 			{
-				xclass = component.ComponentClass;
-				_declaredPersistentProperties = component.IsDynamic ?
-					createDeclaredPersistentPropertyForDynamicComponent(component) : PropertyAndMemberInfo.PersistentInfo(xclass, component.PropertyIterator);
+				var xclass = component.IsDynamic ? 
+					typeof(markerClassForDynamicEntity) : 
+					component.ComponentClass;
+				DeclaredPersistentProperties = component.IsDynamic ?
+					createDeclaredPersistentPropertyForDynamicComponent(component) : 
+					PropertyAndMemberInfo.PersistentInfo(xclass, component.PropertyIterator);
+				Class = xclass;
 			}
 
 			private static IEnumerable<DeclaredPersistentProperty> createDeclaredPersistentPropertyForDynamicComponent(Component component)
@@ -282,15 +382,17 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					.Select(property => new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo)).ToList();
 			}
 
-			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties
-			{
-				get { return _declaredPersistentProperties; }
-			}
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; private set; }
+			public System.Type Class { get; private set; }
 
 			public Property VersionedProperty
 			{
 				get { return null; }
 			}
+		}
+
+		private class markerClassForDynamicEntity
+		{
 		}
 	}
 }

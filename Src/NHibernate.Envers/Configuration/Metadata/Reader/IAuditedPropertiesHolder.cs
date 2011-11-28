@@ -18,5 +18,9 @@
 		/// <param name="propertyName">Name of a property.</param>
 		/// <returns>Auditing data for the property.</returns>
 		PropertyAuditingData GetPropertyAuditingData(string propertyName);
+
+		bool IsEmpty();
+
+		bool Contains(string propertyName);
 	}
 }
