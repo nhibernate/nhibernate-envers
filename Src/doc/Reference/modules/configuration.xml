@@ -289,7 +289,11 @@
 				</orderedlist>
 			</para>
 		</important>
+	</section>
 
+	<section>
+		<title>Additional mapping annotations</title>
+		
 		<para>
 			To change the name of the revision table and its fields (the table, in which the
 			numbers of revisions and their timestamps are stored), you can use the
@@ -325,6 +329,12 @@
 			<literal>[Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED]</literal>
 			(or use fluent configuration: <literal>ExcludeRelationData()</literal>). Then, when reading historic
 			versions of your entity, the relation will always point to the "current" related entity.
+		</para>
+
+		<para>
+			If you'd like to audit properties encapsulated by any subset of your entity's mapped superclasses (which are
+			not explicitly audited), list desired supertypes in <literal>AuditParents</literal> property of
+			<literal>AuditedAttribute</literal>.
 		</para>
 	</section>
 </chapter>
