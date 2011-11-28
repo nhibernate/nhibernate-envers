@@ -116,6 +116,31 @@
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldEntity.cs" />
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldTest.cs" />
     <Compile Include="Integration\Properties\VersionsPropertiesTEst.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditAllSubclass\AuditedAllSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditAllSubclass\MappedSubclassingAllAuditedTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditedMethodMappedSuperclass.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditMethodSubclass\AuditedMethodSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditMethodSubclass\MappedSubclassingMethodAuditedTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\NotAuditedSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditAllSubclass\AuditedAllSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditAllSubclass\MappedSubclassingAllAuditedTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditedAllMappedSuperclass.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\AuditedMethodSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\MappedSubclassingMethodAuditedTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\NotAuditedSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\BabyCompleteEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\ChildCompleteEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\ChildMultipleParentsEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\ChildSingleParentEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\ExplicitTransitiveChildEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\ImplicitTransitiveChildEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\MappedGrandParentEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\MappedParentEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\MultipleAuditParentsTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\SingleAuditParentsTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\TotalAuditParentsTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\TransitiveAuditParentsTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditParents\TransitiveParentEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\AttributesOnBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
@@ -446,9 +471,6 @@
     <Compile Include="Integration\Join\JoinWithAuditNameEntity.cs" />
     <Compile Include="Integration\Serialization\SerializingCollectionTest.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyManyToManyTest.cs" />
-    <Compile Include="Integration\SuperClass\MappedSubclassingTest.cs" />
-    <Compile Include="Integration\SuperClass\SubclassEntity.cs" />
-    <Compile Include="Integration\SuperClass\SuperclassOfEntity.cs" />
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
@@ -622,7 +644,6 @@
     <EmbeddedResource Include="Integration\Versioning\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SameIds\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Join\Mapping.hbm.xml" />
-    <EmbeddedResource Include="Integration\SuperClass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Collection\NoRevision\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\RevEntity\TrackModifiedEntities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Basic\NonAuditedEntity.hbm.xml" />
@@ -649,6 +670,13 @@
     <EmbeddedResource Include="Integration\Interfaces\Inheritance\PropertiesAudited2\Union\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Naming\Quotation\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Properties\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditAllSubclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditMethodSubclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditAllSubclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditParents\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

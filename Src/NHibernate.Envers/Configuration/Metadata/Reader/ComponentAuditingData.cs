@@ -22,5 +22,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			properties.TryGetValue(propertyName, out ret);
 			return ret;
 		}
+
+		public bool IsEmpty()
+		{
+			return properties.Count == 0;
+		}
+
+		public bool Contains(string propertyName)
+		{
+			return properties.ContainsKey(propertyName);
+		}
 	}
 }

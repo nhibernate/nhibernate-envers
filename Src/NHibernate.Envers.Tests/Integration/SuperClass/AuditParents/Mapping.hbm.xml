@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+		assembly="NHibernate.Envers.Tests"
+		namespace="NHibernate.Envers.Tests.Integration.SuperClass.AuditParents">
+
+	<class name="ChildMultipleParentsEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="GrandParent" />
+		<property name="NotAudited" />
+		<property name="Parent" />
+		<many-to-one name="Relation" />
+		<property name="Child" />
+	</class>
+
+	<class name="ChildSingleParentEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="GrandParent" />
+		<property name="NotAudited" />
+		<property name="Parent" />
+		<many-to-one name="Relation" />
+		<property name="Child" />
+	</class>
+
+	<class name="BabyCompleteEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="GrandParent" />
+		<property name="NotAudited" />
+		<property name="Parent" />
+		<many-to-one name="Relation" />
+		<property name="Child" />
+		<property name="Baby"/>
+	</class>
+
+	<class name="ImplicitTransitiveChildEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="GrandParent" />
+		<property name="NotAudited" />
+		<property name="Parent" />
+		<property name="Child" />
+	</class>
+
+	<class name="ExplicitTransitiveChildEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="GrandParent" />
+		<property name="NotAudited" />
+		<property name="Parent" />
+		<property name="Child" />
+	</class>
+</hibernate-mapping>

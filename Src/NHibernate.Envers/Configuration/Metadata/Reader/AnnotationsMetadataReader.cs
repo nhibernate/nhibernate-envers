@@ -104,19 +104,16 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
 		{
 			private readonly AnnotationsMetadataReader parent;
-			private readonly IEnumerable<DeclaredPersistentProperty> _declaredPersistentProperties;
 
 			public PersistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
 			{ 
 				this.parent = parent;
-				_declaredPersistentProperties = PropertyAndMemberInfo.PersistentInfo(typ, parent.pc.PropertyIterator, true);
+				DeclaredPersistentProperties = PropertyAndMemberInfo.PersistentInfo(typ, parent.pc.PropertyIterator, true);
+				Class = typ;
 			}
 
-			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties
-			{
-				get { return _declaredPersistentProperties; }
-			}
-
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; private set; }
+			public System.Type Class { get; private set; }
 
 			public Property VersionedProperty
 			{

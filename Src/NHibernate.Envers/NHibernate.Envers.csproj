@@ -75,6 +75,7 @@
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\Metadata\DefaultCollectionProxyMapperFactory.cs" />
     <Compile Include="Configuration\Metadata\ICollectionProxyMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\Reader\ComponentAuditedPropertiesReader .cs" />
     <Compile Include="Configuration\RevisionInfoConfigurationResult.cs" />
     <Compile Include="Configuration\Store\AuditMappedByMetaDataAdder.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
