@@ -332,9 +332,10 @@
 		</para>
 
 		<para>
-			If you'd like to audit properties encapsulated by any subset of your entity's mapped superclasses (which are
-			not explicitly audited), list desired supertypes in <literal>AuditParents</literal> property of
-			<literal>AuditedAttribute</literal>.
+			If you'd like to audit properties of a superclass of an entity, which are not explicitly audited (which
+			don't have the <literal>AuditedAttribute</literal> on any properties or on the class),
+			you can list the superclasses in the <literal>AuditParents</literal> property on the <literal>AuditedAttribute</literal>
+			instance.
 		</para>
 	</section>
 </chapter>
