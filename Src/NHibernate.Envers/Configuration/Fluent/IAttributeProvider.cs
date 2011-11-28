@@ -11,6 +11,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// Creates corresponding member attributes
 		/// </summary>
 		/// <returns>The attributes</returns>
-		IEnumerable<MemberInfoAndAttribute> Attributes();
+		IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration);
 	}
 }

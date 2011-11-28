@@ -224,7 +224,7 @@ namespace NHibernate.Envers.Configuration
 			XmlDocument revisionInfoXmlMapping = null;
 			System.Type revisionInfoClass;
 
-			var revEntityType = _metaDataStore.EntitiesDeclaredWith<RevisionEntityAttribute>();
+			var revEntityType = nhMappedTypesWithRevisionEntityAttribute(cfg);
 			var noOfRevEntities = revEntityType.Count();
 
 			switch (noOfRevEntities)
@@ -325,6 +325,17 @@ namespace NHibernate.Envers.Configuration
 					revisionInfoEntityName, 
 					revisionInfoClass, 
 					revisionInfoTimestampData);
+		}
+
+		private IEnumerable<System.Type> nhMappedTypesWithRevisionEntityAttribute(Cfg.Configuration cfg)
+		{
+			var ret = new HashSet<System.Type>();
+			foreach (var persistentClass in cfg.ClassMappings)
+			{
+				if (_metaDataStore.ClassMeta<RevisionEntityAttribute>(persistentClass.MappedClass) != null)
+					ret.Add(persistentClass.MappedClass);
+			}
+			return ret;
 		}
 
 		private bool isTimestampAsDate()

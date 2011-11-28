@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			var fluent = new FluentConfiguration();
 			fluent.SetRevisionEntity<RevisionEntity>(rev => rev.Number, rev => rev.Timestamp);
 			cfg.Executing(x => x.IntegrateWithEnvers(new AuditEventListener(), fluent))
-				.Throws<MappingException>();
+				.Throws<FluentException>();
 		}
 	}
 }
