@@ -5,11 +5,6 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 	[Audited]
 	public class GivenIdStrEntity
 	{
-		public GivenIdStrEntity()
-		{
-			Data = string.Empty;
-		}
-
 		public virtual int Id { get; set; }
 		public virtual string Data { get; set; }
 
@@ -18,7 +13,15 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 			var casted = obj as GivenIdStrEntity;
 			if (casted == null)
 				return false;
-			return Id == casted.Id && string.Equals(Data, casted.Data);
+			if (Data != null ? !Data.Equals(casted.Data) : casted.Data != null)
+				return false;
+			return Id == casted.Id;
+		}
+
+		public override int GetHashCode()
+		{
+			var strHash = (Data != null ? Data.GetHashCode() : 0);
+			return strHash ^ Id;
 		}
 	}
 }

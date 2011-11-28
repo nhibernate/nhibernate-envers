@@ -11,12 +11,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly IMetaDataStore _metaDataStore;
 
 		public ComponentAuditedPropertiesReader(IMetaDataStore metaDataStore, 
-														ModificationStore defaultStore, 
 														IPersistentPropertiesSource persistentPropertiesSource, 
 														IAuditedPropertiesHolder auditedPropertiesHolder, 
 														GlobalConfiguration globalCfg, 
 														string propertyNamePrefix) 
-			: base(metaDataStore, defaultStore, persistentPropertiesSource, auditedPropertiesHolder, globalCfg, propertyNamePrefix)
+			: base(metaDataStore, persistentPropertiesSource, auditedPropertiesHolder, globalCfg, propertyNamePrefix)
 		{
 			_metaDataStore = metaDataStore;
 		}

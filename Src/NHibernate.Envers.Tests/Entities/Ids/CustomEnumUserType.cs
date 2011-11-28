@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Entities.Ids
 	{
 		private static readonly SqlType[] TYPES = new[] { new SqlType(DbType.String) };
 
-		public bool Equals(object x, object y)
+		public new bool Equals(object x, object y)
 		{
 			if (x == y)
 			{
