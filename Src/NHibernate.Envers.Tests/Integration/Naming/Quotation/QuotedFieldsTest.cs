@@ -1,5 +1,4 @@
-﻿using NHibernate.Cfg;
-using NHibernate.Mapping;
+﻿using NHibernate.Mapping;
 using NUnit.Framework;
 using SharpTestsEx;
 

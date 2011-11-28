@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration.Attributes;
+﻿using System.Reflection;
+using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -20,7 +21,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_metaDataStore = metaDataStore;
 		}
 
-		protected override bool CheckAudited(System.Reflection.MemberInfo property, PropertyAuditingData propertyData, Attributes.AuditedAttribute allClassAudited)
+		protected override bool CheckAudited(MemberInfo property, PropertyAuditingData propertyData, AuditedAttribute allClassAudited)
 		{
 			// Checking if this property is explicitly audited or if all properties are.
 			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);

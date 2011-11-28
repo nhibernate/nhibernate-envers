@@ -6,7 +6,6 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Mapping;
-using NHibernate.Type;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {

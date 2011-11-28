@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration;
