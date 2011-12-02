@@ -1,0 +1,14 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Incorrect">
+	<class name="BaseEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<joined-subclass name="ConcreteEntity">
+			<key column="foo"/>
+			<property name="Data"/>
+		</joined-subclass>
+	</class>
+</hibernate-mapping>
+
