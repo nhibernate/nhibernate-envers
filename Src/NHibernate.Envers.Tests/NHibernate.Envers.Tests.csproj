@@ -493,6 +493,8 @@
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ParentEntity.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\Animal.cs" />
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Naming\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Naming\SchemaSubclassTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
@@ -555,6 +557,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Configuration\Naming\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Inheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\InsertUpdateFalse\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Strategy\Mapping.hbm.xml" />
@@ -621,7 +624,9 @@
     <EmbeddedResource Include="Integration\Inheritance\Joined\Relation\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Joined\Relation\Unidirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Single\Mapping.hbm.xml" />
-    <EmbeddedResource Include="Integration\Inheritance\Single\ChildRelation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Inheritance\Single\ChildRelation\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Integration\Inheritance\Single\NotOwnedRelation\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Single\Relation\Mapping.hbm.xml">
       <SubType>Designer</SubType>

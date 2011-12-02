@@ -149,12 +149,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 				classMapping.SetAttribute("table", auditTableData.AuditTableName);
 			}
 
-			if (!string.IsNullOrEmpty(auditTableData.Schema))
+			if (!string.IsNullOrEmpty(auditTableData.Schema) && !type.Equals("subclass"))
 			{
 				classMapping.SetAttribute("schema", auditTableData.Schema);
 			}
 
-			if (!string.IsNullOrEmpty(auditTableData.Catalog))
+			if (!string.IsNullOrEmpty(auditTableData.Catalog) && !type.Equals("subclass"))
 			{
 				classMapping.SetAttribute("catalog", auditTableData.Catalog);
 			}
