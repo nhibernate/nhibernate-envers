@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Naming">
+	<class name="Base" abstract="true" discriminator-value="roger">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<discriminator column="disc" type="string" />
+		<subclass name="Concrete" discriminator-value="moore">
+			<property name="Data"/>
+		</subclass>
+	</class>
+</hibernate-mapping>
+
