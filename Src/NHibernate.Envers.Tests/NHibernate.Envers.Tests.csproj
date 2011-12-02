@@ -141,6 +141,8 @@
     <Compile Include="Integration\SuperClass\AuditParents\TotalAuditParentsTest.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\TransitiveAuditParentsTest.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\TransitiveParentEntity.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Incorrect\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\Incorrect\NotAuditingBaseClassTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\AttributesOnBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
@@ -557,6 +559,7 @@
     <Compile Include="Tools\AssertExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Configuration\Incorrect\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Naming\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Inheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\InsertUpdateFalse\Mapping.hbm.xml" />

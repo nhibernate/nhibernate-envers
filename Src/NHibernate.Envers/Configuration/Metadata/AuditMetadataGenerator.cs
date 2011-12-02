@@ -348,11 +348,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Getting the property mapper of the parent - when mapping properties, they need to be included
 			var parentEntityName = pc.Superclass.EntityName;
 
-			var parentConfiguration = EntitiesConfigurations[parentEntityName];
-			if (parentConfiguration == null)
+			EntityConfiguration parentConfiguration;
+			if (!EntitiesConfigurations.TryGetValue(parentEntityName, out parentConfiguration))
 			{
-				throw new MappingException("Entity '" + pc.EntityName + "' is audited, but its superclass: '" +
-						parentEntityName + "' is not.");
+				throw new MappingException("Entity '" + pc.EntityName + "' is audited, but its superclass: '" + parentEntityName + "' is not.");
 			}
 
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
