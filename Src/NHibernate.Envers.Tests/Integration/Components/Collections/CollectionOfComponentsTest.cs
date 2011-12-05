@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.Components;
 using NUnit.Framework;
 
@@ -38,6 +39,14 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 			var comps1 = AuditReader().Find<ComponentSetTestEntity>(id1, 2).Comps;
 			Assert.AreEqual(1, comps1.Count);
 			CollectionAssert.Contains(comps1, new Component1 { Str1 = "a", Str2 = "b" });
+		}
+
+		protected override IEnumerable<string> Mappings
+		{
+			get
+			{
+				return new[] { "Entities.Components.Mapping.hbm.xml" };
+			}
 		}
 	}
 }
