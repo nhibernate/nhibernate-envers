@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Tools;
 using NHibernate.Persister.Entity;
 
 namespace NHibernate.Envers.Synchronization.Work
@@ -25,8 +24,6 @@ namespace NHibernate.Envers.Synchronization.Work
 			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Added)
 		{
 			this.data = data;
-			var propertyNames = sessionImplementor.Factory.GetEntityPersister(EntityName).PropertyNames;
-			State = Toolz.MapToArray(data, propertyNames);
 		}
 
 		internal object[] State { get; private set; }

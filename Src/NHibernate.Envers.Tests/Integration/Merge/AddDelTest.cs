@@ -20,6 +20,7 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 				Session.Save(entity);
 				tx.Commit();
 			}
+			Session.Clear();
 
 			//revision 2
 			using (var tx = Session.BeginTransaction())
@@ -29,6 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 				Session.Save(entity); // Then save it
 				tx.Commit();
 			}
+			Session.Clear();
 
 			//revision 3
 			using (var tx = Session.BeginTransaction())

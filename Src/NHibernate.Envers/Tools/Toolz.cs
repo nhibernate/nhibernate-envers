@@ -122,21 +122,5 @@ namespace NHibernate.Envers.Tools
 			}
 			return true;
 		}
-
-		/// <summary>
-		/// Converts map's value set to an array. <paramref name="keys"/> parameter specifies requested elements and their order. 
-		/// </summary>
-		/// <param name="data">Source dictionary</param>
-		/// <param name="keys">Array of keys that represent requested map values.</param>
-		/// <returns></returns>
-		public static object[] MapToArray(IDictionary<string, object> data, string[] keys)
-		{
-			var ret = new object[keys.Length];
-			for (var i = 0; i < keys.Length; i++)
-			{
-				ret[i] = data[keys[i]];
-			}
-			return ret;
-		}
 	}
 }
