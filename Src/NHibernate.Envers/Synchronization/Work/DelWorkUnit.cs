@@ -41,9 +41,9 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(AddWorkUnit second)
 		{
-			return Toolz.ArraysEqual(second.State, state) ? 
-					null : 
-					new ModWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, entityPersister, second.State, state);
+			return Toolz.ArraysEqual(second.State, state)
+			       	? null
+			       	: new ModWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, entityPersister, second.State, state);
 		}
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)
