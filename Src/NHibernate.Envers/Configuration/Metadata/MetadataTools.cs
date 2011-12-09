@@ -250,29 +250,30 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var nodeList = element.ChildNodes;
 			//need to reverse names because looping backwards
-			var columnNamesReversed = columnNames.Reverse().GetEnumerator();
-
-			for (var i = nodeList.Count - 1; i >= 0; i--)
+			using (var columnNamesReversed = columnNames.Reverse().GetEnumerator())
 			{
-				var property = (XmlElement)nodeList[i];
-				if ("property".Equals(property.Name))
+				for (var i = nodeList.Count - 1; i >= 0; i--)
 				{
-					var value = property.GetAttribute("name");
-					if (!string.IsNullOrEmpty(value))
+					var property = (XmlElement)nodeList[i];
+					if ("property".Equals(property.Name))
 					{
-						property.SetAttribute("name", prefix + value);
-					}
-					ChangeNamesInColumnElement(property, columnNamesReversed);
+						var value = property.GetAttribute("name");
+						if (!string.IsNullOrEmpty(value))
+						{
+							property.SetAttribute("name", prefix + value);
+						}
+						ChangeNamesInColumnElement(property, columnNamesReversed);
 
-					if (changeToKey)
-					{
-						ChangeToKeyProperty(property);
+						if (changeToKey)
+						{
+							ChangeToKeyProperty(property);
+						}
+						else
+						{
+							property.SetAttribute("insert", insertable ? "true" : "false");
+						}
 					}
-					else
-					{
-						property.SetAttribute("insert", insertable ? "true" : "false");
-					}
-				}
+				}	
 			}
 		}
 
