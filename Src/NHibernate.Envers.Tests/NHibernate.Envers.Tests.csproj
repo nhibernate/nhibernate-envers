@@ -497,6 +497,7 @@
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\SchemaSubclassTest.cs" />
+    <Compile Include="NetSpecific\Integration\Merge\AddEditCollectionItemTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
