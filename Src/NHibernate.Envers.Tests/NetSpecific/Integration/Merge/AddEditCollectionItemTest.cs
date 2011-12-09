@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Merge
 		public void RevisionForOwned()
 		{
 			AuditReader().GetRevisions(typeof(SetRefEdEntity), entityId)
-				.Should().Have.SameSequenceAs(1);
+				.Should().Have.SameSequenceAs(1,2);
 		}
 
 
