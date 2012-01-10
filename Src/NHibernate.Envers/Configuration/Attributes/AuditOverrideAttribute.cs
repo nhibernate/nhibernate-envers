@@ -3,10 +3,11 @@
 namespace NHibernate.Envers.Configuration.Attributes
 {
 	/// <summary>
-	///  The AuditingOverrideAttribute is used to override the auditing
-	///  behavior of a field (or property) inside an embedded component.
+	/// The AuditingOverrideAttribute is used to override the auditing
+	/// behavior of a field (or property) inherited from a non mapped base type
+	/// or inside an embedded component.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = true)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Class, AllowMultiple = true)]
 	public sealed class AuditOverrideAttribute : AuditJoinTableAttribute
 	{
 		public AuditOverrideAttribute()
