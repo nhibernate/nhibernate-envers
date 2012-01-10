@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+		assembly="NHibernate.Envers.Tests"
+		namespace="NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride">
+
+	<class name="AuditedSpecialEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Number1" />
+	</class>
+
+	<class name="PropertyOverrideTestEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Number1" />
+	</class>
+
+	<class name="TransitiveOverrideTestEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Str3" />
+		<property name="Number1" />
+		<property name="Number2" />
+	</class>
+</hibernate-mapping>

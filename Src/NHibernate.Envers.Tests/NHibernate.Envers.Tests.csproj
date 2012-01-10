@@ -128,6 +128,13 @@
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\AuditedMethodSubclassEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\MappedSubclassingMethodAuditedTest.cs" />
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\NotAuditedSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\AuditedSpecialEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\AuditOverrideTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\BaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\ExtendedBaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\NotAnnotatedBaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\PropertyOverrideTestEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\TransitiveOverrideTestEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\BabyCompleteEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\ChildCompleteEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\ChildMultipleParentsEntity.cs" />
@@ -686,6 +693,7 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditParents\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

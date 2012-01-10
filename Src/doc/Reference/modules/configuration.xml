@@ -319,8 +319,9 @@
 		</para>
 
 		<para>
-			If you'd like to override auditing behaviour of some fields/properties in an embedded component, you can use
-			the <literal>[AuditOverride]</literal> atttribute on the place where you use the component.
+			If you'd like to override auditing behaviour of some fields/properties inherited from
+			a non mapped base type or in an embedded component, you can apply the <literal>[AuditOverride]</literal> 
+			attribute on the subtype or usage site of the component.
 		</para>
 
 		<para>
