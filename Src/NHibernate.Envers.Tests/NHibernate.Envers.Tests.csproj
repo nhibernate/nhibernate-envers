@@ -143,19 +143,6 @@
     <Compile Include="Integration\SuperClass\AuditOverride\NotAuditedBaseEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\PropertyOverrideTestEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\TransitiveOverrideTestEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\BabyCompleteEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\ChildCompleteEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\ChildMultipleParentsEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\ChildSingleParentEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\ExplicitTransitiveChildEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\ImplicitTransitiveChildEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\MappedGrandParentEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\MappedParentEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\MultipleAuditParentsTest.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\SingleAuditParentsTest.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\TotalAuditParentsTest.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\TransitiveAuditParentsTest.cs" />
-    <Compile Include="Integration\SuperClass\AuditParents\TransitiveParentEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Incorrect\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Incorrect\NotAuditingBaseClassTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\AttributesOnBaseTypeTest.cs" />
@@ -700,7 +687,6 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditAllSubclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\Mapping.hbm.xml" />
-    <EmbeddedResource Include="Integration\SuperClass\AuditParents\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Invalid\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
