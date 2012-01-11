@@ -569,7 +569,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 				else
 				{
-					referencingEntityConfiguration.addToManyMiddleRelation(propertyName, referencedEntityName);
+					referencingEntityConfiguration.AddToManyMiddleRelation(propertyName, referencedEntityName);
 				}
 			}
 		}
@@ -632,7 +632,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return mappedBy;
 		}
 
-		private string searchMappedBy(PersistentClass referencedClass, Mapping.Collection collectionValue)
+		private static string searchMappedBy(PersistentClass referencedClass, Mapping.Collection collectionValue)
 		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
@@ -674,7 +674,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return mappedBy;
 		}
 
-		private string searchMappedBy(PersistentClass referencedClass, Table collectionTable)
+		private static string searchMappedBy(PersistentClass referencedClass, Table collectionTable)
 		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{

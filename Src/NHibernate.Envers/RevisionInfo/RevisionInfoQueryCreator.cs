@@ -30,7 +30,7 @@ namespace NHibernate.Envers.RevisionInfo
 		{
 			//seems that criteria needs exact type
 			object castedRevision = revision;
-			if (_revisionType.Equals(typeof(int)))
+			if (_revisionType == typeof(int))
 				castedRevision = (int)revision;
 
 			return session.CreateCriteria(_revisionInfoEntityName)

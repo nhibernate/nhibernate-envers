@@ -96,7 +96,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private void addEndRevision(XmlElement anyMapping)
 		{
 			// Add the end-revision field, if the appropriate strategy is used.
-			if (VerEntCfg.AuditStrategyType.Equals(typeof(ValidityAuditStrategy)))
+			if (VerEntCfg.AuditStrategyType == typeof(ValidityAuditStrategy))
 			{
 				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
 

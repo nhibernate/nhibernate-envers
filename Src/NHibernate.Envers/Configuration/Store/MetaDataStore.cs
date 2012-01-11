@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Configuration.Store
 				return null;
 			foreach (var enversAttribute in entityMeta.ClassMetas)
 			{
-				if (enversAttribute.GetType().Equals(attrType))
+				if (enversAttribute.GetType() == attrType)
 					return (T)enversAttribute;
 			}
 			return null;
@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Configuration.Store
 
 			foreach (var enversAttribute in attributes)
 			{
-				if (enversAttribute.GetType().Equals(attrType))
+				if (enversAttribute.GetType() == attrType)
 					return (T)enversAttribute;
 			}
 			return null;

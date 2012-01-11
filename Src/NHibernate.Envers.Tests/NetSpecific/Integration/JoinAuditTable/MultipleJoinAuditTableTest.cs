@@ -50,10 +50,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 			var joinAuditTables = Cfg.GetClassMapping(auditName).JoinIterator;
 
 			joinAuditTables.Count().Should().Be.EqualTo(2);
-			joinAuditTables.Where(table => table.Table.Name.Equals("HeightTableAuditing"))
-				.Count().Should().Be.EqualTo(1);
-			joinAuditTables.Where(table => table.Table.Name.Equals("WeightTableAuditing"))
-				.Count().Should().Be.EqualTo(1);
+			joinAuditTables.Count(table => table.Table.Name.Equals("HeightTableAuditing"))
+				.Should().Be.EqualTo(1);
+			joinAuditTables.Count(table => table.Table.Name.Equals("WeightTableAuditing"))
+				.Should().Be.EqualTo(1);
 		}
 
 	}
