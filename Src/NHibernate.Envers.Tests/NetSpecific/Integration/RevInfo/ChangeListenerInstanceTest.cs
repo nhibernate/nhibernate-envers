@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo
 				Called = true;
 			}
 
-			public bool Called { get; set; }
+			public bool Called { get; private set; }
 		}
 	}
 }

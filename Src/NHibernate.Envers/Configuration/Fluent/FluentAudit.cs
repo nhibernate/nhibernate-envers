@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			if (member == null)
 			{
 				var baseType = entityType.BaseType;
-				if (baseType != null && !baseType.Equals(typeof(object)))
+				if (baseType != null && baseType != typeof(object))
 					return getMemberOrThrow(baseType, propertyName);
 				throw new FluentException("Cannot find member " + propertyName + " on type " + entityType);
 			}

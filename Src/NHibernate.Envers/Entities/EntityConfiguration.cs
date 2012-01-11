@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Entities
 					fakeBidirectionalRelationIndexMapper, true));
 		}
 
-		public void addToManyMiddleRelation(string fromPropertyName, string toEntityName)
+		public void AddToManyMiddleRelation(string fromPropertyName, string toEntityName)
 		{
 			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddle,
 					toEntityName, null, null, null, null, true));

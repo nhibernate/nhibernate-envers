@@ -72,7 +72,7 @@ namespace NHibernate.Envers.Configuration
 			return document;
 		}
 
-		private void generateEntityNamesTrackingTableMapping(XmlElement classMapping, string propertyName,
+		private static void generateEntityNamesTrackingTableMapping(XmlElement classMapping, string propertyName,
 																				string joinTableSchema, string joinTableCatalog, 
 																				string joinTableName, string joinTablePrimaryKeyColumnName,
 																				string joinTableValueColumnName, string joinTableValueColumnType)
@@ -128,8 +128,8 @@ namespace NHibernate.Envers.Configuration
 					}
 
 					var revisionTimestampType = property.Type.ReturnedClass;
-					if (typeof(DateTime).Equals(revisionTimestampType) ||
-							typeof(long).Equals(revisionTimestampType))
+					if (typeof(DateTime) == revisionTimestampType ||
+							typeof(long) == revisionTimestampType)
 					{
 						revisionInfoTimestampData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionTimestampFound = true;
@@ -155,7 +155,7 @@ namespace NHibernate.Envers.Configuration
 				{
 					if (found)
 						throw new MappingException("Only one property may be annotated with ModifiedEntityNamesAttribute!");
-					if (property.Type.ReturnedClass.Equals(typeof(ISet<string>)))
+					if (property.Type.ReturnedClass == typeof(ISet<string>))
 					{
 						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						found = true;
@@ -185,12 +185,12 @@ namespace NHibernate.Envers.Configuration
 					}
 
 					var revNrType = property.Type.ReturnedClass;
-					if (revNrType.Equals(typeof(int)))
+					if (revNrType == typeof(int))
 					{
 						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionNumberFound = true;
 					}
-					else if (revNrType.Equals(typeof(long)))
+					else if (revNrType == typeof(long))
 					{
 						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
 						revisionNumberFound = true;
@@ -341,7 +341,7 @@ namespace NHibernate.Envers.Configuration
 		private bool isTimestampAsDate()
 		{
 			var type = revisionInfoTimestampType.ReturnedClass;
-			return type.Equals(typeof(DateTime));
+			return type == typeof(DateTime);
 		}
 	}
 }

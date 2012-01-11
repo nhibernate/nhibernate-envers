@@ -81,7 +81,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 				}	
 			}
 			var baseType = type.BaseType;
-			if(!type.IsInterface && !baseType.Equals(typeof(object)))
+			if(!type.IsInterface && baseType != typeof(object))
 				fillClass(baseType, dicToFill);
 		}
 

@@ -95,7 +95,7 @@ namespace NHibernate.Envers.Strategy
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		private void addEndRevisionNullRestriction(AuditConfiguration auditCfg, QueryBuilder qb)
+		private static void addEndRevisionNullRestriction(AuditConfiguration auditCfg, QueryBuilder qb)
 		{
 			// e.end_rev is null
 			qb.RootParameters.AddWhere(auditCfg.AuditEntCfg.RevisionEndFieldName, true, "is", "null", false);
@@ -139,9 +139,9 @@ namespace NHibernate.Envers.Strategy
 			if (l.Count == 1)
 			{
 				// Setting the end revision to be the current rev
-				var previousData = l[0];
+				var previousData = (IDictionary)l[0];
 				var revisionEndFieldName = auditCfg.AuditEntCfg.RevisionEndFieldName;
-				((IDictionary)previousData)[revisionEndFieldName] = revision;
+				previousData[revisionEndFieldName] = revision;
 
 				if (auditCfg.AuditEntCfg.IsRevisionEndTimestampEnabled)
 				{
@@ -161,7 +161,7 @@ namespace NHibernate.Envers.Strategy
 					}
 
 					// Setting the end revision timestamp
-					((IDictionary)previousData)[revEndTimestampFieldName] = revisionEndTimestamp;
+					previousData[revEndTimestampFieldName] = revisionEndTimestamp;
 				}
 
 				// Saving the previous version

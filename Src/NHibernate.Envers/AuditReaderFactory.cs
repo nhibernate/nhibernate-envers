@@ -27,14 +27,14 @@ namespace NHibernate.Envers
 				if (auditEventListener == null) continue;
 
 				var auditEventListenerType = typeof(AuditEventListener);
-				if (listeners.PostUpdateEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType())) &&
-					 listeners.PostDeleteEventListeners.Any(ltnr => auditEventListenerType.IsAssignableFrom(ltnr.GetType())))
+				if (listeners.PostUpdateEventListeners.Any(auditEventListenerType.IsInstanceOfType) &&
+					 listeners.PostDeleteEventListeners.Any(auditEventListenerType.IsInstanceOfType))
 				{
 					return new AuditReader(auditEventListener.VerCfg, session, sessionImpl);
 				}
 			}
 
-			throw new AuditException("You need to install nhibernate.envers.event.AuditEventListener " +
+			throw new AuditException("You need to install NHibernate.Envers.Event.AuditEventListener " +
 					"class as post insert, update and delete event listener.");
 		}
 
