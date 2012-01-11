@@ -40,29 +40,22 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				return _auditData;
 			}
-			try
+
+			var typ = pc.MappedClass;
+
+			var defaultStore = getDefaultAudited(typ);
+			if (defaultStore != ModificationStore.None)
 			{
-				var typ = pc.MappedClass;
-
-				var defaultStore = getDefaultAudited(typ);
-				if (defaultStore != ModificationStore.None)
-				{
-					_auditData.SetDefaultAudited(true);
-				}
-
-				var ar = new AuditedPropertiesReader(_metaDataStore, 
-													 new PersistentClassPropertiesSource(typ, this), _auditData,
-													 globalCfg, string.Empty);
-				ar.Read();
-
-				addAuditTable(typ);
-				addAuditSecondaryTables(typ);
-			}
-			catch (Exception e)
-			{
-				throw new MappingException(e);
+				_auditData.SetDefaultAudited(true);
 			}
 
+			var ar = new AuditedPropertiesReader(_metaDataStore, 
+													new PersistentClassPropertiesSource(typ, this), _auditData,
+													globalCfg, string.Empty);
+			ar.Read();
+
+			addAuditTable(typ);
+			addAuditSecondaryTables(typ);
 
 			return _auditData;
 		}

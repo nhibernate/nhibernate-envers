@@ -136,6 +136,8 @@
     <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideAuditedEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideNotAuditedEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\ExtendedBaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\Invalid\BothClassAndPropertyNameOverrideEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\Invalid\BothClassAndPropertyNameOverrideTest.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\MixedOverrideEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\MixedOverrideTest .cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\NotAuditedBaseEntity.cs" />
@@ -700,6 +702,7 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditParents\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Invalid\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
