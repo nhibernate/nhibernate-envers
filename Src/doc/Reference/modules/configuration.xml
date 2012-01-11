@@ -335,8 +335,7 @@
 		<para>
 			If you'd like to audit properties of a superclass of an entity, which are not explicitly audited (which
 			don't have the <literal>AuditedAttribute</literal> on any properties or on the class),
-			you can list the superclasses in the <literal>AuditParents</literal> property on the <literal>AuditedAttribute</literal>
-			instance.
+			use <literal>[AuditOverride(ForClass = typeof(SomeEntity), IsAudited = true/false)]</literal>.
 		</para>
 	</section>
 </chapter>
