@@ -13,7 +13,6 @@ namespace NHibernate.Envers.Configuration.Attributes
 		{
 			TargetAuditMode = RelationTargetAuditMode.Audited;
 			ModStore = ModificationStore.Full;
-			AuditParents = new System.Type[0];
 		}
 
 		public ModificationStore ModStore { get; private set; }
@@ -24,18 +23,5 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// This is useful for dictionary-like entities, which don't change and don't need to be audited.
 		/// </summary>
 		public RelationTargetAuditMode TargetAuditMode { get; set; }
-
-		/// <summary>
-		/// Specifies the superclasses for which properties should be audited, even if the superclasses are not
-		/// annotated with <see cref="AuditedAttribute"/>. Causes all properties of the listed classes to be audited, just as if the
-		/// classes had <see cref="AuditedAttribute"/> annotation applied on the class level.
-		/// 
-		/// The scope of this functionality is limited to the class hierarchy of the annotated entity.
-		/// 
-		/// If a parent type lists any of its parent types using this attribute, all properties in the specified classes
-		/// will also be audited.
-		/// </summary>
-		[Obsolete("Use AuditOverrideAttribute(ForClass = typeof(SomeEntity)) instead.")]
-		public System.Type[] AuditParents { get; set; }
 	}
 }

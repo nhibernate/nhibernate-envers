@@ -62,21 +62,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
 		private void readAuditOverrides(System.Type clazz)
 		{
-			//todo: remove this when AuditedAttribute.AuditParents is removed
-			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
-			if (allClassAudited != null)
-			{
-				foreach (var auditParent in allClassAudited.AuditParents)
-				{
-					checkSuperclass(clazz, auditParent);
-					if (!_overriddenNotAuditedClasses.Contains(auditParent))
-					{
-						// If the class has not been marked as not audited by the subclass.
-						_overriddenAuditedClasses.Add(auditParent);
-					}
-				}
-			}
-			//end remove
 			var auditOverrides = computeAuditOverrides(clazz);
 			foreach (var auditOverrideAttribute in auditOverrides)
 			{
