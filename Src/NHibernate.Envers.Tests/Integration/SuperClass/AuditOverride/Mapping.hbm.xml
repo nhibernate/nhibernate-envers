@@ -49,4 +49,13 @@
 		<property name="Str2" />
 		<property name="Number1" />
 	</class>
+
+	<class name="MixedOverrideEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Number1" />
+	</class>
 </hibernate-mapping>

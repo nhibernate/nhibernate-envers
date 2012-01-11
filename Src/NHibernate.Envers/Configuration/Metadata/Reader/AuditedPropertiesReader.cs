@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			// Retrieve classes and properties that are explicitly marked for auditing process by any superclass
 			// of currently mapped entity or itself.
 			var clazz = _persistentPropertiesSource.Class;
-			doReadOverrideAudited(clazz);
+			readAuditOverrides(clazz);
 			addPropertiesFromClass(clazz);
 		}
 
@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// using <see cref="AuditOverrideAttribute"/>.
 		/// </summary>
 		/// <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
-		private void doReadOverrideAudited(System.Type clazz)
+		private void readAuditOverrides(System.Type clazz)
 		{
 			//todo: remove this when AuditedAttribute.AuditParents is removed
 			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
@@ -123,7 +123,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 			var superClass = clazz.BaseType;
 			if(!clazz.IsInterface && superClass != typeof(object))
-				doReadOverrideAudited(superClass);
+				readAuditOverrides(superClass);
 		}
 
 		private string getProperty(string propertyName)
@@ -162,8 +162,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// <param name="clazz">Class which properties are currently being added.</param>
 		/// <returns>
 		/// <see cref="AuditedAttribute"/> of specified class. If processed type hasn't been explicitly marked, method
-		/// checks whether given class exists in collection passed as the second argument. In case of success,
-		/// <see cref="AuditedAttribute"/> configuration of currently mapped entity is returned, otherwise <code>null</code>.
+		/// checks whether given class exists in <see cref="_overriddenAuditedClasses"/> collection.
+		/// In case of success, <see cref="AuditedAttribute"/> of currently mapped entity is returned, otherwise
+		/// <code>null</code>. If processed type exists in <see cref="_overriddenNotAuditedClasses"/> collection,
+		/// the result is also <code>null</code>.
 		/// </returns>
 		private AuditedAttribute computeAuditConfiguration(System.Type clazz)
 		{

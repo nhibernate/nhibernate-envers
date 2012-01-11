@@ -136,6 +136,8 @@
     <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideAuditedEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideNotAuditedEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\ExtendedBaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\MixedOverrideEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\MixedOverrideTest .cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\NotAuditedBaseEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\PropertyOverrideTestEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\TransitiveOverrideTestEntity.cs" />
