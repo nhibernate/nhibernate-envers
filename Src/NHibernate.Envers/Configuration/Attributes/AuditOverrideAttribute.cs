@@ -16,8 +16,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		}
 
 		/// <summary>
-		/// <strong>Required</strong> Name of the field (or property) whose mapping
-		/// is being overridden.
+		/// Name of the field (or property) whose mapping is being overridden.
 		/// </summary>
 		public string PropertyName { get; set; }
 
@@ -25,5 +24,10 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// Indicates if the field (or property) is audited; defaults to <code>true</code>.
 		/// </summary>
 		public bool IsAudited { get; set; }
+
+		/// <summary>
+		/// Can be used together with <seealso cref="IsAudited"/> to set all properties to be audited or not.
+		/// </summary>
+		public System.Type ForClass { get; set; }
 	}
 }

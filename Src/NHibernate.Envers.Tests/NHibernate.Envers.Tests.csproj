@@ -128,11 +128,15 @@
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\AuditedMethodSubclassEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\AuditMethodSubclass\MappedSubclassingMethodAuditedTest.cs" />
     <Compile Include="Integration\SuperClass\AuditedAtSuperclassLevel\NotAuditedSubclassEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\AuditClassOverrideTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\AuditedBaseEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\AuditedSpecialEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditOverride\AuditOverrideTest.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\AuditPropertyOverrideTest.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\BaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideAuditedEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\ClassOverrideNotAuditedEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\ExtendedBaseEntity.cs" />
-    <Compile Include="Integration\SuperClass\AuditOverride\NotAnnotatedBaseEntity.cs" />
+    <Compile Include="Integration\SuperClass\AuditOverride\NotAuditedBaseEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\PropertyOverrideTestEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditOverride\TransitiveOverrideTestEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditParents\BabyCompleteEntity.cs" />

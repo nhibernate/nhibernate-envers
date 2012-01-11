@@ -26,6 +26,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly string _propertyNamePrefix;
 		private readonly ISet<string> _overriddenAuditedProperties;
 		private readonly ISet<string> _overriddenNotAuditedProperties;
+		private readonly ISet<System.Type> _overriddenAuditedClasses;
+		private readonly ISet<System.Type> _overriddenNotAuditedClasses;
 
 		public AuditedPropertiesReader(IMetaDataStore metaDataStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
@@ -40,32 +42,52 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_propertyNamePrefix = propertyNamePrefix;
 			_overriddenAuditedProperties = new HashedSet<string>();
 			_overriddenNotAuditedProperties = new HashedSet<string>();
+			_overriddenAuditedClasses = new HashedSet<System.Type>();
+			_overriddenNotAuditedClasses = new HashedSet<System.Type>();
 		}
 
 		public void Read()
 		{
-			// Retrieve classes that are explicitly marked for auditing process by any superclass of currently mapped
-			// entity or itself.
+			// Retrieve classes and properties that are explicitly marked for auditing process by any superclass
+			// of currently mapped entity or itself.
 			var clazz = _persistentPropertiesSource.Class;
-			var declaredAuditedSuperclasses = new HashSet<System.Type>();
-			doGetDeclaredAuditedSuperclasses(clazz, declaredAuditedSuperclasses);
-			doReadOverrideAuditedProperties(clazz);
-			addPropertiesFromClass(clazz, declaredAuditedSuperclasses);
+			doReadOverrideAudited(clazz);
+			addPropertiesFromClass(clazz);
 		}
 
 		/// <summary>
-		/// Recursively constructs sets of audited and not audited properties which behavior has been overridden
+		/// Recursively constructs sets of audited and not audited properties and classes which behavior has been overridden
 		/// using <see cref="AuditOverrideAttribute"/>.
 		/// </summary>
 		/// <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
-		private void doReadOverrideAuditedProperties(System.Type clazz)
+		private void doReadOverrideAudited(System.Type clazz)
 		{
+			//todo: remove this when AuditedAttribute.AuditParents is removed
+			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
+			if (allClassAudited != null)
+			{
+				foreach (var auditParent in allClassAudited.AuditParents)
+				{
+					checkSuperclass(clazz, auditParent);
+					if (!_overriddenNotAuditedClasses.Contains(auditParent))
+					{
+						// If the class has not been marked as not audited by the subclass.
+						_overriddenAuditedClasses.Add(auditParent);
+					}
+				}
+			}
+			//end remove
 			var auditOverrides = computeAuditOverrides(clazz);
 			foreach (var auditOverrideAttribute in auditOverrides)
 			{
 				var propertyName = auditOverrideAttribute.PropertyName;
+				var overrideClass = auditOverrideAttribute.ForClass;
 				if (propertyName != null)
 				{
+					//todo:...
+					if(overrideClass!= null)
+						throw new MappingException("Both PropertyName and ForClass is set on " + _persistentPropertiesSource.Class.FullName + ". This is not allowed.");
+					// Overridden @Audited annotation on property level.
 					var property = getProperty(propertyName);
 					if (auditOverrideAttribute.IsAudited)
 					{
@@ -80,10 +102,28 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 							_overriddenNotAuditedProperties.Add(property);
 					}
 				}
+				else
+				{
+					if (overrideClass != null)
+					{
+						checkSuperclass(clazz, overrideClass);
+						// Overridden AuditedAttribute on class level.
+						if (auditOverrideAttribute.IsAudited)
+						{
+							if (!_overriddenNotAuditedClasses.Contains(overrideClass))
+								_overriddenAuditedClasses.Add(overrideClass);
+						}
+						else
+						{
+							if (!_overriddenAuditedClasses.Contains(overrideClass))
+								_overriddenNotAuditedClasses.Add(overrideClass);
+						}
+					}
+				}
 			}
 			var superClass = clazz.BaseType;
 			if(!clazz.IsInterface && superClass != typeof(object))
-				doReadOverrideAuditedProperties(superClass);
+				doReadOverrideAudited(superClass);
 		}
 
 		private string getProperty(string propertyName)
@@ -106,30 +146,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		}
 
 		/// <summary>
-		/// Recursively constructs a set of classes that have been declared for auditing process.
-		/// </summary>
-		/// <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
-		/// <param name="declaredAuditedSuperclasses">
-		/// Total collection of classes listed in <see cref="AuditedAttribute.AuditParents"/> property
-		/// by any superclass starting with class specified as the first argument.
-		/// </param>
-		private void doGetDeclaredAuditedSuperclasses(System.Type clazz, HashSet<System.Type> declaredAuditedSuperclasses)
-		{
-			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
-			if (allClassAudited != null)
-			{
-				foreach (var parentClass in allClassAudited.AuditParents)
-				{
-					checkSuperclass(clazz, parentClass);
-					declaredAuditedSuperclasses.Add(parentClass);
-				}
-			}
-			var superClazz = clazz.BaseType;
-			if (!clazz.IsInterface && !typeof(object).Equals(superClazz))
-				doGetDeclaredAuditedSuperclasses(superClazz, declaredAuditedSuperclasses);
-		}
-
-		/// <summary>
 		/// Checks whether one class is assignable from another. If not <see cref="MappingException"/> is thrown.
 		/// </summary>
 		/// <param name="child">Subclass.</param>
@@ -144,23 +160,25 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// <summary>
 		/// </summary>
 		/// <param name="clazz">Class which properties are currently being added.</param>
-		/// <param name="declaredAuditedSuperclasses">Collection of superclasses that have been explicitly declared to be audited.</param>
 		/// <returns>
 		/// <see cref="AuditedAttribute"/> of specified class. If processed type hasn't been explicitly marked, method
 		/// checks whether given class exists in collection passed as the second argument. In case of success,
 		/// <see cref="AuditedAttribute"/> configuration of currently mapped entity is returned, otherwise <code>null</code>.
 		/// </returns>
-		private AuditedAttribute computeAuditConfiguration(System.Type clazz, ICollection<System.Type> declaredAuditedSuperclasses)
+		private AuditedAttribute computeAuditConfiguration(System.Type clazz)
 		{
 			var allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(clazz);
 			// If processed class is not explicitly marked with @Audited annotation, check whether auditing is
 			// forced by any of its child entities configuration (@Audited.auditParents).
-			if (allClassAudited == null && declaredAuditedSuperclasses.Contains(clazz))
+			if (allClassAudited == null && _overriddenAuditedClasses.Contains(clazz))
 			{
 				// Declared audited parent copies @Audited.modStore and @Audited.targetAuditMode configuration from
 				// currently mapped entity.
-				allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(_persistentPropertiesSource.Class);
+				allClassAudited = _metaDataStore.ClassMeta<AuditedAttribute>(_persistentPropertiesSource.Class) ??
+										new AuditedAttribute();
 			}
+			else if (allClassAudited != null && _overriddenNotAuditedClasses.Contains(clazz))
+				return null;
 			return allClassAudited;
 		}
 
@@ -168,20 +186,16 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		/// Recursively adds all audited properties of entity class and its superclasses.
 		/// </summary>
 		/// <param name="clazz">Currently processed class.</param>
-		/// <param name="declaredAuditedSuperclasses">
-		/// Collection of classes that are declared to be audited
-		/// (see <see cref="AuditedAttribute.AuditParents"/>).
-		/// </param>
-		private void addPropertiesFromClass(System.Type clazz, ICollection<System.Type> declaredAuditedSuperclasses)
+		private void addPropertiesFromClass(System.Type clazz)
 		{
-			var allClassAudited = computeAuditConfiguration(clazz, declaredAuditedSuperclasses);
+			var allClassAudited = computeAuditConfiguration(clazz);
 			addFromProperties(allClassAudited, clazz);
 			if (allClassAudited != null || !_auditedPropertiesHolder.IsEmpty())
 			{
 				var superclazz = clazz.BaseType;
 				if (!clazz.IsInterface && typeof(object) != superclazz)
 				{
-					addPropertiesFromClass(superclazz, declaredAuditedSuperclasses);
+					addPropertiesFromClass(superclazz);
 				}
 			}
 		}
@@ -340,28 +354,19 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			// Checking if this property is explicitly audited or if all properties are.
 			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property) ?? allClassAudited;
+			if (aud == null && _overriddenAuditedProperties.Contains(mappedPropertyName) && !_overriddenNotAuditedProperties.Contains(mappedPropertyName))
+			{
+				// Assigning AuditedAttribute defaults. If anyone needs to customize those values in the future,
+				// appropriate fields shall be added to AuditOverrideAttribute annotation.
+				aud=new AuditedAttribute();
+			}
 			if (aud != null)
 			{
 				propertyData.Store = aud.ModStore;
 				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
 				return true;
 			}
-			if (_overriddenAuditedProperties.Contains(mappedPropertyName))
-			{
-				// Filling property data with AuditAttribute defaults. If anyone needs to customize those values in the future,
-				// appropriate fields shall be added to AuditOverrideAttribute.
-				fillAuditedDefaults(propertyData);
-				return true;
-			}
 			return false;
-		}
-
-		private static void fillAuditedDefaults(PropertyAuditingData propertyData)
-		{
-			//fill with default values
-			var temp = new AuditedAttribute();
-			propertyData.Store = temp.ModStore;
-			propertyData.RelationTargetAuditMode = temp.TargetAuditMode;
 		}
 
 		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)

@@ -2,15 +2,15 @@
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 {
-	[AuditOverride(PropertyName = "Str1", IsAudited = true)]
-	public class AuditedSpecialEntity : NotAuditedBaseEntity
+	[AuditOverride(ForClass = typeof(NotAuditedBaseEntity), IsAudited = true)]
+	public class ClassOverrideAuditedEntity : NotAuditedBaseEntity
 	{
 		[Audited]
 		public virtual string Str2 { get; set; }
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as AuditedSpecialEntity;
+			var other = obj as ClassOverrideAuditedEntity;
 			if (other == null)
 				return false;
 			if (!base.Equals(obj))

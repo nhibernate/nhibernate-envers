@@ -1,6 +1,9 @@
-﻿namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
+﻿using NHibernate.Envers.Configuration.Attributes;
+
+namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 {
-	public class NotAnnotatedBaseEntity
+	[Audited]
+	public class AuditedBaseEntity
 	{
 		public virtual int Id { get; set; }
 		public virtual string Str1 { get; set; }
@@ -8,7 +11,7 @@
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as NotAnnotatedBaseEntity;
+			var other = obj as AuditedBaseEntity;
 			if (other == null)
 				return false;
 			if (Id != other.Id)

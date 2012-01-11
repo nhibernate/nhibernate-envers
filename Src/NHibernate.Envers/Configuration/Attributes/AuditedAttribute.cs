@@ -35,6 +35,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// If a parent type lists any of its parent types using this attribute, all properties in the specified classes
 		/// will also be audited.
 		/// </summary>
+		[Obsolete("Use AuditOverrideAttribute(ForClass = typeof(SomeEntity)) instead.")]
 		public System.Type[] AuditParents { get; set; }
 	}
 }

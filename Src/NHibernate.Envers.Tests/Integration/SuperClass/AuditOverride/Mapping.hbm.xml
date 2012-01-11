@@ -31,4 +31,22 @@
 		<property name="Number1" />
 		<property name="Number2" />
 	</class>
+
+	<class name="ClassOverrideAuditedEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Number1" />
+	</class>
+
+	<class name="ClassOverrideNotAuditedEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str1" />
+		<property name="Str2" />
+		<property name="Number1" />
+	</class>
 </hibernate-mapping>
