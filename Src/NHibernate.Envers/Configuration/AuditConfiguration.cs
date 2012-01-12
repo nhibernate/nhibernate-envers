@@ -43,9 +43,9 @@ namespace NHibernate.Envers.Configuration
 			{
 				AuditStrategy = (IAuditStrategy) Activator.CreateInstance(AuditEntCfg.AuditStrategyType);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName));
+				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName), e);
 			}
 			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
 			if(validityAuditStrategy!=null)
