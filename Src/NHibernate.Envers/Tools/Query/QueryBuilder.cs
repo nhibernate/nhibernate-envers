@@ -9,103 +9,91 @@ namespace NHibernate.Envers.Tools.Query
 	/// </summary>
 	public class QueryBuilder
 	{
-		//TODO in second implementation phase
-		private readonly string entityName;
-		private readonly string alias;
+		private readonly string _entityName;
+		private readonly string _alias;
 
-		/**
-		 * For use by alias generator (in case an alias is not provided by the user).
-		 */
-		private readonly Incrementor aliasCounter;
-		/**
-		 * For use by parameter generator, in {@link Parameters}. This counter must be
-		 * the same in all parameters and sub-queries of this query.
-		 */
-		private readonly Incrementor paramCounter;
-		/**
-		 * Main "where" parameters for this query.
-		 */
-		private readonly Parameters rootParameters;
-		public Parameters RootParameters { get { return rootParameters; } }
+		// For use by alias generator (in case an alias is not provided by the user).
+		private readonly Incrementor _aliasCounter;
 
-		/**
-		 * A list of pairs (from entity name, alias name).
-		 */
-		private readonly List<Pair<string, string>> froms;
-		/**
-		 * A list of pairs (property name, order ascending?).
-		 */
-		private readonly List<Pair<string, bool>> orders;
-		/**
-		 * A list of complete projection definitions: either a sole property name, or a function(property name).
-		 */
-		private readonly IList<string> projections;
+		// For use by parameter generator, in {@link Parameters}. This counter must be
+		// the same in all parameters and sub-queries of this query.
+		private readonly Incrementor _paramCounter;
 
-		/**
-		 *
-		 * @param entityName Main entity which should be selected.
-		 * @param alias Alias of the entity
-		 */
+		// A list of pairs (from entity name, alias name).
+		private readonly ICollection<Pair<string, string>> _froms;
+
+		// A list of pairs (property name, order ascending?).
+		private readonly ICollection<Pair<string, bool>> _orders;
+
+		// A list of complete projection definitions: either a sole property name, or a function(property name).
+		private readonly ICollection<string> _projections;
+
+		/// <param name="entityName">Main entity which should be selected.</param>
+		/// <param name="alias">Alias of the entity</param>
 		public QueryBuilder(string entityName, string alias)
 			: this(entityName, alias, new Incrementor(), new Incrementor())
 		{
-
 		}
 
 		private QueryBuilder(string entityName, string alias, Incrementor aliasCounter, Incrementor paramCounter)
 		{
-			this.entityName = entityName;
-			this.alias = alias;
-			this.aliasCounter = aliasCounter;
-			this.paramCounter = paramCounter;
+			_entityName = entityName;
+			_alias = alias;
+			_aliasCounter = aliasCounter;
+			_paramCounter = paramCounter;
 
-			rootParameters = new Parameters(alias, "and", paramCounter);
+			RootParameters = new Parameters(alias, "and", paramCounter);
 
-			froms = new List<Pair<string, string>>();
-			orders = new List<Pair<string, bool>>();
-			projections = new List<string>();
+			_froms = new List<Pair<string, string>>();
+			_orders = new List<Pair<string, bool>>();
+			_projections = new List<string>();
 
 			AddFrom(entityName, alias);
 		}
 
-		/**
-		 * Add an entity from which to select.
-		 * @param entName Name of the entity from which to select.
-		 * @param als Alias of the entity. Should be different than all other aliases.
-		 */
+		/// <summary>
+		/// Main "where" parameters for this query.
+		/// </summary>
+		public Parameters RootParameters { get; private set; }
+
+		/// <summary>
+		/// Add an entity from which to select.
+		/// </summary>
+		/// <param name="entName">Name of the entity from which to select.</param>
+		/// <param name="als">Alias of the entity. Should be different than all other aliases.</param>
 		public void AddFrom(string entName, string als)
 		{
-			froms.Add(new Pair<string, string>(entName, als));
+			_froms.Add(new Pair<string, string>(entName, als));
 		}
 
 		private string GenerateAlias()
 		{
-			return "_e" + aliasCounter.Get();
+			return "_e" + _aliasCounter.Get();
 		}
-
-		/**
-		 * @return A sub-query builder for the same entity (with an auto-generated alias). The sub-query can
-		 * be later used as a value of a parameter.
-		 */
+		
+		/// <returns>
+		/// A sub-query builder for the same entity (with an auto-generated alias). The sub-query can
+		/// be later used as a value of a parameter.
+		/// </returns>
 		public QueryBuilder NewSubQueryBuilder()
 		{
-			return NewSubQueryBuilder(entityName, GenerateAlias());
+			return NewSubQueryBuilder(_entityName, GenerateAlias());
 		}
 
-		/**
-		 * @param entityName Entity name, which will be the main entity for the sub-query.
-		 * @param alias Alias of the entity, which can later be used in parameters.
-		 * @return A sub-query builder for the given entity, with the given alias. The sub-query can
-		 * be later used as a value of a parameter.
-		 */
+		/// <param name="entityName">Entity name, which will be the main entity for the sub-query.</param>
+		/// <param name="alias">Alias of the entity, which can later be used in parameters.</param>
+		/// <returns>
+		/// A sub-query builder for the given entity, with the given alias. The sub-query can
+		/// be later used as a value of a parameter.
+		/// </returns>
 		public QueryBuilder NewSubQueryBuilder(string entityName, string alias)
 		{
-			return new QueryBuilder(entityName, alias, aliasCounter, paramCounter);
+			return new QueryBuilder(entityName, alias, _aliasCounter, _paramCounter);
 		}
 
 		public void AddOrder(string propertyName, bool ascending)
 		{
-			orders.Add(new Pair<string, bool>(propertyName, ascending));
+			_orders.Add(new Pair<string, bool>(propertyName, ascending));
 		}
 
 		public void AddProjection(string function, string propertyName, bool distinct)
@@ -117,11 +105,11 @@ namespace NHibernate.Envers.Tools.Query
 		{
 			if (function == null)
 			{
-				projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? alias + "." : string.Empty) + propertyName);
+				_projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? _alias + "." : string.Empty) + propertyName);
 			}
 			else
 			{
-				projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? alias + "." : string.Empty) + propertyName + ")");
+				_projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? _alias + "." : string.Empty) + propertyName + ")");
 			}
 		}
 
@@ -137,20 +125,20 @@ namespace NHibernate.Envers.Tools.Query
 		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
 		{
 			sb.Append("select ");
-			sb.Append(projections.Count > 0
-							  ? string.Join(", ", projections.ToArray())
+			sb.Append(_projections.Count > 0
+							  ? string.Join(", ", _projections.ToArray())
 							  : string.Join(", ", GetAliasList().ToArray()));
 			sb.Append(" from ");
 			// all from entities with aliases, separated with commas
 			sb.Append(string.Join(", ", GetFromList().ToArray()));
 			// where part - rootParameters
-			if (!rootParameters.IsEmpty())
+			if (!RootParameters.IsEmpty())
 			{
 				sb.Append(" where ");
-				rootParameters.Build(sb, queryParamValues);
+				RootParameters.Build(sb, queryParamValues);
 			}
 			// orders
-			if (orders.Count > 0)
+			if (_orders.Count > 0)
 			{
 				sb.Append(" order by ");
 				sb.Append(string.Join(", ", GetOrderList().ToArray()));
@@ -159,17 +147,17 @@ namespace NHibernate.Envers.Tools.Query
 
 		private IEnumerable<string> GetAliasList()
 		{
-			return froms.Select(theFrom => theFrom.Second).ToList();
+			return _froms.Select(theFrom => theFrom.Second).ToList();
 		}
 
 		private IEnumerable<string> GetFromList()
 		{
-			return froms.Select(theFrom => theFrom.First + " " + theFrom.Second).ToList();
+			return _froms.Select(theFrom => theFrom.First + " " + theFrom.Second).ToList();
 		}
 
 		private IEnumerable<string> GetOrderList()
 		{
-			return orders.Select(theOrder => alias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
+			return _orders.Select(theOrder => _alias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
 		}
 
 		public IQuery ToQuery(ISession session)
