@@ -69,7 +69,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				var overrideClass = auditOverrideAttribute.ForClass;
 				if (propertyName != null)
 				{
-					//todo:...
 					if(overrideClass!= null)
 						throw new MappingException("Both PropertyName and ForClass is set on " + _persistentPropertiesSource.Class.FullName + ". This is not allowed.");
 					// Overridden @Audited annotation on property level.
