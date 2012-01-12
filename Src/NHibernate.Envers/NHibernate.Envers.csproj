@@ -249,7 +249,7 @@
     <Compile Include="Query\Property\RevisionNumberPropertyName.cs" />
     <Compile Include="Query\Property\RevisionPropertyPropertyName.cs" />
     <Compile Include="Query\Property\RevisionTypePropertyName.cs" />
-    <Compile Include="Query\QueryBuilder.cs" />
+    <Compile Include="Tools\Query\QueryBuilder.cs" />
     <Compile Include="Reader\AuditReader.cs" />
     <Compile Include="Reader\FirstLevelCache.cs" />
     <Compile Include="Reader\IAuditReaderImplementor.cs" />

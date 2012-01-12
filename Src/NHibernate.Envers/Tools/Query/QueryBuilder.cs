@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Query;
 
-namespace NHibernate.Envers.Query
+namespace NHibernate.Envers.Tools.Query
 {
 	/// <summary>
 	/// A class for incrementaly building a HQL query.

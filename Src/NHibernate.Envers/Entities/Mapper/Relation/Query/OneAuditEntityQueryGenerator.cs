@@ -3,6 +3,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Strategy;
+using NHibernate.Envers.Tools.Query;
 using NHibernate.Transform;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
