@@ -107,8 +107,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
-			mapper.AddComposite(propertyData, new OneToOneNotOwningMapper(owningReferencePropertyName,
-					referencedEntityName, propertyData));
+			mapper.AddComposite(propertyData, new OneToOneNotOwningMapper(entityName, referencedEntityName, owningReferencePropertyName, propertyData));
+		}
+
+		public void AddOneToOnePrimaryKeyJoinColumn(PropertyAuditingData propertyAuditingData, IValue value, ICompositeMapperBuilder mapper, string entityName, bool insertable)
+		{
+			var referencedEntityName = ((ToOne)value).ReferencedEntityName;
+			var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName, propertyAuditingData, true);
+			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(propertyAuditingData.Name);
+
+			// Generating the id mapper for the relation
+			var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
+
+			// Storing information about this relation
+			mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
+
+			// Adding mapper for the id
+			var propertyData = propertyAuditingData.GetPropertyData();
+			mapper.AddComposite(propertyData, new OneToOnePrimaryKeyJoinColumnMapper(entityName, referencedEntityName, propertyData));
 		}
 	}
 }

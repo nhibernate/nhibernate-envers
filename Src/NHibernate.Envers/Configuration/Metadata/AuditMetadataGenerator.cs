@@ -144,8 +144,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// only second pass
 				if (!firstPass)
 				{
-					toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value,
-					 currentMapper, entityName);
+					var oneToOne = (OneToOne) value;
+					if(oneToOne.ReferencedPropertyName !=null)
+					{
+						toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value, currentMapper, entityName);						
+					}
+					else
+					{
+						toOneRelationMetadataGenerator.AddOneToOnePrimaryKeyJoinColumn(propertyAuditingData, value, currentMapper,
+						                                                               entityName, insertable);
+					}
 				}
 			}
 			else if (type is CollectionType)
