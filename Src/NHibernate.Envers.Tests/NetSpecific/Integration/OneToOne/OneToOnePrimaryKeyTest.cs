@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(OneToOneOwningEntity), id).ToList());
+			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(OneToOneOwningEntity), id).ToList());
 			CollectionAssert.AreEquivalent(new[] { 2, 3, 4 }, AuditReader().GetRevisions(typeof(OneToOneOwnedEntity), id).ToList());
 		}
 
