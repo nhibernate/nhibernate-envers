@@ -111,8 +111,11 @@
     <Compile Include="Configuration\Store\IMetaDataAdder.cs" />
     <Compile Include="DefaultTrackingModifiedEntitiesRevisionEntity.cs" />
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedSetCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\OneToOnePrimaryKeyJoinColumnMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedMapCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedSetCollectionMapper.cs" />
     <Compile Include="ICrossTypeRevisionChangesReader.cs" />
