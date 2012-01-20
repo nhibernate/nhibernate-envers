@@ -3,6 +3,7 @@
 *** Breaking changes ***
 * Removed obsolute methods; AuditQueryCreator.ForHistoryOf<TEntity> and ForHistoryOf<TEntity>(bool)
 * Changed IAuditReader.GetRevisions to be non generic. Instead having Type as inparameter.
+* Removed unnecessary audit column for one-to-one mapping using pk to pk
 
 *** Possible breaking change ***
 * AbstractCollectionMapper.Ctor changed

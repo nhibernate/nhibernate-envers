@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				value = QueryForReferencedEntity(versionsReader, referencedEntity, primaryKey, revision);
 			}
-			catch (NoResultException e)
+			catch (NoResultException)
 			{
 				value = null;
 			}
