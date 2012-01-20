@@ -110,6 +110,12 @@
     <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSuperclass.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\OneToManyInverseToSuperclassTest.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\Master.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Account.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\AccountNotAuditedOwners.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\NotAuditedNoProxyPerson.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\NotAuditedProxyPerson .cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\OneToOneWithPrimaryKeyJoinTest.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Person.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UnidirectionalMulIdWithNullsTest.cs" />
     <Compile Include="Integration\OneToOne\UniDirectional\UniRefIngMulIdEntity.cs" />
     <Compile Include="Integration\Properties\PropertiesTestEntity.cs" />
@@ -689,6 +695,7 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditedAtSuperclassLevel\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Invalid\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
