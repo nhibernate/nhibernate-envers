@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.PrimaryKeyJoinColumn">
+
+	<class name="Account">
+		<id name="AccountId">
+			<generator class="foreign">
+				<param name ="property">Owner</param>
+			</generator>
+		</id>
+
+		<property name="Type" />
+		<one-to-one name="Owner"
+				class="Person"
+				constrained="true"/>
+	</class>
+
+	<class name="AccountNotAuditedOwners">
+		<id name="AccountId">
+			<generator class="identity"/>
+		</id>
+
+		<property name="Type" />
+		<one-to-one name="Owner"
+						class="NotAuditedNoProxyPerson"/>
+		<one-to-one name="CoOwner"
+						class="NotAuditedProxyPerson"
+						lazy="proxy"/>
+	</class>
+
+	<class name="Person">
+		<id name="PersonId">
+			<generator class="identity"/>
+		</id>
+		<property name="Name" />
+		<one-to-one name="Account" class="Account"/>
+	</class>
+
+	<class name="NotAuditedNoProxyPerson" lazy="false">
+		<id name="PersonId">
+			<generator class="foreign">
+				<param name="property">Account</param>
+			</generator>
+		</id>
+		<property name="Name" />
+		<one-to-one name="Account" 
+						class="AccountNotAuditedOwners"
+						constrained="true"/>
+	</class>
+
+	<class name="NotAuditedProxyPerson">
+		<id name="PersonId">
+			<generator class="foreign">
+				<param name="property">Account</param>
+			</generator>
+		</id>
+		<property name="Name" />
+		<one-to-one name="Account" 
+						class="Account" 
+						constrained="true"
+						lazy="proxy"/>
+	</class>
+</hibernate-mapping>
