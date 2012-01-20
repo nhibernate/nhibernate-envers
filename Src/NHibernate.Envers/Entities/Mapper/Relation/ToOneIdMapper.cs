@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public class ToOneIdMapper : IPropertyMapper
+	public class ToOneIdMapper : AbstractToOneMapper 
 	{
 		private readonly IIdMapper _delegat;
 		private readonly PropertyData _propertyData;
@@ -19,6 +17,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly bool _nonInsertableFake;
 
 		public ToOneIdMapper(IIdMapper delegat, PropertyData propertyData, string referencedEntityName, bool nonInsertableFake)
+			: base(propertyData)
 		{
 			_delegat = delegat;
 			_propertyData = propertyData;
@@ -26,7 +25,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_nonInsertableFake = nonInsertableFake;
 		}
 
-		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		public override bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
 			var newData = new Dictionary<string, object>();
 
@@ -44,37 +43,20 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return !_nonInsertableFake && !Toolz.EntitiesEqual(session, newObj, oldObj);
 		}
 
-		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
-									   IAuditReaderImplementor versionsReader, long revision)
+		protected override void NullSafeMapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey, IAuditReaderImplementor versionsReader, long revision)
 		{
-			if (obj == null)
-				return;
-
 			var entityId = _delegat.MapToIdFromMap(data);
-
-			object value;
-			if (entityId == null)
-			{
-				value = null;
-			}
-			else
+			object value = null;
+			if (entityId != null)
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
 					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName)
-						.CreateProxy(entityId, new ToOneDelegateSessionImplementor(versionsReader, entityId, revision, verCfg));
+						.CreateProxy(entityId,
+						             new ToOneDelegateSessionImplementor(versionsReader, entityId, revision, verCfg));
 				}
 			}
-			var setter = ReflectionTools.GetSetter(obj.GetType(), _propertyData);
-			setter.Set(obj, value);
-		}
-
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
-																		 IPersistentCollection newColl,
-																		 object oldColl,
-																		 object id)
-		{
-			return null;
+			SetPropertyValue(obj, value);
 		}
 	}
 }

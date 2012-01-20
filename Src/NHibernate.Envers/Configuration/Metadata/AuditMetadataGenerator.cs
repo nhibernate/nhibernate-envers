@@ -136,7 +136,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (!firstPass)
 				{
 					toOneRelationMetadataGenerator.AddToOne(parent, propertyAuditingData, value, currentMapper,
-							entityName, insertable, null);
+							entityName, insertable);
 				}
 			}
 			else if (type is OneToOneType)
@@ -144,24 +144,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// only second pass
 				if (!firstPass)
 				{
-					var oneToOneType = (OneToOneType)type;
-					var oneToOneValue = (OneToOne)value;
-					if (oneToOneType.IsReferenceToPrimaryKey && oneToOneValue.IsConstrained)
+					var oneToOne = (OneToOne) value;
+					if(oneToOne.ReferencedPropertyName !=null)
 					{
-						//if pk onetoone is used, "value" has no corresponding columns
-						var pkColumns = new List<string>();
-						foreach (Column column in Cfg.GetClassMapping(oneToOneValue.ReferencedEntityName).Identifier.ColumnIterator)
-						{
-							pkColumns.Add("Ref" + column.Name);
-						}
-
-						toOneRelationMetadataGenerator.AddToOne(parent, propertyAuditingData, value, currentMapper,
-								entityName, insertable, pkColumns);
+						toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value, currentMapper, entityName);						
 					}
 					else
 					{
-						toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, oneToOneValue,
-								currentMapper, entityName);
+						toOneRelationMetadataGenerator.AddOneToOnePrimaryKeyJoinColumn(propertyAuditingData, value, currentMapper,
+						                                                               entityName, insertable);
 					}
 				}
 			}
