@@ -202,5 +202,15 @@ namespace NHibernate.Envers.Query.Criteria
 		{
 			return new PropertyAuditOrder(_propertyNameGetter, false);
 		}
+
+		public IAuditCriterion HasChanged()
+		{
+			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), true, "=");
+		}
+
+		public IAuditCriterion HasNotChanged()
+		{
+			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), false, "=");
+		}
 	}
 }

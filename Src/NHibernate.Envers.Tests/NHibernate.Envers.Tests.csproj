@@ -103,6 +103,29 @@
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\ManyToManyInverseToSuperclassTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\Master.cs" />
+    <Compile Include="Integration\ModifiedFlags\AbstractModifiedFlagsEntityTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\Entities\PartialModifiedFlagsEntity.cs" />
+    <Compile Include="Integration\ModifiedFlags\Entities\WithModifiedFlagReferencingEntity.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedAPITest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedAuditedManyToManyTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedBidirectional2Test.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedChildAuditingTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedChildReferencingTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedComponentMapKeyTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedComponentsTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedCompositeCustomTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedDoubleJoinColumnBidirectionalListTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedEnumSetTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedForDefaultNotUsingTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedIdMapKeyTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedManyToOneInComponentTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedNotOwnedBidirectionalTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedNullPropertiesTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedOneToManyInComponentTEst.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedStringMapTEst.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedStringSetTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedUnversionedPropertiesTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\ModifiedFlagSuffixTest.cs" />
     <Compile Include="Integration\Naming\Quotation\QuotedFieldsEntity.cs" />
     <Compile Include="Integration\Naming\Quotation\QuotedFieldsTest.cs" />
     <Compile Include="Integration\OneToMany\InverseToSuperclass\DetailSubclass.cs" />
@@ -566,6 +589,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Tools\AssertExtensions.cs" />
+    <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Incorrect\Mapping.hbm.xml" />
@@ -696,6 +720,7 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Invalid\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\ModifiedFlags\Entities\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

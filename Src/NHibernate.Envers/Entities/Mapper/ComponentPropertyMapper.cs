@@ -43,6 +43,31 @@ namespace NHibernate.Envers.Entities.Mapper
 			return _delegate.MapToMapFromEntity(session, data, newObj, oldObj);
 		}
 
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			if (propertyData.UsingModifiedFlag)
+			{
+				data[propertyData.ModifiedFlagPropertyName] = _delegate.MapToMapFromEntity(session, new Dictionary<string, object>(), newObj, oldObj);
+			}
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			if (propertyData.UsingModifiedFlag)
+			{
+				var hasModifiedCollection = false;
+				foreach (var propData in _delegate.Properties.Keys)
+				{
+					if (collectionPropertyName.Equals(propData.Name))
+					{
+						hasModifiedCollection = true;
+						break;
+					}
+				}
+				data[propertyData.ModifiedFlagPropertyName] = hasModifiedCollection;
+			}
+		}
+
 		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data,
 										object primaryKey, IAuditReaderImplementor versionsReader, long revision)
 		{

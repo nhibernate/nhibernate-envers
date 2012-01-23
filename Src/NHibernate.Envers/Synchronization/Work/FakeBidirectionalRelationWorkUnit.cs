@@ -166,11 +166,19 @@ namespace NHibernate.Envers.Synchronization.Work
 				// new owner will in fact be null.
 				rd.FakeBidirectionalRelationMapper.MapToMapFromEntity(sessionImplementor, data,
 						revisionType == RevisionType.Deleted ? null : owningEntity, null);
+				rd.FakeBidirectionalRelationMapper.MapModifiedFlagsToMapFromEntity(sessionImplementor, 
+																										data,
+				                                                                  revisionType == RevisionType.Deleted ? null : owningEntity, 
+																										null);
 
 				// Also mapping the index, if the collection is indexed.
 				if (rd.FakeBidirectionalRelationIndexMapper != null) {
 					rd.FakeBidirectionalRelationIndexMapper.MapToMapFromEntity(sessionImplementor, data,
 							revisionType == RevisionType.Deleted ? null : index, null);
+					rd.FakeBidirectionalRelationIndexMapper.MapModifiedFlagsToMapFromEntity(sessionImplementor, 
+																													data,
+					                                                                        revisionType == RevisionType.Deleted ? null : index, 
+																													null);
 				}
 			}
 

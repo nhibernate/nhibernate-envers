@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
 		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
 
-		public AuditMetadataGenerator(Cfg.Configuration cfg, 
+		public AuditMetadataGenerator(Cfg.Configuration cfg,
 										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
@@ -108,73 +108,106 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+
+
+		private void addValueInFirstPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 					  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
-					  bool insertable, bool firstPass)
+					  bool insertable, bool processModifiedFlag)
 		{
 			var type = value.Type;
 
-			// only first pass
-			if (firstPass)
+			if (BasicMetadataGenerator.AddBasic(parent, propertyAuditingData, value, currentMapper, insertable, false))
 			{
-				if (BasicMetadataGenerator.AddBasic(parent, propertyAuditingData, value, currentMapper, insertable, false))
-				{
-					// The property was mapped by the basic generator.
-					return;
-				}
+				// The property was mapped by the basic generator.
 			}
-
-			if (type is ComponentType)
+			else if (type is ComponentType)
 			{
-				// both passes
-				componentMetadataGenerator.AddComponent(parent, propertyAuditingData, value, currentMapper,
-						entityName, xmlMappingData, firstPass, insertable);
-			}
-			else if (type is ManyToOneType)
-			{
-				// only second pass
-				if (!firstPass)
-				{
-					toOneRelationMetadataGenerator.AddToOne(parent, propertyAuditingData, value, currentMapper,
-							entityName, insertable);
-				}
-			}
-			else if (type is OneToOneType)
-			{
-				// only second pass
-				if (!firstPass)
-				{
-					var oneToOne = (OneToOne) value;
-					if(oneToOne.ReferencedPropertyName !=null)
-					{
-						toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value, currentMapper, entityName);						
-					}
-					else
-					{
-						toOneRelationMetadataGenerator.AddOneToOnePrimaryKeyJoinColumn(propertyAuditingData, value, currentMapper,
-						                                                               entityName, insertable);
-					}
-				}
-			}
-			else if (type is CollectionType)
-			{
-				// only second pass
-				if (!firstPass)
-				{
-					var collectionMetadataGenerator = new CollectionMetadataGenerator(this,
-							(Mapping.Collection)value, currentMapper, entityName, xmlMappingData,
-							propertyAuditingData);
-					collectionMetadataGenerator.AddCollection();
-				}
+				componentMetadataGenerator.AddComponent(parent, propertyAuditingData, value, currentMapper, entityName,
+																	 xmlMappingData, true, insertable);
 			}
 			else
 			{
-				if (firstPass)
+				if (!processedInSecondPass(type))
 				{
 					// If we got here in the first pass, it means the basic mapper didn't map it, and none of the
 					// above branches either.
 					ThrowUnsupportedTypeException(type, entityName, propertyAuditingData.Name);
 				}
+				return;
+			}
+			addModifiedFlagIfNeeded(parent, propertyAuditingData, processModifiedFlag);
+		}
+
+		private bool processedInSecondPass(IType type)
+		{
+			return type is ComponentType ||
+					 type is ManyToOneType ||
+					 type is OneToOneType ||
+					 type is CollectionType;
+		}
+
+		private void addValueInSecondPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+																									  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
+																									  bool insertable, bool processModifiedFlag)
+		{
+			var type = value.Type;
+
+			if (type is ComponentType)
+			{
+				componentMetadataGenerator.AddComponent(parent, propertyAuditingData, value, currentMapper,
+						entityName, xmlMappingData, false, insertable);
+				return;// mod flag field has been already generated in first pass
+			}
+			else if (type is ManyToOneType)
+			{
+				toOneRelationMetadataGenerator.AddToOne(parent, propertyAuditingData, value, currentMapper, entityName, insertable);
+			}
+			else if (type is OneToOneType)
+			{
+				var oneToOne = (OneToOne)value;
+				if (oneToOne.ReferencedPropertyName != null)
+				{
+					toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value, currentMapper, entityName);	
+				}
+				else
+				{
+					// @OneToOne relation marked with @PrimaryKeyJoinColumn
+					toOneRelationMetadataGenerator.AddOneToOnePrimaryKeyJoinColumn(propertyAuditingData, value,
+																		currentMapper, entityName, insertable);
+				}
+			}
+			else if (type is CollectionType)
+			{
+				var collectionMetadataGenerator = new CollectionMetadataGenerator(this, (Mapping.Collection) value, currentMapper, entityName,
+																										xmlMappingData, propertyAuditingData);
+				collectionMetadataGenerator.AddCollection();
+			}
+			else
+			{
+				return;
+			}
+			addModifiedFlagIfNeeded(parent, propertyAuditingData, processModifiedFlag);
+		}
+
+		private void addModifiedFlagIfNeeded(XmlElement parent, PropertyAuditingData propertyAuditingData, bool processModifiedFlag)
+		{
+			if (processModifiedFlag && propertyAuditingData.UsingModifiedFlag)
+			{
+				MetadataTools.AddModifiedFlagProperty(parent, propertyAuditingData.Name, GlobalCfg.ModifiedFlagSuffix);
+			}
+		}
+
+		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+												 EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
+												 bool insertable, bool firstPass, bool processModifiedFlag)
+		{
+			if (firstPass)
+			{
+				addValueInFirstPass(parent, value, currentMapper, entityName, xmlMappingData, propertyAuditingData, insertable, processModifiedFlag);
+			}
+			else
+			{
+				addValueInSecondPass(parent, value, currentMapper, entityName, xmlMappingData, propertyAuditingData, insertable, processModifiedFlag);
 			}
 		}
 
@@ -189,7 +222,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (propertyAuditingData != null)
 				{
 					AddValue(parent, property.Value, currentMapper, entityName, xmlMappingData, propertyAuditingData,
-							property.IsInsertable, firstPass);
+							property.IsInsertable, firstPass, true);
 				}
 			}
 		}

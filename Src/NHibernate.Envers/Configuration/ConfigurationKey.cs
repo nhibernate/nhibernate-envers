@@ -126,5 +126,8 @@ namespace NHibernate.Envers.Configuration
 		/// is used, and <see cref="AuditStrategyValidityStoreRevendTimestamp"/>evaluates to <code>true</code>.
 		/// </summary>
 		public const string AuditStrategyValidityRevendTimestampFieldName = "nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name";
+
+		public const string ModifiedFlagSuffix = "nhibernate.envers.modified_flag_suffix";
+		public const string GlobalWithModifiedFlag = "nhibernate.envers.global_with_modified_flag";
 	}
 }

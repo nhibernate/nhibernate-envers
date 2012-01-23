@@ -74,9 +74,11 @@ namespace NHibernate.Envers.Entities.Mapper
 
 				if (PropertyDatas.ContainsKey(propertyName)) 
 				{
-					ret |= Properties[PropertyDatas[propertyName]].MapToMapFromEntity(session, data,
-							getAtIndexOrNull(newState, i),
-							getAtIndexOrNull(oldState, i));
+					var propertyMapper = Properties[PropertyDatas[propertyName]];
+					var newObj = getAtIndexOrNull(newState, i);
+					var oldObj = getAtIndexOrNull(oldState, i);
+					ret |= propertyMapper.MapToMapFromEntity(session, data, newObj, oldObj);
+					propertyMapper.MapModifiedFlagsToMapFromEntity(session, data, newObj, oldObj);
 				}
 			}
 
@@ -113,6 +115,29 @@ namespace NHibernate.Envers.Entities.Mapper
 			return ret;
 		}
 
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			foreach (var propertyData in Properties.Keys)
+			{
+				IGetter getter;
+				if (newObj != null)
+				{
+					getter = ReflectionTools.GetGetter(newObj.GetType(), propertyData);
+				}
+				else if (oldObj != null)
+				{
+					getter = ReflectionTools.GetGetter(oldObj.GetType(), propertyData);
+				}
+				else
+				{
+					return;
+				}
+				Properties[propertyData].MapModifiedFlagsToMapFromEntity(session, data,
+				                                                         newObj == null ? null : getter.Get(newObj),
+				                                                         oldObj == null ? null : getter.Get(oldObj));
+			}
+		}
+
 		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data,
 									   object primaryKey, IAuditReaderImplementor versionsReader, long revision) 
 		{
@@ -122,45 +147,67 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
-																		IPersistentCollection newColl,
-																		object oldColl,
-																		object id) 
+		private Pair<IPropertyMapper, string> mapperAndDelegatePropertyName(string referencingPropertyName)
 		{
 			// Name of the property, to which we will delegate the mapping.
 			string delegatePropertyName;
 
 			// Checking if the property name doesn't reference a collection in a component - then the name will containa a .
 			var dotIndex = referencingPropertyName.IndexOf('.');
-			if (dotIndex != -1) 
+			if (dotIndex != -1)
 			{
 				// Computing the name of the component
 				var componentName = referencingPropertyName.Substring(0, dotIndex);
 				// And the name of the property in the component
 				var propertyInComponentName = MappingTools.CreateComponentPrefix(componentName)
-						+ referencingPropertyName.Substring(dotIndex+1);
+						+ referencingPropertyName.Substring(dotIndex + 1);
 
 				// We need to get the mapper for the component.
 				referencingPropertyName = componentName;
 				// As this is a component, we delegate to the property in the component.
 				delegatePropertyName = propertyInComponentName;
-			} 
-			else 
+			}
+			else
 			{
 				// If this is not a component, we delegate to the same property.
 				delegatePropertyName = referencingPropertyName;
 			}
+			var propertyMapper = propertyMapperKey(referencingPropertyName);
+			return propertyMapper == null ? null : new Pair<IPropertyMapper, string>(propertyMapper, delegatePropertyName);
+		}
 
+		private IPropertyMapper propertyMapperKey(string referencingPropertyName)
+		{
 			PropertyData propertyData;
 			if (PropertyDatas.TryGetValue(referencingPropertyName, out propertyData))
 			{
 				IPropertyMapper propertyMapper;
-				if(Properties.TryGetValue(propertyData, out propertyMapper))
+				if (Properties.TryGetValue(propertyData, out propertyMapper))
 				{
-					return propertyMapper.MapCollectionChanges(delegatePropertyName, newColl, oldColl, id);
+					return propertyMapper;
 				}
 			}
 			return null;
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			var pair = mapperAndDelegatePropertyName(collectionPropertyName);
+			if (pair != null)
+			{
+				pair.First.MapModifiedFlagsToMapForCollectionChange(pair.Second, data);
+			}
+		}
+
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+																		IPersistentCollection newColl,
+																		object oldColl,
+																		object id)
+		{
+			var pair = mapperAndDelegatePropertyName(referencingPropertyName);
+			return pair == null ? 
+								null :
+								pair.First.MapCollectionChanges(pair.Second, newColl, oldColl, id);
 		}
 	}
 }

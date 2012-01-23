@@ -39,5 +39,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		}
 
 		protected abstract Object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision);
+
+		public override void MapModifiedFlagsToMapFromEntity(Engine.ISessionImplementor session, System.Collections.Generic.IDictionary<string, object> data, object newObj, object oldObj)
+		{
+		}
+
+		public override void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, System.Collections.Generic.IDictionary<string, object> data)
+		{
+			if (PropertyData.UsingModifiedFlag)
+			{
+				data[PropertyData.ModifiedFlagPropertyName] = collectionPropertyName.Equals(PropertyData.Name);
+			}
+		}
 	}
 }

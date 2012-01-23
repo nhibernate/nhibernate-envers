@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Entities
 {
@@ -96,6 +97,53 @@ namespace NHibernate.Envers.Entities
 				return relDesc;
 			}
 			return entCfg.ParentEntityName != null ? GetRelationDescription(entCfg.ParentEntityName, propertyName) : null;
+		}
+
+		private IEnumerable<RelationDescription> relationDescriptions(string entityName)
+		{
+			var entCfg = entitiesConfigurations[entityName];
+			var descriptions = new List<RelationDescription>();
+			if (entCfg.ParentEntityName != null)
+			{
+				// collect descriptions from super classes
+				descriptions.AddRange(relationDescriptions(entCfg.ParentEntityName));
+			}
+			descriptions.AddRange(entCfg.RelationsIterator);
+			return descriptions;
+		}
+
+		private void addWithParentEntityNames(string entityName, ISet<string> entityNames)
+		{
+			entityNames.Add(entityName);
+			var entCfg = entitiesConfigurations[entityName];
+			if (entCfg.ParentEntityName != null)
+			{
+				// collect descriptions from super classes
+				addWithParentEntityNames(entCfg.ParentEntityName, entityNames);
+			}
+		}
+
+		private ISet<string> entityAndParentsNames(string entityName)
+		{
+			var names = new HashedSet<string>();
+			addWithParentEntityNames(entityName, names);
+			return names;
+		}
+
+		public ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
+		{
+			var entAndParNames = entityAndParentsNames(fromEntityName);
+			var toPropertyNames = new HashedSet<string>();
+			foreach (var relationDescription in relationDescriptions(toEntityName))
+			{
+				var relToEntityName = relationDescription.ToEntityName;
+				var mappedByPropertyName = relationDescription.MappedByPropertyName;
+				if (entAndParNames.Contains(relToEntityName) && mappedByPropertyName.Equals(fromPropertyName))
+				{
+					toPropertyNames.Add(relationDescription.FromPropertyName);
+				}
+			}
+			return toPropertyNames;
 		}
 	}
 }

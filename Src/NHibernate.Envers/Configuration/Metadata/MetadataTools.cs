@@ -299,5 +299,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return (from Column column in columns select column.Name);
 		}
+
+		public static XmlElement AddModifiedFlagProperty(XmlElement parent, string propertyName, string suffix)
+		{
+			return AddProperty(parent, ModifiedFlagPropertyName(propertyName, suffix), "bool", true, false, false);
+		}
+
+		public static string ModifiedFlagPropertyName(string propertyName, string suffix)
+		{
+			return propertyName + suffix;
+		}
 	}
 }

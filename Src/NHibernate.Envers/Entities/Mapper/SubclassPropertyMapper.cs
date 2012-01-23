@@ -67,6 +67,18 @@ namespace NHibernate.Envers.Entities.Mapper
 			return parentCollectionChanges;
 		}
 
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			parentMapper.MapModifiedFlagsToMapFromEntity(session, data, newObj, oldObj);
+			main.MapModifiedFlagsToMapFromEntity(session, data, newObj, oldObj);
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			parentMapper.MapModifiedFlagsToMapForCollectionChange(collectionPropertyName, data);
+			main.MapModifiedFlagsToMapForCollectionChange(collectionPropertyName, data);
+		}
+
 		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
 		{
 			return main.AddComponent(propertyData, componentClassName);

@@ -7,6 +7,8 @@ namespace NHibernate.Envers.Configuration
 {
 	public class GlobalConfiguration 
 	{
+		public const string DefaultModifiedFlagSuffix = "_MOD";
+
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
 			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties, ConfigurationKey.RevisionOnCollectionChange, "true");
@@ -30,6 +32,10 @@ namespace NHibernate.Envers.Configuration
 			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
 			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
 			CorrelatedSubqueryOperator = "=";
+
+			var usingModifiedFlagStr = Toolz.GetProperty(properties, ConfigurationKey.GlobalWithModifiedFlag, "false");
+			IsGlobalWithModifiedFlag = Boolean.Parse(usingModifiedFlagStr);
+			ModifiedFlagSuffix = Toolz.GetProperty(properties, ConfigurationKey.ModifiedFlagSuffix, DefaultModifiedFlagSuffix);
 		}
 
 		/// <summary>
@@ -75,5 +81,8 @@ namespace NHibernate.Envers.Configuration
 		public string DefaultCatalogName { get; private set; }
 
 		public ICollectionProxyMapperFactory CollectionProxyMapperFactory { get; private set; }
+
+		public bool IsGlobalWithModifiedFlag { get; private set; }
+		public string ModifiedFlagSuffix { get; private set; }
 	}
 }

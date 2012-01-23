@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (componentPropertyAuditingData != null)
 				{
 					mainGenerator.AddValue(parent, property.Value, componentMapper, entityName, xmlMappingData,
-							componentPropertyAuditingData, property.IsInsertable && insertable, firstPass);
+							componentPropertyAuditingData, property.IsInsertable && insertable, firstPass, false);
 				}
 			}
 		}

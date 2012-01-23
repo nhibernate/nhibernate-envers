@@ -5,6 +5,7 @@ using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper
@@ -60,6 +61,18 @@ namespace NHibernate.Envers.Entities.Mapper
 																		 object id) 
 		{
 			return null;
+		}
+
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			if (_propertyData.UsingModifiedFlag)
+			{
+				data[_propertyData.ModifiedFlagPropertyName] = !Toolz.ObjectsEqual(newObj, oldObj);
+			}
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
 		}
 	}
 }
