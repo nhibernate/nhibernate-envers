@@ -23,5 +23,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// This is useful for dictionary-like entities, which don't change and don't need to be audited.
 		/// </summary>
 		public RelationTargetAuditMode TargetAuditMode { get; set; }
+
+		public bool WithModifiedFlag { get; set; }
 	}
 }

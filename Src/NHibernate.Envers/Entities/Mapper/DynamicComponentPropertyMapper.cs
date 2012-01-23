@@ -89,5 +89,30 @@ namespace NHibernate.Envers.Entities.Mapper
 		{
 			return _delegate.MapCollectionChanges(referencingPropertyName, newColl, oldColl, id);
 		}
+
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			if (_propertyData.UsingModifiedFlag)
+			{
+				data[_propertyData.ModifiedFlagPropertyName] = _delegate.MapToMapFromEntity(session, new Dictionary<string, object>(), newObj, oldObj);
+			}
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			if (_propertyData.UsingModifiedFlag)
+			{
+				var hasModifiedCollection = false;
+				foreach (var propData in _delegate.Properties.Keys)
+				{
+					if (collectionPropertyName.Equals(propData.Name))
+					{
+						hasModifiedCollection = true;
+						break;
+					}
+				}
+				data[_propertyData.ModifiedFlagPropertyName] = hasModifiedCollection;
+			}
+		}
 	}
 }

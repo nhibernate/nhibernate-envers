@@ -321,7 +321,9 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				return false;
 			}
 
-			propertyData.Name = _propertyNamePrefix + mappedPropertyName;
+			var propertyName = _propertyNamePrefix + property.Name;
+			propertyData.Name = propertyName;
+			propertyData.ModifiedFlagName = MetadataTools.ModifiedFlagPropertyName(propertyName, _globalCfg.ModifiedFlagSuffix);
 			propertyData.BeanName = mappedPropertyName;
 			propertyData.AccessType = accessType;
 
@@ -350,9 +352,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				propertyData.Store = aud.ModStore;
 				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
+				propertyData.UsingModifiedFlag = checkUsingModifiedFlag(aud);
 				return true;
 			}
 			return false;
+		}
+
+		private bool checkUsingModifiedFlag(AuditedAttribute aud)
+		{
+			return _globalCfg.IsGlobalWithModifiedFlag || aud.WithModifiedFlag;
 		}
 
 		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)

@@ -37,10 +37,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public string PositionMappedBy { get; set; }
 		public bool ForceInsertable { get; set; }
 		public RelationTargetAuditMode RelationTargetAuditMode { get; set; }
+		public bool UsingModifiedFlag { get; set; }
+		public string ModifiedFlagName { private get; set;}
 
 		public PropertyData GetPropertyData()
 		{
-			return new PropertyData(Name, BeanName, AccessType, Store);
+			return new PropertyData(Name, BeanName, AccessType, Store, UsingModifiedFlag, ModifiedFlagName);
 		}
 
 		public void AddAuditingOverride(AuditOverrideAttribute annotation)

@@ -12,6 +12,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	public class ToOneIdMapper : AbstractToOneMapper 
 	{
 		private readonly IIdMapper _delegat;
+		//todo - remove
 		private readonly PropertyData _propertyData;
 		private readonly string _referencedEntityName;
 		private readonly bool _nonInsertableFake;
@@ -39,7 +40,27 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				data[entry.Key] = entry.Value;
 			}
 
-			//noinspection SimplifiableConditionalExpression
+			return CheckModified(session, newObj, oldObj);
+		}
+
+		public override void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			if (PropertyData.UsingModifiedFlag)
+			{
+				data[PropertyData.ModifiedFlagPropertyName] = CheckModified(session, newObj, oldObj);
+			}
+		}
+
+		public override void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			if (PropertyData.UsingModifiedFlag)
+			{
+				data[PropertyData.ModifiedFlagPropertyName] = collectionPropertyName.Equals(PropertyData.Name);
+			}
+		}
+
+		protected bool CheckModified(ISessionImplementor session, object newObj, object oldObj)
+		{
 			return !_nonInsertableFake && !Toolz.EntitiesEqual(session, newObj, oldObj);
 		}
 

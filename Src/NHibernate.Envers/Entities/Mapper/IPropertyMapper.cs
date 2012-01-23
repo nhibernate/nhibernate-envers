@@ -42,5 +42,8 @@ namespace NHibernate.Envers.Entities.Mapper
 		IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
 																  IPersistentCollection newColl,
 																  object oldColl, object id);
+
+		void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj);
+		void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data);
 	}
 }

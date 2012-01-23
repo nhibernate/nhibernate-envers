@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.ModifiedFlags.Entities">
+	<class name="PartialModifiedFlagsEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<component name="Comp1">
+			<property name="Str1" />
+			<property name="Str2" />
+		</component>
+		<component name="Comp2">
+			<property name="Str5" />
+			<property name="Str6" />
+		</component>
+		<one-to-one name="Referencing" property-ref="Reference"/>
+		<one-to-one name="Referencing2" property-ref="SecondReference"/>
+		<set name="StringSet">
+			<key column="stringSetKey"/>
+			<element column ="stringKeyElement" type="string"/>
+		</set>
+		<set name="EntitiesSet" table="ENTITIESSET">
+			<key column="entitiesSetKey"/>
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</set>
+		<map name="StringMap">
+			<key column="stringMapKey"/>
+			<index type="string" column="stringMapIndex"/>
+			<element type="string" column="stringMapElelemt"/>
+		</map>
+		<map name="EntitiesMap" table="ENTITIESMAP">
+			<key column ="entitiesMapKey"/>
+			<index type="string" column="entitiesMapIndex"/>
+			<many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity"/>
+		</map>
+	</class>
+
+	<class name="WithModifiedFlagReferencingEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<many-to-one name="Reference" class="PartialModifiedFlagsEntity" unique="true" />
+		<many-to-one name="SecondReference" class="PartialModifiedFlagsEntity" unique="true" />
+	</class>
+</hibernate-mapping>

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
+using System.Linq;
 using Iesi.Collections;
 using NHibernate.Collection;
 using NHibernate.Engine;
@@ -121,11 +122,53 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return collectionChanges;
 		}
 
+		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
+		{
+			var propertyData = CommonCollectionMapperData.CollectionReferencingPropertyData;
+			if (propertyData.UsingModifiedFlag)
+			{
+				if(isFromNullToEmptyOrFromEmptyToNull((IPersistentCollection)newObj, oldObj))
+				{
+					data[propertyData.ModifiedFlagPropertyName] = true;
+				}
+				else
+				{
+					var changes = MapCollectionChanges(propertyData.Name, (IPersistentCollection) newObj, oldObj, null);
+					data[propertyData.ModifiedFlagPropertyName] = changes.Any();
+				}
+			}
+		}
+
+		private bool isFromNullToEmptyOrFromEmptyToNull(IPersistentCollection newColl, object oldColl)
+		{
+			// Comparing new and old collection content.
+			var newCollection = GetNewCollectionContent(newColl);
+			var oldCollection = GetOldCollectionContent(oldColl);
+			return oldCollection == null && newCollection != null && isEmpty(newCollection)
+			       || newCollection == null && oldCollection != null && isEmpty(oldCollection);
+		}
+
+		private static bool isEmpty(IEnumerable source)
+		{
+			return !source.Cast<object>().Any();
+		}
+
+		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
+		{
+			var propertyData = CommonCollectionMapperData.CollectionReferencingPropertyData;
+			if (propertyData.UsingModifiedFlag)
+			{
+				data[propertyData.ModifiedFlagPropertyName] = propertyData.Name.Equals(collectionPropertyName);
+			}
+		}
+
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) 
 		{
 			// Changes are mapped in the "mapCollectionChanges" method.
 			return false;
 		}
+
+
 
 		protected abstract object GetInitializor(AuditConfiguration verCfg,
 														IAuditReaderImplementor versionsReader, 

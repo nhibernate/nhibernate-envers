@@ -10,6 +10,7 @@ using NHibernate.Event;
 using NHibernate.Persister.Collection;
 using NHibernate.Persister.Entity;
 using NHibernate.Proxy;
+using NHibernate.Util;
 
 namespace NHibernate.Envers.Event
 {
@@ -58,18 +59,18 @@ namespace NHibernate.Envers.Event
 						// (size increases).
 						if (newValue != null)
 						{
-							addCollectionChangeWorkUnitToAuditProcess(session, auditProcess, newValue);
+							addCollectionChangeWorkUnit(auditProcess, session, entityName, relDesc, newValue);
 						}
 						if (oldValue != null)
 						{
-							addCollectionChangeWorkUnitToAuditProcess(session, auditProcess, oldValue);
+							addCollectionChangeWorkUnit(auditProcess, session, entityName, relDesc, oldValue);
 						}
 					}
 				}
 			}
 		}
 
-		private void addCollectionChangeWorkUnitToAuditProcess(ISessionImplementor session, AuditProcess auditProcess, object value)
+		private void addCollectionChangeWorkUnit(AuditProcess auditProcess, ISessionImplementor session, string fromEntityName, RelationDescription relDesc, object value)
 		{
 			// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
 			// of subclasses, this will be root class, no the actual class. So it can't be used here.
@@ -81,8 +82,8 @@ namespace NHibernate.Envers.Event
 			{
 				toEntityName = session.BestGuessEntityName(value);
 				id = newValueAsProxy.HibernateLazyInitializer.Identifier;
-				// We've got to initialize the object from the proxy to later read its state.   
-				value = Toolz.GetTargetFromProxy((ISession) session, newValueAsProxy);
+				// We've got to initialize the object from the proxy to later read its state.
+				value = Toolz.GetTargetFromProxy(session, newValueAsProxy);
 			}
 			else
 			{
@@ -92,7 +93,9 @@ namespace NHibernate.Envers.Event
 				id = idMapper.MapToIdFromEntity(value);
 			}
 
-			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, VerCfg, id, value));
+			var toPropertyNames = VerCfg.EntCfg.ToPropertyNames(fromEntityName, relDesc.FromPropertyName, toEntityName);
+			var toPropertyName = (string)toPropertyNames.First();
+			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, toPropertyName, VerCfg, id, value));
 		}
 
 		public virtual void OnPostInsert(PostInsertEvent evt)
@@ -144,7 +147,7 @@ namespace NHibernate.Envers.Event
 		}
 
 		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
-																	IDatabaseEventArgs evt,
+																	AbstractCollectionEvent evt,
 																	PersistentCollectionChangeWorkUnit workUnit,
 																	RelationDescription rd)
 		{
@@ -165,8 +168,12 @@ namespace NHibernate.Envers.Event
 					var relatedObj = changeData.GetChangedElement();
 					var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
 
+					var toPropertyNames = VerCfg.EntCfg.ToPropertyNames(evt.GetAffectedOwnerEntityName(), rd.FromPropertyName, relatedEntityName);
+					var toPropertyName = (string)toPropertyNames.First();
+
 					auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session,
 																							evt.Session.BestGuessEntityName(relatedObj), 
+																							toPropertyName,
 																							VerCfg, 
 																							relatedId, 
 																							relatedObj));
@@ -203,7 +210,7 @@ namespace NHibernate.Envers.Event
 				var realRelatedEntityName = evt.Session.BestGuessEntityName(relatedObj);
 
 				// By default, the nested work unit is a collection change work unit.
-				var nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, VerCfg,
+				var nestedWorkUnit = new CollectionChangeWorkUnit(evt.Session, realRelatedEntityName, rd.MappedByPropertyName, VerCfg,
 						relatedId, relatedObj);
 
 				auditProcess.AddWorkUnit(new FakeBidirectionalRelationWorkUnit(evt.Session, realRelatedEntityName, VerCfg,
@@ -212,7 +219,7 @@ namespace NHibernate.Envers.Event
 			}
 
 			// We also have to generate a collection change work unit for the owning entity.
-			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, collectionEntityName, VerCfg,
+			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, collectionEntityName, referencingPropertyName, VerCfg,
 					evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 		}
 
@@ -248,7 +255,7 @@ namespace NHibernate.Envers.Event
 				if (workUnit.ContainsWork())
 				{
 					// There are some changes: a revision needs also be generated for the collection owner
-					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(),
+					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(), referencingPropertyName,
 																VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 
 					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);

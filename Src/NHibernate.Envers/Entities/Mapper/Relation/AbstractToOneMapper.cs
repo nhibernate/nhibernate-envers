@@ -36,6 +36,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return null;
 		}
 
+		public abstract void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj);
+		public abstract void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data);
+
 		protected EntityInfo GetEntityInfo(AuditConfiguration verCfg, string entityName)
 		{
 			var entCfg = verCfg.EntCfg[entityName];

@@ -31,9 +31,15 @@ namespace NHibernate.Envers.Synchronization.Work
 			IDictionary<string, object> data = new Dictionary<string, object>();
 			FillDataWithId(data, revisionData);
 
-			if (VerCfg.GlobalCfg.StoreDataAtDelete) {
+			if (VerCfg.GlobalCfg.StoreDataAtDelete) 
+			{
 				VerCfg.EntCfg[EntityName].PropertyMapper.Map(SessionImplementor, data,
 						propertyNames, state, state);
+			}
+			else
+			{
+				VerCfg.EntCfg[EntityName].PropertyMapper.Map(SessionImplementor, data,
+						propertyNames, null, state);
 			}
 
 			return data;

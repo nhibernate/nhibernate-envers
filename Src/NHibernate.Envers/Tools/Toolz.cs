@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tools
 			var id1 = GetIdentifier(session, obj1);
 			var id2 = GetIdentifier(session, obj2);
 
-			return objectsEqual(id1, id2);
+			return ObjectsEqual(id1, id2);
 		}
 
 		private static object GetIdentifier(ISessionImplementor session, object obj) 
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tools
 			return objAsProxy!=null ? objAsProxy.HibernateLazyInitializer.Identifier : session.GetEntityPersister(null, obj).GetIdentifier(obj, session.EntityMode);
 		}
 
-		public static object GetTargetFromProxy(ISession session, INHibernateProxy proxy) 
+		public static object GetTargetFromProxy(ISessionImplementor session, INHibernateProxy proxy) 
 		{
 			if (!proxy.HibernateLazyInitializer.IsUninitialized) 
 				return proxy.HibernateLazyInitializer.GetImplementation();
@@ -36,14 +36,14 @@ namespace NHibernate.Envers.Tools
 			var lazyInitializer = proxy.HibernateLazyInitializer;
 			var proxySession = (ISession)lazyInitializer.Session;
 			var tempSession = proxySession == null ? 
-								session.GetSession(EntityMode.Poco) :
+								((ISession)session).GetSession(EntityMode.Poco) :
 								proxySession.GetSession(EntityMode.Poco);
 
 			return tempSession.Get(lazyInitializer.EntityName,
 									lazyInitializer.Identifier);
 		}
 
-		private static bool objectsEqual(object obj1, object obj2)
+		public static bool ObjectsEqual(object obj1, object obj2)
 		{
 			if (obj1 == null) 
 			{
