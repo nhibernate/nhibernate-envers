@@ -24,6 +24,11 @@ namespace NHibernate.Envers.Configuration.Attributes
 		/// </summary>
 		public RelationTargetAuditMode TargetAuditMode { get; set; }
 
+		/// <summary>
+		/// Should a modification flag be stored for each property in the annotated class or for the annotated
+		/// property. The flag stores information if a property has been changed at a given revision.
+		/// This can be used for example in queries.
+		/// </summary>
 		public bool WithModifiedFlag { get; set; }
 	}
 }
