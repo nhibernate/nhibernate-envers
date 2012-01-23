@@ -127,7 +127,14 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public const string AuditStrategyValidityRevendTimestampFieldName = "nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name";
 
+		/// <summary>
+		/// Suffix to be used for modified flags columns.
+		/// </summary>
 		public const string ModifiedFlagSuffix = "nhibernate.envers.modified_flag_suffix";
+
+		/// <summary>
+		/// Should Envers use modified property flags by default
+		/// </summary>
 		public const string GlobalWithModifiedFlag = "nhibernate.envers.global_with_modified_flag";
 	}
 }
