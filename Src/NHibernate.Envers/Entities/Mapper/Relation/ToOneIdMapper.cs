@@ -12,8 +12,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	public class ToOneIdMapper : AbstractToOneMapper 
 	{
 		private readonly IIdMapper _delegat;
-		//todo - remove
-		private readonly PropertyData _propertyData;
 		private readonly string _referencedEntityName;
 		private readonly bool _nonInsertableFake;
 
@@ -21,7 +19,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			: base(propertyData)
 		{
 			_delegat = delegat;
-			_propertyData = propertyData;
 			_referencedEntityName = referencedEntityName;
 			_nonInsertableFake = nonInsertableFake;
 		}
