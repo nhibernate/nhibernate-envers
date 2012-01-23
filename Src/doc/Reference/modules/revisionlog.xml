@@ -213,4 +213,52 @@ public class CustomTrackingRevisionEntity
 var modifiedEntityTypes = revEntity.ModifiedEntityNames]]></programlisting>
 		</example>
 	</section>
+
+	<section id="envers-tracking-properties-changes">
+		<title>Tracking entity changes at property level</title>
+		<para>
+			By default the only information stored by Envers are revisions of modified entities.
+			This approach lets user create audit queries based on historical values of entity's properties.
+
+			Sometimes it is useful to store additional metadata for each revision, when you are interested also in
+			the type of changes, not only about the resulting values. The feature described in
+			<xref linkend="envers-tracking-modified-entities-revchanges"/>
+			makes it possible to tell which entities were modified in given revision.
+
+			Feature described here takes it one step further. "Modification Flags" enable Envers to track which
+			properties of audited entities were modified in a given revision.
+		</para>
+		<para>
+			Tracking entity changes at property level can be enabled by:
+		</para>
+		<orderedlist>
+			<listitem>
+				setting
+				<property>nhibernate.envers.global_with_modified_flag</property>
+				configuration property to
+				<literal>true</literal>.
+				This global switch will cause adding modification flags for all audited
+				properties in all audited entities.
+			</listitem>
+			<listitem>
+				using <literal>[Audited(WithModifiedFlag=true)]</literal>
+				on a property or on an entity.
+			</listitem>
+		</orderedlist>
+		<para>
+			The trade-off coming with this functionality is an increased size of
+			audit tables and a very little, almost negligible, performance drop
+			during audit writes. This is due to the fact that every tracked
+			property has to have an accompanying boolean column in the
+			schema that stores information about the property's modifications. Of
+			course it is Envers' job to fill these columns accordingly - no additional work by the
+			developer is required. Because of costs mentioned, it is recommended
+			to enable the feature selectively, when needed with use of the
+			granular configuration means described above.
+		</para>
+		<para>
+			To see how "Modified Flags" can be utilized, check out the very
+			simple query API that uses them: <xref linkend="envers-envers-tracking-properties-changes-queries"/>.
+		</para>
+	</section>
 </chapter>

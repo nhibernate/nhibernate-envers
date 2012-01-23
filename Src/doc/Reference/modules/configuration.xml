@@ -265,6 +265,35 @@
 					</row>
 					<row>
 						<entry>
+							nhibernate.envers.global_with_modified_flag
+						</entry>
+						<entry>
+							false, can be individually overriden with <literal>[Audited(WithModifiedFlag=true)]</literal>
+						</entry>
+						<entry>
+							Should property modification flags be stored for all audited entities and all properties.
+							When set to true, for all properties an additional boolean column in the audit tables will
+							be created, filled with information if the given property changed in the given revision.
+							When set to false, such column can be added to selected entities or properties using the
+							<literal>[Audited]</literal> attribute.
+							For more information refer to <xref linkend="envers-tracking-properties-changes"/>
+							and <xref linkend="envers-envers-tracking-properties-changes-queries"/>.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							nhibernate.envers.modified_flag_suffix
+						</entry>
+						<entry>
+							_MOD
+						</entry>
+						<entry>
+							The suffix for columns storing "Modified Flags".
+							For example: a property called "age", will by default get modified flag with column name "age_MOD".
+						</entry>
+					</row>
+					<row>
+						<entry>
 							nhibernate.envers.collection_proxy_mapper_factory
 						</entry>
 						<entry>
@@ -285,6 +314,12 @@
 				<orderedlist>
 					<listitem>
 						org.hibernate.envers.track_entities_changed_in_revision
+					</listitem>
+					<listitem>
+						nhibernate.envers.global_with_modified_flag
+					</listitem>
+					<listitem>
+						nhibernate.envers.modified_flag_suffix
 					</listitem>
 				</orderedlist>
 			</para>
