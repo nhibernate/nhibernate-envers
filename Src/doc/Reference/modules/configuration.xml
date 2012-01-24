@@ -313,7 +313,7 @@
 				The following configuration options have been added recently and should be regarded as experimental:
 				<orderedlist>
 					<listitem>
-						org.hibernate.envers.track_entities_changed_in_revision
+						nhibernate.envers.track_entities_changed_in_revision
 					</listitem>
 					<listitem>
 						nhibernate.envers.global_with_modified_flag
