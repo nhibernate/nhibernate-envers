@@ -521,6 +521,7 @@
     <Compile Include="NetSpecific\Integration\Ctor\NonPublicCtorEntity.cs" />
     <Compile Include="NetSpecific\Integration\Ctor\NonPublicCtorTest.cs" />
     <Compile Include="NetSpecific\Integration\Ctor\StructComponentWithDefinedCtor.cs" />
+    <Compile Include="NetSpecific\Integration\EntityNames\HasChangedDynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\InsertUpdateFalseComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ParentEntity.cs" />
