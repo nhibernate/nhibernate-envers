@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
@@ -94,7 +95,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		{
 			if (_propertyData.UsingModifiedFlag)
 			{
-				data[_propertyData.ModifiedFlagPropertyName] = _delegate.MapToMapFromEntity(session, new Dictionary<string, object>(), newObj, oldObj);
+				throw new NotSupportedException("Modified flags on dynamic components are currently not supported.");
 			}
 		}
 
@@ -102,16 +103,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		{
 			if (_propertyData.UsingModifiedFlag)
 			{
-				var hasModifiedCollection = false;
-				foreach (var propData in _delegate.Properties.Keys)
-				{
-					if (collectionPropertyName.Equals(propData.Name))
-					{
-						hasModifiedCollection = true;
-						break;
-					}
-				}
-				data[_propertyData.ModifiedFlagPropertyName] = hasModifiedCollection;
+				throw new NotSupportedException("Modified flags on dynamic components are currently not supported.");
 			}
 		}
 	}
