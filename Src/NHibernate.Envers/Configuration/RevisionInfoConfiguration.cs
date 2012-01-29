@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Configuration
 			idProperty.InsertBefore(col, idProperty.GetElementsByTagName("generator")[0]);
 
 			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false);
-			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, 0, 0, SqlTypeFactory.DateTime.ToString(), false);
+			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, -1, -1, SqlTypeFactory.DateTime.ToString(), false);
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
@@ -106,7 +106,7 @@ namespace NHibernate.Envers.Configuration
 			if (revisionPropSqlType != null)
 			{
 				// Putting a fake name to make Hibernate happy. It will be replaced later anyway.
-				MetadataTools.AddColumn(revRelMapping, "*", -1, 0, 0, revisionPropSqlType, false);
+				MetadataTools.AddColumn(revRelMapping, "*", -1, -1, -1, revisionPropSqlType, false);
 			}
 
 			return revRelMapping;
