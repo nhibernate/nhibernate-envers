@@ -69,6 +69,8 @@
     <Compile Include="Entities\Ids\CustomEnumUserType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomTypeTestEntity.cs" />
+    <Compile Include="Integration\Basic\ColumnScalePrecisionTest.cs" />
+    <Compile Include="Integration\Basic\ScalePrecisionEntity.cs" />
     <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractCheckActivity.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractActivity.cs" />
@@ -722,6 +724,7 @@
     <EmbeddedResource Include="Integration\SuperClass\AuditOverride\Invalid\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\ModifiedFlags\Entities\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Basic\ScalePrecision.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

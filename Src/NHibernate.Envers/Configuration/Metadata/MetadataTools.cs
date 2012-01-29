@@ -79,7 +79,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			if (column_mapping == null)
 			{
-				return AddColumn(parent, name, -1, 0, 0, null, false);
+				return AddColumn(parent, name, -1, -1, -1, null, false);
 			}
 
 			if (!string.IsNullOrEmpty(name))
@@ -105,11 +105,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				columnMapping.SetAttribute("length", length.ToString());
 			}
-			if (scale != 0)
+			if (scale != -1)
 			{
 				columnMapping.SetAttribute("scale", scale.ToString());
 			}
-			if (precision != 0)
+			if (precision != -1)
 			{
 				columnMapping.SetAttribute("precision", precision.ToString());
 			}
@@ -212,8 +212,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static void AddColumn(XmlElement anyMapping, Column column)
 		{
-			AddColumn(anyMapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : 0,
-					column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType, column.IsQuoted);
+			AddColumn(anyMapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : -1,
+					column.IsPrecisionDefined() ? column.Precision : -1, column.SqlType, column.IsQuoted);
 		}
 
 		public static void AddColumnsOrFormulas(XmlElement element, IEnumerable<ISelectable> columnIterator)
