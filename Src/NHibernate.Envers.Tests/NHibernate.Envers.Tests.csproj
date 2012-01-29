@@ -105,6 +105,9 @@
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\ManyToManyInverseToSuperclassTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\Master.cs" />
+    <Compile Include="Integration\ManyToOne\BiDirectional\ImplicitMappedByTest.cs" />
+    <Compile Include="Integration\ManyToOne\BiDirectional\ManyToOneOwning.cs" />
+    <Compile Include="Integration\ManyToOne\BiDirectional\OneToManyOwned.cs" />
     <Compile Include="Integration\ModifiedFlags\AbstractModifiedFlagsEntityTest.cs" />
     <Compile Include="Integration\ModifiedFlags\Entities\PartialModifiedFlagsEntity.cs" />
     <Compile Include="Integration\ModifiedFlags\Entities\WithModifiedFlagReferencingEntity.cs" />
@@ -725,6 +728,7 @@
     <EmbeddedResource Include="Integration\OneToOne\BiDirectional\PrimaryKeyJoinColumn\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\ModifiedFlags\Entities\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Basic\ScalePrecision.hbm.xml" />
+    <EmbeddedResource Include="Integration\ManyToOne\BiDirectional\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

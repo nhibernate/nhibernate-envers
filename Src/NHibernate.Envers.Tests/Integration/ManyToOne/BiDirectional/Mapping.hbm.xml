@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional">
+	<class name="ManyToOneOwning">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Data" />
+		<join table="many_to_one_join_table">
+			<key column ="manytooneid"/>
+			<many-to-one name="References" class="OneToManyOwned" column="onetomanyid"  />
+		</join>
+	</class>
+
+	<class name="OneToManyOwned">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Data" />
+		<set name="Referencing" table ="many_to_one_join_table" inverse="true">
+			<key column="onetomanyid" />
+			<many-to-many class="ManyToOneOwning" column="manytooneid" unique="true"/>
+		</set>
+	</class>
+</hibernate-mapping>
