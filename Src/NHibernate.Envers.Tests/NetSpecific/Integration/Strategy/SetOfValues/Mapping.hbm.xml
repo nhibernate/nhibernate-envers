@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<hibernate-mapping namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Strategy"
+<hibernate-mapping namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues"
 							assembly="NHibernate.Envers.Tests"
 							xmlns="urn:nhibernate-mapping-2.2">
 	<class name="SetOfValuesTestEntity">
