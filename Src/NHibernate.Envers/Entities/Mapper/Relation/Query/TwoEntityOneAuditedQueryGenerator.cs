@@ -49,17 +49,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
 			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
-			var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
+			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 
 			// SELECT new list(ee) FROM middleEntity ee
-			var qb = new QueryBuilder(versionsMiddleEntityName, "ee");
-			qb.AddFrom(referencedIdData.EntityName, "e");
-			qb.AddProjection("new list", "ee, e", false, false);
+			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
+			qb.AddFrom(referencedIdData.EntityName, QueryConstants.ReferencedEntityAlias);
+			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias + ", " + QueryConstants.ReferencedEntityAlias, false, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
 			// ee.id_ref_ed = e.id_ref_ed
 			referencedIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
-					referencedIdData.OriginalMapper, "e");
+					referencedIdData.OriginalMapper, QueryConstants.ReferencedEntityAlias);
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
 
@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 							eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
 
 			// ee.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
@@ -80,8 +80,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			var query = versionsReader.Session.CreateQuery(queryString);
-			query.SetParameter("revision", revision);
-			query.SetParameter("delrevisiontype", RevisionType.Deleted);
+			query.SetParameter(QueryConstants.RevisionParameter, revision);
+			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
 			foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);

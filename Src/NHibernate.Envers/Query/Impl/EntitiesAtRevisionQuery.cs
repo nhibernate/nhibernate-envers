@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
@@ -59,7 +60,7 @@ namespace NHibernate.Envers.Query.Impl
 			// --> based on auditStrategy (see above)
 			VerCfg.AuditStrategy.AddEntityAtRevisionRestriction(VerCfg.GlobalCfg, QueryBuilder, revisionPropertyPath,
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
-					revisionPropertyPath, originalIdPropertyName, "e", "e2");
+					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// e.revision_type != DEL
 			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
@@ -73,9 +74,9 @@ namespace NHibernate.Envers.Query.Impl
 
 			var query = BuildQuery();
 			// add named parameter (only used for ValidAuditTimeStrategy) 
-			if (query.NamedParameters.Contains("revision"))
+			if (query.NamedParameters.Contains(QueryConstants.RevisionParameter))
 			{
-				query.SetParameter("revision", _revision);
+				query.SetParameter(QueryConstants.RevisionParameter, _revision);
 			}
 
 			if (HasProjection)

@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var versionsReferencedEntityName = verEntCfg.GetAuditEntityName(referencedEntityName);
 
 			// SELECT new list(e) FROM versionsEntity e
-			var qb = new QueryBuilder(versionsReferencedEntityName, "e");
+			var qb = new QueryBuilder(versionsReferencedEntityName, QueryConstants.ReferencedEntityAlias);
 			//qb.AddProjection("new list", "e", false, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
@@ -53,11 +53,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, revisionPropertyPath, verEntCfg.RevisionEndFieldName, true,
-													referencedIdData, revisionPropertyPath, originalIdPropertyName, "e", "e2");
+				referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 
 
 			// e.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
@@ -67,8 +67,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision) 
 		{
 			var query = versionsReader.Session.CreateQuery(queryString);
-			query.SetParameter("revision", revision);
-			query.SetParameter("delrevisiontype", RevisionType.Deleted);
+			query.SetParameter(QueryConstants.RevisionParameter, revision);
+			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
 			foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey)) 
 			{
 				paramData.SetParameterValue(query);
