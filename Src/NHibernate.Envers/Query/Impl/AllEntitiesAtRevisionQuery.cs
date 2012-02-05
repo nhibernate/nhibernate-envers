@@ -9,12 +9,12 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public class AllEntitiesAtRevisionQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
 	{
-		private readonly long revision;
+		private readonly long _revision;
 
 		public AllEntitiesAtRevisionQuery(AuditConfiguration auditConfiguration, IAuditReaderImplementor versionsReader, long revision) 
 							: base(auditConfiguration, versionsReader, false, typeof(TEntity).FullName)
 		{
-			this.revision = revision;
+			_revision = revision;
 		}
 
 		public override IEnumerable<TEntity> Results()
@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
 			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
-						 select (TEntity)EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision);
+						 select (TEntity)EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, _revision);
 		}
 
 		protected override void AddExtraParameter(IQuery query)
@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Query.Impl
 			// add named parameter (only used for ValidAuditTimeStrategy) 
 			if (query.NamedParameters.Contains("revision"))
 			{
-				query.SetParameter("revision", revision);
+				query.SetParameter("revision", _revision);
 			}
 		}
 	}
