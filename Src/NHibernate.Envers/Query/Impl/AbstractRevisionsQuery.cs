@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
@@ -229,9 +230,13 @@ namespace NHibernate.Envers.Query.Impl
 			{
 				query.SetParameter(paramValue.Key, paramValue.Value);
 			}
-
+			AddExtraParameter(query);
 			SetQueryProperties(query);
 			return query.List<TResult>();
+		}
+
+		protected virtual void AddExtraParameter(IQuery query)
+		{
 		}
 
 		private void SetQueryProperties(IQuery query)

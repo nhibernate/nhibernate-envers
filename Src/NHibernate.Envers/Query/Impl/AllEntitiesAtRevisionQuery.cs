@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
@@ -19,36 +20,51 @@ namespace NHibernate.Envers.Query.Impl
 		public override IEnumerable<TEntity> Results()
 		{
 			/*
-			The query that should be executed in the versions table:
-			SELECT e FROM ent_ver e WHERE
-			  (all specified conditions, transformed, on the "e" entity) AND
-			  e.revision_type != DEL AND
-			  e.revision = (SELECT max(e2.revision) FROM ent_ver e2 WHERE
-				e2.revision <= :revision AND e2.originalId.id = e.originalId.id)
+			 * The query that should be executed in the versions table:
+			 * SELECT e FROM ent_ver e 
+			 *   WHERE
+			 * (all specified conditions, transformed, on the "e" entity) AND
+			 * (selecting e entities at revision :revision)
+			 *   --> for DefaultAuditStrategy:
+			 *     e.revision = (SELECT max(e2.revision) FROM versionsReferencedEntity e2
+			 *       WHERE e2.revision <= :revision AND e2.id = e.id) 
+			 *     
+			 *   --> for ValidityAuditStrategy:
+			 *     e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)
+			 *     
+			 *     AND
+			 * (only non-deleted entities)
+			 *     e.revision_type != DEL
 			 */
-			var maxRevQb = QueryBuilder.NewSubQueryBuilder(VersionsEntityName, "e2");
+
 			var verEntCfg = AuditConfiguration.AuditEntCfg;
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
 			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
-			// SELECT max(e2.revision)
-			maxRevQb.AddProjection("max", revisionPropertyPath, false);
-			// e2.revision <= :revision
-			maxRevQb.RootParameters.AddWhereWithParam(revisionPropertyPath, "<=", revision);
-			// e2.id = e.id
-			AuditConfiguration.EntCfg[EntityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
-																		 "e." + originalIdPropertyName,
-																		 "e2." + originalIdPropertyName);
+			var referencedIdData = new MiddleIdData(verEntCfg, AuditConfiguration.EntCfg[EntityName].IdMappingData,
+					null, EntityName, AuditConfiguration.EntCfg.IsVersioned(EntityName));
+
+			// (selecting e entities at revision :revision)
+			// --> based on auditStrategy (see above)
+			AuditConfiguration.AuditStrategy.AddEntityAtRevisionRestriction(AuditConfiguration.GlobalCfg, QueryBuilder, revisionPropertyPath,
+					verEntCfg.RevisionEndFieldName, true, referencedIdData,
+					revisionPropertyPath, originalIdPropertyName, "e", "e2");
 			SetIncludeDeletationClause();
-			
-			// e.revision = (SELECT max(...) ...)
-			QueryBuilder.RootParameters.AddWhere(revisionPropertyPath, AuditConfiguration.GlobalCfg.CorrelatedSubqueryOperator, maxRevQb);
 
 			AddCriterions();
 
 			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
 			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
 						 select (TEntity)EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision);
+		}
+
+		protected override void AddExtraParameter(IQuery query)
+		{
+			// add named parameter (only used for ValidAuditTimeStrategy) 
+			if (query.NamedParameters.Contains("revision"))
+			{
+				query.SetParameter("revision", revision);
+			}
 		}
 	}
 }

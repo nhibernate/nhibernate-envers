@@ -558,6 +558,7 @@
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetEntity.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetAndMapTest.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\StrTestEntityComparer.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\Query\BasicQueries.cs" />
     <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTest.cs" />
     <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTestEntity.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
