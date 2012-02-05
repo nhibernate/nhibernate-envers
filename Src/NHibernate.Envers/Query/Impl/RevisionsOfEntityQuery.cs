@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 using NHibernate.Proxy;
 
@@ -80,8 +81,8 @@ namespace NHibernate.Envers.Query.Impl
 
 			if (!selectEntitiesOnly)
 			{
-				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName(), "r");
-				QueryBuilder.RootParameters.AddWhere(VerCfg.AuditEntCfg.RevisionNumberPath, true, "=", "r.id", false);
+				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias);
+				QueryBuilder.RootParameters.AddWhere(VerCfg.AuditEntCfg.RevisionNumberPath, true, "=", QueryConstants.RevisionAlias + ".id", false);
 			}
 
 			if (HasProjection)

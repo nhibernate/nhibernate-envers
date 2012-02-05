@@ -13,5 +13,7 @@
 
 		public static readonly string RevisionParameter = "revision";
 		public static readonly string DelRevisionTypeParameter = "delrevisiontype";
+
+		public static readonly string RevisionAlias = "r__";
 	}
 }
