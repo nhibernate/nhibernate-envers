@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Query;
-using NHibernate.Envers.Query.Impl;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
