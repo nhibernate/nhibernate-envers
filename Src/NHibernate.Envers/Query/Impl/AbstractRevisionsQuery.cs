@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
@@ -183,7 +182,7 @@ namespace NHibernate.Envers.Query.Impl
 			{
 				return;
 			}
-			string revisionPropertyPath = auditConfiguration.AuditEntCfg.RevisionNumberPath;
+			var revisionPropertyPath = auditConfiguration.AuditEntCfg.RevisionNumberPath;
 			queryBuilder.AddOrder(revisionPropertyPath, true);
 		}
 
