@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="ee.Estonia.Entities">
+	<class name="Parent">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data" />
+		<set name="Collection">
+			<key column="refid"/>
+			<one-to-many class="Child"/>
+		</set>
+	</class>
+
+	<class name="Child">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Data" />
+	</class>
+</hibernate-mapping>
