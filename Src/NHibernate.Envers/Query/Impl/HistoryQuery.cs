@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Query.Impl
 
 		public override IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>> Results()
 		{
-			AuditEntitiesConfiguration auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
+			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
 			/*
 			The query that should be executed in the versions table:
 			SELECT e FROM ent_ver e, rev_entity r WHERE
@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Query.Impl
 			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), "r");
 			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", "r.id", false);
 
-			string revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
+			var revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
 
 			return (from resultRow in BuildAndExecuteQuery<object[]>()
 			        let versionsEntity = (IDictionary) resultRow[0]
