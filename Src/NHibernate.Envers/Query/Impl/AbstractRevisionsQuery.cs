@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
@@ -49,7 +50,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			versionsEntityName = auditConfiguration.AuditEntCfg.GetAuditEntityName(this.entityName);
 
-			queryBuilder = new QueryBuilder(versionsEntityName, "e");
+			queryBuilder = new QueryBuilder(versionsEntityName, QueryConstants.ReferencedEntityAlias);
 			this.includesDeletations = includesDeletations;
 
 			if (!auditConfiguration.EntCfg.IsVersioned(EntityName))
@@ -264,7 +265,7 @@ namespace NHibernate.Envers.Query.Impl
 			}
 			if (lockMode != null)
 			{
-				query.SetLockMode("e", lockMode);
+				query.SetLockMode(QueryConstants.ReferencedEntityAlias, lockMode);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
@@ -37,7 +38,7 @@ namespace NHibernate.Envers.Query.Impl
 			maxRevQb.RootParameters.AddWhereWithParam(revisionPropertyPath, "<=", revision);
 			// e2.id = e.id
 			AuditConfiguration.EntCfg[EntityName].IdMapper.AddIdsEqualToQuery(maxRevQb.RootParameters,
-																		 "e." + originalIdPropertyName,
+																		 QueryConstants.ReferencedEntityAlias + "." + originalIdPropertyName,
 																		 "e2." + originalIdPropertyName);
 			SetIncludeDeletationClause();
 			
