@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
@@ -29,7 +30,7 @@ namespace NHibernate.Envers.Query.Impl
 			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
 			EntityName = entityName;
 			VersionsEntityName = verCfg.AuditEntCfg.GetAuditEntityName(EntityName);
-			QueryBuilder = new QueryBuilder(VersionsEntityName, "e");
+			QueryBuilder = new QueryBuilder(VersionsEntityName, QueryConstants.ReferencedEntityAlias);
 
 			if (!verCfg.EntCfg.IsVersioned(EntityName))
 			{
@@ -197,7 +198,7 @@ namespace NHibernate.Envers.Query.Impl
 			query.SetFlushMode(flushMode);
 			query.SetCacheMode(cacheMode);
 			if (timeout != null) query.SetTimeout((int)timeout);
-			if (lockMode != null) query.SetLockMode("e", lockMode);
+			if (lockMode != null) query.SetLockMode(QueryConstants.ReferencedEntityAlias, lockMode);
 		}
 	}
 }

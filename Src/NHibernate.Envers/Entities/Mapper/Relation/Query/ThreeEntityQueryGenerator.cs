@@ -65,35 +65,37 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 */
 			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
 			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
-			var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
+			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 
 			// SELECT new list(ee) FROM middleEntity ee
-			var qb = new QueryBuilder(versionsMiddleEntityName, "ee");
-			qb.AddFrom(referencedIdData.AuditEntityName, "e");
-			qb.AddFrom(indexIdData.AuditEntityName, "f");
-			qb.AddProjection("new list", "ee, e, f", false, false);
+			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
+			qb.AddFrom(referencedIdData.AuditEntityName, QueryConstants.ReferencedEntityAlias);
+			qb.AddFrom(indexIdData.AuditEntityName, QueryConstants.IndexEntityAlias);
+			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias + ", " 
+												+ QueryConstants.ReferencedEntityAlias + ", " 
+												+ QueryConstants.IndexEntityAlias, false, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
 			// ee.id_ref_ed = e.id_ref_ed
 			referencedIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
-					referencedIdData.OriginalMapper, "e." + originalIdPropertyName);
+					referencedIdData.OriginalMapper, QueryConstants.ReferencedEntityAlias + "." + originalIdPropertyName);
 			// ee.id_ref_ind = f.id_ref_ind
 			indexIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
-					indexIdData.OriginalMapper, "f." + originalIdPropertyName);
+					indexIdData.OriginalMapper, QueryConstants.IndexEntityAlias + "." + originalIdPropertyName);
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
 
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, "e." + revisionPropertyPath,
-						"e." + verEntCfg.RevisionEndFieldName, false,
-									referencedIdData, revisionPropertyPath, originalIdPropertyName, "e", "e2");
+			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
+						QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionEndFieldName, false,
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// (selecting f entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, "e." + revisionPropertyPath,
-							"e." + verEntCfg.RevisionEndFieldName, false,
-							referencedIdData, revisionPropertyPath, originalIdPropertyName, "f", "f2");
+			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
+						QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionEndFieldName, false,
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)
@@ -103,11 +105,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 
 			// ee.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
 			// e.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam("e." + verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 			// f.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam("f." + verEntCfg.RevisionTypePropName, false, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
@@ -117,8 +119,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			var query = versionsReader.Session.CreateQuery(queryString);
-			query.SetParameter("revision", revision);
-			query.SetParameter("delrevisiontype", RevisionType.Deleted);
+			query.SetParameter(QueryConstants.RevisionParameter, revision);
+			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
 			foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);

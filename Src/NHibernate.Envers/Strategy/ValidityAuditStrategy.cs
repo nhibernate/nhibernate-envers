@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Properties;
@@ -46,7 +47,7 @@ namespace NHibernate.Envers.Strategy
 				 Constructing a query:
 				 select e from audited_ent e where e.end_rev is null and e.id = :id
 				*/
-				var qb = new QueryBuilder(auditedEntityName, "e");
+				var qb = new QueryBuilder(auditedEntityName, QueryConstants.MiddleEntityAlias);
 
 				// e.id = :id
 				var idMapper = auditCfg.EntCfg[entityName].IdMapper;
@@ -54,7 +55,7 @@ namespace NHibernate.Envers.Strategy
 
 				addEndRevisionNullRestriction(auditCfg, qb);
 
-				var l = qb.ToQuery(session).SetLockMode("e", LockMode.Upgrade).List();
+				var l = qb.ToQuery(session).SetLockMode(QueryConstants.MiddleEntityAlias, LockMode.Upgrade).List();
 
 				updateLastRevision(session, auditCfg, l, id, auditedEntityName, revision);
 			}
@@ -66,7 +67,7 @@ namespace NHibernate.Envers.Strategy
 
 		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
-			var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, "e");
+			var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, QueryConstants.MiddleEntityAlias);
 
 			// Adding a parameter for each id component, except the rev number
 			var originalIdPropName = auditCfg.AuditEntCfg.OriginalIdPropName;
@@ -81,7 +82,7 @@ namespace NHibernate.Envers.Strategy
 
 			addEndRevisionNullRestriction(auditCfg, qb);
 
-			var l = qb.ToQuery(session).SetLockMode("e", LockMode.Upgrade).List();
+			var l = qb.ToQuery(session).SetLockMode(QueryConstants.MiddleEntityAlias, LockMode.Upgrade).List();
 
 			if (l.Count > 0)
 			{
@@ -121,8 +122,8 @@ namespace NHibernate.Envers.Strategy
 		{
 			// e.revision <= _revision and (e.endRevision > _revision or e.endRevision is null)
 			var subParm = rootParameters.AddSubParameters("or");
-			rootParameters.AddWhereWithNamedParam(revisionProperty, addAlias, "<=", "revision");
-			subParm.AddWhereWithNamedParam(revisionEndProperty + ".id", addAlias, ">", "revision");
+			rootParameters.AddWhereWithNamedParam(revisionProperty, addAlias, "<=", QueryConstants.RevisionParameter);
+			subParm.AddWhereWithNamedParam(revisionEndProperty + ".id", addAlias, ">", QueryConstants.RevisionParameter);
 			subParm.AddWhere(revisionEndProperty, addAlias, "is", "null", false);
 		}
 
