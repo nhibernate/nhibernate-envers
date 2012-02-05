@@ -1,7 +1,7 @@
 ﻿using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
 	[Audited]
 	public class SetOfValuesTestEntity

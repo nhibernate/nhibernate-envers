@@ -558,8 +558,8 @@
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetEntity.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetAndMapTest.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\StrTestEntityComparer.cs" />
-    <Compile Include="NetSpecific\Integration\Strategy\SetOfValuesTest.cs" />
-    <Compile Include="NetSpecific\Integration\Strategy\SetOfValuesTestEntity.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTest.cs" />
+    <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTestEntity.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
@@ -602,7 +602,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Naming\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Inheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\InsertUpdateFalse\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\Strategy\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\Strategy\SetOfValues\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\RelationIn\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Ctor\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\PropertyNull\Mapping.hbm.xml">
