@@ -69,6 +69,11 @@
     <Compile Include="Entities\Ids\CustomEnumUserType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomTypeTestEntity.cs" />
+    <Compile Include="Entities\ManyToAny\CreditCardPayment.cs" />
+    <Compile Include="Entities\ManyToAny\IPayment.cs" />
+    <Compile Include="Entities\ManyToAny\Order.cs" />
+    <Compile Include="Entities\ManyToAny\Purchase.cs" />
+    <Compile Include="Entities\ManyToAny\WirePayment.cs" />
     <Compile Include="Integration\Basic\ColumnScalePrecisionTest.cs" />
     <Compile Include="Integration\Basic\ScalePrecisionEntity.cs" />
     <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
@@ -100,6 +105,7 @@
     <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\NonAuditedImplementor.cs" />
     <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\Subclass\SubclassAllAuditedTest.cs" />
     <Compile Include="Integration\Interfaces\Inheritance\PropertiesAudited\Union\UnionAllAuditedTest.cs" />
+    <Compile Include="Integration\ManyToAny\GeneratingDatabaseSchemaTest.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSubclass2.cs" />
     <Compile Include="Integration\ManyToMany\InverseToSuperclass\DetailSuperclass.cs" />
@@ -650,6 +656,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Entities\RevEntity\TrackModifiedEntities\ExtendedRevisionEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\Components\UniqueProps.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToAny\CreditCardPayment.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToAny\Order.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToAny\Purchase.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManyToAny\WirePayment.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
