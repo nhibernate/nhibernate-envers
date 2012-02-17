@@ -2,7 +2,7 @@
 using NHibernate.Envers.Strategy;
 using NUnit.Framework;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
 	//NHE-32
 	[TestFixture]

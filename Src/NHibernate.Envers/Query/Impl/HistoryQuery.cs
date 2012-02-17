@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
@@ -15,7 +16,7 @@ namespace NHibernate.Envers.Query.Impl
 
 		public override IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>> Results()
 		{
-			AuditEntitiesConfiguration auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
+			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
 			/*
 			The query that should be executed in the versions table:
 			SELECT e FROM ent_ver e, rev_entity r WHERE
@@ -27,10 +28,10 @@ namespace NHibernate.Envers.Query.Impl
 			SetIncludeDeletationClause();
 			AddCriterions();
 			AddOrders();
-			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), "r");
-			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", "r.id", false);
+			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias);
+			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", QueryConstants.RevisionAlias + ".id", false);
 
-			string revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
+			var revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
 
 			return (from resultRow in BuildAndExecuteQuery<object[]>()
 			        let versionsEntity = (IDictionary) resultRow[0]

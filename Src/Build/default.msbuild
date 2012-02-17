@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
 		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
-		<ExternalLibRootFolder>$(SourceDir)\..\lib</ExternalLibRootFolder>
 		<ToolsFolder>$(SourceDir)\..\Tools</ToolsFolder>
 		<FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
 		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
@@ -21,8 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup Label="NHibernate dependencies">
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\NHibernate.dll" />
-		<NHibernateFiles Include="$(ExternalLibRootFolder)\nhibernate\Iesi.Collections.dll" />
+		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\NHibernate.dll" />
+		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\Iesi.Collections.dll" />
 	</ItemGroup>
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>

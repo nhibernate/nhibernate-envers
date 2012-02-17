@@ -1,6 +1,7 @@
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Query;
 
@@ -35,7 +36,7 @@ namespace NHibernate.Envers.Strategy
 			// WHERE
 			var maxERevQbParameters = maxERevQb.RootParameters;
 			// e2.revision <= :revision
-			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", "revision");
+			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", QueryConstants.RevisionParameter);
 			// e2.id_ref_ed = e.id_ref_ed
 			idData.OriginalMapper.AddIdsEqualToQuery(maxERevQbParameters,
 					alias1 + "." + originalIdPropertyName, alias2 + "." + originalIdPropertyName);
@@ -59,14 +60,14 @@ namespace NHibernate.Envers.Strategy
 			var rootParameters = rootQueryBuilder.RootParameters;
 
 			// SELECT max(ee2.revision) FROM middleEntity ee2
-			var maxEeRevQb = rootQueryBuilder.NewSubQueryBuilder(versionsMiddleEntityName, "ee2");
+			var maxEeRevQb = rootQueryBuilder.NewSubQueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAliasDefAudStr);
 			maxEeRevQb.AddProjection("max", revisionPropertyPath, false);
 			// WHERE
 			var maxEeRevQbParameters = maxEeRevQb.RootParameters;
 			// ee2.revision <= :revision
-			maxEeRevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", "revision");
+			maxEeRevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", QueryConstants.RevisionParameter);
 			// ee2.originalId.* = ee.originalId.*
-			var ee2OriginalIdPropertyPath = "ee2." + originalIdPropertyName;
+			var ee2OriginalIdPropertyPath = QueryConstants.MiddleEntityAliasDefAudStr + "." + originalIdPropertyName;
 			referencingIdData.PrefixedMapper.AddIdsEqualToQuery(maxEeRevQbParameters, eeOriginalIdPropertyPath, ee2OriginalIdPropertyPath);
 
 			foreach (var componentData in componentDatas)
