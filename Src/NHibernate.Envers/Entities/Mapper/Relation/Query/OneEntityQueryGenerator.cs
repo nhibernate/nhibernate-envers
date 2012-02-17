@@ -43,15 +43,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
 
 			// SELECT new list(ee) FROM middleEntity ee
-			var qb = new QueryBuilder(versionsMiddleEntityName, "ee");
-			qb.AddProjection("new list", "ee", false, false);
+			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
+			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias, false, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
 
 
-			var eeOriginalIdPropertyPath = "ee." + originalIdPropertyName;
+			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)
@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 				eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
 
 			// ee.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", "delrevisiontype");
+			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
@@ -70,8 +70,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision) 
 		{
 			var query = versionsReader.Session.CreateQuery(_queryString);
-			query.SetParameter("revision", revision);
-			query.SetParameter("delrevisiontype", RevisionType.Deleted);
+			query.SetParameter(QueryConstants.RevisionParameter, revision);
+			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
 			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);
