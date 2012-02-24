@@ -137,6 +137,9 @@
     <Compile Include="Integration\ModifiedFlags\HasChangedStringSetTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedUnversionedPropertiesTest.cs" />
     <Compile Include="Integration\ModifiedFlags\ModifiedFlagSuffixTest.cs" />
+    <Compile Include="Integration\MultipleRelations\Address.cs" />
+    <Compile Include="Integration\MultipleRelations\MultipleAssociationsTest .cs" />
+    <Compile Include="Integration\MultipleRelations\Person.cs" />
     <Compile Include="Integration\Naming\EstonianTableAliasTest.cs" />
     <Compile Include="Integration\Naming\Quotation\QuotedFieldsEntity.cs" />
     <Compile Include="Integration\Naming\Quotation\QuotedFieldsTest.cs" />
@@ -742,6 +745,7 @@
     <EmbeddedResource Include="Integration\Basic\ScalePrecision.hbm.xml" />
     <EmbeddedResource Include="Integration\ManyToOne\BiDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Naming\Estonia.hbm.xml" />
+    <EmbeddedResource Include="Integration\MultipleRelations\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

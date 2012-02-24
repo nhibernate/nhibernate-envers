@@ -138,7 +138,7 @@ namespace NHibernate.Envers.Entities
 			{
 				var relToEntityName = relationDescription.ToEntityName;
 				var mappedByPropertyName = relationDescription.MappedByPropertyName;
-				if (entAndParNames.Contains(relToEntityName) && mappedByPropertyName.Equals(fromPropertyName))
+				if (entAndParNames.Contains(relToEntityName) && mappedByPropertyName!=null && mappedByPropertyName.Equals(fromPropertyName))
 				{
 					toPropertyNames.Add(relationDescription.FromPropertyName);
 				}
