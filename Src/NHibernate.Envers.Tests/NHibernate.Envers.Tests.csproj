@@ -544,6 +544,7 @@
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\SchemaSubclassTest.cs" />
+    <Compile Include="NetSpecific\Integration\Memory\MultipleConfigurationsTest.cs" />
     <Compile Include="NetSpecific\Integration\Merge\AddEditCollectionItemTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
@@ -609,6 +610,8 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Memory\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\Memory\Extended.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Incorrect\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Naming\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Inheritance\Mapping.hbm.xml" />

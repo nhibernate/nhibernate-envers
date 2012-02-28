@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Event;
 using NUnit.Framework;
@@ -54,6 +55,7 @@ namespace NHibernate.Envers.Tests
 		public void BaseTearDown()
 		{
 			closeSessionAndAuditReader();
+			AuditConfiguration.Remove(Cfg);
 			if (SessionFactory != null)
 			{
 				SessionFactory.Close();
