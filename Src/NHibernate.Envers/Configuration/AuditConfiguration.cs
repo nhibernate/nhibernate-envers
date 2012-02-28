@@ -90,5 +90,24 @@ namespace NHibernate.Envers.Configuration
 		{
 			ConfigurationMetadataProvider[cfg] = metaDataProvider;
 		}
+
+		/// <summary>
+		/// Release Envers resources.
+		/// </summary>
+		/// <param name="cfg">
+		/// The <see cref="Cfg.Configuration"/> object belonging to current <see cref="ISessionFactory"/>.
+		/// </param>
+		/// <returns>
+		/// Normally not needed to be called.
+		/// Should be used in environment where multiple Envers aware 
+		/// <see cref="ISessionFactory"/> are created and destroyed during runtime.
+		/// Call this method when <see cref="ISessionFactory"/> is disposed.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public static void Remove(Cfg.Configuration cfg)
+		{
+			ConfigurationMetadataProvider.Remove(cfg);
+			Configurations.Remove(cfg);
+		}
 	}
 }

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Entities.OneToMany.Detached">
+  <class name="ListRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <bag name="Collection">
+      <key column ="listRef" />
+      <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+    </bag>
+  </class>
+  
+  <class name="SetRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    <set name="Collection">
+      <key column ="setRef" />
+      <one-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" />
+    </set>
+  </class>
+
+  <class name="DoubleSetRefCollEntity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data"/>
+    
+    <set name="Collection" table="DOUBLE_STR_1">
+      <key column ="doubleSetRef" />
+      <many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true"/>
+    </set>
+    <set name="Collection2" table="DOUBLE_STR_2">
+      <key column ="doubleSetRef" />
+      <many-to-many class="NHibernate.Envers.Tests.Entities.StrTestEntity" unique="true"/>
+    </set>
+  </class>
+
+  <class name="DoubleListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References1">
+      <key column="some_join_column_1"/>
+      <one-to-many class="DoubleListJoinColumnBidirectionalRefEdEntity1"/>
+    </bag>
+    <bag name="References2">
+      <key column="some_join_column_2"/>
+      <one-to-many class="DoubleListJoinColumnBidirectionalRefEdEntity2"/>
+    </bag>
+  </class>
+
+  <class name="DoubleListJoinColumnBidirectionalRefEdEntity1">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column_1" insert="false" update="false" />
+  </class>
+  
+  <class name="DoubleListJoinColumnBidirectionalRefEdEntity2">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column_2" insert="false" update="false" />
+  </class>
+
+  <class name="IndexedListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <list name="References">
+      <key column ="indexed_join_column" />
+      <index column ="indexed_index" />
+      <one-to-many class="IndexedListJoinColumnBidirectionalRefEdEntity"/>
+    </list>
+  </class>
+  
+  <class name="IndexedListJoinColumnBidirectionalRefEdEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <property name="Position" insert="false" update="false" column="indexed_index"/>
+    <many-to-one name="Owner" column="indexed_join_column" insert="false" update="false" />
+  </class>
+
+  <class name="ListJoinColumnBidirectionalRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References">
+      <key column="some_join_column" />
+      <one-to-many class="ListJoinColumnBidirectionalRefEdEntity"/>
+    </bag>
+  </class>
+
+  <class name="ListJoinColumnBidirectionalRefEdEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <many-to-one name="Owner" column="some_join_column" insert="false" update="false" />
+  </class>
+
+  <class name="ListJoinColumnBidirectionalInheritanceRefEdParentEntity" discriminator-value="1">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <discriminator column="discriminator" type="int" />
+    <property name="ParentData"/>
+    <many-to-one name="Owner" column="some_join_column" insert="false" update="false" />
+    <subclass name="ListJoinColumnBidirectionalInheritanceRefEdChildEntity" discriminator-value="2">
+      <property name="ChildData"/>
+    </subclass>
+  </class>
+
+  <class name="ListJoinColumnBidirectionalInheritanceRefIngEntity">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Data"/>
+    <bag name="References">
+      <key column="some_join_column" />
+      <one-to-many class="ListJoinColumnBidirectionalInheritanceRefEdParentEntity"/>
+    </bag>
+  </class>
+</hibernate-mapping>
+
