@@ -578,6 +578,8 @@
     <Compile Include="NetSpecific\Integration\Transaction\SessionClosedWhenCommitingTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\DifferentSchemaAndCatalogTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringBaseTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringGenericTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />

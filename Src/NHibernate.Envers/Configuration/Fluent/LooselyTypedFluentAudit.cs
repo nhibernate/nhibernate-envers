@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Configuration.Fluent
@@ -7,13 +6,12 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// <summary>
 	/// An <see cref="IAttributeProvider"/> to audit the full class.
 	/// </summary>
-	/// <remarks>
-	/// The class will be audited using default values of <see cref="AuditedAttribute"/> without exclusions of properties.
-	/// </remarks>
+	/// <seealso cref="IFluentAudit"/>
 	/// <seealso cref="IFluentAudit{T}"/>
 	/// <seealso cref="FluentAudit{T}"/>
-	public class LooselyTypedFluentAudit : IAttributeProvider
+	public class LooselyTypedFluentAudit : BaseFluentAudit, IFluentAudit
 	{
+
 		private readonly System.Type _entityType;
 
 		public LooselyTypedFluentAudit(System.Type entityType)
@@ -26,12 +24,33 @@ namespace NHibernate.Envers.Configuration.Fluent
 			{
 				throw new ArgumentOutOfRangeException("entityType", "Expected class type found:" + entityType);
 			}
+
 			_entityType = entityType;
+			AttributeCollection.Add(new MemberInfoAndAttribute(entityType, new AuditedAttribute()));
 		}
 
-		public IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration)
+		public IFluentAudit Exclude(string property)
 		{
-			yield return new MemberInfoAndAttribute(_entityType, new AuditedAttribute());
+			Exclude(_entityType, property);
+			return this;
+		}
+
+		public IFluentAudit ExcludeRelationData(string property)
+		{
+			ExcludeRelationData(_entityType, property);
+			return this;
+		}
+
+		public IFluentAudit SetTableInfo(Action<AuditTableAttribute> tableInfo)
+		{
+			SetTableInfo(_entityType, tableInfo);
+			return this;
+		}
+
+		public IFluentAudit SetTableInfo(string property, Action<AuditJoinTableAttribute> tableInfo)
+		{
+			SetTableInfo(_entityType, property, tableInfo);
+			return this;
 		}
 	}
 }

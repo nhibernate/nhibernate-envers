@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Fluent;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
@@ -11,19 +12,87 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 	[TestFixture]
 	public class TableNameTest
 	{
+		
 		[Test]
-		public void ShouldSetTableInfo()
+		public void ShouldSetTableInfoGeneric()
 		{
 			var fluentCfg = new FluentConfiguration();
 			fluentCfg.Audit<StrTestEntity>()
 				.SetTableInfo(table =>
-				              	{
-				              		table.Schema = "testschema";
-				              		table.Catalog = "testcatalog";
-				              		table.Value = "tableName";
-				              	});
+								{
+									table.Schema = "testschema";
+									table.Catalog = "testcatalog";
+									table.Value = "tableName";
+								});
+			CheckTableInfo(fluentCfg);
+		}
+
+		[Test]
+		public void ShouldSetTableInfo()
+		{
+			var fluentCfg = new FluentConfiguration();
+			fluentCfg.Audit(typeof(StrTestEntity))
+				.SetTableInfo(table =>
+				{
+					table.Schema = "testschema";
+					table.Catalog = "testcatalog";
+					table.Value = "tableName";
+				});
+			CheckTableInfo(fluentCfg);
+		}
+
+		[Test]
+		public void ShouldSetJoinTableInfoGeneric()
+		{
+			var fluentCfg = new FluentConfiguration();
+			fluentCfg.Audit<SetRefCollEntity>()
+				.SetTableInfo(r => r.Collection,
+									table =>
+									{
+										table.Schema = "testschema";
+										table.Catalog = "testcatalog";
+										table.TableName = "tableName";
+										table.InverseJoinColumns = new[] { "donald", "duck" };
+									});
+			CheckJoinTableInfo(fluentCfg);
+		}
+
+		[Test]
+		public void ShouldSetJoinTableInfoGenericUsingString()
+		{
+			var fluentCfg = new FluentConfiguration();
+			fluentCfg.Audit<SetRefCollEntity>()
+				.SetTableInfo("Collection",
+									table =>
+									{
+										table.Schema = "testschema";
+										table.Catalog = "testcatalog";
+										table.TableName = "tableName";
+										table.InverseJoinColumns = new[] { "donald", "duck" };
+									});
+			CheckJoinTableInfo(fluentCfg);
+		}
+
+		[Test]
+		public void ShouldSetJoinTableInfo()
+		{
+			var fluentCfg = new FluentConfiguration();
+			fluentCfg.Audit(typeof(SetRefCollEntity))
+				.SetTableInfo("Collection", 
+									table =>
+							   {
+								  table.Schema = "testschema";
+								  table.Catalog = "testcatalog";
+								  table.TableName = "tableName";
+								table.InverseJoinColumns = new[] {"donald", "duck"};
+							   });
+			CheckJoinTableInfo(fluentCfg);	
+		}
+
+		private static void CheckTableInfo(IMetaDataProvider fluentCfg)
+		{
 			var metas = fluentCfg.CreateMetaData(null);
-			var entMeta = metas[typeof (StrTestEntity)];
+			var entMeta = metas[typeof(StrTestEntity)];
 
 			var result = entMeta.ClassMetas.OfType<AuditTableAttribute>().Single();
 
@@ -32,20 +101,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			result.Value.Should().Be.EqualTo("tableName");
 		}
 
-		[Test]
-		public void ShouldSetJoinTableInfo()
+		private static void CheckJoinTableInfo(IMetaDataProvider fluentCfg)
 		{
-			var fluentCfg = new FluentConfiguration();
-			fluentCfg.Audit<SetRefCollEntity>()
-				.SetTableInfo(r => r.Collection, 
-									table =>
-				               {
-				                  table.Schema = "testschema";
-				                  table.Catalog = "testcatalog";
-				                  table.TableName = "tableName";
-				               	table.InverseJoinColumns = new[] {"donald", "duck"};
-				               });
-				
 			var metas = fluentCfg.CreateMetaData(null);
 			var entMeta = metas[typeof(SetRefCollEntity)];
 

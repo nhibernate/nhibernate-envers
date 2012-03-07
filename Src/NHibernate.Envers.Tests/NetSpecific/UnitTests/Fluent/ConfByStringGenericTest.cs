@@ -1,22 +1,21 @@
-using NHibernate.Envers.Configuration.Fluent;
+﻿using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
 	[TestFixture]
-	public class ConfByStringTest : ConfByStringBaseTest
+	public class ConfByStringGenericTest : ConfByStringBaseTest
 	{
 		[SetUp]
 		public void Setup()
 		{
 			var cfg = new FluentConfiguration();
-			cfg.Audit(typeof(FieldEntity))
+			cfg.Audit<FieldEntity>()
 				.Exclude("data1")
 				.Exclude("data2");
-			cfg.Audit(typeof (NotAuditedOwnerEntity))
+			cfg.Audit<NotAuditedOwnerEntity>()
 				.ExcludeRelationData("RelationField");
-
 			metas = cfg.CreateMetaData(null);
 		}
 
@@ -25,9 +24,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			Assert.Throws<FluentException>(() =>
-												cfg.Audit(typeof(FieldEntity))
-													.Exclude("data3")
-											);
+															cfg.Audit<FieldEntity>()
+																 .Exclude("data3")
+													  );
 		}
 	}
 }

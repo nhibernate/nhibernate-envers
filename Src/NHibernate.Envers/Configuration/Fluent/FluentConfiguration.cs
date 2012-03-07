@@ -35,6 +35,18 @@ namespace NHibernate.Envers.Configuration.Fluent
 		}
 
 		/// <summary>
+		/// Register an entity type to be audited.
+		/// </summary>
+		/// <param name="type">The type to be audited.</param>
+		/// <returns>A fluent audit object where you can fine grain the auditing.</returns>
+		public IFluentAudit Audit(System.Type type)
+		{
+			var ret = new LooselyTypedFluentAudit(type);
+			attributeFactories.Add(ret);
+			return ret;
+		}
+		
+		/// <summary>
 		/// Register multiple audited entities.
 		/// </summary>
 		/// <param name="types">All types to be audited.</param>
@@ -45,7 +57,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			foreach (var type in types)
 			{
-				attributeFactories.Add(new LooselyTypedFluentAudit(type));
+				Audit(type);
 			}
 		}
 

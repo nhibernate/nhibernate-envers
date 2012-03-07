@@ -69,6 +69,7 @@
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="Configuration\Attributes\AuditTableAttribute.cs" />
     <Compile Include="Configuration\ConfigurationKey.cs" />
+    <Compile Include="Configuration\Fluent\BaseFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
     <Compile Include="Configuration\Fluent\FluentRevision.cs" />
     <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
