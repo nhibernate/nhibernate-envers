@@ -19,5 +19,6 @@
     <file src="Output\Deploy\NHibernate.Envers.dll" target="lib\Net35" />
     <file src="Output\Deploy\NHibernate.Envers.pdb" target="lib\Net35" />
     <file src="Output\Deploy\NHibernate.Envers.xml" target="lib\Net35" />
+	<file src="..\nhibernate.envers\**\*.cs" target="src"/>
   </files>
 </package>
