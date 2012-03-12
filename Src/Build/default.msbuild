@@ -4,7 +4,6 @@
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
 		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
-		<FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
 		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
 		<ClassPath>"support\lib\*"</ClassPath>
 		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
@@ -37,34 +36,25 @@
 		</MSBuild>
 	</Target>
 
-	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
+	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles"/>
 
 	<Target Name="MakeBuildDirectory">
 		<RemoveDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(BuildFolder)" />
-		<MakeDir Directories="$(FullDeployFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
 	</Target>
 
 	<Target Name="CopyOutputsToBin">
-		<Copy SourceFiles="@(OutputFiles)"
-			  DestinationFiles="@(OutputFiles->'$(FullDeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
 		<Copy SourceFiles="@(OutputFiles)"
 			  DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>
 
 	<Target Name="CopyExtraFiles">
 		<Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
-		<Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(FullDeployFolder)" />
-	</Target>
-
-	<Target Name="CopyNHibernateLibsToDeploy">
-		<Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
 	</Target>
 
 	<Target Name="BuildPdf" DependsOnTargets="PrepareDoc;RunPdfBuild" Condition="'$(configuration)' == 'Release'">
 		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
-		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(FullDeployFolder)" />
 		<RemoveDir Directories="$(TempDirectory)" />
 	</Target>
 
