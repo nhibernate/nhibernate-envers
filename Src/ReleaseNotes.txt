@@ -1,4 +1,32 @@
-=== 1.1 Beta 1, ???? ===
+=== 1.1 CR1 (v 1.1.0.1), 2012-03-12, NH 3.3 CR1 ===
+
+** Bug
+[NHE-40] - Only add RevInfo table if audited types exists
+[NHE-41] - Support auditing of <properties>
+[NHE-42] - Many-to-many with base class throws NonUniqueException when persisted
+[NHE-43] - Don't assume session is open when transaction is completed
+[NHE-44] - Delete + Save on entity with no mod shouldn't trigger audit
+[NHE-45] - Allow nullable, unidirectional one-to-one mapping
+[NHE-46] - Problem with one to many relation with subclass of a base class
+[NHE-47] - Support composite-id with custom type
+[NHE-48] - Components having properties with default values 
+[NHE-49] - Mixing <join> and <subclass> causes crash
+[NHE-51] - Support quoted mapped columns (reserved sql keywords)
+[NHE-52] - Can't find class attributes on non mapped base types
+[NHE-53] - Correcting configuration of base classes
+[NHE-54] - User defined Envers schema/catalog + <subclass> causes crash
+[NHE-57] - Possible to have non audit entities even if base classes are audited
+[NHE-59] - Support scale=0
+[NHE-63] - Memory leaks in envers configuration
+
+** Improvement
+[NHE-35] - Track entity names in a revision
+[NHE-36] - Implement support of AuditJoinTable/AuditTable attribute functionality with fluent interface
+[NHE-58] - Enable query for changed properties
+
+** Patch
+[NHE-65] - Non generic fine grain methods in fluent configuration interface
+
 
 *** Breaking changes ***
 * Removed obsolute methods; AuditQueryCreator.ForHistoryOf<TEntity> and ForHistoryOf<TEntity>(bool)
@@ -11,6 +39,7 @@
 * (Fluent) Using a non mapped type as revision entity now throws FluentException and not MappedException
 * IFluentRevision.Attributes now takes a Configuration object as inparameter
 * IMetaDataStore.EntitiesDeclaredWith<T> removed
+
 
 
 === 1.0 GA (v 1.0.0.0), 2011-10-14, NH 3.2 GA ===
