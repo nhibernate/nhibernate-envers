@@ -5,6 +5,7 @@
 		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
+		<NugetDeployFolder>$(BuildFolder)\NugetDeploy</NugetDeployFolder>
 		<ClassPath>"support\lib\*"</ClassPath>
 		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
 		<TempDirectory>$(BuildFolder)\temp</TempDirectory>
@@ -26,7 +27,7 @@
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
 	<Target Name="nuget" DependsOnTargets="Build">
-		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release"
+		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(NugetDeployFolder) -symbols -Prop Configuration=Release"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 
@@ -42,6 +43,7 @@
 		<RemoveDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
+		<MakeDir Directories="$(NugetDeployFolder)" />
 	</Target>
 
 	<Target Name="CopyOutputsToBin">
