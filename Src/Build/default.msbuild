@@ -16,6 +16,7 @@
 	<ItemGroup Label="Extra files to deploy">
 		<ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
 		<ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
+		<ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\$(configuration)\NHibernate.Envers.pdb" />
 		<ExtraFiles Include="$(SourceDir)\ReleaseNotes.txt"/>
 	</ItemGroup>
 
@@ -26,7 +27,7 @@
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
 	<Target Name="nuget" DependsOnTargets="Build">
-		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
+		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 
