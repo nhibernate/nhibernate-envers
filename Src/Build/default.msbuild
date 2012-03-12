@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
 		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
-		<ToolsFolder>$(SourceDir)\..\Tools</ToolsFolder>
+		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<FullDeployFolder>$(BuildFolder)\Full</FullDeployFolder>
 		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
 		<ClassPath>"support\lib\*"</ClassPath>
@@ -26,7 +26,7 @@
 
 	<Target Name="Build" DependsOnTargets="BuildPdf;RunBuild;CopyAllFilesToBuild;"/>
 	<Target Name="nuget" DependsOnTargets="Build">
-		<Exec Command="$(ToolsFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
+		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder)"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 
