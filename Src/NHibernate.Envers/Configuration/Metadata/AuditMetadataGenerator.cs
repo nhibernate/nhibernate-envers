@@ -138,7 +138,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			addModifiedFlagIfNeeded(parent, propertyAuditingData, processModifiedFlag);
 		}
 
-		private bool processedInSecondPass(IType type)
+		private static bool processedInSecondPass(IType type)
 		{
 			return type is ComponentType ||
 					 type is ManyToOneType ||

@@ -13,13 +13,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 	/// </summary>
 	public sealed class MiddleMapKeyIdComponentMapper : IMiddleComponentMapper
 	{
-		private readonly AuditEntitiesConfiguration verEntCfg;
-		private readonly IIdMapper relatedIdMapper;
+		private readonly AuditEntitiesConfiguration _verEntCfg;
+		private readonly IIdMapper _relatedIdMapper;
 
 		public MiddleMapKeyIdComponentMapper(AuditEntitiesConfiguration verEntCfg, IIdMapper relatedIdMapper)
 		{
-			this.verEntCfg = verEntCfg;
-			this.relatedIdMapper = relatedIdMapper;
+			_verEntCfg = verEntCfg;
+			_relatedIdMapper = relatedIdMapper;
 		}
 
 		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator,
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 											object dataObject,
 											long revision)
 		{
-			return relatedIdMapper.MapToIdFromMap((IDictionary)data[verEntCfg.OriginalIdPropName]);
+			return _relatedIdMapper.MapToIdFromMap((IDictionary)data[_verEntCfg.OriginalIdPropName]);
 		}
 
 		public void MapToMapFromObject(IDictionary<string, object> data, object obj)

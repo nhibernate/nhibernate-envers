@@ -6,11 +6,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
 	public class MiddleRelatedComponentMapper : IMiddleComponentMapper
 	{
-		private readonly MiddleIdData relatedIdData;
+		private readonly MiddleIdData _relatedIdData;
 
 		public MiddleRelatedComponentMapper(MiddleIdData relatedIdData)
 		{
-			this.relatedIdData = relatedIdData;
+			_relatedIdData = relatedIdData;
 		}
 
 		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator,
@@ -18,17 +18,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 														object dataObject,
 										 long revision)
 		{
-			return entityInstantiator.CreateInstanceFromVersionsEntity(relatedIdData.EntityName, data, revision);
+			return entityInstantiator.CreateInstanceFromVersionsEntity(_relatedIdData.EntityName, data, revision);
 		}
 
 		public void MapToMapFromObject(IDictionary<string, object> data, object obj)
 		{
-			relatedIdData.PrefixedMapper.MapToMapFromEntity(data, obj);
+			_relatedIdData.PrefixedMapper.MapToMapFromEntity(data, obj);
 		}
 
 		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)
 		{
-			relatedIdData.PrefixedMapper.AddIdsEqualToQuery(parameters, prefix1, prefix2);
+			_relatedIdData.PrefixedMapper.AddIdsEqualToQuery(parameters, prefix1, prefix2);
 		}
 	}
 }
