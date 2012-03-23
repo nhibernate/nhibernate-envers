@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 							where TCollection : class, ICollection<TItem>
 	{
 		[NonSerialized]
-		private readonly IInitializor<TCollection> initializor;
+		private readonly IInitializor<TCollection> _initializor;
 
 		protected CollectionProxy() 
 		{
@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 
 		protected CollectionProxy(IInitializor<TCollection> initializor) 
 		{
-			this.initializor = initializor;
+			_initializor = initializor;
 		}
 
 		protected TCollection CollectionDelegate { get; private set; }
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 		{
 			if (CollectionDelegate == null)
 			{
-				CollectionDelegate = initializor.Initialize();
+				CollectionDelegate = _initializor.Initialize();
 			}
 		}
 

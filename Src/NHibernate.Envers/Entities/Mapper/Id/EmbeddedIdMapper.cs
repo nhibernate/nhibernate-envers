@@ -9,12 +9,12 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 {
 	public class EmbeddedIdMapper : AbstractCompositeIdMapper
 	{
-		private readonly PropertyData idPropertyData;
+		private readonly PropertyData _idPropertyData;
 
 		public EmbeddedIdMapper(PropertyData idPropertyData, System.Type compositeIdClass)
 								: base(compositeIdClass)
 		{
-			this.idPropertyData = idPropertyData;
+			_idPropertyData = idPropertyData;
 		}
 
 		public override void MapToMapFromId(IDictionary<string, object> data, object obj)
@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			{
 				return;
 			}
-			var getter = ReflectionTools.GetGetter(obj.GetType(), idPropertyData);
+			var getter = ReflectionTools.GetGetter(obj.GetType(), _idPropertyData);
 			MapToMapFromId(data, getter.Get(obj));
 		}
 
@@ -41,8 +41,8 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 				return false;
 
 			var objType = obj.GetType();
-			var getter = ReflectionTools.GetGetter(objType, idPropertyData);
-			var setter = ReflectionTools.GetSetter(objType, idPropertyData);
+			var getter = ReflectionTools.GetGetter(objType, _idPropertyData);
+			var setter = ReflectionTools.GetSetter(objType, _idPropertyData);
 
 			try 
 			{
@@ -66,7 +66,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override IIdMapper PrefixMappedProperties(string prefix)
 		{
-			var ret = new EmbeddedIdMapper(idPropertyData, CompositeIdClass);
+			var ret = new EmbeddedIdMapper(_idPropertyData, CompositeIdClass);
 
 			foreach (var propertyData in Ids.Keys) 
 			{
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			{
 				return null;
 			}
-			var getter = ReflectionTools.GetGetter(data.GetType(), idPropertyData);
+			var getter = ReflectionTools.GetGetter(data.GetType(), _idPropertyData);
 			return getter.Get(data);
 		}
 
