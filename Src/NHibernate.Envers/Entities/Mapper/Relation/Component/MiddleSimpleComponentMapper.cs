@@ -7,28 +7,28 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
 	public class MiddleSimpleComponentMapper : IMiddleComponentMapper
 	{
-		private readonly AuditEntitiesConfiguration verEntCfg;
-		private readonly string propertyName;
+		private readonly AuditEntitiesConfiguration _verEntCfg;
+		private readonly string _propertyName;
 
 		public MiddleSimpleComponentMapper(AuditEntitiesConfiguration verEntCfg, string propertyName)
 		{
-			this.propertyName = propertyName;
-			this.verEntCfg = verEntCfg;
+			_propertyName = propertyName;
+			_verEntCfg = verEntCfg;
 		}
 
 		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision)
 		{
-			return ((IDictionary)data[verEntCfg.OriginalIdPropName])[propertyName];
+			return ((IDictionary)data[_verEntCfg.OriginalIdPropName])[_propertyName];
 		}
 
 		public void MapToMapFromObject(IDictionary<string, object> data, object obj)
 		{
-			data.Add(propertyName, obj);
+			data.Add(_propertyName, obj);
 		}
 
 		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)
 		{
-			parameters.AddWhere(prefix1 + "." + propertyName, false, "=", prefix2 + "." + propertyName, false);
+			parameters.AddWhere(prefix1 + "." + _propertyName, false, "=", prefix2 + "." + _propertyName, false);
 		}
 	}
 }

@@ -12,13 +12,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 	/// </summary>
 	public class MiddleMapKeyPropertyComponentMapper : IMiddleComponentMapper 
 	{
-		private readonly string propertyName;
-		private readonly string accessType;
+		private readonly string _propertyName;
+		private readonly string _accessType;
 
 		public MiddleMapKeyPropertyComponentMapper(string propertyName, string accessType) 
 		{
-			this.propertyName = propertyName;
-			this.accessType = accessType;
+			_propertyName = propertyName;
+			_accessType = accessType;
 		}
 
 		public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, 
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 											long revision)
 		{
 			// dataObject is not null, as this mapper can only be used in an index.
-			return ReflectionTools.GetGetter(dataObject.GetType(), propertyName, accessType).Get(dataObject);
+			return ReflectionTools.GetGetter(dataObject.GetType(), _propertyName, _accessType).Get(dataObject);
 		}
 
 		public void MapToMapFromObject(IDictionary<string, object> data, object obj) 

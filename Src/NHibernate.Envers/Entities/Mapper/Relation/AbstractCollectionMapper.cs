@@ -127,13 +127,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			var propertyData = CommonCollectionMapperData.CollectionReferencingPropertyData;
 			if (propertyData.UsingModifiedFlag)
 			{
-				if(isFromNullToEmptyOrFromEmptyToNull((IPersistentCollection)newObj, oldObj))
+				var newObjAsPersistentCollection = (IPersistentCollection) newObj;
+				if(isFromNullToEmptyOrFromEmptyToNull(newObjAsPersistentCollection, oldObj))
 				{
 					data[propertyData.ModifiedFlagPropertyName] = true;
 				}
 				else
 				{
-					var changes = MapCollectionChanges(propertyData.Name, (IPersistentCollection) newObj, oldObj, null);
+					var changes = MapCollectionChanges(propertyData.Name, newObjAsPersistentCollection, oldObj, null);
 					data[propertyData.ModifiedFlagPropertyName] = changes.Any();
 				}
 			}
