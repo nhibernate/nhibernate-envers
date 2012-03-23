@@ -8,41 +8,41 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 {
 	public class SingleIdMapper : AbstractIdMapper, ISimpleIdMapperBuilder
 	{
-		private PropertyData propertyData;
+		private PropertyData _propertyData;
 
 		public SingleIdMapper() { }
 
 		public SingleIdMapper(PropertyData propertyData)
 		{
-			this.propertyData = propertyData;
+			_propertyData = propertyData;
 		}
 
 		public void Add(PropertyData propertyData)
 		{
-			if (this.propertyData != null)
+			if (_propertyData != null)
 			{
 				throw new AuditException("Only one property can be added!");
 			}
 
-			this.propertyData = propertyData;
+			_propertyData = propertyData;
 		}
 
 		public override bool MapToEntityFromMap(object obj, IDictionary data)
 		{
 			if (data == null || obj == null)
 				return false;
-			var value = data[propertyData.Name];
+			var value = data[_propertyData.Name];
 			if (value == null)
 				return false;
 
-			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
+			var setter = ReflectionTools.GetSetter(obj.GetType(), _propertyData);
 			setter.Set(obj, value);
 			return true;
 		}
 
 		public override object MapToIdFromMap(IDictionary data)
 		{
-			return data == null ? null : data[propertyData.Name];
+			return data == null ? null : data[_propertyData.Name];
 		}
 
 		public override object MapToIdFromEntity(object data)
@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			{
 				return proxy.HibernateLazyInitializer.Identifier;
 			}
-			var getter = ReflectionTools.GetGetter(data.GetType(), propertyData);
+			var getter = ReflectionTools.GetGetter(data.GetType(), _propertyData);
 			return getter.Get(data);
 		}
 
@@ -66,7 +66,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 		{
 			if (data != null)
 			{
-				data.Add(propertyData.Name, obj);
+				data.Add(_propertyData.Name, obj);
 			}
 		}
 
@@ -74,31 +74,31 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 		{
 			if (obj == null)
 			{
-				data.Add(propertyData.Name, null);
+				data.Add(_propertyData.Name, null);
 			}
 			else
 			{
 				var proxy = obj as INHibernateProxy;
 				if (proxy != null)
 				{
-					data.Add(propertyData.Name, proxy.HibernateLazyInitializer.Identifier);
+					data.Add(_propertyData.Name, proxy.HibernateLazyInitializer.Identifier);
 				}
 				else
 				{
-					var getter = ReflectionTools.GetGetter(obj.GetType(), propertyData);
-					data.Add(propertyData.Name, getter.Get(obj));
+					var getter = ReflectionTools.GetGetter(obj.GetType(), _propertyData);
+					data.Add(_propertyData.Name, getter.Get(obj));
 				}
 			}
 		}
 
 		public override IIdMapper PrefixMappedProperties(string prefix)
 		{
-			return new SingleIdMapper(new PropertyData(prefix + propertyData.Name, propertyData));
+			return new SingleIdMapper(new PropertyData(prefix + _propertyData.Name, _propertyData));
 		}
 
 		public override IList<QueryParameterData> MapToQueryParametersFromId(object obj)
 		{
-			return new List<QueryParameterData> { new QueryParameterData(propertyData.Name, obj) };
+			return new List<QueryParameterData> { new QueryParameterData(_propertyData.Name, obj) };
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
 	public class SetCollectionInitializor<T> : AbstractCollectionInitializor<ISet<T>>
 	{
-		private readonly MiddleComponentData elementComponentData;
+		private readonly MiddleComponentData _elementComponentData;
 
 		public SetCollectionInitializor(AuditConfiguration verCfg,
 											IAuditReaderImplementor versionsReader,
@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 											MiddleComponentData elementComponentData) 
 								:base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
 		{
-			this.elementComponentData = elementComponentData;
+			_elementComponentData = elementComponentData;
 		}
 
 		protected override ISet<T> InitializeCollection(int size) 
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		protected override void AddToCollection(ISet<T> collection, object collectionRow) 
 		{
-			var elementData = ((IList) collectionRow)[elementComponentData.ComponentIndex];
+			var elementData = ((IList) collectionRow)[_elementComponentData.ComponentIndex];
 
 			// If the target entity is not audited, the elements may be the entities already, so we have to check
 			// if they are maps or not.
@@ -36,7 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementDataAsDic = elementData as IDictionary;
 			if (elementDataAsDic!=null) 
 			{
-				element = (T)elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator, elementDataAsDic, null, Revision);
+				element = (T)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator, elementDataAsDic, null, Revision);
 			} 
 			else 
 			{
