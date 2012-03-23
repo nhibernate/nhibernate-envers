@@ -13,8 +13,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// </summary>
 	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator
 	{
-		private readonly string queryString;
-		private readonly MiddleIdData referencingIdData;
+		private readonly string _queryString;
+		private readonly MiddleIdData _referencingIdData;
 
 		public TwoEntityOneAuditedQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 										MiddleIdData referencedIdData,
 										IEnumerable<MiddleComponentData> componentDatas)
 		{
-			this.referencingIdData = referencingIdData;
+			_referencingIdData = referencingIdData;
 
 			/*
 			 * The query that we need to create:
@@ -74,15 +74,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
-			queryString = sb.ToString();
+			_queryString = sb.ToString();
 		}
 
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
-			var query = versionsReader.Session.CreateQuery(queryString);
+			var query = versionsReader.Session.CreateQuery(_queryString);
 			query.SetParameter(QueryConstants.RevisionParameter, revision);
 			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
-			foreach (var paramData in referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
+			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);
 			}
