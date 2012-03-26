@@ -15,9 +15,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var type = value.Type;
 			var custType = type as CustomType;
 			var compType = type as CompositeCustomType;
-			if (type is ImmutableType || type is MutableType) 
+			if (type is ImmutableType || type is MutableType)
 			{
-				AddSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
+				var mappingType = type.GetType();
+				var userDefined = isUserDefined(mappingType);
+				if(userDefined)
+					AddCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, mappingType);
+				else
+					AddSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
 			}
 			else if (custType != null)
 			{
@@ -33,6 +38,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			return true;
+		}
+
+		private static bool isUserDefined(System.Type mappingType)
+		{
+			return !typeof(ISession).Assembly.Equals(mappingType.Assembly);
 		}
 
 		private static void AddSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
