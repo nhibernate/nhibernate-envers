@@ -69,6 +69,9 @@
     <Compile Include="Entities\Components\DefaultValueComponent1.cs" />
     <Compile Include="Entities\Components\DefaultValueComponent2.cs" />
     <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
+    <Compile Include="Entities\CustomType\PrimitiveCustomTypeEntity.cs" />
+    <Compile Include="Entities\CustomType\PrimitiveImmutableType.cs" />
+    <Compile Include="Entities\CustomType\PrimitiveTestUserType.cs" />
     <Compile Include="Entities\Ids\CustomEnum.cs" />
     <Compile Include="Entities\Ids\CustomEnumUserType.cs" />
     <Compile Include="Entities\Ids\EmbIdWithCustomType.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Integration\Basic\ColumnScalePrecisionTest.cs" />
     <Compile Include="Integration\Basic\ScalePrecisionEntity.cs" />
     <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
+    <Compile Include="Integration\CustomType\PrimitiveCustomTest.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractCheckActivity.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractActivity.cs" />
     <Compile Include="Integration\Inheritance\Mixed\IActivity.cs" />
