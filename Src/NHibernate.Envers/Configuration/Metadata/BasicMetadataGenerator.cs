@@ -20,17 +20,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var mappingType = type.GetType();
 				var userDefined = isUserDefined(mappingType);
 				if(userDefined)
-					AddCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, mappingType);
+					addCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, mappingType);
 				else
-					AddSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
+					addSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
 			}
 			else if (custType != null)
 			{
-				AddCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, custType.UserType.GetType());
+				addCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, custType.UserType.GetType());
 			}
 			else if (compType != null)
 			{
-				AddCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, compType.UserType.GetType());
+				addCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, compType.UserType.GetType());
 			}
 			else 
 			{
@@ -45,14 +45,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return !typeof(ISession).Assembly.Equals(mappingType.Assembly);
 		}
 
-		private static void AddSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		private static void addSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
 								IValue value, ISimpleMapperBuilder mapper, bool insertable, bool key)
 		{
 			if (parent != null) 
 			{
-				var prop_mapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
+				var propMapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
 						value.Type.Name, propertyAuditingData.ForceInsertable || insertable, key);
-				MetadataTools.AddColumns(prop_mapping, value.ColumnIterator.OfType<Column>());
+				MetadataTools.AddColumns(propMapping, value.ColumnIterator.OfType<Column>());
 			}
 
 			// A null mapper means that we only want to add xml mappings
@@ -62,15 +62,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static void AddCustomValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		private static void addCustomValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
 									IValue value, ISimpleMapperBuilder mapper, bool insertable, 
 									bool key, System.Type typeOfUserImplementation) 
 		{
 			if (parent != null) 
 			{
-				var prop_mapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
+				var propMapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
 						typeOfUserImplementation.AssemblyQualifiedName, insertable, key);
-				MetadataTools.AddColumns(prop_mapping, value.ColumnIterator.OfType<Column>());
+				MetadataTools.AddColumns(propMapping, value.ColumnIterator.OfType<Column>());
 				var typeElement = parent.OwnerDocument.CreateElement("type");
 				typeElement.SetAttribute("name", typeOfUserImplementation.AssemblyQualifiedName);
 
@@ -82,14 +82,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 					{
 						foreach (var paramKeyValue in typeParameters) 
 						{
-							var type_param = typeElement.OwnerDocument.CreateElement("param");
-							type_param.SetAttribute("name", paramKeyValue.Key);
-							type_param.InnerText =  paramKeyValue.Value;
-							typeElement.AppendChild(type_param);
+							var typeParam = typeElement.OwnerDocument.CreateElement("param");
+							typeParam.SetAttribute("name", paramKeyValue.Key);
+							typeParam.InnerText =  paramKeyValue.Value;
+							typeElement.AppendChild(typeParam);
 						}
 					}
 				}
-				prop_mapping.AppendChild(typeElement);
+				propMapping.AppendChild(typeElement);
 			}
 
 			if (mapper != null) 
