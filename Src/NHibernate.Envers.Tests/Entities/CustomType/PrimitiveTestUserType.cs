@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using NHibernate.Type;
 
 namespace NHibernate.Envers.Tests.Entities.CustomType
@@ -35,7 +36,9 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 
 		public override object Get(IDataReader rs, int index)
 		{
-			return PrimitiveImmutableType.Get(index);
+			var o = rs[index];
+			var value = Convert.ToInt32(o);
+			return PrimitiveImmutableType.Get(value);
 		}
 
 		public override void Set(IDbCommand cmd, object value, int index)
