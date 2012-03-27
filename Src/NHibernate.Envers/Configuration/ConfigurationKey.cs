@@ -13,8 +13,8 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// Should Envers track (persist) entity types that have been changed during each revision.
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> TrackEntitiesChangedInRevision 
-			= new ConfigurationEntry<bool>("nhibernate.envers.track_entities_changed_in_revision", "false", toValueString);
+		public static readonly BoolConfigurationEntry TrackEntitiesChangedInRevision
+			= new BoolConfigurationEntry("nhibernate.envers.track_entities_changed_in_revision", "false");
 
 		/// <summary>
 		/// Should a revision be generated when a not-owned relation
@@ -22,16 +22,16 @@ namespace NHibernate.Envers.Configuration
 		/// one-to-many relation, or the field using "mappedBy"
 		/// attribute in a one-to-one relation).
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> RevisionOnCollectionChange 
-			= new ConfigurationEntry<bool>("nhibernate.envers.revision_on_collection_change", "true", toValueString);
+		public static readonly BoolConfigurationEntry RevisionOnCollectionChange
+			= new BoolConfigurationEntry("nhibernate.envers.revision_on_collection_change", "true");
 
 		/// <summary>
 		/// When true, properties to be used for optimistic locking
 		/// will be automatically not audited (their history won't be
 		/// stored; it normally doesn't make sense to store it).
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> DoNotAuditOptimisticLockingField 
-			= new ConfigurationEntry<bool>("nhibernate.envers.do_not_audit_optimistic_locking_field", "true", toValueString);
+		public static readonly BoolConfigurationEntry DoNotAuditOptimisticLockingField
+			= new BoolConfigurationEntry("nhibernate.envers.do_not_audit_optimistic_locking_field", "true");
 
 		/// <summary>
 		/// Should the entity data be stored in the revision when
@@ -42,8 +42,8 @@ namespace NHibernate.Envers.Configuration
 		/// to access it in the last revision (then the data that
 		/// the entity contained before deletion is stored twice).
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> StoreDataAtDelete 
-			= new ConfigurationEntry<bool>("nhibernate.envers.store_data_at_delete", "false", toValueString);
+		public static readonly BoolConfigurationEntry StoreDataAtDelete
+			= new BoolConfigurationEntry("nhibernate.envers.store_data_at_delete", "false");
 
 		/// <summary>
 		/// The default schema name that should be used for audit
@@ -51,8 +51,8 @@ namespace NHibernate.Envers.Configuration
 		/// If not present,  the schema will be the same as the schema of the normal
 		/// tables.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> DefaultSchema 
-			= new ConfigurationEntry<string>("nhibernate.envers.default_schema", string.Empty, toValueString);
+		public static readonly StringConfigurationEntry DefaultSchema
+			= new StringConfigurationEntry("nhibernate.envers.default_schema", string.Empty);
 
 		/// <summary>
 		/// The default catalog name that should be used for audit
@@ -60,8 +60,8 @@ namespace NHibernate.Envers.Configuration
 		/// If not present,  the catalog will be the same as the catalog of the normal
 		/// tables.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> DefaultCatalog 
-			= new ConfigurationEntry<string>("nhibernate.envers.default_catalog", string.Empty, toValueString);
+		public static readonly StringConfigurationEntry DefaultCatalog
+			= new StringConfigurationEntry("nhibernate.envers.default_catalog", string.Empty);
 
 		/// <summary>
 		/// Responsible to create collection proxies for audited entities.
@@ -69,8 +69,8 @@ namespace NHibernate.Envers.Configuration
 		/// normal types for its mapped collections, eg if a user
 		/// defined CollectionTypeFactory is used.
 		/// </summary>
-		public static readonly ConfigurationEntry<System.Type> CollectionProxyMapperFactory
-			= new ConfigurationEntry<System.Type>("nhibernate.envers.collection_proxy_mapper_factory", typeof (DefaultCollectionProxyMapperFactory).AssemblyQualifiedName, toValueString);
+		public static readonly TypeConfigurationEntry CollectionProxyMapperFactory
+			= new TypeConfigurationEntry("nhibernate.envers.collection_proxy_mapper_factory", typeof(DefaultCollectionProxyMapperFactory).AssemblyQualifiedName);
 
 		/// <summary>
 		/// String that will be appended to the name of an audited
@@ -79,29 +79,29 @@ namespace NHibernate.Envers.Configuration
 		/// name Person, in the default setting Envers will generate
 		/// a Person_AUD table to store historical data.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> AuditTablePrefix 
-			= new ConfigurationEntry<string>("nhibernate.envers.audit_table_prefix", string.Empty, toValueString);
+		public static readonly StringConfigurationEntry AuditTablePrefix
+			= new StringConfigurationEntry("nhibernate.envers.audit_table_prefix", string.Empty);
 
 		/// <summary>
 		/// String that will be prepended to the name of an audited
 		/// entity to create the name of the entity, that will hold
 		/// audit information.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> AuditTableSuffix 
-			= new ConfigurationEntry<string>("nhibernate.envers.audit_table_suffix", "_AUD", toValueString);
+		public static readonly StringConfigurationEntry AuditTableSuffix
+			= new StringConfigurationEntry("nhibernate.envers.audit_table_suffix", "_AUD");
 
 		/// <summary>
 		/// Name of a field in the audit entity that will hold the revision number.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> RevisionFieldName 
-			= new ConfigurationEntry<string>("nhibernate.envers.revision_field_name", "REV", toValueString);
+		public static readonly StringConfigurationEntry RevisionFieldName 
+			= new StringConfigurationEntry("nhibernate.envers.revision_field_name", "REV");
 
 		/// <summary>
 		/// Name of a field in the audit entity that will hold the
 		/// type of the revision (currently, this can be: add, mod, del).
 		/// </summary>
-		public static readonly ConfigurationEntry<string> RevisionTypeFieldName 
-			= new ConfigurationEntry<string>("nhibernate.envers.revision_type_field_name", "REVTYPE", toValueString);
+		public static readonly StringConfigurationEntry RevisionTypeFieldName
+			= new StringConfigurationEntry("nhibernate.envers.revision_type_field_name", "REVTYPE");
 
 		/// <summary>
 		/// The audit strategy that should be used when persisting
@@ -112,8 +112,8 @@ namespace NHibernate.Envers.Configuration
 		/// these define when an audit row was valid, hence the
 		/// name ValidityAuditStrategy.
 		/// </summary>
-		public static readonly ConfigurationEntry<System.Type> AuditStrategy
-			= new ConfigurationEntry<System.Type>("nhibernate.envers.audit_strategy", typeof(DefaultAuditStrategy).AssemblyQualifiedName, toValueString);
+		public static readonly TypeConfigurationEntry AuditStrategy
+			= new TypeConfigurationEntry("nhibernate.envers.audit_strategy", typeof(DefaultAuditStrategy).AssemblyQualifiedName);
 
 		/// <summary>
 		/// Should the timestamp of the end revision be stored, until
@@ -124,50 +124,35 @@ namespace NHibernate.Envers.Configuration
 		/// the table. This property is only evaluated if the
 		/// ValidityAuditStrategy is used.
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> AuditStrategyValidityStoreRevendTimestamp 
-			= new ConfigurationEntry<bool>("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "false", toValueString);
+		public static readonly BoolConfigurationEntry AuditStrategyValidityStoreRevendTimestamp
+			= new BoolConfigurationEntry("nhibernate.envers.audit_strategy_validity_store_revend_timestamp", "false");
 
 		/// <summary>
 		/// The column name that will hold the end revision number
 		/// in audit entities. This property is only valid if the
 		/// validity audit strategy is used.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> AuditStrategyValidityEndRevFieldName
-			= new ConfigurationEntry<string>("nhibernate.envers.audit_strategy_validity_end_rev_field_name", "REVEND", toValueString);
+		public static readonly StringConfigurationEntry AuditStrategyValidityEndRevFieldName
+			= new StringConfigurationEntry("nhibernate.envers.audit_strategy_validity_end_rev_field_name", "REVEND");
 
 		/// <summary>
 		/// Column name of the timestamp of the end revision until
 		/// which the data was valid. Only used if the ValidityAuditStrategy
 		/// is used, and <see cref="AuditStrategyValidityStoreRevendTimestamp"/>evaluates to <code>true</code>.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> AuditStrategyValidityRevendTimestampFieldName 
-			= new ConfigurationEntry<string>("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", "REVEND_TSTMP", toValueString);
+		public static readonly StringConfigurationEntry AuditStrategyValidityRevendTimestampFieldName
+			= new StringConfigurationEntry("nhibernate.envers.audit_strategy_validity_revend_timestamp_field_name", "REVEND_TSTMP");
 
 		/// <summary>
 		/// Suffix to be used for modified flags columns.
 		/// </summary>
-		public static readonly ConfigurationEntry<string> ModifiedFlagSuffix
-			= new ConfigurationEntry<string>("nhibernate.envers.modified_flag_suffix", "_MOD", toValueString);
+		public static readonly StringConfigurationEntry ModifiedFlagSuffix
+			= new StringConfigurationEntry("nhibernate.envers.modified_flag_suffix", "_MOD");
 
 		/// <summary>
 		/// Should Envers use modified property flags by default
 		/// </summary>
-		public static readonly ConfigurationEntry<bool> GlobalWithModifiedFlag 
-			= new ConfigurationEntry<bool>("nhibernate.envers.global_with_modified_flag", "false", toValueString);
-
-		private static string toValueString(bool userValue)
-		{
-			return userValue ? "true" : "false";
-		}
-
-		private static string toValueString(string userValue)
-		{
-			return userValue;
-		}
-
-		private static string toValueString(System.Type userValue)
-		{
-			return userValue.AssemblyQualifiedName;
-		}
+		public static readonly BoolConfigurationEntry GlobalWithModifiedFlag
+			= new BoolConfigurationEntry("nhibernate.envers.global_with_modified_flag", "false");
 	}
 }
