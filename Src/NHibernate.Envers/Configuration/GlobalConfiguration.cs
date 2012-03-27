@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -11,19 +9,16 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
-			GenerateRevisionsForCollections = ConfigurationKey.RevisionOnCollectionChange.ToValue(properties);
-			DoNotAuditOptimisticLockingField = ConfigurationKey.DoNotAuditOptimisticLockingField.ToValue(properties);
-			StoreDataAtDelete = ConfigurationKey.StoreDataAtDelete.ToValue(properties);
-			IsTrackEntitiesChangedInRevisionEnabled = ConfigurationKey.TrackEntitiesChangedInRevision.ToValue(properties);
-			DefaultSchemaName = ConfigurationKey.DefaultSchema.ToValue(properties);
-			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToValue(properties);
-
-			var collectionProxyMapperFactoryType = ConfigurationKey.CollectionProxyMapperFactory.ToValue(properties);
-			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
+			GenerateRevisionsForCollections = ConfigurationKey.RevisionOnCollectionChange.ToBool(properties);
+			DoNotAuditOptimisticLockingField = ConfigurationKey.DoNotAuditOptimisticLockingField.ToBool(properties);
+			StoreDataAtDelete = ConfigurationKey.StoreDataAtDelete.ToBool(properties);
+			IsTrackEntitiesChangedInRevisionEnabled = ConfigurationKey.TrackEntitiesChangedInRevision.ToBool(properties);
+			DefaultSchemaName = ConfigurationKey.DefaultSchema.ToString(properties);
+			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToString(properties);
+			CollectionProxyMapperFactory = ConfigurationKey.CollectionProxyMapperFactory.ToInstance<ICollectionProxyMapperFactory>(properties);
 			CorrelatedSubqueryOperator = "=";
-
-			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToValue(properties);
-			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToValue(properties);
+			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
+			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToString(properties);
 		}
 
 		/// <summary>
