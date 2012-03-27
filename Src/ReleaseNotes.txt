@@ -1,3 +1,16 @@
+=== 1.1 CR1 (v ???), ???, NH ??? ===
+
+*** Breaking changes ***
+*
+* -- ConfigurationKey --
+* nhConf.SetProperty(ConfigurationKey.StoreDataAtDelete, "true") no longer supported.
+* Choose either...
+* nhConf.SetProperty("nhibernate.envers.store_data_at_delete", "true");
+* nhConf.SetEnversProperty(ConfigurationKey.StoreDataAtDelete, true);
+* ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);
+
+
+
 === 1.1 CR1 (v 1.1.0.1), 2012-03-12, NH 3.3 CR1 ===
 
 ** Bug
