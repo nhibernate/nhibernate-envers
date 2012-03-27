@@ -11,31 +11,29 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
-			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties, ConfigurationKey.RevisionOnCollectionChange, "true");
+			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties, ConfigurationKey.RevisionOnCollectionChange);
 			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
 
-			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties, ConfigurationKey.DoNotAuditOptimisticLockingField, "true");
+			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties, ConfigurationKey.DoNotAuditOptimisticLockingField);
 			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
 
-			var storeDataDeletedEntityStr = Toolz.GetProperty(properties, ConfigurationKey.StoreDataAtDelete, "false");
+			var storeDataDeletedEntityStr = Toolz.GetProperty(properties, ConfigurationKey.StoreDataAtDelete);
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			var trackEntityChangesStr = Toolz.GetProperty(properties, ConfigurationKey.TrackEntitiesChangedInRevision, "false");
+			var trackEntityChangesStr = Toolz.GetProperty(properties, ConfigurationKey.TrackEntitiesChangedInRevision);
 			IsTrackEntitiesChangedInRevisionEnabled = Boolean.Parse(trackEntityChangesStr);
 
-			DefaultSchemaName = Toolz.GetProperty(properties, ConfigurationKey.DefaultSchema, string.Empty);
-			DefaultCatalogName = Toolz.GetProperty(properties, ConfigurationKey.DefaultCatalog, string.Empty);
+			DefaultSchemaName = Toolz.GetProperty(properties, ConfigurationKey.DefaultSchema);
+			DefaultCatalogName = Toolz.GetProperty(properties, ConfigurationKey.DefaultCatalog);
 
-			var collectionProxyMapperFactoryTypeString = Toolz.GetProperty(properties,
-																	 ConfigurationKey.CollectionProxyMapperFactory,
-			                                                         "NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory");
+			var collectionProxyMapperFactoryTypeString = Toolz.GetProperty(properties, ConfigurationKey.CollectionProxyMapperFactory);
 			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
 			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
 			CorrelatedSubqueryOperator = "=";
 
-			var usingModifiedFlagStr = Toolz.GetProperty(properties, ConfigurationKey.GlobalWithModifiedFlag, "false");
+			var usingModifiedFlagStr = Toolz.GetProperty(properties, ConfigurationKey.GlobalWithModifiedFlag);
 			IsGlobalWithModifiedFlag = Boolean.Parse(usingModifiedFlagStr);
-			ModifiedFlagSuffix = Toolz.GetProperty(properties, ConfigurationKey.ModifiedFlagSuffix, DefaultModifiedFlagSuffix);
+			ModifiedFlagSuffix = Toolz.GetProperty(properties, ConfigurationKey.ModifiedFlagSuffix);
 		}
 
 		/// <summary>

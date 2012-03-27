@@ -61,6 +61,11 @@ namespace NHibernate.Cfg
 			return IntegrateWithEnvers(configuration, new AuditEventListener(), new AttributeConfiguration());
 		}
 
+		public static Configuration SetEnversProperty<T>(this Configuration configuration, ConfigurationEntry<T> configurationEntry, T value)
+		{
+			return configuration.SetProperty(configurationEntry.Key, configurationEntry.ToStringFunc(value));
+		}
+
 		private static void AddListeners(Configuration cfg, AuditEventListener auditEventListener)
 		{
 			var listeners = new[] { auditEventListener };

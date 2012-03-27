@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Integration.Basic;
@@ -16,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			base.AddToConfiguration(configuration);
-			configuration.SetProperty(ConfigurationKey.ModifiedFlagSuffix, "_CHANGED");
+			configuration.SetEnversProperty(ConfigurationKey.ModifiedFlagSuffix, "_CHANGED");
 		}
 
 		protected override void Initialize()

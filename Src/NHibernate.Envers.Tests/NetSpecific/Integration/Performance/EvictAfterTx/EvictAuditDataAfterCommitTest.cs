@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Iesi.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
@@ -19,7 +20,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfter
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.AuditStrategy, AuditStrategy.AssemblyQualifiedName);
+			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, AuditStrategy);
 		}
 
 		protected abstract System.Type AuditStrategy { get; }

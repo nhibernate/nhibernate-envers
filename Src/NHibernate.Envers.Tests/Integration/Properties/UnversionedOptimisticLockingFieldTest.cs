@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -11,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.Properties
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.DoNotAuditOptimisticLockingField, "true");
+			configuration.SetEnversProperty(ConfigurationKey.DoNotAuditOptimisticLockingField, true);
 		}
 
 		protected override void Initialize()

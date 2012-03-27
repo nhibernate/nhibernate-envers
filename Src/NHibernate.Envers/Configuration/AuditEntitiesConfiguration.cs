@@ -15,20 +15,20 @@ namespace NHibernate.Envers.Configuration
 		{
 			RevisionInfoEntityAssemblyQualifiedName = revisionInfoEntityName;
 
-			auditTablePrefix = Toolz.GetProperty(properties, ConfigurationKey.AuditTablePrefix, string.Empty);
-			auditTableSuffix = Toolz.GetProperty(properties, ConfigurationKey.AuditTableSuffix, "_AUD");
+			auditTablePrefix = Toolz.GetProperty(properties, ConfigurationKey.AuditTablePrefix);
+			auditTableSuffix = Toolz.GetProperty(properties, ConfigurationKey.AuditTableSuffix);
 			OriginalIdPropName = "originalId";
-			RevisionFieldName = Toolz.GetProperty(properties, ConfigurationKey.RevisionFieldName, "REV");
-			RevisionTypePropName = Toolz.GetProperty(properties, ConfigurationKey.RevisionTypeFieldName, "REVTYPE");
+			RevisionFieldName = Toolz.GetProperty(properties, ConfigurationKey.RevisionFieldName);
+			RevisionTypePropName = Toolz.GetProperty(properties, ConfigurationKey.RevisionTypeFieldName);
 			RevisionTypePropType = "byte";
 
-			RevisionEndFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityEndRevFieldName, "REVEND");
-			AuditStrategyType = System.Type.GetType(Toolz.GetProperty(properties, ConfigurationKey.AuditStrategy, typeof (DefaultAuditStrategy).AssemblyQualifiedName));
+			RevisionEndFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityEndRevFieldName);
+			AuditStrategyType = System.Type.GetType(Toolz.GetProperty(properties, ConfigurationKey.AuditStrategy));
 
-			IsRevisionEndTimestampEnabled = bool.Parse(Toolz.GetProperty(properties,ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp, "false"));
+			IsRevisionEndTimestampEnabled = bool.Parse(Toolz.GetProperty(properties,ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp));
 			if (IsRevisionEndTimestampEnabled)
 			{
-				RevisionEndTimestampFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName, "REVEND_TSTMP");
+				RevisionEndTimestampFieldName = Toolz.GetProperty(properties, ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName);
 			}
 
 			customAuditTablesNames = new Dictionary<string, string>();

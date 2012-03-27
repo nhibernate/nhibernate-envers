@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Engine;
+using NHibernate.Envers.Configuration;
 using NHibernate.Proxy;
 using NHibernate.Util;
 
@@ -84,16 +85,10 @@ namespace NHibernate.Envers.Tools
 			return ret;
 		}
 
-		/**
-		 * @param properties Properties from which to read.
-		 * @param propertyName The name of the property.
-		 * @param defaultValue Default value returned if no value for {@code propertyName} is set.
-		 * @return The value of the property or the default value, if property is not set.
-		 */
-		public static string GetProperty(IDictionary<string, string> properties, string propertyName, string defaultValue)
+		public static string GetProperty<T>(IDictionary<string, string> properties, ConfigurationEntry<T> cfgEntry)
 		{
 			string ret;
-			return properties.TryGetValue(propertyName, out ret) ? ret : defaultValue;
+			return properties.TryGetValue(cfgEntry.Key, out ret) ? ret : cfgEntry.DefaultValueAsString;
 		}
 
 		public static System.Type ResolveDotnetType(string className)

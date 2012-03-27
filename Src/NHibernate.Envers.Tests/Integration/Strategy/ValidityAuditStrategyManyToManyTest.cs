@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Iesi.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
@@ -86,7 +87,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy).AssemblyQualifiedName);
+			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));
 		}
 
 		protected override IEnumerable<string> Mappings
