@@ -1,22 +1,20 @@
 ﻿using System.Collections.Generic;
-using NHibernate.Envers.Strategy;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Configuration
 {
 	public class AuditEntitiesConfiguration 
 	{
-		private readonly string auditTablePrefix;
-		private readonly string auditTableSuffix;
-		private readonly string revisionPropBasePath;
-		private readonly IDictionary<string, string> customAuditTablesNames;
+		private readonly string _auditTablePrefix;
+		private readonly string _auditTableSuffix;
+		private readonly string _revisionPropBasePath;
+		private readonly IDictionary<string, string> _customAuditTablesNames;
 
 		public AuditEntitiesConfiguration(IDictionary<string, string> properties, string revisionInfoEntityName)
 		{
 			RevisionInfoEntityAssemblyQualifiedName = revisionInfoEntityName;
 
-			auditTablePrefix = ConfigurationKey.AuditTablePrefix.ToString(properties);
-			auditTableSuffix = ConfigurationKey.AuditTableSuffix.ToString(properties);
+			_auditTablePrefix = ConfigurationKey.AuditTablePrefix.ToString(properties);
+			_auditTableSuffix = ConfigurationKey.AuditTableSuffix.ToString(properties);
 			OriginalIdPropName = "originalId";
 			RevisionFieldName = ConfigurationKey.RevisionFieldName.ToString(properties);
 			RevisionTypePropName = ConfigurationKey.RevisionTypeFieldName.ToString(properties);
@@ -31,10 +29,10 @@ namespace NHibernate.Envers.Configuration
 				RevisionEndTimestampFieldName = ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName.ToString(properties);
 			}
 
-			customAuditTablesNames = new Dictionary<string, string>();
+			_customAuditTablesNames = new Dictionary<string, string>();
 
 			RevisionNumberPath = OriginalIdPropName + "." + RevisionFieldName + ".id";
-			revisionPropBasePath = OriginalIdPropName + "." + RevisionFieldName + ".";
+			_revisionPropBasePath = OriginalIdPropName + "." + RevisionFieldName + ".";
 		}
 
 
@@ -63,25 +61,25 @@ namespace NHibernate.Envers.Configuration
 		/// <returns>A path to the given property of the revision entity associated with an audit entity.</returns>
 		public string GetRevisionPropPath(string propertyName) 
 		{
-			return revisionPropBasePath + propertyName;
+			return _revisionPropBasePath + propertyName;
 		}
 
 		public void AddCustomAuditTableName(string entityName, string tableName) 
 		{
-			customAuditTablesNames.Add(entityName, tableName);
+			_customAuditTablesNames.Add(entityName, tableName);
 		}
 
 		public string GetAuditEntityName(string entityName) 
 		{
-			return auditTablePrefix + entityName + auditTableSuffix;
+			return _auditTablePrefix + entityName + _auditTableSuffix;
 		}
 
 		public string GetAuditTableName(string entityName, string tableName) 
 		{
 			string dicValue;
-			if(entityName != null && customAuditTablesNames.TryGetValue(entityName, out dicValue))
+			if(entityName != null && _customAuditTablesNames.TryGetValue(entityName, out dicValue))
 				return dicValue;
-			return auditTablePrefix + tableName + auditTableSuffix;
+			return _auditTablePrefix + tableName + _auditTableSuffix;
 		}
 	}
 }
