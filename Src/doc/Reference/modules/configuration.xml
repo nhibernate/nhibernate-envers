@@ -58,6 +58,19 @@
 		<title>Reference</title>
 
 		<para>
+			There are three ways setting property values. All examples below produce the same result
+			(tells Envers to store entity data at delete).
+		</para>
+		<programlisting><![CDATA[//NHibernate Core syntax
+nhConf.SetProperty("nhibernate.envers.store_data_at_delete", "true");
+
+//Using SetEnversProperty extension method with type safe value input
+nhConfiguration.SetEnversProperty(ConfigurationKey.StoreDataAtDelete, true);
+
+//Using ConfigurationKey directly with type safe value input
+ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></programlisting>
+
+		<para>
 			In more detail, below are the properties that you can pass to NHibernate.Cfg.Configuration.
 			The property names are, from code, also available on ConfigurationKey class.
 		</para>
