@@ -199,6 +199,7 @@
     <Compile Include="NetSpecific\Integration\Configuration\Incorrect\NotAuditingBaseClassTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\AttributesOnBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\SetPropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
