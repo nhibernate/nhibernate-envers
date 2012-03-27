@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.Tools
 
 		public static IEnumerable<string> ExtractModProperties(this PersistentClass pc)
 		{
-			return pc.ExtractModProperties(GlobalConfiguration.DefaultModifiedFlagSuffix);
+			return pc.ExtractModProperties("_MOD");
 		}
 
 		public static IEnumerable<string> ExtractModProperties(this PersistentClass pc, string suffix)

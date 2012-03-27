@@ -5,8 +5,6 @@ namespace NHibernate.Envers.Configuration
 {
 	public class GlobalConfiguration 
 	{
-		public const string DefaultModifiedFlagSuffix = "_MOD";
-
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
 			GenerateRevisionsForCollections = ConfigurationKey.RevisionOnCollectionChange.ToBool(properties);
