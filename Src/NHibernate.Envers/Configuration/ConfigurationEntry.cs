@@ -15,18 +15,22 @@ namespace NHibernate.Envers.Configuration
 
 		public string Key { get; private set; }
 
-		public T ToValue(IDictionary<string, string> nhibernateProperties)
+		protected string PropertyValue(IDictionary<string, string> nhibernateProperties)
 		{
 			string stringValue;
 			if (!nhibernateProperties.TryGetValue(Key, out stringValue))
 			{
 				stringValue = _defaultValueAsString;
 			}
-			return ToValue(stringValue);
+			return stringValue;
 		}
 
-		public abstract string ToString(T value);
-		protected abstract T ToValue(string value);
+		public void SetUserValue(Cfg.Configuration nhibernateProperties, T value)
+		{
+			nhibernateProperties.SetProperty(Key, ToString(value));
+		}
+
+		protected abstract string ToString(T value);
 	}
 
 	public class StringConfigurationEntry : ConfigurationEntry<string>
@@ -36,12 +40,12 @@ namespace NHibernate.Envers.Configuration
 		{
 		}
 
-		public override string ToString(string value)
+		public string ToString(IDictionary<string, string> nhibernateProperties)
 		{
-			return value;
+			return PropertyValue(nhibernateProperties);
 		}
 
-		protected override string ToValue(string value)
+		protected override string ToString(string value)
 		{
 			return value;
 		}
@@ -53,14 +57,15 @@ namespace NHibernate.Envers.Configuration
 		{
 		}
 
-		public override string ToString(bool value)
+		public bool ToBool(IDictionary<string, string> nhibernateProperties)
 		{
-			return value ? "true" : "false";
+			var propAsString = PropertyValue(nhibernateProperties);
+			return "true".Equals(propAsString, StringComparison.InvariantCultureIgnoreCase);
 		}
 
-		protected override bool ToValue(string value)
+		protected override string ToString(bool value)
 		{
-			return "true".Equals(value, StringComparison.OrdinalIgnoreCase);
+			return value ? "true" : "false";
 		}
 	}
 
@@ -70,14 +75,21 @@ namespace NHibernate.Envers.Configuration
 		{
 		}
 
-		public override string ToString(System.Type value)
+		public T ToInstance<T>(IDictionary<string, string> nhibernateProperties)
 		{
-			return value.AssemblyQualifiedName;
+			var propAsType = ToType(nhibernateProperties);
+			return (T)Activator.CreateInstance(propAsType);
 		}
 
-		protected override System.Type ToValue(string value)
+		public System.Type ToType(IDictionary<string, string> nhibernateProperties)
 		{
-			return System.Type.GetType(value, true, true);
+			var propAsString = PropertyValue(nhibernateProperties);
+			return System.Type.GetType(propAsString, true, true);
+		}
+
+		protected override string ToString(System.Type value)
+		{
+			return value.AssemblyQualifiedName;
 		}
 	}
 }
