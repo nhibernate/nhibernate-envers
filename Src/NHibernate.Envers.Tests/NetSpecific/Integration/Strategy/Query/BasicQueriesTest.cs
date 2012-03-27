@@ -10,7 +10,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.Query
 {
 	[TestFixture]
-	public class BasicQueries : TestBase
+	public class BasicQueriesTest : TestBase
 	{
 		private int id;
 
