@@ -6,19 +6,18 @@ namespace NHibernate.Envers.Configuration
 	public abstract class ConfigurationEntry<T>
 	{
 		private readonly string _defaultValueAsString;
+		private readonly string _key;
 
 		protected ConfigurationEntry(string key, string defaultValueAsString)
 		{
-			Key = key;
+			_key = key;
 			_defaultValueAsString = defaultValueAsString;
 		}
-
-		public string Key { get; private set; }
 
 		protected string PropertyValue(IDictionary<string, string> nhibernateProperties)
 		{
 			string stringValue;
-			if (!nhibernateProperties.TryGetValue(Key, out stringValue))
+			if (!nhibernateProperties.TryGetValue(_key, out stringValue))
 			{
 				stringValue = _defaultValueAsString;
 			}
@@ -27,7 +26,7 @@ namespace NHibernate.Envers.Configuration
 
 		public void SetUserValue(Cfg.Configuration nhibernateProperties, T value)
 		{
-			nhibernateProperties.SetProperty(Key, ToString(value));
+			nhibernateProperties.SetProperty(_key, ToString(value));
 		}
 
 		protected abstract string ToString(T value);
