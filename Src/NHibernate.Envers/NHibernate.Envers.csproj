@@ -71,6 +71,7 @@
     <Compile Include="Configuration\Attributes\AuditOverrideAttribute.cs" />
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="Configuration\Attributes\AuditTableAttribute.cs" />
+    <Compile Include="Configuration\BoolConfigurationEntry.cs" />
     <Compile Include="Configuration\ConfigurationKey.cs" />
     <Compile Include="Configuration\Fluent\BaseFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
     <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
     <Compile Include="Configuration\Store\IMetaDataAdder.cs" />
+    <Compile Include="Configuration\StringConfigurationEntry.cs" />
+    <Compile Include="Configuration\TypeConfigurationEntry.cs" />
     <Compile Include="DefaultTrackingModifiedEntitiesRevisionEntity.cs" />
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
