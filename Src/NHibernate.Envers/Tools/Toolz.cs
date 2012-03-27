@@ -85,12 +85,6 @@ namespace NHibernate.Envers.Tools
 			return ret;
 		}
 
-		public static string GetProperty<T>(IDictionary<string, string> properties, ConfigurationEntry<T> cfgEntry)
-		{
-			string ret;
-			return properties.TryGetValue(cfgEntry.Key, out ret) ? ret : cfgEntry.DefaultValueAsString;
-		}
-
 		public static System.Type ResolveDotnetType(string className)
 		{
 			return ReflectHelper.ClassForFullName(className);

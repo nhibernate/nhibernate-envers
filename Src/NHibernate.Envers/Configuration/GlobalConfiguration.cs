@@ -11,29 +11,29 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
-			var generateRevisionsForCollectionsStr = Toolz.GetProperty(properties, ConfigurationKey.RevisionOnCollectionChange);
+			var generateRevisionsForCollectionsStr = ConfigurationKey.RevisionOnCollectionChange.PropertyValue(properties);
 			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
 
-			var ignoreOptimisticLockingPropertyStr = Toolz.GetProperty(properties, ConfigurationKey.DoNotAuditOptimisticLockingField);
+			var ignoreOptimisticLockingPropertyStr = ConfigurationKey.DoNotAuditOptimisticLockingField.PropertyValue(properties);
 			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
 
-			var storeDataDeletedEntityStr = Toolz.GetProperty(properties, ConfigurationKey.StoreDataAtDelete);
+			var storeDataDeletedEntityStr = ConfigurationKey.StoreDataAtDelete.PropertyValue(properties);
 			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
 
-			var trackEntityChangesStr = Toolz.GetProperty(properties, ConfigurationKey.TrackEntitiesChangedInRevision);
+			var trackEntityChangesStr = ConfigurationKey.TrackEntitiesChangedInRevision.PropertyValue(properties);
 			IsTrackEntitiesChangedInRevisionEnabled = Boolean.Parse(trackEntityChangesStr);
 
-			DefaultSchemaName = Toolz.GetProperty(properties, ConfigurationKey.DefaultSchema);
-			DefaultCatalogName = Toolz.GetProperty(properties, ConfigurationKey.DefaultCatalog);
+			DefaultSchemaName = ConfigurationKey.DefaultSchema.PropertyValue(properties);
+			DefaultCatalogName = ConfigurationKey.DefaultCatalog.PropertyValue(properties);
 
-			var collectionProxyMapperFactoryTypeString = Toolz.GetProperty(properties, ConfigurationKey.CollectionProxyMapperFactory);
+			var collectionProxyMapperFactoryTypeString = ConfigurationKey.CollectionProxyMapperFactory.PropertyValue(properties);
 			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
 			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
 			CorrelatedSubqueryOperator = "=";
 
-			var usingModifiedFlagStr = Toolz.GetProperty(properties, ConfigurationKey.GlobalWithModifiedFlag);
+			var usingModifiedFlagStr = ConfigurationKey.GlobalWithModifiedFlag.PropertyValue(properties);
 			IsGlobalWithModifiedFlag = Boolean.Parse(usingModifiedFlagStr);
-			ModifiedFlagSuffix = Toolz.GetProperty(properties, ConfigurationKey.ModifiedFlagSuffix);
+			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.PropertyValue(properties);
 		}
 
 		/// <summary>

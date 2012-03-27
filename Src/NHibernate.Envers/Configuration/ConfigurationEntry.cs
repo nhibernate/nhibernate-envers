@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -14,5 +15,11 @@ namespace NHibernate.Envers.Configuration
 		public string Key { get; private set; }
 		public string DefaultValueAsString { get; private set; }
 		public Func<T, string> ToStringFunc { get; private set; }
+
+		public string PropertyValue(IDictionary<string, string> nhibernateProperties)
+		{
+			string ret;
+			return nhibernateProperties.TryGetValue(Key, out ret) ? ret : DefaultValueAsString;
+		}
 	}
 }
