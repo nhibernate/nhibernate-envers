@@ -61,6 +61,14 @@ namespace NHibernate.Cfg
 			return IntegrateWithEnvers(configuration, new AuditEventListener(), new AttributeConfiguration());
 		}
 
+		/// <summary>
+		/// A type safe way setting Envers properties on <see cref="Cfg.Configuration"/> object.
+		/// </summary>
+		/// <typeparam name="T">The type of the value</typeparam>
+		/// <param name="configuration">The <see cref="Cfg.Configuration"/> object</param>
+		/// <param name="configurationEntry">The configuration entry</param>
+		/// <param name="value">The value set by user</param>
+		/// <returns></returns>
 		public static Configuration SetEnversProperty<T>(this Configuration configuration, ConfigurationEntry<T> configurationEntry, T value)
 		{
 			return configuration.SetProperty(configurationEntry.Key, configurationEntry.ToStringFunc(value));
