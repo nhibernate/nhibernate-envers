@@ -71,7 +71,7 @@ namespace NHibernate.Cfg
 		/// <returns></returns>
 		public static Configuration SetEnversProperty<T>(this Configuration configuration, ConfigurationEntry<T> configurationEntry, T value)
 		{
-			return configuration.SetProperty(configurationEntry.Key, configurationEntry.ToStringFunc(value));
+			return configuration.SetProperty(configurationEntry.Key, configurationEntry.ToString(value));
 		}
 
 		private static void AddListeners(Configuration cfg, AuditEventListener auditEventListener)

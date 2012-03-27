@@ -15,20 +15,20 @@ namespace NHibernate.Envers.Configuration
 		{
 			RevisionInfoEntityAssemblyQualifiedName = revisionInfoEntityName;
 
-			auditTablePrefix = ConfigurationKey.AuditTablePrefix.PropertyValue(properties);
-			auditTableSuffix = ConfigurationKey.AuditTableSuffix.PropertyValue(properties);
+			auditTablePrefix = ConfigurationKey.AuditTablePrefix.ToValue(properties);
+			auditTableSuffix = ConfigurationKey.AuditTableSuffix.ToValue(properties);
 			OriginalIdPropName = "originalId";
-			RevisionFieldName = ConfigurationKey.RevisionFieldName.PropertyValue(properties);
-			RevisionTypePropName = ConfigurationKey.RevisionTypeFieldName.PropertyValue(properties);
+			RevisionFieldName = ConfigurationKey.RevisionFieldName.ToValue(properties);
+			RevisionTypePropName = ConfigurationKey.RevisionTypeFieldName.ToValue(properties);
 			RevisionTypePropType = "byte";
 
-			RevisionEndFieldName = ConfigurationKey.AuditStrategyValidityEndRevFieldName.PropertyValue(properties);
-			AuditStrategyType = System.Type.GetType(ConfigurationKey.AuditStrategy.PropertyValue(properties));
+			RevisionEndFieldName = ConfigurationKey.AuditStrategyValidityEndRevFieldName.ToValue(properties);
+			AuditStrategyType = ConfigurationKey.AuditStrategy.ToValue(properties);
 
-			IsRevisionEndTimestampEnabled = bool.Parse(ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp.PropertyValue(properties));
+			IsRevisionEndTimestampEnabled = ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp.ToValue(properties);
 			if (IsRevisionEndTimestampEnabled)
 			{
-				RevisionEndTimestampFieldName = ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName.PropertyValue(properties);
+				RevisionEndTimestampFieldName = ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName.ToValue(properties);
 			}
 
 			customAuditTablesNames = new Dictionary<string, string>();

@@ -11,29 +11,19 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration(IDictionary<string,string> properties) 
 		{
-			var generateRevisionsForCollectionsStr = ConfigurationKey.RevisionOnCollectionChange.PropertyValue(properties);
-			GenerateRevisionsForCollections = Boolean.Parse(generateRevisionsForCollectionsStr);
+			GenerateRevisionsForCollections = ConfigurationKey.RevisionOnCollectionChange.ToValue(properties);
+			DoNotAuditOptimisticLockingField = ConfigurationKey.DoNotAuditOptimisticLockingField.ToValue(properties);
+			StoreDataAtDelete = ConfigurationKey.StoreDataAtDelete.ToValue(properties);
+			IsTrackEntitiesChangedInRevisionEnabled = ConfigurationKey.TrackEntitiesChangedInRevision.ToValue(properties);
+			DefaultSchemaName = ConfigurationKey.DefaultSchema.ToValue(properties);
+			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToValue(properties);
 
-			var ignoreOptimisticLockingPropertyStr = ConfigurationKey.DoNotAuditOptimisticLockingField.PropertyValue(properties);
-			DoNotAuditOptimisticLockingField = Boolean.Parse(ignoreOptimisticLockingPropertyStr);
-
-			var storeDataDeletedEntityStr = ConfigurationKey.StoreDataAtDelete.PropertyValue(properties);
-			StoreDataAtDelete = Boolean.Parse(storeDataDeletedEntityStr);
-
-			var trackEntityChangesStr = ConfigurationKey.TrackEntitiesChangedInRevision.PropertyValue(properties);
-			IsTrackEntitiesChangedInRevisionEnabled = Boolean.Parse(trackEntityChangesStr);
-
-			DefaultSchemaName = ConfigurationKey.DefaultSchema.PropertyValue(properties);
-			DefaultCatalogName = ConfigurationKey.DefaultCatalog.PropertyValue(properties);
-
-			var collectionProxyMapperFactoryTypeString = ConfigurationKey.CollectionProxyMapperFactory.PropertyValue(properties);
-			var collectionProxyMapperFactoryType = System.Type.GetType(collectionProxyMapperFactoryTypeString, true, true);
+			var collectionProxyMapperFactoryType = ConfigurationKey.CollectionProxyMapperFactory.ToValue(properties);
 			CollectionProxyMapperFactory = (ICollectionProxyMapperFactory) Activator.CreateInstance(collectionProxyMapperFactoryType);
 			CorrelatedSubqueryOperator = "=";
 
-			var usingModifiedFlagStr = ConfigurationKey.GlobalWithModifiedFlag.PropertyValue(properties);
-			IsGlobalWithModifiedFlag = Boolean.Parse(usingModifiedFlagStr);
-			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.PropertyValue(properties);
+			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToValue(properties);
+			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToValue(properties);
 		}
 
 		/// <summary>
