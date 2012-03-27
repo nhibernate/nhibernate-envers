@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -10,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 	{
 	   protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.RevisionOnCollectionChange, RevisionOnCollectionChange);
+			configuration.SetEnversProperty(ConfigurationKey.RevisionOnCollectionChange, RevisionOnCollectionChange);
 		}
 
 		protected override void Initialize()
@@ -50,7 +51,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 		}
 
 		private int PersonId { get; set; }
-		protected abstract string RevisionOnCollectionChange { get; }
+		protected abstract bool RevisionOnCollectionChange { get; }
 		protected abstract IEnumerable<long> ExpectedPersonRevisions { get; }
 	}
 }

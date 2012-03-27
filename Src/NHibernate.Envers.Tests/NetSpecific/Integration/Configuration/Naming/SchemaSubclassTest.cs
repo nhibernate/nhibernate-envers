@@ -18,8 +18,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Naming
 			var assembly = GetType().Assembly;
 			var assemblyName = assembly.GetName().Name;
 			configuration = new Cfg.Configuration()
-							.SetProperty(ConfigurationKey.DefaultSchema, enversSchema)
-							.SetProperty(ConfigurationKey.DefaultCatalog, enversCatalog)
+							.SetEnversProperty(ConfigurationKey.DefaultSchema, enversSchema)
+							.SetEnversProperty(ConfigurationKey.DefaultCatalog, enversCatalog)
 							.Configure()
 							.AddResource(assemblyName + ".NetSpecific.Integration.Configuration.Naming.Mapping.hbm.xml", assembly)
 							.IntegrateWithEnvers();

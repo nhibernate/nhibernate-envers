@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities;
@@ -15,7 +16,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.Query
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.AuditStrategy, typeof (ValidityAuditStrategy).FullName);
+			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));
 		}
 
 		protected override void Initialize()

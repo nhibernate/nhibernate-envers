@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
@@ -56,7 +57,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.RevisionOnCollectionChange, "false");
+			configuration.SetEnversProperty(ConfigurationKey.RevisionOnCollectionChange, false);
 		}
 
 		protected override IEnumerable<string> Mappings

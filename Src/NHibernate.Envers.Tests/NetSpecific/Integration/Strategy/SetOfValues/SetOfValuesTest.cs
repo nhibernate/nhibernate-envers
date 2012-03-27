@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Strategy;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			// Uses ValidityAuditStrategy
-			configuration.SetProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy).AssemblyQualifiedName);
+			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));
 		}
 
 		protected override void Initialize()

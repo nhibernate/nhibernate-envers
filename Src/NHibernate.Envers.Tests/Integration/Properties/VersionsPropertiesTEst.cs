@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -11,10 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Properties
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.AuditTablePrefix, "VP_");
-			configuration.SetProperty(ConfigurationKey.AuditTableSuffix, "_VS");
-			configuration.SetProperty(ConfigurationKey.RevisionFieldName, "ver_rev");
-			configuration.SetProperty(ConfigurationKey.RevisionTypeFieldName, "ver_rev_type");
+			configuration.SetEnversProperty(ConfigurationKey.AuditTablePrefix, "VP_");
+			configuration.SetEnversProperty(ConfigurationKey.AuditTableSuffix, "_VS");
+			configuration.SetEnversProperty(ConfigurationKey.RevisionFieldName, "ver_rev");
+			configuration.SetEnversProperty(ConfigurationKey.RevisionTypeFieldName, "ver_rev_type");
 		}
 
 		protected override void Initialize()

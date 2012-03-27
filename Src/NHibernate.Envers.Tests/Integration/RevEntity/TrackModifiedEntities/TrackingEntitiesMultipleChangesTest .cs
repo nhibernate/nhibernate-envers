@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
@@ -83,7 +84,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetProperty(ConfigurationKey.TrackEntitiesChangedInRevision, "true");
+			configuration.SetEnversProperty(ConfigurationKey.TrackEntitiesChangedInRevision, true);
 		}
 	}
 }
