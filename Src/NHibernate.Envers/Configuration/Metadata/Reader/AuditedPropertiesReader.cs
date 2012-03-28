@@ -327,13 +327,13 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			propertyData.BeanName = mappedPropertyName;
 			propertyData.AccessType = accessType;
 
-			AddPropertyJoinTables(property, propertyData);
-			AddPropertyAuditingOverrides(property, propertyData);
-			if (!ProcessPropertyAuditingOverrides(property, propertyData))
+			addPropertyJoinTables(property, propertyData);
+			addPropertyAuditingOverrides(property, propertyData);
+			if (!processPropertyAuditingOverrides(property, propertyData))
 			{
 				return false; // not audited due to AuditOverride annotation
 			}
-			SetPropertyAuditMappedBy(property, propertyData);
+			setPropertyAuditMappedBy(property, propertyData);
 
 			return true;
 		}
@@ -362,7 +362,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return _globalCfg.IsGlobalWithModifiedFlag || aud.WithModifiedFlag;
 		}
 
-		private void SetPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)
+		private void setPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)
 		{
 
 			var auditMappedBy = _metaDataStore.MemberMeta<AuditMappedByAttribute>(property);
@@ -376,7 +376,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 		}
 
-		private void AddPropertyJoinTables(MemberInfo property, PropertyAuditingData propertyData)
+		private void addPropertyJoinTables(MemberInfo property, PropertyAuditingData propertyData)
 		{
 			// first set the join table based on the AuditJoinTable annotation
 			var joinTable = _metaDataStore.MemberMeta<AuditJoinTableAttribute>(property);
@@ -389,7 +389,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 * @param property the property being processed
 		 * @param propertyData the Envers auditing data for this property
 		 */
-		private void AddPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
+		private void addPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
 			var annotationOverride = _metaDataStore.MemberMeta<AuditOverrideAttribute>(property);
 			if (annotationOverride != null)
@@ -408,7 +408,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 *            the Envers auditing data for this property
 		 * @return {@code false} if isAudited() of the override annotation was set to
 		 */
-		private bool ProcessPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
+		private bool processPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
 			var audPropHolderAsComponentAudData = _auditedPropertiesHolder as ComponentAuditingData;
 			// if this property is part of a component, process all override annotations
