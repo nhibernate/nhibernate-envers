@@ -42,8 +42,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			var typ = pc.MappedClass;
 
-			var defaultStore = getDefaultAudited(typ);
-			if (defaultStore != ModificationStore.None)
+			if (defaultAudited(typ))
 			{
 				_auditData.SetDefaultAudited(true);
 			}
@@ -59,11 +58,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return _auditData;
 		}
 
-		private ModificationStore getDefaultAudited(System.Type typ) 
+		private bool defaultAudited(System.Type typ) 
 		{
 			var defaultAudited = _metaDataStore.ClassMeta<AuditedAttribute>(typ);
 
-			return defaultAudited != null ? ModificationStore.Full : ModificationStore.None;
+			return defaultAudited != null;
 		}
 
 		private void addAuditTable(System.Type typ)
