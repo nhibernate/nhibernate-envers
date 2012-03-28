@@ -350,7 +350,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 			if (aud != null)
 			{
-				propertyData.Store = ModificationStore.Full;
 				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
 				propertyData.UsingModifiedFlag = checkUsingModifiedFlag(aud);
 				return true;

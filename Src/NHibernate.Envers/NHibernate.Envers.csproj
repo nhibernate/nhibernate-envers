@@ -218,7 +218,6 @@
     <Compile Include="Exceptions\RevisionDoesNotExistException.cs" />
     <Compile Include="IAuditReader.cs" />
     <Compile Include="IRevisionListener.cs" />
-    <Compile Include="Configuration\ModificationStore.cs" />
     <Compile Include="Configuration\Attributes\NotAuditedAttribute.cs" />
     <Compile Include="Query\AuditEntity.cs" />
     <Compile Include="Query\AuditQueryCreator.cs" />

@@ -25,7 +25,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			// Checking if this property is explicitly audited or if all properties are.
 			var aud = _metaDataStore.MemberMeta<AuditedAttribute>(property);
-			propertyData.Store = ModificationStore.Full;
 			if (aud != null)
 			{
 				propertyData.RelationTargetAuditMode = aud.TargetAuditMode;
