@@ -387,7 +387,7 @@
     <Compile Include="Integration\Inheritance\Entities\ChildPrimaryKeyJoinEntity.cs" />
     <Compile Include="Integration\Inheritance\Entities\ChildNotIngEntity.cs" />
     <Compile Include="Integration\Inheritance\Entities\ParentIngEntity.cs" />
-    <Compile Include="Integration\Inheritance\Joined\Relation\ParentReferencingChildTest .cs" />
+    <Compile Include="Integration\Inheritance\Joined\Relation\ParentReferencingChildTest.cs" />
     <Compile Include="Integration\Inheritance\Joined\Relation\PolymorphicCollectionTest.cs" />
     <Compile Include="Integration\Inheritance\Entities\ReferencedToParentEntity.cs" />
     <Compile Include="Integration\Inheritance\Joined\Relation\Unidirectional\AbstractContainedEntity.cs" />
