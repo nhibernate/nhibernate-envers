@@ -12,10 +12,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		public AuditedAttribute()
 		{
 			TargetAuditMode = RelationTargetAuditMode.Audited;
-			ModStore = ModificationStore.Full;
 		}
-
-		public ModificationStore ModStore { get; private set; }
 
 		/// <summary>
 		/// Specifies if the entity that is the target of the relation should be audited or not. If not, then when
