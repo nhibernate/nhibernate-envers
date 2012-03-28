@@ -33,9 +33,9 @@ namespace NHibernate.Envers.Configuration
 			_globalCfg = globalCfg;
 			_metaDataStore = metaDataStore;
 			revisionInfoEntityName = "NHibernate.Envers.DefaultRevisionEntity";
-			revisionInfoIdData = new PropertyData("Id", "Id", "property", ModificationStore.None);
-			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property", ModificationStore.None);
-			modifiedEntityNamesData = new PropertyData("ModifiedEntityNames", "ModifiedEntityNames", "property", ModificationStore.None);
+			revisionInfoIdData = new PropertyData("Id", "Id", "property");
+			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property");
+			modifiedEntityNamesData = new PropertyData("ModifiedEntityNames", "ModifiedEntityNames", "property");
 			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
 			revisionPropType = typeof(int);
 		}
@@ -131,7 +131,7 @@ namespace NHibernate.Envers.Configuration
 					if (typeof(DateTime) == revisionTimestampType ||
 							typeof(long) == revisionTimestampType)
 					{
-						revisionInfoTimestampData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
+						revisionInfoTimestampData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						revisionTimestampFound = true;
 					}
 					else
@@ -157,7 +157,7 @@ namespace NHibernate.Envers.Configuration
 						throw new MappingException("Only one property may be annotated with ModifiedEntityNamesAttribute!");
 					if (property.Type.ReturnedClass == typeof(ISet<string>))
 					{
-						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
+						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						found = true;
 					}
 					else
@@ -187,12 +187,12 @@ namespace NHibernate.Envers.Configuration
 					var revNrType = property.Type.ReturnedClass;
 					if (revNrType == typeof(int))
 					{
-						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
+						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						revisionNumberFound = true;
 					}
 					else if (revNrType == typeof(long))
 					{
-						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName, ModificationStore.None);
+						revisionInfoIdData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						revisionNumberFound = true;
 
 						// The default is integer

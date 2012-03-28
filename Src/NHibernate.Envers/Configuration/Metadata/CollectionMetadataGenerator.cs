@@ -155,14 +155,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 						relMapper,
 					// The mapper will only be used to map from entity to map, so no need to provide other details
 					// when constructing the PropertyData.
-						new PropertyData(auditMappedBy, null, null, ModificationStore.None),
+						new PropertyData(auditMappedBy, null, null),
 						referencedEntityName, false);
 
 				// Checking if there's an index defined. If so, adding a mapper for it.
 				if (propertyAuditingData.PositionMappedBy != null)
 				{
 					var positionMappedBy = propertyAuditingData.PositionMappedBy;
-					fakeBidirectionalRelationIndexMapper = new SinglePropertyMapper(new PropertyData(positionMappedBy, null, null, ModificationStore.None));
+					fakeBidirectionalRelationIndexMapper = new SinglePropertyMapper(new PropertyData(positionMappedBy, null, null));
 
 					// Also, overwriting the index component data to properly read the index.
 					indexComponentData = new MiddleComponentData(new MiddleStraightComponentMapper(positionMappedBy), 0);
@@ -435,7 +435,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			// Last but one parameter: collection components are always insertable
 			var mapped = mainGenerator.BasicMetadataGenerator.AddBasic(xmlMapping,
-																		new PropertyAuditingData(prefix, "field", ModificationStore.Full, RelationTargetAuditMode.Audited, null, null, false),
+																		new PropertyAuditingData(prefix, "field", RelationTargetAuditMode.Audited, null, null, false),
 																		value, null, true, true);
 
 			if (mapped) 
