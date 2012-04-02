@@ -43,7 +43,6 @@ namespace NHibernate.Envers.Reader
 		public object Find(string entityName, object primaryKey, long revision)
 		{
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 
 			if (!verCfg.EntCfg.IsVersioned(entityName))
@@ -95,7 +94,6 @@ namespace NHibernate.Envers.Reader
 
 		public DateTime GetRevisionDate(long revision)
 		{
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 
 			var query = verCfg.RevisionInfoQueryCreator.RevisionDateQuery(Session, revision);
@@ -112,8 +110,6 @@ namespace NHibernate.Envers.Reader
 
 		public long GetRevisionNumberForDate(DateTime date)
 		{
-			ArgumentsTools.CheckNotNull(date, "Date of revision");
-
 			var query = verCfg.RevisionInfoQueryCreator.RevisionNumberForDateQuery(Session, date);
 
 			var res = query.UniqueResult();
@@ -167,7 +163,6 @@ namespace NHibernate.Envers.Reader
 		{
 			foreach (var revision in revisions)
 			{
-				ArgumentsTools.CheckNotNull(revision, "Entity revision");
 				ArgumentsTools.CheckPositive(revision, "Entity revision");
 			}
 

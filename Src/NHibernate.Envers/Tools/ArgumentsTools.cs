@@ -4,7 +4,7 @@ namespace NHibernate.Envers.Tools
 {
 	public static class ArgumentsTools
 	{
-		public static void CheckNotNull(object o, string paramName)
+		public static void CheckNotNull<T>(T o, string paramName) where T : class
 		{
 			if (o == null)
 			{
