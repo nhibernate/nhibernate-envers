@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Engine;
-using NHibernate.Envers.Configuration;
 using NHibernate.Proxy;
 using NHibernate.Util;
 
@@ -11,13 +10,13 @@ namespace NHibernate.Envers.Tools
 	{
 		public static bool EntitiesEqual(ISessionImplementor session, object obj1, object obj2) 
 		{
-			var id1 = GetIdentifier(session, obj1);
-			var id2 = GetIdentifier(session, obj2);
+			var id1 = getIdentifier(session, obj1);
+			var id2 = getIdentifier(session, obj2);
 
 			return ObjectsEqual(id1, id2);
 		}
 
-		private static object GetIdentifier(ISessionImplementor session, object obj) 
+		private static object getIdentifier(ISessionImplementor session, object obj) 
 		{
 			if (obj == null) 
 			{
@@ -52,20 +51,6 @@ namespace NHibernate.Envers.Tools
 			}
 
 			return obj1.Equals(obj2);
-		}
-
-
-		public static bool IteratorsContentEqual(IEnumerator iter1, IEnumerator iter2)
-		{
-			while (iter1.MoveNext() && iter2.MoveNext()) 
-			{
-				if (!iter1.Current.Equals(iter2.Current)) 
-				{
-					return false;
-				}
-			}
-
-			return !iter1.MoveNext() && !iter2.MoveNext();
 		}
 
 		/**

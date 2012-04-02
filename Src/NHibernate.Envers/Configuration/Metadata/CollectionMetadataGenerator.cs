@@ -636,8 +636,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
-				if (Toolz.IteratorsContentEqual(property.Value.ColumnIterator.GetEnumerator(),
-							collectionValue.Key.ColumnIterator.GetEnumerator()))
+				//should probably not care if order is same...
+				if(property.Value.ColumnIterator.SequenceEqual(collectionValue.Key.ColumnIterator))
 				{
 					return property.Name;
 				}
