@@ -84,7 +84,6 @@ namespace NHibernate.Envers.Query
 		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
 		public IEntityAuditQuery<TEntity> ForEntitiesAtRevision<TEntity>(long revision) where TEntity : class
 		{
-			ArgumentsTools.CheckNotNull(revision, "Entity revision");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 			return new AllEntitiesAtRevisionQuery<TEntity>(auditCfg, auditReaderImplementor, revision);
 		}
