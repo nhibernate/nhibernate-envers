@@ -313,17 +313,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private void AddJoins(PersistentClass pc, ICompositeMapperBuilder currentMapper, ClassAuditingData auditingData,
+		private void addJoins(PersistentClass pc, ICompositeMapperBuilder currentMapper, ClassAuditingData auditingData,
 							  string entityName, EntityXmlMappingData xmlMappingData, bool firstPass)
 		{
+			var entityJoin = entitiesJoins[entityName];
 			foreach (var join in pc.JoinIterator)
 			{
-				var joinElement = entitiesJoins[entityName][join];
-
-				if (joinElement != null)
+				XmlElement joinElement;
+				if (entityJoin.TryGetValue(join, out joinElement))
 				{
-					AddProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName,
-							xmlMappingData, firstPass);
+					AddProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName, xmlMappingData, firstPass);
 				}
 			}
 		}
@@ -483,7 +482,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Creating and mapping joins (first pass)
 			CreateJoins(pc, class_mapping, auditingData);
-			AddJoins(pc, propertyMapper, auditingData, pc.EntityName, xmlMappingData, true);
+			addJoins(pc, propertyMapper, auditingData, pc.EntityName, xmlMappingData, true);
 
 			// Storing the generated configuration
 			var entityCfg = new EntityConfiguration(auditEntityName, pc.ClassName, idMapper,
@@ -509,7 +508,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					propertyMapper, auditingData, entityName, xmlMappingData, false);
 
 			// Mapping joins (second pass)
-			AddJoins(pc, propertyMapper, auditingData, entityName, xmlMappingData, false);
+			addJoins(pc, propertyMapper, auditingData, entityName, xmlMappingData, false);
 		}
 
 		// Getters for generators and configuration
