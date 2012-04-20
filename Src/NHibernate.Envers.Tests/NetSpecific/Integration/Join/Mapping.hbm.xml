@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Join">
+	<class name="NotAudited">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+	</class>
+	<class name="Audited">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Number"/>
+		<join table="jointable">
+			<key column="C_ID"/>
+			<set name="XCollection" cascade="all">
+				<key column="toA_ID"/>
+				<one-to-many class="NotAudited"/>
+			</set>
+		</join>
+	</class>
+</hibernate-mapping>
