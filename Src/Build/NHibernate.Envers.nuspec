@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
-  <metadata>
-    <id>NHibernate.Envers</id>
-    <version>1.1.0-CR1</version>
-    <authors>NHibernate community, Hibernate community</authors>
-    <summary>Audit trail integrated with NHibernate.</summary>
-    <description>
-      Powerful audit trail integrated with NHibernate.
-    </description>
-    <language>en-US</language>
-    <tags>Audit, NHibernate, Envers, History</tags>
-    <dependencies>
-      <dependency id="NHibernate" version="3.3.0-CR1" />
-      <dependency id="Iesi.Collections" version="1.0.1" />
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="Output\Deploy\NHibernate.Envers.dll" target="lib\Net35" />
-    <file src="Output\Deploy\NHibernate.Envers.pdb" target="lib\Net35" />
-    <file src="Output\Deploy\NHibernate.Envers.xml" target="lib\Net35" />
-	<file src="..\nhibernate.envers\**\*.cs" target="src"/>
-  </files>
+	<metadata>
+		<id>NHibernate.Envers</id>
+		<version>1.1.0</version>
+		<authors>NHibernate community, Hibernate community</authors>
+		<summary>Audit trail integrated with NHibernate.</summary>
+		<description>
+			Powerful audit trail integrated with NHibernate.
+		</description>
+		<language>en-US</language>
+		<tags>Audit, NHibernate, Envers, History, Auditing</tags>
+		<projectUrl>https://bitbucket.org/RogerKratz/nhibernate.envers</projectUrl>
+		<dependencies>
+			<dependency id="NHibernate" version="3.3.0" />
+			<dependency id="Iesi.Collections" version="1.0.1" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Output\Deploy\NHibernate.Envers.dll" target="lib\Net35" />
+		<file src="Output\Deploy\NHibernate.Envers.pdb" target="lib\Net35" />
+		<file src="Output\Deploy\NHibernate.Envers.xml" target="lib\Net35" />
+		<file src="..\nhibernate.envers\**\*.cs" target="src"/>
+	</files>
 </package>
