@@ -1,4 +1,4 @@
 1. Create an empty database
-2. Copy hibernate.cfg.xml.template and rename it to hibernate.cfg.xml
-3. Modify this file to point to your database
+2. Build NHibernate.Envers.Test
+3. Modify hibernate.cfg.xml to point to your database
 4. Run the tests
