@@ -1,5 +1,13 @@
 === 1.1 GA (v 1.1.0.2), ???, NH 3.3 GA ===
 
+** Bug
+* [NHE-66] - Support for custom PrimitiveType classes
+* [NHE-69] - Non audited collection throws if in a <join>
+
+** Improvement
+* [NHE-67] - Type safe way configuration of properties
+
+
 *** Breaking changes ***
 *
 * -- ConfigurationKey --
