@@ -9,11 +9,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		private readonly IComparer<T> _comparer;
 
-		public SortedSetCollectionMapper(CommonCollectionMapperData commonCollectionMapperData, 
+		public SortedSetCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
+													CommonCollectionMapperData commonCollectionMapperData, 
 													System.Type proxyType, 
 													MiddleComponentData elementComponentData,
 													IComparer<T> comparer) 
-			: base(commonCollectionMapperData, proxyType, elementComponentData)
+			: base(collectionProxyFactory, commonCollectionMapperData, proxyType, elementComponentData)
 		{
 			_comparer = comparer;
 		}

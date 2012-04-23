@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Proxy.DynamicProxy;
 
-namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
+namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
 	[Serializable]
-	public class CollectionProxyInterceptor : Proxy.DynamicProxy.IInterceptor
+	public class CollectionProxyInterceptor : NHibernate.Proxy.DynamicProxy.IInterceptor
 	{
 		[NonSerialized]
 		private readonly IInitializor _initializor;

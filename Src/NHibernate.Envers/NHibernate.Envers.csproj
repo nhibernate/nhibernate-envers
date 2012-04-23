@@ -119,11 +119,14 @@
     <Compile Include="Configuration\TypeConfigurationEntry.cs" />
     <Compile Include="DefaultTrackingModifiedEntitiesRevisionEntity.cs" />
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />
-    <Compile Include="Entities\Mapper\Relation\Lazy\CollectionProxyInterceptor.cs" />
+    <Compile Include="Entities\Mapper\Relation\ICollectionProxyFactory.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedSetCollectionInitializor.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\CollectionProxyFactory.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\CollectionProxyInterceptor.cs" />
     <Compile Include="Entities\Mapper\Relation\OneToOnePrimaryKeyJoinColumnMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\QueryConstants.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedMapCollectionMapper.cs" />
@@ -171,7 +174,6 @@
     <Compile Include="Entities\Mapper\ISimpleMapperBuilder.cs" />
     <Compile Include="Entities\Mapper\MultiPropertyMapper.cs" />
     <Compile Include="Entities\Mapper\PersistentCollectionChangeData.cs" />
-    <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\AbstractDelegateSessionImplementor.cs" />
     <Compile Include="Entities\Mapper\Relation\BagCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\BagCollectionInitializor.cs" />
