@@ -1,27 +1,27 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Iesi.Collections;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Reflection;
-using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
+		private readonly ICollectionProxyFactory _collectionProxyFactory;
 		private readonly System.Type _proxyType;
-		private static readonly ProxyFactory proxyFactory = new ProxyFactory();
 
-		protected AbstractCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
+		protected AbstractCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
+											CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
+			_collectionProxyFactory = collectionProxyFactory;
 			_proxyType = proxyType;
 		}
 
@@ -181,10 +181,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										IAuditReaderImplementor versionsReader, 
 										long revision) 
 		{
-			var setter = ReflectionTools.GetSetter(obj.GetType(),
-												   CommonCollectionMapperData.CollectionReferencingPropertyData);
-			var coll = proxyFactory.CreateProxy(_proxyType,
-				                                new CollectionProxyInterceptor(GetInitializor(verCfg, versionsReader, primaryKey, revision)));
+			var setter = ReflectionTools.GetSetter(obj.GetType(), CommonCollectionMapperData.CollectionReferencingPropertyData);
+			var coll = _collectionProxyFactory.Create(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision));
 			setter.Set(obj, coll);
 		}
 	}
