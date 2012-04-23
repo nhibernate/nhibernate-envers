@@ -1,7 +1,7 @@
 ﻿namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
-    public interface IInitializor<T> 
+    public interface IInitializor
     {
-        T Initialize();
+        object Initialize();
     }
 }
