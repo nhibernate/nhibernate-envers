@@ -11,9 +11,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		private readonly MiddleComponentData _elementComponentData;
 
-		public BagCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
+		public BagCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
+									CommonCollectionMapperData commonCollectionMapperData,
 									MiddleComponentData elementComponentData)
-			: base(commonCollectionMapperData, typeof(IList<T>))
+			: base(collectionProxyFactory, commonCollectionMapperData, typeof(IList<T>))
 		{    
 			_elementComponentData = elementComponentData;
 		}

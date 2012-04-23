@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class DefaultCollectionProxyMapperFactory : ICollectionProxyMapperFactory
 	{
+		private readonly ICollectionProxyFactory _proxyCollectionFactory = new CollectionProxyFactory();
+		
 		public virtual IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
 			throw new NotImplementedException("Array is not supported by DefaultCollectionProxyMapperFactory");
@@ -26,9 +29,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			return new SetCollectionMapper<T>(commonCollectionMapperData, 
-			                                  typeof (ISet<T>),
-			                                  elementComponentData);
+			return new SetCollectionMapper<T>(_proxyCollectionFactory,
+														commonCollectionMapperData, 
+			                                 typeof (ISet<T>),
+			                                 elementComponentData);
 		}
 
 		public virtual IPropertyMapper Set(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
@@ -43,15 +47,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
 		{
-			return new SortedSetCollectionMapper<T>(commonCollectionMapperData,
-											 typeof(ISet<T>),
-											 elementComponentData,
-											 comparer);
+			return new SortedSetCollectionMapper<T>(_proxyCollectionFactory,
+											commonCollectionMapperData,
+											typeof(ISet<T>),
+											elementComponentData,
+											comparer);
 		}
 
 		public virtual IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new ListCollectionMapper<T>(commonCollectionMapperData, elementComponentData, indexComponentData);
+			return new ListCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper List(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -61,7 +66,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Map<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new MapCollectionMapper<TKey, TValue>(commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData);
+			return new MapCollectionMapper<TKey, TValue>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -76,12 +81,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer)
 		{
-			return new SortedMapCollectionMapper<TKey, TValue>(commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData, comparer);
+			return new SortedMapCollectionMapper<TKey, TValue>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData, comparer);
 		}
 
 		public virtual IPropertyMapper Bag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			return new BagCollectionMapper<T>(commonCollectionMapperData, elementComponentData);
+			return new BagCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, elementComponentData);
 		}
 
 		public virtual IPropertyMapper Bag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)

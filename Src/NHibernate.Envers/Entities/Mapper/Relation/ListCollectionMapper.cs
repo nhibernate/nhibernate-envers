@@ -13,10 +13,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		private readonly MiddleComponentData _elementComponentData;
 		private readonly MiddleComponentData _indexComponentData;
 
-		public ListCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
+		public ListCollectionMapper(ICollectionProxyFactory collectionProxyFactory,
+									CommonCollectionMapperData commonCollectionMapperData,
 									MiddleComponentData elementComponentData, 
 									MiddleComponentData indexComponentData) 
-						: base(commonCollectionMapperData, typeof(IList<T>))
+						: base(collectionProxyFactory, commonCollectionMapperData, typeof(IList<T>))
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;
