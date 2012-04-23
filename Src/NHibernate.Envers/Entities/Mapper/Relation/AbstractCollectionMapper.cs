@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Security;
 using System.Linq;
 using Iesi.Collections;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Exceptions;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
 		private readonly System.Type _proxyType;
+		private static readonly ProxyFactory proxyFactory = new ProxyFactory();
 
 		protected AbstractCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType) 
@@ -169,9 +169,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return false;
 		}
 
-
-
-		protected abstract object GetInitializor(AuditConfiguration verCfg,
+		protected abstract IInitializor GetInitializor(AuditConfiguration verCfg,
 														IAuditReaderImplementor versionsReader, 
 														object primaryKey,
 														long revision);
@@ -185,24 +183,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(),
 												   CommonCollectionMapperData.CollectionReferencingPropertyData);
-
-			try 
-			{
-				var coll = Activator.CreateInstance(_proxyType, new[]{GetInitializor(verCfg, versionsReader, primaryKey, revision)});
-				setter.Set(obj, coll);
-			} 
-			catch (InstantiationException e) 
-			{
-				throw new AuditException(e.Message, e);
-			} 
-			catch (SecurityException e) 
-			{
-				throw new AuditException(e.Message, e);
-			} 
-			catch (TargetInvocationException e) 
-			{
-				throw new AuditException(e.Message, e);
-			}
+			var coll = proxyFactory.CreateProxy(_proxyType,
+				                                new CollectionProxyInterceptor(GetInitializor(verCfg, versionsReader, primaryKey, revision)));
+			setter.Set(obj, coll);
 		}
 	}
 }

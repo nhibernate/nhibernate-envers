@@ -4,7 +4,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
-	public abstract class AbstractCollectionInitializor<T> : IInitializor<T>
+	public abstract class AbstractCollectionInitializor<T> : IInitializor
 	{
 		private readonly IAuditReaderImplementor _versionsReader;
 		private readonly IRelationQueryGenerator _queryGenerator;
@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		protected abstract void AddToCollection(T collection, object collectionRow);
 
-		public T Initialize() 
+		public object Initialize() 
 		{
 			var collectionContent = _queryGenerator.GetQuery(_versionsReader, _primaryKey, Revision).List();
 			var collection = InitializeCollection(collectionContent.Count);

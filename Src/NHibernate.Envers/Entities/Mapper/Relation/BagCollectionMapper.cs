@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public class BagCollectionMapper<T> : AbstractCollectionMapper
 	{
-		private readonly MiddleComponentData elementComponentData;
+		private readonly MiddleComponentData _elementComponentData;
 
 		public BagCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 									MiddleComponentData elementComponentData)
-			: base(commonCollectionMapperData, typeof(ListProxy<T>))
+			: base(commonCollectionMapperData, typeof(IList<T>))
 		{    
-			this.elementComponentData = elementComponentData;
+			_elementComponentData = elementComponentData;
 		}
 
-		protected override object GetInitializor(AuditConfiguration verCfg, 
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, 
 														IAuditReaderImplementor versionsReader,
 														object primaryKey, 
 														long revision) 
@@ -29,7 +28,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 											CommonCollectionMapperData.QueryGenerator,
 											primaryKey, 
 											revision,
-											elementComponentData);
+											_elementComponentData);
 		}
 
 		protected override IEnumerable GetNewCollectionContent(IPersistentCollection newCollection) 
@@ -53,7 +52,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed) 
 		{
-			elementComponentData.ComponentMapper.MapToMapFromObject(data, changed);
+			_elementComponentData.ComponentMapper.MapToMapFromObject(data, changed);
 		}
 	}
 }

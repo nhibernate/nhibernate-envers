@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			IndexComponentData.ComponentMapper.MapToMapFromObject(data, keyValue.Key);
 		}
 
-		protected override object GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new MapCollectionInitializor<TKey, TValue>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
 			                                          primaryKey, revision, ElementComponentData,

@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_comparer = comparer;
 		}
 
-		protected override object GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			return new SortedSetCollectionInitializor<T>(verCfg, 
 																	versionsReader, 

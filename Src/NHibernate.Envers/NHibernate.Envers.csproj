@@ -121,6 +121,7 @@
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Lazy\CollectionProxyInterceptor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedSetCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\OneToOnePrimaryKeyJoinColumnMapper.cs" />
@@ -188,10 +189,6 @@
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\IInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\ListCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\MapCollectionInitializor.cs" />
-    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\CollectionProxy.cs" />
-    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\ListProxy.cs" />
-    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\MapProxy.cs" />
-    <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\SetProxy.cs" />
     <Compile Include="Entities\Mapper\Relation\ListCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\MapCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\MiddleComponentData.cs" />

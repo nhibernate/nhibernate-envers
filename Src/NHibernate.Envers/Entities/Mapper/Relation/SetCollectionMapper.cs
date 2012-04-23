@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected MiddleComponentData ElementComponentData { get; private set; }
 
-		protected override object GetInitializor(AuditConfiguration verCfg,
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg,
 													 IAuditReaderImplementor versionsReader,
 													 object primaryKey,
 													 long revision)
