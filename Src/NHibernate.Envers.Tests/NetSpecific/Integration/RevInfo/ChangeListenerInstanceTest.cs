@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -19,7 +20,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo
 			}
 		}
 
-		protected override AttributeConfiguration AttributeConfiguration()
+		protected override IMetaDataProvider EnversConfiguration()
 		{
 			listener = new testListener();
 			return new AttributeConfigurationWithRevisionListener(listener);
