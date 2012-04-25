@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 			SpecialCollection = new SpecialCollection(10);
 		}
 		public virtual int Id { get; set; }
-		[CustomCollectionMapper(typeof(CustomCollectionFactory))]
+		[CustomCollectionMapper(typeof(CustomCollectionMapperFactory))]
 		public virtual ISpecialCollection SpecialCollection { get; set; }
 	}
 }

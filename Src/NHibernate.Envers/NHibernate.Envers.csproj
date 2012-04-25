@@ -120,7 +120,7 @@
     <Compile Include="Configuration\TypeConfigurationEntry.cs" />
     <Compile Include="DefaultTrackingModifiedEntitiesRevisionEntity.cs" />
     <Compile Include="Entities\Mapper\DynamicComponentPropertyMapper.cs" />
-    <Compile Include="Entities\Mapper\ICustomCollectionFactory.cs" />
+    <Compile Include="Entities\Mapper\ICustomCollectionMapperFactory.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />

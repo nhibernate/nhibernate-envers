@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public RelationTargetAuditMode RelationTargetAuditMode { get; set; }
 		public bool UsingModifiedFlag { get; set; }
 		public string ModifiedFlagName { private get; set;}
-		public ICustomCollectionFactory CustomFactory { get; set; }
+		public ICustomCollectionMapperFactory CustomCollectionMapperFactory { get; set; }
 
 		public PropertyData GetPropertyData()
 		{

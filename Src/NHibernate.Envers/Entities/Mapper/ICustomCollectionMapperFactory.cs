@@ -5,7 +5,7 @@ namespace NHibernate.Envers.Entities.Mapper
 	/// <summary>
 	/// Creates a user defined <see cref="IPropertyMapper"/> for a collection.
 	/// </summary>
-	public interface ICustomCollectionFactory
+	public interface ICustomCollectionMapperFactory
 	{
 		IPropertyMapper Create(ICollectionProxyFactory collectionProxyFactory, 
 						CommonCollectionMapperData commonCollectionMapperData,

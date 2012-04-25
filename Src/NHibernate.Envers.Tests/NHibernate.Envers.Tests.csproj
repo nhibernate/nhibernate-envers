@@ -201,7 +201,7 @@
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SetPropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
-    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\CustomCollectionFactory.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\CustomCollectionMapperFactory.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\Entity.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\ISpecialCollection.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\Number.cs" />
