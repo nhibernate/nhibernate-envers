@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
+using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
@@ -334,6 +336,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				return false; // not audited due to AuditOverride annotation
 			}
 			setPropertyAuditMappedBy(property, propertyData);
+			setCustomMapper(property, propertyData);
 
 			return true;
 		}
@@ -364,7 +367,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void setPropertyAuditMappedBy(MemberInfo property, PropertyAuditingData propertyData)
 		{
-
 			var auditMappedBy = _metaDataStore.MemberMeta<AuditMappedByAttribute>(property);
 			if (auditMappedBy != null)
 			{
@@ -373,6 +375,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				{
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;
 				}
+			}
+		}
+
+		private void setCustomMapper(MemberInfo property, PropertyAuditingData propertyData)
+		{
+			var customMapper = _metaDataStore.MemberMeta<CustomCollectionAttribute>(property);
+			if (customMapper != null)
+			{
+				propertyData.CustomFactory = (ICustomCollectionFactory) Activator.CreateInstance(customMapper.CustomCollectionFactory);
 			}
 		}
 

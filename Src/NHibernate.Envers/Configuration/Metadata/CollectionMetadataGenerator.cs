@@ -6,10 +6,12 @@ using System.Linq;
 using System.Xml;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Component;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
@@ -456,7 +458,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			IPropertyMapper collectionMapper;
 			var collectionProxyMapperFactory = mainGenerator.GlobalCfg.CollectionProxyMapperFactory;
 
-			if (type is SetType)
+			if(propertyAuditingData.CustomFactory!=null)
+			{
+				//todo: fix! shouldn't be here...
+				var collPrxy = new CollectionProxyFactory();
+				collectionMapper = propertyAuditingData.CustomFactory.Create(collPrxy, commonCollectionMapperData, elementComponentData, indexComponentData);
+			}
+			else if (type is SetType)
 			{
 				if (propertyValue.IsGeneric)
 				{
@@ -542,9 +550,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 				else
 				{
 					collectionMapper = collectionProxyMapperFactory.Bag(commonCollectionMapperData, elementComponentData);
-				}
 
+				}
 			}
+			//else if (type is CustomCollectionType)
+			//{
+			//   propertyValue.
+			//   commonCollectionMapperData.
+			//   propertyValue.
+			//   this.propertyValue.p
+			//   var mapper = _metaDataStore.MemberMeta>()
+			//}
 			else
 				throw new NotImplementedException("Mapped collection type " + type.Name + " is not currently supported in Envers");
 
