@@ -8,23 +8,23 @@ using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
-	public class DefaultCollectionProxyMapperFactory : ICollectionProxyMapperFactory
+	public class DefaultCollectionMapperFactory : ICollectionMapperFactory
 	{
 		private readonly ICollectionProxyFactory _proxyCollectionFactory = new CollectionProxyFactory();
 		
 		public virtual IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Array is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Array is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper IdBag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Generic idbag is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Generic idbag is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper IdBag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
@@ -37,12 +37,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Set(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			throw new NotImplementedException("Non generic set is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic set is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper SortedSet(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer)
 		{
-			throw new NotImplementedException("Non generic sorted set is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic sorted set is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
@@ -61,7 +61,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper List(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Non generic list is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic list is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper Map<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -71,12 +71,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Non generic map is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic map is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper SortedMap(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer comparer)
 		{
-			throw new NotImplementedException("Non generic sorted map is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic sorted map is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer)
@@ -91,7 +91,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Bag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			throw new NotImplementedException("Non generic bag is not supported by DefaultCollectionProxyMapperFactory");
+			throw new NotImplementedException("Non generic bag is not supported by DefaultCollectionMapperFactory");
 		}
 	}
 }

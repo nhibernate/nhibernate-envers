@@ -80,8 +80,8 @@
     <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\ConfigurationEntry.cs" />
-    <Compile Include="Configuration\Metadata\DefaultCollectionProxyMapperFactory.cs" />
-    <Compile Include="Configuration\Metadata\ICollectionProxyMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\DefaultCollectionMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\ICollectionMapperFactory.cs" />
     <Compile Include="Configuration\Metadata\Reader\ComponentAuditedPropertiesReader .cs" />
     <Compile Include="Configuration\RevisionInfoConfigurationResult.cs" />
     <Compile Include="Configuration\Store\AuditMappedByMetaDataAdder.cs" />
