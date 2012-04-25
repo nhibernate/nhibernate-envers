@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 	[TestFixture]
 	public class ParameterizedUserCollectionTest : TestBase
 	{
-		private int id = 123;
+		private const int id = 123;
 
 		protected override void Initialize()
 		{
@@ -50,6 +50,5 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 			rev1.SpecialCollection.ItemsOverLimit()
 				.Should().Be.EqualTo(3);
 		}
-
 	}
 }
