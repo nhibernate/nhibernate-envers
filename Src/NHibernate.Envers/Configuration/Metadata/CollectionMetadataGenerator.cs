@@ -546,11 +546,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 				else
 				{
 					collectionMapper = collectionProxyMapperFactory.Bag(commonCollectionMapperData, elementComponentData);
-
 				}
 			}
 			else
+			{
+				if (type is CustomCollectionType)
+					throw new NotImplementedException("Your custom collection type " + type.Name + " needs a defined " + typeof(ICustomCollectionMapperFactory).Name);
 				throw new NotImplementedException("Mapped collection type " + type.Name + " is not currently supported in Envers");
+			}
 
 			_currentMapper.AddComposite(_propertyAuditingData.GetPropertyData(), collectionMapper);
 		}
