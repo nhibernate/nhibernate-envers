@@ -3,6 +3,7 @@
 *** Breaking changes ***
 * ----- ConfigurationKey.CollectionProxyMapperFactory changed----
 * ICollectionProxyMapperFactory renamed to ICollectionMapperFactory
+* ICollectionMapperFactory.Initialize(ICollectionProxyFactory) added
 * nhibernate.envers.collection_proxy_mapper_factory renamed to nhibernate.envers.collection_mapper_factory
 * ConfigurationKey.CollectionProxyMapperFactory renamed to ConfigurationKey.CollectionMapperFactory
 * ---------------------------------------------------------------
