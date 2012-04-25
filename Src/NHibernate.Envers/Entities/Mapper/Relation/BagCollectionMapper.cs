@@ -13,8 +13,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public BagCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
 									CommonCollectionMapperData commonCollectionMapperData,
+									System.Type proxyType,
 									MiddleComponentData elementComponentData)
-			: base(collectionProxyFactory, commonCollectionMapperData, typeof(IList<T>))
+			: base(collectionProxyFactory, commonCollectionMapperData, proxyType)
 		{    
 			_elementComponentData = elementComponentData;
 		}

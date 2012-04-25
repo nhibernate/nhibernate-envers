@@ -56,7 +56,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new ListCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+			return new ListCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper List(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -86,7 +86,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Bag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			return new BagCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, elementComponentData);
+			return new BagCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData);
 		}
 
 		public virtual IPropertyMapper Bag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)

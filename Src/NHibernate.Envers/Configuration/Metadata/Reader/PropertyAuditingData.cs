@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Entities.Mapper;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -37,6 +38,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public RelationTargetAuditMode RelationTargetAuditMode { get; set; }
 		public bool UsingModifiedFlag { get; set; }
 		public string ModifiedFlagName { private get; set;}
+		public ICustomCollectionFactory CustomFactory { get; set; }
 
 		public PropertyData GetPropertyData()
 		{

@@ -201,6 +201,16 @@
     <Compile Include="NetSpecific\Integration\Configuration\Inheritance\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SetPropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SimpleAuiditableForConfEntity.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\CustomCollectionFactory.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\Entity.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\ISpecialCollection.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\Number.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\ParameterizedUserCollectionTest.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialCollection.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialInitializor.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialMapper.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialPersistentGenericBag.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialUserCollectionType.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\AuditConfigurationTests.cs" />
@@ -623,6 +633,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\UserCollection\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Memory\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Memory\Extended.hbm.xml" />

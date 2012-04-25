@@ -15,9 +15,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public ListCollectionMapper(ICollectionProxyFactory collectionProxyFactory,
 									CommonCollectionMapperData commonCollectionMapperData,
+									System.Type proxyType,
 									MiddleComponentData elementComponentData, 
 									MiddleComponentData indexComponentData) 
-						: base(collectionProxyFactory, commonCollectionMapperData, typeof(IList<T>))
+						: base(collectionProxyFactory, commonCollectionMapperData, proxyType)
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;
