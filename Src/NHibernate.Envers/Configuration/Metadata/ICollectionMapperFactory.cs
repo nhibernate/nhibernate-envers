@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 	/// <remarks>
 	/// Implementations of this interface must have a public, default ctor
 	/// </remarks>
-	public interface ICollectionProxyMapperFactory
+	public interface ICollectionMapperFactory
 	{
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Array" />.

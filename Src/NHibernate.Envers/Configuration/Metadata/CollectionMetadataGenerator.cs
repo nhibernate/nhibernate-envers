@@ -456,7 +456,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var type = propertyValue.Type;
 
 			IPropertyMapper collectionMapper;
-			var collectionProxyMapperFactory = mainGenerator.GlobalCfg.CollectionProxyMapperFactory;
+			var collectionProxyMapperFactory = mainGenerator.GlobalCfg.CollectionMapperFactory;
 
 			if(propertyAuditingData.CustomFactory!=null)
 			{
@@ -471,7 +471,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					if (propertyValue.IsSorted)
 					{
 						var comparerType = createGenericComparerType(type);
-						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedSet",
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("SortedSet",
 																											type.ReturnedClass.GetGenericArguments(),
 																											new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
@@ -479,7 +479,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					}
 					else
 					{
-						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Set",
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Set",
 																											type.ReturnedClass.GetGenericArguments(),
 																											new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
@@ -497,7 +497,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				if (propertyValue.IsGeneric)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("List", 
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("List", 
 																										type.ReturnedClass.GetGenericArguments(), 
 																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
@@ -515,7 +515,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					if (propertyValue.IsSorted)
 					{
 						var comparerType = createGenericComparerType(type);
-						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("SortedMap",
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("SortedMap",
 																						type.ReturnedClass.GetGenericArguments(),
 																						new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
@@ -523,7 +523,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					}
 					else
 					{
-						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Map",
+						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Map",
 																	type.ReturnedClass.GetGenericArguments(),
 																	new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
@@ -541,7 +541,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				if (propertyValue.IsGeneric)
 				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionProxyMapperFactory>("Bag",
+					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Bag",
 																										type.ReturnedClass.GetGenericArguments(),
 																										new[] { typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,

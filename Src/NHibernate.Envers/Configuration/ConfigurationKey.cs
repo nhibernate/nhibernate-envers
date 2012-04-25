@@ -69,8 +69,8 @@ namespace NHibernate.Envers.Configuration
 		/// normal types for its mapped collections, eg if a user
 		/// defined CollectionTypeFactory is used.
 		/// </summary>
-		public static readonly TypeConfigurationEntry CollectionProxyMapperFactory
-			= new TypeConfigurationEntry("nhibernate.envers.collection_proxy_mapper_factory", typeof(DefaultCollectionProxyMapperFactory).AssemblyQualifiedName);
+		public static readonly TypeConfigurationEntry CollectionMapperFactory
+			= new TypeConfigurationEntry("nhibernate.envers.collection_mapper_factory", typeof(DefaultCollectionMapperFactory).AssemblyQualifiedName);
 
 		/// <summary>
 		/// String that will be appended to the name of an audited

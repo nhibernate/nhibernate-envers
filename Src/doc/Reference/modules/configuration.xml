@@ -307,7 +307,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</row>
 					<row>
 						<entry>
-							nhibernate.envers.collection_proxy_mapper_factory
+							nhibernate.envers.collection_mapper_factory
 						</entry>
 						<entry>
 							NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory
