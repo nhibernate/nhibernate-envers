@@ -1,6 +1,8 @@
 ﻿using NHibernate.Cfg;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata;
+using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Configuration
@@ -64,13 +66,19 @@ namespace NHibernate.Envers.Configuration
 			= new StringConfigurationEntry("nhibernate.envers.default_catalog", string.Empty);
 
 		/// <summary>
-		/// Responsible to create collection proxies for audited entities.
+		/// Responsible to create collection mappers (<see cref="IPropertyMapper"/>) for audited entities.
 		/// May be used if NHibernate Core isn't using its
 		/// normal types for its mapped collections, eg if a user
 		/// defined CollectionTypeFactory is used.
 		/// </summary>
 		public static readonly TypeConfigurationEntry CollectionMapperFactory
 			= new TypeConfigurationEntry("nhibernate.envers.collection_mapper_factory", typeof(DefaultCollectionMapperFactory).AssemblyQualifiedName);
+
+		/// <summary>
+		/// Resposible to create envers collection proxies for collection interfaces.
+		/// </summary>
+		public static readonly TypeConfigurationEntry CollectionProxyFactory
+			= new TypeConfigurationEntry("nhibernate.envers.collection_proxy_factory", typeof(DefaultCollectionProxyFactory).AssemblyQualifiedName);
 
 		/// <summary>
 		/// String that will be appended to the name of an audited

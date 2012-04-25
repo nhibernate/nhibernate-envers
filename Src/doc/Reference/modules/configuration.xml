@@ -310,12 +310,24 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 							nhibernate.envers.collection_mapper_factory
 						</entry>
 						<entry>
-							NHibernate.Envers.Configuration.Metadata.DefaultCollectionProxyMapperFactory
+							NHibernate.Envers.Configuration.Metadata.DefaultCollectionMapperFactory
 						</entry>
 						<entry>
-							Responsible to create collection proxies for audited entities.
+							Responsible to create collection mappers for audited entities.
 							May be used if NHibernate Core isn't using its normal types for its mapped collections,
 							eg if a user defined CollectionTypeFactory is used.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							nhibernate.envers.nhibernate.envers.collection_proxy_factory
+						</entry>
+						<entry>
+							NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy.DefaultCollectionProxyFactory
+						</entry>
+						<entry>
+							Resposible to create envers collection proxies for collection interfaces.
+							The default implementation uses NH Core's internal proxy framework.
 						</entry>
 					</row>
 				</tbody>

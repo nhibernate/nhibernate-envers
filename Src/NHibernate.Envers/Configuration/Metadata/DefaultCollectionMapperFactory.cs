@@ -4,14 +4,18 @@ using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class DefaultCollectionMapperFactory : ICollectionMapperFactory
 	{
-		private readonly ICollectionProxyFactory _proxyCollectionFactory = new CollectionProxyFactory();
-		
+		private ICollectionProxyFactory _proxyCollectionFactory;
+
+		public void Initialize(ICollectionProxyFactory collectionProxyFactory)
+		{
+			_proxyCollectionFactory = collectionProxyFactory;
+		}
+
 		public virtual IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
 			throw new NotImplementedException("Array is not supported by DefaultCollectionMapperFactory");

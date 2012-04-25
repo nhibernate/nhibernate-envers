@@ -7,6 +7,7 @@
 * ConfigurationKey.CollectionProxyMapperFactory renamed to ConfigurationKey.CollectionMapperFactory
 * ---------------------------------------------------------------
 
+
 === 1.1 GA (v 1.1.0.2), 2012-04-22, NH 3.3 GA ===
 
 ** Bug
