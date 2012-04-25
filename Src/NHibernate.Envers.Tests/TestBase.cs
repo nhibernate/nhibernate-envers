@@ -3,6 +3,7 @@ using System.Reflection;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
 using NUnit.Framework;
 
@@ -24,7 +25,7 @@ namespace NHibernate.Envers.Tests
 			AddToConfiguration(Cfg);
 			Cfg.Configure();
 			addMappings();
-			Cfg.IntegrateWithEnvers(new AuditEventListener(), AttributeConfiguration());
+			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
 			SessionFactory = Cfg.BuildSessionFactory();
 			Session = openSession(SessionFactory);
 			Initialize();
@@ -32,7 +33,7 @@ namespace NHibernate.Envers.Tests
 			Session = openSession(SessionFactory);
 		}
 
-		protected virtual AttributeConfiguration AttributeConfiguration()
+		protected virtual IMetaDataProvider EnversConfiguration()
 		{
 			return new AttributeConfiguration();
 		}
