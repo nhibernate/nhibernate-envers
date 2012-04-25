@@ -3,11 +3,11 @@ using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
-	public class CollectionProxyFactory : ICollectionProxyFactory
+	public class DefaultCollectionProxyFactory : ICollectionProxyFactory
 	{
 		private readonly ProxyFactory _proxyFactory;
 
-		public CollectionProxyFactory()
+		public DefaultCollectionProxyFactory()
 		{
 			_proxyFactory = new ProxyFactory();
 		}

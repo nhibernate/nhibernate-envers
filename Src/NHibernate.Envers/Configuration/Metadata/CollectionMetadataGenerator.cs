@@ -461,7 +461,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if(propertyAuditingData.CustomFactory!=null)
 			{
 				//todo: fix! shouldn't be here...
-				var collPrxy = new CollectionProxyFactory();
+				var collPrxy = new DefaultCollectionProxyFactory();
 				collectionMapper = propertyAuditingData.CustomFactory.Create(collPrxy, commonCollectionMapperData, elementComponentData, indexComponentData);
 			}
 			else if (type is SetType)

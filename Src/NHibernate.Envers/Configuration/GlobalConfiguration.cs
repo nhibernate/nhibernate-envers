@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
+using NHibernate.Envers.Entities.Mapper.Relation;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -13,7 +14,9 @@ namespace NHibernate.Envers.Configuration
 			IsTrackEntitiesChangedInRevisionEnabled = ConfigurationKey.TrackEntitiesChangedInRevision.ToBool(properties);
 			DefaultSchemaName = ConfigurationKey.DefaultSchema.ToString(properties);
 			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToString(properties);
+			CollectionProxyFactory = ConfigurationKey.CollectionProxyFactory.ToInstance<ICollectionProxyFactory>(properties);
 			CollectionMapperFactory = ConfigurationKey.CollectionMapperFactory.ToInstance<ICollectionMapperFactory>(properties);
+			CollectionMapperFactory.Initialize(CollectionProxyFactory);
 			CorrelatedSubqueryOperator = "=";
 			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
 			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToString(properties);
@@ -62,6 +65,7 @@ namespace NHibernate.Envers.Configuration
 		public string DefaultCatalogName { get; private set; }
 
 		public ICollectionMapperFactory CollectionMapperFactory { get; private set; }
+		public ICollectionProxyFactory CollectionProxyFactory { get; private set; }
 
 		public bool IsGlobalWithModifiedFlag { get; private set; }
 		public string ModifiedFlagSuffix { get; private set; }

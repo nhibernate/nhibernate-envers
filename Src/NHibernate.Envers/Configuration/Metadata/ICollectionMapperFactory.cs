@@ -6,13 +6,19 @@ using System.Collections.Generic;
 namespace NHibernate.Envers.Configuration.Metadata
 {
 	/// <summary>
-	/// Mapper factory for collection proxies
+	/// Mapper factory for collection.
+	/// Users can implement their own by setting <see cref="ConfigurationKey.CollectionMapperFactory"/>.
 	/// </summary>
 	/// <remarks>
 	/// Implementations of this interface must have a public, default ctor
 	/// </remarks>
 	public interface ICollectionMapperFactory
 	{
+		/// <summary>
+		/// Will be called once after instansiation.
+		/// </summary>
+		void Initialize(ICollectionProxyFactory collectionProxyFactory);
+
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Array" />.
 		/// </summary>
