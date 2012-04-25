@@ -71,7 +71,7 @@
     <Compile Include="Configuration\Attributes\AuditOverrideAttribute.cs" />
     <Compile Include="AuditReaderFactory.cs" />
     <Compile Include="Configuration\Attributes\AuditTableAttribute.cs" />
-    <Compile Include="Configuration\Attributes\CustomCollectionAttribute.cs" />
+    <Compile Include="Configuration\Attributes\CustomCollectionMapperAttribute.cs" />
     <Compile Include="Configuration\BoolConfigurationEntry.cs" />
     <Compile Include="Configuration\ConfigurationKey.cs" />
     <Compile Include="Configuration\Fluent\BaseFluentAudit.cs" />

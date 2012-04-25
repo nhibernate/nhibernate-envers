@@ -10,9 +10,9 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// This attribute is only applicable on collections.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-	public class CustomCollectionAttribute : Attribute
+	public class CustomCollectionMapperAttribute : Attribute
 	{
-		public CustomCollectionAttribute(System.Type mapperType)
+		public CustomCollectionMapperAttribute(System.Type mapperType)
 		{
 			CustomCollectionFactory = mapperType;
 		}

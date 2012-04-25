@@ -380,7 +380,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void setCustomMapper(MemberInfo property, PropertyAuditingData propertyData)
 		{
-			var customMapper = _metaDataStore.MemberMeta<CustomCollectionAttribute>(property);
+			var customMapper = _metaDataStore.MemberMeta<CustomCollectionMapperAttribute>(property);
 			if (customMapper != null)
 			{
 				propertyData.CustomFactory = (ICustomCollectionFactory) Activator.CreateInstance(customMapper.CustomCollectionFactory);
