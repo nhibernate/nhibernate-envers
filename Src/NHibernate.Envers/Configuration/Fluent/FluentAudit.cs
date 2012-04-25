@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Entities.Mapper;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
@@ -11,7 +12,6 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// <seealso cref="LooselyTypedFluentAudit"/>
 	public class FluentAudit<T> : BaseFluentAudit, IFluentAudit<T>
 	{
-
 		public FluentAudit()
 		{
 			AttributeCollection.Add(new MemberInfoAndAttribute(typeof(T), new AuditedAttribute()));
@@ -61,6 +61,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 			var methodInfo = property.MethodInfo();
 			var attr = new AuditJoinTableAttribute();
 			tableInfo(attr);
+			AttributeCollection.Add(new MemberInfoAndAttribute(typeof(T), methodInfo, attr));
+			return this;
+		}
+
+		public IFluentAudit<T> SetCollectionMapper<TCustomCollectionMapper>(Expression<Func<T, object>> property) where TCustomCollectionMapper : ICustomCollectionMapperFactory
+		{
+			var methodInfo = property.MethodInfo();
+			var attr = new CustomCollectionMapperAttribute(typeof (TCustomCollectionMapper));
 			AttributeCollection.Add(new MemberInfoAndAttribute(typeof(T), methodInfo, attr));
 			return this;
 		}
