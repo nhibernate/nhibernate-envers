@@ -602,6 +602,7 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringBaseTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringGenericTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ConfByStringTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\CustomCollectionMapperTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeRelationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\ExcludeTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\FakeNHibernateConfiguration.cs" />
@@ -617,6 +618,7 @@
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\InheritedRevisionEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevisionEntityWithEntityNames.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\RevListener.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\Model\SomeCollectionMapper.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\Model\SomePropsEntity.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\MultipleFullClassAuditRegistrationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\NonMappedRevisionEntityTest.cs" />

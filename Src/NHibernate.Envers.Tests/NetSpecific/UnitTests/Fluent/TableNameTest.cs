@@ -12,7 +12,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 	[TestFixture]
 	public class TableNameTest
 	{
-		
 		[Test]
 		public void ShouldSetTableInfoGeneric()
 		{

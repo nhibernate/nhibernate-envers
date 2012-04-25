@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Entities.Mapper;
 
 namespace NHibernate.Envers.Configuration.Fluent
 {
@@ -61,6 +62,14 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <param name="tableInfo">A lambda expression that will fill an <see cref="AuditJoinTableAttribute"/></param>
 		/// <returns></returns>
 		IFluentAudit<T> SetTableInfo(Expression<Func<T, object>> property, Action<AuditJoinTableAttribute> tableInfo);
+
+		/// <summary>
+		/// Sets a custom <see cref="ICustomCollectionMapperFactory"/> for a collection.
+		/// </summary>
+		/// <typeparam name="TCustomCollectionMapper"></typeparam>
+		/// <param name="property"></param>
+		/// <returns></returns>
+		IFluentAudit<T> SetCollectionMapper<TCustomCollectionMapper>(Expression<Func<T, object>> property) where TCustomCollectionMapper : ICustomCollectionMapperFactory;
 	}
 
 	/// <summary>
