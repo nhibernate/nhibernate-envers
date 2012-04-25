@@ -383,7 +383,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			var customMapper = _metaDataStore.MemberMeta<CustomCollectionMapperAttribute>(property);
 			if (customMapper != null)
 			{
-				propertyData.CustomFactory = (ICustomCollectionFactory) Activator.CreateInstance(customMapper.CustomCollectionFactory);
+				propertyData.CustomCollectionMapperFactory = (ICustomCollectionMapperFactory) Activator.CreateInstance(customMapper.CustomCollectionFactory);
 			}
 		}
 

@@ -3,7 +3,7 @@ using NHibernate.Envers.Entities.Mapper.Relation;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserCollection
 {
-	public class CustomCollectionFactory : ICustomCollectionFactory
+	public class CustomCollectionMapperFactory : ICustomCollectionMapperFactory
 	{
 		public IPropertyMapper Create(ICollectionProxyFactory collectionProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{

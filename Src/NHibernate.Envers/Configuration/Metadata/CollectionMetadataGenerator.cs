@@ -456,9 +456,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			IPropertyMapper collectionMapper;
 			var collectionProxyMapperFactory = _mainGenerator.GlobalCfg.CollectionMapperFactory;
 
-			if(_propertyAuditingData.CustomFactory!=null)
+			if(_propertyAuditingData.CustomCollectionMapperFactory!=null)
 			{
-				collectionMapper = _propertyAuditingData.CustomFactory.Create(_mainGenerator.GlobalCfg.CollectionProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+				collectionMapper = _propertyAuditingData.CustomCollectionMapperFactory.Create(_mainGenerator.GlobalCfg.CollectionProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
 			}
 			else if (type is SetType)
 			{

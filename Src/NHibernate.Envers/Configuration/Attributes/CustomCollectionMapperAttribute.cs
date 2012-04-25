@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 		}
 
 		/// <summary>
-		/// Nees to be a type deriving from <see cref="ICustomCollectionFactory"/>
+		/// Nees to be a type deriving from <see cref="ICustomCollectionMapperFactory"/>
 		/// </summary>
 		public System.Type CustomCollectionFactory { get; private set; }
 	}
