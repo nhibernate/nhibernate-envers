@@ -181,7 +181,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			// Checking the type of the collection and adding an appropriate mapper.
-			AddMapper(commonCollectionMapperData, elementComponentData, indexComponentData);
+			addMapper(commonCollectionMapperData, elementComponentData, indexComponentData);
 
 			// Storing information about this relation.
 			referencingEntityConfiguration.AddToManyNotOwningRelation(propertyName, mappedBy,
@@ -335,7 +335,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					referencingIdData, queryGenerator);
 
 			// Checking the type of the collection and adding an appropriate mapper.
-			AddMapper(commonCollectionMapperData, elementComponentData, indexComponentData);
+			addMapper(commonCollectionMapperData, elementComponentData, indexComponentData);
 
 			// ******
 			// Storing information about this relation.
@@ -450,7 +450,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			throw new AssertionFailure();
 		}
 
-		private void AddMapper(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData,
+		private void addMapper(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData,
 							   MiddleComponentData indexComponentData)
 		{
 			var type = propertyValue.Type;
@@ -553,14 +553,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				}
 			}
-			//else if (type is CustomCollectionType)
-			//{
-			//   propertyValue.
-			//   commonCollectionMapperData.
-			//   propertyValue.
-			//   this.propertyValue.p
-			//   var mapper = _metaDataStore.MemberMeta>()
-			//}
 			else
 				throw new NotImplementedException("Mapped collection type " + type.Name + " is not currently supported in Envers");
 
