@@ -7,6 +7,11 @@
 * nhibernate.envers.collection_proxy_mapper_factory renamed to nhibernate.envers.collection_mapper_factory
 * ConfigurationKey.CollectionProxyMapperFactory renamed to ConfigurationKey.CollectionMapperFactory
 * ---------------------------------------------------------------
+* 
+* --- Non existing items in dynamic-property now behaves like NH Core ---
+* - If no items exists, the IDictionary is null
+* - if an item don't exist, the keyvalue in IDictionary does not exist
+* -----------------------------------------------------------------------
 
 
 === 1.1 GA (v 1.1.0.2), 2012-04-22, NH 3.3 GA ===
