@@ -211,7 +211,7 @@
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialMapper.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialPersistentGenericBag.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\UserCollection\SpecialUserCollectionType.cs" />
-    <Compile Include="NetSpecific\Integration\EntityNames\DynamicComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\EntityNames\AddAndRemovePropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\DynamicTestEntity.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\AuditConfigurationTests.cs" />
     <Compile Include="Entities\Collection\EnumSetEntity.cs" />
@@ -556,6 +556,7 @@
     <Compile Include="NetSpecific\Integration\Ctor\NonPublicCtorTest.cs" />
     <Compile Include="NetSpecific\Integration\Ctor\StructComponentWithDefinedCtor.cs" />
     <Compile Include="NetSpecific\Integration\EntityNames\HasChangedDynamicComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\EntityNames\MultiplePropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\InsertUpdateFalseComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ParentEntity.cs" />
@@ -635,6 +636,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\MultipleProperty.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\UserCollection\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Memory\Mapping.hbm.xml" />
@@ -655,7 +657,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\Access\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\JoinAuditTable\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\AddRemoveMapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\SortedSetAndMap\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Single\DiscriminatorFormula\Mapping.hbm.xml" />

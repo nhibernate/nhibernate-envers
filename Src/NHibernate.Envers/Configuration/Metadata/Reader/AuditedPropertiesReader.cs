@@ -323,7 +323,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				return false;
 			}
 
-			var propertyName = _propertyNamePrefix + property.Name;
+			var propertyName = _propertyNamePrefix + mappedPropertyName;
 			propertyData.Name = propertyName;
 			propertyData.ModifiedFlagName = MetadataTools.ModifiedFlagPropertyName(propertyName, _globalCfg.ModifiedFlagSuffix);
 			propertyData.BeanName = mappedPropertyName;
