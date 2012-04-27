@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 		{
 			get
 			{
-				return new[]{"NetSpecific.Integration.EntityNames.AddRemoveMapping.hbm.xml"};
+				return new[]{"NetSpecific.Integration.EntityNames.SingleProperty.hbm.xml"};
 			}
 		}
 	}

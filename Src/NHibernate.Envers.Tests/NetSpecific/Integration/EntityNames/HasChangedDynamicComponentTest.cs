@@ -43,5 +43,13 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 				.ExtractRevisionNumbersFromRevision()
 				.Should().Be.Empty();
 		}
+
+		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		{
+			get
+			{
+				return new[] { "NetSpecific.Integration.EntityNames.SingleProperty.hbm.xml" };
+			}
+		}
 	}
 }
