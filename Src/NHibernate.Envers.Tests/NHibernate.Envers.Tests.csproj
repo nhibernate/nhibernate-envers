@@ -657,7 +657,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\Access\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\JoinAuditTable\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\AddRemoveMapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\EntityNames\SingleProperty.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\SortedSetAndMap\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\RevInfo\RevEntityIncorrectListenerType.hbm.xml" />
     <EmbeddedResource Include="Integration\Inheritance\Single\DiscriminatorFormula\Mapping.hbm.xml" />
