@@ -1,0 +1,15 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames">
+
+	<class name="DynamicTestEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<dynamic-component name="Properties">
+			<property name="Prop1" type="int" />
+			<property name="Prop2" type="int" />
+			<property name="Prop3" type="int" />
+		</dynamic-component>
+	</class>
+</hibernate-mapping>

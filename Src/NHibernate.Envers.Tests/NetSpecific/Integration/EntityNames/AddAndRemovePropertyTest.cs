@@ -3,9 +3,8 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 {
-	//NHE-12
 	[TestFixture]
-	public class DynamicComponentTest : TestBase
+	public class AddAndRemovePropertyTest : TestBase
 	{
 		private int id;
 
@@ -40,7 +39,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, AuditReader().GetRevisions(typeof(DynamicTestEntity),id));
+			AuditReader().GetRevisions(typeof (DynamicTestEntity), id)
+				.Should().Have.SameSequenceAs(1, 2, 3);
 		}
 
 		[Test]
@@ -56,6 +56,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 
 			rev1.Properties["Name"].Should().Be.EqualTo("1");
 			rev2.Properties["Name"].Should().Be.EqualTo("2");
+		}
+
+		protected override System.Collections.Generic.IEnumerable<string> Mappings
+		{
+			get
+			{
+				return new[]{"NetSpecific.Integration.EntityNames.AddRemoveMapping.hbm.xml"};
+			}
 		}
 	}
 }
