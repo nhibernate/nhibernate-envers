@@ -71,13 +71,18 @@ namespace NHibernate.Envers.Entities.Mapper
 				}
 			}
 
-			// And we don't have to set anything on the object - the default value is null
-			if (!allNullAndSingle)
+			if (allNullAndSingle)
+			{
+				setter.Set(obj, null);
+			}
+			else
 			{
 				var subObj = new Dictionary<string, object>();
 				foreach (var propertyData in _delegate.Properties.Keys)
 				{
-					subObj[propertyData.BeanName] = data[propertyData.Name];
+					var elementData = data[propertyData.Name];
+					if(elementData != null)
+						subObj[propertyData.BeanName] = elementData;
 				}
 				setter.Set(obj, subObj);
 			}

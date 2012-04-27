@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 
 			rev1.Properties.Count.Should().Be.EqualTo(1);
 			rev2.Properties.Count.Should().Be.EqualTo(1);
-			rev3.Properties.Count.Should().Be.EqualTo(0);
+			rev3.Properties.Should().Be.Null();
 
 			rev1.Properties["Name"].Should().Be.EqualTo("1");
 			rev2.Properties["Name"].Should().Be.EqualTo("2");
