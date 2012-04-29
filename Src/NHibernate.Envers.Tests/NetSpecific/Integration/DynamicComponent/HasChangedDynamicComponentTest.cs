@@ -3,7 +3,7 @@ using NHibernate.Envers.Tests.Tools;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
 	[TestFixture, Ignore("Currently not supported")]
 	public class HasChangedDynamicComponentTest : AbstractModifiedFlagsEntityTest
@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 		{
 			get
 			{
-				return new[] { "NetSpecific.Integration.EntityNames.SingleProperty.hbm.xml" };
+				return new[] { "NetSpecific.Integration.DynamicComponent.SingleProperty.hbm.xml" };
 			}
 		}
 	}
