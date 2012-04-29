@@ -20,7 +20,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			return _proxyFactory.CreateProxy(collectionInterface, new CollectionProxyInterceptor(collectionInitializor));
 		}
 
-		public object CreateToOneProxy(IAuditReaderImplementor versionsReader, string referencedEntityName, object entityId, long revision, AuditConfiguration verCfg)
+		public object CreateToOneProxy(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, 
+											string referencedEntityName, object entityId, long revision)
 		{
 			var innerProxy = (ISessionImplementor)_proxyFactory
 					.CreateProxy(typeof(ISessionImplementor), new SessionImplToOneInterceptor(versionsReader, entityId, revision, verCfg));
