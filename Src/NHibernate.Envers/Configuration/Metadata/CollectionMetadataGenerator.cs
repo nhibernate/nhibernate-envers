@@ -152,6 +152,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 						MappingTools.CreateToOneRelationPrefix(auditMappedBy));
 
 				fakeBidirectionalRelationMapper = new ToOneIdMapper(
+						_mainGenerator.GlobalCfg.CollectionProxyFactory,
 						relMapper,
 					// The mapper will only be used to map from entity to map, so no need to provide other details
 					// when constructing the PropertyData.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy;
+using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
 
@@ -11,13 +11,19 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public class ToOneIdMapper : AbstractToOneMapper 
 	{
+		private readonly ICollectionProxyFactory _collectionProxyFactory;
 		private readonly IIdMapper _delegat;
 		private readonly string _referencedEntityName;
 		private readonly bool _nonInsertableFake;
 
-		public ToOneIdMapper(IIdMapper delegat, PropertyData propertyData, string referencedEntityName, bool nonInsertableFake)
+		public ToOneIdMapper(ICollectionProxyFactory collectionProxyFactory, 
+									IIdMapper delegat, 
+									PropertyData propertyData, 
+									string referencedEntityName, 
+									bool nonInsertableFake)
 			: base(propertyData)
 		{
+			_collectionProxyFactory = collectionProxyFactory;
 			_delegat = delegat;
 			_referencedEntityName = referencedEntityName;
 			_nonInsertableFake = nonInsertableFake;
@@ -69,9 +75,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					value = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName)
-						.CreateProxy(entityId,
-						             new ToOneDelegateSessionImplementor(versionsReader, entityId, revision, verCfg));
+					value = _collectionProxyFactory.CreateToOneProxy(versionsReader, _referencedEntityName, entityId, revision, verCfg);
 				}
 			}
 			SetPropertyValue(obj, value);
