@@ -13,15 +13,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
-		private readonly ICollectionProxyFactory _collectionProxyFactory;
+		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly System.Type _proxyType;
 
-		protected AbstractCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
+		protected AbstractCollectionMapper(IEnversProxyFactory enversProxyFactory, 
 											CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
-			_collectionProxyFactory = collectionProxyFactory;
+			_enversProxyFactory = enversProxyFactory;
 			_proxyType = proxyType;
 		}
 
@@ -182,7 +182,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										long revision) 
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(), CommonCollectionMapperData.CollectionReferencingPropertyData);
-			var coll = _collectionProxyFactory.Create(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision));
+			var coll = _enversProxyFactory.Create(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision));
 			setter.Set(obj, coll);
 		}
 	}

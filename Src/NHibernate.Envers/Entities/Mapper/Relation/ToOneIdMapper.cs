@@ -11,19 +11,19 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	public class ToOneIdMapper : AbstractToOneMapper 
 	{
-		private readonly ICollectionProxyFactory _collectionProxyFactory;
+		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly IIdMapper _delegat;
 		private readonly string _referencedEntityName;
 		private readonly bool _nonInsertableFake;
 
-		public ToOneIdMapper(ICollectionProxyFactory collectionProxyFactory, 
+		public ToOneIdMapper(IEnversProxyFactory enversProxyFactory, 
 									IIdMapper delegat, 
 									PropertyData propertyData, 
 									string referencedEntityName, 
 									bool nonInsertableFake)
 			: base(propertyData)
 		{
-			_collectionProxyFactory = collectionProxyFactory;
+			_enversProxyFactory = enversProxyFactory;
 			_delegat = delegat;
 			_referencedEntityName = referencedEntityName;
 			_nonInsertableFake = nonInsertableFake;
@@ -75,7 +75,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					value = _collectionProxyFactory.CreateToOneProxy(versionsReader, _referencedEntityName, entityId, revision, verCfg);
+					value = _enversProxyFactory.CreateToOneProxy(versionsReader, _referencedEntityName, entityId, revision, verCfg);
 				}
 			}
 			SetPropertyValue(obj, value);

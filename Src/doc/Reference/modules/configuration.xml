@@ -320,13 +320,13 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</row>
 					<row>
 						<entry>
-							nhibernate.envers.nhibernate.envers.collection_proxy_factory
+							nhibernate.envers.proxy_factory
 						</entry>
 						<entry>
-							NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy.DefaultCollectionProxyFactory
+							NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy.DefaultEnversProxyFactory
 						</entry>
 						<entry>
-							Resposible to create envers collection proxies for collection interfaces.
+							Resposible to create envers proxies.
 							The default implementation uses NH Core's internal proxy framework.
 						</entry>
 					</row>

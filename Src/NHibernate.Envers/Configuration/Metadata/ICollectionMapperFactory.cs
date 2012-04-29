@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <summary>
 		/// Will be called once after instansiation.
 		/// </summary>
-		void Initialize(ICollectionProxyFactory collectionProxyFactory);
+		void Initialize(IEnversProxyFactory enversProxyFactory);
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Array" />.
