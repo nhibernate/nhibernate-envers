@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Linq;
+using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -66,12 +67,26 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Extracting related id properties from properties tag
 			foreach (XmlElement element in properties.ChildNodes)
 			{
-				parent.AppendChild(element.Clone());
+				var firstJoin = firstJoinElement(parent);
+				if(firstJoin==null)
+				{
+					parent.AppendChild(element.Clone());					
+				}
+				else
+				{
+					parent.InsertBefore(element.Clone(), firstJoin);
+				}
 			}
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
 			mapper.AddComposite(propertyData, new ToOneIdMapper(relMapper,propertyData,referencedEntityName,nonInsertableFake));
+		}
+
+		private static XmlElement firstJoinElement(XmlElement classElement)
+		{
+			//do we have to check for other elements than join here?
+			return classElement.GetElementsByTagName("join").OfType<XmlElement>().FirstOrDefault();
 		}
 
 		public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, IValue value, ICompositeMapperBuilder mapper, string entityName)
