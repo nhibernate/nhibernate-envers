@@ -13,18 +13,18 @@ namespace NHibernate.Envers.Configuration.Metadata
 	/// </summary>
 	public sealed class ToOneRelationMetadataGenerator 
 	{
-		private readonly AuditMetadataGenerator mainGenerator;
+		private readonly AuditMetadataGenerator _mainGenerator;
 
 		public ToOneRelationMetadataGenerator(AuditMetadataGenerator auditMetadataGenerator) 
 		{
-			mainGenerator = auditMetadataGenerator;
+			_mainGenerator = auditMetadataGenerator;
 		}
 
 		public void AddToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value,
 					  ICompositeMapperBuilder mapper, string entityName, bool insertable) 
 		{
 			var referencedEntityName = ((ToOne)value).ReferencedEntityName;
-			var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
+			var idMapping = _mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName,
 					propertyAuditingData, true);
 
 			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(propertyAuditingData.Name);
@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
 			// Storing information about this relation
-			mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(
+			_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(
 					propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
 
 			// If the property isn't insertable, checking if this is not a "fake" bidirectional many-to-one relationship,
@@ -94,7 +94,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var propertyValue = (OneToOne) value;
 			var owningReferencePropertyName = propertyValue.ReferencedPropertyName; // mappedBy
 
-			var configuration = mainGenerator.EntitiesConfigurations[entityName]; 
+			var configuration = _mainGenerator.EntitiesConfigurations[entityName]; 
 			if (configuration == null) 
 			{
 				throw new MappingException("An audited relation to a non-audited entity " + entityName + "!");
@@ -114,7 +114,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var ownedIdMapper = ownedIdMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
 			// Storing information about this relation
-			mainGenerator.EntitiesConfigurations[entityName].AddToOneNotOwningRelation(
+			_mainGenerator.EntitiesConfigurations[entityName].AddToOneNotOwningRelation(
 					propertyAuditingData.Name, owningReferencePropertyName,
 					referencedEntityName, ownedIdMapper);
 
@@ -126,14 +126,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public void AddOneToOnePrimaryKeyJoinColumn(PropertyAuditingData propertyAuditingData, IValue value, ICompositeMapperBuilder mapper, string entityName, bool insertable)
 		{
 			var referencedEntityName = ((ToOne)value).ReferencedEntityName;
-			var idMapping = mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName, propertyAuditingData, true);
+			var idMapping = _mainGenerator.GetReferencedIdMappingData(entityName, referencedEntityName, propertyAuditingData, true);
 			var lastPropertyPrefix = MappingTools.CreateToOneRelationPrefix(propertyAuditingData.Name);
 
 			// Generating the id mapper for the relation
 			var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
 			// Storing information about this relation
-			mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
+			_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
