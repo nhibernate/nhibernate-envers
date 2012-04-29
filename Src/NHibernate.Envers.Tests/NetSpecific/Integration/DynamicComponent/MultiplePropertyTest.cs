@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
 	[TestFixture]
 	public class MultiplePropertyTest : TestBase
@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 		{
 			get
 			{
-				return new[] { "NetSpecific.Integration.EntityNames.MultipleProperty.hbm.xml" };
+				return new[] { "NetSpecific.Integration.DynamicComponent.MultipleProperty.hbm.xml" };
 			}
 		}
 	}

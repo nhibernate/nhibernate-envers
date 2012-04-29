@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
 	[TestFixture]
 	public class AddAndRemovePropertyTest : TestBase
@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityNames
 		{
 			get
 			{
-				return new[]{"NetSpecific.Integration.EntityNames.SingleProperty.hbm.xml"};
+				return new[]{"NetSpecific.Integration.DynamicComponent.SingleProperty.hbm.xml"};
 			}
 		}
 	}
