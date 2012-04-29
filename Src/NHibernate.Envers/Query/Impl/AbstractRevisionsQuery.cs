@@ -90,14 +90,14 @@ namespace NHibernate.Envers.Query.Impl
 
 		public TEntity Single()
 		{
-			IEnumerable<TEntity> results = Results();
-			using (IEnumerator<TEntity> enumerator = results.GetEnumerator())
+			var results = Results();
+			using (var enumerator = results.GetEnumerator())
 			{
 				if (!enumerator.MoveNext())
 				{
-					throw new NoResultException();
+					return null;
 				}
-				TEntity current = enumerator.Current;
+				var current = enumerator.Current;
 				if (!enumerator.MoveNext())
 				{
 					return current;

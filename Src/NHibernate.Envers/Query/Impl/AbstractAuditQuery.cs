@@ -85,18 +85,15 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			var result = new ArrayList();
 			FillResult(result);
-
-			if (result == null || result.Count == 0) 
+			switch (result.Count)
 			{
-				throw new NoResultException();
+				case 0:
+					return null;
+				case 1:
+					return result[0];
+				default:
+					throw new NonUniqueResultException(result.Count);
 			}
-
-			if (result.Count > 1) 
-			{
-				throw new NonUniqueResultException(result.Count);
-			}
-
-			return result[0];
 		}
 
 		public IAuditQuery Add(IAuditCriterion criterion) 

@@ -26,10 +26,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				value = QueryForReferencedEntity(versionsReader, referencedEntity, primaryKey, revision);
 			}
-			catch (NoResultException)
-			{
-				value = null;
-			}
 			catch (NonUniqueResultException e)
 			{
 				throw new AuditException("Many versions results for one-to-one relationship " + _entityName + "." + PropertyData.BeanName + ".", e);
