@@ -558,6 +558,9 @@
     <Compile Include="NetSpecific\Integration\DynamicComponent\HasChangedDynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\DynamicComponent\MultiplePropertyTest.cs" />
     <Compile Include="NetSpecific\Integration\DynamicComponent\NonExistingKeyTest.cs" />
+    <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\BasicJoinWithDynamicComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Car.cs" />
+    <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Person.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\InsertUpdateFalseComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ParentEntity.cs" />
@@ -637,6 +640,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\MultipleProperty.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\UserCollection\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\Mapping.hbm.xml" />
