@@ -213,7 +213,6 @@
     <Compile Include="Entities\RevisionTypeType.cs" />
     <Compile Include="Event\AuditEventListener.cs" />
     <Compile Include="Exceptions\AuditException.cs" />
-    <Compile Include="Exceptions\NoResultException.cs" />
     <Compile Include="Exceptions\NotAuditedException.cs" />
     <Compile Include="Exceptions\RevisionDoesNotExistException.cs" />
     <Compile Include="IAuditReader.cs" />

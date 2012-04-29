@@ -56,16 +56,9 @@ namespace NHibernate.Envers.Reader
 				return result;
 			}
 
-			try
-			{
-				// The result is put into the cache by the entity instantiator called from the query
-				result = CreateQuery().ForEntitiesAtRevision(entityName, revision)
-					.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
-			}
-			catch (NoResultException)
-			{
-				result = null;
-			}
+			// The result is put into the cache by the entity instantiator called from the query
+			result = CreateQuery().ForEntitiesAtRevision(entityName, revision)
+				.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
 
 			return result;
 		}
