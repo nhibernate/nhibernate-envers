@@ -11,11 +11,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		private readonly MiddleComponentData _elementComponentData;
 
-		public BagCollectionMapper(ICollectionProxyFactory collectionProxyFactory, 
+		public BagCollectionMapper(IEnversProxyFactory enversProxyFactory, 
 									CommonCollectionMapperData commonCollectionMapperData,
 									System.Type proxyType,
 									MiddleComponentData elementComponentData)
-			: base(collectionProxyFactory, commonCollectionMapperData, proxyType)
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType)
 		{    
 			_elementComponentData = elementComponentData;
 		}

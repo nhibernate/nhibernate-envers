@@ -75,10 +75,10 @@ namespace NHibernate.Envers.Configuration
 			= new TypeConfigurationEntry("nhibernate.envers.collection_mapper_factory", typeof(DefaultCollectionMapperFactory).AssemblyQualifiedName);
 
 		/// <summary>
-		/// Resposible to create envers collection proxies for collection interfaces.
+		/// Resposible to create envers proxies.
 		/// </summary>
-		public static readonly TypeConfigurationEntry CollectionProxyFactory
-			= new TypeConfigurationEntry("nhibernate.envers.collection_proxy_factory", typeof(DefaultCollectionProxyFactory).AssemblyQualifiedName);
+		public static readonly TypeConfigurationEntry ProxyFactory
+			= new TypeConfigurationEntry("nhibernate.envers.proxy_factory", typeof(DefaultEnversProxyFactory).AssemblyQualifiedName);
 
 		/// <summary>
 		/// String that will be appended to the name of an audited

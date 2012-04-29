@@ -9,11 +9,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class DefaultCollectionMapperFactory : ICollectionMapperFactory
 	{
-		private ICollectionProxyFactory _proxyCollectionFactory;
+		private IEnversProxyFactory _proxyEnversFactory;
 
-		public void Initialize(ICollectionProxyFactory collectionProxyFactory)
+		public void Initialize(IEnversProxyFactory enversProxyFactory)
 		{
-			_proxyCollectionFactory = collectionProxyFactory;
+			_proxyEnversFactory = enversProxyFactory;
 		}
 
 		public virtual IPropertyMapper Array(System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Set<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			return new SetCollectionMapper<T>(_proxyCollectionFactory,
+			return new SetCollectionMapper<T>(_proxyEnversFactory,
 														commonCollectionMapperData, 
 			                                 typeof (ISet<T>),
 			                                 elementComponentData);
@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedSet<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
 		{
-			return new SortedSetCollectionMapper<T>(_proxyCollectionFactory,
+			return new SortedSetCollectionMapper<T>(_proxyEnversFactory,
 											commonCollectionMapperData,
 											typeof(ISet<T>),
 											elementComponentData,
@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper List<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new ListCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, indexComponentData);
+			return new ListCollectionMapper<T>(_proxyEnversFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper List(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper Map<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			return new MapCollectionMapper<TKey, TValue>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData);
+			return new MapCollectionMapper<TKey, TValue>(_proxyEnversFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData);
 		}
 
 		public virtual IPropertyMapper Map(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
@@ -85,12 +85,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper SortedMap<TKey, TValue>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer)
 		{
-			return new SortedMapCollectionMapper<TKey, TValue>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData, comparer);
+			return new SortedMapCollectionMapper<TKey, TValue>(_proxyEnversFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData, comparer);
 		}
 
 		public virtual IPropertyMapper Bag<T>(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
-			return new BagCollectionMapper<T>(_proxyCollectionFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData);
+			return new BagCollectionMapper<T>(_proxyEnversFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData);
 		}
 
 		public virtual IPropertyMapper Bag(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)

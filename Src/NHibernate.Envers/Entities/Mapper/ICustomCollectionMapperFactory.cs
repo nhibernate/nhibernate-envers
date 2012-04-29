@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Entities.Mapper
 	/// </summary>
 	public interface ICustomCollectionMapperFactory
 	{
-		IPropertyMapper Create(ICollectionProxyFactory collectionProxyFactory, 
+		IPropertyMapper Create(IEnversProxyFactory enversProxyFactory, 
 						CommonCollectionMapperData commonCollectionMapperData,
 						MiddleComponentData elementComponentData, 
 						MiddleComponentData indexComponentData);
