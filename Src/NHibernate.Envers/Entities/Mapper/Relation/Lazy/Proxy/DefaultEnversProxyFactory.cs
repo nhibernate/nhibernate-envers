@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 			_proxyFactory = new ProxyFactory();
 		}
 
-		public object Create(System.Type collectionInterface, IInitializor collectionInitializor)
+		public object CreateCollectionProxy(System.Type collectionInterface, IInitializor collectionInitializor)
 		{
 			return _proxyFactory.CreateProxy(collectionInterface, new CollectionProxyInterceptor(collectionInitializor));
 		}

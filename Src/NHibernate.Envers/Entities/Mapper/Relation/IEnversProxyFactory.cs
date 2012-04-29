@@ -14,13 +14,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	/// </remarks>
 	public interface IEnversProxyFactory
 	{
-		object Create(System.Type collectionInterface, IInitializor collectionInitializor);
+		/// <summary>
+		/// Creates a collection proxy.
+		/// </summary>
+		object CreateCollectionProxy(System.Type collectionInterface, IInitializor collectionInitializor);
 
 		/// <summary>
-		/// Creates a proxy for a x-to-one releationship
+		/// Creates a proxy for a x-to-one releationship.
 		/// </summary>
 		object CreateToOneProxy(IAuditReaderImplementor versionsReader, string referencedEntityName,
-		                        object entityId, long revision,
-		                        AuditConfiguration verCfg);
+		                        object entityId, long revision, AuditConfiguration verCfg);
 	}
 }
