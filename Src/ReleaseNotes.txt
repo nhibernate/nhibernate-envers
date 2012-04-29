@@ -12,7 +12,11 @@
 * - If no items exists, the IDictionary is null
 * - if an item don't exist, the keyvalue in IDictionary does not exist
 * -----------------------------------------------------------------------
-
+*
+* --- NoResultException no longer exists ---
+* If IEntityAuditQuery<T>.Single() returns no rows, null is returned
+* If IAuditQuery.GetSingleResult() returns no rows, null is returned
+* ------------------------------------------
 
 === 1.1 GA (v 1.1.0.2), 2012-04-22, NH 3.3 GA ===
 
