@@ -1,5 +1,7 @@
+using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
+using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
@@ -13,5 +15,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	public interface ICollectionProxyFactory
 	{
 		object Create(System.Type collectionInterface, IInitializor collectionInitializor);
+
+		object CreateToOneProxy(IAuditReaderImplementor versionsReader, string referencedEntityName,
+		                        object entityId, long revision,
+		                        AuditConfiguration verCfg);
 	}
 }
