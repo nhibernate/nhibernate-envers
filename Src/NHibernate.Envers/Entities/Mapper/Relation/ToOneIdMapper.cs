@@ -75,7 +75,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					value = _enversProxyFactory.CreateToOneProxy(versionsReader, _referencedEntityName, entityId, revision, verCfg);
+					value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision);
 				}
 			}
 			SetPropertyValue(obj, value);
