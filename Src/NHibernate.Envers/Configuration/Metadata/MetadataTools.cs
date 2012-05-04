@@ -212,8 +212,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static void AddColumn(XmlElement anyMapping, Column column)
 		{
-			AddColumn(anyMapping, column.Name, column.Length, column.IsPrecisionDefined() ? column.Scale : -1,
-					column.IsPrecisionDefined() ? column.Precision : -1, column.SqlType, column.IsQuoted);
+			AddColumn(anyMapping, column.Name, column.IsLengthDefined() ? column.Length : -1, column.IsPrecisionDefined() ? column.Scale : 0,
+					column.IsPrecisionDefined() ? column.Precision : 0, column.SqlType);
 		}
 
 		public static void AddColumnsOrFormulas(XmlElement element, IEnumerable<ISelectable> columnIterator)
