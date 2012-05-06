@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using NHibernate.Envers.Tests.Entities.CustomType;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
@@ -8,11 +6,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 	public class CLOBCustomTest : TestBase
 	{
 		private int ccte_id;
-
-		protected override IEnumerable<string> Mappings
-		{
-			get { return new[] { "Entities.CustomType.Mapping.hbm.xml" }; }
-		}
 
 		protected override void Initialize()
 		{

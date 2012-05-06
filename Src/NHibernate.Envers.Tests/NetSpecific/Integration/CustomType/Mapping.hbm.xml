@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 						 assembly="NHibernate.Envers.Tests"
 						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.CustomType">
-	<typedef class="NHibernate.Envers.Tests.Entities.CustomType.CLOBTestUserType, NHibernate.Envers.Tests" name="CLOB" />
+	<typedef class="CLOBTestUserType" name="CLOB" />
 	<class name="CLOBCustomTypeEntity">
 		<id name="Id">
 			<generator class="native"/>

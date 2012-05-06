@@ -1,6 +1,6 @@
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.Entities.CustomType
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
 	public class CLOBCustomTypeEntity
 	{
