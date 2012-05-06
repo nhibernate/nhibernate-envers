@@ -2,7 +2,7 @@ using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.CustomType
 {
-	public class ParametrizedCustomTypeEntity
+	public class CLOBCustomTypeEntity
 	{
 		public virtual int Id { get; set; }
 		[Audited]
