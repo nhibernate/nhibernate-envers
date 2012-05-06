@@ -2,7 +2,7 @@ using System.Data;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 
-namespace NHibernate.Envers.Tests.Entities.CustomType
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
 	public class CLOBTestUserType : IUserType
 	{
@@ -73,6 +73,5 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 		{
 			get { return false; }
 		}
-
 	}
 }
