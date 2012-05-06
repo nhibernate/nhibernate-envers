@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Data;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
@@ -9,7 +8,7 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 	{
 		private static readonly SqlType[] TYPES = new[] { new StringClobSqlType() };
 
-        public new bool Equals(object x, object y)
+		public new bool Equals(object x, object y)
 		{
 			//noinspection ObjectEquality
 			if (x == y)
@@ -37,7 +36,7 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 
 		public void NullSafeSet(IDbCommand cmd, object value, int index)
 		{
-            NHibernateUtil.String.NullSafeSet(cmd, value, index);
+			NHibernateUtil.String.NullSafeSet(cmd, value, index);
 		}
 
 		public object DeepCopy(object value)
@@ -67,7 +66,7 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 
 		public System.Type ReturnedType
 		{
-			get { return typeof (string); }
+			get { return typeof(string); }
 		}
 
 		public bool IsMutable
