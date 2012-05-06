@@ -68,8 +68,8 @@
     <Compile Include="Entities\Components\DefaultValueComponent1.cs" />
     <Compile Include="Entities\Components\DefaultValueComponent2.cs" />
     <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
-    <Compile Include="Entities\CustomType\CLOBTestUserType.cs" />
-    <Compile Include="Entities\CustomType\CLOBCustomTypeEntity.cs" />
+    <Compile Include="NetSpecific\Integration\CustomType\CLOBTestUserType.cs" />
+    <Compile Include="NetSpecific\Integration\CustomType\CLOBCustomTypeEntity.cs" />
     <Compile Include="Entities\CustomType\PrimitiveCustomTypeEntity.cs" />
     <Compile Include="Entities\CustomType\PrimitiveImmutableType.cs" />
     <Compile Include="Entities\CustomType\PrimitiveTestUserType.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Integration\Basic\ColumnScalePrecisionTest.cs" />
     <Compile Include="Integration\Basic\ScalePrecisionEntity.cs" />
     <Compile Include="Integration\Components\DefaultValueComponentsTest.cs" />
-    <Compile Include="Integration\CustomType\CLOBCustomTest.cs" />
+    <Compile Include="NetSpecific\Integration\CustomType\CLOBCustomTest.cs" />
     <Compile Include="Integration\CustomType\PrimitiveCustomTest.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractCheckActivity.cs" />
     <Compile Include="Integration\Inheritance\Mixed\AbstractActivity.cs" />
@@ -642,6 +642,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\CustomType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\MultipleProperty.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\UserCollection\Mapping.hbm.xml" />
