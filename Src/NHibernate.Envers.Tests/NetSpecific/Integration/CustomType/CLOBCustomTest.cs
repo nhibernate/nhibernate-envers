@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.CustomType;
 using NUnit.Framework;
 
-namespace NHibernate.Envers.Tests.Integration.CustomType
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
 	[TestFixture]
 	public class CLOBCustomTest : TestBase

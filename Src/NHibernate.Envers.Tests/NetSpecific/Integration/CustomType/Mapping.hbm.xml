@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.CustomType">
+	<typedef class="NHibernate.Envers.Tests.Entities.CustomType.CLOBTestUserType, NHibernate.Envers.Tests" name="CLOB" />
+	<class name="CLOBCustomTypeEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str" type="CLOB"/>
+	</class>
+</hibernate-mapping>
