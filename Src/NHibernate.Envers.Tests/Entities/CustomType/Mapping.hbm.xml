@@ -7,16 +7,16 @@
 		<param name="param1">x</param>
 		<param name="param2">y</param>
 	</typedef>
-    <typedef class="NHibernate.Envers.Tests.Entities.CustomType.CLOBTestUserType, NHibernate.Envers.Tests" name="CLOB" />
-    <typedef name="Prim" class="NHibernate.Envers.Tests.Entities.CustomType.PrimitiveTestUserType, NHibernate.Envers.Tests"/>
-    <class name="CLOBCustomTypeEntity">
-        <id name="Id">
-            <generator class="native"/>
-        </id>
-        <property name="Str" type="CLOB"/>
-    </class>
+	 <typedef class="NHibernate.Envers.Tests.Entities.CustomType.CLOBTestUserType, NHibernate.Envers.Tests" name="CLOB" />
+	 <typedef name="Prim" class="NHibernate.Envers.Tests.Entities.CustomType.PrimitiveTestUserType, NHibernate.Envers.Tests"/>
+	 <class name="CLOBCustomTypeEntity">
+		  <id name="Id">
+				<generator class="native"/>
+		  </id>
+		  <property name="Str" type="CLOB"/>
+	 </class>
 
-    <class name="CompositeCustomTypeEntity">
+	 <class name="CompositeCustomTypeEntity">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
