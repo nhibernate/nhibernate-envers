@@ -286,10 +286,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			foreach (var join in pc.JoinIterator)
 			{
 				// Checking if all of the join properties are audited
-				if (!CheckPropertiesAudited(join.PropertyIterator, auditingData))
-				{
-					continue;
-				}
+				//if (!CheckPropertiesAudited(join.PropertyIterator, auditingData))
+				//{
+					//continue;
+					
+				//}
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
