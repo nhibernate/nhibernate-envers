@@ -227,19 +227,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static bool CheckPropertiesAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
+		private static bool CheckAnyPropertyAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
 		{
 			foreach (var property in properties)
 			{
 				var propertyName = property.Name;
 				var propertyAuditingData = auditingData.GetPropertyAuditingData(propertyName);
-				if (propertyAuditingData == null)
+				if (propertyAuditingData != null)
 				{
-					return false;
+					return true;
 				}
 			}
 
-			return true;
+			return false;
 		}
 
 		public string GetSchema(string schemaFromAnnotation, Table table)
@@ -285,12 +285,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			foreach (var join in pc.JoinIterator)
 			{
-				// Checking if all of the join properties are audited
-				//if (!CheckPropertiesAudited(join.PropertyIterator, auditingData))
-				//{
-					//continue;
-					
-				//}
+				// Checking if any of the join properties are audited
+				if (!CheckAnyPropertyAudited(join.PropertyIterator, auditingData))
+				{
+					continue;
+				}
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
