@@ -1,8 +1,9 @@
 ﻿using Iesi.Collections.Generic;
+using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollectionWithAudited
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedProperties
 {
 	[TestFixture]
 	public class NoAuditedCollectionTest : TestBase
@@ -36,7 +37,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollecti
 		public void VerifyRevision1()
 		{
 			var rev1 = AuditReader().Find<Audited>(id, 1);
-			rev1.Number.Should().Be.EqualTo(1);
+			rev1.Number.Should().Be.EqualTo(0);
 			rev1.XCollection.Should().Be.Null();
 		}
 
@@ -44,8 +45,16 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollecti
 		public void VerifyRevision2()
 		{
 			var rev1 = AuditReader().Find<Audited>(id, 2);
-			rev1.Number.Should().Be.EqualTo(2);
+			rev1.Number.Should().Be.EqualTo(0);
 			rev1.XCollection.Should().Be.Null();
+		}
+
+		[Test]
+		public void ShouldHaveNotCreatedAuditedJoinTable()
+		{
+			Cfg.GetClassMapping("NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedProperties.Audited_AUD")
+				.JoinIterator
+				.Should().Be.Empty();
 		}
 	}
 }

@@ -574,6 +574,8 @@
     <Compile Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\Model.cs" />
     <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\NoAuditedCollectionTest.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedProperties\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedProperties\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Memory\MultipleConfigurationsTest.cs" />
     <Compile Include="NetSpecific\Integration\Merge\AddEditCollectionItemTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
@@ -644,6 +646,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedProperties\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Mapping.hbm.xml" />

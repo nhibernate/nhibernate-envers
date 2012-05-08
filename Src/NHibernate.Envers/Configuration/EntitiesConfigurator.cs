@@ -92,7 +92,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				if (revisionInfoXmlMapping !=  null) 
 				{
-					cfg.AddDocument((revisionInfoXmlMapping));
+					cfg.AddDocument(revisionInfoXmlMapping);
 				}
 			}
 
