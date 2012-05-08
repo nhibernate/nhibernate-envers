@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollection
 {
 	[TestFixture]
 	public class NoAuditedCollectionTest : TestBase
