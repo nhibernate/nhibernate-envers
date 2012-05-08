@@ -570,6 +570,8 @@
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\SchemaSubclassTest.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\Model.cs" />
     <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Memory\MultipleConfigurationsTest.cs" />
@@ -642,6 +644,7 @@
     <Compile Include="Tools\TestTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\MultipleProperty.hbm.xml" />
