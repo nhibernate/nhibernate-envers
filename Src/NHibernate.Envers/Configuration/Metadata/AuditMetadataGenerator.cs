@@ -108,8 +108,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-
-
 		private void addValueInFirstPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 					  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
 					  bool insertable, bool processModifiedFlag)
@@ -211,7 +209,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private void AddProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
+		private void addProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
 									ClassAuditingData auditingData, string entityName, EntityXmlMappingData xmlMappingData,
 									bool firstPass)
 		{
@@ -227,7 +225,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static bool CheckAnyPropertyAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
+		private static bool checkAnyPropertyAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)
 		{
 			foreach (var property in properties)
 			{
@@ -278,7 +276,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return catalog;
 		}
 
-		private void CreateJoins(PersistentClass pc, XmlElement parent, ClassAuditingData auditingData)
+		private void createJoins(PersistentClass pc, XmlElement parent, ClassAuditingData auditingData)
 		{
 			var JoinElements = new Dictionary<Join, XmlElement>();
 			entitiesJoins.Add(pc.EntityName, JoinElements);
@@ -286,7 +284,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			foreach (var join in pc.JoinIterator)
 			{
 				// Checking if any of the join properties are audited
-				if (!CheckAnyPropertyAudited(join.PropertyIterator, auditingData))
+				if (!checkAnyPropertyAudited(join.PropertyIterator, auditingData))
 				{
 					continue;
 				}
@@ -322,12 +320,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 				XmlElement joinElement;
 				if (entityJoin.TryGetValue(join, out joinElement))
 				{
-					AddProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName, xmlMappingData, firstPass);
+					addProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName, xmlMappingData, firstPass);
 				}
 			}
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateMappingData(
+		private Triple<XmlElement, IExtendedPropertyMapper, string> generateMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				IdMappingData idMapper)
 		{
@@ -357,7 +355,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return new Triple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, string> GenerateInheritanceMappingData(
+		private Triple<XmlElement, IExtendedPropertyMapper, string> generateInheritanceMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				string inheritanceMappingType)
 		{
@@ -440,16 +438,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			switch (inheritanceType)
 			{
 				case InheritanceType.None:
-					mappingData = GenerateMappingData(pc, xmlMappingData, auditTableData, idMapper);
+					mappingData = generateMappingData(pc, xmlMappingData, auditTableData, idMapper);
 					break;
 
 				case InheritanceType.Single:
 					auditTableData = new AuditTableData(auditEntityName, null, schema, catalog);
-					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "subclass");
+					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "subclass");
 					break;
 
 				case InheritanceType.Joined:
-					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
+					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
 
 					// Adding the "key" element with all id columns...
 					var keyMapping = mappingData.First.OwnerDocument.CreateElement("key");
@@ -461,7 +459,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					break;
 
 				case InheritanceType.TablePerClass:
-					mappingData = GenerateInheritanceMappingData(pc, xmlMappingData, auditTableData, "union-subclass");
+					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "union-subclass");
 
 					break;
 
@@ -469,19 +467,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 					throw new AssertionFailure("AuditMetadataGenerator.GenerateFirstPass: Impossible enum value.");
 			}
 
-			var class_mapping = mappingData.First;
+			var classMapping = mappingData.First;
 			var propertyMapper = mappingData.Second;
 			var parentEntityName = mappingData.Third;
 
-			xmlMappingData.ClassMapping = class_mapping;
+			xmlMappingData.ClassMapping = classMapping;
 
 			// Mapping unjoined properties
-			AddProperties(class_mapping, pc.UnjoinedPropertyIterator, propertyMapper,
+			addProperties(classMapping, pc.UnjoinedPropertyIterator, propertyMapper,
 					auditingData, pc.EntityName, xmlMappingData,
 					true);
 
 			// Creating and mapping joins (first pass)
-			CreateJoins(pc, class_mapping, auditingData);
+			createJoins(pc, classMapping, auditingData);
 			addJoins(pc, propertyMapper, auditingData, pc.EntityName, xmlMappingData, true);
 
 			// Storing the generated configuration
@@ -504,7 +502,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Mapping unjoined properties
 			var parent = xmlMappingData.ClassMapping;
 
-			AddProperties(parent, pc.UnjoinedPropertyIterator,
+			addProperties(parent, pc.UnjoinedPropertyIterator,
 					propertyMapper, auditingData, entityName, xmlMappingData, false);
 
 			// Mapping joins (second pass)
