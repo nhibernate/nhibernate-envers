@@ -1,8 +1,7 @@
-﻿using System;
-using Iesi.Collections.Generic;
+﻿using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollection
 {
 	public class NotAudited
 	{

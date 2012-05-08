@@ -570,8 +570,8 @@
     <Compile Include="NetSpecific\Integration\JoinAuditTable\MultipleJoinAuditTableTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\Model.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Naming\SchemaSubclassTest.cs" />
-    <Compile Include="NetSpecific\Integration\Join\Model.cs" />
-    <Compile Include="NetSpecific\Integration\Join\NoAuditedCollectionTest.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\Model.cs" />
+    <Compile Include="NetSpecific\Integration\Join\NoAuditedCollection\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Memory\MultipleConfigurationsTest.cs" />
     <Compile Include="NetSpecific\Integration\Merge\AddEditCollectionItemTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
@@ -646,7 +646,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\MultipleProperty.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\UserCollection\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\Join\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedCollection\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Memory\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Memory\Extended.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Configuration\Incorrect\Mapping.hbm.xml" />
