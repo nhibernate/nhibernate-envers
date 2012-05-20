@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children(parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_AUD").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV integer NOT NULL, REVTYPE tinyint, " +
+				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV integer NOT NULL, REVEND int, REVTYPE tinyint, " +
 						"parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
 				tx.Commit();
 			}
