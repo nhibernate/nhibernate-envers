@@ -6,11 +6,14 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	[TestFixture]
 	public class HasChangedChildReferencingTest : AbstractModifiedFlagsEntityTest
 	{
 		private int id1;
 		private int id2;
+
+		public HasChangedChildReferencingTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

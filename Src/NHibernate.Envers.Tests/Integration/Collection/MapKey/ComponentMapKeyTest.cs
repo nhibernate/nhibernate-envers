@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 		private int cte1_id;
 		private int cte2_id;
 
+		public ComponentMapKeyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Integration.Collection.MapKey.Mapping.hbm.xml", 

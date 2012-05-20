@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 	{
 		private int id;
 
+		public SuccessfulTransactionScopeTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new IntTestEntity { Number = 10 };

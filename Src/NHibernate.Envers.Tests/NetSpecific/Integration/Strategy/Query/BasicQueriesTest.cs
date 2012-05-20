@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.Query
 	{
 		private int id;
 
+		public BasicQueriesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));

@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 	{
 		private long id;
 
+		public ColumnScalePrecisionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			using (var tx = Session.BeginTransaction())

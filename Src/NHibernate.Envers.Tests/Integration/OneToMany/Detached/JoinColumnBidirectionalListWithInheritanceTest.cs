@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int ing1_id;
 		private int ing2_id;
 
+		public JoinColumnBidirectionalListWithInheritanceTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new ListJoinColumnBidirectionalInheritanceRefEdChildEntity { ParentData = "ed1", ChildData = "ed1 child" };

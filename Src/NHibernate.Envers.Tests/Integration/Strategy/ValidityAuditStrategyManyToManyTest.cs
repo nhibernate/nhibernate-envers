@@ -15,6 +15,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		private const int ingId = 1;
 		private const int edId = 2;
 
+		public ValidityAuditStrategyManyToManyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var owningEntity = new SetOwningEntity {Id = ingId, Data = "parent"};

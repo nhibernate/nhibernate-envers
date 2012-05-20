@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.Integration.Data
 	{
 		private int id1;
 
+		public DateTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var dte = new DateTestEntity { Date = new DateTime(2000,1,2,3,4,5) };

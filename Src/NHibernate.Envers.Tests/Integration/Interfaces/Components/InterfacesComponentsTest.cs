@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 {
-	[TestFixture]
 	public class InterfacesComponentsTest : TestBase
 	{
 		private int id1;
+
+		public InterfacesComponentsTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

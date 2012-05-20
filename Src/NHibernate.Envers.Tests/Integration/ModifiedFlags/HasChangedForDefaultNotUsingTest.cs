@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private const int entityId = 37;
 		private const int refEntityId = 133;
 
+		public HasChangedForDefaultNotUsingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override bool ForceModifiedFlags
 		{
 			get { return false; }

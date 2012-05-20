@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private int ing1_id;
 		private int ing2_id;
 
+		public BidirectionalMapKeyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed = new RefEdMapKeyEntity();

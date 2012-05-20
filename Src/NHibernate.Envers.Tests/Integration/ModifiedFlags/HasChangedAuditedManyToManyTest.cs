@@ -15,6 +15,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private long idPers1;
 		private long idPers2;
 
+		public HasChangedAuditedManyToManyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var pers1 = new Person {Name = "Hernan", Age = 28};

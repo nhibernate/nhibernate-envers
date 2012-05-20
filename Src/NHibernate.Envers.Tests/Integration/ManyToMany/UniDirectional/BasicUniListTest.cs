@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		private int ing1_id;
 		private int ing2_id;
 
+		public BasicUniListTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ing1_id = 123;

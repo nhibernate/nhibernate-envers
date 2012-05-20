@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	[TestFixture]
 	public class HasChangedAPITest : AbstractModifiedFlagsEntityTest
 	{
+		public HasChangedAPITest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ent1 = new AuditedTestEntity {Id = 1, Data = "str1"};

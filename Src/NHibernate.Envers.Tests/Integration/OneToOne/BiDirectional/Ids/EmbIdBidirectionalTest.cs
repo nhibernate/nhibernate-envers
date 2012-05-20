@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.Ids
 		private EmbId ed2_id;
 		private EmbId ing1_id;
 
+		public EmbIdBidirectionalTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ed1_id = new EmbId {X = 1, Y = 2};

@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int vjtrte_id;
 		private int vjtrtae_id1;
 
+		public VersionsJoinTableRangeComponentNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var vjrcte = new VersionsJoinTableRangeComponentTestEntity();

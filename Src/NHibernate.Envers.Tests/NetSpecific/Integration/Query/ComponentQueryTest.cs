@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 		private const int id = 1345;
 		private const int personWeight = 80;
 
+		public ComponentQueryTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var person = new Person { Id = id, Weight = new Weight { Kilo = personWeight } };

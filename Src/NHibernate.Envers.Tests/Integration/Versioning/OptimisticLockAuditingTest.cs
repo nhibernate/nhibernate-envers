@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 	{
 		private const int id =47;
 
+		public OptimisticLockAuditingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.DoNotAuditOptimisticLockingField, false);

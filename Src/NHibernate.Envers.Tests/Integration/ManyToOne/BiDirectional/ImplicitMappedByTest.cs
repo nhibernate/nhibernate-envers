@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional
 		private long owning1Id;
 		private long owning2Id;
 
+		public ImplicitMappedByTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var owned = new OneToManyOwned {Data = "data"};

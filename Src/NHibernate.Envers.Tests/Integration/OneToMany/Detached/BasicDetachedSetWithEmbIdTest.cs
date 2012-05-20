@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private EmbId str2_id;
 		private EmbId coll1_id;
 
+		public BasicDetachedSetWithEmbIdTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			str1_id = new EmbId {X = 1, Y = 2};

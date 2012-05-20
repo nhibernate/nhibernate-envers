@@ -2,11 +2,14 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.HashCode
 {
-	[TestFixture]
 	public class ChangingHashcodeTest : TestBase
 	{
 		private int pageId;
 		private int imageId;
+
+		public ChangingHashcodeTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

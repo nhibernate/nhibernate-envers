@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 	{
 		private int id1;
 
+		public DoubleFlushAddDelTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Mapping.hbm.xml" }; }

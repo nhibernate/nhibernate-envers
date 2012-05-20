@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Properties
 	{
 		private int id;
 
+		public UnversionedOptimisticLockingFieldTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.DoNotAuditOptimisticLockingField, true);

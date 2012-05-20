@@ -3,12 +3,15 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudited
 {
-	[TestFixture]
 	public class SingleDomainObjectToMultipleTablesTest : TestBase
 	{
 		private long carId;
 		private long ownerId;
 		private long driverId;
+
+		public SingleDomainObjectToMultipleTablesTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

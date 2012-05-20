@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 	{
 		private const int id = 17;
 
+		public AddDelTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new GivenIdStrEntity { Id = id, Data = "data" };

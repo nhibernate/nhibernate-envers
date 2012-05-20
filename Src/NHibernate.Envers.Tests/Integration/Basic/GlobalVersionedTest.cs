@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	[TestFixture]
 	public class GlobalVersionedTest : TestBase
 	{
 		private int id1;
+
+		public GlobalVersionedTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

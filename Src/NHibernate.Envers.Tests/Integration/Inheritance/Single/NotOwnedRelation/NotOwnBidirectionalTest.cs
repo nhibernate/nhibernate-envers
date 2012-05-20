@@ -3,12 +3,15 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.NotOwnedRelation
 {
-	[TestFixture]
 	public class NotOwnBidirectionalTest : TestBase
 	{
 		private long pc_id;
 		private long a1_id;
 		private long a2_id;
+
+		public NotOwnBidirectionalTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 	{
 		private Guid id;
 
+		public SortedSetAndMapTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

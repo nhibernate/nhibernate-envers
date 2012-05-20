@@ -8,7 +8,11 @@ namespace NHibernate.Envers.Tests.Integration.Query
     [TestFixture]
     public class AggregateQueryTest : TestBase
     {
-        protected override void Initialize()
+    	public AggregateQueryTest(string strategyType) : base(strategyType)
+    	{
+    	}
+
+    	protected override void Initialize()
         {
             var ite1 = new IntTestEntity {Number = 2};
             var ite2 = new IntTestEntity { Number = 10};

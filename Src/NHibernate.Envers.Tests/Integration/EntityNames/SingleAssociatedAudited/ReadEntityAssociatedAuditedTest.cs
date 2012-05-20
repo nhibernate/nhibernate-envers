@@ -18,6 +18,10 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudite
 		private Person currentPerson1;
 		private Person person1;
 
+		public ReadEntityAssociatedAuditedTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var pers1 = new Person { Name = "Hernan", Age = 15 };

@@ -9,9 +9,12 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	/// <summary>
 	/// Tests proper behavior of revision entity that utilizes <see cref="ModifiedEntityNamesAttribute"/> annotation.
 	/// </summary>
-	[TestFixture]
 	public class AnnotatedTrackingEntitiesTest : DefaultTrackingEntitiesTest
 	{
+		public AnnotatedTrackingEntitiesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.TrackEntitiesChangedInRevision, false);

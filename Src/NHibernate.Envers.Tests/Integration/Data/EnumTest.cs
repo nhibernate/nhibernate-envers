@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Data
 {
-	[TestFixture]
 	public class EnumTest : TestBase
 	{
 		private int id1;
+
+		public EnumTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

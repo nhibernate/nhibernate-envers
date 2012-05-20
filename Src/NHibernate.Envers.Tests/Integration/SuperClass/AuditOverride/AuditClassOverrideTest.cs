@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 		private int classAuditedEntityId;
 		private int classNotAuditedEntityId;
 
+		public AuditClassOverrideTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			//Revision 1

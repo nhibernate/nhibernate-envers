@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
+		public HasChangedCompositeCustomTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ccte = new CompositeCustomTypeEntity();

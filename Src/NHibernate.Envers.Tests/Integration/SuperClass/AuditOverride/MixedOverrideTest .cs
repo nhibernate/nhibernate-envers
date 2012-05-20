@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 	{
 		private int mixedEntityId;
 
+		public MixedOverrideTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			using (var tx = Session.BeginTransaction())

@@ -23,6 +23,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		private int c2_1_id;
 		private int c2_2_id;
 
+		public ValidityAuditStrategyRevEndTestCustomRevEntTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy))

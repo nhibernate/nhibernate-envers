@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyAudited
 		private Person person1_1;
 		private Car car1_1;
 
+		public ReadEntityWithAuditedCollectionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var pers1 = new Person { Name = "Hernan", Age = 28 };

@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 	{
 		private int id;
 
+		public NonExistingKeyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new DynamicTestEntity();

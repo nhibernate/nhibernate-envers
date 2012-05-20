@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Versioning
 {
-	[TestFixture]
 	public class NoOptimisticLockAuditingTest : TestBase
 	{
 		private const int id = 17;
+
+		public NoOptimisticLockAuditingTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

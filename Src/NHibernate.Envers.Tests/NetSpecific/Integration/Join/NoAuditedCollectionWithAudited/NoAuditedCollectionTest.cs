@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollecti
 	{
 		private const int id = 44;
 
+		public NoAuditedCollectionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var audited = new Audited

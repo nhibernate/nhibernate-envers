@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 	{
 		private const int id = 425;
 
+		public MultipleJoinAuditTableTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var animal = new Animal{Id=id};

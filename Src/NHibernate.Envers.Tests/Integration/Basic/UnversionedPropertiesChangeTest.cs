@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	[TestFixture]
 	public class UnversionedPropertiesChangeTest : TestBase
 	{
 		private int id1;
+
+		public UnversionedPropertiesChangeTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		private int addNewEntity(string str1, string str2)
 		{

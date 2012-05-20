@@ -2,12 +2,15 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	[TestFixture]
 	public class ManyOperationsInTransactionTest : TestBase
 	{
 		private int id1;
 		private int id2;
 		private int id3;
+
+		public ManyOperationsInTransactionTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

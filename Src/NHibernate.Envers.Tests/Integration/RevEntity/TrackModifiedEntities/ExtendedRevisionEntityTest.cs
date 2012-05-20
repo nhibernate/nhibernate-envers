@@ -10,9 +10,12 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	/// <summary>
 	/// Tests proper behavior of revision entity that extends <see cref="DefaultTrackingModifiedEntitiesRevisionEntity"/>.
 	/// </summary>
-	[TestFixture]
 	public class ExtendedRevisionEntityTest : DefaultTrackingEntitiesTest 
 	{
+		public ExtendedRevisionEntityTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Mapping.hbm.xml", "Entities.RevEntity.TrackModifiedEntities.ExtendedRevisionEntity.hbm.xml" }; }

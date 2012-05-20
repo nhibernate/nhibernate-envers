@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int str1_id;
 		private int coll1_id;
 
+		public DataChangesDetachedSetTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			coll1_id = 1234;

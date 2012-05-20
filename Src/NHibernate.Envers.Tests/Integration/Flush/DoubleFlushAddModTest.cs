@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 	{
 		private int id;
 
+		public DoubleFlushAddModTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Mapping.hbm.xml" }; }

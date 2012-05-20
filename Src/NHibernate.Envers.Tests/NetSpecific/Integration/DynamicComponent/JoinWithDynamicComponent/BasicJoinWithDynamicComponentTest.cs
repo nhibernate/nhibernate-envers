@@ -19,6 +19,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent.JoinW
 		private Person currentPerson1;
 		private Person person1;
 
+		public BasicJoinWithDynamicComponentTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var pers1 = new Person { Name = "Hernan", Age = 15 };

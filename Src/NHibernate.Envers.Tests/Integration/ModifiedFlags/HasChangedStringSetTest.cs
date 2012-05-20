@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int sse1_id;
 		private int sse2_id;
 
+		public HasChangedStringSetTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var sse1 = new StringSetEntity();

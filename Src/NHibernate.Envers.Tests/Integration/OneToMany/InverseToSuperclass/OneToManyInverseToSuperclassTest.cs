@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.InverseToSuperclass
 	{
 		private long masterId;
 
+		public OneToManyInverseToSuperclassTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var master = new Master();

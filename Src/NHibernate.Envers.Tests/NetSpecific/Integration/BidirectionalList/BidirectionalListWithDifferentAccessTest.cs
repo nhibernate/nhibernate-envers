@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
 		private int child1_id;
 		private int child2_id;
 
+		public BidirectionalListWithDifferentAccessTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var parent = new Parent();

@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		private int wjte1_id;
 		private int wjte2_id;
 
+		public BasicWhereJoinTableTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ite1_1_id = 10;

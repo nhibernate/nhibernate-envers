@@ -2,11 +2,14 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidirectional
 {
-	[TestFixture]
 	public class UnidirectionalDoubleAbstractTest : TestBase
 	{
 		private long cce1_id;
 		private int cse1_id;
+
+		public UnidirectionalDoubleAbstractTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

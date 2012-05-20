@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 	{
 		private int id;
 
+		public MultiplePropertyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ent = new DynamicTestEntity();

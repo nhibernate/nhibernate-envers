@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int ed1Id;
 		private int ed2Id;
 
+		public HasChangedBidirectional2Test(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new BiRefEdEntity {Id = 1, Data = "data_ed_1"};

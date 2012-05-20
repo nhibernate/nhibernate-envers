@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
-	[TestFixture]
 	public class CLOBCustomTest : TestBase
 	{
 		private int ccte_id;
+
+		public CLOBCustomTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

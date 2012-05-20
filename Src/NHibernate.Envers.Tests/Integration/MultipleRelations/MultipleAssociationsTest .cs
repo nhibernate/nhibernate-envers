@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.MultipleRelations
 		private long warsawId;
 		private long cracowId;
 
+		public MultipleAssociationsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var lukasz = new Person { Name = "Lukasz" };

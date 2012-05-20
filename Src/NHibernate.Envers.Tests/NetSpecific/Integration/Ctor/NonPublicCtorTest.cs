@@ -7,6 +7,11 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Ctor
 	public class NonPublicCtorTest : TestBase
 	{
 		private int id;
+
+		public NonPublicCtorTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new NonPublicCtorEntity(new NonPublicCtorComponent("first"), new StructComponentWithDefinedCtor(1));

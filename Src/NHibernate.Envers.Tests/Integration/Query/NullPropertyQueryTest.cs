@@ -18,6 +18,10 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private const int idReferenceToParentNotNull = 1;
 		private const int idParent = 1;
 
+		public NullPropertyQueryTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			//rev 1

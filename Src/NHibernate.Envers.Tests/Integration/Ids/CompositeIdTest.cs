@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 		private EmbIdWithCustomType id5;
 		private EmbIdWithCustomType id6;
 
+		public CompositeIdTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Ids.Mapping.hbm.xml" }; }

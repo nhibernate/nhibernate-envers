@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 		private const int ing1_id = 5;
 		private const int ing2_id = 6;
 
+		public UniDirectionalWithNullsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new UniRefEdEntity {Id = ed1_id, Data = "data_ed_1"};

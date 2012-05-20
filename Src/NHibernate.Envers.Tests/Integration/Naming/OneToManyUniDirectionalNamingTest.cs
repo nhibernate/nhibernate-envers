@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int uni1_id;
 		private int str1_id;
 
+		public OneToManyUniDirectionalNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var uni1 = new DetachedNamingTestEntity {Id = 1, Data = "data1", Collection = new HashedSet<StrTestEntity>()};

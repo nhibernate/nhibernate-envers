@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	[TestFixture]
 	public class MixedAccessTest : TestBase
 	{
 		private int id1;
+
+		public MixedAccessTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

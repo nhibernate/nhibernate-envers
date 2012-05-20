@@ -15,6 +15,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int cte1_id;
 		private int cte2_id;
 
+		public HasChangedComponentMapKeyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var cmke = new ComponentMapKeyEntity();

@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	[TestFixture]
 	public class NoSetterTest : TestBase
 	{
 		private int id1;
+
+		public NoSetterTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

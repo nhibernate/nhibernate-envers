@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int id1;
 		private int id2;
 
+		public BasicNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var nte1 = new NamingTestEntity1 {Data = "data1"};

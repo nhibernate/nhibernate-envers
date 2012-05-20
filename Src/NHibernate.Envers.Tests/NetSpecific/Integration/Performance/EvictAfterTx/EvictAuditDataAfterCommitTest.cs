@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfter
 	[TestFixture]
 	public abstract class EvictAuditDataAfterCommitTest : TestBase
 	{
+		protected EvictAuditDataAfterCommitTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 		}

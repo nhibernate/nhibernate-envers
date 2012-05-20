@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.Integration.Join
 	{
 		private int id;
 
+		public NamingJoinTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ste = new JoinWithAuditNameEntity {S1 = "a", S2 = "1"};

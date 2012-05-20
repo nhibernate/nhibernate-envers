@@ -3,10 +3,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	[TestFixture]
 	public class NonVersionedTest : TestBase
 	{
 		private int id1;
+
+		public NonVersionedTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

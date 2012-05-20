@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		private int ing1_id;
 		private int ing2_id;
 
+		public OneToManyCacheTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.OneToMany.Mapping.hbm.xml" }; }
