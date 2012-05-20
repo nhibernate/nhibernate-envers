@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Proxy
 {
-    [TestFixture]
     public class ProxyIdentifierTest : TestBase
     {
         private TargetNotAuditedEntity tnae1;

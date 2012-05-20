@@ -12,7 +12,6 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	/// interface. <see cref="CustomTrackingRevisionListener"/> shall be notified whenever an entity instance has been
 	/// added, modified or removed, so that changed entity type can be persisted.
 	/// </summary>
-	[TestFixture]
 	public class CustomTrackingEntitiesTest : TestBase
 	{
 		public CustomTrackingEntitiesTest(string strategyType) : base(strategyType)

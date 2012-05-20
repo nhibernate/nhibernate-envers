@@ -7,7 +7,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 {
-	[TestFixture]
 	public class SortedSetAndMapTest : TestBase
 	{
 		private Guid id;

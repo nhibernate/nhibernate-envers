@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditedAtSuperclassLevel.AuditAllSubclass
 {
-	[TestFixture]
 	public class MappedSubclassingAllAuditedTest : TestBase
 	{
 		private int id1_1;

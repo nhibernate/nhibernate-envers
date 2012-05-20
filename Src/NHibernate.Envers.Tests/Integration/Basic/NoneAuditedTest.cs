@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	[TestFixture]
 	public class NoneAuditedTest : TestBase
 	{
 		public NoneAuditedTest(string strategyType) : base(strategyType)

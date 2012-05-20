@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 {
-	[TestFixture]
 	public class OneToOnePrimaryKeyTest : TestBase
 	{
 		private const int id = 47;

@@ -6,7 +6,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
-	[TestFixture]
 	public class RollbackAuditExceptionTest : TestBase
 	{
 		public RollbackAuditExceptionTest(string strategyType) : base(strategyType)

@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 {
-	[TestFixture]
 	public class M2MRelationNotAuditedTargetTest : TestBase
 	{
 		private int tnae1_id;

@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
-	[TestFixture]
 	public class ComponentInTest : TestBase
 	{
 		public ComponentInTest(string strategyType) : base(strategyType)

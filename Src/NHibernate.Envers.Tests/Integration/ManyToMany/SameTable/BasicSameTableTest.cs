@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 {
-	[TestFixture]
 	public class BasicSameTableTest : TestBase
 	{
 		private int p1_id;

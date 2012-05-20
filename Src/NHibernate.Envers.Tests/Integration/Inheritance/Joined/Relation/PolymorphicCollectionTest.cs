@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 {
-	[TestFixture]
 	public class PolymorphicCollectionTest : TestBase
 	{
 		private int ed_id1;

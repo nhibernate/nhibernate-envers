@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	[TestFixture]
 	public class CustomTest : TestBase
 	{
 		private int id;

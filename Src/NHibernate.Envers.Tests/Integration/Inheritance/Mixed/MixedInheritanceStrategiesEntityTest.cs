@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Mixed
 {
-	[TestFixture]
 	public class MixedInheritanceStrategiesEntityTest : TestBase
 	{
 		private ActivityId id1;

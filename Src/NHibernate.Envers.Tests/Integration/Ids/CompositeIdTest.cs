@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Ids
 {
-	[TestFixture]
 	public class CompositeIdTest : TestBase
 	{
 		private EmbId id1;

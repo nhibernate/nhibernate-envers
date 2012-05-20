@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 {
-	[TestFixture]
 	public class BasicBiOwnedTest : TestBase
 	{
 		private int o1_1_id;

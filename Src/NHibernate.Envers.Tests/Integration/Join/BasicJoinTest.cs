@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Join
 {
-	[TestFixture]
 	public class BasicJoinTest : TestBase
 	{
 		private int id;

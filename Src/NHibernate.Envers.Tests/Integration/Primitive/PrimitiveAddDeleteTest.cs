@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Primitive
 {
-	[TestFixture]
 	public class PrimitiveAddDeleteTest : TestBase
 	{
 		private int id1;

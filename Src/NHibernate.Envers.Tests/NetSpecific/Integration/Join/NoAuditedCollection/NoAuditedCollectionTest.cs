@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollection
 {
-	[TestFixture]
 	public class NoAuditedCollectionTest : TestBase
 	{
 		private const int id = 15;

@@ -7,7 +7,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
-	[TestFixture]
 	public class EntityNamesTest : TestBase
 	{
 		public EntityNamesTest(string strategyType) : base(strategyType)

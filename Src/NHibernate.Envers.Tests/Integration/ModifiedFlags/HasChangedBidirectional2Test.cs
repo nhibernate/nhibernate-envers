@@ -6,7 +6,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	[TestFixture]
 	public class HasChangedBidirectional2Test : AbstractModifiedFlagsEntityTest
 	{
 		private int ed1Id;

@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 {
-	[TestFixture]
 	public class MultipleJoinAuditTableTest : TestBase
 	{
 		private const int id = 425;

@@ -7,7 +7,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
-	[TestFixture]
 	public class TrackingEntitiesMultipleChangesTest : TestBase
 	{
 		private int steId1;

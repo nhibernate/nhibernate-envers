@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride.Invalid
 {
-	[TestFixture]
 	public class BothClassAndPropertyNameOverrideTest
 	{
 		[Test]

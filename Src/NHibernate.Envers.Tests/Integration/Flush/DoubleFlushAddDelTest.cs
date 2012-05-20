@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Flush
 {
-	[TestFixture]
 	public class DoubleFlushAddDelTest : TestBase
 	{
 		private int id1;

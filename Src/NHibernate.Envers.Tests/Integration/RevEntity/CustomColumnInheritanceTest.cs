@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	[TestFixture]
 	public class CustomColumnInheritanceTest : TestBase
 	{
 		public CustomColumnInheritanceTest(string strategyType) : base(strategyType)

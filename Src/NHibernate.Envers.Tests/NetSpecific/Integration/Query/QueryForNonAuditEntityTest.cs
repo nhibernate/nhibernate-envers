@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 {
-	[TestFixture]
 	public class QueryForNonAuditEntityTest : TestBase
 	{
 		public QueryForNonAuditEntityTest(string strategyType) : base(strategyType)

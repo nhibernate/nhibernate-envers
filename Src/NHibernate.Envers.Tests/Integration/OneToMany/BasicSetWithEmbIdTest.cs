@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
-	[TestFixture]
 	public class BasicSetWithEmbIdTest : TestBase
 	{
 		private EmbId ed1_id;

@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 {
-	[TestFixture]
 	public class InsertUpdateFalseComponentTest : TestBase
 	{
 		private int id;

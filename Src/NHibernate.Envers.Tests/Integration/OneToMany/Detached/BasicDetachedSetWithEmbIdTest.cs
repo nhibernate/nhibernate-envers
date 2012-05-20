@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	[TestFixture]
 	public class BasicDetachedSetWithEmbIdTest : TestBase
 	{
 		private EmbId str1_id;

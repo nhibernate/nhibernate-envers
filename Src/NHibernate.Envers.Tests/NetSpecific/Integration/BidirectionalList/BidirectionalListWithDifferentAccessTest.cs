@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
 {
-	[TestFixture]
 	public class BidirectionalListWithDifferentAccessTest : TestBase
 	{
 		private int parent_id;

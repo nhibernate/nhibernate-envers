@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesAudited
 {
-	[TestFixture]
 	public abstract class AbstractAllAuditedTest : TestBase
 	{
 		private long aiId;

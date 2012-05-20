@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 {
-	[TestFixture]
 	public class TernaryMapTest : TestBase
 	{
 		private int str1_id;

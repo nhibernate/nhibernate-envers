@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
-	[TestFixture, Ignore("Not working. See NHE-13")]
+	[Ignore("Not working. See NHE-13")]
 	public class SuccessfulTransactionScopeTest : TestBase
 	{
 		private int id;

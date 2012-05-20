@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access
 {
-	[TestFixture]
 	public class ReadonlyAccessTest : TestBase
 	{
 		private int id;

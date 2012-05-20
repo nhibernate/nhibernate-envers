@@ -10,10 +10,8 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
-
 	public abstract class ConfByStringBaseTest
 	{
-
 		protected IDictionary<System.Type, IEntityMeta> metas;
 
 		[Test]

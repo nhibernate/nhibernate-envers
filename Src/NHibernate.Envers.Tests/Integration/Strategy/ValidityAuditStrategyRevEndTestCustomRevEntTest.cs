@@ -11,7 +11,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	[TestFixture]
 	public class ValidityAuditStrategyRevEndTestCustomRevEntTest : TestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";

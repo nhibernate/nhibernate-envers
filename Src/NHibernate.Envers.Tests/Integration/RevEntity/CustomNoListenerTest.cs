@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	[TestFixture]
 	public class CustomNoListenerTest : TestBase
 	{
 		private int id;

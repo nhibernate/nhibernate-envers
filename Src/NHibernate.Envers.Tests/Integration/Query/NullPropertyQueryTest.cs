@@ -9,7 +9,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	[TestFixture]
 	public class NullPropertyQueryTest : TestBase
 	{
 		private int idSimplePropertyNull;

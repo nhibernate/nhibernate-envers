@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	[TestFixture]
 	public class DoubleJoinColumnBidirectionalListTest : TestBase
 	{
 		private int ed1_1_id;

@@ -6,7 +6,6 @@ using NUnit.Framework;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
 	//NHE-32
-	[TestFixture]
 	public class SetOfValuesTest : TestBase
 	{
 		private int id;

@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.ChildRelation
 {
-	[TestFixture]
 	public class ChildReferencingTest : TestBase
 	{
 		private int re_id1;

@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components.Relations
 {
-	[TestFixture]
 	public class OneToManyInComponentTest : TestBase
 	{
 		private int otmcte_id1;

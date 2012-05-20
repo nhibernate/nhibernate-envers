@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.ManyToManyAudited
 {
-	[TestFixture]
 	public class ReadEntityWithAuditedManyToManyTest : TestBase
 	{
 		private long id_car1;

@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedNotAudited
 {
-	[TestFixture]
 	public class ReadEntityAssociatedNotAuditedTest : TestBase
 	{
 		private long id_car1;

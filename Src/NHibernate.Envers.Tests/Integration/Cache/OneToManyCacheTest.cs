@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Cache
 {
-	[TestFixture]
 	public class OneToManyCacheTest : TestBase
 	{
 		private int ed1_id;
