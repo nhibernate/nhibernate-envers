@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.Query
 	{
 		private int id1;
 
+		public StoreDeletedDataTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

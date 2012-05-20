@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		private int ste_id1;
 		private int ste_id2;
 
+		public ManyToOneInComponentTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Components.Relations.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" }; }

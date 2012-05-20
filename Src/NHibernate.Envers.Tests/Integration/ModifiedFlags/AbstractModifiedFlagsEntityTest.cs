@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	[TestFixture]
 	public abstract class AbstractModifiedFlagsEntityTest : TestBase
 	{
+		protected AbstractModifiedFlagsEntityTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected virtual bool ForceModifiedFlags
 		{
 			get { return true; }

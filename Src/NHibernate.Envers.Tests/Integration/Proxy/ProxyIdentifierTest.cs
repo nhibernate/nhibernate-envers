@@ -12,7 +12,11 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
         private TargetNotAuditedEntity tnae1;
         private UnversionedStrTestEntity uste1;
 
-        protected override IEnumerable<string> Mappings
+    	public ProxyIdentifierTest(string strategyType) : base(strategyType)
+    	{
+    	}
+
+    	protected override IEnumerable<string> Mappings
         {
             get
             {

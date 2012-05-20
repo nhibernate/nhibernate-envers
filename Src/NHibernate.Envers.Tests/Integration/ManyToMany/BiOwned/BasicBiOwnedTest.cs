@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 		private int o2_1_id;
 		private int o2_2_id;
 
+		public BasicBiOwnedTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			//revision 1

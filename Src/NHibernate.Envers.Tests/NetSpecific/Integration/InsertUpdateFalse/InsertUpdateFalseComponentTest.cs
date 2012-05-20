@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 	{
 		private int id;
 
+		public InsertUpdateFalseComponentTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new ParentEntity { Component = new ChildComponent { NoUpdateInsert = 1 }, ComponentSetter = new ChildComponent()};

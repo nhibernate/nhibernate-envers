@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private long a1_id;
 		private long a2_id;
 
+		public HasChangedNotOwnedBidirectionalTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			pc_id = 1;

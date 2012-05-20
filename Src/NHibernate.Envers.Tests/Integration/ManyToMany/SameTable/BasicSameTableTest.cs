@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		private int c2_1_id;
 		private int c2_2_id;
 
+		public BasicSameTableTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			// We need first to modify the columns in the middle (join table) to allow null values. Hbm2ddl doesn't seem

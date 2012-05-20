@@ -16,6 +16,10 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		private DateTime timestamp3;
 		private DateTime timestamp4;
 
+		public RevisionForDateTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

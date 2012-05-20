@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 	{
 		private int id1;
 
+		public SimpleTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ite = new IntTestEntity { Number = 10 };

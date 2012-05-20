@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int id3;
 		private int id4;
 
+		public HasChangedComponentsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var cte1 = new ComponentTestEntity {Comp1 = new Component1 {Str1 = "a", Str2 = "b"}, Comp2 = new Component2 {Str5 = "x", Str6 = "y"}};

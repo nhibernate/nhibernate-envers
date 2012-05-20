@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
+		public HasChangedIdMapKeyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var imke = new IdMapKeyEntity();

@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access
 	{
 		private int id;
 
+		public ReadonlyAccessTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ent = new ReadonlyEntity{Data=1};

@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
 		private EmbIdNaming ed_id2;
 		private EmbIdNaming ing_id1;
 
+		public JoinEmbIdNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ed_id1 = new EmbIdNaming { X = 10, Y = 20 };

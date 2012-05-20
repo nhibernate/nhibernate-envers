@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		private int id3;
 		private int id4;
 
+		public ComponentsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Components.Mapping.hbm.xml" }; }

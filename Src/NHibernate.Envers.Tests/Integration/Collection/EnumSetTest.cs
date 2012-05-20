@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 	{
 		private int sse1_id;
 
+		public EnumSetTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Collection.Mapping.hbm.xml" }; }

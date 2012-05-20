@@ -15,6 +15,10 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	[TestFixture]
 	public class CustomTrackingEntitiesTest : TestBase
 	{
+		public CustomTrackingEntitiesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ste = new StrTestEntity{Str = "x"};

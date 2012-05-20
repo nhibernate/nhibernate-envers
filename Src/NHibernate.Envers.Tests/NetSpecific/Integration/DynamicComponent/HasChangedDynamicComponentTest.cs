@@ -5,10 +5,14 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
-	[TestFixture, Ignore("Currently not supported")]
+	[Ignore("Currently not supported")]
 	public class HasChangedDynamicComponentTest : AbstractModifiedFlagsEntityTest
 	{
 		private int id;
+
+		public HasChangedDynamicComponentTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

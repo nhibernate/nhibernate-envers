@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int id2;
 		private int id3;
 
+		public SingleOperationInTransactionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		private int addNewEntity(string str, long lng)
 		{
 			using (var tx = Session.BeginTransaction())

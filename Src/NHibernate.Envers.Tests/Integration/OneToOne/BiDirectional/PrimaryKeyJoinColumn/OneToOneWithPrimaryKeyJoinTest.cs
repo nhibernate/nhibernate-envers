@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.PrimaryKeyJ
 		private long noProxyPersonId;
 		private long proxyPersonId;
 
+		public OneToOneWithPrimaryKeyJoinTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			//Revision 1

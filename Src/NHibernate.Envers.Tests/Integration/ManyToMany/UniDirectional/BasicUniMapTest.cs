@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		private int str2_id;
 		private const int coll1_id = 47;
 
+		public BasicUniMapTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var str1 = new StrTestEntity { Str = "str1" };

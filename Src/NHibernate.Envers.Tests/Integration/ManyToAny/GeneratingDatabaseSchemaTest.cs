@@ -8,7 +8,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToAny
     [TestFixture, Ignore("failing test for NHE-61")]
     public class GeneratingDatabaseSchemaTest : TestBase
     {
-        protected override IEnumerable<string> Mappings
+    	public GeneratingDatabaseSchemaTest(string strategyType) : base(strategyType)
+    	{
+    	}
+
+    	protected override IEnumerable<string> Mappings
         {
             get
             {

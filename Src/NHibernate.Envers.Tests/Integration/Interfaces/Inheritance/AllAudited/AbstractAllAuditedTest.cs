@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.AllAudited
 		private long aiId;
 		private long naiId;
 
+		protected AbstractAllAuditedTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ai = new AuditedImplementor {Data = "La data", AuditedImplementorData = "audited implementor data"};

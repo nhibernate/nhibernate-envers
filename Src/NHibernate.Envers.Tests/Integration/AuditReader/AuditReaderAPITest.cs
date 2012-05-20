@@ -7,6 +7,10 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 	[TestFixture]
 	public class AuditReaderAPITest : TestBase
 	{
+		public AuditReaderAPITest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ent1 = new AuditedTestEntity {Data = "str1"};

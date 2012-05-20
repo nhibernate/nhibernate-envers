@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 	[TestFixture]
 	public class AuditedCollectionProxyTest : TestBase
 	{
+		public AuditedCollectionProxyTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var refEntity = new SetRefEdEntity {Id = 1, Data = "str1"};

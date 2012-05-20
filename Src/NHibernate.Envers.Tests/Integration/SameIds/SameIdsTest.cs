@@ -2,9 +2,12 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.SameIds
 {
-	[TestFixture]
 	public class SameIdsTest : TestBase
 	{
+		public SameIdsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var site1 = new SameIdTestEntity1 {Id = 1, Str1 = "str1"};

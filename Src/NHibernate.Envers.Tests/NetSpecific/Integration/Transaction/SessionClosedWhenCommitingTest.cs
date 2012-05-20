@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 	{
 		private StrTestEntity entity;
 
+		public SessionClosedWhenCommitingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			entity = new StrTestEntity {Str = "data"};

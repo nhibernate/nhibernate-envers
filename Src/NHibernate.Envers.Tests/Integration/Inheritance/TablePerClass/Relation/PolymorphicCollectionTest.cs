@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.Relation
 		private int c_id;
 		private int p_id;
 
+		public PolymorphicCollectionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ed_id1 = 1;

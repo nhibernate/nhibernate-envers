@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 	{
 		private int id1;
 
+		public CollectionOfComponentsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var cte1 = new ComponentSetTestEntity();

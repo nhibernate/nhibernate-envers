@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Mixed
 		private ActivityId id2;
 		private ActivityId id3;
 
+		public MixedInheritanceStrategiesEntityTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			id1 = new ActivityId { Id1 = 1, Id2 = 2 };

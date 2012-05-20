@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	[TestFixture]
 	public class ImmutableClassAccessTest : TestBase
 	{
 		private Country country;
+
+		public ImmutableClassAccessTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

@@ -6,6 +6,10 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 	[TestFixture]
 	public class CollectionChangeRevisionTest : AbstractCollectionChangeTest
 	{
+		public CollectionChangeRevisionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override bool RevisionOnCollectionChange
 		{
 			get { return true; }

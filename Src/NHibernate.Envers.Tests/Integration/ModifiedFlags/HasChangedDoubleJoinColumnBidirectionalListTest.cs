@@ -16,6 +16,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int ing1_id;
 		private int ing2_id;
 
+		public HasChangedDoubleJoinColumnBidirectionalListTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1_1 = new DoubleListJoinColumnBidirectionalRefEdEntity1 {Data = "ed1_1"};

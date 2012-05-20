@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Data
 {
-	[TestFixture]
 	public class SerializableTest : TestBase
 	{
 		private int id1;
+
+		public SerializableTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

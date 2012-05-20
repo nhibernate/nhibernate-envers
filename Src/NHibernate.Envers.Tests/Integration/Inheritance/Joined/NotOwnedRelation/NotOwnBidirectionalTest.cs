@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.NotOwnedRelatio
 		private long a1_id;
 		private long a2_id;
 
+		public NotOwnBidirectionalTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			pc_id = 1;

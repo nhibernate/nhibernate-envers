@@ -5,5 +5,8 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesA
 	[TestFixture]
 	public class JoinedAllAuditedTest : AbstractAllAuditedTest
 	{
+		public JoinedAllAuditedTest(string strategyType) : base(strategyType)
+		{
+		}
 	}
 }

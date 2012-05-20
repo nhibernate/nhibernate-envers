@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 	{
 		private int id;
 
+		public SetOfValuesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			// Uses ValidityAuditStrategy

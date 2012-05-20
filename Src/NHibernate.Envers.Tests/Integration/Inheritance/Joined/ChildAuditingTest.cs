@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 	{
 		private int id1;
 
+		public ChildAuditingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			id1 = 1;

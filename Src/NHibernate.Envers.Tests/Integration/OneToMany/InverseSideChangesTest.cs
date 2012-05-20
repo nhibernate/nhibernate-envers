@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private const int ed1_id =123123;
 		private const int ing1_id = 33;
 
+		public InverseSideChangesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new SetRefEdEntity {Id = ed1_id, Data = "data_ed_1"};

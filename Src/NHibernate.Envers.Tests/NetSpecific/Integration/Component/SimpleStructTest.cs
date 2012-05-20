@@ -2,10 +2,13 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 {
-	[TestFixture]
 	public class SimpleStructTest : TestBase
 	{
 		private const int id = 111;
+
+		public SimpleStructTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

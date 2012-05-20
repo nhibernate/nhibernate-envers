@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 	{
 		private EmbId ei;
 
+		public UnidirectionalMulIdWithNullsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			ei = new EmbId {X = 1, Y = 2};

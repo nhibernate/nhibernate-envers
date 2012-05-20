@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Quotation
 		private long qfeId1;
 		private long qfeId2;
 
+		public QuotedFieldsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var qfe1 = new QuotedFieldsEntity {Data1 = "data1", Data2 = 1};

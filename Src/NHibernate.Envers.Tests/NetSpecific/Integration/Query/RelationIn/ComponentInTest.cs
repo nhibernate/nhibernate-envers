@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 	[TestFixture]
 	public class ComponentInTest : TestBase
 	{
+		public ComponentInTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new Person {Weight = new Weight{Kilo=75}};

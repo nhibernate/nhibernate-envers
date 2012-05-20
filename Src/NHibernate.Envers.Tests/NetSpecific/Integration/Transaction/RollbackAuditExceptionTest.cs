@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 	[TestFixture]
 	public class RollbackAuditExceptionTest : TestBase
 	{
+		public RollbackAuditExceptionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			dropStrTestAuditTable();

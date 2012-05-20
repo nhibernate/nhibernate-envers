@@ -9,6 +9,10 @@ namespace NHibernate.Envers.Tests.Integration.CustomType
 	{
 		private int pcte_id;
 
+		public ParametrizedCustomTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.CustomType.Mapping.hbm.xml" }; }

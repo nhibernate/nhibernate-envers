@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		private long auditedId;
 		private long notAuditedId;
 
+		public PropertiesGroupTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			//rev 1

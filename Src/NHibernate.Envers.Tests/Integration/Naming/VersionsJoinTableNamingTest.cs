@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int uni1_id;
 		private int str1_id;
 
+		public VersionsJoinTableNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			uni1_id = 427;

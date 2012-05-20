@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.Query.Ids
 		private EmbId id3;
 		private EmbId id4;
 
+		public EmbIdOneToManyQueryTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

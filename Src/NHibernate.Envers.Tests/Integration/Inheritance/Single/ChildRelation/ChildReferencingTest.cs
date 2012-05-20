@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.ChildRelation
 		private int re_id2;
 		private int c_id;
 
+		public ChildReferencingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			re_id1 = 1;

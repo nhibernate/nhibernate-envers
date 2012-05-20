@@ -18,6 +18,10 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		private DateTime timestamp2;
 		private DateTime timestamp3;
 
+		public CustomTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

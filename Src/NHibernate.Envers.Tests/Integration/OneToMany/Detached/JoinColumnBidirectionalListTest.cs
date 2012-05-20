@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int ing1_id;
 		private int ing2_id;
 
+		public JoinColumnBidirectionalListTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			// Revision 1 (ing1: ed1, ing2: ed2)

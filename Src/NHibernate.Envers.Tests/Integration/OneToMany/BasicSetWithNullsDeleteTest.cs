@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private const int ing3_id =100;
 		private const int ing4_id =200;
 
+		public BasicSetWithNullsDeleteTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new SetRefEdEntity {Id = ed1_id, Data = "data_ed_1"};

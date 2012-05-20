@@ -16,6 +16,10 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		private int id5;
 		private int id6;
 
+		public DefaultValueComponentsTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var cte0 = new DefaultValueComponentTestEntity();

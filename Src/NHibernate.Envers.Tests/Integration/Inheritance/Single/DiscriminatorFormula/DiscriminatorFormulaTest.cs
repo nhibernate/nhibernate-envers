@@ -14,6 +14,10 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFo
 		private ParentEntity parentVer1;
 		private ParentEntity parentVer2;
 
+		public DiscriminatorFormulaTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			parentAudit = Cfg.GetClassMapping(TestAssembly + ".Integration.Inheritance.Single.DiscriminatorFormula.ParentEntity_AUD");

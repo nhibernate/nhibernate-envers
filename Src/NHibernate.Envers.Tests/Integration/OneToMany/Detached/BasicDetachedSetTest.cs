@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int str2_id;
 		private const int coll1_id = 13;
 
+		public BasicDetachedSetTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var str1 = new StrTestEntity { Str = "str1" };

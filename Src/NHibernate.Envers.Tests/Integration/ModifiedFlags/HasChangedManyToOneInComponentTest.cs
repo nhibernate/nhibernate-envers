@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
+		public HasChangedManyToOneInComponentTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ste1 = new StrTestEntity {Str = "str1"};

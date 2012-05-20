@@ -11,6 +11,10 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id1;
 		private int id2;
 
+		public MaximalizePropertyQueryTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override IEnumerable<string> Mappings
 		{
 			get

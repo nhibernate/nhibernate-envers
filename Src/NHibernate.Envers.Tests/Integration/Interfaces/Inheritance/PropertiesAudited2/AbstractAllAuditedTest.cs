@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesA
 
 		private const int NUMBER = 555;
 
+		protected AbstractAllAuditedTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ai = new AuditedImplementor {Data = "La data", AuditedImplementorData = "audited implementor data", Number = NUMBER};

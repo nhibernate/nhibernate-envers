@@ -10,6 +10,10 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	[TestFixture]
 	public class EntityNamesTest : TestBase
 	{
+		public EntityNamesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var person1 = new Person {Name = "Hernan", Age = 28};

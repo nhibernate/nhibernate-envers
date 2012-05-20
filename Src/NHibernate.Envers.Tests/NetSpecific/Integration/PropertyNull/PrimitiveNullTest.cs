@@ -3,10 +3,13 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.PropertyNull
 {
-	[TestFixture]
 	public class PrimitiveNullTest : TestBase
 	{
 		private int id;
+
+		public PrimitiveNullTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

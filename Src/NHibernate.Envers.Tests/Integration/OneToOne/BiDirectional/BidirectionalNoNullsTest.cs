@@ -2,13 +2,16 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 {
-	[TestFixture]
 	public class BidirectionalNoNullsTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;
 		private int ing1_id;
 		private int ing2_id;
+
+		public BidirectionalNoNullsTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

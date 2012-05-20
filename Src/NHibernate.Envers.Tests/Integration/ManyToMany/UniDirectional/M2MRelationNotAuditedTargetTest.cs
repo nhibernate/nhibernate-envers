@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		private int uste1_id;
 		private int uste2_id;
 
+		public M2MRelationNotAuditedTargetTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			tnae1_id = 123;

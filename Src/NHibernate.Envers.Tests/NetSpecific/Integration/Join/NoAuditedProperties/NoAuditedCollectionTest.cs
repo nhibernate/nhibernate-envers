@@ -1,5 +1,4 @@
 ﻿using Iesi.Collections.Generic;
-using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -9,6 +8,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedProperti
 	public class NoAuditedCollectionTest : TestBase
 	{
 		private const int id = 44;
+
+		public NoAuditedCollectionTest(string strategyType) : base(strategyType)
+		{
+		}
 
 		protected override void Initialize()
 		{

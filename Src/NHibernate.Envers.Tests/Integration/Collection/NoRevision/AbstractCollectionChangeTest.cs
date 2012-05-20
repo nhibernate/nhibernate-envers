@@ -9,7 +9,11 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 	[TestFixture]
 	public abstract class AbstractCollectionChangeTest : TestBase
 	{
-	   protected override void AddToConfiguration(Cfg.Configuration configuration)
+		protected AbstractCollectionChangeTest(string strategyType) : base(strategyType)
+		{
+		}
+
+		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.RevisionOnCollectionChange, RevisionOnCollectionChange);
 		}

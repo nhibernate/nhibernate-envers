@@ -13,6 +13,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int id1;
 		private int id2;
 
+		public HasChangedNullPropertiesTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var bte1 = new BasicTestEntity1 { Str1 = "x", Long1 = 1 };

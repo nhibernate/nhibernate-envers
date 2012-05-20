@@ -12,6 +12,10 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int ed_id2;
 		private int ing_id1;
 
+		public JoinNamingTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var ed1 = new JoinNamingRefEdEntity {Data = "data1"};

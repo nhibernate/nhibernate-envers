@@ -8,6 +8,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 	{
 		private const int id = 123;
 
+		public ParameterizedUserCollectionTest(string strategyType) : base(strategyType)
+		{
+		}
+
 		protected override void Initialize()
 		{
 			var entity = new Entity {Id = 123};
