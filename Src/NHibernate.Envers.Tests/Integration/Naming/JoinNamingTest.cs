@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	[TestFixture]
 	public class JoinNamingTest : TestBase
 	{
 		private int ed_id1;

@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
-	[TestFixture]
 	public class NonExistingKeyTest : TestBase
 	{
 		private int id;

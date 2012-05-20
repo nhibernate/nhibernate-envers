@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
-	[TestFixture]
 	public class AddAndRemovePropertyTest : TestBase
 	{
 		private int id;

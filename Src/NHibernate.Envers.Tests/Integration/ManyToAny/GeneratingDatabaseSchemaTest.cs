@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToAny
 {
-    [TestFixture, Ignore("failing test for NHE-61")]
+    [Ignore("failing test for NHE-61")]
     public class GeneratingDatabaseSchemaTest : TestBase
     {
     	public GeneratingDatabaseSchemaTest(string strategyType) : base(strategyType)

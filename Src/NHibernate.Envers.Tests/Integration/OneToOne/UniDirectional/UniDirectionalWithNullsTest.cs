@@ -4,7 +4,6 @@ using NUnit.Framework;
 namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 {
 	//change this port a bit. added a unique index
-	[TestFixture]
 	public class UniDirectionalWithNullsTest : TestBase
 	{
 		private const int ed1_id = 1;

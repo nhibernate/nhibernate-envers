@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 {
-	[TestFixture]
 	public class MixedOverrideTest : TestBase
 	{
 		private int mixedEntityId;

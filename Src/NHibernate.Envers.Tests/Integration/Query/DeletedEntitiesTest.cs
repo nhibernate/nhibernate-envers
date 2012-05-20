@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	[TestFixture]
 	public class DeletedEntitiesTest : TestBase
 	{
 		private int id2;

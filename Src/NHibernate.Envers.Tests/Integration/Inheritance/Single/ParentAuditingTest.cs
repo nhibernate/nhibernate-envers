@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Single
 {
-	[TestFixture]
 	public class ParentAuditingTest : TestBase
 	{
 		private int id1;

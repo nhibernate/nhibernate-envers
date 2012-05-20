@@ -7,7 +7,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	[TestFixture]
 	public class HasChangedIdMapKeyTest : AbstractModifiedFlagsEntityTest
 	{
 		private int id;

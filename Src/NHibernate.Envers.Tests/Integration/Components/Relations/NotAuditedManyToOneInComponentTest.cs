@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components.Relations
 {
-	[TestFixture]
 	public class NotAuditedManyToOneInComponentTest : TestBase
 	{
 		private int mtocte_id1;

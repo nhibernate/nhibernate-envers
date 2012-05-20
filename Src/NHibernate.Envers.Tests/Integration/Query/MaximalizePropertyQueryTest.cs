@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	[TestFixture]
 	public class MaximalizePropertyQueryTest : TestBase
 	{
 		private int id1;

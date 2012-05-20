@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 {
-	[TestFixture]
 	public class ChildAuditingTest : TestBase
 	{
 		private int id1;

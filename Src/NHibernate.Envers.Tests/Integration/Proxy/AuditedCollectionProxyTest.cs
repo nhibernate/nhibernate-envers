@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Proxy
 {
-	[TestFixture]
 	public class AuditedCollectionProxyTest : TestBase
 	{
 		public AuditedCollectionProxyTest(string strategyType) : base(strategyType)

@@ -11,7 +11,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfterTx
 {
-	[TestFixture]
 	public abstract class EvictAuditDataAfterCommitTest : TestBase
 	{
 		protected EvictAuditDataAfterCommitTest(string strategyType) : base(strategyType)

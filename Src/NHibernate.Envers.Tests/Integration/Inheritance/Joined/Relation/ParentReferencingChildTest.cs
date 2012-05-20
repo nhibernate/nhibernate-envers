@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 {
-	[TestFixture]
 	public class ParentReferencingChildTest : TestBase
 	{
 		private Person expLukaszRev1;

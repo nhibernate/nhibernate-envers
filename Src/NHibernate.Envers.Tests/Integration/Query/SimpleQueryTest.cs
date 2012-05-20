@@ -8,7 +8,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	[TestFixture]
 	public class SimpleQueryTest : TestBase
 	{
 		private int id1;

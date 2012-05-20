@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Naming.Ids
 {
-	[TestFixture]
 	public class JoinEmbIdNamingTest : TestBase
 	{
 		private EmbIdNaming ed_id1;

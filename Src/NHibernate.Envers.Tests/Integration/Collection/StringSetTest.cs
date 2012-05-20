@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Collection
 {
-	[TestFixture]
 	public class StringSetTest : TestBase
 	{
 		private int sse1_id;

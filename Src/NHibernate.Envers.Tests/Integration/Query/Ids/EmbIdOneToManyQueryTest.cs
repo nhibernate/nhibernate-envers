@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query.Ids
 {
-	[TestFixture]
 	public class EmbIdOneToManyQueryTest : TestBase
 	{
 		private EmbId id1;

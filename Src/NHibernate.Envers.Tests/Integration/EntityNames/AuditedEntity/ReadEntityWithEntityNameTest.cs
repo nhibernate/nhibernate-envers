@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 {
-	[TestFixture]
 	public class ReadEntityWithEntityNameTest : TestBase
 	{
 		private long id_pers1;

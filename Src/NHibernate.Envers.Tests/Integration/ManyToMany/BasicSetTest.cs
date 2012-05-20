@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany
 {
-	[TestFixture]
 	public class BasicSetTest : TestBase
 	{
 		private int ed1_id;

@@ -12,8 +12,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 	{
 		private class MyClass
 		{
-
 		}
+
 		[Test]
 		public void WhenCreateWithNullThenThrows()
 		{

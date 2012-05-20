@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components
 {
-	[TestFixture]
 	public class ComponentsTest : TestBase
 	{
 		private int id1;

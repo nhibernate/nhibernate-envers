@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Data
 {
-	[TestFixture]
 	public class DateTest : TestBase
 	{
 		private int id1;

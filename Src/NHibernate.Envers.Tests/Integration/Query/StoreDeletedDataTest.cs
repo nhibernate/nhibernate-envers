@@ -8,7 +8,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	[TestFixture]
 	public class StoreDeletedDataTest : TestBase
 	{
 		private int id1;

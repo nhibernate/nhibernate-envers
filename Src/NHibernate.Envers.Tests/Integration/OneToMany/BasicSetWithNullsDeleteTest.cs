@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
-	[TestFixture]
 	public class BasicSetWithNullsDeleteTest : TestBase
 	{
 		private const int ed1_id =123;

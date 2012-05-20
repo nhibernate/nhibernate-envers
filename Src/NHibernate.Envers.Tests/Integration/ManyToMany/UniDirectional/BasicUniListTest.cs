@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 {
-	[TestFixture]
 	public class BasicUniListTest : TestBase
 	{
 		private int ed1_id;

@@ -7,7 +7,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	[TestFixture]
 	public class EstonianTableAliasTest : TestBase
 	{
 		private long parentId;

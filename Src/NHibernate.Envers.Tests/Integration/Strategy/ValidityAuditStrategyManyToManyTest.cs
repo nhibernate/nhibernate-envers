@@ -9,7 +9,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	[TestFixture]
 	public class ValidityAuditStrategyManyToManyTest : TestBase
 	{
 		private const int ingId = 1;

@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.NotOwnedRelation
 {
-	[TestFixture]
 	public class NotOwnBidirectionalTest : TestBase
 	{
 		private long pc_id;

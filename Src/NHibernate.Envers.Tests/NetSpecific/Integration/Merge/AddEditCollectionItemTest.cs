@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Merge
 {
-	[TestFixture]
 	public class AddEditCollectionItemTest : TestBase
 	{
 		private const int entityId = 342;

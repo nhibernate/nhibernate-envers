@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-    [TestFixture]
     public class AggregateQueryTest : TestBase
     {
     	public AggregateQueryTest(string strategyType) : base(strategyType)

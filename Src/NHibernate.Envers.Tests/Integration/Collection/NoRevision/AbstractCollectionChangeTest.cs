@@ -6,7 +6,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 {
-	[TestFixture]
 	public abstract class AbstractCollectionChangeTest : TestBase
 	{
 		protected AbstractCollectionChangeTest(string strategyType) : base(strategyType)

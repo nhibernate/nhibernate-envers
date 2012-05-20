@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 {
-	[TestFixture]
 	public class ComponentMapKeyTest : TestBase
 	{
 		private int cmke_id;

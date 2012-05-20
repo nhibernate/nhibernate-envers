@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Serialization
 {
-	[TestFixture]
 	public class SerializingCollectionTest : TestBase
 	{
 		private const int ed1_id = 15;

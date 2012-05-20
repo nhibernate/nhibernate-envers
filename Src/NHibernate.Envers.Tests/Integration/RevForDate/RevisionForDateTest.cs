@@ -8,7 +8,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevForDate
 {
-	[TestFixture]
 	public class RevisionForDateTest : TestBase
 	{
 		private DateTime timestamp1;

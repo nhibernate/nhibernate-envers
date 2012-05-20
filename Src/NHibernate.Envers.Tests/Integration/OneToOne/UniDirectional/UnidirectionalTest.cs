@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 {
-	[TestFixture]
 	public class UnidirectionalTest : TestBase
 	{
 		private const int ed1_id = 1;

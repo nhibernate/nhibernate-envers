@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Components
 {
-	[TestFixture]
 	public class DefaultValueComponentsTest : TestBase
 	{
 		private int id0;

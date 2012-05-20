@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	[TestFixture]
 	public class OneToManyUniDirectionalNamingTest : TestBase
 	{
 		private int uni1_id;

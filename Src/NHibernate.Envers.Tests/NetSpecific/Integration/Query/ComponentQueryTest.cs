@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 {
-	[TestFixture]
 	public class ComponentQueryTest : TestBase
 	{
 		private const int id = 1345;

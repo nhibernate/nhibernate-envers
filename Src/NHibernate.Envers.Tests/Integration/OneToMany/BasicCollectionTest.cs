@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
-	[TestFixture]
 	public class BasicCollectionTest : TestBase
 	{
 		private int ed1_id;
