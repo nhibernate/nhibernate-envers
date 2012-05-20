@@ -14,13 +14,13 @@ namespace NHibernate.Envers.Tests
 		protected string TestAssembly { get; private set; }
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; private set; }
+		protected System.Type StrategyType { get; private set; }
 		private ISessionFactory SessionFactory { get; set; }
 		private IAuditReader _auditReader;
-		private readonly System.Type _strategyType;
 
 		protected OneStrategyTestBase(string strategyType)
 		{
-			_strategyType = System.Type.GetType(strategyType);
+			StrategyType = System.Type.GetType(strategyType);
 		}
 
 		[SetUp]
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Tests
 		{
 			TestAssembly = GetType().Assembly.GetName().Name;
 			Cfg = new Cfg.Configuration();
-			Cfg.SetEnversProperty(ConfigurationKey.AuditStrategy, _strategyType);
+			Cfg.SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
 			AddToConfiguration(Cfg);
 			Cfg.Configure();
 			addMappings();
