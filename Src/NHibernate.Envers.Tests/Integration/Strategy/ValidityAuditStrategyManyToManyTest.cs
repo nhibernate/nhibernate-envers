@@ -6,15 +6,10 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
-	public class ValidityAuditStrategyManyToManyTest : OneStrategyTestBase
+	public class ValidityAuditStrategyManyToManyTest : ValidityTestBase
 	{
 		private const int ingId = 1;
 		private const int edId = 2;
-
-		public ValidityAuditStrategyManyToManyTest(string strategyType) : base(strategyType)
-		{
-		}
 
 		protected override void Initialize()
 		{
