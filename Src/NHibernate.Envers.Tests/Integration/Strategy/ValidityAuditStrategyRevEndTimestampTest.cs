@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
 using NUnit.Framework;
@@ -12,7 +11,8 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class ValidityAuditStrategyRevEndTimestampTest : TestBase
+	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
+	public class ValidityAuditStrategyRevEndTimestampTest : OneStrategyTestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";
 
@@ -29,8 +29,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
-			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy))
-				.SetEnversProperty(ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp, true)
+			configuration.SetEnversProperty(ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp, true)
 				.SetEnversProperty(ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName, revendTimestampColumName);
 		}
 

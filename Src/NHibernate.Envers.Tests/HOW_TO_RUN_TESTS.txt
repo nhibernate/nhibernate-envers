@@ -2,3 +2,9 @@
 2. Build NHibernate.Envers.Test
 3. Modify hibernate.cfg.xml to point to your database
 4. Run the tests
+
+
+NHibernate Envers' tests are using Parameterized Test Fixtures
+http://www.nunit.org/index.php?p=testFixture&r=2.6
+to run (most) integration tests twice, once for DefaultAuditStrategy and once for ValidityAuditStrategy.
+Make sure you have a modern test runner!

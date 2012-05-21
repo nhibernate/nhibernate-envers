@@ -1,23 +1,15 @@
-﻿using NHibernate.Cfg;
-using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Strategy;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
 	//NHE-32
-	public class SetOfValuesTest : TestBase
+	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
+	public class SetOfValuesTest : OneStrategyTestBase
 	{
 		private int id;
 
 		public SetOfValuesTest(string strategyType) : base(strategyType)
 		{
-		}
-
-		protected override void AddToConfiguration(Cfg.Configuration configuration)
-		{
-			// Uses ValidityAuditStrategy
-			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));
 		}
 
 		protected override void Initialize()
