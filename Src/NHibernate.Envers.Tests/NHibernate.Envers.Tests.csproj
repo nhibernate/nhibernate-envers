@@ -601,7 +601,6 @@
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetEntity.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\SortedSetAndMapTest.cs" />
     <Compile Include="NetSpecific\Integration\SortedSetAndMap\StrTestEntityComparer.cs" />
-    <Compile Include="NetSpecific\Integration\Strategy\Query\BasicQueriesTest.cs" />
     <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTest.cs" />
     <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTestEntity.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
@@ -696,7 +695,9 @@
     <EmbeddedResource Include="Entities\OneToMany\Detached\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToMany\Detached\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntity.hbm.xml" />
-    <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityColumnMapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityColumnMapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Entities\RevEntity\CustomDateRevEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomDataRevEntity.hbm.xml" />
     <EmbeddedResource Include="Entities\RevEntity\CustomRevEntityFieldAccess.hbm.xml" />
