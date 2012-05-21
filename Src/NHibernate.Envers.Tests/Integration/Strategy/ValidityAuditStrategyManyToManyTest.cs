@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using Iesi.Collections.Generic;
-using NHibernate.Cfg;
-using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class ValidityAuditStrategyManyToManyTest : TestBase
+	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
+	public class ValidityAuditStrategyManyToManyTest : OneStrategyTestBase
 	{
 		private const int ingId = 1;
 		private const int edId = 2;
@@ -86,11 +84,6 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			AuditReader().Find<SetOwnedEntity>(edId, 3).Referencing.Should().Be.Empty();
 			AuditReader().Find<SetOwnedEntity>(edId, 4).Referencing.Should().Have.SameSequenceAs(ing);
 			AuditReader().Find<SetOwnedEntity>(edId, 5).Referencing.Should().Be.Empty();
-		}
-
-		protected override void AddToConfiguration(Cfg.Configuration configuration)
-		{
-			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, typeof(ValidityAuditStrategy));
 		}
 
 		protected override IEnumerable<string> Mappings
