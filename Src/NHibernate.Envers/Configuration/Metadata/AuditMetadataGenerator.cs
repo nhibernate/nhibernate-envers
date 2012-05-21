@@ -69,7 +69,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// </summary>
 		/// <param name="doc">The xml document</param>
 		/// <returns>A revision info mapping, which can be added to other mappings (has no parent).</returns>
-		private XmlElement CloneAndSetupRevisionInfoRelationMapping(XmlDocument doc)
+		private XmlElement cloneAndSetupRevisionInfoRelationMapping(XmlDocument doc)
 		{
 			var revMapping = (XmlElement)doc.ImportNode(revisionInfoRelationMapping, true);
 			revMapping.SetAttribute("name", VerEntCfg.RevisionFieldName);
@@ -81,7 +81,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public void AddRevisionInfoRelation(XmlElement anyMapping)
 		{
-			anyMapping.AppendChild(CloneAndSetupRevisionInfoRelationMapping(anyMapping.OwnerDocument));
+			anyMapping.AppendChild(cloneAndSetupRevisionInfoRelationMapping(anyMapping.OwnerDocument));
 		}
 
 		public void AddRevisionType(XmlElement anyMapping)
@@ -98,7 +98,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Add the end-revision field, if the appropriate strategy is used.
 			if (VerEntCfg.AuditStrategyType == typeof(ValidityAuditStrategy))
 			{
-				MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
+				var manyToOne = MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
+				foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes 
+													select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
+				{
+					manyToOne.AppendChild(clonedNode);
+				}
+				MetadataTools.AddOrModifyColumn(manyToOne, VerEntCfg.RevisionEndFieldName);
 
 				if (VerEntCfg.IsRevisionEndTimestampEnabled)
 				{
@@ -455,7 +461,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					MetadataTools.AddColumns(keyMapping, pc.Table.PrimaryKey.ColumnIterator);
 
 					// ... and the revision number column, read from the revision info relation mapping.
-					keyMapping.AppendChild(CloneAndSetupRevisionInfoRelationMapping(keyMapping.OwnerDocument).GetElementsByTagName("column")[0].Clone());
+					keyMapping.AppendChild(cloneAndSetupRevisionInfoRelationMapping(keyMapping.OwnerDocument).GetElementsByTagName("column")[0].Clone());
 					break;
 
 				case InheritanceType.TablePerClass:
