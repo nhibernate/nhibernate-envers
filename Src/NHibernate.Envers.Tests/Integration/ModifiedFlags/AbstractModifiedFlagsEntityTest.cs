@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
-using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {

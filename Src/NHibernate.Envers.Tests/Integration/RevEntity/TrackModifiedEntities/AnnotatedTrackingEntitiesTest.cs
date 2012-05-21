@@ -2,7 +2,6 @@
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
-using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
-using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
 
