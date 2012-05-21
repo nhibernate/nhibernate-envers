@@ -642,6 +642,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Tools\AssertExtensions.cs" />
     <Compile Include="Tools\TestTools.cs" />
+    <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedProperties\Mapping.hbm.xml" />

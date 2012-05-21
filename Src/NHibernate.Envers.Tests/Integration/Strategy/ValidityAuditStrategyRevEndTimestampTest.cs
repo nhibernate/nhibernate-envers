@@ -11,8 +11,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
-	public class ValidityAuditStrategyRevEndTimestampTest : OneStrategyTestBase
+	public class ValidityAuditStrategyRevEndTimestampTest : ValidityTestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";
 
@@ -22,10 +21,6 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		private int c1_2_id;
 		private int c2_1_id;
 		private int c2_2_id;
-
-		public ValidityAuditStrategyRevEndTimestampTest(string strategyType) : base(strategyType)
-		{
-		}
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{

@@ -3,14 +3,9 @@
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
 	//NHE-32
-	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
-	public class SetOfValuesTest : OneStrategyTestBase
+	public class SetOfValuesTest : ValidityTestBase
 	{
 		private int id;
-
-		public SetOfValuesTest(string strategyType) : base(strategyType)
-		{
-		}
 
 		protected override void Initialize()
 		{
