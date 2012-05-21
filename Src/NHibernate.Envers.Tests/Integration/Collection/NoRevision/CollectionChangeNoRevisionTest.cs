@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 {

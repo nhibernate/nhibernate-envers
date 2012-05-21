@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesAudited2.Joined
+﻿namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesAudited2.Joined
 {
 	public class JoinedAllAuditedTest : AbstractAllAuditedTest
 	{

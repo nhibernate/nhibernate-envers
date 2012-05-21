@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Collection.Generic;
-using System.Linq;
 using NHibernate.Engine;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserCollection
