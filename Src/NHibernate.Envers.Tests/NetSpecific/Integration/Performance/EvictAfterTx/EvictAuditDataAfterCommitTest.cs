@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Iesi.Collections.Generic;
-using NHibernate.Cfg;
 using NHibernate.Engine;
-using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.OneToMany;
 using NUnit.Framework;
@@ -11,22 +10,17 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfterTx
 {
-	public abstract class EvictAuditDataAfterCommitTest : TestBase
+	public class EvictAuditDataAfterCommitTest : TestBase
 	{
-		protected EvictAuditDataAfterCommitTest(string strategyType) : base(strategyType)
+		public EvictAuditDataAfterCommitTest(string strategyType) : base(strategyType)
 		{
 		}
 
 		protected override void Initialize()
 		{
+			if (StrategyType == typeof(ValidityAuditStrategy))
+				Assert.Ignore("Need a fix in NH Core first - see https://nhibernate.jira.com/browse/NH-2907");
 		}
-
-		protected override void AddToConfiguration(Cfg.Configuration configuration)
-		{
-			configuration.SetEnversProperty(ConfigurationKey.AuditStrategy, AuditStrategy);
-		}
-
-		protected abstract System.Type AuditStrategy { get; }
 
 		[Test]
 		public void VerifySessionCacheClear()
