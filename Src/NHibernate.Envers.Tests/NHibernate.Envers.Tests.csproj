@@ -809,7 +809,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hibernate.cfg.xml.template" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
