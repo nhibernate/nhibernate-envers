@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
+using NHibernate.SqlTypes;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
@@ -23,11 +24,13 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			// to allow this.
 			using (var tx = Session.BeginTransaction())
 			{
+				var intType = Dialect.GetTypeName(SqlTypeFactory.Int32);
+				var tinyIntType = Dialect.GetTypeName(SqlTypeFactory.Byte);
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children(parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_AUD").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV integer NOT NULL, REVEND int, REVTYPE tinyint, " +
-						"parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV " + intType + " NOT NULL, REVEND " + intType + ", REVTYPE " + tinyIntType + ", " +
+						"parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
 				tx.Commit();
 			}
 

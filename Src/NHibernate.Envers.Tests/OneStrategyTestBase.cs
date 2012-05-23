@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
+using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
@@ -38,6 +39,11 @@ namespace NHibernate.Envers.Tests
 			Initialize();
 			closeSessionAndAuditReader();
 			Session = openSession(SessionFactory);
+		}
+
+		protected Dialect.Dialect Dialect
+		{
+			get { return ((ISessionFactoryImplementor)SessionFactory).Dialect; }
 		}
 
 		protected virtual IMetaDataProvider EnversConfiguration()
