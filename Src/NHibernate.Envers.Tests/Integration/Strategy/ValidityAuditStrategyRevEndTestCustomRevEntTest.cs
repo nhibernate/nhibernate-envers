@@ -128,14 +128,20 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		[Test]
 		public void VerifyRevisionCounts()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity),p1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, AuditReader().GetRevisions(typeof(ParentEntity),p2_id));
+			AuditReader().GetRevisions(typeof(ParentEntity), p1_id)
+							.Should().Have.SameSequenceAs(1, 2, 3, 4);
+			AuditReader().GetRevisions(typeof(ParentEntity), p2_id)
+							.Should().Have.SameSequenceAs(1, 2, 3, 4);
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child1Entity),c1_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child1Entity),c1_2_id));
+			AuditReader().GetRevisions(typeof(Child1Entity), c1_1_id)
+							.Should().Have.SameSequenceAs(1);
+			AuditReader().GetRevisions(typeof(Child1Entity), c1_2_id)
+							.Should().Have.SameSequenceAs(1, 5);
 
-			CollectionAssert.AreEquivalent(new[] { 1 }, AuditReader().GetRevisions(typeof(Child2Entity),c2_1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 5 }, AuditReader().GetRevisions(typeof(Child2Entity),c2_2_id));
+			AuditReader().GetRevisions(typeof(Child2Entity), c2_1_id)
+							.Should().Have.SameSequenceAs(1);
+			AuditReader().GetRevisions(typeof(Child2Entity), c2_2_id)
+							.Should().Have.SameSequenceAs(1, 5);
 		}
 
 		[Test]
@@ -169,17 +175,17 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<ParentEntity>(p1_id, 4);
 			var rev5 = AuditReader().Find<ParentEntity>(p1_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev2.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1, c1_2 }, rev3.Children1);
-			CollectionAssert.AreEqual(new[] { c1_2 }, rev4.Children1);
-			CollectionAssert.IsEmpty(rev5.Children1);
+			rev1.Children1.Should().Be.Empty();
+			rev2.Children1.Should().Have.SameValuesAs(c1_1);
+			rev3.Children1.Should().Have.SameValuesAs(c1_1, c1_2);
+			rev4.Children1.Should().Have.SameValuesAs(c1_2);
+			rev5.Children1.Should().Be.Empty();
 
-			CollectionAssert.IsEmpty(rev1.Children2);
-			CollectionAssert.IsEmpty(rev2.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev3.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev4.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev5.Children2);
+			rev1.Children2.Should().Be.Empty();
+			rev2.Children2.Should().Be.Empty();
+			rev3.Children2.Should().Have.SameValuesAs(c2_2);
+			rev4.Children2.Should().Have.SameValuesAs(c2_2);
+			rev5.Children2.Should().Have.SameValuesAs(c2_2);
 		}
 
 		[Test]
@@ -195,17 +201,17 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<ParentEntity>(p2_id, 4);
 			var rev5 = AuditReader().Find<ParentEntity>(p2_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Children1);
-			CollectionAssert.IsEmpty(rev2.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev3.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev4.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev5.Children1);
+			rev1.Children1.Should().Be.Empty();
+			rev2.Children1.Should().Be.Empty();
+			rev3.Children1.Should().Have.SameValuesAs(c1_1);
+			rev4.Children1.Should().Have.SameValuesAs(c1_1);
+			rev5.Children1.Should().Have.SameValuesAs(c1_1);
 
-			CollectionAssert.IsEmpty(rev1.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev2.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev3.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1, c2_2 }, rev4.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev5.Children2);
+			rev1.Children2.Should().Be.Empty();
+			rev2.Children2.Should().Have.SameValuesAs(c2_1);
+			rev3.Children2.Should().Have.SameValuesAs(c2_1);
+			rev4.Children2.Should().Have.SameValuesAs(c2_1, c2_2);
+			rev5.Children2.Should().Have.SameValuesAs(c2_1);
 		}
 
 		[Test]
@@ -220,11 +226,11 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<Child1Entity>(c1_1_id, 4);
 			var rev5 = AuditReader().Find<Child1Entity>(c1_1_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1, p2 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+			rev1.Parents.Should().Be.Empty();
+			rev2.Parents.Should().Have.SameValuesAs(p1);
+			rev3.Parents.Should().Have.SameValuesAs(p1, p2);
+			rev4.Parents.Should().Have.SameValuesAs(p2);
+			rev5.Parents.Should().Have.SameValuesAs(p2);
 		}
 
 		[Test]
@@ -238,11 +244,11 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<Child1Entity>(c1_2_id, 4);
 			var rev5 = AuditReader().Find<Child1Entity>(c1_2_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.IsEmpty(rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev4.Parents);
-			CollectionAssert.IsEmpty(rev5.Parents);
+			rev1.Parents.Should().Be.Empty();
+			rev2.Parents.Should().Be.Empty();
+			rev3.Parents.Should().Have.SameValuesAs(p1);
+			rev4.Parents.Should().Have.SameValuesAs(p1);
+			rev5.Parents.Should().Be.Empty();
 		}
 
 		[Test]
@@ -256,11 +262,11 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<Child2Entity>(c2_1_id, 4);
 			var rev5 = AuditReader().Find<Child2Entity>(c2_1_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+			rev1.Parents.Should().Be.Empty();
+			rev2.Parents.Should().Have.SameValuesAs(p2);
+			rev3.Parents.Should().Have.SameValuesAs(p2);
+			rev4.Parents.Should().Have.SameValuesAs(p2);
+			rev5.Parents.Should().Have.SameValuesAs(p2);
 		}
 
 		[Test]
@@ -275,11 +281,11 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev4 = AuditReader().Find<Child2Entity>(c2_2_id, 4);
 			var rev5 = AuditReader().Find<Child2Entity>(c2_2_id, 5);
 
-			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.IsEmpty(rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p1, p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev5.Parents);
+			rev1.Parents.Should().Be.Empty();
+			rev2.Parents.Should().Be.Empty();
+			rev3.Parents.Should().Have.SameValuesAs(p1);
+			rev4.Parents.Should().Have.SameValuesAs(p1, p2);
+			rev5.Parents.Should().Have.SameValuesAs(p1);
 		}
 
 		private IEnumerable<IDictionary> getRevisions(System.Type originalEntityClazz, int originalEntityId)
