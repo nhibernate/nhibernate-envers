@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
@@ -71,10 +72,14 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		[Test]
 		public void VerifyRevisionCount()
 		{
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing2_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 3, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed1_id));
-			CollectionAssert.AreEquivalent(new[] { 1, 2, 4 }, AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed2_id));
+			AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing1_id)
+				.Should().Have.SameSequenceAs(1, 2, 4);
+			AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefIngEntity), ing2_id)
+				.Should().Have.SameSequenceAs(1, 2, 4);
+			AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed1_id)
+				.Should().Have.SameSequenceAs(1, 3, 4);
+			AuditReader().GetRevisions(typeof(ListJoinColumnBidirectionalRefEdEntity), ed2_id)
+				.Should().Have.SameSequenceAs(1, 2, 4);
 		}
 
 		[Test]
@@ -89,10 +94,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			var rev3 = AuditReader().Find<ListJoinColumnBidirectionalRefIngEntity>(ing1_id, 3);
 			var rev4 = AuditReader().Find<ListJoinColumnBidirectionalRefIngEntity>(ing1_id, 4);
 
-			CollectionAssert.AreEqual(new[] { ed1_fromRev1 }, rev1.References);
-			CollectionAssert.AreEqual(new[] { ed1_fromRev1, ed2 }, rev2.References);
-			CollectionAssert.AreEqual(new[] { ed1_fromRev3, ed2 }, rev3.References);
-			CollectionAssert.IsEmpty(rev4.References);
+			rev1.References.Should().Have.SameValuesAs(ed1_fromRev1);
+			rev2.References.Should().Have.SameValuesAs(ed1_fromRev1, ed2);
+			rev3.References.Should().Have.SameValuesAs(ed1_fromRev3, ed2);
+			rev4.References.Should().Be.Empty();
 		}
 
 		[Test]
@@ -106,10 +111,10 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			var rev3 = AuditReader().Find<ListJoinColumnBidirectionalRefIngEntity>(ing2_id, 3);
 			var rev4 = AuditReader().Find<ListJoinColumnBidirectionalRefIngEntity>(ing2_id, 4);
 
-			CollectionAssert.AreEqual(new[] { ed2 }, rev1.References);
-			CollectionAssert.IsEmpty(rev2.References);
-			CollectionAssert.IsEmpty(rev3.References);
-			CollectionAssert.AreEqual(new[] { ed1, ed2 }, rev4.References);
+			rev1.References.Should().Have.SameValuesAs(ed2);
+			rev2.References.Should().Be.Empty();
+			rev3.References.Should().Be.Empty();
+			rev4.References.Should().Have.SameValuesAs(ed1, ed2);
 		}
 
 		[Test]
