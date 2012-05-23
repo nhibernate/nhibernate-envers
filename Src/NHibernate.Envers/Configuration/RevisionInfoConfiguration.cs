@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Configuration
 			idProperty.InsertBefore(col, idProperty.GetElementsByTagName("generator")[0]);
 
 			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false);
-			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, -1, -1, SqlTypeFactory.DateTime.ToString(), false);
+			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, -1, -1, null, false);
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)
 			{
