@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						.AddProjection(AuditEntity.RevisionNumber().Distinct())
 						.Add(AuditEntity.RevisionNumber().Lt(3))
 						.GetResultList();
-			CollectionAssert.AreEqual(new[]{1, 2}, result);
+			CollectionAssert.AreEquivalent(new[]{1, 2}, result);
 		}
 
 		[Test]
@@ -71,7 +71,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						.AddProjection(AuditEntity.RevisionNumber().Distinct())
 						.Add(AuditEntity.RevisionNumber().Ge(2))
 						.GetResultList();
-			CollectionAssert.AreEqual(new[] { 2, 3, 4 }, result);
+			CollectionAssert.AreEquivalent(new[] { 2, 3, 4 }, result);
 		}
 
 		[Test]
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						.Add(AuditEntity.RevisionNumber().Lt(3))
 						.Add(AuditEntity.Property("Str").Eq("a"))
 						.GetResultList();
-			CollectionAssert.AreEqual(new[] { 1 }, result);
+			CollectionAssert.AreEquivalent(new[] { 1 }, result);
 		}
 
 		[Test]
@@ -95,7 +95,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						.Add(AuditEntity.RevisionNumber().Gt(1))
 						.Add(AuditEntity.Property("Number").Lt(10))
 						.GetResultList();
-			CollectionAssert.AreEqual(new[] { 3, 4 }, result);
+			CollectionAssert.AreEquivalent(new[] { 3, 4 }, result);
 		}
 
 		[Test]
