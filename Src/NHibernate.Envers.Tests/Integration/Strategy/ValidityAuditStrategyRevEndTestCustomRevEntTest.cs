@@ -5,6 +5,7 @@ using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
+using NHibernate.SqlTypes;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -99,15 +100,19 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 		private void allowNullInMiddleTable()
 		{
+			var intType = Dialect.GetTypeName(SqlTypeFactory.Int32);
+			var tinyIntType = Dialect.GetTypeName(SqlTypeFactory.Byte);
+			var dateTimeType = Dialect.GetTypeName(SqlTypeFactory.DateTime);
+
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children(parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_aud").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV integer NOT NULL, REVEND integer, "
+				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV " + intType + " NOT NULL, REVEND " + intType + ", "
 										+ revendTimestampColumName
-										+ " datetime, REVTYPE tinyint, "
-										+ "parent_id integer, child1_id integer NULL, child2_id integer NULL)").ExecuteUpdate();
+										+ " " + dateTimeType + ", REVTYPE " + tinyIntType + ", "
+										+ "parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
 				tx.Commit();
 			}
 		}
