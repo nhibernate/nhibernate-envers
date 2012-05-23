@@ -171,16 +171,16 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev5 = AuditReader().Find<ParentEntity>(p1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev2.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1, c1_2 }, rev3.Children1);
-			CollectionAssert.AreEqual(new[] { c1_2 }, rev4.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_1 }, rev2.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_1, c1_2 }, rev3.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_2 }, rev4.Children1);
 			CollectionAssert.IsEmpty(rev5.Children1);
 
 			CollectionAssert.IsEmpty(rev1.Children2);
 			CollectionAssert.IsEmpty(rev2.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev3.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev4.Children2);
-			CollectionAssert.AreEqual(new[] { c2_2 }, rev5.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_2 }, rev3.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_2 }, rev4.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_2 }, rev5.Children2);
 		}
 
 		[Test]
@@ -198,15 +198,15 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 			CollectionAssert.IsEmpty(rev1.Children1);
 			CollectionAssert.IsEmpty(rev2.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev3.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev4.Children1);
-			CollectionAssert.AreEqual(new[] { c1_1 }, rev5.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_1 }, rev3.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_1 }, rev4.Children1);
+			CollectionAssert.AreEquivalent(new[] { c1_1 }, rev5.Children1);
 
 			CollectionAssert.IsEmpty(rev1.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev2.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev3.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1, c2_2 }, rev4.Children2);
-			CollectionAssert.AreEqual(new[] { c2_1 }, rev5.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_1 }, rev2.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_1 }, rev3.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_1, c2_2 }, rev4.Children2);
+			CollectionAssert.AreEquivalent(new[] { c2_1 }, rev5.Children2);
 		}
 
 		[Test]
@@ -222,10 +222,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev5 = AuditReader().Find<Child1Entity>(c1_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1, p2 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1 }, rev2.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1, p2 }, rev3.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev4.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev5.Parents);
 		}
 
 		[Test]
@@ -241,8 +241,8 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.IsEmpty(rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev4.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1 }, rev3.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1 }, rev4.Parents);
 			CollectionAssert.IsEmpty(rev5.Parents);
 		}
 
@@ -258,10 +258,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			var rev5 = AuditReader().Find<Child2Entity>(c2_1_id, 5);
 
 			CollectionAssert.IsEmpty(rev1.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p2 }, rev5.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev2.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev3.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev4.Parents);
+			CollectionAssert.AreEquivalent(new[] { p2 }, rev5.Parents);
 		}
 
 		[Test]
@@ -278,9 +278,9 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 
 			CollectionAssert.IsEmpty(rev1.Parents);
 			CollectionAssert.IsEmpty(rev2.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev3.Parents);
-			CollectionAssert.AreEqual(new[] { p1, p2 }, rev4.Parents);
-			CollectionAssert.AreEqual(new[] { p1 }, rev5.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1 }, rev3.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1, p2 }, rev4.Parents);
+			CollectionAssert.AreEquivalent(new[] { p1 }, rev5.Parents);
 		}
 
 		private IEnumerable<IDictionary> getRevisions(System.Type originalEntityClazz, int originalEntityId)
