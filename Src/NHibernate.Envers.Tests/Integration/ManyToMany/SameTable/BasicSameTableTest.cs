@@ -20,12 +20,13 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 
 		protected override void Initialize()
 		{
+			var intType = Dialect.GetTypeName(SqlTypeFactory.Int32);
+			var tinyIntType = Dialect.GetTypeName(SqlTypeFactory.Byte);
+
 			// We need first to modify the columns in the middle (join table) to allow null values. Hbm2ddl doesn't seem
 			// to allow this.
 			using (var tx = Session.BeginTransaction())
 			{
-				var intType = Dialect.GetTypeName(SqlTypeFactory.Int32);
-				var tinyIntType = Dialect.GetTypeName(SqlTypeFactory.Byte);
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_AUD").ExecuteUpdate();
