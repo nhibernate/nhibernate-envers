@@ -4,6 +4,6 @@ Some notes...
 
 * Report bugs and/or patches with unit tests here http://nhibernate.jira.com/browse/NHE    
 
-* Binaries are available here, http://sourceforge.net/projects/nhcontrib/files
+* Binaries and documentation are available here, http://sourceforge.net/projects/nhcontrib/files
 
 * Available as a nuget package, http://nuget.org/packages/NHibernate.Envers
