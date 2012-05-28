@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			}
 
 			timestamp2 = DateTime.Now;
-			Thread.Sleep(100);
+			Thread.Sleep(1000);
 			using (var tx = Session.BeginTransaction())
 			{
 				te.Str = "y";
