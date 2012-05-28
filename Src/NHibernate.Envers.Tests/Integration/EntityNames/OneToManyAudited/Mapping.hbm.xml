@@ -14,7 +14,7 @@
 		<id name="Id" column="ID_CAR" type="long">
 			<generator class="native" />
 		</id>
-		<property name="Number" type="int" column="int" not-null="true" />
+		<property name="Number" type="int" not-null="true" />
 		<bag name="Owners" cascade="save-update">
 			<key column="ID_GARAGE" not-null="true" update="false" />
 			<one-to-many entity-name="Personaje"/>
