@@ -1,3 +1,4 @@
+using NHibernate.Dialect;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
@@ -28,13 +29,18 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 			}
 			using (var tx = Session.BeginTransaction())
 			{
-
 				ccte.Str = new string('Y', 20000);
 				Session.Save(ccte);
 				tx.Commit();
 			}
 			ccte_id = ccte.Id;
 		}
+
+		protected override string TestShouldNotRunMessage()
+		{
+			return Dialect.GetType() == typeof(MySQLDialect) ? "Not applicable for MySQL" : null;
+		}
+
 
 		[Test]
 		public void VerifyRevisionCount()

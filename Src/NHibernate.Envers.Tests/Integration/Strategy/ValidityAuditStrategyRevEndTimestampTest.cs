@@ -304,7 +304,6 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 		{
 			foreach (var revisionEntity in revisionEntities)
 			{
-
 				var revendTimestamp = revisionEntity[revendTimestampColumName];
 				var revEnd = (CustomRevEntity)revisionEntity["REVEND"];
 
@@ -316,7 +315,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 				{
 					var exactDate = new DateTime(revEnd.CustomTimestamp);
 					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-100), exactDate.AddMilliseconds(100));
+					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-500), exactDate.AddMilliseconds(500));
 				}
 			}
 		}
