@@ -40,14 +40,14 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			}
 
 			timestamp2 = DateTime.Now;
-			Thread.Sleep(100);
+			Thread.Sleep(1000);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "y";
 				tx.Commit();
 			}
 			timestamp3 = DateTime.Now;
-			Thread.Sleep(100);
+			Thread.Sleep(1000);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "z";

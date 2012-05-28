@@ -35,10 +35,18 @@ namespace NHibernate.Envers.Tests
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
 			SessionFactory = Cfg.BuildSessionFactory();
+			var notRun = TestShouldNotRunMessage();
+			if (!string.IsNullOrEmpty(notRun))
+				Assert.Ignore(notRun);
 			Session = openSession(SessionFactory);
 			Initialize();
 			closeSessionAndAuditReader();
 			Session = openSession(SessionFactory);
+		}
+
+		protected virtual string TestShouldNotRunMessage()
+		{
+			return null;
 		}
 
 		protected Dialect.Dialect Dialect
@@ -111,7 +119,8 @@ namespace NHibernate.Envers.Tests
 
 		private void closeSessionAndAuditReader()
 		{
-			Session.Dispose();
+			if(Session!=null)
+				Session.Dispose();
 			_auditReader = null;
 		}
 
