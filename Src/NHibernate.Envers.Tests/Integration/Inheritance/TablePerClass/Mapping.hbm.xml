@@ -9,7 +9,7 @@
     <property name="Data"/>
 
     <union-subclass name="ChildEntity">
-      <property name="Number" />
+      <property name="Number" column="thenumber" />
     </union-subclass>
   </class>
 </hibernate-mapping>
