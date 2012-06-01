@@ -10,7 +10,7 @@
     <property name="Data"/>
     <joined-subclass name="ChildEntity" >
       <key column="Id"/>
-      <property name="Number" />
+      <property name="Number" column="thenumber" />
     </joined-subclass>
   </class>
 </hibernate-mapping>
