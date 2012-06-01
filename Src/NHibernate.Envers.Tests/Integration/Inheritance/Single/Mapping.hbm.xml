@@ -10,7 +10,7 @@
     <property name="Data"/>
     
     <subclass name="ChildEntity" discriminator-value="2">
-      <property name="Number" />
+      <property name="Number" column="thenumber" />
     </subclass>
   </class>
 </hibernate-mapping>
