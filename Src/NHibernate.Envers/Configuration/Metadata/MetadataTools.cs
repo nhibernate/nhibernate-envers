@@ -17,6 +17,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var generatorMapping = doc.CreateElement("generator");
 			idMapping.AppendChild(generatorMapping);
 			generatorMapping.SetAttribute("class", "native");
+			var generatorParam = doc.CreateElement("param");
+			generatorParam.SetAttribute("name", "sequence");
+			generatorParam.InnerText = "rev_id_seq";
+			generatorMapping.AppendChild(generatorParam);
 
 			return idMapping;
 		}
