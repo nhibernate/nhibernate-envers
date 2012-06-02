@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="NHibernate.Envers.Tests"
                    namespace="NHibernate.Envers.Tests.Entities.Components.Relations">
-  <class name="OneToManyComponentTestEntity">
+  <class name="OneToManyComponentTestEntity" table="OTMCompTestEnt">
     <id name="Id">
       <generator class="identity"/>
     </id>
