@@ -5,6 +5,6 @@
 		<id name="Id">
 			<generator class="native"/>
 		</id>
-		<property name="Number" scale="0" precision="3"/>
+		<property name="Number" column="thenumber" scale="0" precision="3"/>
 	</class>
 </hibernate-mapping>

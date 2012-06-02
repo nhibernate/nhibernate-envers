@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		{
 			var auditTable = Cfg.GetClassMapping("NHibernate.Envers.Tests.Integration.Basic.ScalePrecisionEntity_AUD").Table;
 			var originalTable = Cfg.GetClassMapping(typeof (ScalePrecisionEntity)).Table;
-			var testColumn = new Column("Number");
+			var testColumn = new Column("thenumber");
 			var scalePrecisionAuditColumn = auditTable.GetColumn(testColumn);
 			var scalePrecisionColumn = originalTable.GetColumn(testColumn);
 
