@@ -6,7 +6,7 @@
 		<id name="Id">
 			<generator class="native"/>
 		</id>
-		<property name="Number"/>
+		<property name="Number" column="thenumber"/>
 	</class>
 
 	<class name="StrTestEntity">
@@ -21,7 +21,7 @@
 			<generator class="native"/>
 		</id>
 		<property name="Str"/>
-		<property name="Number"/>
+		<property name="Number" column="thenumber"/>
 	</class>
 
 

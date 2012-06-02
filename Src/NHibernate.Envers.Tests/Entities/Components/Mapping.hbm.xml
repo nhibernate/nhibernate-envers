@@ -29,7 +29,7 @@
 		</set>
 	</class>
 
-	<class name="DefaultValueComponentTestEntity">
+	<class name="DefaultValueComponentTestEntity" table="DefValueCompTestEnt">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
