@@ -19,7 +19,7 @@
 		<id name="Id" column="ID_CAR" type="long">
 			<generator class="native" />
 		</id>
-		<property name="Number" type="int" not-null="true" />
+		<property name="Number" column="thenumber" type="int" not-null="true" />
 		<bag name="Owners" cascade="all" table="PERSON_CAR" >
 			<key column="ID_PERSON" />
 			<many-to-many entity-name="Personaje" column="ID_CAR"/>
