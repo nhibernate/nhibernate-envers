@@ -716,6 +716,7 @@
     <EmbeddedResource Include="Entities\ManyToAny\WirePayment.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Integration\OneToOne\BiDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Data\Mapping.hbm.xml" />

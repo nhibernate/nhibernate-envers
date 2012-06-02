@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Tests.Entities.Collection;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection
 {
@@ -69,7 +71,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 			var rev4 = AuditReader().Find<StringMapEntity>(sme1_id, 4);
 
 			CollectionAssert.IsEmpty(rev1.Strings.Keys);
-			Assert.AreEqual(new Dictionary<string, string> { { "1", "a" }, { "2", "b" } }, rev2.Strings);
+			Assert.AreEqual(new Dictionary<string, string> { { "1", "a" }, { "2", "b" } }, rev2.Strings.OrderBy(kv => kv.Key));
 			Assert.AreEqual(new Dictionary<string, string> { { "2", "b" } }, rev3.Strings);
 			Assert.AreEqual(new Dictionary<string, string> { { "2", "b" } }, rev4.Strings);
 		}

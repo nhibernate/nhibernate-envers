@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 						 assembly="NHibernate.Envers.Tests"
 						 namespace="NHibernate.Envers.Tests.Entities.Components">
-	<class name="UniquePropsEntity">
+	<class name="UniquePropsEntity" table="UPE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -12,7 +12,7 @@
 		</properties>
 	</class>
 
-	<class name="UniquePropsNotAuditedEntity">
+	<class name="UniquePropsNotAuditedEntity" table="UPNAE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
