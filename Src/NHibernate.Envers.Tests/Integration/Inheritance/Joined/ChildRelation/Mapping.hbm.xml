@@ -21,7 +21,7 @@
     
     <joined-subclass name="ChildIngEntity">
       <key column="Id"/>
-      <property name="Number"/>
+		 <property name="Number" column="thenumber" />
       <many-to-one name="Referenced" column="refId" />  
     </joined-subclass>
   </class>
