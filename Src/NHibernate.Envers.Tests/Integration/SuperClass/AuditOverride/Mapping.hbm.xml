@@ -3,7 +3,7 @@
 		assembly="NHibernate.Envers.Tests"
 		namespace="NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride">
 
-	<class name="AuditedSpecialEntity">
+	<class name="AuditedSpecialEntity" table="ASE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -12,7 +12,7 @@
 		<property name="Number1" />
 	</class>
 
-	<class name="PropertyOverrideTestEntity">
+	<class name="PropertyOverrideTestEntity" table="POTE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -21,7 +21,7 @@
 		<property name="Number1" />
 	</class>
 
-	<class name="TransitiveOverrideTestEntity">
+	<class name="TransitiveOverrideTestEntity" table="TOTE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -32,7 +32,7 @@
 		<property name="Number2" />
 	</class>
 
-	<class name="ClassOverrideAuditedEntity">
+	<class name="ClassOverrideAuditedEntity" table="COAE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -41,7 +41,7 @@
 		<property name="Number1" />
 	</class>
 
-	<class name="ClassOverrideNotAuditedEntity">
+	<class name="ClassOverrideNotAuditedEntity" table="COMAE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -50,7 +50,7 @@
 		<property name="Number1" />
 	</class>
 
-	<class name="MixedOverrideEntity">
+	<class name="MixedOverrideEntity" table="MOE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>

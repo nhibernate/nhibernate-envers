@@ -3,7 +3,7 @@
     assembly="NHibernate.Envers.Tests"
     namespace="NHibernate.Envers.Tests.Integration.Naming.Ids">
 
-  <class name="JoinEmbIdNamingRefEdEntity">
+  <class name="JoinEmbIdNamingRefEdEntity" table="JEINREE">
     <composite-id name="Id">
       <key-property name="X" column="XX"/>
       <key-property name="Y" column="YY"/>
@@ -18,7 +18,7 @@
     </bag>
   </class>
 
-  <class name="JoinEmbIdNamingRefIngEntity">
+  <class name="JoinEmbIdNamingRefIngEntity" table="JEUNRIE">
     <composite-id name="Id">
       <key-property name="X" column="XX"/>
       <key-property name="Y" column="YY"/>
