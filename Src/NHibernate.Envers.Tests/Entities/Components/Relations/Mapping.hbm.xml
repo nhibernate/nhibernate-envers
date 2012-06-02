@@ -15,7 +15,7 @@
     </component>
   </class>
 
-	<class name="ManyToOneComponentTestEntity">
+	<class name="ManyToOneComponentTestEntity" table="MTOCompTestEntity">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
@@ -25,7 +25,7 @@
 		</component>
 	</class>
 
-	<class name="NotAuditedManyToOneComponentTestEntity">
+	<class name="NotAuditedManyToOneComponentTestEntity" table="NotAudMTOCompTestEnt">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
