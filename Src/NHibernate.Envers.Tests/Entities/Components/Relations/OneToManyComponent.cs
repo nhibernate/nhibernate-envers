@@ -1,4 +1,5 @@
 using Iesi.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.Components.Relations
 {
@@ -9,6 +10,7 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 			Entities = new HashedSet<StrTestEntity>();
 		}
 
+		[AuditJoinTable(TableName = "OTMComp_StrTestEnt")]
 		public virtual ISet<StrTestEntity> Entities { get; set; }
 		public virtual string Data { get; set; }
 
