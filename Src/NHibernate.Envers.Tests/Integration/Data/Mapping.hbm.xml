@@ -8,7 +8,7 @@
     <id name="Id">
       <generator class="identity"/>
     </id>
-    <property name="Date" />
+    <property name="Date" column="thedate" />
   </class>
 
   <class name="EnumTestEntity">
