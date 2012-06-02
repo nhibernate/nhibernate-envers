@@ -13,7 +13,7 @@
 		</id>
 		<join table="jointable">
 			<key column="C_ID"/>
-			<property name="Number"/>
+			<property name="Number" column="thenumber"/>
 			<set name="XCollection" cascade="all">
 				<key column="toA_ID"/>
 				<one-to-many class="NotAudited"/>
