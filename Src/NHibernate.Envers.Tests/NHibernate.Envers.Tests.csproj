@@ -606,6 +606,7 @@
     <Compile Include="NetSpecific\Integration\Strategy\SetOfValues\SetOfValuesTestEntity.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTestCustomRevEntTest.cs" />
     <Compile Include="Integration\Strategy\ValidityAuditStrategyRevEndTimestampTest.cs" />
+    <Compile Include="NetSpecific\Integration\Transaction\NoSchemaEntity.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\RollbackAuditExceptionTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SessionClosedWhenCommitingTest.cs" />
     <Compile Include="NetSpecific\Integration\Transaction\SuccessfulTransactionScopeTest.cs" />
@@ -648,6 +649,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Transaction\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedProperties\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedCollectionWithAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomType\Mapping.hbm.xml" />
