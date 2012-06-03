@@ -22,7 +22,7 @@
 
 		<joined-subclass name="ChildNotIngEntity">
 			<key column="Id"/>
-			<property name="Number"/>
+			<property name="Number" column="thenumber"/>
 		</joined-subclass>
 	</class>
 

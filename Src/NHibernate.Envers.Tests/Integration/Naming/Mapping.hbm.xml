@@ -74,14 +74,14 @@
 		</component>
 	</class>
 
-	<class name="VersionsJoinTableRangeTestAlternateEntity" table="RANGE_TEST_ALTERNATE_ENTITY">
+	<class name="VersionsJoinTableRangeTestAlternateEntity" table="R_TEST_ALT_ENTITY">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
 		<property name="GenericValue" />
 		<property name="AlternativeValue" />
 	</class>
-	<class name="VersionsJoinTableRangeTestEntity" table="RANGE_TEST_ENTITY">
+	<class name="VersionsJoinTableRangeTestEntity" table="R_TEST_ENTITY">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
