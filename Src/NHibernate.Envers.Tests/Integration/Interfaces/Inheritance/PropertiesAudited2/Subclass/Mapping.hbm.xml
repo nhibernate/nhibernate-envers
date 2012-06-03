@@ -9,7 +9,7 @@
 		</id>
 		<discriminator column="DISCRIMINATOR" />
 		<property name="Data" />
-		<property name="Number" />
+		<property name="Number"  column="numb" />
 	</class>
 
 	<subclass name="AuditedImplementor"	extends="ISimple"
