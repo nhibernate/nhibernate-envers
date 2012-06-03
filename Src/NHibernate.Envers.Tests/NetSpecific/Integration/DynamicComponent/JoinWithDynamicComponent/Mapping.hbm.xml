@@ -15,7 +15,7 @@
 		<id name="Id">
 			<generator class="native" />
 		</id>
-		<property name="Number" />
+		<property name="Number" column="thenumber"/>
 		<many-to-one name="Owner" entity-name="Person"/>
 		<join table="CustomProperties">
 			<key>

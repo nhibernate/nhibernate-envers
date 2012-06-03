@@ -2,11 +2,13 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 									 assembly="NHibernate.Envers.Tests"
 									 namespace="NHibernate.Envers.Tests.Entities.RevEntity">
-  <class name="ListenerRevEntity">
-    <id name="CustomId">
-      <generator class="identity" />
-    </id>
-    <property name="CustomTimestamp" />
-    <property name="Data" />
-  </class>
+	<class name="ListenerRevEntity">
+		<id name="CustomId">
+			<generator class="native">
+				<param name="sequence">cre_sequence</param>
+			</generator>
+		</id>
+		<property name="CustomTimestamp" />
+		<property name="Data" />
+	</class>
 </hibernate-mapping>
