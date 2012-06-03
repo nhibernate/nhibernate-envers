@@ -30,6 +30,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 			using (var tx = Session.BeginTransaction())
 			{
 				id = (int) Session.Save(fe);
+				Session.Flush();
 				tx.Commit();
 			}
 			using (var tx = Session.BeginTransaction())
