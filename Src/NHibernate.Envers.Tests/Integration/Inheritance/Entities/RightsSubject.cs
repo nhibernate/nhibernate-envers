@@ -19,15 +19,18 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
 
 		public override bool Equals(object obj)
 		{
-			var casted = obj as RightsSubject;
-			if (casted == null)
+			var that = obj as RightsSubject;
+			if (that == null)
 				return false;
-			return Id == casted.Id && Group.Equals(casted.Group);
+			if (string.IsNullOrEmpty(Group) ? !string.IsNullOrEmpty(that.Group) : !Group.Equals(that.Group)) return false;
+			return Id.Equals(that.Id);
 		}
 
 		public override int GetHashCode()
 		{
-			return Id.GetHashCode() ^Group.GetHashCode();
+			var result = Id.GetHashCode();
+			result = 31 * result + (string.IsNullOrEmpty(Group) ? 0 : Group.GetHashCode());
+			return result;
 		}
 	}
 }
