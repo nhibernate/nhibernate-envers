@@ -12,40 +12,36 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 		{
 		}
 
-		protected override void Initialize()
-		{
-			dropStrTestAuditTable();
-		}
-
 		[Test]
-		public void WhenAuditPeristExceptionOccursTransactionShouldBeRolledBack()
+		public void WhenAuditPersistExceptionOccursTransactionShouldBeRolledBack()
 		{
 			int intId;
-			var strEntity = new StrTestEntity();
+			var willCrash = new NoSchemaEntity();
 			var intEntity = new IntTestEntity();
 
 			using (var tx = Session.BeginTransaction())
 			{
 				intId = (int)Session.Save(intEntity);
-				Session.Save(strEntity);
+				Session.Save(willCrash);
 				Assert.Throws<GenericADOException>(tx.Commit);
 			}
+			ForceNewSession();
 			verifyNoDataGotPeristed(intId);
 		}
 
 		[Test]
-		public void WhenAuditPeristExceptionOccursTransactionShouldBeRolledBack_FlushModeNever()
+		public void WhenAuditPersistExceptionOccursTransactionShouldBeRolledBack_FlushModeNever()
 		{
 			int intId;
-			var strEntity = new StrTestEntity();
+			var willCrash = new NoSchemaEntity();
 			var intEntity = new IntTestEntity();
 			Session.FlushMode = FlushMode.Never;
 
-			using (var tx = Session.BeginTransaction())
+			using (Session.BeginTransaction())
 			{
 				intId = (int)Session.Save(intEntity);
-				Session.Save(strEntity);
-				Assert.Throws<GenericADOException>(tx.Commit);
+				Session.Save(willCrash);
+				Assert.Throws<GenericADOException>(Session.Flush);
 			}
 			verifyNoDataGotPeristed(intId);
 		}
@@ -63,17 +59,16 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			}
 		}
 
-		private void dropStrTestAuditTable()
-		{
-			Session.CreateSQLQuery("drop table StrTestEntity_AUD").ExecuteUpdate();
-		}
 
+		protected override void Initialize()
+		{
+		}
 
 		protected override IEnumerable<string> Mappings
 		{
 			get
 			{
-				return new[] { "Entities.Mapping.hbm.xml"};
+				return new[] { "Entities.Mapping.hbm.xml", "NetSpecific.Integration.Transaction.Mapping.hbm.xml"};
 			}
 		}
 	}
