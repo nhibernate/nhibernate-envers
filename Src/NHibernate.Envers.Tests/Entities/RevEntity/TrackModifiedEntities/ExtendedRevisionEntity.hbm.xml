@@ -4,14 +4,16 @@
 									 namespace="NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities">
 	<class name="ExtendedRevisionEntity">
 		<id name="Id">
-			<generator class="identity" />
+			<generator class="native">
+				<param name="sequence">ere_seq</param>
+			</generator>
 		</id>
 		<property name="RevisionDate" />
 		<set name="ModifiedEntityNames" table="REVCHANGES" cascade="all">
 			<key column="REV"/>
 			<element column="ENTITYNAME" type="string"/>
 		</set>
-		<property name="Comment" />
+		<property name="Comment" column="thecomment" />
 	</class>
 </hibernate-mapping>
 
