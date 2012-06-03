@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 	{
 		const string SimpleMapping = @"<?xml version='1.0' encoding='utf-8'?>
 <hibernate-mapping namespace='NHibernate.Envers.Tests.NetSpecific.Integration.Configuration' assembly='NHibernate.Envers.Tests' xmlns='urn:nhibernate-mapping-2.2'>
-  <class name='SimpleAuiditableForConfEntity'>
+  <class name='SimpleAuiditableForConfEntity' table='SAFCE'>
 	 <id name='Id' type='Int32'>
 		<generator class='assigned'/>
 	 </id>
