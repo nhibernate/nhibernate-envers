@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
+using NHibernate.Dialect;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
@@ -34,11 +35,27 @@ namespace NHibernate.Envers.Entities.Mapper
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj) 
 		{
 			data[_propertyData.Name] = newObj;
+			if (bothOldAndNewAreEmptyStrings(session, newObj, oldObj)) 
+				return false;
 			if (newObj == null)
 			{
 				return oldObj != null;
 			}
 			return !newObj.Equals(oldObj);
+		}
+
+		private static bool bothOldAndNewAreEmptyStrings(ISessionImplementor session, object newObj, object oldObj)
+		{
+			var newObjAsString = newObj as string;
+			var oldObjAsString = oldObj as string;
+			if ((newObjAsString != null || oldObjAsString != null) && session.Factory.Dialect is Oracle8iDialect)
+			{
+				// Don't generate new revision when database replaces empty string with NULL during INSERT or UPDATE statements.
+				var bothNullOrEmpty = string.IsNullOrEmpty(newObjAsString) && string.IsNullOrEmpty(oldObjAsString);
+				if (bothNullOrEmpty)
+					return true;
+			}
+			return false;
 		}
 
 		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
