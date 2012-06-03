@@ -295,7 +295,7 @@
     <Compile Include="Entities\RevEntity\TrackModifiedEntities\CustomTrackingRevisionEntity .cs" />
     <Compile Include="Entities\RevEntity\TrackModifiedEntities\ExtendedRevisionEntity .cs" />
     <Compile Include="Entities\RevEntity\TrackModifiedEntities\ExtendedRevisionListener .cs" />
-    <Compile Include="Entities\RevEntity\TrackModifiedEntities\ModifiedEntityNameEntity .cs" />
+    <Compile Include="Entities\RevEntity\TrackModifiedEntities\ModifiedEntityTypeEntity .cs" />
     <Compile Include="Entities\StrIntTestEntity.cs" />
     <Compile Include="Entities\StrTestEntity.cs" />
     <Compile Include="Entities\UnversionedEntity.cs" />
