@@ -18,7 +18,7 @@
 		<id name="Id">
 			<generator class="native"/>
 		</id>
-		<property name="Number"/>
+		<property name="Number" column="thenumber"/>
 		<bag name="Owners" cascade="all" table="PERSON_CAR">
 			<key column="ID_PERSON"/>
 			<many-to-many entity-name="Personaje" column="ID_CAR"/>
