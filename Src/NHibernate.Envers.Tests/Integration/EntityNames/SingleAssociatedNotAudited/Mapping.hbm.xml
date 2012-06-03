@@ -14,7 +14,7 @@
 		<id name="Id" column="ID_CAR" type="long">
 			<generator class="native" />
 		</id>
-		<property name="Number" type="int" not-null="true" />
+		<property name="Number" type="int" not-null="true"  column="numb"/>
 		<many-to-one name="Owner" entity-name="Personaje"/>
 	</class>
 </hibernate-mapping>

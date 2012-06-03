@@ -41,7 +41,7 @@
 		</set>
 	</class>
 
-	<class name="VersionsJoinTableTestEntity">
+	<class name="VersionsJoinTableTestEntity" table="VJTTE">
 		<id name="Id">
 			<generator class="assigned"/>
 		</id>

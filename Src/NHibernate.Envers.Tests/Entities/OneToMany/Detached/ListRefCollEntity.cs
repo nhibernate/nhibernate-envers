@@ -11,6 +11,7 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached
 		public virtual string Data { get; set; }
 
 		[Audited]
+		[AuditJoinTable(TableName = "LRCE_STE")]
 		public virtual IList<StrTestEntity> Collection { get; set; }
 
 		public override bool Equals(object obj)

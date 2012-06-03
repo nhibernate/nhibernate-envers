@@ -8,7 +8,7 @@
 			<generator class="increment" />
 		</id>
 		<property name="Data" />
-		<property name="Number" />
+		<property name="Number" column="theNumber" />
 	</class>
 
 	<joined-subclass name="AuditedImplementor" extends="ISimple" table="AUDITED_IMPLEMENTOR">

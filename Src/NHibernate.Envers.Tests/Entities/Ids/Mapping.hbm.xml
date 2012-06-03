@@ -10,7 +10,7 @@
 		<property name="Str1"/>
 	</class>
 
-	<class name="EmbIdWithCustomTypeTestEntity">
+	<class name="EmbIdWithCustomTypeTestEntity" table="EIWCTTE">
 		<composite-id name="Id">
 			<key-property name="X"/>
 			<key-property name="CustomEnum" type="NHibernate.Envers.Tests.Entities.Ids.CustomEnumUserType, NHibernate.Envers.Tests"/>
