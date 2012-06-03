@@ -3,7 +3,7 @@
 		assembly="NHibernate.Envers.Tests"
 		namespace="NHibernate.Envers.Tests.Integration.SuperClass.AuditAtMethodSuperclassLevel.AuditMethodSubclass">
 
-	<class name="AuditedMethodSubclassEntity">
+	<class name="AuditedMethodSubclassEntity" table="AMSE">
 		<id name="Id">
 			<generator class="native"/>
 		</id>

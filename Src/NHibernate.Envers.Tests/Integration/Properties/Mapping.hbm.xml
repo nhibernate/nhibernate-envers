@@ -9,7 +9,7 @@
 		</id>
 		<property name="Str" />
 	</class>
-	<class name="UnversionedOptimisticLockingFieldEntity">
+	<class name="UnversionedOptimisticLockingFieldEntity" table="UOLFE">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>

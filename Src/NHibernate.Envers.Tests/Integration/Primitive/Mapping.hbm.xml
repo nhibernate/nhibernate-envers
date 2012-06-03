@@ -7,7 +7,7 @@
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
-		<property name="Number" />
+		<property name="Number" column="thenumber" />
 		<property name="Number2" />
 	</class>
 </hibernate-mapping>

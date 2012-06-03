@@ -11,7 +11,7 @@
 		<id name="Id">
 			<generator class="assigned"/>
 		</id>
-		<property name="Number"/>
+		<property name="Number" column="thenumber"/>
 		<join table="jointable">
 			<key column="C_ID"/>
 			<set name="XCollection" cascade="all">
