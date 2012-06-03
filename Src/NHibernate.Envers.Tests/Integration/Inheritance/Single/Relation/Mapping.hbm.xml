@@ -22,7 +22,7 @@
     <many-to-one name="Referenced" column="refId" />
 
     <subclass name="ChildNotIngEntity" discriminator-value="2">
-      <property name="Number"/>
+      <property name="Number" column="thenumber"/>
     </subclass>
   </class>
 </hibernate-mapping>

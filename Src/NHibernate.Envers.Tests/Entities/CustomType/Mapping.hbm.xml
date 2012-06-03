@@ -9,7 +9,7 @@
 	</typedef>
 	<typedef name="Prim" class="NHibernate.Envers.Tests.Entities.CustomType.PrimitiveTestUserType, NHibernate.Envers.Tests"/>
 
-	<class name="CompositeCustomTypeEntity">
+	<class name="CompositeCustomTypeEntity" table="ComCusTypEnt">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
@@ -19,14 +19,14 @@
 		</property>
 	</class>
 
-	<class name="ParametrizedCustomTypeEntity">
+	<class name="ParametrizedCustomTypeEntity" table="ParCusTypEnt">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
 		<property name="Str" type="Param"/>
 	</class>
 
-	<class name="PrimitiveCustomTypeEntity">
+	<class name="PrimitiveCustomTypeEntity" table="PriCusTypEnt">
 		<id name="Id">
 			<generator class="native"/>
 		</id>

@@ -21,7 +21,7 @@
     <many-to-one name="Referenced" column="refId" />
 
     <union-subclass name="ChildNotIngEntity">
-      <property name="Number"/>
+      <property name="Number" column="thenumber"/>
     </union-subclass>
   </class>
 </hibernate-mapping>
