@@ -16,6 +16,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 		}
 
 		public virtual Guid Id { get; set; }
+		[AuditJoinTable(TableName = "SSE_SS_AUD")]
 		public virtual ISet<StrTestEntity> SortedSet { get; set; }
 		public virtual IDictionary<StrTestEntity, string> SortedMap { get; set; }
 

@@ -15,7 +15,7 @@
 		</bag>
 	</class>
 
-	<class name="Number">
+	<class name="Number" table="THENUMBER">
 		<id name="Id">
 			<generator class="identity"/>
 		</id>

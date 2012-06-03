@@ -12,6 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidir
 		}
 
 		public virtual int Id { get; set; }
+		[AuditJoinTable(TableName = "ASE_ACE_AUD")]
 		public virtual ISet<AbstractContainedEntity> Entities { get; set; }
 
 	}
