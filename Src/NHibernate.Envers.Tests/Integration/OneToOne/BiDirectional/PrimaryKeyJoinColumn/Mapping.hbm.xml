@@ -18,7 +18,9 @@
 
 	<class name="AccountNotAuditedOwners">
 		<id name="AccountId">
-			<generator class="identity"/>
+			<generator class="identity">
+				<param name="sequence">account_seq</param>
+			</generator>
 		</id>
 
 		<property name="Type" />
