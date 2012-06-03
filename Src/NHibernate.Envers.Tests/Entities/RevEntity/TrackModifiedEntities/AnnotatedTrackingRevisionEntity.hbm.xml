@@ -4,7 +4,9 @@
 									 namespace="NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities">
 	<class name="AnnotatedTrackingRevisionEntity" table="AnnTrackRevEnt">
 		<id name="CustomId">
-			<generator class="identity" />
+			<generator class="native">
+				<param name="sequence">atre_seq</param>
+			</generator>
 		</id>
 		<property name="CustomTimestamp" />
 		<set name="EntityNames" table="REVCHANGES">
