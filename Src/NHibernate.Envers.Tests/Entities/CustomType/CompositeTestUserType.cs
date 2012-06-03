@@ -58,7 +58,8 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 			if (prop1 == null) {
 				return null;
 			}
-			var prop2 = dr.GetInt32(dr.GetOrdinal(names[1]));
+
+			var prop2 = (int)NHibernateUtil.Int32.NullSafeGet(dr, names[1]);
 
 			return new Component {Prop1 = prop1, Prop2 = prop2};
 		}

@@ -1,18 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
-    assembly="NHibernate.Envers.Tests"
-    namespace="NHibernate.Envers.Tests.Integration.ManyToMany.Ternary">
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.Integration.ManyToMany.Ternary">
 
-  <class name="TernaryMapEntity">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <map name="Map">
-      <key column ="entId"/>
-      <index-many-to-many class="NHibernate.Envers.Tests.Entities.IntTestEntity"/>
-      <many-to-many class ="NHibernate.Envers.Tests.Entities.StrTestEntity" />
-    </map>
-  </class>
+	<class name="TernaryMapEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="Map">
+			<key column ="entId"/>
+			<index-many-to-many class="IntTestPrivSeqEntity"/>
+			<many-to-many class ="StrTestPrivSeqEntity" />
+		</map>
+	</class>
+
+	<class name="IntTestPrivSeqEntity">
+		<id name="Id">
+			<generator class="native">
+				<param name="sequence">IntTestPrivSeq</param>
+			</generator>
+		</id>
+		<property name="Number" column="thenumber"/>
+	</class>
+
+	<class name="StrTestPrivSeqEntity">
+		<id name="Id">
+			<generator class="native">
+				<param name="sequence">StrTestPrivSeq</param>
+			</generator>
+		</id>
+		<property name="Str"/>
+	</class>
 </hibernate-mapping>
 
 

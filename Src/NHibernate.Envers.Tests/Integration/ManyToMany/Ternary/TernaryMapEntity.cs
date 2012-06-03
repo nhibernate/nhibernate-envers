@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Tests.Entities;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 {
@@ -9,11 +8,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 		public virtual int Id { get; set; }
 
 		[Audited]
-		public virtual IDictionary<IntTestEntity, StrTestEntity> Map { get; set; }
+		public virtual IDictionary<IntTestPrivSeqEntity, StrTestPrivSeqEntity> Map { get; set; }
 
 		public TernaryMapEntity()
 		{
-			Map = new Dictionary<IntTestEntity, StrTestEntity>();
+			Map = new Dictionary<IntTestPrivSeqEntity, StrTestPrivSeqEntity>();
 		}
 
 		public override bool Equals(object obj)
