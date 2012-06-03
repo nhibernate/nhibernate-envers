@@ -4,7 +4,9 @@
 									namespace="NHibernate.Envers.Tests.Entities.RevEntity">
 	<class name="ExceptionListenerRevEntity">
 		<id name="Id">
-			<generator class="native" />
+			<generator class="native">
+				<param name="sequence">cre_sequence</param>
+			</generator>
 		</id>
 		<property name="Timestamp"/>
 	</class>

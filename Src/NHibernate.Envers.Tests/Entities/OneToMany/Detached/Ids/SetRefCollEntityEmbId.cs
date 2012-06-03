@@ -12,6 +12,7 @@ namespace NHibernate.Envers.Tests.Entities.OneToMany.Detached.Ids
 		public virtual string Data { get; set; }
 
 		[Audited]
+		[AuditJoinTable(TableName = "SRCEEI_EITE")]
 		public virtual ISet<EmbIdTestEntity> Collection { get; set; }
 
 		public override bool Equals(object obj)

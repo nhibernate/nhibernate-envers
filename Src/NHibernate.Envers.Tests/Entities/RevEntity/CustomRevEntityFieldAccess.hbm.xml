@@ -4,9 +4,11 @@
 									default-access="field"
 									namespace="NHibernate.Envers.Tests.Entities.RevEntity">
 	<class name="CustomRevEntityField">
-		<id name="_customId">
-			<generator class="native" />
+		<id name="_customId" column="cID">
+			<generator class="native">
+				<param name="sequence">cre_sequence</param>
+			</generator>
 		</id>
-		<property name="_customTimestamp"/>
+		<property name="_customTimestamp" column="cts"/>
 	</class>
 </hibernate-mapping>
