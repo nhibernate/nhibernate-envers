@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
+using NHibernate.Dialect;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
@@ -44,6 +45,17 @@ namespace NHibernate.Envers.Tests
 			Session = openSession(SessionFactory);
 		}
 
+		[TearDown]
+		public void BaseTearDown()
+		{
+			closeSessionAndAuditReader();
+			AuditConfiguration.Remove(Cfg);
+			if (SessionFactory != null)
+			{
+				SessionFactory.Close();
+			}
+		}
+
 		protected virtual string TestShouldNotRunMessage()
 		{
 			return null;
@@ -66,22 +78,9 @@ namespace NHibernate.Envers.Tests
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
 
-		private ISession openSession(ISessionFactory sessionFactory)
+		protected int MillisecondPrecision
 		{
-			var session = sessionFactory.OpenSession();
-			session.FlushMode = FlushMode;
-			return session;
-		}
-
-		[TearDown]
-		public void BaseTearDown()
-		{
-			closeSessionAndAuditReader();
-			AuditConfiguration.Remove(Cfg);
-			if (SessionFactory != null)
-			{
-				SessionFactory.Close();
-			}
+			get { return Dialect is MySQLDialect ? 1000 : 100; }
 		}
 
 		protected virtual FlushMode FlushMode
@@ -91,11 +90,6 @@ namespace NHibernate.Envers.Tests
 
 		protected abstract void Initialize();
 
-		private string nameSpaceAssemblyExtracted()
-		{
-			var fullNamespace = GetType().Namespace;
-			return fullNamespace.Remove(0, TestAssembly.Length + 1);
-		}
 
 		protected virtual IEnumerable<string> Mappings
 		{
@@ -106,6 +100,26 @@ namespace NHibernate.Envers.Tests
 				       		nameSpaceAssemblyExtracted() + ".Mapping.hbm.xml"
 				       	};
 			}
+		}
+
+		private ISession openSession(ISessionFactory sessionFactory)
+		{
+			var session = sessionFactory.OpenSession();
+			session.FlushMode = FlushMode;
+			return session;
+		}
+
+		private string nameSpaceAssemblyExtracted()
+		{
+			var fullNamespace = GetType().Namespace;
+			return fullNamespace.Remove(0, TestAssembly.Length + 1);
+		}
+
+		protected void ForceNewSession()
+		{
+			Session.Close();
+			Session = SessionFactory.OpenSession();
+			_auditReader = null;
 		}
 
 		private void addMappings()
@@ -119,15 +133,8 @@ namespace NHibernate.Envers.Tests
 
 		private void closeSessionAndAuditReader()
 		{
-			if(Session!=null)
+			if (Session != null)
 				Session.Dispose();
-			_auditReader = null;
-		}
-
-		protected void ForceNewSession()
-		{
-			Session.Close();
-			Session = SessionFactory.OpenSession();
 			_auditReader = null;
 		}
 	}
