@@ -300,7 +300,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			return qry.List<IDictionary>();
 		}
 
-		private static void verifyRevEndTimeStamps(IEnumerable<IDictionary> revisionEntities)
+		private void verifyRevEndTimeStamps(IEnumerable<IDictionary> revisionEntities)
 		{
 			foreach (var revisionEntity in revisionEntities)
 			{
@@ -315,7 +315,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 				{
 					var exactDate = new DateTime(revEnd.CustomTimestamp);
 					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-500), exactDate.AddMilliseconds(500));
+					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-MillisecondPrecision), exactDate.AddMilliseconds(MillisecondPrecision));
 				}
 			}
 		}
