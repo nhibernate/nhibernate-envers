@@ -71,6 +71,8 @@
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\IntTestPrivSeqEntity.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
+    <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableEntity.cs" />
+    <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableTest.cs" />
     <Compile Include="NetSpecific\Integration\CustomType\CLOBTestUserType.cs" />
     <Compile Include="NetSpecific\Integration\CustomType\CLOBCustomTypeEntity.cs" />
     <Compile Include="Entities\CustomType\PrimitiveCustomTypeEntity.cs" />
@@ -801,6 +803,7 @@
     <EmbeddedResource Include="Integration\ManyToOne\BiDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Naming\Estonia.hbm.xml" />
     <EmbeddedResource Include="Integration\MultipleRelations\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\NotUpdatable\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
