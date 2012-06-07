@@ -120,14 +120,31 @@ namespace NHibernate.Envers.Event
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
+			var newDbState = postUpdateDBState(evt);
 			var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
-																		 evt.Id, evt.Persister, evt.State, evt.OldState);
+																		 evt.Id, evt.Persister, newDbState, evt.OldState);
 			verSync.AddWorkUnit(workUnit);
 			if (workUnit.ContainsWork())
 			{
-				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, evt.State,
+				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, newDbState,
 																	evt.OldState, evt.Session);
 			}
+		}
+
+		private static object[] postUpdateDBState(PostUpdateEvent evt)
+		{
+			var newDbState = (object[])evt.State.Clone();
+			var entityPersister = evt.Persister;
+			for (var i = 0; i < entityPersister.PropertyNames.Length; i++)
+			{
+				if (!entityPersister.PropertyUpdateability[i])
+				{
+					// Assuming that PostUpdateEvent#getOldState() returns database state of the record before modification.
+					// Otherwise, we would have to execute SQL query to be sure of @Column(updatable = false) column value.
+					newDbState[i] = evt.OldState[i];
+				}
+			}
+			return newDbState;
 		}
 
 		public virtual void OnPostDelete(PostDeleteEvent evt)
