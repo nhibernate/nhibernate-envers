@@ -58,10 +58,13 @@
 		<title>Reference</title>
 
 		<para>
-			There are three ways setting property values. All examples below produce the same result
+			There are four ways setting property values. All examples below produce the same result
 			(tells Envers to store entity data at delete).
 		</para>
-		<programlisting><![CDATA[//NHibernate Core syntax
+		<programlisting><![CDATA[//NHibernate Core xml configuration for ISessionFactory
+<property name="nhibernate.envers.store_data_at_delete">true</property>
+
+//NHibernate Core syntax
 nhConf.SetProperty("nhibernate.envers.store_data_at_delete", "true");
 
 //Using SetEnversProperty extension method with type safe value input
