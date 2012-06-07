@@ -41,6 +41,7 @@
 	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles"/>
 
 	<Target Name="MakeBuildDirectory">
+		<RemoveDir Directories="$(DeployHtmlFolder)"/>
 		<RemoveDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
@@ -74,8 +75,7 @@
 		<exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(DeployHtmlFolder)\index.html $(DocReferencePath)\master.xml $(DocReferencePath)\styles\html.xsl"
 			  WorkingDirectory="$(DeployHtmlFolder)"/>
 		<ItemGroup>
-			<WebFiles Include="$(DocReferencePath)\styles\**\*.css" />
-			<WebFiles Include="$(DocReferencePath)\images\**\*.*" />
+			<WebFiles Include="$(DocReferencePath)\styles\**\*.css;$(DocReferencePath)\images\**\*.*" />
 		</ItemGroup>
 		<copy SourceFiles="@(WebFiles)" DestinationFolder="$(DeployHtmlFolder)\"/>		
 	</Target>

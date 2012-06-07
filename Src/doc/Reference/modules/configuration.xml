@@ -65,7 +65,7 @@
 nhConf.SetProperty("nhibernate.envers.store_data_at_delete", "true");
 
 //Using SetEnversProperty extension method with type safe value input
-nhConfiguration.SetEnversProperty(ConfigurationKey.StoreDataAtDelete, true);
+nhConf.SetEnversProperty(ConfigurationKey.StoreDataAtDelete, true);
 
 //Using ConfigurationKey directly with type safe value input
 ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></programlisting>
