@@ -10,7 +10,7 @@
 		<ClassPath>"$(DocReferencePath)\support\lib\*"</ClassPath>
 		<TempDirectory>$(BuildFolder)\temp</TempDirectory>
 		<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
-		<OutputDoc>$(TempDirectory)\EnversUserDoc.pdf</OutputDoc>
+		<OutputDoc>$(DeployFolder)\EnversUserDoc.pdf</OutputDoc>
 		<DeployHtmlFolder>$(DeployFolder)\html</DeployHtmlFolder>
 	</PropertyGroup>
 
@@ -26,7 +26,10 @@
 		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\Iesi.Collections.dll" />
 	</ItemGroup>
 
-	<Target Name="Build" DependsOnTargets="RunPdfBuild;RunBuild;CopyAllFilesToBuild;"/>
+	<Target Name="Build" DependsOnTargets="RunPdfBuild;RunBuild;CopyAllFilesToBuild;">
+		<RemoveDir Directories="$(TempDirectory)"/>
+	</Target>
+	
 	<Target Name="nuget" DependsOnTargets="Build">
 		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(NugetDeployFolder) -symbols -Prop Configuration=Release"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
