@@ -1,4 +1,20 @@
-=== 1.2 GA (v 1.2.0.0), ????, NH 3.3.1 GA ===
+=== 1.2 GA (v 1.2.0.0), 2012-06-12, NH 3.3.1 GA ===
+
+** Bug
+* [NHE-70] - Join is ignored if not all join properties are audited
+* [NHE-71] - The use of dynamic-component with multiple properties causes an exception on initialization.
+* [NHE-72] - Dynamic component with non set value should not result with any dictionary entry
+* [NHE-73] - The use of dynamic-component combined with using many-to-one reference causes an XML validation exception on initialization 
+* [NHE-76] - Non default sql-type for revision id column + ValidityAuditStrategy throws
+* [NHE-78] - Make tests pass on Oracle
+* [NHE-79] - Make tests pass on postgreesql
+* [NHE-80] - Make tests pass on mysql
+* [NHE-81] - Detached entities + updatable=false fails
+* [NHE-74] - Data truncation may occur if you use IUserType with StringClobSqlType
+
+** Improvement
+* [NHE-39] - Support for CustomCollection
+
 
 *** Breaking changes ***
 * ----- ConfigurationKey.CollectionProxyMapperFactory changed----
@@ -17,6 +33,8 @@
 * If IEntityAuditQuery<T>.Single() returns no rows, null is returned
 * If IAuditQuery.GetSingleResult() returns no rows, null is returned
 * ------------------------------------------
+
+
 
 === 1.1 GA (v 1.1.0.2), 2012-04-22, NH 3.3 GA ===
 
