@@ -1,4 +1,4 @@
-=== vNext ===
+=== 1.2 GA (v 1.2.0.0), ????, NH 3.3.1 GA ===
 
 *** Breaking changes ***
 * ----- ConfigurationKey.CollectionProxyMapperFactory changed----
