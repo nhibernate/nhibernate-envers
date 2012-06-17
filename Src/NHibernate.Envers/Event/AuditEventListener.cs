@@ -324,7 +324,7 @@ namespace NHibernate.Envers.Event
 
 		private void checkIfTransactionInProgress(ISessionImplementor session)
 		{
-			if (!session.TransactionInProgress)
+			if (!session.TransactionInProgress && session.TransactionContext==null)
 			{
 				// Historical data would not be flushed to audit tables if outside of active transaction
 				// (AuditProcess#doBeforeTransactionCompletion(SessionImplementor) not executed).
