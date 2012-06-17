@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Transactions;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tests.Entities;
@@ -97,6 +98,29 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			                              		Session.Update(person);
 			                              		Session.Flush();
 			                              	});
+		}
+
+		[Test]
+		public void ShouldThrowIfOutsideDistributedTransaction()
+		{
+			var entity = new StrTestEntity { Str = "data" };
+			using (var distrTx = new TransactionScope())
+			{
+				using (var newSession = Session.SessionFactory.OpenSession())
+				{
+					newSession.FlushMode = FlushMode.Never;
+					newSession.Save(entity);
+					newSession.Flush();
+				}
+				distrTx.Complete();
+			}
+
+			// Illegal insertion of entity outside of active transaction.
+			Assert.Throws<AuditException>(() =>
+			{
+				Session.Save(entity);
+				Session.Flush();
+			});
 		}
 
 		protected override void Initialize()
