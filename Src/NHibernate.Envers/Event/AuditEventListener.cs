@@ -25,7 +25,7 @@ namespace NHibernate.Envers.Event
 	{
 		public AuditConfiguration VerCfg { get; private set; }
 
-		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
+		private void generateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
 																	IEntityPersister entityPersister,
 																	string entityName,
 																	IList<object> newState,
@@ -111,7 +111,7 @@ namespace NHibernate.Envers.Event
 			auditProcess.AddWorkUnit(workUnit);
 			if (workUnit.ContainsWork())
 			{
-				GenerateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
+				generateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
 																		null, evt.Session);
 			}
 		}
@@ -129,7 +129,7 @@ namespace NHibernate.Envers.Event
 			verSync.AddWorkUnit(workUnit);
 			if (workUnit.ContainsWork())
 			{
-				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, newDbState,
+				generateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, newDbState,
 																	evt.OldState, evt.Session);
 			}
 		}
@@ -162,12 +162,12 @@ namespace NHibernate.Envers.Event
 			verSync.AddWorkUnit(workUnit);
 			if (workUnit.ContainsWork())
 			{
-				GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
+				generateBidirectionalCollectionChangeWorkUnits(verSync, evt.Persister, entityName, null,
 																	evt.DeletedState, evt.Session);
 			}
 		}
 
-		private void GenerateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
+		private void generateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
 																	AbstractCollectionEvent evt,
 																	PersistentCollectionChangeWorkUnit workUnit,
 																	RelationDescription rd)
@@ -202,7 +202,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private void GenerateFakeBidirecationalRelationWorkUnits(AuditProcess auditProcess,
+		private void generateFakeBidirecationalRelationWorkUnits(AuditProcess auditProcess,
 																IPersistentCollection newColl,
 																object oldColl,
 																string collectionEntityName,
@@ -244,7 +244,7 @@ namespace NHibernate.Envers.Event
 					evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 		}
 
-		private void OnCollectionAction(AbstractCollectionEvent evt,
+		private void onCollectionAction(AbstractCollectionEvent evt,
 										IPersistentCollection newColl,
 										object oldColl,
 										CollectionEntry collectionEntry)
@@ -264,7 +264,7 @@ namespace NHibernate.Envers.Event
 			var rd = VerCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
 			if (rd != null && rd.MappedByPropertyName != null)
 			{
-				GenerateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
+				generateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
 															referencingPropertyName, evt, rd);
 			}
 			else
@@ -280,7 +280,7 @@ namespace NHibernate.Envers.Event
 					verSync.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session, evt.GetAffectedOwnerEntityName(), referencingPropertyName,
 																VerCfg, evt.AffectedOwnerIdOrNull, evt.AffectedOwnerOrNull));
 
-					GenerateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
+					generateBidirectionalCollectionChangeWorkUnits(verSync, evt, workUnit, rd);
 				}
 			}
 		}
@@ -295,7 +295,7 @@ namespace NHibernate.Envers.Event
 			var collectionEntry = GetCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
-				OnCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
+				onCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
 			}
 		}
 
@@ -304,7 +304,7 @@ namespace NHibernate.Envers.Event
 			var collectionEntry = GetCollectionEntry(evt);
 			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse)
 			{
-				OnCollectionAction(evt, null, collectionEntry.Snapshot, collectionEntry);
+				onCollectionAction(evt, null, collectionEntry.Snapshot, collectionEntry);
 			}
 		}
 
@@ -313,7 +313,7 @@ namespace NHibernate.Envers.Event
 			var collectionEntry = GetCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
-				OnCollectionAction(evt, evt.Collection, null, collectionEntry);
+				onCollectionAction(evt, evt.Collection, null, collectionEntry);
 			}
 		}
 
