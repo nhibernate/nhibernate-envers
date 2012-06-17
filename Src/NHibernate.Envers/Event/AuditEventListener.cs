@@ -3,6 +3,7 @@ using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
+using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Synchronization.Work;
 using NHibernate.Envers.Tools;
@@ -102,6 +103,7 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.Persister.EntityName;
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
+			checkIfTransactionInProgress(evt.Session);
 
 			var auditProcess = VerCfg.AuditProcessManager.Get(evt.Session);
 			var workUnit = new AddWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
@@ -118,6 +120,7 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.Persister.EntityName;
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
+			checkIfTransactionInProgress(evt.Session);
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
 			var newDbState = postUpdateDBState(evt);
@@ -151,6 +154,7 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.Persister.EntityName;
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
+			checkIfTransactionInProgress(evt.Session);
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
 			var workUnit = new DelWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
@@ -249,6 +253,7 @@ namespace NHibernate.Envers.Event
 				return;
 			var entityName = evt.GetAffectedOwnerEntityName();
 			if (!VerCfg.EntCfg.IsVersioned(entityName)) return;
+			checkIfTransactionInProgress(evt.Session);
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
 			var ownerEntityName = ((AbstractCollectionPersister)collectionEntry.LoadedPersister).OwnerEntityName;
@@ -315,6 +320,16 @@ namespace NHibernate.Envers.Event
 		public virtual void Initialize(Cfg.Configuration cfg)
 		{
 			VerCfg = AuditConfiguration.GetFor(cfg);
+		}
+
+		private void checkIfTransactionInProgress(ISessionImplementor session)
+		{
+			if (!session.TransactionInProgress)
+			{
+				// Historical data would not be flushed to audit tables if outside of active transaction
+				// (AuditProcess#doBeforeTransactionCompletion(SessionImplementor) not executed).
+				throw new AuditException("Unable to create revision because of non-active transaction");
+			}
 		}
 	}
 }
