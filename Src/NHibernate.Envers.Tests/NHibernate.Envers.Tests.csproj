@@ -70,6 +70,7 @@
     <Compile Include="Entities\Components\DefaultValueComponent2.cs" />
     <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
+    <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\IntTestPrivSeqEntity.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableEntity.cs" />

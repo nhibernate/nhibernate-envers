@@ -1,3 +1,9 @@
+=== vNext (v ????), ?????, ??? ===
+
+*** Breaking changes ***
+* Persisting outside a transaction now throws AuditException
+
+
 === 1.2 GA (v 1.2.0.0), 2012-06-12, NH 3.3.1 GA ===
 
 ** Bug
