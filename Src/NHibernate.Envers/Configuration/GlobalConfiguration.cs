@@ -16,7 +16,6 @@ namespace NHibernate.Envers.Configuration
 			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToString(properties);
 			EnversProxyFactory = ConfigurationKey.ProxyFactory.ToInstance<IEnversProxyFactory>(properties);
 			CollectionMapperFactory = ConfigurationKey.CollectionMapperFactory.ToInstance<ICollectionMapperFactory>(properties);
-			CollectionMapperFactory.Initialize(EnversProxyFactory);
 			CorrelatedSubqueryOperator = "=";
 			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
 			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToString(properties);
