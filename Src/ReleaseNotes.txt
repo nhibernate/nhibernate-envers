@@ -2,7 +2,7 @@
 
 *** Breaking changes ***
 * Persisting outside a transaction now throws AuditException
-
+* ICollectionMapperFactory changed. Initialize method gone. Instead IEnversProxyFactory is passed to every factory method.
 
 === 1.2 GA (v 1.2.0.0), 2012-06-12, NH 3.3.1 GA ===
 
