@@ -24,8 +24,17 @@
         </listitem>
         <listitem>
             <para>
-                <ulink url="jira.nhforge.org">JIRA issue tracker</ulink>
-                (when adding issues concerning Envers, be sure to select the "envers" component!)
+                <ulink url="https://nhibernate.jira.com/browse/NHE">JIRA issue tracker</ulink>
+            </para>
+        </listitem>
+		<listitem>
+            <para>
+                <ulink url="http://sourceforge.net/projects/nhcontrib/files/NHibernate.Envers/">Binaries</ulink>
+            </para>
+        </listitem>
+		<listitem>
+            <para>
+                <ulink url="http://nuget.org/packages/NHibernate.Envers">Nuget package</ulink>
             </para>
         </listitem>
     </orderedlist>
