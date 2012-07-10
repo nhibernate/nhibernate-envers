@@ -1,8 +1,17 @@
-=== vNext (v ????), ?????, ??? ===
+=== 1.3 GA (v 1.3.0.0), 2012-07-10, NH 3.3.1 GA ===
+
+** Bug
+* [NHE-83] - Envers should throw if trying to persist outside transaction
+* [NHE-84] - Auditing a previously detached and now reatched object causes a null pointer exception
+
+** Improvement
+* [NHE-82] - Let user reuse enversproxyfactory instance in DefaultCollectionMapperFactory override
 
 *** Breaking changes ***
 * Persisting outside a transaction now throws AuditException
 * ICollectionMapperFactory changed. Initialize method gone. Instead IEnversProxyFactory is passed to every factory method.
+
+
 
 === 1.2 GA (v 1.2.0.0), 2012-06-12, NH 3.3.1 GA ===
 

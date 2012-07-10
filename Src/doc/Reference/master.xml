@@ -20,7 +20,7 @@
 	<bookinfo>
 		<title>NHibernate Envers - Audit trail for NHibernate</title>
 		<subtitle>NHibernate Envers Reference Documentation</subtitle>
-		<releaseinfo>1.2</releaseinfo>
+		<releaseinfo>1.3</releaseinfo>
 	</bookinfo>
 
 	<toc />
