@@ -23,6 +23,8 @@ namespace NHibernate.Envers.Event
 									IPostCollectionRecreateEventListener,
 									IInitializable
 	{
+		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditEventListener));
+
 		public AuditConfiguration VerCfg { get; private set; }
 
 		private void generateBidirectionalCollectionChangeWorkUnits(AuditProcess auditProcess,
@@ -138,13 +140,20 @@ namespace NHibernate.Envers.Event
 		{
 			var newDbState = (object[])evt.State.Clone();
 			var entityPersister = evt.Persister;
+			var oldState = evt.OldState;
+			if (oldState == null)
+			{
+				log.InfoFormat("Using current state when persisting detached {0}. This can result in incorrect audit data if non updatable property(ies) are used.", entityPersister.EntityName);
+				return newDbState;
+			}
 			for (var i = 0; i < entityPersister.PropertyNames.Length; i++)
 			{
 				if (!entityPersister.PropertyUpdateability[i])
 				{
 					// Assuming that PostUpdateEvent#getOldState() returns database state of the record before modification.
 					// Otherwise, we would have to execute SQL query to be sure of @Column(updatable = false) column value.
-					newDbState[i] = evt.OldState[i];
+					// For now, we're in that case returning newdbstate above which (potentially) result in corrupt audit state for update=false properties
+					newDbState[i] = oldState[i];
 				}
 			}
 			return newDbState;

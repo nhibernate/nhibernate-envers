@@ -585,6 +585,7 @@
     <Compile Include="NetSpecific\Integration\Join\NoAuditedProperties\NoAuditedCollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\Memory\MultipleConfigurationsTest.cs" />
     <Compile Include="NetSpecific\Integration\Merge\AddEditCollectionItemTest.cs" />
+    <Compile Include="NetSpecific\Integration\NotUpdatable\DetachedTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwnedEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOneOwningEntity.cs" />
     <Compile Include="NetSpecific\Integration\OneToOne\OneToOnePrimaryKeyTest.cs" />
