@@ -11,15 +11,15 @@ namespace NHibernate.Envers.Entities.Mapper
 {
 	public class ComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder
 	{
-		private readonly PropertyData propertyData;
+		private readonly PropertyData _propertyData;
 		private readonly MultiPropertyMapper _delegate;
-		private readonly string componentClassName;
+		private readonly string _componentClassName;
 
 		public ComponentPropertyMapper(PropertyData propertyData, string componentClassName)
 		{
-			this.propertyData = propertyData;
+			_propertyData = propertyData;
 			_delegate = new MultiPropertyMapper();
-			this.componentClassName = componentClassName;
+			_componentClassName = componentClassName;
 		}
 
 		public void Add(PropertyData propertyData)
@@ -45,15 +45,15 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
-			if (propertyData.UsingModifiedFlag)
+			if (_propertyData.UsingModifiedFlag)
 			{
-				data[propertyData.ModifiedFlagPropertyName] = _delegate.MapToMapFromEntity(session, new Dictionary<string, object>(), newObj, oldObj);
+				data[_propertyData.ModifiedFlagPropertyName] = _delegate.MapToMapFromEntity(session, new Dictionary<string, object>(), newObj, oldObj);
 			}
 		}
 
 		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
 		{
-			if (propertyData.UsingModifiedFlag)
+			if (_propertyData.UsingModifiedFlag)
 			{
 				var hasModifiedCollection = false;
 				foreach (var propData in _delegate.Properties.Keys)
@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Entities.Mapper
 						break;
 					}
 				}
-				data[propertyData.ModifiedFlagPropertyName] = hasModifiedCollection;
+				data[_propertyData.ModifiedFlagPropertyName] = hasModifiedCollection;
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace NHibernate.Envers.Entities.Mapper
 				return;
 			}
 
-			if (propertyData.BeanName == null)
+			if (_propertyData.BeanName == null)
 			{
 				// If properties are not encapsulated in a component but placed directly in a class
 				// (e.g. by applying <properties> tag).
@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Entities.Mapper
 				return;
 			}
 
-			var setter = ReflectionTools.GetSetter(obj.GetType(), propertyData);
+			var setter = ReflectionTools.GetSetter(obj.GetType(), _propertyData);
 
 			// If all properties are null and single, then the component has to be null also.
 			var allNullAndSingle = true;
@@ -104,7 +104,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 			else
 			{
-				var componentType = Toolz.ResolveDotnetType(componentClassName);
+				var componentType = Toolz.ResolveDotnetType(_componentClassName);
 				var subObj = ReflectionTools.CreateInstanceByDefaultConstructor(componentType);
 				_delegate.MapToEntityFromMap(verCfg, subObj, data, primaryKey, versionsReader, revision);
 				setter.Set(obj, subObj);

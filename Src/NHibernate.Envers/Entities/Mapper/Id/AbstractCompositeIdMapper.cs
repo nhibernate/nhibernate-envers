@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Exceptions;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
@@ -35,13 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 				throw new AuditException("Cannot create instance of type " + CompositeIdClass, e);
 			}	
 
-			foreach (var mapper in Ids.Values) 
-			{
-				if (!mapper.MapToEntityFromMap(ret, data))
-					return null;
-			}
-
-			return ret;
+			return Ids.Values.Any(mapper => !mapper.MapToEntityFromMap(ret, data)) ? null : ret;
 		}
 	}
 }

@@ -5,11 +5,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
 	public class ClassAuditingData : IAuditedPropertiesHolder 
 	{
-		private readonly IDictionary<string, PropertyAuditingData> properties;
+		private readonly IDictionary<string, PropertyAuditingData> _properties;
 
 		public ClassAuditingData()
 		{
-			properties = new Dictionary<string, PropertyAuditingData>();
+			_properties = new Dictionary<string, PropertyAuditingData>();
 			JoinTableDictionary = new Dictionary<string, string>();
 		}
 
@@ -21,42 +21,42 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		///  True if the class is audited globally (this helps to cover the cases when there are no fields in the class,
 		///  but it's still audited).
 		/// </summary>
-		private bool defaultAudited;
+		private bool _defaultAudited;
 
 		public void AddPropertyAuditingData(string propertyName, PropertyAuditingData auditingData)
 		{
-			properties.Add(propertyName, auditingData);
+			_properties.Add(propertyName, auditingData);
 		}
 
 		public PropertyAuditingData GetPropertyAuditingData(string propertyName)
 		{
 			PropertyAuditingData ret;
-			return properties.TryGetValue(propertyName, out ret) ? ret : null;
+			return _properties.TryGetValue(propertyName, out ret) ? ret : null;
 		}
 
 		public bool IsEmpty()
 		{
-			return properties.Count == 0;
+			return _properties.Count == 0;
 		}
 
 		public bool Contains(string propertyName)
 		{
-			return properties.ContainsKey(propertyName);
+			return _properties.ContainsKey(propertyName);
 		}
 
 		public IEnumerable<string> PropertyNames
 		{
-			get { return properties.Keys; }
+			get { return _properties.Keys; }
 		}
 
 		public void SetDefaultAudited(bool defaultAudited) 
 		{
-			this.defaultAudited = defaultAudited;
+			_defaultAudited = defaultAudited;
 		}
 
 		public bool IsAudited() 
 		{
-			return defaultAudited || properties.Count > 0;
+			return _defaultAudited || _properties.Count > 0;
 		}
 	}
 }
