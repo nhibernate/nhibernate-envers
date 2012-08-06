@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NHibernate.Envers.Tools
 {
@@ -26,12 +27,7 @@ namespace NHibernate.Envers.Tools
 
 		public int GetHashCode(IDictionary<K, V> obj)
 		{
-			var ret =123;
-			foreach (var keyValue in obj)
-			{
-				ret = ret + (keyValue.GetHashCode()*31);
-			}
-			return ret;
+			return obj.Aggregate(123, (current, keyValue) => current + (keyValue.GetHashCode()*31));
 		}
 	}
 }

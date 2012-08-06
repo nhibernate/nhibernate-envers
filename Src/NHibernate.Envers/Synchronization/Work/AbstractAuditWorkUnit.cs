@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Synchronization.Work
 {
 	public abstract class AbstractAuditWorkUnit : IAuditWorkUnit 
 	{
-		private object performedData;
+		private object _performedData;
 
 		protected AbstractAuditWorkUnit(ISessionImplementor sessionImplementor,			
 										string entityName, 
@@ -45,24 +45,19 @@ namespace NHibernate.Envers.Synchronization.Work
 		{
 			var data = GenerateData(revisionData);
 			AuditStrategy.Perform(session, EntityName, VerCfg, EntityId, data, revisionData);
-			SetPerformed(data);
+			_performedData = data;
 		}
 
 		public bool IsPerformed() 
 		{
-			return performedData != null;
-		}
-
-		private void SetPerformed(object performedData) 
-		{
-			this.performedData = performedData;
+			return _performedData != null;
 		}
 
 		public void Undo(ISession session) 
 		{
 			if (IsPerformed()) 
 			{
-				session.Delete(VerCfg.AuditEntCfg.GetAuditEntityName(EntityName), performedData);
+				session.Delete(VerCfg.AuditEntCfg.GetAuditEntityName(EntityName), _performedData);
 				session.Flush();
 			}
 		}

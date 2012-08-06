@@ -11,7 +11,6 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
-using NHibernate.SqlTypes;
 using NHibernate.Type;
 
 namespace NHibernate.Envers.Configuration

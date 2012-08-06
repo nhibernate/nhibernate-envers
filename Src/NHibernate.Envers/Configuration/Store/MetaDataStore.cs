@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace NHibernate.Envers.Configuration.Store
@@ -35,12 +36,7 @@ namespace NHibernate.Envers.Configuration.Store
 			var attrType = typeof (T);
 			if (!EntityMetas.TryGetValue(entityType, out entityMeta))
 				return null;
-			foreach (var enversAttribute in entityMeta.ClassMetas)
-			{
-				if (enversAttribute.GetType() == attrType)
-					return (T)enversAttribute;
-			}
-			return null;
+			return entityMeta.ClassMetas.Where(enversAttribute => enversAttribute.GetType() == attrType).Cast<T>().FirstOrDefault();
 		}
 
 		public T MemberMeta<T>(MemberInfo member) where T : Attribute
