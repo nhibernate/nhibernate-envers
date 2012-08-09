@@ -71,9 +71,11 @@
     <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
     <Compile Include="Entities\Ids\CompositeDateIdTestEntity.cs" />
     <Compile Include="Entities\Ids\DateEmbId.cs" />
+    <Compile Include="Entities\Ids\DateIdTestEntity.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\Ids\CompositeDateIdTest.cs" />
+    <Compile Include="Integration\Ids\DateIdTest.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\IntTestPrivSeqEntity.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableEntity.cs" />

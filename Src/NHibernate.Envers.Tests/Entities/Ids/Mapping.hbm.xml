@@ -25,4 +25,11 @@
 		</composite-id>
 		<property name="Str1"/>
 	</class>
+
+	<class name="DateIdTestEntity" table="DITE">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Str1"/>
+	</class>
 </hibernate-mapping>
