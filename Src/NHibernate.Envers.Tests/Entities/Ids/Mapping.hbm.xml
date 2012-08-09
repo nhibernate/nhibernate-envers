@@ -17,4 +17,12 @@
 		</composite-id>
 		<property name="Str1"/>
 	</class>
+
+	<class name="CompositeDateIdTestEntity" table="CDITE">
+		<composite-id name="Id">
+			<key-property name="X"/>
+			<key-property name="Y"/>
+		</composite-id>
+		<property name="Str1"/>
+	</class>
 </hibernate-mapping>
