@@ -21,7 +21,6 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 			get { return new[] { "Entities.Ids.Mapping.hbm.xml" }; }
 		}
 
-
 		protected override void Initialize()
 		{
 			id1 = new EmbId { X = 1, Y = 2 };
