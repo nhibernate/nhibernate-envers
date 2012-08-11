@@ -1,0 +1,12 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	 assembly="NHibernate.Envers.Tests"
+	 namespace="NHibernate.Envers.Tests.NetSpecific.UnitTests.Ids">
+
+	<class name="MultipleIdEntity">
+		<composite-id>
+			<key-property name="Id1"/>
+			<key-property name="Id2"/>
+		</composite-id>
+		<property name="Value"/>
+	</class>
+</hibernate-mapping>

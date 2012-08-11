@@ -5,6 +5,7 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
+using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
@@ -433,6 +434,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Generating a mapping for the id
 			var idMapper = idMetadataGenerator.AddId(pc);
+			if (idMapper == null)
+			{
+				throw new AuditException("Id mapping for type " + pc.ClassName +
+				                         " is currently not supported in Envers. If you need composite-id, use 'Components as composite identifiers'.");
+			}
 
 			var inheritanceType = pc.GetInheritanceType();
 
