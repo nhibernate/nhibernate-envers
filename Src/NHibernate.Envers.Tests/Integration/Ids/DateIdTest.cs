@@ -46,7 +46,6 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 				.Should().Be.EqualTo("y");
 		}
 
-
 		protected override IEnumerable<string> Mappings
 		{
 			get { return new[] { "Entities.Ids.Mapping.hbm.xml" }; }
