@@ -37,7 +37,7 @@
 
     <section id="exceptions-willbesupported">
 
-        <title>What is not and <emphasis>will</emphasis> be supported</title>
+        <title>What is not but <emphasis>will</emphasis> be supported</title>
 
         <orderedlist>
             <listitem>
@@ -45,6 +45,11 @@
                     Collections of components
                 </para>
             </listitem>
+			  <listitem>
+				  <para>
+					  ManyToAny reference
+				  </para>
+			  </listitem>
         </orderedlist>
 
     </section>
