@@ -4,10 +4,10 @@
 
     <section id="exceptions-wontbesupported">
 
-        <title>What is not and will not be supported</title>
+        <title>What is not and will (probably) not be supported</title>
 
         <para>
-            Bags (the corresponding CLR type is IList&lt;T&gt;) of primitive types, as they can contain non-unique elements.
+            Bags (the corresponding CLR type is IList&lt;T&gt;) with duplicate elements.
             The reason is that persisting, for example a bag of String-s, violates a principle
             of relational databases: that each table is a set of tuples. In case of bags,
             however (which require a join table), if there is a duplicate element, the two
