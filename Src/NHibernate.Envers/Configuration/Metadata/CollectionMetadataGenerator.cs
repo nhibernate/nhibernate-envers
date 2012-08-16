@@ -636,7 +636,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 			}
 			if(mappedBy==null)
-				throw new MappingException("Unable to read the mapped by attribute for " + _propertyName + " in " + _referencingEntityName + "!");
+				throw new MappingException("Cannot find the inverse side for " + _propertyName + " in " + _referencingEntityName + "!");
 			return mappedBy;
 		}
 
