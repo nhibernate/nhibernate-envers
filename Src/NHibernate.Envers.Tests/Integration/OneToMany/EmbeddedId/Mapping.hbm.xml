@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.OneToMany.EmbeddedId">
+	<class name="Person">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Name"/>
+		<set name="PersonATuples" inverse="true">
+			<key column="PersonAId"/>
+			<one-to-many class="PersonTuple"/>
+		</set>
+		<set name="PersonBTuples" inverse="true">
+			<key column="PersonBId"/>
+			<one-to-many class="PersonTuple"/>
+		</set>
+	</class>
+
+	<class name="PersonTuple">
+		<composite-id name="PersonTupleId" class="PersonTupleId">
+			<key-property name="PersonAId"/>
+			<key-property name="PersonBId"/>
+			<key-property name="ConstantId"/>
+		</composite-id>
+		<many-to-one name="PersonA" column="PersonAId" not-null="true" update="false" insert="false"/>
+		<many-to-one name="PersonB" column="PersonBId" not-null="true" update="false" insert="false"/>
+		<many-to-one name="Constant" column="ConstantId" not-null="true" update="false" insert="false"/>
+		<property name="HelloWorld" not-null="true"/>
+	</class>
+
+	<class name="Constant">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Name"/>
+	</class>
+</hibernate-mapping>
