@@ -83,6 +83,11 @@
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableTest.cs" />
+    <Compile Include="Integration\OneToMany\EmbeddedId\Constant.cs" />
+    <Compile Include="Integration\OneToMany\EmbeddedId\MapsIdTest.cs" />
+    <Compile Include="Integration\OneToMany\EmbeddedId\Person.cs" />
+    <Compile Include="Integration\OneToMany\EmbeddedId\PersonTuple.cs" />
+    <Compile Include="Integration\OneToMany\EmbeddedId\PersonTupleId.cs" />
     <Compile Include="NetSpecific\Integration\CustomType\CLOBTestUserType.cs" />
     <Compile Include="NetSpecific\Integration\CustomType\CLOBCustomTypeEntity.cs" />
     <Compile Include="Entities\CustomType\PrimitiveCustomTypeEntity.cs" />
@@ -819,6 +824,7 @@
     <EmbeddedResource Include="Integration\MultipleRelations\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\NotUpdatable\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Ids\ManyToOneIdNotAuditedTest.hbm.xml" />
+    <EmbeddedResource Include="Integration\OneToMany\EmbeddedId\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
