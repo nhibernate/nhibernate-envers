@@ -77,12 +77,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public void AddCollection() 
 		{
 			var type = _propertyValue.Type;
+			var value = _propertyValue.Element;
 
 			var oneToManyAttachedType = type is BagType || type is SetType || type is MapType || type is ListType;
-			var inverseOneToMany = (_propertyValue.Element is OneToMany) && (_propertyValue.IsInverse);
-			var fakeOneToManyBidirectional = (_propertyValue.Element is OneToMany) && (_propertyAuditingData.AuditMappedBy != null);
+			var inverseOneToMany = (value is OneToMany) && (_propertyValue.IsInverse);
+			var owningManyToOneWithJoinTableBidirectional = value is ManyToOne && _propertyAuditingData.AuditMappedBy != null;
+			var fakeOneToManyBidirectional = (value is OneToMany) && (_propertyAuditingData.AuditMappedBy != null);
 
-			if (oneToManyAttachedType && (inverseOneToMany || fakeOneToManyBidirectional)) 
+			if (oneToManyAttachedType && (inverseOneToMany || fakeOneToManyBidirectional || owningManyToOneWithJoinTableBidirectional)) 
 			{
 				// A one-to-many relation mapped using @ManyToOne and @OneToMany(mappedBy="...")
 				addOneToManyAttached(fakeOneToManyBidirectional);
@@ -149,14 +151,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Creating a prefixed relation mapper.
 				var relMapper = referencingIdMapping.IdMapper.PrefixMappedProperties(
-						MappingTools.CreateToOneRelationPrefix(auditMappedBy));
+						MappingTools.CreateToOneRelationPrefix(auditMappedBy.MappedBy));
 
 				fakeBidirectionalRelationMapper = new ToOneIdMapper(
 						_mainGenerator.GlobalCfg.EnversProxyFactory,
 						relMapper,
 					// The mapper will only be used to map from entity to map, so no need to provide other details
 					// when constructing the PropertyData.
-						new PropertyData(auditMappedBy, null, null),
+						new PropertyData(auditMappedBy.MappedBy, null, null),
 						_referencedEntityName, false);
 
 				// Checking if there's an index defined. If so, adding a mapper for it.
@@ -613,8 +615,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private string getMappedBy(Mapping.Collection collectionValue) 
 		{
-			var referencedClass = ((OneToMany)collectionValue.Element).AssociatedClass;
-
+			var referencedClass = _mainGenerator.Cfg.GetClassMapping(MappingTools.ReferencedEntityName(collectionValue.Element));
 			// If there's an @AuditMappedBy specified, returning it directly.
 			//var auditMappedBy = _propertyAuditingData.AuditMappedBy;
 			//if (auditMappedBy != null)
