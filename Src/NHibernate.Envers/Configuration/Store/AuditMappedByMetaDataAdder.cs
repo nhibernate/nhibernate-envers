@@ -67,17 +67,22 @@ namespace NHibernate.Envers.Configuration.Store
 
 		private static AuditMappedByAttribute createAuditMappedByAttributeIfReferenceImmutable(Mapping.Collection collectionValue, Property referencedProperty)
 		{
-			//check key value
-			if (MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator) &&
-										!referencedProperty.IsUpdateable && 
-										!referencedProperty.IsInsertable)
+			AuditMappedByAttribute attr = null;
+		
+			//check if bidrectional
+			//TODO: backref check here is wrong! NHE-87
+			if (!referencedProperty.BackRef && MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator))
 			{
-				//check that non update/insert properties are not also part of id!
-				if (MappingTools.AnyColumnMatches(referencedProperty.ColumnIterator, referencedProperty.PersistentClass.Identifier.ColumnIterator))
-					return null;
-				return new AuditMappedByAttribute { MappedBy = referencedProperty.Name };				
+				attr = new AuditMappedByAttribute {MappedBy = referencedProperty.Name};
+				if (!referencedProperty.IsUpdateable && 
+					!referencedProperty.IsInsertable &&
+					//check that non update/insert properties are not also part of id!
+					!MappingTools.AnyColumnMatches(referencedProperty.ColumnIterator, referencedProperty.PersistentClass.Identifier.ColumnIterator))
+				{
+					attr.ForceInsertOverride = true;									
+				}
 			}
-			return null;
+			return attr;
 		}
 
 		private static void mightAddIndexToAttribute(AuditMappedByAttribute auditMappedByAttribute, Mapping.Collection collectionValue, IEnumerable<Property> referencedProperties)

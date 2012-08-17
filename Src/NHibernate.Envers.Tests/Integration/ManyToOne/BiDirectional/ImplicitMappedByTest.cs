@@ -4,7 +4,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional
 {
-	[Ignore("Not fixed yet - similar to https://hibernate.onjira.com/browse/HHH-4962, but cannot be fixed the same way")]
 	public class ImplicitMappedByTest : TestBase
 	{
 		private long ownedId;

@@ -50,13 +50,13 @@ namespace NHibernate.Envers.Configuration
 				{
 					var propertyAuditingData = classAuditingData.GetPropertyAuditingData(propertyName);
 					// If a property had the @AuditMappedBy annotation, setting the referenced fields to be always insertable.
-					if (propertyAuditingData.AuditMappedBy != null) 
+					if (propertyAuditingData.AuditMappedBy != null && propertyAuditingData.AuditMappedBy.ForceInsertOverride) 
 					{
 						var referencedEntityName = MappingTools.ReferencedEntityName(pc.GetProperty(propertyName).Value);
 
 						var referencedClassAuditingData = entityNameToAuditingData[referencedEntityName];
 
-						ForcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.AuditMappedBy,
+						ForcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.AuditMappedBy.MappedBy,
 								pc.EntityName, referencedEntityName);
 
 						ForcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.PositionMappedBy,

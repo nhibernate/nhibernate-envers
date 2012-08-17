@@ -370,7 +370,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			var auditMappedBy = _metaDataStore.MemberMeta<AuditMappedByAttribute>(property);
 			if (auditMappedBy != null)
 			{
-				propertyData.AuditMappedBy = auditMappedBy.MappedBy;
+				propertyData.AuditMappedBy = auditMappedBy;
 				if (!string.IsNullOrEmpty(auditMappedBy.PositionMappedBy))
 				{
 					propertyData.PositionMappedBy = auditMappedBy.PositionMappedBy;

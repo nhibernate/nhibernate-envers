@@ -9,7 +9,9 @@
 		<property name="Data" />
 		<join table="many_to_one_join_table">
 			<key column ="manytooneid"/>
-			<many-to-one name="References" class="OneToManyOwned" column="onetomanyid"  />
+			<many-to-one name="References" class="OneToManyOwned">
+				<column name="onetomanyid" not-null="true"/>
+			</many-to-one>
 		</join>
 	</class>
 
@@ -20,7 +22,9 @@
 		<property name="Data" />
 		<set name="Referencing" table ="many_to_one_join_table" inverse="true">
 			<key column="onetomanyid" />
-			<many-to-many class="ManyToOneOwning" column="manytooneid" unique="true"/>
+			<many-to-many class="ManyToOneOwning" unique="true">
+				<column unique="true" name="manytooneid" not-null="true"/>
+			</many-to-many>
 		</set>
 	</class>
 </hibernate-mapping>
