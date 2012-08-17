@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
-using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
