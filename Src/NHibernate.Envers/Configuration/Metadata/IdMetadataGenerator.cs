@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
@@ -11,14 +10,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public sealed class IdMetadataGenerator 
 	{
-		private readonly AuditMetadataGenerator mainGenerator;
+		private readonly AuditMetadataGenerator _mainGenerator;
 
 		public IdMetadataGenerator(AuditMetadataGenerator auditMetadataGenerator) 
 		{
-			mainGenerator = auditMetadataGenerator;
+			_mainGenerator = auditMetadataGenerator;
 		}
 	
-		private void AddIdProperties(XmlElement parent, IEnumerable<Property> properties, ISimpleMapperBuilder mapper, bool key) 
+		private void addIdProperties(XmlElement parent, IEnumerable<Property> properties, ISimpleMapperBuilder mapper, bool key) 
 		{
 			foreach (var property in properties)
 			{
@@ -28,8 +27,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					if (!propertyType.IsMutable)
 					{
 						// Last but one parameter: ids are always insertable
-						mainGenerator.BasicMetadataGenerator.AddBasic(parent,
-								GetIdPersistentPropertyAuditingData(property),
+						_mainGenerator.BasicMetadataGenerator.AddBasic(parent,
+								getIdPersistentPropertyAuditingData(property),
 								property.Value, mapper, true, key);
 					}
 					else
@@ -68,11 +67,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// Embedded id
 				var idComponent = (Component) idProp.Value;
 
-				mapper = new EmbeddedIdMapper(GetIdPropertyData(idProp), idComponent.ComponentClass);
-				AddIdProperties(relIdMapping, idComponent.PropertyIterator, mapper, false);
+				mapper = new EmbeddedIdMapper(getIdPropertyData(idProp), idComponent.ComponentClass);
+				addIdProperties(relIdMapping, idComponent.PropertyIterator, mapper, false);
 
 				// null mapper - the mapping where already added the first time, now we only want to generate the xml
-				AddIdProperties(origIdMapping, idComponent.PropertyIterator, null, true);
+				addIdProperties(origIdMapping, idComponent.PropertyIterator, null, true);
 			} 
 			else 
 			{
@@ -80,30 +79,30 @@ namespace NHibernate.Envers.Configuration.Metadata
 				mapper = new SingleIdMapper();
 
 				// Last but one parameter: ids are always insertable
-				mainGenerator.BasicMetadataGenerator.AddBasic(relIdMapping,
-				                                              GetIdPersistentPropertyAuditingData(idProp),
+				_mainGenerator.BasicMetadataGenerator.AddBasic(relIdMapping,
+				                                              getIdPersistentPropertyAuditingData(idProp),
 				                                              idProp.Value, mapper, true, false);
 
 				// null mapper - the mapping where already added the first time, now we only want to generate the xml
-				mainGenerator.BasicMetadataGenerator.AddBasic(origIdMapping,
-				                                              GetIdPersistentPropertyAuditingData(idProp),
+				_mainGenerator.BasicMetadataGenerator.AddBasic(origIdMapping,
+				                                              getIdPersistentPropertyAuditingData(idProp),
 				                                              idProp.Value, null, true, true);
 			}
 
-			origIdMapping.SetAttribute("name", mainGenerator.VerEntCfg.OriginalIdPropName);
+			origIdMapping.SetAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName);
 
 			// Adding a relation to the revision entity (effectively: the "revision number" property)
-			mainGenerator.AddRevisionInfoRelation(origIdMapping);
+			_mainGenerator.AddRevisionInfoRelation(origIdMapping);
 
 			return new IdMappingData(mapper, origIdMapping, relIdMapping);
 		}
 
-		private static PropertyData GetIdPropertyData(Property property) 
+		private static PropertyData getIdPropertyData(Property property) 
 		{
 			return new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 		}
 
-		private static PropertyAuditingData GetIdPersistentPropertyAuditingData(Property property) 
+		private static PropertyAuditingData getIdPersistentPropertyAuditingData(Property property) 
 		{
 			return new PropertyAuditingData(property.Name, property.PropertyAccessorName);
 		}
