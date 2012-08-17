@@ -583,6 +583,9 @@
     <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\BasicJoinWithDynamicComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Car.cs" />
     <Compile Include="NetSpecific\Integration\DynamicComponent\JoinWithDynamicComponent\Person.cs" />
+    <Compile Include="NetSpecific\Integration\OneToMany\Child.cs" />
+    <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
+    <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\CompositeIdNoComponentTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\MultipleIdEntity.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
@@ -669,6 +672,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\OneToMany\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\UnitTests\Ids\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Transaction\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Join\NoAuditedProperties\Mapping.hbm.xml" />

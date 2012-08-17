@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Configuration.Store
 			AuditMappedByAttribute attr = null;
 		
 			//check if bidrectional
-			//TODO: backref check here is wrong! NHE-87
+			//TODO: backref check here is wrong! But if it's fixed it will be a big breaking change I guess.. For now, an extra table will be created.
 			if (!referencedProperty.BackRef && MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator))
 			{
 				attr = new AuditMappedByAttribute {MappedBy = referencedProperty.Name};
