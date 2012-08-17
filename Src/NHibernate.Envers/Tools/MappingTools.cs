@@ -52,5 +52,13 @@ namespace NHibernate.Envers.Tools
 							select ((Column)s).Name;
 			return firstNames.Count() == lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
 		}
+
+		public static bool AnyColumnMatches(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
+		{
+			return (from Column idColumn in first 
+					  from Column propColumn in second 
+					  where propColumn.Name.Equals(idColumn.Name) 
+					  select idColumn).Any();
+		}
 	}
 }
