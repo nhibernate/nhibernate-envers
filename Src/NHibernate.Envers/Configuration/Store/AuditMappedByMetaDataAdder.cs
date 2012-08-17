@@ -72,6 +72,9 @@ namespace NHibernate.Envers.Configuration.Store
 										!referencedProperty.IsUpdateable && 
 										!referencedProperty.IsInsertable)
 			{
+				//check that non update/insert properties are not also part of id!
+				if (MappingTools.AnyColumnMatches(referencedProperty.ColumnIterator, referencedProperty.PersistentClass.Identifier.ColumnIterator))
+					return null;
 				return new AuditMappedByAttribute { MappedBy = referencedProperty.Name };				
 			}
 			return null;

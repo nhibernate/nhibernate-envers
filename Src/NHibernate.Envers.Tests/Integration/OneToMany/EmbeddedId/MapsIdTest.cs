@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.EmbeddedId
 {
-	[Ignore("NHE86 - Not yet fixed")]
 	public class MapsIdTest : TestBase
 	{
 		private PersonTuple tuple1Ver1;

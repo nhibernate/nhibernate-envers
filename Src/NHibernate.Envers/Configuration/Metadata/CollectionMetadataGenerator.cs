@@ -616,11 +616,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var referencedClass = ((OneToMany)collectionValue.Element).AssociatedClass;
 
 			// If there's an @AuditMappedBy specified, returning it directly.
-			var auditMappedBy = _propertyAuditingData.AuditMappedBy;
-			if (auditMappedBy != null)
-			{
-				return auditMappedBy;
-			}
+			//var auditMappedBy = _propertyAuditingData.AuditMappedBy;
+			//if (auditMappedBy != null)
+			//{
+			//   return auditMappedBy;
+			//}
 
 			var mappedBy = searchMappedBy(referencedClass, collectionValue);
 
@@ -643,11 +643,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private string getMappedBy(Table collectionTable, PersistentClass referencedClass)
 		{
 			// If there's an @AuditMappedBy specified, returning it directly.
-			var auditMappedBy = _propertyAuditingData.AuditMappedBy;
-			if (auditMappedBy != null)
-			{
-				return auditMappedBy;
-			}
+			//var auditMappedBy = _propertyAuditingData.AuditMappedBy;
+			//if (auditMappedBy != null)
+			//{
+			//   return auditMappedBy;
+			//}
 
 			var mappedBy = searchMappedBy(referencedClass, collectionTable);
 
