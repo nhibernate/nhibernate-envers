@@ -12,19 +12,13 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			AuditingOverrides = new List<AuditOverrideAttribute>(0);
 		}
 
-		public PropertyAuditingData(string name, string accessType, 
-		                            RelationTargetAuditMode relationTargetAuditMode,
-		                            AuditMappedByAttribute auditMappedBy, string positionMappedBy,
-		                            bool forceInsertable)
+		public PropertyAuditingData(string name, string accessType)
 		{
 			AuditingOverrides = new List<AuditOverrideAttribute>(0);
 			Name = name;
 			BeanName = name;
 			AccessType = accessType;
-			RelationTargetAuditMode = relationTargetAuditMode;
-			AuditMappedBy = auditMappedBy;
-			PositionMappedBy = positionMappedBy;
-			ForceInsertable = forceInsertable;
+			RelationTargetAuditMode = RelationTargetAuditMode.Audited;
 		}
 
 		public string Name { get; set; }
@@ -32,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public AuditJoinTableAttribute JoinTable { get; set; }
 		public string AccessType { get; set; }
 		public IList<AuditOverrideAttribute> AuditingOverrides { get; private set; }
-		public AuditMappedByAttribute AuditMappedBy { get; set; }
+		public string MappedBy { get; set; }
 		public string PositionMappedBy { get; set; }
 		public bool ForceInsertable { get; set; }
 		public RelationTargetAuditMode RelationTargetAuditMode { get; set; }
