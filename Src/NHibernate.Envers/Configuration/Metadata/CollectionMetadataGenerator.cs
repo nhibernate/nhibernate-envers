@@ -81,8 +81,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			var oneToManyAttachedType = type is BagType || type is SetType || type is MapType || type is ListType;
 			var inverseOneToMany = (value is OneToMany) && (_propertyValue.IsInverse);
-			var owningManyToOneWithJoinTableBidirectional = value is ManyToOne && _propertyAuditingData.AuditMappedBy != null;
-			var fakeOneToManyBidirectional = (value is OneToMany) && (_propertyAuditingData.AuditMappedBy != null);
+			var owningManyToOneWithJoinTableBidirectional = value is ManyToOne && _propertyAuditingData.MappedBy != null;
+			var fakeOneToManyBidirectional = (value is OneToMany) && (_propertyAuditingData.MappedBy != null);
 
 			if (oneToManyAttachedType && (inverseOneToMany || fakeOneToManyBidirectional || owningManyToOneWithJoinTableBidirectional)) 
 			{
@@ -147,18 +147,18 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				// In case of a fake many-to-one bidirectional relation, we have to generate a mapper which maps
 				// the mapped-by property name to the id of the related entity (which is the owner of the collection).
-				var auditMappedBy = _propertyAuditingData.AuditMappedBy;
+				var auditMappedBy = _propertyAuditingData.MappedBy;
 
 				// Creating a prefixed relation mapper.
 				var relMapper = referencingIdMapping.IdMapper.PrefixMappedProperties(
-						MappingTools.CreateToOneRelationPrefix(auditMappedBy.MappedBy));
+						MappingTools.CreateToOneRelationPrefix(auditMappedBy));
 
 				fakeBidirectionalRelationMapper = new ToOneIdMapper(
 						_mainGenerator.GlobalCfg.EnversProxyFactory,
 						relMapper,
 					// The mapper will only be used to map from entity to map, so no need to provide other details
 					// when constructing the PropertyData.
-						new PropertyData(auditMappedBy.MappedBy, null, null),
+						new PropertyData(auditMappedBy, null, null),
 						_referencedEntityName, false);
 
 				// Checking if there's an index defined. If so, adding a mapper for it.
@@ -438,7 +438,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			// Last but one parameter: collection components are always insertable
 			var mapped = _mainGenerator.BasicMetadataGenerator.AddBasic(xmlMapping,
-																		new PropertyAuditingData(prefix, "field", RelationTargetAuditMode.Audited, null, null, false),
+																		new PropertyAuditingData(prefix, "field"),
 																		value, null, true, true);
 
 			if (mapped) 
