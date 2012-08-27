@@ -83,6 +83,7 @@
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableEntity.cs" />
     <Compile Include="Integration\NotUpdatable\PropertyNotUpdatableTest.cs" />
+    <Compile Include="Integration\OneToMany\Detached\DetachedTest.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\Constant.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\MapsIdTest.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\Person.cs" />
