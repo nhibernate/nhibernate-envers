@@ -46,7 +46,6 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 			using (var tx = Session.BeginTransaction())
 			{
 				ing1.References.Add(ed2);
-				ing1.References.Add(ed2);
 				tx.Commit();
 			}
 			using (var tx = Session.BeginTransaction())
