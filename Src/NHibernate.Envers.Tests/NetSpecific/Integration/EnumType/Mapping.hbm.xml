@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.EnumType">
+	<class name="Entity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="EntityEnum" type="NHibernate.Type.EnumCharType`1[NHibernate.Envers.Tests.NetSpecific.Integration.EnumType.EntityEnum, NHibernate.Envers.Tests], NHibernate"/>
+	</class>
+</hibernate-mapping>
