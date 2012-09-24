@@ -333,6 +333,17 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 							The default implementation uses NH Core's internal proxy framework.
 						</entry>
 					</row>
+					<row>
+						<entry>
+							nhibernate.envers.unique_cfg_name
+						</entry>
+						<entry>
+							A guid string
+						</entry>
+						<entry>
+							A unique name for the configuration object. Used internally by Envers. Must not be set explicitly by user!
+						</entry>
+					</row>
 				</tbody>
 			</tgroup>
 		</table>
