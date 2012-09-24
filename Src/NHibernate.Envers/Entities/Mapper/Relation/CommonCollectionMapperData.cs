@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using System;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
@@ -6,6 +7,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	/// <summary>
 	/// Data that is used by all collection mappers, regardless of the type.  
 	/// </summary>
+	[Serializable]
 	public sealed class CommonCollectionMapperData
 	{
 		public CommonCollectionMapperData(AuditEntitiesConfiguration verEntCfg, string versionsMiddleEntityName,

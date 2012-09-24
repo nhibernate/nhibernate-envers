@@ -30,6 +30,7 @@ namespace NHibernate.Envers.Strategy
 	/// </ul>
 	/// </p>
 	/// </summary>
+	[Serializable]
 	public class ValidityAuditStrategy : IAuditStrategy
 	{
 		//getter for the revision entity field annotated with @RevisionTimestamp 

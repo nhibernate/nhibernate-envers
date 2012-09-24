@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
@@ -15,6 +16,7 @@ using NHibernate.Util;
 
 namespace NHibernate.Envers.Event
 {
+	[Serializable]
 	public class AuditEventListener : IPostInsertEventListener,
 									IPostUpdateEventListener,
 									IPostDeleteEventListener,

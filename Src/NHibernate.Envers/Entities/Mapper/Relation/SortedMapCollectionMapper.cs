@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public class SortedMapCollectionMapper<TKey, TValue> : MapCollectionMapper<TKey, TValue>
 	{
 		private readonly IComparer<TKey> _comparer;

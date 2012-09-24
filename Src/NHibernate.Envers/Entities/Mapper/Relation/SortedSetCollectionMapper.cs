@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
@@ -5,6 +6,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public class SortedSetCollectionMapper<T> : SetCollectionMapper<T>
 	{
 		private readonly IComparer<T> _comparer;

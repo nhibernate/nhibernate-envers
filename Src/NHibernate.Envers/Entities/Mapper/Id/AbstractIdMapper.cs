@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
+	[Serializable]
 	public abstract class AbstractIdMapper : IIdMapper
 	{
 		private static Parameters GetParametersToUse(Parameters parameters, ICollection<QueryParameterData> paramDatas)

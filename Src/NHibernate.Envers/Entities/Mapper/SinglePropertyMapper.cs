@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Dialect;
@@ -11,6 +12,7 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
+	[Serializable]
 	public class SinglePropertyMapper : IPropertyMapper, ISimpleMapperBuilder 
 	{
 		private PropertyData _propertyData;

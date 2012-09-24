@@ -1,8 +1,10 @@
-﻿using NHibernate.Envers.Entities.Mapper;
+﻿using System;
+using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities
 {
+	[Serializable]
 	public class RelationDescription 
 	{
 		public RelationDescription(string fromPropertyName, RelationType relationType, string toEntityName,

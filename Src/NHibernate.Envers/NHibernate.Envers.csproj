@@ -73,6 +73,7 @@
     <Compile Include="Configuration\Attributes\AuditTableAttribute.cs" />
     <Compile Include="Configuration\Attributes\CustomCollectionMapperAttribute.cs" />
     <Compile Include="Configuration\BoolConfigurationEntry.cs" />
+    <Compile Include="Configuration\ConfigurationComparer.cs" />
     <Compile Include="Configuration\ConfigurationKey.cs" />
     <Compile Include="Configuration\Fluent\BaseFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />

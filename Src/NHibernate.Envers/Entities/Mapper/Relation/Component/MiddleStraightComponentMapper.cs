@@ -9,6 +9,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 	/// A mapper for reading and writing a property straight to/from maps. This mapper cannot be used with middle tables,
 	/// but only with "fake" bidirectional indexed relations. 
 	/// </summary>
+	[Serializable]
 	public sealed class MiddleStraightComponentMapper : IMiddleComponentMapper 
 	{
 		private readonly string _propertyName;

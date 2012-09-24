@@ -9,6 +9,7 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
+	[Serializable]
 	public class DynamicComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder
 	{
 		private readonly PropertyData _propertyData;

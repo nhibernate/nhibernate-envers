@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Collection;
@@ -12,6 +13,7 @@ namespace NHibernate.Envers.Entities.Mapper
 	/// A mapper which maps from a parent mapper and a "main" one, but adds only to the "main". The "main" mapper
 	/// should be the mapper of the subclass.
 	/// </summary>
+	[Serializable]
 	public class SubclassPropertyMapper : IExtendedPropertyMapper 
 	{
 		private readonly IExtendedPropertyMapper main;

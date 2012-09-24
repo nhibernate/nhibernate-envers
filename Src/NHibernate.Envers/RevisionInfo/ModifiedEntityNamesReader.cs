@@ -1,4 +1,5 @@
-﻿using Iesi.Collections.Generic;
+﻿using System;
+using Iesi.Collections.Generic;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
@@ -8,6 +9,7 @@ namespace NHibernate.Envers.RevisionInfo
 	/// <summary>
 	/// Returns modified entity types from a persisted revision info entity.
 	/// </summary>
+	[Serializable]
 	public class ModifiedEntityNamesReader
 	{
 		private readonly IGetter modifiedEntityTypesGetter;

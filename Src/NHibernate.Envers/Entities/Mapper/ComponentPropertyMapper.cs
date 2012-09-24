@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Engine;
@@ -9,6 +10,7 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
+	[Serializable]
 	public class ComponentPropertyMapper : IPropertyMapper, ICompositeMapperBuilder
 	{
 		private readonly PropertyData _propertyData;

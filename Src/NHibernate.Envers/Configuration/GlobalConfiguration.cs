@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper.Relation;
 
 namespace NHibernate.Envers.Configuration
 {
+	[Serializable]
 	public class GlobalConfiguration 
 	{
 		public GlobalConfiguration(IDictionary<string,string> properties) 

@@ -1,5 +1,8 @@
-﻿namespace NHibernate.Envers.Entities
+﻿using System;
+
+namespace NHibernate.Envers.Entities
 {
+	[Serializable]
 	public class PropertyData 
 	{
 		/// <summary>

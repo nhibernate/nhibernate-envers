@@ -5,6 +5,7 @@ using NHibernate.Criterion;
 
 namespace NHibernate.Envers.RevisionInfo
 {
+	[Serializable]
 	public class RevisionInfoQueryCreator
 	{
 		private readonly string _revisionInfoEntityName;

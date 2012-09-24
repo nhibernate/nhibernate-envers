@@ -6,6 +6,7 @@ using NHibernate.Properties;
 
 namespace NHibernate.Envers.RevisionInfo
 {
+	[Serializable]
 	public class DefaultRevisionInfoGenerator : IRevisionInfoGenerator
 	{
 		private readonly string _revisionInfoEntityName;

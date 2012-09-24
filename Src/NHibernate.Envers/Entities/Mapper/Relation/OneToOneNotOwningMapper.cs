@@ -1,8 +1,10 @@
-﻿using NHibernate.Envers.Query;
+﻿using System;
+using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public class OneToOneNotOwningMapper : AbstractOneToOneMapper
 	{
 		private readonly string _owningReferencePropertyName;

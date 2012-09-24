@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
@@ -7,6 +8,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public class MapCollectionMapper<TKey, TValue> : AbstractCollectionMapper
 	{
 		public MapCollectionMapper(IEnversProxyFactory enversProxyFactory,

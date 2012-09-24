@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
+	[Serializable]
 	public class MiddleSimpleComponentMapper : IMiddleComponentMapper
 	{
 		private readonly AuditEntitiesConfiguration _verEntCfg;

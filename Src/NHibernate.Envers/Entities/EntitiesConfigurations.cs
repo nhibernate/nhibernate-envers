@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Entities
@@ -6,6 +7,7 @@ namespace NHibernate.Envers.Entities
 	/// <summary>
 	/// Configuration of the user entities: property mapping of the entities, relations, inheritance.
 	/// </summary>
+	[Serializable]
 	public class EntitiesConfigurations
 	{
 		private readonly IDictionary<string, EntityConfiguration> entitiesConfigurations;
