@@ -80,7 +80,7 @@ namespace NHibernate.Envers.Configuration
 
 					cfg.AddDocument(xmlMappingData.MainXmlMapping);
 
-					foreach (var additionalMapping in  xmlMappingData.AdditionalXmlMappings) 
+					foreach (var additionalMapping in xmlMappingData.AdditionalXmlMappings) 
 					{
 						cfg.AddDocument(additionalMapping);
 					}

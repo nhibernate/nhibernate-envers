@@ -42,8 +42,18 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private static bool isUserDefined(System.Type mappingType)
 		{
+			if (isUserDefinedInner(mappingType))
+			{
+				return true;
+			}
+			return mappingType.IsGenericType && mappingType.GetGenericArguments().Any(isUserDefinedInner);
+		}
+
+		private static bool isUserDefinedInner(System.Type mappingType)
+		{
 			return !typeof(ISession).Assembly.Equals(mappingType.Assembly);
 		}
+	
 
 		private static void addSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
 								IValue value, ISimpleMapperBuilder mapper, bool insertable, bool key)
