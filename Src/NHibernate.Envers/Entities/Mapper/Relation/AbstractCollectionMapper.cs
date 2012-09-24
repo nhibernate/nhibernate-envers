@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
 		private readonly IEnversProxyFactory _enversProxyFactory;

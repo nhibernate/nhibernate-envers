@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities
 {
+	[Serializable]
 	public class EntityConfiguration
 	{
 		public EntityConfiguration(string versionsEntityName, string entityClassName, IdMappingData idMappingData,
@@ -20,7 +22,15 @@ namespace NHibernate.Envers.Entities
 	
 		public string VersionsEntityName { get; private set; }
 		public string EntityClassName { get; private set; }
-		public IdMappingData IdMappingData { get; private set; }
+
+		[NonSerialized]
+		private IdMappingData _idMappingData;
+		public IdMappingData IdMappingData
+		{
+			get { return _idMappingData; }
+			private set { _idMappingData = value; }
+		}
+
 		public IExtendedPropertyMapper PropertyMapper { get; private set; }
 		// Maps from property name
 		private readonly IDictionary<string, RelationDescription> relations;

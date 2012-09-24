@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Envers.Tools.Reflection;
@@ -10,6 +11,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 	/// is a property of the entity. This doesn't have an effect on the data stored in the versions tables,
 	/// so <code>mapToMapFromObject</code> is empty.
 	/// </summary>
+	[Serializable]
 	public class MiddleMapKeyPropertyComponentMapper : IMiddleComponentMapper 
 	{
 		private readonly string _propertyName;

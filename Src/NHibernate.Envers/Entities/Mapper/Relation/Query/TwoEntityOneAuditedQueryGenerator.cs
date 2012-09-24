@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
@@ -11,6 +12,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// <summary>
 	/// Selects data from a relation middle-table and a related non-audited entity.
 	/// </summary>
+	[Serializable]
 	public sealed class TwoEntityOneAuditedQueryGenerator : IRelationQueryGenerator
 	{
 		private readonly string _queryString;

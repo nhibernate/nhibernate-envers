@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
@@ -8,6 +9,7 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
+	[Serializable]
 	public class ListCollectionMapper<T> : AbstractCollectionMapper
 	{
 		private readonly MiddleComponentData _elementComponentData;

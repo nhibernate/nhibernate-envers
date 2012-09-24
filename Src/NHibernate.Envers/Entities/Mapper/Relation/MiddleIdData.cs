@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using System;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
@@ -7,6 +8,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	///  A class holding information about ids, which form a virtual "relation" from a middle-table. Middle-tables are used
 	///  when mapping collections.
 	/// </summary>
+	[Serializable]
 	public sealed class MiddleIdData
 	{
 		public MiddleIdData(AuditEntitiesConfiguration verEntCfg, IdMappingData mappingData, string prefix,

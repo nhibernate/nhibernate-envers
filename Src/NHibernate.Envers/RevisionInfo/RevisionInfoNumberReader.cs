@@ -5,6 +5,7 @@ using NHibernate.Properties;
 
 namespace NHibernate.Envers.RevisionInfo
 {
+	[Serializable]
 	public class RevisionInfoNumberReader 
 	{
 		private readonly IGetter _getter;

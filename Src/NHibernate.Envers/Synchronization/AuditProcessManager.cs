@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Event;
@@ -5,6 +6,7 @@ using NHibernate.Util;
 
 namespace NHibernate.Envers.Synchronization
 {
+	[Serializable]
 	public class AuditProcessManager
 	{
 		private readonly IDictionary<ITransaction, AuditProcess> auditProcesses;

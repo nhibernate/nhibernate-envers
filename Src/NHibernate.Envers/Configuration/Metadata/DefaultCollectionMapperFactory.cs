@@ -7,6 +7,7 @@ using NHibernate.Envers.Entities.Mapper.Relation;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
+	[Serializable]
 	public class DefaultCollectionMapperFactory : ICollectionMapperFactory
 	{
 		public virtual IPropertyMapper Array(IEnversProxyFactory enversProxyFactory, System.Type elementType, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)

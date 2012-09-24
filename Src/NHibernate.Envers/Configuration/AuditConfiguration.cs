@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using NHibernate.Cfg;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
@@ -11,9 +12,10 @@ using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Configuration
 {
+	[Serializable]
 	public class AuditConfiguration
 	{
-		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> Configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>();
+		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> Configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>(new ConfigurationComparer());
 		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> ConfigurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
 
 		private AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
@@ -72,6 +74,7 @@ namespace NHibernate.Envers.Configuration
 			AuditConfiguration verCfg;
 			if (!Configurations.TryGetValue(cfg, out verCfg))
 			{
+				cfg.SetEnversProperty(ConfigurationKey.UniqueConfigurationName, Guid.NewGuid().ToString());
 				cfg.BuildMappings(); // force secondpass for mappings added by users
 				IMetaDataProvider metas;
 				if (!ConfigurationMetadataProvider.TryGetValue(cfg, out metas))

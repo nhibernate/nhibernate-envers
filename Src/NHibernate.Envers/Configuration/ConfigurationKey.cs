@@ -162,5 +162,12 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public static readonly BoolConfigurationEntry GlobalWithModifiedFlag
 			= new BoolConfigurationEntry("nhibernate.envers.global_with_modified_flag", "false");
+
+		/// <summary>
+		/// Gives a cfg object a unique name. Used by Envers to use equality on serialized <see cref="Cfg.Configuration"/> objects.
+		/// The name will be set first time Envers use this <see cref="Cfg.Configuration"/> object.
+		/// </summary>
+		public static readonly StringConfigurationEntry UniqueConfigurationName
+			= new StringConfigurationEntry("nhibernate.envers.unique_cfg_name", string.Empty);
 	}
 }

@@ -6,6 +6,7 @@ using NHibernate.Envers.Exceptions;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
+	[Serializable]
 	public abstract class AbstractCompositeIdMapper : AbstractIdMapper , ISimpleIdMapperBuilder
 	{
 		protected AbstractCompositeIdMapper(System.Type compositeIdClass)

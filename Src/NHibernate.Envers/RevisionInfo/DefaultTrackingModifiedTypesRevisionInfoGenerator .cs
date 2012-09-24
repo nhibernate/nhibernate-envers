@@ -1,4 +1,5 @@
-﻿using Iesi.Collections.Generic;
+﻿using System;
+using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Tools.Reflection;
@@ -11,6 +12,7 @@ namespace NHibernate.Envers.RevisionInfo
 	/// <see cref="ModifiedEntityNamesAttribute"/>
 	/// <see cref="DefaultTrackingModifiedEntitiesRevisionEntity"/>
 	/// </summary>
+	[Serializable]
 	public class DefaultTrackingModifiedEntitiesRevisionInfoGenerator : DefaultRevisionInfoGenerator
 	{
 		private readonly ISetter modifiedEntityTypesSetter;

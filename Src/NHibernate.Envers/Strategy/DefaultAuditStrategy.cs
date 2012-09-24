@@ -1,3 +1,4 @@
+using System;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -10,6 +11,7 @@ namespace NHibernate.Envers.Strategy
 	/// <summary>
 	/// Default strategy is to simply persist the audit data.
 	/// </summary>
+	[Serializable]
 	public class DefaultAuditStrategy : IAuditStrategy
 	{
 		public void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision)

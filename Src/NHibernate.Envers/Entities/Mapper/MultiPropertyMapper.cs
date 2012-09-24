@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
 using NHibernate.Engine;
@@ -10,6 +11,7 @@ using NHibernate.Properties;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
+	[Serializable]
 	public class MultiPropertyMapper : IExtendedPropertyMapper 
 	{
 		public MultiPropertyMapper() 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tools.Reflection;
@@ -6,6 +7,7 @@ using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Id
 {
+	[Serializable]
 	public class SingleIdMapper : AbstractIdMapper, ISimpleIdMapperBuilder
 	{
 		private PropertyData _propertyData;

@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
+	[Serializable]
 	public class MiddleRelatedComponentMapper : IMiddleComponentMapper
 	{
 		private readonly MiddleIdData _relatedIdData;

@@ -1,4 +1,5 @@
-﻿using NHibernate.Envers.Entities.Mapper.Relation.Component;
+﻿using System;
+using NHibernate.Envers.Entities.Mapper.Relation.Component;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
@@ -8,6 +9,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	/// - an index, which specifies in which element of the array returned by the query for reading the collection the data
 	/// of the component is
 	/// </summary>
+	[Serializable]
 	public sealed class MiddleComponentData 
 	{
 		public MiddleComponentData(IMiddleComponentMapper componentMapper, int componentIndex) 

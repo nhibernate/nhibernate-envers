@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Strategy;
@@ -10,6 +11,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// <summary>
 	/// Selects data from an audit entity.
 	/// </summary>
+	[Serializable]
 	public sealed class OneAuditEntityQueryGenerator: IRelationQueryGenerator 
 	{
 		private readonly string _queryString;

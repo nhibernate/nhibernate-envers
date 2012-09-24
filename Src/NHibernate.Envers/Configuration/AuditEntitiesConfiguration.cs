@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration
 {
+	[Serializable]
 	public class AuditEntitiesConfiguration 
 	{
 		private readonly string _auditTablePrefix;

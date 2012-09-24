@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 {
+	[Serializable]
     public sealed class MiddleDummyComponentMapper: IMiddleComponentMapper
     {
         public object MapToObjectFromFullMap(EntityInstantiator entityInstantiator, IDictionary data, object dataObject, long revision)
