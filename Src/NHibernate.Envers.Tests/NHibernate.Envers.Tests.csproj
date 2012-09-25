@@ -76,7 +76,6 @@
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
-    <Compile Include="Integration\Flush\FlushGetCurrentRevisionTest.cs" />
     <Compile Include="Integration\Ids\CompositeDateIdTest.cs" />
     <Compile Include="Integration\Ids\DateIdTest.cs" />
     <Compile Include="Integration\Ids\ManyToOneIdNotAuditedTest.cs" />
