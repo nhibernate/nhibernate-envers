@@ -76,6 +76,7 @@
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
+    <Compile Include="Integration\Flush\FlushGetCurrentRevisionTest.cs" />
     <Compile Include="Integration\Ids\CompositeDateIdTest.cs" />
     <Compile Include="Integration\Ids\DateIdTest.cs" />
     <Compile Include="Integration\Ids\ManyToOneIdNotAuditedTest.cs" />
@@ -591,6 +592,7 @@
     <Compile Include="NetSpecific\Integration\OneToMany\Child.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />
+    <Compile Include="NetSpecific\Integration\PersistRevisionInfo\FlushGetCurrentRevisionTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\CompositeIdNoComponentTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\MultipleIdEntity.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
