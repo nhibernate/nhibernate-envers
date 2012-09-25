@@ -15,6 +15,7 @@ namespace NHibernate.Envers.Synchronization
 		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
 		private readonly EntityChangeNotifier entityChangeNotifier;
 		private object revisionData;
+		private bool revisionInfoPersistedInCurrentTransaction;
 
 		public AuditProcess(IRevisionInfoGenerator revisionInfoGenerator, ISessionImplementor session)
 		{
@@ -132,9 +133,10 @@ namespace NHibernate.Envers.Synchronization
 			}
 
 			// Saving the revision data, if not yet saved and persist is true
-			if (!executeSession.Contains(revisionData) && persist)
+			if (!revisionInfoPersistedInCurrentTransaction && persist)
 			{
 				revisionInfoGenerator.SaveRevisionData(executeSession, revisionData);
+				revisionInfoPersistedInCurrentTransaction = true;
 			}
 
 			return revisionData;
