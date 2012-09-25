@@ -30,8 +30,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 				{
 					using (var tx = s.BeginTransaction())
 					{
-						Session.Save(ed);
-						Session.Save(ing1);
+						s.Save(ed);
+						s.Save(ing1);
 						tx.Commit();
 					}		
 				}
@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 				stream.Position = 0;
 				serializedCfg = (Cfg.Configuration) formatter.Deserialize(stream);
 			}
-			serializedCfg.Properties[Environment.Hbm2ddlAuto] = string.Empty;
+			serializedCfg.Properties.Remove(Environment.Hbm2ddlAuto);
 			return serializedCfg;
 		}
 
