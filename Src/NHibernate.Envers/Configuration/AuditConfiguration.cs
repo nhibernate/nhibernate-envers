@@ -116,7 +116,7 @@ namespace NHibernate.Envers.Configuration
 			Configurations.Remove(cfg);
 		}
 
-		public void OnDeserialization(object sender)
+		void IDeserializationCallback.OnDeserialization(object sender)
 		{
 			Configurations[Configuration] = this;
 		}
