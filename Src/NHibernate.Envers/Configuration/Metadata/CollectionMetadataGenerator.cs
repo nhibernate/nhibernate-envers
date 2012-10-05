@@ -615,13 +615,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private string getMappedBy(Mapping.Collection collectionValue) 
 		{
 			var referencedClass = _mainGenerator.Cfg.GetClassMapping(MappingTools.ReferencedEntityName(collectionValue.Element));
-			// If there's an @AuditMappedBy specified, returning it directly.
-			//var auditMappedBy = _propertyAuditingData.AuditMappedBy;
-			//if (auditMappedBy != null)
-			//{
-			//   return auditMappedBy;
-			//}
-
 			var mappedBy = searchMappedBy(referencedClass, collectionValue);
 
 			if (mappedBy == null)
