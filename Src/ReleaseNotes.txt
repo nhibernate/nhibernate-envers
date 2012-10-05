@@ -1,7 +1,19 @@
 === 1.4 GA (v 1.4.0.0), ???, NH 3.3.1 GA ===
 
+** Bug
+* [NHE-60] - Support bidirectional onetomany with join table
+* [NHE-86] - Bidirectional one-to-many with composite-id throws
+* [NHE-88] - Support custom generic types
+* [NHE-90] - Incorrect entity revision when clearing the cache
+
+** Improvement
+* [NHE-85] - generateMappingData Method throws NullReferenceException
+* [NHE-89] - Make Envers configuration serializable.
+
 *** Possible breaking change ***
 * AuditConfiguration made sealed
+
+
 
 === 1.3 GA (v 1.3.0.0), 2012-07-10, NH 3.3.1 GA ===
 
