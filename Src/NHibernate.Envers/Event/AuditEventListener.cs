@@ -333,7 +333,7 @@ namespace NHibernate.Envers.Event
 			VerCfg = AuditConfiguration.GetFor(cfg);
 		}
 
-		private void checkIfTransactionInProgress(ISessionImplementor session)
+		private static void checkIfTransactionInProgress(ISessionImplementor session)
 		{
 			if (!session.TransactionInProgress && session.TransactionContext==null)
 			{

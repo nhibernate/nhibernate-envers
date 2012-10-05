@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Query.Criteria
 			}
 			else
 			{
-				foreach (IAuditCriterion criterion in criterions)
+				foreach (var criterion in criterions)
 				{
 					criterion.AddToQuery(verCfg, entityName, qb, orParameters);
 				}

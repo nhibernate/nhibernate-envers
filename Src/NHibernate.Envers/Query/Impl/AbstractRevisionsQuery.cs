@@ -116,7 +116,7 @@ namespace NHibernate.Envers.Query.Impl
 		public IEntityAuditQuery<TEntity> AddOrder(IAuditOrder order)
 		{
 			hasOrder = true;
-			Pair<string, bool> orderData = order.GetData(auditConfiguration);
+			var orderData = order.GetData(auditConfiguration);
 			queryBuilder.AddOrder(orderData.First, orderData.Second);
 			return this;
 		}
@@ -190,7 +190,7 @@ namespace NHibernate.Envers.Query.Impl
 		protected void AddCriterions()
 		{
 			// all specified conditions, transformed
-			foreach (IAuditCriterion criterion in criterions)
+			foreach (var criterion in criterions)
 			{
 				criterion.AddToQuery(auditConfiguration, entityName, queryBuilder, queryBuilder.RootParameters);
 			}
