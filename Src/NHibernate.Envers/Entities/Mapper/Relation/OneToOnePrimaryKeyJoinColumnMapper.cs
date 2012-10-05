@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			                                       referencedEntity.EntityName, primaryKey);
 		}
 
-		private object createNotAuditedEntityReference(IAuditReaderImplementor versionsReader, System.Type entityClass, string entityName, object primaryKey)
+		private static object createNotAuditedEntityReference(IAuditReaderImplementor versionsReader, System.Type entityClass, string entityName, object primaryKey)
 		{
 			var entityPersister = versionsReader.SessionImplementor.Factory.GetEntityPersister(entityName);
 			if (entityPersister.HasProxy)
