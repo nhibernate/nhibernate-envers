@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Iesi.Collections.Generic;
 using NHibernate.Cfg;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -41,6 +42,21 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 		[Test]
 		public void CanSerializeAndDeserializeCfg()
 		{
+			var serializedCfg = serializeCfg(); //serialize after use
+			using (var sFactory = serializedCfg.BuildSessionFactory())
+			{
+				using (var s = sFactory.OpenSession())
+				{
+					var auditReader = AuditReaderFactory.Get(s);
+					auditReader.Find<SetOwningEntity>(ingId, 1).References.Should().Have.SameSequenceAs(ed);
+				}
+			}
+		}
+
+		[Test, Ignore("Not yet fixed")]
+		public void CanSerializeAndDeserializeCfgBetweenProcesses()
+		{
+			AuditConfiguration.Remove(serializeCfg()); //simulates removal of static data (between processes)
 			var serializedCfg = serializeCfg(); //serialize after use
 			using (var sFactory = serializedCfg.BuildSessionFactory())
 			{
