@@ -22,15 +22,7 @@ namespace NHibernate.Envers.Entities
 	
 		public string VersionsEntityName { get; private set; }
 		public string EntityClassName { get; private set; }
-
-		[NonSerialized]
-		private IdMappingData _idMappingData;
-		public IdMappingData IdMappingData
-		{
-			get { return _idMappingData; }
-			private set { _idMappingData = value; }
-		}
-
+		public IdMappingData IdMappingData { get; private set; }
 		public IExtendedPropertyMapper PropertyMapper { get; private set; }
 		// Maps from property name
 		private readonly IDictionary<string, RelationDescription> relations;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
@@ -13,7 +14,7 @@ using NHibernate.Envers.Tools.Reflection;
 namespace NHibernate.Envers.Configuration
 {
 	[Serializable]
-	public class AuditConfiguration
+	public sealed class AuditConfiguration : IDeserializationCallback
 	{
 		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> Configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>(new ConfigurationComparer());
 		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> ConfigurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
@@ -37,6 +38,7 @@ namespace NHibernate.Envers.Configuration
 			ModifiedEntityNamesReader = revInfoCfgResult.ModifiedEntityNamesReader;
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
 			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+			Configuration = cfg;
 		}
 
 		private void initializeAuditStrategy(RevisionInfoConfigurationResult revInfoCfgResult)
@@ -66,6 +68,7 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
 		public IAuditStrategy AuditStrategy { get; private set; }
+		private Cfg.Configuration Configuration { get; set; } //for serialization
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
@@ -111,6 +114,11 @@ namespace NHibernate.Envers.Configuration
 		{
 			ConfigurationMetadataProvider.Remove(cfg);
 			Configurations.Remove(cfg);
+		}
+
+		public void OnDeserialization(object sender)
+		{
+			Configurations[Configuration] = this;
 		}
 	}
 }

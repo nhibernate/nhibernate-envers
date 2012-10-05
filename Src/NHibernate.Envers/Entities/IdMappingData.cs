@@ -1,8 +1,10 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using NHibernate.Envers.Entities.Mapper.Id;
 
 namespace NHibernate.Envers.Entities
 {
+	[Serializable]
 	public class IdMappingData 
 	{
 		public IdMappingData(IIdMapper idMapper, XmlElement xmlMapping, XmlElement xmlRelationMapping)
@@ -14,8 +16,21 @@ namespace NHibernate.Envers.Entities
 
 		public IIdMapper IdMapper { get; private set; }
 		// Mapping which will be used to generate the entity
-		public XmlElement XmlMapping { get; private set; }
+		[NonSerialized]
+		private XmlElement _xmlMapping;
+		public XmlElement XmlMapping
+		{
+			get { return _xmlMapping; }
+			private set { _xmlMapping = value; }
+		}
+
 		// Mapping which will be used to generate references to the entity in related entities
-		public XmlElement XmlRelationMapping { get; private set; }
+		[NonSerialized]
+		private XmlElement _xmlRelationMapping;
+		public XmlElement XmlRelationMapping
+		{
+			get { return _xmlRelationMapping; }
+			private set { _xmlRelationMapping = value; }
+		}
 	}
 }

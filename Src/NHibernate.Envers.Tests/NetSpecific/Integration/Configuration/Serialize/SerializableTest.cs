@@ -53,7 +53,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 			}
 		}
 
-		[Test, Ignore("Not yet fixed")]
+		[Test]
 		public void CanSerializeAndDeserializeCfgBetweenProcesses()
 		{
 			AuditConfiguration.Remove(serializeCfg()); //simulates removal of static data (between processes)
