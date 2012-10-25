@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Dialect;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -34,6 +35,8 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Test]
 		public void VerifyAuditRecordsRollback()
 		{
+			if(Dialect is Oracle8iDialect)
+				Assert.Ignore("Fails due to NH Core issue https://nhibernate.jira.com/browse/NH-3304");
 			AuditReader().GetRevisions(typeof (IntTestEntity), committedId).Count().Should().Be.EqualTo(1);
 			AuditReader().GetRevisions(typeof (IntTestEntity), rollbackId).Should().Be.Empty();
 		}
