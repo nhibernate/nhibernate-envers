@@ -66,6 +66,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return manyToOneMapping;
 		}
 
+		public static XmlElement AddKeyManyToOne(XmlElement parent, string name, string type)
+		{
+			var manyToOneMapping = parent.OwnerDocument.CreateElement("key-many-to-one");
+			parent.AppendChild(manyToOneMapping);
+			manyToOneMapping.SetAttribute("name", name);
+			manyToOneMapping.SetAttribute("class", type);
+			return manyToOneMapping;
+		}
+
 		private static void AddOrModifyAttribute(XmlElement parent, string name, string value)
 		{
 			parent.SetAttribute(name, value);
@@ -259,7 +268,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 				for (var i = nodeList.Count - 1; i >= 0; i--)
 				{
 					var property = (XmlElement)nodeList[i];
-					if ("property".Equals(property.Name))
+					var propertyName = property.Name;
+					if ("property".Equals(propertyName) || "many-to-one".Equals(propertyName))
 					{
 						var value = property.GetAttribute("name");
 						if (!string.IsNullOrEmpty(value))
