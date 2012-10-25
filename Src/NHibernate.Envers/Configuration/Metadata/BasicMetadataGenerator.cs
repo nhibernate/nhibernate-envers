@@ -19,10 +19,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				var mappingType = type.GetType();
 				var userDefined = isUserDefined(mappingType);
-				if(userDefined)
+				if (userDefined)
+				{
 					addCustomValue(parent, propertyAuditingData, value, mapper, insertable, key, mappingType);
+				}
 				else
-					addSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);
+				{
+					addSimpleValue(parent, propertyAuditingData, value, mapper, insertable, key);					
+				}
 			}
 			else if (custType != null)
 			{
@@ -106,6 +110,27 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				mapper.Add(propertyAuditingData.GetPropertyData());
 			}
+		}
+
+		public bool AddKeyManyToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value, ISimpleMapperBuilder mapper)
+		{
+			var type = value.Type;
+			XmlElement element;
+			if (mapper == null)
+			{
+				element = MetadataTools.AddKeyManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName);	
+			}
+			else
+			{
+				element = MetadataTools.AddManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName, true, false);	
+			}
+			MetadataTools.AddColumns(element, value.ColumnIterator.OfType<Column>());
+			// A null mapper occurs when adding to composite-id element
+			if (mapper != null)
+			{
+				mapper.Add(propertyAuditingData.GetPropertyData());
+			}
+			return true;
 		}
 	}
 }

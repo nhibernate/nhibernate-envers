@@ -5,6 +5,7 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Mapping;
+using NHibernate.Type;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -26,10 +27,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					if (!propertyType.IsMutable)
 					{
-						// Last but one parameter: ids are always insertable
-						_mainGenerator.BasicMetadataGenerator.AddBasic(parent,
-								getIdPersistentPropertyAuditingData(property),
-								property.Value, mapper, true, key);
+						if (propertyType is ManyToOneType)
+						{
+							_mainGenerator.BasicMetadataGenerator.AddKeyManyToOne(parent,
+									 getIdPersistentPropertyAuditingData(property),
+									 property.Value, mapper);
+						}
+						else
+						{
+							// Last but one parameter: ids are always insertable
+							_mainGenerator.BasicMetadataGenerator.AddBasic(parent,
+									getIdPersistentPropertyAuditingData(property),
+									property.Value, mapper, true, key);							
+						}
 					}
 					else
 					{

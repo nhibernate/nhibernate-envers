@@ -79,6 +79,11 @@
     <Compile Include="Integration\Basic\TransactionRollbackBehaviourTest.cs" />
     <Compile Include="Integration\Ids\CompositeDateIdTest.cs" />
     <Compile Include="Integration\Ids\DateIdTest.cs" />
+    <Compile Include="Integration\Ids\EmbeddedId\Item.cs" />
+    <Compile Include="Integration\Ids\EmbeddedId\ItemId.cs" />
+    <Compile Include="Integration\Ids\EmbeddedId\Producer.cs" />
+    <Compile Include="Integration\Ids\EmbeddedId\PurchaseOrder.cs" />
+    <Compile Include="Integration\Ids\EmbeddedId\RelationInsideEmbeddableTest.cs" />
     <Compile Include="Integration\Ids\ManyToOneIdNotAuditedTest.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\IntTestPrivSeqEntity.cs" />
     <Compile Include="Integration\ManyToMany\Ternary\StrTestPrivSeqEntity.cs" />
@@ -837,6 +842,7 @@
     <EmbeddedResource Include="Integration\NotUpdatable\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Ids\ManyToOneIdNotAuditedTest.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToMany\EmbeddedId\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Ids\EmbeddedId\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
