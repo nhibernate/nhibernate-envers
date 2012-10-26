@@ -4,7 +4,7 @@ Docs are available here
 http://envers.bitbucket.org
 
 Send user questions to NH user group list
-http://groups.google.com/group/nhusers?pli=1
+http://groups.google.com/group/nhusers
 
 Report bugs and/or patches with unit tests here 
 http://nhibernate.jira.com/browse/NHE 
