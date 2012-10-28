@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NHibernate.Dialect;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -33,12 +32,28 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		}
 
 		[Test]
-		public void VerifyAuditRecordsRollback()
+		public void CommittedEntityShouldHaveAuditRecord()
 		{
-			if(Dialect is Oracle8iDialect)
-				Assert.Ignore("Fails due to NH Core issue https://nhibernate.jira.com/browse/NH-3304");
-			AuditReader().GetRevisions(typeof (IntTestEntity), committedId).Count().Should().Be.EqualTo(1);
-			AuditReader().GetRevisions(typeof (IntTestEntity), rollbackId).Should().Be.Empty();
+			AuditReader().GetRevisions(typeof(IntTestEntity), committedId).Count().Should().Be.EqualTo(1);
+		}
+
+		[Test]
+		public void RollbackedEntityShouldHaveAuditRecordIfPersisted()
+		{
+			//NH might persist rollbacked entity
+			//https://nhibernate.jira.com/browse/NH-3304
+			var revisions = AuditReader().GetRevisions(typeof (IntTestEntity), rollbackId);
+			var entity = Session.Get<IntTestEntity>(rollbackId);
+			if (entity == null)
+			{
+				revisions.Should().Be.Empty();
+			}
+			else
+			{
+				//if code generated poid, the session is still dirty when second transaction starts
+				// eg oracle dialects ends up here in this test
+				revisions.Count().Should().Be.EqualTo(1);
+			}
 		}
 
 		protected override IEnumerable<string> Mappings
