@@ -95,6 +95,7 @@
     <Compile Include="Integration\OneToMany\EmbeddedId\Person.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\PersonTuple.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\PersonTupleId.cs" />
+    <Compile Include="NetSpecific\Integration\Configuration\SchemaForAbstractUnionSubclassTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Serialize\InterfaceImplementationVerificationTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Serialize\SerializableTest.cs" />
     <Compile Include="NetSpecific\Integration\CustomType\CLOBTestUserType.cs" />

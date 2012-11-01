@@ -134,7 +134,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return columnMapping;
 		}
 
-		private static XmlElement CreateEntityCommon(XmlDocument document, string type, AuditTableData auditTableData, string discriminatorValue)
+		private static XmlElement createEntityCommon(XmlDocument document, 
+																	string type, 
+																	AuditTableData auditTableData, 
+																	string discriminatorValue,
+																	bool isAbstract)
 		{
 			var hibernateMapping = document.CreateElement("hibernate-mapping");
 			hibernateMapping.SetAttribute("assembly", "NHibernate.Envers");
@@ -146,6 +150,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			var classMapping = document.CreateElement(type);
 			hibernateMapping.AppendChild(classMapping);
+
+			if (isAbstract)
+			{
+				classMapping.SetAttribute("abstract", "true");
+			}
 
 			if (auditTableData.AuditEntityName != null)
 			{
@@ -175,15 +184,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return classMapping;
 		}
 
-		public static XmlElement CreateEntity(XmlDocument document, AuditTableData auditTableData, string discriminatorValue)
+		public static XmlElement CreateEntity(XmlDocument document, AuditTableData auditTableData, string discriminatorValue, bool isAbstract)
 		{
-			return CreateEntityCommon(document, "class", auditTableData, discriminatorValue);
+			return createEntityCommon(document, "class", auditTableData, discriminatorValue, isAbstract);
 		}
 
 		public static XmlElement CreateSubclassEntity(XmlDocument document, string subclassType, AuditTableData auditTableData,
-													string extendsEntityName, string discriminatorValue)
+													string extendsEntityName, string discriminatorValue, bool isAbstract)
 		{
-			var classMapping = CreateEntityCommon(document, subclassType, auditTableData, discriminatorValue);
+			var classMapping = createEntityCommon(document, subclassType, auditTableData, discriminatorValue, isAbstract);
 			classMapping.SetAttribute("extends", extendsEntityName);
 
 			return classMapping;
