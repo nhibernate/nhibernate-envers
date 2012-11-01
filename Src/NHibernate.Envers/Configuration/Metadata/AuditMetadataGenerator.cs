@@ -339,7 +339,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var hasDiscriminator = pc.Discriminator != null;
 
 			var classMapping = MetadataTools.CreateEntity(xmlMappingData.MainXmlMapping, auditTableData,
-					hasDiscriminator ? pc.DiscriminatorValue : null);
+					hasDiscriminator ? pc.DiscriminatorValue : null, pc.IsAbstract.HasValue && pc.IsAbstract.Value);
 			var propertyMapper = new MultiPropertyMapper();
 
 			// Adding the id mapping
@@ -369,7 +369,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var extendsEntityName = VerEntCfg.GetAuditEntityName(pc.Superclass.EntityName);
 			var hasDiscriminator = pc.Discriminator != null;
 			var classMapping = MetadataTools.CreateSubclassEntity(xmlMappingData.MainXmlMapping,
-					inheritanceMappingType, auditTableData, extendsEntityName, hasDiscriminator ? pc.DiscriminatorValue : null);
+					inheritanceMappingType, auditTableData, extendsEntityName, hasDiscriminator ? pc.DiscriminatorValue : null,
+					pc.IsAbstract.HasValue && pc.IsAbstract.Value);
 
 			// The id and revision type is already mapped in the parent
 

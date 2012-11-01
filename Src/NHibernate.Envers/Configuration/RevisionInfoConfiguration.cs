@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Configuration
 
 			var classMapping = MetadataTools.CreateEntity(document,
 									new AuditTableData(null, null, _globalCfg.DefaultSchemaName, _globalCfg.DefaultCatalogName),
-									null);
+									null, false);
 
 			classMapping.SetAttribute("name", revisionInfoEntityName);
 			classMapping.SetAttribute("table", "REVINFO");

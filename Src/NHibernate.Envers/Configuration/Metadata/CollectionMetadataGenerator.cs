@@ -589,7 +589,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var catalog = _mainGenerator.GetCatalog(_propertyAuditingData.JoinTable.Catalog, _propertyValue.CollectionTable);
 
 			var middleEntityXml = MetadataTools.CreateEntity(_xmlMappingData.NewAdditionalMapping(),
-					new AuditTableData(auditMiddleEntityName, auditMiddleTableName, schema, catalog), null);
+					new AuditTableData(auditMiddleEntityName, auditMiddleTableName, schema, catalog), null, false);
 			var middleEntityXmlId = middleEntityXml.OwnerDocument.CreateElement("composite-id");
 			middleEntityXml.AppendChild(middleEntityXmlId);
 
