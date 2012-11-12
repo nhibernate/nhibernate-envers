@@ -76,10 +76,31 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
-					value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision);
+					var persister = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName);
+					if (persister.HasProxy)
+					{
+						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision);	
+					}
+					else
+					{
+						var entityInfo = GetEntityInfo(verCfg, _referencedEntityName);
+						value = loadImmediate(versionsReader, entityInfo.EntityClass, _referencedEntityName, entityId, revision, verCfg);
+					}
 				}
 			}
 			SetPropertyValue(obj, value);
+		}
+
+		private object loadImmediate(IAuditReaderImplementor versionsReader, System.Type entityClass, string entityName,
+									   object entityId, long revision, AuditConfiguration verCfg)
+		{
+			if (verCfg.EntCfg.GetNotVersionEntityConfiguration(entityName) == null)
+			{
+				// Audited relation, look up entity with Envers.
+				return versionsReader.Find(entityClass, entityId, revision);
+			}
+			// Not audited relation, look up entity with Hibernate.
+			return versionsReader.SessionImplementor.ImmediateLoad(entityName, entityId);
 		}
 	}
 }
