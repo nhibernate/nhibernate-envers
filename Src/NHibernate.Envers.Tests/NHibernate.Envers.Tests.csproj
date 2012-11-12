@@ -74,6 +74,8 @@
     <Compile Include="Entities\Ids\DateIdTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneIdNotAuditedTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
+    <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefEdPK.cs" />
+    <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefIngPK.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\Basic\TransactionRollbackBehaviourTest.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Integration\OneToMany\EmbeddedId\Person.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\PersonTuple.cs" />
     <Compile Include="Integration\OneToMany\EmbeddedId\PersonTupleId.cs" />
+    <Compile Include="Integration\OneToOne\BiDirectional\BidirectionalEagerHbmTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\SchemaForAbstractUnionSubclassTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Serialize\InterfaceImplementationVerificationTest.cs" />
     <Compile Include="NetSpecific\Integration\Configuration\Serialize\SerializableTest.cs" />
@@ -844,6 +847,7 @@
     <EmbeddedResource Include="Integration\Ids\ManyToOneIdNotAuditedTest.hbm.xml" />
     <EmbeddedResource Include="Integration\OneToMany\EmbeddedId\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Ids\EmbeddedId\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Entities\OneToOne\EagerLoading.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

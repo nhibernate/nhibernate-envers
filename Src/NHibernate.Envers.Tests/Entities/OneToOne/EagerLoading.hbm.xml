@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+										assembly="NHibernate.Envers.Tests"
+										namespace="NHibernate.Envers.Tests.Entities.OneToOne"
+										default-lazy="false">
+
+	<class name="BidirectionalEagerHbmRefEdPK" table="refEd">
+		<id name="Id" column="EdId">
+			<generator class="native"/>
+		</id>
+		<property name="Data" />
+	</class>
+
+	<class name="BidirectionalEagerHbmRefIngPK" table="refIng">
+		<id name="Id" column="IngId">
+			<generator class="native"/>
+		</id>
+		<property name="Data" />
+		<many-to-one name="Reference" cascade="save-update" column="EdId"/>
+	</class>
+</hibernate-mapping>
