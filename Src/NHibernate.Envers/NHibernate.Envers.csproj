@@ -125,6 +125,7 @@
     <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\IdBagCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\IEnversProxyFactory.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedSetCollectionInitializor.cs" />

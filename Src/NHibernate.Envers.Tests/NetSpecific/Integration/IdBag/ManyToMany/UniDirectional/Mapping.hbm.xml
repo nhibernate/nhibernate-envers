@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+			assembly="NHibernate.Envers.Tests"
+			namespace="NHibernate.Envers.Tests.NetSpecific.Integration.IdBag.ManyToMany.UniDirectional">
+	<class name="UniOwning">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<idbag name="Referencing" cascade="all">
+			<collection-id column="theid" type="guid">
+				<generator class="guid.comb"/>
+			</collection-id>
+			<key column="owning"/>
+			<many-to-many class="UniOwned" column="owned"/>
+		</idbag>
+	</class>
+	<class name="UniOwned">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<property name="Number"/>
+	</class>
+</hibernate-mapping>
