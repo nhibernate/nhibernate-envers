@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public virtual IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
 		{
-			throw new NotImplementedException("Generic idbag is not supported by DefaultCollectionMapperFactory");
+			return new IdBagCollectionMapper<T>(enversProxyFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData);
 		}
 
 		public virtual IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
