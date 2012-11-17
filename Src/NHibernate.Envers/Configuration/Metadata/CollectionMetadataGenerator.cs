@@ -556,13 +556,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("IdBag",
 						type.ReturnedClass.GetGenericArguments(),
-						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData });
+						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData });
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.IdBag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+					collectionMapper = collectionProxyMapperFactory.IdBag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData);
 				}
 			}
 			else

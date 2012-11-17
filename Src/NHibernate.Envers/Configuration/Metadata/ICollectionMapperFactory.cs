@@ -24,13 +24,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// Creates a new <see cref="IPropertyMapper"/> for an 
 		/// <see cref="System.Collections.Generic.IList{T}"/> with identifier bag semantics.
 		/// </summary>
-		IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+		IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an 
 		/// <see cref="System.Collections.IList"/> with identifier bag semantics.
 		/// </summary>
-		IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData);
+		IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
 
 
 		/// <summary>

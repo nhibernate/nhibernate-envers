@@ -15,12 +15,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 			throw new NotImplementedException("Array is not supported by DefaultCollectionMapperFactory");
 		}
 
-		public virtual IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
+		public virtual IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
 			return new IdBagCollectionMapper<T>(enversProxyFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData);
 		}
 
-		public virtual IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData)
+		public virtual IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
 		{
 			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionMapperFactory");
 		}
