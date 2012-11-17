@@ -1,3 +1,10 @@
+=== vNExt ====
+
+*** Possible breaking change ***
+* ICollectionMapperFactory.IdBag and IdBag<T> signature changed. IndexComponentData no longer passed.
+
+
+
 === 1.4 GA (v 1.4.0.0), ???, NH 3.3.1 GA ===
 
 ** Bug
