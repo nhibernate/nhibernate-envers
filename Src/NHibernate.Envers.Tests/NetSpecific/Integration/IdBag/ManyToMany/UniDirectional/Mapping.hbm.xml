@@ -18,6 +18,6 @@
 		<id name="Id">
 			<generator class="guid.comb"/>
 		</id>
-		<property name="Number"/>
+		<property name="Number" column="theNumber"/>
 	</class>
 </hibernate-mapping>
