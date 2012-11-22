@@ -36,6 +36,8 @@ namespace NHibernate.Envers.Query.Criteria
 
 			CriteriaTools.CheckPropertyNotARelation(auditCfg, entityName, propertyName);
 
+			// Make sure our conditions are ANDed together even if the parent Parameters have a different connective	
+	      var subParams = parameters.AddSubParameters(Parameters.AND);
 			// This will be the aggregated query, containing all the specified conditions
 			var subQb = qb.NewSubQueryBuilder();
 
@@ -43,7 +45,7 @@ namespace NHibernate.Envers.Query.Criteria
 			// aggregated one.
 			foreach (var versionsCriteria in criterions)
 			{
-				versionsCriteria.AddToQuery(auditCfg, entityName, qb, parameters);
+				versionsCriteria.AddToQuery(auditCfg, entityName, qb, subParams);
 				versionsCriteria.AddToQuery(auditCfg, entityName, subQb, subQb.RootParameters);
 			}
 
@@ -59,7 +61,7 @@ namespace NHibernate.Envers.Query.Criteria
 			}
 
 			// Adding the constrain on the result of the aggregated criteria
-			parameters.AddWhere(propertyName, "=", subQb);
+			subParams.AddWhere(propertyName, "=", subQb);
 		}
 	}
 }
