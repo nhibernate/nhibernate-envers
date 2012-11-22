@@ -21,8 +21,9 @@ namespace NHibernate.Envers.Query.Criteria
 		{
 			var propertyName = propertyNameGetter.Get(auditCfg);
 			CriteriaTools.CheckPropertyNotARelation(auditCfg, entityName, propertyName);
-			parameters.AddWhereWithParam(propertyName, ">=", lo);
-			parameters.AddWhereWithParam(propertyName, "<=", hi);
+			var subParams = parameters.AddSubParameters(Parameters.AND);
+			subParams.AddWhereWithParam(propertyName, ">=", lo);
+			subParams.AddWhereWithParam(propertyName, "<=", hi);
 		}
 	}
 }
