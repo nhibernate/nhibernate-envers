@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
@@ -9,6 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 	{
 		private int id1;
 		private int id2;
+		private int id3;
 
 		public MaximalizePropertyQueryTest(string strategyType) : base(strategyType)
 		{
@@ -26,10 +28,12 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		{
 			var site1 = new StrIntTestEntity { Str = "a", Number = 10 };
 			var site2 = new StrIntTestEntity { Str = "b", Number = 15 };
+			var site3 = new StrIntTestEntity { Str = "c", Number = 42 };
 			using (var tx = Session.BeginTransaction())
 			{
 				id1 = (int) Session.Save(site1);
 				id2 = (int) Session.Save(site2);
+				id3 = (int) Session.Save(site3);
 				tx.Commit();
 			}
 			using (var tx = Session.BeginTransaction())
@@ -53,15 +57,15 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		}
 
 		[Test]
-		public void VerifyMaximzeWithEqId()
+		public void VerifyMaximzeWithIdEq()
 		{
-			var revs_id1 = AuditReader().CreateQuery()
+			var revsId1 = AuditReader().CreateQuery()
 						.ForRevisionsOfEntity(typeof (StrIntTestEntity), false, true)
 						.AddProjection(AuditEntity.RevisionNumber())
 						.Add(AuditEntity.Property("Number").Maximize()
 							.Add(AuditEntity.Id().Eq(id2)))
 						.GetResultList();
-			CollectionAssert.AreEqual(new[]{2, 3, 4}, revs_id1);
+			CollectionAssert.AreEqual(new[]{2, 3, 4}, revsId1);
 		}
 
 		[Test]
@@ -86,6 +90,28 @@ namespace NHibernate.Envers.Tests.Integration.Query
 							.Add(AuditEntity.Property("Number").Eq(10)))
 						.GetResultList();
 			CollectionAssert.AreEquivalent(new[]{2}, result);
+		}
+
+		[Test]
+		public void VerifyMaximizeInDisjunction()
+		{
+			var idsToQuery = new[] {id1, id3};
+			var disjuction = AuditEntity.Disjunction();
+			foreach (var id in idsToQuery)
+			{
+				disjuction.Add(AuditEntity.RevisionNumber().Maximize().Add(AuditEntity.Id().Eq(id)));
+			}
+			var result = AuditReader().CreateQuery()
+				.ForRevisionsOf<StrIntTestEntity>(true)
+				.Add(disjuction)
+				.Results();
+			var idsSeen = new HashSet<int>();
+			foreach (var entity in result)
+			{
+				var id = entity.Id;
+				idsToQuery.Should().Contain(id);
+				idsSeen.Add(id).Should().Be.True();
+			}
 		}
 	}
 }
