@@ -336,5 +336,20 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						.GetResultList<StrIntTestEntity>();
 			result.Should().Be.Empty();
 		}
+
+		[Test]
+		public void VerifyBetweenInsideDisjunction()
+		{
+			var result = AuditReader().CreateQuery()
+				.ForRevisionsOf<StrIntTestEntity>()
+				.Add(AuditEntity.Disjunction()
+				     	.Add(AuditEntity.Property("Number").Between(0, 5))
+				     	.Add(AuditEntity.Property("Number").Between(20, 100)))
+				.Results();
+			foreach (var number in result.Select(entity => entity.Number))
+			{
+				Assert.That(number, Is.InRange(0, 5).Or.InRange(20, 100));
+			}
+		}
 	}
 }
