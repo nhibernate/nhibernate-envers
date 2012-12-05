@@ -17,7 +17,7 @@ echo Installing msbuildtasks to %PackageFolder%. Please wait...
 %nugetFolder%\NuGet install MsBuildTasks -o %PackageFolder%
 
 echo.
-set /p Version=Please enter version number, eg 1.2.0.0: 
+set /p Version=Please enter version number, eg 1.2.0: 
 set /p NugetVersion=Please enter nuget version number, eg 1.2: 
 
 %msbuild% default.msbuild /v:q /t:BuildRelease
