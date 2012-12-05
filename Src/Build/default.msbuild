@@ -2,34 +2,21 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
-		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
-		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
+		<DeployFolder>$(MSBuildProjectDirectory)\Deploy</DeployFolder>
 		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
 		<ClassPath>"$(DocReferencePath)\support\lib\*"</ClassPath>
-		<TempDirectory>$(BuildFolder)\temp</TempDirectory>
+		<TempDirectory>$(DeployFolder)\temp</TempDirectory>
 		<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
 		<OutputDoc>$(DeployFolder)\EnversUserDoc.pdf</OutputDoc>
 		<DeployHtmlFolder>$(DeployFolder)\html</DeployHtmlFolder>
 	</PropertyGroup>
 
-	<ItemGroup Label="Extra files to deploy">
-		<ExtraFiles Include="$(SourceDir)\LGPL_3.0.txt" />
-		<ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\Doc\NHibernate.Envers.XML" />
-		<ExtraFiles Include="$(SourceDir)\NHibernate.Envers\bin\$(configuration)\NHibernate.Envers.pdb" />
-		<ExtraFiles Include="$(SourceDir)\ReleaseNotes.txt"/>
-	</ItemGroup>
-
-	<ItemGroup Label="NHibernate dependencies">
-		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\NHibernate.dll" />
-		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\Iesi.Collections.dll" />
-	</ItemGroup>
-
-	<Target Name="Build" DependsOnTargets="RunHtmlBuild;RunBuild">
+	<Target Name="BuildRelease" DependsOnTargets="RunHtmlBuild;RunBuild;nuget">
 		<RemoveDir Directories="$(TempDirectory)"/>
 	</Target>
 	
-	<Target Name="nuget" DependsOnTargets="Build">
+	<Target Name="nuget" DependsOnTargets="MakeBuildDirectory;RunBuild">
 		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
@@ -38,24 +25,12 @@
 		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" />
 	</Target>
 
-	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles"/>
-
 	<Target Name="MakeBuildDirectory">
 		<RemoveDir Directories="$(DeployHtmlFolder)"/>
-		<RemoveDir Directories="$(BuildFolder)" />
-		<MakeDir Directories="$(BuildFolder)" />
+		<RemoveDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(TempDirectory)"/>
 		<MakeDir Directories="$(DeployHtmlFolder)"/>
-	</Target>
-
-	<Target Name="CopyOutputsToBin">
-		<Copy SourceFiles="@(OutputFiles)"
-			  DestinationFiles="@(OutputFiles->'$(TempDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
-	</Target>
-
-	<Target Name="CopyExtraFiles">
-		<Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
 	</Target>
 
 	<Target Name="BuildDocs" DependsOnTargets="RunPdfBuild;RunHtmlBuild" Condition="'$(configuration)' == 'Release'">
