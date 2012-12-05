@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>NHibernate.Envers</id>
-		<version>1.4.0</version>
+		<version>0.0.0.0</version>
 		<authors>NHibernate community, Hibernate community</authors>
 		<summary>Audit trail integrated with NHibernate.</summary>
 		<description>
