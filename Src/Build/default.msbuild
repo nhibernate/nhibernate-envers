@@ -19,13 +19,19 @@
 		<AssemblyVersionFiles Include="$(SourceDir)\NHibernate.Envers\Properties\AssemblyInfo.cs"/>
 	</ItemGroup>
 
-	<Target Name="BuildRelease" DependsOnTargets="RunHtmlBuild;RunBuild;nuget">
+	<Target Name="BuildRelease" DependsOnTargets="RunHtmlBuild;RunBuild;nuget;CopyNuget">
 		<RemoveDir Directories="$(TempDirectory)"/>
 	</Target>
 	
 	<Target Name="nuget" DependsOnTargets="MakeBuildDirectory;RunBuild">
 		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release -Version $(NugetVersion)"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
+	</Target>
+	
+	<Target Name="CopyNuget">
+		<!-- copying nuget.exe to deplayfolder - to make easier manual push to nuget server -->
+		<Copy SourceFiles="$(NugetFolder)\NuGet.exe"
+				DestinationFolder="$(DeployFolder)"/>
 	</Target>
 
 	<Target Name="RunBuild" DependsOnTargets="UpdateAssemblyInfos">
