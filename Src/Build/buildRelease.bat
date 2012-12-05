@@ -7,7 +7,6 @@ set msbuild="%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
 set configuration=Release
 
 echo Before creating a release, remember to...
-echo * Close and create a new release on JIRA
 echo * Update release notes
 echo.
 pause
@@ -17,8 +16,8 @@ echo Installing msbuildtasks to %PackageFolder%. Please wait...
 %nugetFolder%\NuGet install MsBuildTasks -o %PackageFolder%
 
 echo.
-set /p Version=Please enter version number, eg 1.2.0: 
-set /p NugetVersion=Please enter nuget version number, eg 1.2: 
+set /p Version=Please enter version number, eg 1.2.0.0: 
+set /p NugetVersion=Please enter nuget version number, eg 1.2.0: 
 
 %msbuild% default.msbuild /v:q /t:BuildRelease
 
@@ -33,6 +32,7 @@ echo.
 echo Remember to...
 echo * Tag current changeset with version %nugetversion%
 echo * Push changes (tag) to server repo
+echo * Close and create a new release on JIRA
 echo * Push nuget package to nuget server (and symbol server)
 echo * Update version number on docs
 echo * Push new docs to docs repo
