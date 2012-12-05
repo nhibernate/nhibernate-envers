@@ -19,7 +19,7 @@
 		<AssemblyVersionFiles Include="$(SourceDir)\NHibernate.Envers\Properties\AssemblyInfo.cs"/>
 	</ItemGroup>
 
-	<Target Name="BuildRelease" DependsOnTargets="RunHtmlBuild;RunBuild;nuget;CopyNuget">
+	<Target Name="BuildRelease" DependsOnTargets="RunBuild;nuget;CopyNuget">
 		<RemoveDir Directories="$(TempDirectory)"/>
 	</Target>
 	
@@ -43,7 +43,6 @@
 		<RemoveDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(TempDirectory)"/>
-		<MakeDir Directories="$(DeployHtmlFolder)"/>
 	</Target>
 	
 	<Target Name="UpdateAssemblyInfos">
@@ -65,6 +64,7 @@
 	</Target>
 	
 	<Target Name="RunHtmlBuild" DependsOnTargets="MakeBuildDirectory">
+		<MakeDir Directories="$(DeployHtmlFolder)"/>
 		<exec command="java -classpath $(ClassPath) com.icl.saxon.StyleSheet -o $(DeployHtmlFolder)\index.html $(DocReferencePath)\master.xml $(DocReferencePath)\styles\html.xsl"
 			  WorkingDirectory="$(DeployHtmlFolder)"/>
 		<ItemGroup>
