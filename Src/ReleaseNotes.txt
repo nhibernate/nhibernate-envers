@@ -1,7 +1,19 @@
-=== vNExt ====
+=== 1.5 GA (v 1.5.0), 2012-12-05, NH 3.3.2 GA ====
 
 *** Possible breaking change ***
 * ICollectionMapperFactory.IdBag and IdBag<T> signature changed. IndexComponentData no longer passed.
+
+** Bug
+* [NHE-95] - unionsubclass mapping creates table for abstract base class
+* [NHE-98] - Between in OR statement produce wrong result
+* [NHE-99] - Maximize in OR statement produce wrong result
+* [NHE-93] - Rolled back transaction might create audit data
+* [NHE-94] - Support composite-id with key-many-to-one
+* [NHE-97] - Exception if non lazy ToOne ref exists
+
+** Improvement
+* [NHE-96] - IdBag is not currently supported
+* [NHE-100] - Get the latest revision of all instances for a requested Entity Class
 
 
 
