@@ -5,7 +5,6 @@
 		<BuildFolder>$(MSBuildProjectDirectory)\Output</BuildFolder>
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<DeployFolder>$(BuildFolder)\Deploy</DeployFolder>
-		<NugetDeployFolder>$(BuildFolder)\NugetDeploy</NugetDeployFolder>
 		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
 		<ClassPath>"$(DocReferencePath)\support\lib\*"</ClassPath>
 		<TempDirectory>$(BuildFolder)\temp</TempDirectory>
@@ -26,19 +25,17 @@
 		<NHibernateFiles Include="$(SourceDir)\nhibernate.envers\bin\$(configuration)\Iesi.Collections.dll" />
 	</ItemGroup>
 
-	<Target Name="Build" DependsOnTargets="RunPdfBuild;RunBuild;CopyAllFilesToBuild;">
+	<Target Name="Build" DependsOnTargets="RunHtmlBuild;RunBuild">
 		<RemoveDir Directories="$(TempDirectory)"/>
 	</Target>
 	
 	<Target Name="nuget" DependsOnTargets="Build">
-		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(NugetDeployFolder) -symbols -Prop Configuration=Release"
+		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release"
 				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 
 	<Target Name="RunBuild">
-		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" >
-			<Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
-		</MSBuild>
+		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" />
 	</Target>
 
 	<Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles"/>
@@ -48,14 +45,13 @@
 		<RemoveDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(BuildFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />
-		<MakeDir Directories="$(NugetDeployFolder)" />
 		<MakeDir Directories="$(TempDirectory)"/>
 		<MakeDir Directories="$(DeployHtmlFolder)"/>
 	</Target>
 
 	<Target Name="CopyOutputsToBin">
 		<Copy SourceFiles="@(OutputFiles)"
-			  DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+			  DestinationFiles="@(OutputFiles->'$(TempDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>
 
 	<Target Name="CopyExtraFiles">
