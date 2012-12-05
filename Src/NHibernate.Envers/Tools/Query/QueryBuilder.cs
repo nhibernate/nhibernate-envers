@@ -10,7 +10,6 @@ namespace NHibernate.Envers.Tools.Query
 	public class QueryBuilder
 	{
 		private readonly string _entityName;
-		private readonly string _alias;
 
 		// For use by alias generator (in case an alias is not provided by the user).
 		private readonly Incrementor _aliasCounter;
@@ -38,7 +37,7 @@ namespace NHibernate.Envers.Tools.Query
 		private QueryBuilder(string entityName, string alias, Incrementor aliasCounter, Incrementor paramCounter)
 		{
 			_entityName = entityName;
-			_alias = alias;
+			RootAlias = alias;
 			_aliasCounter = aliasCounter;
 			_paramCounter = paramCounter;
 
@@ -105,11 +104,11 @@ namespace NHibernate.Envers.Tools.Query
 		{
 			if (function == null)
 			{
-				_projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? _alias + "." : string.Empty) + propertyName);
+				_projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? RootAlias + "." : string.Empty) + propertyName);
 			}
 			else
 			{
-				_projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? _alias + "." : string.Empty) + propertyName + ")");
+				_projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? RootAlias + "." : string.Empty) + propertyName + ")");
 			}
 		}
 
@@ -150,6 +149,8 @@ namespace NHibernate.Envers.Tools.Query
 			return _froms.Select(theFrom => theFrom.Second).ToList();
 		}
 
+		public string RootAlias { get; private set; }
+
 		private IEnumerable<string> GetFromList()
 		{
 			return _froms.Select(theFrom => theFrom.First + " " + theFrom.Second).ToList();
@@ -157,7 +158,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		private IEnumerable<string> GetOrderList()
 		{
-			return _orders.Select(theOrder => _alias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
+			return _orders.Select(theOrder => RootAlias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
 		}
 
 		public IQuery ToQuery(ISession session)

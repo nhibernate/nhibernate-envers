@@ -10,6 +10,7 @@ namespace NHibernate.Envers.Query.Criteria
 		private readonly IPropertyNameGetter propertyNameGetter;
 		private readonly AggregatedMode mode;
 		private readonly IList<IAuditCriterion> criterions;
+		private bool correlate; // Correlate subquery with outer query by entity id.
 
 		public AggregatedAuditExpression(IPropertyNameGetter propertyNameGetter, AggregatedMode mode)
 		{
@@ -60,8 +61,27 @@ namespace NHibernate.Envers.Query.Criteria
 					break;
 			}
 
+			// Correlating subquery with the outer query by entity id.
+			if (correlate)
+			{
+				var originalIdPropertyName = auditCfg.AuditEntCfg.OriginalIdPropName;
+				auditCfg.EntCfg[entityName].IdMapper.AddIdsEqualToQuery(subQb.RootParameters, subQb.RootAlias + "." + originalIdPropertyName, qb.RootAlias + "." + originalIdPropertyName);
+			}
+
 			// Adding the constrain on the result of the aggregated criteria
 			subParams.AddWhere(propertyName, "=", subQb);
+		}
+
+		/// <summary>
+		/// Compute aggregated expression in the context of each entity instance separately. Useful for retrieving latest
+		/// revisions of all entities of a particular type.
+		/// Implementation note: Correlates subquery with the outer query by entity id.
+		/// </summary>
+		/// <returns></returns>
+		public AggregatedAuditExpression ComputeAggregationInInstanceContext()
+		{
+			correlate = true;
+			return this;
 		}
 	}
 }
