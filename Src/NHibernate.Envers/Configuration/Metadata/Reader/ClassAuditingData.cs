@@ -16,6 +16,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		//called SecondaryTableDictionary in Hibernate Envers
 		public IDictionary<string, string> JoinTableDictionary { get; private set; }
 		public AuditTableAttribute AuditTable { get; set; }
+		public AuditFactoryAttribute Factory { get; set; }
 
 		/// <summary>
 		///  True if the class is audited globally (this helps to cover the cases when there are no fields in the class,

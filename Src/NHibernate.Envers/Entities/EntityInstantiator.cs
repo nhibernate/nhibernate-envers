@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Entities
 			try 
 			{
 				var cls = Toolz.ResolveEntityClass(versionsReader.SessionImplementor, entityName);
-				ret = ReflectionTools.CreateInstanceByDefaultConstructor(cls);				
+				ret = verCfg.EntCfg[entityName].Factory(cls);
 			} 
 			catch (Exception e) 
 			{
@@ -71,6 +71,8 @@ namespace NHibernate.Envers.Entities
 
 			verCfg.EntCfg[entityName].PropertyMapper.MapToEntityFromMap(verCfg, ret, versionsEntity, primaryKey, versionsReader, revision);
 			idMapper.MapToEntityFromMap(ret, originalId);
+
+			verCfg.GlobalCfg.PostInstantiationListener.PostInstantiate(ret);
 
 			// Put entity on entityName cache after mapping it from the map representation
 			versionsReader.FirstLevelCache.AddEntityName(primaryKey, revision, ret, entityName);

@@ -54,6 +54,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			addAuditTable(typ);
 			addAuditSecondaryTables(typ);
+			addFactory(typ);
 
 			return _auditData;
 		}
@@ -82,6 +83,18 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					_auditData.JoinTableDictionary.Add(joinAuditTableAttribute.JoinTableName, joinAuditTableAttribute.JoinAuditTableName);
 				}
 			}
+		}
+
+		private void addFactory(System.Type typ)
+		{
+			var factory = _metaDataStore.ClassMeta<AuditFactoryAttribute>(typ);
+			_auditData.Factory = factory ?? getDefaultFactory();
+		}
+
+		private readonly AuditFactoryAttribute defaultFactory = new AuditFactoryAttribute(new DefaultAuditEntityFactory());
+		private AuditFactoryAttribute getDefaultFactory()
+		{
+			return defaultFactory;
 		}
 
 		private readonly AuditTableAttribute defaultAuditTable = new AuditTableAttribute(string.Empty);

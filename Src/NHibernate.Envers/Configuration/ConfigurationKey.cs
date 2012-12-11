@@ -169,5 +169,12 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public static readonly StringConfigurationEntry UniqueConfigurationName
 			= new StringConfigurationEntry("nhibernate.envers.unique_cfg_name", string.Empty);
+
+		/// <summary>
+		/// Listener to be invoked after a versioned entity is instantiated.  Can be used for DI
+		/// </summary>
+		public static readonly TypeConfigurationEntry PostInstantiationListener
+			= new TypeConfigurationEntry("nhibernate.envers.post_instantiation_listener", typeof(DefaultEnversPostInstantiationListener).AssemblyQualifiedName);
+
 	}
 }

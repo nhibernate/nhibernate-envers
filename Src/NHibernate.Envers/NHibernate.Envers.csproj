@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Configuration\Attributes\AttributeConfigurationWithRevisionListener.cs" />
     <Compile Include="Configuration\Attributes\AuditedAttribute.cs" />
+    <Compile Include="Configuration\Attributes\AuditFactoryAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditJoinTableAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditMappedByAttribute.cs" />
     <Compile Include="Configuration\Attributes\AuditOverrideAttribute.cs" />
@@ -80,7 +81,9 @@
     <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\ConfigurationEntry.cs" />
+    <Compile Include="Configuration\Metadata\DefaultAuditEntityFactory.cs" />
     <Compile Include="Configuration\Metadata\DefaultCollectionMapperFactory.cs" />
+    <Compile Include="Configuration\Metadata\DefaultEnversPostInstantiationListener.cs" />
     <Compile Include="Configuration\Metadata\ICollectionMapperFactory.cs" />
     <Compile Include="Configuration\Metadata\Reader\ComponentAuditedPropertiesReader .cs" />
     <Compile Include="Configuration\RevisionInfoConfigurationResult.cs" />
@@ -135,7 +138,9 @@
     <Compile Include="Entities\Mapper\Relation\Query\QueryConstants.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedMapCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedSetCollectionMapper.cs" />
+    <Compile Include="Event\IPostInstantiationListener.cs" />
     <Compile Include="ICrossTypeRevisionChangesReader.cs" />
+    <Compile Include="IEntityFactory.cs" />
     <Compile Include="IEntityTrackingRevisionListener .cs" />
     <Compile Include="Configuration\Attributes\ModifiedEntityNamesAttribute.cs" />
     <Compile Include="Query\Criteria\RevisionTypeAuditExpression.cs" />

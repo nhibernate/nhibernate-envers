@@ -70,6 +70,19 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <param name="property"></param>
 		/// <returns></returns>
 		IFluentAudit<T> SetCollectionMapper<TCustomCollectionMapper>(Expression<Func<T, object>> property) where TCustomCollectionMapper : ICustomCollectionMapperFactory;
+
+		/// <summary>
+		/// Use a pre-created <see cref="IEntityFactory"/> to instantiate this entity
+		/// </summary>
+		/// <param name="factory"></param>
+		/// <returns></returns>
+		IFluentAudit<T> UseFactory(IEntityFactory factory);
+
+		/// <summary>
+		/// Use a custom <see cref="IEntityFactory"/> to instantiate this entity
+		/// </summary>
+		/// <returns></returns>
+		IFluentAudit<T> UseFactory<TFactory>() where TFactory : IEntityFactory;
 	}
 
 	/// <summary>
@@ -107,6 +120,18 @@ namespace NHibernate.Envers.Configuration.Fluent
 		/// <param name="tableInfo">A lambda expression that will fill an <see cref="AuditJoinTableAttribute"/></param>
 		/// <returns></returns>
 		IFluentAudit SetTableInfo(string property, Action<AuditJoinTableAttribute> tableInfo);
-	}
 
+		/// <summary>
+		/// Use a pre-created <see cref="IEntityFactory"/> to instantiate this entity
+		/// </summary>
+		/// <param name="factory"></param>
+		/// <returns></returns>
+		IFluentAudit UseFactory(IEntityFactory factory);
+
+		/// <summary>
+		/// Use a custom <see cref="IEntityFactory"/> to instantiate this entity
+		/// </summary>
+		/// <returns></returns>
+		IFluentAudit UseFactory<TFactory>() where TFactory : IEntityFactory;
+	}
 }
