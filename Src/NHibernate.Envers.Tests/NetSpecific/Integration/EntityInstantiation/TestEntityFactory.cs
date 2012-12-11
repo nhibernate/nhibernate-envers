@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 {
 	public class TestEntityFactory : IEntityFactory<FactoryCreatedTestEntity>
 	{

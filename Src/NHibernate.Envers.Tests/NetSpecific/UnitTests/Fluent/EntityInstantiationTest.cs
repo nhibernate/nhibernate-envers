@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation;
 using NUnit.Framework;
-using NHibernate.Envers.Tests.Integration.EntityInstantiation;
 using NHibernate.Envers.Configuration.Fluent;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.Tools;

@@ -1,6 +1,6 @@
 ﻿using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 {
 	[Audited]
 	public class TestEntityWithContext
