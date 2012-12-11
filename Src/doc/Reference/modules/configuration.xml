@@ -349,8 +349,8 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 							NHibernate.Envers.Configuration.Metadata.DefaultEnversPostInstantiationListener
 						</entry>
 						<entry>
-							Passed a copy of each audited entity immediately after it has been instantiated and populated.
-							May be used to inject dependencies for the entity
+							Each audited entity will be sent to IPostInstantiationListener immediately after it has been instantiated and populated. 
+							May be used to inject dependencies for the entity.
 						</entry>
 					</row>					
 				</tbody>
