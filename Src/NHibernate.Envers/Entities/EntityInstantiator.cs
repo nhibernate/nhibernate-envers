@@ -5,7 +5,6 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
-using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities
 {
