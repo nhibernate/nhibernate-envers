@@ -1,6 +1,6 @@
 ﻿using NHibernate.Envers.Event;
 
-namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 {
 	public class PostInstantiationListener : IPostInstantiationListener
 	{
