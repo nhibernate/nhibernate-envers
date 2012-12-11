@@ -10,6 +10,7 @@ using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
+using System;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -306,7 +307,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
-				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);
+				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);				
 
 				var joinElement = MetadataTools.CreateJoin(parent, auditTableName, schema, catalog);
 				JoinElements.Add(join, joinElement);
@@ -394,6 +395,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var schema = GetSchema(auditingData.AuditTable.Schema, pc.Table);
 			var catalog = GetCatalog(auditingData.AuditTable.Catalog, pc.Table);
+			Func<System.Type, object> factory = auditingData.Factory.Factory.Instantiate;
 
 			var entityName = pc.EntityName;
 			if (!isAudited)
@@ -415,7 +417,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				//ORIG:
 				//IExtendedPropertyMapper propertyMapper = null;
 				//String parentEntityName = null;
-				var _entityCfg = new EntityConfiguration(entityName, pc.ClassName, _idMapper, null, null);
+				var _entityCfg = new EntityConfiguration(entityName, pc.ClassName, _idMapper, null, null, factory);
 				NotAuditedEntitiesConfigurations.Add(entityName, _entityCfg);
 				return;
 			}
@@ -497,7 +499,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Storing the generated configuration
 			var entityCfg = new EntityConfiguration(auditEntityName, pc.ClassName, idMapper,
-					propertyMapper, parentEntityName);
+					propertyMapper, parentEntityName, factory);
 			EntitiesConfigurations.Add(pc.EntityName, entityCfg);
 		}
 

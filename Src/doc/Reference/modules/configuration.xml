@@ -341,6 +341,18 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 							A unique name for the configuration object. Used internally by Envers. Must not be set explicitly by user!
 						</entry>
 					</row>
+					<row>
+						<entry>
+							nhibernate.envers.post_instantiation_listener
+						</entry>
+						<entry>
+							NHibernate.Envers.Configuration.Metadata.DefaultEnversPostInstantiationListener
+						</entry>
+						<entry>
+							Passed a copy of each audited entity immediately after it has been instantiated and populated.
+							May be used to inject dependencies for the entity
+						</entry>
+					</row>					
 				</tbody>
 			</tgroup>
 		</table>
@@ -356,6 +368,9 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</listitem>
 					<listitem>
 						nhibernate.envers.modified_flag_suffix
+					</listitem>
+					<listitem>
+						nhibernate.envers.post_instantiation_listener
 					</listitem>
 				</orderedlist>
 			</para>
@@ -407,6 +422,11 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 			If you'd like to audit properties of a superclass of an entity, which are not explicitly audited (which
 			don't have the <literal>AuditedAttribute</literal> on any properties or on the class),
 			use <literal>[AuditOverride(ForClass = typeof(SomeEntity), IsAudited = true/false)]</literal>.
+		</para>
+
+		<para>
+			If an audited entity should be created by a factory, annotate the entity with the <literal>[AuditFactory(typeof(SomeFactory))]</literal>
+			attribute to specify the factory type.  You can also pass an pre-configured instance into the fluent interface's <literal>UseFactory()</literal>.
 		</para>
 	</section>
 </chapter>

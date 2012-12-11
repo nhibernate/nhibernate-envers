@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper.Relation;
+using NHibernate.Envers.Event;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -21,6 +22,7 @@ namespace NHibernate.Envers.Configuration
 			CorrelatedSubqueryOperator = "=";
 			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
 			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToString(properties);
+			PostInstantiationListener = ConfigurationKey.PostInstantiationListener.ToInstance<IPostInstantiationListener>(properties);
 		}
 
 		/// <summary>
@@ -70,5 +72,7 @@ namespace NHibernate.Envers.Configuration
 
 		public bool IsGlobalWithModifiedFlag { get; private set; }
 		public string ModifiedFlagSuffix { get; private set; }
+
+		public IPostInstantiationListener PostInstantiationListener { get; private set; }
 	}
 }

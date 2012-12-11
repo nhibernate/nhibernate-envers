@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Entities
 	public class EntityConfiguration
 	{
 		public EntityConfiguration(string versionsEntityName, string entityClassName, IdMappingData idMappingData,
-							IExtendedPropertyMapper propertyMapper, string parentEntityName)
+							IExtendedPropertyMapper propertyMapper, string parentEntityName, Func<System.Type, object> factory)
 		{
 			VersionsEntityName = versionsEntityName;
 			EntityClassName = entityClassName;
@@ -17,6 +17,7 @@ namespace NHibernate.Envers.Entities
 			PropertyMapper = propertyMapper;
 			ParentEntityName = parentEntityName;
 
+			Factory = factory;
 			relations = new Dictionary<string, RelationDescription>();
 		}
 	
@@ -82,5 +83,7 @@ namespace NHibernate.Envers.Entities
 		{
 			return relations.ContainsKey(propertyName)? relations[propertyName]: null;
 		}
+
+		public Func<System.Type, object> Factory { get; private set; }
 	}
 }

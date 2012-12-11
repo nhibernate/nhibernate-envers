@@ -78,6 +78,13 @@
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\Basic\TransactionRollbackBehaviourTest.cs" />
+    <Compile Include="Integration\EntityInstantiation\FactoryTest.cs" />
+    <Compile Include="Integration\EntityInstantiation\IExternalContext.cs" />
+    <Compile Include="Integration\EntityInstantiation\PostInstantiationListener.cs" />
+    <Compile Include="Integration\EntityInstantiation\TestExternalContext.cs" />
+    <Compile Include="Integration\EntityInstantiation\FactoryCreatedTestEntity.cs" />
+    <Compile Include="Integration\EntityInstantiation\TestEntityWithContext.cs" />
+    <Compile Include="Integration\EntityInstantiation\TestEntityFactory.cs" />
     <Compile Include="Integration\Ids\CompositeDateIdTest.cs" />
     <Compile Include="Integration\Ids\DateIdTest.cs" />
     <Compile Include="Integration\Ids\EmbeddedId\Item.cs" />
@@ -604,6 +611,7 @@
     <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />
     <Compile Include="NetSpecific\Integration\PersistRevisionInfo\FlushGetCurrentRevisionTest.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\EntityInstantiationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\CompositeIdNoComponentTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\MultipleIdEntity.cs" />
     <Compile Include="NetSpecific\Integration\InsertUpdateFalse\ChildComponent.cs" />
@@ -851,6 +859,7 @@
     <EmbeddedResource Include="Integration\OneToMany\EmbeddedId\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Ids\EmbeddedId\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToOne\EagerLoading.hbm.xml" />
+    <EmbeddedResource Include="Integration\EntityInstantiation\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

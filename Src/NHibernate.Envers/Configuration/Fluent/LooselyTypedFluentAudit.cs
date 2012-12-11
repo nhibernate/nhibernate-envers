@@ -52,5 +52,17 @@ namespace NHibernate.Envers.Configuration.Fluent
 			SetTableInfo(_entityType, property, tableInfo);
 			return this;
 		}
+
+		public IFluentAudit UseFactory(IEntityFactory factory)
+		{
+			AttributeCollection.Add(new MemberInfoAndAttribute(_entityType, new AuditFactoryAttribute(factory)));
+			return this;
+		}
+
+		public IFluentAudit UseFactory<TFactory>() where TFactory: IEntityFactory
+		{
+			AttributeCollection.Add(new MemberInfoAndAttribute(_entityType, new AuditFactoryAttribute(typeof(TFactory))));
+			return this;
+		}
 	}
 }
