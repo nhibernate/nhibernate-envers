@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using NHibernate.Envers.Tests.Integration.EntityInstantiation;
 using NHibernate.Envers.Configuration.Fluent;
-using NHibernate.Cfg;
-using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.Tools;
 using NHibernate.Envers.Configuration.Attributes;

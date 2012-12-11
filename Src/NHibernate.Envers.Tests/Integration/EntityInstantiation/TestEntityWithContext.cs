@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Envers.Configuration.Attributes;
+﻿using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
 {
@@ -20,7 +16,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
 
 		public TestEntityWithContext(bool createdByFactory)
 		{
-			this.CreatedByFactory = createdByFactory;
+			CreatedByFactory = createdByFactory;
 		}
 	}
 }

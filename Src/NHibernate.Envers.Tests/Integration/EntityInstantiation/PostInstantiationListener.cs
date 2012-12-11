@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Envers.Event;
+﻿using NHibernate.Envers.Event;
 
 namespace NHibernate.Envers.Tests.Integration.EntityInstantiation
 {
