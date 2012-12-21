@@ -29,11 +29,6 @@
         </listitem>
 		<listitem>
             <para>
-                <ulink url="http://sourceforge.net/projects/nhcontrib/files/NHibernate.Envers/">Binaries</ulink>
-            </para>
-        </listitem>
-		<listitem>
-            <para>
                 <ulink url="http://nuget.org/packages/NHibernate.Envers">Nuget package</ulink>
             </para>
         </listitem>
