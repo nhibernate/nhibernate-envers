@@ -605,8 +605,10 @@
     <Compile Include="NetSpecific\Integration\EnumType\CustomEnumTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\EnumType\Model.cs" />
     <Compile Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\Fixture.cs" />
+    <Compile Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\FixtureWithModifiedFlagTest.cs" />
     <Compile Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\UniOwned.cs" />
     <Compile Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\UniOwning.cs" />
+    <Compile Include="NetSpecific\Integration\ManyToMany\WithModifiedFlag\SaveNewItemTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\Child.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />

@@ -24,9 +24,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			var ret = new List<object>();
 			foreach (var item in (IEnumerable) oldCollection)
 			{
-				//hack - can't get the snapshot value without reflection. Needs to be changed inside NH Core
-				var itemValue = item.GetType().GetProperty("Value").GetValue(item, null);
-				ret.Add(itemValue);
+				//hack - need to know if element if of nh core's hidden type SnapshotElement
+				if(item.GetType().FullName.Equals("NHibernate.Collection.PersistentIdentifierBag+SnapshotElement"))
+				{
+					//hack again - can't get the snapshot value without reflection. Needs to be changed inside NH Core
+					var itemValue = item.GetType().GetProperty("Value").GetValue(item, null);
+					ret.Add(itemValue);					
+				}
+				else
+				{
+					ret.Add(item);
+				}
 			}
 			return ret;
 		}

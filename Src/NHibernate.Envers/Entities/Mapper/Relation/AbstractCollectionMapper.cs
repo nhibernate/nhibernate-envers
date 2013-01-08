@@ -8,6 +8,7 @@ using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
@@ -129,17 +130,30 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			var propertyData = CommonCollectionMapperData.CollectionReferencingPropertyData;
 			if (propertyData.UsingModifiedFlag)
 			{
-				var newObjAsPersistentCollection = (IPersistentCollection) newObj;
-				if(isFromNullToEmptyOrFromEmptyToNull(newObjAsPersistentCollection, oldObj))
+				if (isNotPersistentCollection(newObj) || isNotPersistentCollection(oldObj))
 				{
-					data[propertyData.ModifiedFlagPropertyName] = true;
+					//Compare POCOs
+					data[propertyData.ModifiedFlagPropertyName] = !Toolz.ObjectsEqual(newObj, oldObj);
 				}
 				else
 				{
-					var changes = MapCollectionChanges(propertyData.Name, newObjAsPersistentCollection, oldObj, null);
-					data[propertyData.ModifiedFlagPropertyName] = changes.Any();
+					var newObjAsPersistentCollection = (IPersistentCollection)newObj;
+					if (isFromNullToEmptyOrFromEmptyToNull(newObjAsPersistentCollection, oldObj))
+					{
+						data[propertyData.ModifiedFlagPropertyName] = true;
+					}
+					else
+					{
+						var changes = MapCollectionChanges(propertyData.Name, newObjAsPersistentCollection, oldObj, null);
+						data[propertyData.ModifiedFlagPropertyName] = changes.Any();
+					}					
 				}
 			}
+		}
+
+		private static bool isNotPersistentCollection(object obj)
+		{
+			return obj != null && !(obj is IPersistentCollection);
 		}
 
 		private bool isFromNullToEmptyOrFromEmptyToNull(IPersistentCollection newColl, object oldColl)
