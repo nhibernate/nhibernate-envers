@@ -303,7 +303,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 				string auditTableName;
 				if (!auditingData.JoinTableDictionary.TryGetValue(originalTableName, out auditTableName))
 				{
-					auditTableName = VerEntCfg.GetAuditEntityName(originalTableName);
+					//rk - not following Hibernate Envers here...
+					auditTableName = VerEntCfg.GetAuditTableName(null, originalTableName);
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
