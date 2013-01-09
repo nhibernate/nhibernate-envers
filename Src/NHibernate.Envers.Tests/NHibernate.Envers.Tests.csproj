@@ -208,7 +208,7 @@
     <Compile Include="Integration\Properties\PropertiesTestEntity.cs" />
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldEntity.cs" />
     <Compile Include="Integration\Properties\UnversionedOptimisticLockingFieldTest.cs" />
-    <Compile Include="Integration\Properties\VersionsPropertiesTEst.cs" />
+    <Compile Include="Integration\Properties\VersionsPropertiesTest.cs" />
     <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditAllSubclass\AuditedAllSubclassEntity.cs" />
     <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditAllSubclass\MappedSubclassingAllAuditedTest.cs" />
     <Compile Include="Integration\SuperClass\AuditAtMethodSuperclassLevel\AuditedMethodMappedSuperclass.cs" />
