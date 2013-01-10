@@ -299,12 +299,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
-				var originalTableName = join.Table.Name;
+				var originalJoinTableName = join.Table.Name;
 				string auditTableName;
-				if (!auditingData.JoinTableDictionary.TryGetValue(originalTableName, out auditTableName))
+				if (!auditingData.JoinTableDictionary.TryGetValue(originalJoinTableName, out auditTableName))
 				{
 					//rk - not following Hibernate Envers here...
-					auditTableName = VerEntCfg.GetAuditTableName(null, originalTableName);
+					auditTableName = VerEntCfg.GetAuditTableName(null, originalJoinTableName);
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
