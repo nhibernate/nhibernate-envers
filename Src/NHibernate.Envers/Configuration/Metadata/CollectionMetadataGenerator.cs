@@ -239,9 +239,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else
 			{
-				var middleTableName = CollectionMetadataGenerator.middleTableName(_propertyValue, _referencingEntityName);
-				auditMiddleTableName = _mainGenerator.VerEntCfg.GetAuditTableName(null, middleTableName);
-				auditMiddleEntityName = _mainGenerator.VerEntCfg.GetAuditEntityName(middleTableName);
+				var midTableName = middleTableName(_propertyValue, _referencingEntityName);
+				auditMiddleTableName = _mainGenerator.VerEntCfg.GetAuditTableName(null, midTableName);
+				auditMiddleEntityName = _mainGenerator.VerEntCfg.GetAuditEntityName(midTableName);
 			}
 
 			log.DebugFormat("Using join table name: {0}", auditMiddleTableName);
