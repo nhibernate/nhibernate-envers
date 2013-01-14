@@ -5,7 +5,7 @@
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<DeployFolder>$(MSBuildProjectDirectory)\Deploy</DeployFolder>
 		<DocReferencePath>$(SourceDir)\doc\reference</DocReferencePath>
-		<ClassPath>"$(DocReferencePath)\support\lib\*"</ClassPath>
+		<ClassPath>"$(DocReferencePath)\support\lib\*;"</ClassPath>
 		<TempDirectory>$(DeployFolder)\temp</TempDirectory>
 		<TempDoc>$(TempDirectory)\doc.tmp</TempDoc>
 		<OutputDoc>$(DeployFolder)\EnversUserDoc.pdf</OutputDoc>
