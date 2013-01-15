@@ -78,6 +78,7 @@
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\Basic\TransactionRollbackBehaviourTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\FactoryTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\IExternalContext.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\PostInstantiationListener.cs" />
