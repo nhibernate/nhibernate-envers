@@ -7,14 +7,20 @@ namespace NHibernate.Envers.Synchronization.Work
 {
 	public class ModWorkUnit: AbstractAuditWorkUnit 
 	{
-		private readonly bool changes;        
+		private readonly bool _changes;
+		private readonly IEntityPersister _entityPersister;
+		private readonly object[] _oldState;
+		private readonly object[] _newState;
 
 		public ModWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg, 
 						   object id, IEntityPersister entityPersister, object[] newState, object[] oldState)
 			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Modified)
 		{
+			_entityPersister = entityPersister;
+			_oldState = oldState;
+			_newState = newState;
 			Data = new Dictionary<string, object>();
-			changes = verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, Data,
+			_changes = verCfg.EntCfg[EntityName].PropertyMapper.Map(sessionImplementor, Data,
 					entityPersister.PropertyNames, newState, oldState);
 		}
 
@@ -22,7 +28,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override bool ContainsWork() 
 		{
-			return changes;
+			return _changes;
 		}
 
 		public override IDictionary<string, object> GenerateData(object revisionData)
@@ -39,7 +45,10 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)
 		{
-			return second;
+			// In case of multiple subsequent flushes within single transaction, modification flags need to be
+			// recalculated against initial and final state of the given entity.
+			return new ModWorkUnit(second.SessionImplementor, second.EntityName, second.VerCfg, second.EntityId,
+			                       second._entityPersister, second._newState, _oldState);
 		}
 
 		public override IAuditWorkUnit Merge(DelWorkUnit second)
