@@ -86,6 +86,7 @@
     <Compile Include="Configuration\Metadata\DefaultEnversPostInstantiationListener.cs" />
     <Compile Include="Configuration\Metadata\ICollectionMapperFactory.cs" />
     <Compile Include="Configuration\Metadata\Reader\ComponentAuditedPropertiesReader .cs" />
+    <Compile Include="Configuration\Metadata\Reader\QueryGeneratorBuilder.cs" />
     <Compile Include="Configuration\RevisionInfoConfigurationResult.cs" />
     <Compile Include="Configuration\Store\AuditMappedByMetaDataAdder.cs" />
     <Compile Include="Configuration\Store\EntityMeta.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Configuration\Metadata\Reader\DeclaredPersistentProperty.cs" />
     <Compile Include="Configuration\Metadata\Reader\IAuditedPropertiesHolder.cs" />
     <Compile Include="Configuration\Metadata\Reader\IPersistentPropertiesSource.cs" />
-    <Compile Include="Configuration\Metadata\Reader\IQueryGeneratorBuilder.cs" />
     <Compile Include="Configuration\Store\IMetaDataAdder.cs" />
     <Compile Include="Configuration\StringConfigurationEntry.cs" />
     <Compile Include="Configuration\TypeConfigurationEntry.cs" />
