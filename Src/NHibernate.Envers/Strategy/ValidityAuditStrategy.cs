@@ -40,9 +40,6 @@ namespace NHibernate.Envers.Strategy
 			_auditConfiguration = auditConfiguration;
 		}
 
-		//getter for the revision entity field annotated with @RevisionTimestamp 
-		private IGetter _revisionTimestampGetter;
-
 		public void Perform(ISession session, string entityName, object id, object data, object revision)
 		{
 			var auditedEntityName = _auditConfiguration.AuditEntCfg.GetAuditEntityName(entityName);
@@ -120,11 +117,6 @@ namespace NHibernate.Envers.Strategy
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
 		}
 
-		public void SetRevisionTimestampGetter(IGetter revisionTimestampGetter)
-		{
-			_revisionTimestampGetter = revisionTimestampGetter;
-		}
-
 		private static void addRevisionRestriction(Parameters rootParameters, string revisionProperty, string revisionEndProperty, bool addAlias)
 		{
 			// e.revision <= _revision and (e.endRevision > _revision or e.endRevision is null)
@@ -155,7 +147,7 @@ namespace NHibernate.Envers.Strategy
 					// Determine the value of the revision property annotated with @RevisionTimestamp
 					DateTime revisionEndTimestamp;
 					var revEndTimestampFieldName = auditCfg.AuditEntCfg.RevisionEndTimestampFieldName;
-					var revEndTimestampObj = _revisionTimestampGetter.Get(revision);
+					var revEndTimestampObj = _auditConfiguration.RevisionTimestampGetter.Get(revision);
 
 					// convert to a DateTime
 					if (revEndTimestampObj is DateTime)
