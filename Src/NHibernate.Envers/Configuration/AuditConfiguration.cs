@@ -7,7 +7,6 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Properties;
