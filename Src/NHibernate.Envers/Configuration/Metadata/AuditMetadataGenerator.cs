@@ -98,7 +98,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private void addEndRevision(XmlElement anyMapping)
 		{
 			// Add the end-revision field, if the appropriate strategy is used.
-			if (VerEntCfg.AuditStrategyType == typeof(ValidityAuditStrategy))
+			if (AuditStrategy is ValidityAuditStrategy)
 			{
 				var manyToOne = MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
 				foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes 
