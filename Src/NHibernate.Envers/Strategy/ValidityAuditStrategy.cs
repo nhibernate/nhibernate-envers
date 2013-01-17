@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Query;
-using NHibernate.Properties;
 
 namespace NHibernate.Envers.Strategy
 {
@@ -115,6 +117,28 @@ namespace NHibernate.Envers.Strategy
 		{
 			var rootParameters = rootQueryBuilder.RootParameters;
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
+		}
+
+		/// <summary>
+		/// Adds a <![CDATA[<many-to-one>]]> mapping to the revision entity as an endrevision.
+		/// Also, if <see cref="AuditEntitiesConfiguration.IsRevisionEndTimestampEnabled"/> set, adds a timestamp when the revision is no longer valid.
+		/// </summary>
+		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		{
+			var verEntCfg = _auditConfiguration.AuditEntCfg;
+			var manyToOne = MetadataTools.AddManyToOne(classMapping, verEntCfg.RevisionEndFieldName, verEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
+			foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes
+												select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
+			{
+				manyToOne.AppendChild(clonedNode);
+			}
+			MetadataTools.AddOrModifyColumn(manyToOne, verEntCfg.RevisionEndFieldName);
+
+			if (verEntCfg.IsRevisionEndTimestampEnabled)
+			{
+				const string revisionInfoTimestampSqlType = "Timestamp";
+				MetadataTools.AddProperty(classMapping, verEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
+			}
 		}
 
 		private static void addRevisionRestriction(Parameters rootParameters, string revisionProperty, string revisionEndProperty, bool addAlias)

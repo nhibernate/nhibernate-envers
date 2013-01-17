@@ -1,3 +1,4 @@
+using System.Xml;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -89,5 +90,13 @@ namespace NHibernate.Envers.Strategy
 		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty,
 									bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName,
 									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas);
+
+		/// <summary>
+		/// Adds extra revision mapping for audited entities.
+		/// Can add more columns than mandatory Id (entityId, Ref to revision entity) and Revision type (Add, deleted or updated)
+		/// </summary>
+		/// <param name="classMapping">The audited class mapping where the extra info should be added.</param>
+		/// <param name="revisionInfoRelationMapping"><![CDATA[<many-to-one>]]> mapping to the revision entity.</param>
+		void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping);
 	}
 }

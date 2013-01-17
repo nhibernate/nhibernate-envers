@@ -89,28 +89,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					VerEntCfg.RevisionTypePropType, true, false);
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
 			revTypeProperty.SetAttribute("not-null", "true");
-			addEndRevision(anyMapping);
-		}
 
-		private void addEndRevision(XmlElement anyMapping)
-		{
-			// Add the end-revision field, if the appropriate strategy is used.
-			if (GlobalCfg.AuditStrategy is ValidityAuditStrategy)
-			{
-				var manyToOne = MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
-				foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes 
-													select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
-				{
-					manyToOne.AppendChild(clonedNode);
-				}
-				MetadataTools.AddOrModifyColumn(manyToOne, VerEntCfg.RevisionEndFieldName);
-
-				if (VerEntCfg.IsRevisionEndTimestampEnabled)
-				{
-					const string revisionInfoTimestampSqlType = "Timestamp";
-					MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
-				}
-			}
+			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMapping, revisionInfoRelationMapping);
 		}
 
 		private void addValueInFirstPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
