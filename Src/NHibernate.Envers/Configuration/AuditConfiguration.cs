@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Configuration
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
-			initializeAuditStrategy(revInfoCfgResult);
+			initializeAuditStrategy(properties, revInfoCfgResult);
 
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
@@ -41,16 +41,9 @@ namespace NHibernate.Envers.Configuration
 			Configuration = cfg;
 		}
 
-		private void initializeAuditStrategy(RevisionInfoConfigurationResult revInfoCfgResult)
+		private void initializeAuditStrategy(IDictionary<string, string> nhProperties, RevisionInfoConfigurationResult revInfoCfgResult)
 		{
-			try
-			{
-				AuditStrategy = (IAuditStrategy) Activator.CreateInstance(AuditEntCfg.AuditStrategyType);
-			}
-			catch (Exception e)
-			{
-				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName), e);
-			}
+			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(nhProperties);
 			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
 			if(validityAuditStrategy!=null)
 			{
