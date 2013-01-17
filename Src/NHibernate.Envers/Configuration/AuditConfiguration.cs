@@ -27,9 +27,7 @@ namespace NHibernate.Envers.Configuration
 
 			var mds = new MetaDataStore(cfg, metaDataProvider, metaDataAdders);
 			var properties = cfg.Properties;
-			GlobalCfg = new GlobalConfiguration(properties);
-			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(properties);
-			AuditStrategy.Initialize(this);
+			GlobalCfg = new GlobalConfiguration(this, properties);
 
 			var revInfoCfg = new RevisionInfoConfiguration(GlobalCfg, mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
@@ -41,8 +39,8 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			ModifiedEntityNamesReader = revInfoCfgResult.ModifiedEntityNamesReader;
-			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
-			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+			EntCfg = new EntitiesConfigurator()
+				.Configure(cfg, mds, GlobalCfg, AuditEntCfg, revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
 			Configuration = cfg;
 		}
 
@@ -53,7 +51,6 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
-		public IAuditStrategy AuditStrategy { get; private set; }
 		public IGetter RevisionTimestampGetter { get; private set; }
 		private Cfg.Configuration Configuration { get; set; } //for serialization
 
