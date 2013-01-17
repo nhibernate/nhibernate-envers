@@ -10,6 +10,7 @@ using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Properties;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -27,11 +28,15 @@ namespace NHibernate.Envers.Configuration
 			var mds = new MetaDataStore(cfg, metaDataProvider, metaDataAdders);
 			var properties = cfg.Properties;
 			GlobalCfg = new GlobalConfiguration(properties);
+			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(properties);
+			AuditStrategy.Initialize(this);
+
 			var revInfoCfg = new RevisionInfoConfiguration(GlobalCfg, mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
-			initializeAuditStrategy(properties, revInfoCfgResult);
+
+			RevisionTimestampGetter = ReflectionTools.GetGetter(revInfoCfgResult.RevisionInfoClass, revInfoCfgResult.RevisionInfoTimestampData);
 
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
@@ -39,19 +44,6 @@ namespace NHibernate.Envers.Configuration
 			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
 			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
 			Configuration = cfg;
-		}
-
-		private void initializeAuditStrategy(IDictionary<string, string> nhProperties, RevisionInfoConfigurationResult revInfoCfgResult)
-		{
-			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(nhProperties);
-			AuditStrategy.Initialize(this);
-			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
-			if(validityAuditStrategy!=null)
-			{
-				var revisionTimestampGetter = ReflectionTools.GetGetter(revInfoCfgResult.RevisionInfoClass,
-				                                                        revInfoCfgResult.RevisionInfoTimestampData);
-				validityAuditStrategy.SetRevisionTimestampGetter(revisionTimestampGetter);
-			}
 		}
 
 		public GlobalConfiguration GlobalCfg { get; private set; }
@@ -62,6 +54,7 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
 		public IAuditStrategy AuditStrategy { get; private set; }
+		public IGetter RevisionTimestampGetter { get; private set; }
 		private Cfg.Configuration Configuration { get; set; } //for serialization
 
 
