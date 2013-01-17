@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
@@ -20,7 +19,6 @@ namespace NHibernate.Envers.Synchronization.Work
 			EntityId = id;
 			RevisionType = revisionType;
 			EntityName = entityName;
-			AuditStrategy = verCfg.AuditStrategy;
 		}
 
 		public object EntityId { get; private set; }
@@ -28,7 +26,6 @@ namespace NHibernate.Envers.Synchronization.Work
 		public RevisionType RevisionType { get; private set; }
 		protected ISessionImplementor SessionImplementor { get; private set; }
 		protected AuditConfiguration VerCfg { get; private set; }
-		protected IAuditStrategy AuditStrategy { get; private set; }
 
 		protected void FillDataWithId(IDictionary<string, object> data, object revision) 
 		{
@@ -44,7 +41,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public virtual void Perform(ISession session, object revisionData) 
 		{
 			var data = GenerateData(revisionData);
-			AuditStrategy.Perform(session, EntityName, EntityId, data, revisionData);
+			VerCfg.GlobalCfg.AuditStrategy.Perform(session, EntityName, EntityId, data, revisionData);
 			_performedData = data;
 		}
 

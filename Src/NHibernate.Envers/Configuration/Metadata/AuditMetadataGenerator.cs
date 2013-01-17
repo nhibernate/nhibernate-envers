@@ -21,7 +21,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public Cfg.Configuration Cfg { get; private set; }
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
-		public IAuditStrategy AuditStrategy { get; private set; }
 		private readonly XmlElement revisionInfoRelationMapping;
 
 		/*
@@ -45,14 +44,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public AuditMetadataGenerator(Cfg.Configuration cfg,
 										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
-										IAuditStrategy auditStrategy,
 										XmlElement revisionInfoRelationMapping,
 										AuditEntityNameRegister auditEntityNameRegister)
 		{
 			Cfg = cfg;
 			GlobalCfg = globalCfg;
 			VerEntCfg = verEntCfg;
-			AuditStrategy = auditStrategy;
 			this.revisionInfoRelationMapping = revisionInfoRelationMapping;
 			BasicMetadataGenerator = new BasicMetadataGenerator();
 			componentMetadataGenerator = new ComponentMetadataGenerator(this);
@@ -98,7 +95,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private void addEndRevision(XmlElement anyMapping)
 		{
 			// Add the end-revision field, if the appropriate strategy is used.
-			if (AuditStrategy is ValidityAuditStrategy)
+			if (GlobalCfg.AuditStrategy is ValidityAuditStrategy)
 			{
 				var manyToOne = MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
 				foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes 
