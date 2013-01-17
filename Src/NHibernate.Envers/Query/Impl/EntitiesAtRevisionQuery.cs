@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Query.Impl
 
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			VerCfg.AuditStrategy.AddEntityAtRevisionRestriction(VerCfg.GlobalCfg, QueryBuilder, revisionPropertyPath,
+			VerCfg.AuditStrategy.AddEntityAtRevisionRestriction(QueryBuilder, revisionPropertyPath,
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
 					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 

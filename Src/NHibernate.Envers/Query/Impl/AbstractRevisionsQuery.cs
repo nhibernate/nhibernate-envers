@@ -9,7 +9,6 @@ using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Reader;
-using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Proxy;
 

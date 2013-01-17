@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public virtual void Perform(ISession session, object revisionData) 
 		{
 			var data = GenerateData(revisionData);
-			AuditStrategy.Perform(session, EntityName, VerCfg, EntityId, data, revisionData);
+			AuditStrategy.Perform(session, EntityName, EntityId, data, revisionData);
 			_performedData = data;
 		}
 

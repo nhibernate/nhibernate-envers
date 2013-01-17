@@ -18,8 +18,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		private readonly string _queryString;
 		private readonly MiddleIdData _referencingIdData;
 
-		public TwoEntityQueryGenerator(GlobalConfiguration globalCfg,
-										AuditEntitiesConfiguration verEntCfg,
+		public TwoEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
 										string versionsMiddleEntityName,
 										MiddleIdData referencingIdData,
@@ -76,7 +75,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(globalCfg, qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
+			auditStrategy.AddEntityAtRevisionRestriction(qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
 			      QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionEndFieldName, false,
 					referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 

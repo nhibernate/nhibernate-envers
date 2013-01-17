@@ -44,6 +44,7 @@ namespace NHibernate.Envers.Configuration
 		private void initializeAuditStrategy(IDictionary<string, string> nhProperties, RevisionInfoConfigurationResult revInfoCfgResult)
 		{
 			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(nhProperties);
+			AuditStrategy.Initialize(this);
 			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
 			if(validityAuditStrategy!=null)
 			{
