@@ -33,16 +33,22 @@ namespace NHibernate.Envers.Strategy
 	[Serializable]
 	public class ValidityAuditStrategy : IAuditStrategy
 	{
+		private AuditConfiguration _auditConfiguration;
+
+		public void Initialize(AuditConfiguration auditConfiguration)
+		{
+			_auditConfiguration = auditConfiguration;
+		}
+
 		//getter for the revision entity field annotated with @RevisionTimestamp 
 		private IGetter _revisionTimestampGetter;
 
-		public void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision)
+		public void Perform(ISession session, string entityName, object id, object data, object revision)
 		{
-			var audEntCfg = auditCfg.AuditEntCfg;
-			var auditedEntityName = audEntCfg.GetAuditEntityName(entityName);
+			var auditedEntityName = _auditConfiguration.AuditEntCfg.GetAuditEntityName(entityName);
 
 			// Update the end date of the previous row if this operation is expected to have a previous row
-			if (revisionType(auditCfg, data) != RevisionType.Added)
+			if (revisionType(_auditConfiguration, data) != RevisionType.Added)
 			{
 				/*
 				 Constructing a query:
@@ -51,14 +57,14 @@ namespace NHibernate.Envers.Strategy
 				var qb = new QueryBuilder(auditedEntityName, QueryConstants.MiddleEntityAlias);
 
 				// e.id = :id
-				var idMapper = auditCfg.EntCfg[entityName].IdMapper;
-				idMapper.AddIdEqualsToQuery(qb.RootParameters, id, auditCfg.AuditEntCfg.OriginalIdPropName, true);
+				var idMapper = _auditConfiguration.EntCfg[entityName].IdMapper;
+				idMapper.AddIdEqualsToQuery(qb.RootParameters, id, _auditConfiguration.AuditEntCfg.OriginalIdPropName, true);
 
-				addEndRevisionNullRestriction(auditCfg, qb);
+				addEndRevisionNullRestriction(_auditConfiguration, qb);
 
 				var l = qb.ToQuery(session).SetLockMode(QueryConstants.MiddleEntityAlias, LockMode.Upgrade).List();
 
-				updateLastRevision(session, auditCfg, l, id, auditedEntityName, revision);
+				updateLastRevision(session, _auditConfiguration, l, id, auditedEntityName, revision);
 			}
 
 			// Save the audit data
@@ -66,28 +72,28 @@ namespace NHibernate.Envers.Strategy
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		public void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
 			var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, QueryConstants.MiddleEntityAlias);
 
 			// Adding a parameter for each id component, except the rev number
-			var originalIdPropName = auditCfg.AuditEntCfg.OriginalIdPropName;
+			var originalIdPropName = _auditConfiguration.AuditEntCfg.OriginalIdPropName;
 			var originalId = (IDictionary)persistentCollectionChangeData.Data[originalIdPropName];
 			foreach (DictionaryEntry originalIdKeyValue in originalId)
 			{
-				if (!auditCfg.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
+				if (!_auditConfiguration.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
 				{
 					qb.RootParameters.AddWhereWithParam(originalIdPropName + "." + originalIdKeyValue.Key, true, "=", originalIdKeyValue.Value);
 				}
 			}
 
-			addEndRevisionNullRestriction(auditCfg, qb);
+			addEndRevisionNullRestriction(_auditConfiguration, qb);
 
 			var l = qb.ToQuery(session).SetLockMode(QueryConstants.MiddleEntityAlias, LockMode.Upgrade).List();
 
 			if (l.Count > 0)
 			{
-				updateLastRevision(session, auditCfg, l, originalId, persistentCollectionChangeData.EntityName, revision);
+				updateLastRevision(session, _auditConfiguration, l, originalId, persistentCollectionChangeData.EntityName, revision);
 			}
 
 			// Save the audit data
@@ -102,7 +108,7 @@ namespace NHibernate.Envers.Strategy
 			qb.RootParameters.AddWhere(auditCfg.AuditEntCfg.RevisionEndFieldName, true, "is", "null", false);
 		}
 
-		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
+		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
 		{
 			var rootParameters = rootQueryBuilder.RootParameters;
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
