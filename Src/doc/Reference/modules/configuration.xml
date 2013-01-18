@@ -332,6 +332,33 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</row>
 					<row>
 						<entry>
+							nhibernate.envers.post_instantiation_listener
+						</entry>
+						<entry>
+							NHibernate.Envers.Configuration.Metadata.DefaultEnversPostInstantiationListener
+						</entry>
+						<entry>
+							Each audited entity will be sent to IPostInstantiationListener immediately after it has been instantiated and populated.
+							May be used to inject dependencies for the entity.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							nhibernate.envers.table_name_strategy
+						</entry>
+						<entry>
+							NHibernate.Envers.Configuration.DefaultNamingStrategy
+						</entry>
+						<entry>
+							Give names to envers auditing tables. Either implement your own <literal>NHibernate.Envers.Configuration.IEnversNamingStrategy</literal> or
+							subclass <literal>NHibernate.Envers.Configuration.DefaultNamingStrategy</literal>.
+							Note that your implementation will override <literal>nhibernate.envers.audit_table_prefix</literal> and
+							<literal>nhibernate.envers.audit_table_suffix</literal> settings.
+							Your explicit table names (both when using attribute configuration and fluent configuration) will still be valid though.
+						</entry>
+					</row>
+					<row>
+						<entry>
 							nhibernate.envers.unique_cfg_name
 						</entry>
 						<entry>
@@ -340,19 +367,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 						<entry>
 							A unique name for the configuration object. Used internally by Envers. Must not be set explicitly by user!
 						</entry>
-					</row>
-					<row>
-						<entry>
-							nhibernate.envers.post_instantiation_listener
-						</entry>
-						<entry>
-							NHibernate.Envers.Configuration.Metadata.DefaultEnversPostInstantiationListener
-						</entry>
-						<entry>
-							Each audited entity will be sent to IPostInstantiationListener immediately after it has been instantiated and populated. 
-							May be used to inject dependencies for the entity.
-						</entry>
-					</row>					
+					</row>		
 				</tbody>
 			</tgroup>
 		</table>

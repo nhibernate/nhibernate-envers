@@ -209,21 +209,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static string middleTableName(Mapping.Collection value, string entityName) 
-		{
-			// We check how Hibernate maps the collection.
-			if (value.Element is OneToMany && !value.IsInverse) 
-			{
-				// This must be a @JoinColumn+@OneToMany mapping. Generating the table name, as Hibernate doesn't use a
-				// middle table for mapping this relation.
-				var refEntName = MappingTools.ReferencedEntityName(value.Element);
-				return entityName.Substring(entityName.LastIndexOf(".") + 1) + "_" + 
-					refEntName.Substring(refEntName.LastIndexOf(".") + 1);
-			}
-			// Hibernate uses a middle table for mapping this relation, so we get it's name directly.
-			return value.CollectionTable.Name;
-		}
-
 		private void addWithMiddleTable() 
 		{
 			log.DebugFormat("Adding audit mapping for property {0}. {1}" + 
@@ -239,9 +224,21 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else
 			{
-				var midTableName = middleTableName(_propertyValue, _referencingEntityName);
-				auditMiddleTableName = _mainGenerator.VerEntCfg.GetAuditTableName(null, midTableName);
-				auditMiddleEntityName = _mainGenerator.VerEntCfg.GetAuditEntityName(midTableName);
+				// We check how Hibernate maps the collection.
+				if (_propertyValue.Element is OneToMany && !_propertyValue.IsInverse)
+				{
+					// This must be a @JoinColumn+@OneToMany mapping. Generating the table name, as Hibernate doesn't use a
+					// middle table for mapping this relation.
+					var referencingPersistentClass = _mainGenerator.Cfg.GetClassMapping(_referencingEntityName);
+					var referencedPersistentClass = _mainGenerator.Cfg.GetClassMapping(_referencedEntityName);
+					auditMiddleTableName = _mainGenerator.VerEntCfg.UnidirectionOneToManyTableName(referencingPersistentClass, referencedPersistentClass);
+					auditMiddleEntityName = _mainGenerator.VerEntCfg.GetAuditEntityName(_referencingEntityName, _referencedEntityName);
+				}
+				else
+				{
+					auditMiddleTableName = _mainGenerator.VerEntCfg.CollectionTableName(_propertyValue);
+					auditMiddleEntityName = _mainGenerator.VerEntCfg.GetAuditEntityName(_propertyValue.CollectionTable.Name);
+				}
 			}
 
 			log.DebugFormat("Using join table name: {0}", auditMiddleTableName);

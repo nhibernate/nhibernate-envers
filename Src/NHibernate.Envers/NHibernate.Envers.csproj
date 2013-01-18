@@ -75,12 +75,14 @@
     <Compile Include="Configuration\BoolConfigurationEntry.cs" />
     <Compile Include="Configuration\ConfigurationComparer.cs" />
     <Compile Include="Configuration\ConfigurationKey.cs" />
+    <Compile Include="Configuration\DefaultNamingStrategy.cs" />
     <Compile Include="Configuration\Fluent\BaseFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\FluentException.cs" />
     <Compile Include="Configuration\Fluent\FluentRevision.cs" />
     <Compile Include="Configuration\Fluent\LooselyTypedFluentAudit.cs" />
     <Compile Include="Configuration\Fluent\MemberInfoAndAttribute.cs" />
     <Compile Include="Configuration\ConfigurationEntry.cs" />
+    <Compile Include="Configuration\IEnversNamingStrategy.cs" />
     <Compile Include="Configuration\Metadata\DefaultAuditEntityFactory.cs" />
     <Compile Include="Configuration\Metadata\DefaultCollectionMapperFactory.cs" />
     <Compile Include="Configuration\Metadata\DefaultEnversPostInstantiationListener.cs" />
