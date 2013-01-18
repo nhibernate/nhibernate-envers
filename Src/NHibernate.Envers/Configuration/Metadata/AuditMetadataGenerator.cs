@@ -6,7 +6,6 @@ using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Exceptions;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
@@ -276,12 +275,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
-				var originalJoinTableName = join.Table.Name;
 				string auditTableName;
-				if (!auditingData.JoinTableDictionary.TryGetValue(originalJoinTableName, out auditTableName))
+				if (!auditingData.JoinTableDictionary.TryGetValue(join.Table.Name, out auditTableName))
 				{
-					//rk - not following Hibernate Envers here...
-					auditTableName = VerEntCfg.GetAuditTableName(null, originalJoinTableName);
+					auditTableName = VerEntCfg.JoinTableName(join);
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
@@ -406,7 +403,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			var auditEntityName = VerEntCfg.GetAuditEntityName(entityName);
-			var auditTableName = VerEntCfg.GetAuditTableName(entityName, pc.Table.Name);
+			//var auditTableName = VerEntCfg.GetAuditTableName(entityName, pc.Table.Name);
+			var auditTableName = VerEntCfg.AuditTableName(entityName, pc);
 
 			// Registering the audit entity name, now that it is known
 			AuditEntityNameRegister.Register(auditEntityName);
