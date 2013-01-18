@@ -80,8 +80,11 @@ namespace NHibernate.Envers.Configuration
 
 		public string GetAuditEntityName(string referencingEntityName, string referencedEntityName)
 		{
-			return string.Concat(referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
-							"_", referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1));
+			return string.Concat(_auditTablePrefix,
+							referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1),
+							"_",
+							referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
+							_auditTableSuffix);
 		}
 
 		public string JoinTableName(Join originalJoinTable)
@@ -104,7 +107,7 @@ namespace NHibernate.Envers.Configuration
 
 		public string CollectionTableName(Mapping.Collection originalCollection)
 		{
-			return _namingStrategy.ReferenceTableName(originalCollection);
+			return _namingStrategy.CollectionTableName(originalCollection);
 		}
 	}
 }
