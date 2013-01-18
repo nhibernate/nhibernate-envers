@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
 {
 	[Serializable]
 	public class AuditEntitiesConfiguration 
 	{
+		private readonly IEnversNamingStrategy _namingStrategy;
 		private readonly string _auditTablePrefix;
 		private readonly string _auditTableSuffix;
 		private readonly string _revisionPropBasePath;
@@ -23,7 +25,6 @@ namespace NHibernate.Envers.Configuration
 			RevisionTypePropType = "byte";
 
 			RevisionEndFieldName = ConfigurationKey.AuditStrategyValidityEndRevFieldName.ToString(properties);
-			AuditStrategyType = ConfigurationKey.AuditStrategy.ToType(properties);
 
 			IsRevisionEndTimestampEnabled = ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp.ToBool(properties);
 			if (IsRevisionEndTimestampEnabled)
@@ -35,6 +36,8 @@ namespace NHibernate.Envers.Configuration
 
 			RevisionNumberPath = OriginalIdPropName + "." + RevisionFieldName + ".id";
 			_revisionPropBasePath = OriginalIdPropName + "." + RevisionFieldName + ".";
+			_namingStrategy = ConfigurationKey.TableNameStrategy.ToInstance<IEnversNamingStrategy>(properties);
+			_namingStrategy.Initialize(_auditTablePrefix, _auditTableSuffix);
 		}
 
 
@@ -44,7 +47,6 @@ namespace NHibernate.Envers.Configuration
 		public string RevisionTypePropName { get; private set; }
 		public string RevisionTypePropType { get; private set; }
 		public string RevisionEndFieldName { get; private set; }
-		public System.Type AuditStrategyType { get; private set; }
 		public bool IsRevisionEndTimestampEnabled { get; private set; }
 		public string RevisionEndTimestampFieldName { get; private set; }
 		public string RevisionInfoEntityAssemblyQualifiedName { get; private set; }
@@ -76,12 +78,33 @@ namespace NHibernate.Envers.Configuration
 			return _auditTablePrefix + entityName + _auditTableSuffix;
 		}
 
-		public string GetAuditTableName(string entityName, string tableName) 
+		public string GetAuditEntityName(string referencingEntityName, string referencedEntityName)
+		{
+			return string.Concat(referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
+							"_", referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1));
+		}
+
+		public string JoinTableName(Join originalJoinTable)
+		{
+			return _namingStrategy.JoinTableName(originalJoinTable);
+		}
+
+		public string AuditTableName(string entityName, PersistentClass persistentClass)
 		{
 			string dicValue;
-			if(entityName != null && _customAuditTablesNames.TryGetValue(entityName, out dicValue))
-				return dicValue;
-			return _auditTablePrefix + tableName + _auditTableSuffix;
+			return _customAuditTablesNames.TryGetValue(entityName, out dicValue) ? 
+						dicValue : 
+						_namingStrategy.AuditTableName(persistentClass);
+		}
+
+		public string UnidirectionOneToManyTableName(PersistentClass referencingPersistentClass, PersistentClass referencedPersistentClass)
+		{
+			return _namingStrategy.UnidirectionOneToManyTableName(referencingPersistentClass, referencedPersistentClass);
+		}
+
+		public string CollectionTableName(Mapping.Collection originalCollection)
+		{
+			return _namingStrategy.ReferenceTableName(originalCollection);
 		}
 	}
 }

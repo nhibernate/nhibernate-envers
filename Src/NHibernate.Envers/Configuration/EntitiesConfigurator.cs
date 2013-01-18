@@ -4,7 +4,6 @@ using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools.Graph;
 using NHibernate.Mapping;
 
@@ -16,7 +15,6 @@ namespace NHibernate.Envers.Configuration
 												IMetaDataStore metaDataStore,
 												GlobalConfiguration globalCfg, 
 												AuditEntitiesConfiguration verEntCfg,
-												IAuditStrategy auditStrategy,
 												XmlDocument revisionInfoXmlMapping, 
 												XmlElement revisionInfoRelationMapping) 
 		{
@@ -42,8 +40,7 @@ namespace NHibernate.Envers.Configuration
 			// Now that all information is read we can update the calculated fields.
 			classesAuditingData.UpdateCalculatedFields();
 
-			var auditMetaGen = new AuditMetadataGenerator(cfg, globalCfg, verEntCfg, auditStrategy, 
-												revisionInfoRelationMapping, auditEntityNameRegister);
+			var auditMetaGen = new AuditMetadataGenerator(cfg, globalCfg, verEntCfg, revisionInfoRelationMapping, auditEntityNameRegister);
 
 			// First pass
 			foreach (var pcDatasEntry in classesAuditingData.AllClassAuditedData)
