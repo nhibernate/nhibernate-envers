@@ -37,6 +37,6 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// Audit table name for a reference mapping (not inversed <![CDATA[<one-to-many>]]> mapping).
 		/// </summary>
-		string ReferenceTableName(Mapping.Collection originalCollection);
+		string CollectionTableName(Mapping.Collection originalCollection);
 	}
 }

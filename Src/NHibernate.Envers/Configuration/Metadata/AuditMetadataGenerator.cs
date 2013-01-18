@@ -403,7 +403,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			var auditEntityName = VerEntCfg.GetAuditEntityName(entityName);
-			//var auditTableName = VerEntCfg.GetAuditTableName(entityName, pc.Table.Name);
 			var auditTableName = VerEntCfg.AuditTableName(entityName, pc);
 
 			// Registering the audit entity name, now that it is known

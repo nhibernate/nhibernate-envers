@@ -30,13 +30,13 @@ namespace NHibernate.Envers.Configuration
 			var referencedEntityName = referencedPersistentClass.EntityName;
 			var referencingEntityName = referencingPersistentClass.EntityName;
 			return string.Concat(DefaultPrefix,
-			                     referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
+										referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1),
 			                     "_",
-			                     referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1),
+										referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
 			                     DefaultSuffix);
 		}
 
-		public virtual string ReferenceTableName(Mapping.Collection originalCollection)
+		public virtual string CollectionTableName(Mapping.Collection originalCollection)
 		{
 			return string.Concat(DefaultPrefix, originalCollection.CollectionTable.Name, DefaultSuffix);
 		}
