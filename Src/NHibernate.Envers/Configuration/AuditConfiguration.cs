@@ -7,9 +7,9 @@ using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Reflection;
+using NHibernate.Properties;
 
 namespace NHibernate.Envers.Configuration
 {
@@ -26,38 +26,21 @@ namespace NHibernate.Envers.Configuration
 
 			var mds = new MetaDataStore(cfg, metaDataProvider, metaDataAdders);
 			var properties = cfg.Properties;
-			GlobalCfg = new GlobalConfiguration(properties);
+			GlobalCfg = new GlobalConfiguration(this, properties);
+
 			var revInfoCfg = new RevisionInfoConfiguration(GlobalCfg, mds);
 			var revInfoCfgResult = revInfoCfg.Configure(cfg);
 			AuditEntCfg = new AuditEntitiesConfiguration(properties, revInfoCfgResult.RevisionInfoEntityName);
 			AuditProcessManager = new AuditProcessManager(revInfoCfgResult.RevisionInfoGenerator);
-			initializeAuditStrategy(revInfoCfgResult);
+
+			RevisionTimestampGetter = ReflectionTools.GetGetter(revInfoCfgResult.RevisionInfoClass, revInfoCfgResult.RevisionInfoTimestampData);
 
 			RevisionInfoQueryCreator = revInfoCfgResult.RevisionInfoQueryCreator;
 			RevisionInfoNumberReader = revInfoCfgResult.RevisionInfoNumberReader;
 			ModifiedEntityNamesReader = revInfoCfgResult.ModifiedEntityNamesReader;
-			EntCfg = new EntitiesConfigurator().Configure(cfg, mds, GlobalCfg, AuditEntCfg, AuditStrategy,
-			                                              revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
+			EntCfg = new EntitiesConfigurator()
+				.Configure(cfg, mds, GlobalCfg, AuditEntCfg, revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
 			Configuration = cfg;
-		}
-
-		private void initializeAuditStrategy(RevisionInfoConfigurationResult revInfoCfgResult)
-		{
-			try
-			{
-				AuditStrategy = (IAuditStrategy) Activator.CreateInstance(AuditEntCfg.AuditStrategyType);
-			}
-			catch (Exception e)
-			{
-				throw new MappingException(string.Format("Unable to create AuditStrategy[{0}] instance.", AuditEntCfg.AuditStrategyType.FullName), e);
-			}
-			var validityAuditStrategy = AuditStrategy as ValidityAuditStrategy;
-			if(validityAuditStrategy!=null)
-			{
-				var revisionTimestampGetter = ReflectionTools.GetGetter(revInfoCfgResult.RevisionInfoClass,
-				                                                        revInfoCfgResult.RevisionInfoTimestampData);
-				validityAuditStrategy.SetRevisionTimestampGetter(revisionTimestampGetter);
-			}
 		}
 
 		public GlobalConfiguration GlobalCfg { get; private set; }
@@ -67,7 +50,7 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
-		public IAuditStrategy AuditStrategy { get; private set; }
+		public IGetter RevisionTimestampGetter { get; private set; }
 		private Cfg.Configuration Configuration { get; set; } //for serialization
 
 
