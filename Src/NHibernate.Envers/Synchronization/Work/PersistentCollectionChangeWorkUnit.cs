@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Setting the revision number
 				((IDictionary<string, object>) persistentCollectionChangeData.Data[entitiesCfg.OriginalIdPropName])
 						.Add(entitiesCfg.RevisionFieldName, revisionData);
-				AuditStrategy.PerformCollectionChange(session, VerCfg, persistentCollectionChangeData, revisionData);
+				VerCfg.GlobalCfg.AuditStrategy.PerformCollectionChange(session, persistentCollectionChangeData, revisionData);
 			}
 		}
 

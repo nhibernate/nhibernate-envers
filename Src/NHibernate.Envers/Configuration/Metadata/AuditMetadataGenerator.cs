@@ -6,7 +6,6 @@ using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Exceptions;
-using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
@@ -21,7 +20,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public Cfg.Configuration Cfg { get; private set; }
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
-		public IAuditStrategy AuditStrategy { get; private set; }
 		private readonly XmlElement revisionInfoRelationMapping;
 
 		/*
@@ -45,14 +43,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public AuditMetadataGenerator(Cfg.Configuration cfg,
 										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
-										IAuditStrategy auditStrategy,
 										XmlElement revisionInfoRelationMapping,
 										AuditEntityNameRegister auditEntityNameRegister)
 		{
 			Cfg = cfg;
 			GlobalCfg = globalCfg;
 			VerEntCfg = verEntCfg;
-			AuditStrategy = auditStrategy;
 			this.revisionInfoRelationMapping = revisionInfoRelationMapping;
 			BasicMetadataGenerator = new BasicMetadataGenerator();
 			componentMetadataGenerator = new ComponentMetadataGenerator(this);
@@ -92,28 +88,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					VerEntCfg.RevisionTypePropType, true, false);
 			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
 			revTypeProperty.SetAttribute("not-null", "true");
-			addEndRevision(anyMapping);
-		}
 
-		private void addEndRevision(XmlElement anyMapping)
-		{
-			// Add the end-revision field, if the appropriate strategy is used.
-			if (VerEntCfg.AuditStrategyType == typeof(ValidityAuditStrategy))
-			{
-				var manyToOne = MetadataTools.AddManyToOne(anyMapping, VerEntCfg.RevisionEndFieldName, VerEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
-				foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes 
-													select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
-				{
-					manyToOne.AppendChild(clonedNode);
-				}
-				MetadataTools.AddOrModifyColumn(manyToOne, VerEntCfg.RevisionEndFieldName);
-
-				if (VerEntCfg.IsRevisionEndTimestampEnabled)
-				{
-					const string revisionInfoTimestampSqlType = "Timestamp";
-					MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
-				}
-			}
+			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMapping, revisionInfoRelationMapping);
 		}
 
 		private void addValueInFirstPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
@@ -299,12 +275,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
-				var originalJoinTableName = join.Table.Name;
 				string auditTableName;
-				if (!auditingData.JoinTableDictionary.TryGetValue(originalJoinTableName, out auditTableName))
+				if (!auditingData.JoinTableDictionary.TryGetValue(join.Table.Name, out auditTableName))
 				{
-					//rk - not following Hibernate Envers here...
-					auditTableName = VerEntCfg.GetAuditTableName(null, originalJoinTableName);
+					auditTableName = VerEntCfg.JoinTableName(join);
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
@@ -429,7 +403,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			var auditEntityName = VerEntCfg.GetAuditEntityName(entityName);
-			var auditTableName = VerEntCfg.GetAuditTableName(entityName, pc.Table.Name);
+			var auditTableName = VerEntCfg.AuditTableName(entityName, pc);
 
 			// Registering the audit entity name, now that it is known
 			AuditEntityNameRegister.Register(auditEntityName);

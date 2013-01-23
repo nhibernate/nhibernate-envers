@@ -1,3 +1,4 @@
+using System.Xml;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -11,24 +12,27 @@ namespace NHibernate.Envers.Strategy
 	public interface IAuditStrategy
 	{
 		/// <summary>
+		/// Called once at start up.
+		/// </summary>
+		void Initialize(AuditConfiguration auditConfiguration);
+
+		/// <summary>
 		/// Perform the persistence of audited data for regular entities.
 		/// </summary>
 		/// <param name="session">Session, which can be used to persist the data.</param>
 		/// <param name="entityName">Name of the entity, in which the audited change happens</param>
-		/// <param name="auditCfg">Audit configuration</param>
 		/// <param name="id">Id of the entity.</param>
 		/// <param name="data">Audit data to persist</param>
 		/// <param name="revision">Current revision data</param>
-		void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision);
+		void Perform(ISession session, string entityName, object id, object data, object revision);
 
 		/// <summary>
 		/// Perform the persistence of audited data for collection ("middle") entities.
 		/// </summary>
 		/// <param name="session">Session, which can be used to persist the data.</param>
-		/// <param name="auditCfg">Audit configuration</param>
 		/// <param name="persistentCollectionChangeData">Collection change data to be persisted.</param>
 		/// <param name="revision">Current revision data</param>
-		void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
+		void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
 
 		/// <summary>
 		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a two-entity relation.
@@ -44,7 +48,6 @@ namespace NHibernate.Envers.Strategy
 		/// </li>
 		/// </ul>
 		/// </summary>
-		/// <param name="globalCfg">The <see cref="GlobalConfiguration"/></param>
 		/// <param name="rootQueryBuilder">The <see cref="QueryBuilder"/> that will be updated</param>
 		/// <param name="revisionProperty">Property of the revision column</param>
 		/// <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="ValidityAuditStrategy"/>)</param>
@@ -54,7 +57,7 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias1">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias2">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
-		void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty,
+		void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty,
 										string revisionEndProperty, bool addAlias, MiddleIdData idData,
 										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2);
 
@@ -87,5 +90,13 @@ namespace NHibernate.Envers.Strategy
 		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty,
 									bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName,
 									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas);
+
+		/// <summary>
+		/// Adds extra revision mapping for audited entities.
+		/// Can add more columns than mandatory Id (entityId, Ref to revision entity) and Revision type (Add, deleted or updated)
+		/// </summary>
+		/// <param name="classMapping">The audited class mapping where the extra info should be added.</param>
+		/// <param name="revisionInfoRelationMapping"><![CDATA[<many-to-one>]]> mapping to the revision entity.</param>
+		void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping);
 	}
 }
