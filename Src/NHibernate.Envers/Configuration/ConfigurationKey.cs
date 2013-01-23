@@ -171,10 +171,17 @@ namespace NHibernate.Envers.Configuration
 			= new StringConfigurationEntry("nhibernate.envers.unique_cfg_name", string.Empty);
 
 		/// <summary>
-		/// Listener to be invoked after a versioned entity is instantiated.  Can be used for DI
+		/// Listener to be invoked after a versioned entity is instantiated. Can be used for DI.
 		/// </summary>
 		public static readonly TypeConfigurationEntry PostInstantiationListener
 			= new TypeConfigurationEntry("nhibernate.envers.post_instantiation_listener", typeof(DefaultEnversPostInstantiationListener).AssemblyQualifiedName);
 
+		/// <summary>
+		/// A <see cref="IEnversNamingStrategy"/> giving name to envers auditing tables.
+		/// This will override <see cref="AuditTablePrefix"/> and <see cref="AuditTableSuffix"/>.
+		/// Setting explicit names to tables will override these default namings.
+		/// </summary>
+		public static readonly TypeConfigurationEntry TableNameStrategy
+			= new TypeConfigurationEntry("nhibernate.envers.table_name_strategy", typeof(DefaultNamingStrategy).AssemblyQualifiedName);
 	}
 }

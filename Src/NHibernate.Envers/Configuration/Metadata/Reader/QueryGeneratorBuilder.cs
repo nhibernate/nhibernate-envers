@@ -12,17 +12,15 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 	/// </summary>
 	public sealed class QueryGeneratorBuilder 
 	{
-		private readonly GlobalConfiguration _globalCfg;
 		private readonly AuditEntitiesConfiguration _verEntCfg;
 		private readonly IAuditStrategy _auditStrategy;
 		private readonly MiddleIdData _referencingIdData;
 		private readonly string _auditMiddleEntityName;
 		private readonly IList<MiddleIdData> _idDatas;
 
-		public QueryGeneratorBuilder(GlobalConfiguration globalCfg, AuditEntitiesConfiguration verEntCfg, IAuditStrategy auditStrategy,
+		public QueryGeneratorBuilder(AuditEntitiesConfiguration verEntCfg, IAuditStrategy auditStrategy,
 							  MiddleIdData referencingIdData, string auditMiddleEntityName) 
 		{
-			_globalCfg = globalCfg;
 			_verEntCfg = verEntCfg;
 			_auditStrategy = auditStrategy;
 			_referencingIdData = referencingIdData;
@@ -46,7 +44,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				if (_idDatas[0].IsAudited()) 
 				{
-					return new TwoEntityQueryGenerator(_globalCfg, _verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
+					return new TwoEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
 													   _idDatas[0], componentDatas);
 				}
 				return new TwoEntityOneAuditedQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
@@ -60,7 +58,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					throw new MappingException("Ternary relations using @Audited(TargetAuditMode = NotAudited) are not supported.");
 				}
 
-				return new ThreeEntityQueryGenerator(_globalCfg, _verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
+				return new ThreeEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
 													 _idDatas[0], _idDatas[1], componentDatas);
 			}
 			throw new NotSupportedException("Illegal number of related entities.");

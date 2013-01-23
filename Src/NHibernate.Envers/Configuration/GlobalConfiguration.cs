@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Event;
+using NHibernate.Envers.Strategy;
 
 namespace NHibernate.Envers.Configuration
 {
 	[Serializable]
 	public class GlobalConfiguration 
 	{
-		public GlobalConfiguration(IDictionary<string,string> properties) 
+		public GlobalConfiguration(AuditConfiguration auditConfiguration, IDictionary<string,string> properties) 
 		{
 			GenerateRevisionsForCollections = ConfigurationKey.RevisionOnCollectionChange.ToBool(properties);
 			DoNotAuditOptimisticLockingField = ConfigurationKey.DoNotAuditOptimisticLockingField.ToBool(properties);
@@ -23,6 +24,8 @@ namespace NHibernate.Envers.Configuration
 			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
 			ModifiedFlagSuffix = ConfigurationKey.ModifiedFlagSuffix.ToString(properties);
 			PostInstantiationListener = ConfigurationKey.PostInstantiationListener.ToInstance<IPostInstantiationListener>(properties);
+			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(properties);
+			AuditStrategy.Initialize(auditConfiguration);
 		}
 
 		/// <summary>
@@ -74,5 +77,7 @@ namespace NHibernate.Envers.Configuration
 		public string ModifiedFlagSuffix { get; private set; }
 
 		public IPostInstantiationListener PostInstantiationListener { get; private set; }
+
+		public IAuditStrategy AuditStrategy { get; private set; }
 	}
 }

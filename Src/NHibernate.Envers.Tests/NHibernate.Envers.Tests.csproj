@@ -614,6 +614,11 @@
     <Compile Include="NetSpecific\Integration\Naming\Default\DetachedOneToManyTest.cs" />
     <Compile Include="NetSpecific\Integration\Naming\Default\EntityTest.cs" />
     <Compile Include="NetSpecific\Integration\Naming\Default\JoinTest.cs" />
+    <Compile Include="NetSpecific\Integration\Naming\UserSpecific\DetachedOneToManyTest.cs" />
+    <Compile Include="NetSpecific\Integration\Naming\UserSpecific\EntityTest.cs" />
+    <Compile Include="NetSpecific\Integration\Naming\UserSpecific\JoinTest.cs" />
+    <Compile Include="NetSpecific\Integration\Naming\UserSpecific\NamingStrategy.cs" />
+    <Compile Include="NetSpecific\Integration\Naming\UserSpecific\CollectionTest.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\Child.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />

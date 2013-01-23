@@ -1,3 +1,8 @@
+=== vNext ===
+* IAuditStrategy.Initialize(AuditConfiguration) added. AuditConfiguration and GlobalConfiguration removed from interface methods.
+
+
+
 === 1.5 GA (v 1.5.0), 2012-12-05, NH 3.3.2 GA ====
 
 *** Possible breaking change ***

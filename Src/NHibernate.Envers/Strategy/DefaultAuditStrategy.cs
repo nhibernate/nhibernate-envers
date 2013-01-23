@@ -1,4 +1,5 @@
 using System;
+using System.Xml;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -14,20 +15,27 @@ namespace NHibernate.Envers.Strategy
 	[Serializable]
 	public class DefaultAuditStrategy : IAuditStrategy
 	{
-		public void Perform(ISession session, string entityName, AuditConfiguration auditCfg, object id, object data, object revision)
+		private AuditConfiguration _auditConfiguration;
+
+		public void Initialize(AuditConfiguration auditConfiguration)
 		{
-			session.Save(auditCfg.AuditEntCfg.GetAuditEntityName(entityName), data);
+			_auditConfiguration = auditConfiguration;
+		}
+
+		public void Perform(ISession session, string entityName, object id, object data, object revision)
+		{
+			session.Save(_auditConfiguration.AuditEntCfg.GetAuditEntityName(entityName), data);
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void PerformCollectionChange(ISession session, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		public void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
 			var data = persistentCollectionChangeData.Data;
 			session.Save(persistentCollectionChangeData.EntityName, data);
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void AddEntityAtRevisionRestriction(GlobalConfiguration globalCfg, QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
+		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
 		{
 			var rootParameters = rootQueryBuilder.RootParameters;
 
@@ -44,7 +52,7 @@ namespace NHibernate.Envers.Strategy
 					alias1 + "." + originalIdPropertyName, alias2 + "." + originalIdPropertyName);
 
 			// add subquery to rootParameters
-			var subqueryOperator = globalCfg.CorrelatedSubqueryOperator;
+			var subqueryOperator = _auditConfiguration.GlobalCfg.CorrelatedSubqueryOperator;
 			rootParameters.AddWhere(revisionProperty, addAlias, subqueryOperator, maxERevQb);
 		}
 
@@ -79,6 +87,10 @@ namespace NHibernate.Envers.Strategy
 
 			// add subquery to rootParameters
 			rootParameters.AddWhere(revisionProperty, addAlias, "=", maxEeRevQb);
+		}
+
+		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		{
 		}
 	}
 }
