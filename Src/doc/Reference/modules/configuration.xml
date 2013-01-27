@@ -394,6 +394,11 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 
 	<section>
 		<title>Additional mapping annotations</title>
+
+		<para>
+			To set the value of any of the properties described above, simply add an entry to
+			your NHibernate Core's <literal>Configuration</literal> object.
+		</para>
 		
 		<para>
 			To change the name of the revision table and its fields (the table, in which the
@@ -403,14 +408,9 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 		</para>
 
 		<para>
-			To set the value of any of the properties described above, simply add an entry to
-			your <literal>hibernate.cfg.xml</literal> (or to NH's <literal>Configuration</literal> object).
-		</para>
-
-		<para>
-			You can also set the name of the audit table on a per-entity basis, using the
-			<literal>[AuditTable]</literal> attribute. It may be tedious to add this
-			annotation to every audited entity, so if possible, it's better to use a prefix/suffix.
+			The name of the audit table can be set on a per-entity basis, using the <literal>AuditTableAttribute</literal> (attribute) or <literal>SetTableInfo()</literal> (fluent).
+			It may be tedious to add this annotation to every audited entity, so if possible, it's better to use a prefix/suffix.
+			As an alternative, you can create your own <literal>nhibernate.envers.table_name_strategy</literal> to set table names.
 		</para>
 
 		<para>
