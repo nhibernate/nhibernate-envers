@@ -49,6 +49,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)
 		{
+			MergeCollectionModifiedData(second.Data);
 			return second;
 		}
 
