@@ -6,7 +6,6 @@ using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Exceptions;
-using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NHibernate.Type;
 using System;
