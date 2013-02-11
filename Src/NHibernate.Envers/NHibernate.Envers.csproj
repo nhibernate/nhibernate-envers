@@ -300,7 +300,6 @@
     <Compile Include="Tools\Graph\IGraphDefiner.cs" />
     <Compile Include="Tools\Graph\TopologicalSort.cs" />
     <Compile Include="Tools\Graph\Vertex.cs" />
-    <Compile Include="Tools\IPair.cs" />
     <Compile Include="Tools\MappingTools.cs" />
     <Compile Include="Tools\Incrementor.cs" />
     <Compile Include="Tools\Pair.cs" />

@@ -28,17 +28,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override IEnumerable GetNewCollectionContent(IPersistentCollection newCollection)
 		{
-			return newCollection == null ? null : Toolz.ListToIndexElementPairList<T>((IList)newCollection);
+			return newCollection == null ? null : Toolz.ListToIndexElementPairList((IList)newCollection);
 		}
 
 		protected override IEnumerable GetOldCollectionContent(object oldCollection)
 		{
-			return oldCollection == null ? null : Toolz.ListToIndexElementPairList<T>((IList)oldCollection);
+			return oldCollection == null ? null : Toolz.ListToIndexElementPairList((IList)oldCollection);
 		}
 
 		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed)
 		{
-			var indexValuePair = (Pair<int, T>)changed;
+			var indexValuePair = (Pair<int, object>)changed;
 			_elementComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.Second);
 			_indexComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.First);
 		}

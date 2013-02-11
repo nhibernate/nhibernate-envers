@@ -19,13 +19,13 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public object GetChangedElement()
 		{
-			var elementAsPair = changedElement as IPair;
+			var elementAsPair = changedElement as Pair<int, object>;
 			return elementAsPair != null ? elementAsPair.Second : keyValueOrDefault(changedElement, "Value", changedElement);
 		}
 
 		public object GetChangedElementIndex()
 		{
-			var elementAsPair = changedElement as IPair;
+			var elementAsPair = changedElement as Pair<int, object>;
 			return elementAsPair != null ? elementAsPair.First : keyValueOrDefault(changedElement, "Key", null);
 		}
 

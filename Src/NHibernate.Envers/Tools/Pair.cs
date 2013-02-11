@@ -2,7 +2,7 @@
 
 namespace NHibernate.Envers.Tools
 {
-	public class Pair<T1, T2> : IPair, IEquatable<Pair<T1, T2>>
+	public class Pair<T1, T2> : IEquatable<Pair<T1, T2>>
 	{
 		private readonly int hashCode;
 
@@ -19,17 +19,7 @@ namespace NHibernate.Envers.Tools
 
 		public T1 First { get; private set; }
 		public T2 Second { get; private set; }
-
-		object IPair.First
-		{
-			get { return First; }
-		}
-
-		object IPair.Second
-		{
-			get { return Second; }
-		}
-
+		
 		public override bool Equals(object obj)
 		{
 			var castedPair = obj as Pair<T1, T2>;
