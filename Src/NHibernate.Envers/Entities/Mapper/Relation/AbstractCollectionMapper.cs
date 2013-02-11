@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Iesi.Collections;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
@@ -79,7 +78,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			var newCollection = GetNewCollectionContent(newColl);
 			var oldCollection = GetOldCollectionContent(oldColl);
 
-			var added = new HashedSet();
+			var added = new HashSet<object>();
 			if (newColl != null)
 			{
 				foreach (var item in newCollection)
@@ -91,17 +90,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			// removeAll in AbstractSet has an implementation that is hashcode-change sensitive (as opposed to addAll).
 			if (oldColl != null)
 			{
-				var itemsToRemove = new HashedSet();
+				var itemsToRemove = new HashSet<object>();
 				foreach (var item in oldCollection)
 				{
 					itemsToRemove.Add(item);
 				}
-				added.RemoveAll(itemsToRemove);
+				added.ExceptWith(itemsToRemove);
 			}
 
 			addCollectionChanges(collectionChanges, added, RevisionType.Added, id);
 
-			var deleted = new HashedSet();
+			var deleted = new HashSet<object>();
 			if (oldColl != null)
 			{
 				foreach (var item in oldCollection)
@@ -112,12 +111,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			// The same as above - re-hashing new collection.
 			if (newColl != null)
 			{
-				var itemsToRemove = new HashedSet();
+				var itemsToRemove = new HashSet<object>();
 				foreach (var item in newCollection)
 				{
 					itemsToRemove.Add(item);
 				}
-				deleted.RemoveAll(itemsToRemove);
+				deleted.ExceptWith(itemsToRemove);
 			}
 
 			addCollectionChanges(collectionChanges, deleted, RevisionType.Deleted, id);
