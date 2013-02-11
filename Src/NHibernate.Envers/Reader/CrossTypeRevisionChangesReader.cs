@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Reader
 			var result = new List<object>();
 			foreach (var type in entityTypes)
 			{
-				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision).GetResultList<object>());
+				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Item1, revision).GetResultList<object>());
 			}
 			return result;
 		}
@@ -35,7 +35,7 @@ namespace NHibernate.Envers.Reader
 			var result = new List<object>();
 			foreach (var type in entityTypes)
 			{
-				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision)
+				result.AddRange(_auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Item1, revision)
 												.Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>());
 			}
 			return result;
@@ -51,7 +51,7 @@ namespace NHibernate.Envers.Reader
 				var tempList = new List<object>();
 				foreach (var type in entityTypes)
 				{
-					var list = _auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.First, revision)
+					var list = _auditReaderImplementor.CreateQuery().ForEntitiesModifiedAtRevision(type.Item1, revision)
 										.Add(new RevisionTypeAuditExpression(revisionType, "=")).GetResultList<object>();
 					tempList.AddRange(list);
 				}
@@ -60,7 +60,7 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public ISet<Pair<string, System.Type>> FindEntityTypes(long revision)
+		public ISet<Tuple<string, System.Type>> FindEntityTypes(long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
 			if (!_verCfg.GlobalCfg.IsTrackEntitiesChangedInRevisionEnabled)
@@ -81,15 +81,15 @@ namespace NHibernate.Envers.Reader
 				if (entityNames != null)
 				{
 					// Generate result that contains entity names and corresponding CLR classes.
-					var result = new HashSet<Pair<string, System.Type>>();
+					var result = new HashSet<Tuple<string, System.Type>>();
 					foreach (var entityName in entityNames)
 					{
-						result.Add(new Pair<string, System.Type>(entityName, Toolz.ResolveEntityClass(sessionImplementor, entityName)));
+						result.Add(new Tuple<string, System.Type>(entityName, Toolz.ResolveEntityClass(sessionImplementor, entityName)));
 					}
 					return result;
 				}
 			}
-			return new HashSet<Pair<string, System.Type>>();
+			return new HashSet<Tuple<string, System.Type>>();
 		}
 	}
 }

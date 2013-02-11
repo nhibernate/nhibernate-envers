@@ -1,6 +1,7 @@
 === v2.0 ===
 * NHibernate.Envers now targets .net framework 4.0
 * IAuditProjection.GetData now returns Tuple<string, string, Boolean>
+* ICrossTypeRevisionChangesReader.FindEntityTypes now returns ISet<Tuple<string, System.Type>>
 
 
 === vNext ===
