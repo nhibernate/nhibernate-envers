@@ -308,7 +308,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, string> generateMappingData(
+		private Tuple<XmlElement, IExtendedPropertyMapper, string> generateMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				IdMappingData idMapper)
 		{
@@ -335,10 +335,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Adding the "revision type" property
 			AddRevisionType(classMapping);
 
-			return new Triple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
+			return new Tuple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
 		}
 
-		private Triple<XmlElement, IExtendedPropertyMapper, string> generateInheritanceMappingData(
+		private Tuple<XmlElement, IExtendedPropertyMapper, string> generateInheritanceMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				string inheritanceMappingType)
 		{
@@ -362,7 +362,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
 			var propertyMapper = new SubclassPropertyMapper(new MultiPropertyMapper(), parentPropertyMapper);
 
-			return new Triple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, parentEntityName);
+			return new Tuple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, parentEntityName);
 		}
 
 		public void GenerateFirstPass(PersistentClass pc, ClassAuditingData auditingData,
@@ -422,7 +422,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// These properties will be read from the mapping data
 
-			Triple<XmlElement, IExtendedPropertyMapper, string> mappingData;
+			Tuple<XmlElement, IExtendedPropertyMapper, string> mappingData;
 
 			// Reading the mapping data depending on inheritance type (if any)
 			switch (inheritanceType)
@@ -440,8 +440,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
 
 					// Adding the "key" element with all id columns...
-					var keyMapping = mappingData.First.OwnerDocument.CreateElement("key");
-					mappingData.First.AppendChild(keyMapping);
+					var keyMapping = mappingData.Item1.OwnerDocument.CreateElement("key");
+					mappingData.Item1.AppendChild(keyMapping);
 					MetadataTools.AddColumns(keyMapping, pc.Table.PrimaryKey.ColumnIterator);
 
 					// ... and the revision number column, read from the revision info relation mapping.
@@ -457,9 +457,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 					throw new AssertionFailure("AuditMetadataGenerator.GenerateFirstPass: Impossible enum value.");
 			}
 
-			var classMapping = mappingData.First;
-			var propertyMapper = mappingData.Second;
-			var parentEntityName = mappingData.Third;
+			var classMapping = mappingData.Item1;
+			var propertyMapper = mappingData.Item2;
+			var parentEntityName = mappingData.Item3;
 
 			xmlMappingData.ClassMapping = classMapping;
 

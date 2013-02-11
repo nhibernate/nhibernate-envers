@@ -308,7 +308,6 @@
     <Compile Include="Tools\Reflection\ReflectionTools.cs" />
     <Compile Include="Tools\StringTools.cs" />
     <Compile Include="Tools\Toolz.cs" />
-    <Compile Include="Tools\Triple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
