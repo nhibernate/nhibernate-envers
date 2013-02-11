@@ -38,9 +38,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed)
 		{
-			var indexValuePair = (Pair<int, object>)changed;
-			_elementComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.Second);
-			_indexComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.First);
+			var indexValuePair = (Tuple<int, object>)changed;
+			_elementComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.Item2);
+			_indexComponentData.ComponentMapper.MapToMapFromObject(data, indexValuePair.Item1);
 		}
 
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)

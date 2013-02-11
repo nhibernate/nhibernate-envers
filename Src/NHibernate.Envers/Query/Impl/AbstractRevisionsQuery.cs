@@ -116,7 +116,7 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			hasOrder = true;
 			var orderData = order.GetData(auditConfiguration);
-			queryBuilder.AddOrder(orderData.First, orderData.Second);
+			queryBuilder.AddOrder(orderData.Item1, orderData.Item2);
 			return this;
 		}
 

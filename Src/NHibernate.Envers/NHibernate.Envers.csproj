@@ -303,7 +303,6 @@
     <Compile Include="Tools\Graph\Vertex.cs" />
     <Compile Include="Tools\MappingTools.cs" />
     <Compile Include="Tools\Incrementor.cs" />
-    <Compile Include="Tools\Pair.cs" />
     <Compile Include="Tools\Query\Parameters.cs" />
     <Compile Include="Tools\Reflection\ReflectionTools.cs" />
     <Compile Include="Tools\StringTools.cs" />
