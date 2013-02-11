@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities.Mapper;
@@ -26,10 +25,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
 		private readonly GlobalConfiguration _globalCfg;
 		private readonly string _propertyNamePrefix;
-		private readonly Iesi.Collections.Generic.ISet<string> _overriddenAuditedProperties;
-		private readonly Iesi.Collections.Generic.ISet<string> _overriddenNotAuditedProperties;
-		private readonly Iesi.Collections.Generic.ISet<System.Type> _overriddenAuditedClasses;
-		private readonly Iesi.Collections.Generic.ISet<System.Type> _overriddenNotAuditedClasses;
+		private readonly ISet<string> _overriddenAuditedProperties;
+		private readonly ISet<string> _overriddenNotAuditedProperties;
+		private readonly ISet<System.Type> _overriddenAuditedClasses;
+		private readonly ISet<System.Type> _overriddenNotAuditedClasses;
 
 		public AuditedPropertiesReader(IMetaDataStore metaDataStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
@@ -42,10 +41,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_auditedPropertiesHolder = auditedPropertiesHolder;
 			_globalCfg = globalCfg;
 			_propertyNamePrefix = propertyNamePrefix;
-			_overriddenAuditedProperties = new HashedSet<string>();
-			_overriddenNotAuditedProperties = new HashedSet<string>();
-			_overriddenAuditedClasses = new HashedSet<System.Type>();
-			_overriddenNotAuditedClasses = new HashedSet<System.Type>();
+			_overriddenAuditedProperties = new HashSet<string>();
+			_overriddenNotAuditedProperties = new HashSet<string>();
+			_overriddenAuditedClasses = new HashSet<System.Type>();
+			_overriddenNotAuditedClasses = new HashSet<System.Type>();
 		}
 
 		public void Read()

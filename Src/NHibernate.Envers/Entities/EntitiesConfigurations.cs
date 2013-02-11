@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Entities
 {
@@ -114,7 +113,7 @@ namespace NHibernate.Envers.Entities
 			return descriptions;
 		}
 
-		private void addWithParentEntityNames(string entityName, Iesi.Collections.Generic.ISet<string> entityNames)
+		private void addWithParentEntityNames(string entityName, ISet<string> entityNames)
 		{
 			entityNames.Add(entityName);
 			var entCfg = entitiesConfigurations[entityName];
@@ -125,17 +124,17 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-		private Iesi.Collections.Generic.ISet<string> entityAndParentsNames(string entityName)
+		private ISet<string> entityAndParentsNames(string entityName)
 		{
-			var names = new HashedSet<string>();
+			var names = new HashSet<string>();
 			addWithParentEntityNames(entityName, names);
 			return names;
 		}
 
-		public Iesi.Collections.Generic.ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
+		public ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
 		{
 			var entAndParNames = entityAndParentsNames(fromEntityName);
-			var toPropertyNames = new HashedSet<string>();
+			var toPropertyNames = new HashSet<string>();
 			foreach (var relationDescription in relationDescriptions(toEntityName))
 			{
 				var relToEntityName = relationDescription.ToEntityName;

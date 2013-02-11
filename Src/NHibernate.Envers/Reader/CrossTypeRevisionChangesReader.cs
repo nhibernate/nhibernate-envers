@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Criteria;
@@ -61,7 +60,7 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public Iesi.Collections.Generic.ISet<Pair<string, System.Type>> FindEntityTypes(long revision)
+		public ISet<Pair<string, System.Type>> FindEntityTypes(long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
 			if (!_verCfg.GlobalCfg.IsTrackEntitiesChangedInRevisionEnabled)
@@ -72,7 +71,7 @@ namespace NHibernate.Envers.Reader
 			}
 			var session = _auditReaderImplementor.Session;
 			var sessionImplementor = _auditReaderImplementor.SessionImplementor;
-			var revisions = new HashedSet<long> { revision };
+			var revisions = new HashSet<long> { revision };
 			var query = _verCfg.RevisionInfoQueryCreator.RevisionsQuery(session, revisions);
 			var revisionInfo = query.UniqueResult();
 			if (revisionInfo != null)
@@ -82,7 +81,7 @@ namespace NHibernate.Envers.Reader
 				if (entityNames != null)
 				{
 					// Generate result that contains entity names and corresponding CLR classes.
-					var result = new HashedSet<Pair<string, System.Type>>();
+					var result = new HashSet<Pair<string, System.Type>>();
 					foreach (var entityName in entityNames)
 					{
 						result.Add(new Pair<string, System.Type>(entityName, Toolz.ResolveEntityClass(sessionImplementor, entityName)));
@@ -90,7 +89,7 @@ namespace NHibernate.Envers.Reader
 					return result;
 				}
 			}
-			return new HashedSet<Pair<string, System.Type>>();
+			return new HashSet<Pair<string, System.Type>>();
 		}
 	}
 }
