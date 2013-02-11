@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities;
@@ -113,9 +112,9 @@ namespace NHibernate.Envers.Synchronization.Work
 			// Now merging the fake relation changes from both work units.
 			var secondFakeRelationChanges = second.fakeRelationChanges;
 			var mergedFakeRelationChanges = new Dictionary<string, FakeRelationChange>();
-			var allPropertyNames = new HashedSet<string>(fakeRelationChanges.Keys);
-			allPropertyNames.AddAll(secondFakeRelationChanges.Keys);
-
+			var allPropertyNames = new HashSet<string>(fakeRelationChanges.Keys);
+			allPropertyNames.UnionWith(secondFakeRelationChanges.Keys);
+			
 			foreach (var propertyName in allPropertyNames) 
 			{
 				mergedFakeRelationChanges.Add(propertyName,
