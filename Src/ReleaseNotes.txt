@@ -1,3 +1,8 @@
+=== v2.0 ===
+* NHibernate.Envers now targets .net framework 4.0
+* IAuditProjection.GetData now returns Tuple<string, string, Boolean>
+
+
 === vNext ===
 * IAuditStrategy.Initialize(AuditConfiguration) added. AuditConfiguration and GlobalConfiguration removed from interface methods.
 
