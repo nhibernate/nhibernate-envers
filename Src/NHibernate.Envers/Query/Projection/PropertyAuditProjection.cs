@@ -1,27 +1,27 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using System;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Property;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Projection
 {
 	public class PropertyAuditProjection : IAuditProjection
 	{
-		private readonly IPropertyNameGetter propertyNameGetter;
-		private readonly string function;
-		private readonly bool distinct;
+		private readonly IPropertyNameGetter _propertyNameGetter;
+		private readonly string _function;
+		private readonly bool _distinct;
 
 		public PropertyAuditProjection(IPropertyNameGetter propertyNameGetter, string function, bool distinct)
 		{
-			this.propertyNameGetter = propertyNameGetter;
-			this.function = function;
-			this.distinct = distinct;
+			_propertyNameGetter = propertyNameGetter;
+			_function = function;
+			_distinct = distinct;
 		}
 
-		public Triple<string, string, bool> GetData(AuditConfiguration auditCfg)
+		public Tuple<string, string, bool> GetData(AuditConfiguration auditCfg)
 		{
-			var propertyName = propertyNameGetter.Get(auditCfg);
+			var propertyName = _propertyNameGetter.Get(auditCfg);
 
-			return new Triple<string, string, bool>(function, propertyName, distinct);
+			return new Tuple<string, string, bool>(_function, propertyName, _distinct);
 		}
 	}
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NHibernate.Envers.Tools;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers.Reader
 {
@@ -20,27 +20,27 @@ namespace NHibernate.Envers.Reader
 			"Successfully resolving entityName from first level cache (primaryKey:{0} - revision:{1} - entity:{2})";
 
 		//cache for resolve an object for a given id, revision and entityName.
-		private readonly IDictionary<Triple<string, long, object>, object> cache;
+		private readonly IDictionary<Tuple<string, long, object>, object> cache;
 
 		//used to resolve the entityName for a given id, revision and entity.
-		private readonly IDictionary<Triple<object, long, object>, string> entityNameCache;
+		private readonly IDictionary<Tuple<object, long, object>, string> entityNameCache;
 
 		public FirstLevelCache()
 		{
-			cache = new Dictionary<Triple<string, long, object>, object>();
-			entityNameCache = new Dictionary<Triple<object, long, object>, string>();
+			cache = new Dictionary<Tuple<string, long, object>, object>();
+			entityNameCache = new Dictionary<Tuple<object, long, object>, string>();
 		}
 
 		public void Add(string entityName, long revision, object id, object entity)
 		{
 			if(log.IsDebugEnabled)
 				log.DebugFormat(logAdd, id, revision, entityName);
-			cache.Add(new Triple<string, long, object>(entityName, revision, id), entity);
+			cache.Add(new Tuple<string, long, object>(entityName, revision, id), entity);
 		}
 
 		public bool TryGetValue(string entityName, long revision, object id, out object value)
 		{
-			if (cache.TryGetValue(new Triple<string, long, object>(entityName, revision, id), out value))
+			if (cache.TryGetValue(new Tuple<string, long, object>(entityName, revision, id), out value))
 			{
 				if(log.IsDebugEnabled)
 					log.DebugFormat(logHit, id, revision, entityName);
@@ -53,12 +53,12 @@ namespace NHibernate.Envers.Reader
 		{
 			if (log.IsDebugEnabled)
 				log.DebugFormat(logAddEntityName, id, revision, entity.GetType().FullName, entityName);
-			entityNameCache.Add(new Triple<object, long, object>(id, revision, entity), entityName);
+			entityNameCache.Add(new Tuple<object, long, object>(id, revision, entity), entityName);
 		}
 
 		public bool TryGetEntityName(object id, long revision, object entity, out string entityName)
 		{
-			if (entityNameCache.TryGetValue(new Triple<object, long, object>(id, revision, entity), out entityName))
+			if (entityNameCache.TryGetValue(new Tuple<object, long, object>(id, revision, entity), out entityName))
 			{
 				if(log.IsDebugEnabled)
 					log.DebugFormat(logHitEntityName, id, revision, entity.GetType().FullName);

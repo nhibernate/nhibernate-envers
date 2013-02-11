@@ -107,7 +107,7 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			var projectionData = projection.GetData(VerCfg);
 			HasProjection = true;
-			QueryBuilder.AddProjection(projectionData.First, projectionData.Second, projectionData.Third);
+			QueryBuilder.AddProjection(projectionData.Item1, projectionData.Item2, projectionData.Item3);
 			return this;
 		}
 
