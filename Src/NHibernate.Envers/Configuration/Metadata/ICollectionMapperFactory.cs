@@ -39,22 +39,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 		IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
 
 		/// <summary>
-		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />.
-		/// </summary>
-		IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData);
-
-		/// <summary>
-		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
-		/// that is sorted by an <see cref="IComparer"/>.
-		/// </summary>
-		IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer);
-
-		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
 		/// that is sorted by an <see cref="IComparer{T}"/>.
 		/// </summary>
 		IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer);
-
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="System.Collections.Generic.IList{T}" />.

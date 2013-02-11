@@ -32,16 +32,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			                                 elementComponentData);
 		}
 
-		public virtual IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData)
-		{
-			throw new NotImplementedException("Non generic set is not supported by DefaultCollectionMapperFactory");
-		}
-
-		public virtual IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer)
-		{
-			throw new NotImplementedException("Non generic sorted set is not supported by DefaultCollectionMapperFactory");
-		}
-
 		public virtual IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer)
 		{
 			return new SortedSetCollectionMapper<T>(enversProxyFactory,
