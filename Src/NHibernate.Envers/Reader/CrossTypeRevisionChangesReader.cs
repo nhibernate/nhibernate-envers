@@ -61,7 +61,7 @@ namespace NHibernate.Envers.Reader
 			return result;
 		}
 
-		public ISet<Pair<string, System.Type>> FindEntityTypes(long revision)
+		public Iesi.Collections.Generic.ISet<Pair<string, System.Type>> FindEntityTypes(long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
 			if (!_verCfg.GlobalCfg.IsTrackEntitiesChangedInRevisionEnabled)

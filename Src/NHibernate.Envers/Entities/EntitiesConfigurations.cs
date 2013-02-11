@@ -114,7 +114,7 @@ namespace NHibernate.Envers.Entities
 			return descriptions;
 		}
 
-		private void addWithParentEntityNames(string entityName, ISet<string> entityNames)
+		private void addWithParentEntityNames(string entityName, Iesi.Collections.Generic.ISet<string> entityNames)
 		{
 			entityNames.Add(entityName);
 			var entCfg = entitiesConfigurations[entityName];
@@ -125,14 +125,14 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-		private ISet<string> entityAndParentsNames(string entityName)
+		private Iesi.Collections.Generic.ISet<string> entityAndParentsNames(string entityName)
 		{
 			var names = new HashedSet<string>();
 			addWithParentEntityNames(entityName, names);
 			return names;
 		}
 
-		public ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
+		public Iesi.Collections.Generic.ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
 		{
 			var entAndParNames = entityAndParentsNames(fromEntityName);
 			var toPropertyNames = new HashedSet<string>();

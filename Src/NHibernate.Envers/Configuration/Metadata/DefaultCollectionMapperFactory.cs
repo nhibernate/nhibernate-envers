@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return new SetCollectionMapper<T>(enversProxyFactory,
 														commonCollectionMapperData, 
-			                                 typeof (ISet<T>),
+			                                 typeof (Iesi.Collections.Generic.ISet<T>),
 			                                 elementComponentData);
 		}
 
@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return new SortedSetCollectionMapper<T>(enversProxyFactory,
 											commonCollectionMapperData,
-											typeof(ISet<T>),
+											typeof(Iesi.Collections.Generic.ISet<T>),
 											elementComponentData,
 											comparer);
 		}
