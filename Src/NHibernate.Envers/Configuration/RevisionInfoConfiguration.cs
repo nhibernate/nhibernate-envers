@@ -154,7 +154,7 @@ namespace NHibernate.Envers.Configuration
 				{
 					if (found)
 						throw new MappingException("Only one property may be annotated with ModifiedEntityNamesAttribute!");
-					if (property.Type.ReturnedClass == typeof(ISet<string>))
+					if (property.Type.ReturnedClass == typeof(Iesi.Collections.Generic.ISet<string>))
 					{
 						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						found = true;

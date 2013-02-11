@@ -26,10 +26,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly IAuditedPropertiesHolder _auditedPropertiesHolder;
 		private readonly GlobalConfiguration _globalCfg;
 		private readonly string _propertyNamePrefix;
-		private readonly ISet<string> _overriddenAuditedProperties;
-		private readonly ISet<string> _overriddenNotAuditedProperties;
-		private readonly ISet<System.Type> _overriddenAuditedClasses;
-		private readonly ISet<System.Type> _overriddenNotAuditedClasses;
+		private readonly Iesi.Collections.Generic.ISet<string> _overriddenAuditedProperties;
+		private readonly Iesi.Collections.Generic.ISet<string> _overriddenNotAuditedProperties;
+		private readonly Iesi.Collections.Generic.ISet<System.Type> _overriddenAuditedClasses;
+		private readonly Iesi.Collections.Generic.ISet<System.Type> _overriddenNotAuditedClasses;
 
 		public AuditedPropertiesReader(IMetaDataStore metaDataStore,
 										IPersistentPropertiesSource persistentPropertiesSource,
