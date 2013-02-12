@@ -45,6 +45,7 @@ namespace NHibernate.Envers.Configuration
 		public string RevisionFieldName { get; private set; }
 		public string RevisionNumberPath { get; private set; }
 		public string RevisionTypePropName { get; private set; }
+		//todo - vad används denna till?
 		public string RevisionTypePropType { get; private set; }
 		public string RevisionEndFieldName { get; private set; }
 		public bool IsRevisionEndTimestampEnabled { get; private set; }
