@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata;
@@ -47,8 +46,7 @@ namespace NHibernate.Envers.Configuration
 									new AuditTableData(null, null, _globalCfg.DefaultSchemaName, _globalCfg.DefaultCatalogName),
 									null, false);
 
-			classMapping.Add(new XAttribute("name", revisionInfoEntityName));
-			classMapping.Add(new XAttribute("table", "REVINFO"));
+			classMapping.Add(new XAttribute("name", revisionInfoEntityName), new XAttribute("table", "REVINFO"));
 
 			MetadataTools.AddNativelyGeneratedId(classMapping, revisionInfoIdData.Name, revisionPropType);
 

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -56,13 +55,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			
 			// Adding an element to the mapping corresponding to the references entity id's
-			// Use OwnerDocument.ImportNode() instead of XmlNode.Clone();
 			var properties = new XElement(idMapping.XmlRelationMapping);
 			properties.Add(new XAttribute("name",propertyAuditingData.Name));
 
 			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
-			                                           MetadataTools.GetColumnNameEnumerator(value.ColumnIterator)
-																	 ,false, insertable);
+			                                           MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
+																								 false, insertable);
 
 			// Extracting related id properties from properties tag
 			var firstJoin = firstJoinElement(parent);
