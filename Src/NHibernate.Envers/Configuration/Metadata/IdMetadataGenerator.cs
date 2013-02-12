@@ -50,14 +50,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		//todo - remove
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		public IdMappingData AddId(PersistentClass pc) 
 		{
-			var relIdMapping = new XElement(ns + "properties"); 
+			var relIdMapping = new XElement(MetadataTools.CreateElementName("properties"));
 			// Xml mapping which will be used for the primary key of the versions table
-			var origIdMapping = new XElement(ns + "composite-id", new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName)); 
+			var origIdMapping = new XElement(MetadataTools.CreateElementName("composite-id"), 
+				new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName)); 
 
 			var idProp = pc.IdentifierProperty;
 			var idMapper = pc.IdentifierMapper;

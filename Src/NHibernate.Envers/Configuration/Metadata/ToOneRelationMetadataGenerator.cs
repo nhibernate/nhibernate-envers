@@ -83,12 +83,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			mapper.AddComposite(propertyData, new ToOneIdMapper(_mainGenerator.GlobalCfg.EnversProxyFactory, relMapper, propertyData, referencedEntityName, nonInsertableFake));
 		}
 
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		private static XElement firstJoinElement(XElement classElement)
 		{
 			//do we have to check for other elements than join here?
-			return classElement.Element(ns + "join");
+			return classElement.Element(MetadataTools.CreateElementName("join"));
 		}
 
 		public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, IValue value, ICompositeMapperBuilder mapper, string entityName)
