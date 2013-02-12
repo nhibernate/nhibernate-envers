@@ -285,7 +285,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var joinElement = MetadataTools.CreateJoin(parent, auditTableName, schema, catalog);
 				JoinElements.Add(join, joinElement);
 
-				var joinKey = new XElement(ns + "key");
+				var joinKey = new XElement(MetadataTools.CreateElementName("key"));
 				joinElement.Add(joinKey);
 				MetadataTools.AddColumns(joinKey, join.Key.ColumnIterator.OfType<Column>());
 				MetadataTools.AddColumn(joinKey, VerEntCfg.RevisionFieldName, -1, -1, -1, null, false);
@@ -306,9 +306,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		//todo - remove
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		private Tuple<XElement, IExtendedPropertyMapper, string> generateMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				IdMappingData idMapper)
@@ -325,7 +322,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Checking if there is a discriminator column
 			if (hasDiscriminator)
 			{
-				var discriminatorElement = new XElement(ns + "discriminator");
+				var discriminatorElement = new XElement(MetadataTools.CreateElementName("discriminator"));
 				classMapping.Add(discriminatorElement);
 				// Database column or SQL formula allowed to distinguish entity types
 				MetadataTools.AddColumnsOrFormulas(discriminatorElement, pc.Discriminator.ColumnIterator);
@@ -440,12 +437,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
 
 					// Adding the "key" element with all id columns...
-					var keyMapping = new XElement(ns + "key");
+					var keyMapping = new XElement(MetadataTools.CreateElementName("key"));
 					mappingData.Item1.Add(keyMapping);
 					MetadataTools.AddColumns(keyMapping, pc.Table.PrimaryKey.ColumnIterator);
 
 					// ... and the revision number column, read from the revision info relation mapping.
-					keyMapping.Add(cloneAndSetupRevisionInfoRelationMapping().Elements(ns + "column").First());
+					keyMapping.Add(cloneAndSetupRevisionInfoRelationMapping().Element(MetadataTools.CreateElementName("column")));
 					break;
 
 				case InheritanceType.TablePerClass:

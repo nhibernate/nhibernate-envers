@@ -585,9 +585,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		//todo - remove
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		private XElement createMiddleEntityXml(string auditMiddleTableName, string auditMiddleEntityName, string where) 
 		{
 			var schema = _mainGenerator.GetSchema(_propertyAuditingData.JoinTable.Schema, _propertyValue.CollectionTable);
@@ -595,7 +592,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			var middleEntityXml = MetadataTools.CreateEntity(_xmlMappingData.NewAdditionalMapping(),
 					new AuditTableData(auditMiddleEntityName, auditMiddleTableName, schema, catalog), null, false);
-			var middleEntityXmlId = new XElement(ns + "composite-id", new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName));
+			var middleEntityXmlId = new XElement(MetadataTools.CreateElementName("composite-id"), 
+				new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName));
 			middleEntityXml.Add(middleEntityXmlId);
 
 			// If there is a where clause on the relation, adding it to the middle entity.

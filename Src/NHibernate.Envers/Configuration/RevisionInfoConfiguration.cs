@@ -66,33 +66,31 @@ namespace NHibernate.Envers.Configuration
 			return document;
 		}
 
-		//todo - remove
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		private static void generateEntityNamesTrackingTableMapping(XElement classMapping, string propertyName,
 																				string joinTableSchema, string joinTableCatalog, 
 																				string joinTableName, string joinTablePrimaryKeyColumnName,
 																				string joinTableValueColumnName, string joinTableValueColumnType)
 		{
-			var setMapping = new XElement(ns + "set",
+			var setMapping = new XElement(MetadataTools.CreateElementName("set"),
 			                              new XAttribute("name", propertyName),
 			                              new XAttribute("table", joinTableName),
 			                              new XAttribute("schema", joinTableSchema),
 			                              new XAttribute("catalog", joinTableCatalog),
 			                              new XAttribute("fetch", "join"),
 			                              new XAttribute("lazy", "false"),
-			                              new XElement(ns + "key",
+			                              new XElement(MetadataTools.CreateElementName("key"),
 			                                           new XAttribute("column", joinTablePrimaryKeyColumnName)),
-			                              new XElement(ns + "element",
+			                              new XElement(MetadataTools.CreateElementName("element"),
 			                                           new XAttribute("type", joinTableValueColumnType),
-			                                           new XElement(ns + "column",
+			                                           new XElement(MetadataTools.CreateElementName("column"),
 			                                                        new XAttribute("name", joinTableValueColumnName))));
 			classMapping.Add(setMapping);
 		}
 
 		private XElement generateRevisionInfoRelationMapping(string revisionAssQName)
 		{
-			var revRelMapping = new XElement(ns + "key-many-to-one", new XAttribute("class", revisionAssQName));
+			var revRelMapping = new XElement(MetadataTools.CreateElementName("key-many-to-one"), 
+				new XAttribute("class", revisionAssQName));
 
 			if (revisionPropSqlType != null)
 			{

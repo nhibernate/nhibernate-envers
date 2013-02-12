@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using System.Xml.Linq;
 using NHibernate.Mapping;
 
@@ -8,15 +7,22 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public static class MetadataTools
 	{
+		private static readonly XNamespace xNamespace = "urn:nhibernate-mapping-2.2";
+
+		public static XName CreateElementName(string name)
+		{
+			return xNamespace + name;
+		}
+
 		public static void AddNativelyGeneratedId(XElement parent, string name, System.Type type)
 		{
-			var idMapping = new XElement(ns + "id",
+			var idMapping = new XElement(CreateElementName("id"),
 												new XAttribute("name", name),
 												new XAttribute("column", "REV"),
 												new XAttribute("type", type.Name),
-													new XElement(ns + "generator", 
+													new XElement(CreateElementName("generator"), 
 														new XAttribute("class", "native"),
-															new XElement(ns + "param",
+															new XElement(CreateElementName("param"),
 																new XAttribute("name", "sequence"),
 																	"rev_id_seq")));
 			parent.Add(idMapping);
@@ -27,13 +33,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			XElement propMapping;
 			if (key)
 			{
-				propMapping = new XElement(ns + "key-property");
+				propMapping = new XElement(CreateElementName("key-property"));
 			}
 			else
 			{
-				propMapping = new XElement(ns + "property");
-				propMapping.Add(new XAttribute("insert", insertable ? "true" : "false"));
-				propMapping.Add(new XAttribute("update", updateable ? "true" : "false"));
+				propMapping = new XElement(CreateElementName("property"), 
+									new XAttribute("insert", insertable ? "true" : "false"),	
+									new XAttribute("update", updateable ? "true" : "false"));
 			}
 			parent.Add(propMapping);
 
@@ -54,7 +60,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static XElement AddManyToOne(XElement parent, string name, string type, bool insertable, bool updateable)
 		{
-			var manyToOneMapping = new XElement(ns + "many-to-one",
+			var manyToOneMapping = new XElement(CreateElementName("many-to-one"),
 				new XAttribute("insert", insertable ? "true" : "false"),
 				new XAttribute("update", updateable ? "true" : "false"),
 				new XAttribute("name", name),
@@ -65,14 +71,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static XElement AddKeyManyToOne(XElement parent, string name, string type)
 		{
-			var manyToOneMapping = new XElement(ns + "key-many-to-one",
+			var manyToOneMapping = new XElement(CreateElementName("key-many-to-one"),
 				new XAttribute("name", name),
 				new XAttribute("class", type));
 			parent.Add(manyToOneMapping);
 			return manyToOneMapping;
 		}
 
-		private static void AddOrModifyAttribute(XElement parent, string name, string value)
+		private static void addOrModifyAttribute(XElement parent, string name, string value)
 		{
 			parent.SetAttributeValue(name, value);
 		}
@@ -85,7 +91,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <returns></returns>
 		public static void AddOrModifyColumn(XElement parent, string name)
 		{
-			var columnMapping = parent.Element(ns + "column");
+			var columnMapping = parent.Element(CreateElementName("column"));
 
 			if (columnMapping == null)
 			{
@@ -93,18 +99,18 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else if (!string.IsNullOrEmpty(name))
 			{
-				AddOrModifyAttribute(columnMapping, "name", name);
+				addOrModifyAttribute(columnMapping, "name", name);
 			}
 		}
 
-		public static void AddFormula(XElement element, Formula formula)
+		private static void addFormula(XElement element, Formula formula)
 		{
 			element.Add(new XAttribute("formula", formula.Text));
 		}
 
 		public static void AddColumn(XElement parent, string name, int length, int scale, int precision, string sqlType, bool quoted)
 		{
-			var columnMapping = new XElement(ns + "column",
+			var columnMapping = new XElement(CreateElementName("column"),
 														new XAttribute("name", quoted ? "`" + name + "`" : name));
 			parent.Add(columnMapping);
 			if (length != -1)
@@ -125,16 +131,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
-
 		private static XElement createEntityCommon(XDocument document, 
 																	string type, 
 																	AuditTableData auditTableData, 
 																	string discriminatorValue,
 																	bool isAbstract)
 		{
-			var classMapping = new XElement(ns + type);
-			var nhMapping = new XElement(ns + "hibernate-mapping",
+			var classMapping = new XElement(CreateElementName(type));
+			var nhMapping = new XElement(CreateElementName("hibernate-mapping"),
 															new XAttribute("assembly", "NHibernate.Envers"),
 			                        new XAttribute("auto-import", "false"),
 																	 classMapping);
@@ -190,7 +194,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public static XElement CreateJoin(XElement parent, string tableName,
 										 string schema, string catalog)
 		{
-			var joinMapping = new XElement(ns + "join", new XAttribute("table", tableName));
+			var joinMapping = new XElement(CreateElementName("join"), new XAttribute("table", tableName));
 			parent.Add(joinMapping);
 
 			if (!string.IsNullOrEmpty(schema))
@@ -215,11 +219,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			foreach (var column in columns)
 			{
-				AddColumn(anyMapping, column);
+				addColumn(anyMapping, column);
 			}
 		}
 
-		public static void AddColumn(XElement anyMapping, Column column)
+		private static void addColumn(XElement anyMapping, Column column)
 		{
 			AddColumn(anyMapping, column.Name, column.IsLengthDefined() ? column.Length : -1, column.IsPrecisionDefined() ? column.Scale : -1,
 						column.IsPrecisionDefined() ? column.Precision : -1, column.SqlType, column.IsQuoted);
@@ -231,13 +235,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				var column = selectable as Column;
 				if (column != null)
-					AddColumn(element, column);
+					addColumn(element, column);
 				else
-					AddFormula(element, (Formula)selectable);
+					addFormula(element, (Formula)selectable);
 			}
 		}
 
-		private static void ChangeNamesInColumnElement(XElement element, IEnumerator<string> columnEnumerator)
+		private static void changeNamesInColumnElement(XElement element, IEnumerator<string> columnEnumerator)
 		{
 			foreach (var property in element.Elements())
 			{
@@ -271,11 +275,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 						{
 							property.SetAttributeValue("name", prefix + value);
 						}
-						ChangeNamesInColumnElement(property, columnNamesReversed);
+						changeNamesInColumnElement(property, columnNamesReversed);
 
 						if (changeToKey)
 						{
-							ChangeToKeyProperty(property);
+							changeToKeyProperty(property);
 						}
 						else
 						{
@@ -286,9 +290,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static void ChangeToKeyProperty(XElement element)
+		private static void changeToKeyProperty(XElement element)
 		{
-			var newElement = new XElement(ns + "key-property", element.Elements());
+			var newElement = new XElement(CreateElementName("key-property"), element.Elements());
 			foreach (var attribute in element.Attributes())
 			{
 				var attrName = attribute.Name;
