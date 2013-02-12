@@ -1,5 +1,4 @@
 using System;
-using System.Xml;
 using System.Xml.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;

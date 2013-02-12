@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
@@ -260,8 +259,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void createJoins(PersistentClass pc, XElement parent, ClassAuditingData auditingData)
 		{
-			var JoinElements = new Dictionary<Join, XElement>();
-			entitiesJoins.Add(pc.EntityName, JoinElements);
+			var joinElements = new Dictionary<Join, XElement>();
+			entitiesJoins.Add(pc.EntityName, joinElements);
 
 			foreach (var join in pc.JoinIterator)
 			{
@@ -283,7 +282,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);				
 
 				var joinElement = MetadataTools.CreateJoin(parent, auditTableName, schema, catalog);
-				JoinElements.Add(join, joinElement);
+				joinElements.Add(join, joinElement);
 
 				var joinKey = new XElement(MetadataTools.CreateElementName("key"));
 				joinElement.Add(joinKey);
