@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Mapping;
@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class BasicMetadataGenerator 
 	{
-		public bool AddBasic(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		public bool AddBasic(XElement parent, PropertyAuditingData propertyAuditingData,
 					 IValue value, ISimpleMapperBuilder mapper, bool insertable, bool key) 
 		{
 			var type = value.Type;
@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 	
 
-		private static void addSimpleValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		private static void addSimpleValue(XElement parent, PropertyAuditingData propertyAuditingData,
 								IValue value, ISimpleMapperBuilder mapper, bool insertable, bool key)
 		{
 			if (parent != null) 
@@ -76,7 +76,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static void addCustomValue(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		//todo - remove
+		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
+
+		private static void addCustomValue(XElement parent, PropertyAuditingData propertyAuditingData,
 									IValue value, ISimpleMapperBuilder mapper, bool insertable, 
 									bool key, System.Type typeOfUserImplementation) 
 		{
@@ -85,8 +88,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var propMapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
 						typeOfUserImplementation.AssemblyQualifiedName, insertable, key);
 				MetadataTools.AddColumns(propMapping, value.ColumnIterator.OfType<Column>());
-				var typeElement = parent.OwnerDocument.CreateElement("type");
-				typeElement.SetAttribute("name", typeOfUserImplementation.AssemblyQualifiedName);
+				var typeElement = new XElement(ns + "type", new XAttribute("name", typeOfUserImplementation.AssemblyQualifiedName));
 
 				var simpleValue = value as SimpleValue;
 				if (simpleValue != null) 
@@ -96,14 +98,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 					{
 						foreach (var paramKeyValue in typeParameters) 
 						{
-							var typeParam = typeElement.OwnerDocument.CreateElement("param");
-							typeParam.SetAttribute("name", paramKeyValue.Key);
-							typeParam.InnerText =  paramKeyValue.Value;
-							typeElement.AppendChild(typeParam);
+							var typeParam = new XElement(ns + "param",new XAttribute("name", paramKeyValue.Key), paramKeyValue.Value);
+							typeElement.Add(typeParam);
 						}
 					}
 				}
-				propMapping.AppendChild(typeElement);
+				propMapping.Add(typeElement);
 			}
 
 			if (mapper != null) 
@@ -112,10 +112,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		public bool AddKeyManyToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value, ISimpleMapperBuilder mapper)
+		public void AddKeyManyToOne(XElement parent, PropertyAuditingData propertyAuditingData, IValue value, ISimpleMapperBuilder mapper)
 		{
 			var type = value.Type;
-			XmlElement element;
+			XElement element;
 			if (mapper == null)
 			{
 				element = MetadataTools.AddKeyManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName);	
@@ -130,7 +130,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			{
 				mapper.Add(propertyAuditingData.GetPropertyData());
 			}
-			return true;
 		}
 	}
 }

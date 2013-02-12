@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
@@ -18,7 +19,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			_mainGenerator = auditMetadataGenerator;
 		}
 	
-		private void addIdProperties(XmlElement parent, IEnumerable<Property> properties, ISimpleMapperBuilder mapper, bool key) 
+		private void addIdProperties(XElement parent, IEnumerable<Property> properties, ISimpleMapperBuilder mapper, bool key) 
 		{
 			foreach (var property in properties)
 			{
@@ -49,13 +50,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
+		//todo - remove
+		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
+
 		public IdMappingData AddId(PersistentClass pc) 
 		{
-			// Xml mapping which will be used for relations
-			var idMappingDoc = new XmlDocument();
-			var relIdMapping = idMappingDoc.CreateElement("properties"); 
+			var relIdMapping = new XElement(ns + "properties"); 
 			// Xml mapping which will be used for the primary key of the versions table
-			var origIdMapping = idMappingDoc.CreateElement("composite-id"); 
+			var origIdMapping = new XElement(ns + "composite-id", new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName)); 
 
 			var idProp = pc.IdentifierProperty;
 			var idMapper = pc.IdentifierMapper;
@@ -98,8 +100,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 				                                              getIdPersistentPropertyAuditingData(idProp),
 				                                              idProp.Value, null, true, true);
 			}
-
-			origIdMapping.SetAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName);
 
 			// Adding a relation to the revision entity (effectively: the "revision number" property)
 			_mainGenerator.AddRevisionInfoRelation(origIdMapping);

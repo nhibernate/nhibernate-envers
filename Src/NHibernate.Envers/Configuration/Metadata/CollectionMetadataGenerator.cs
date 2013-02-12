@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
@@ -196,16 +197,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <param name="prefix">Prefix for the names of properties which will be prepended to properties that form the id.</param>
 		/// <param name="columnNames">Column names that will be used for properties that form the id.</param>
 		/// <param name="relatedIdMapping">Id mapping data of the related entity.</param>
-		private static void addRelatedToXmlMapping(XmlElement xmlMapping, string prefix,
+		private static void addRelatedToXmlMapping(XElement xmlMapping, string prefix,
 											IEnumerable<string> columnNames,
 											IdMappingData relatedIdMapping) 
 		{
-			var properties = (XmlElement) relatedIdMapping.XmlRelationMapping.Clone();
+			var properties = new XElement(relatedIdMapping.XmlRelationMapping);
 			MetadataTools.PrefixNamesInPropertyElement(properties, prefix, columnNames, true, true);
-			foreach (XmlNode idProperty in properties.ChildNodes)
+			foreach (var idProperty in properties.Elements())
 			{
-				var tempNode = xmlMapping.OwnerDocument.ImportNode(idProperty, true);
-				xmlMapping.AppendChild(tempNode);
+				xmlMapping.Add(idProperty);
 			}
 		}
 
@@ -245,7 +245,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Generating the XML mapping for the middle entity, only if the relation isn't inverse.
 			// If the relation is inverse, will be later checked by comparing middleEntityXml with null.
-			XmlElement middleEntityXml;
+			XElement middleEntityXml;
 			if (!_propertyValue.IsInverse)
 			{
 				// Generating a unique middle entity name
@@ -339,7 +339,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			storeMiddleEntityRelationInformation(mappedBy);
 		}
 
-		private MiddleComponentData addIndex(XmlElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
+		private MiddleComponentData addIndex(XElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder) 
 		{
 			var indexedValue = _propertyValue as IndexedCollection;
 			if (indexedValue != null)
@@ -398,7 +398,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <param name="prefix">Prefix for proeprty names of related entities identifiers.</param>
 		/// <param name="joinColumns">Names of columns to use in the xml mapping, if this array isn't null and has any elements.</param>
 		/// <returns>Data for mapping this component.</returns>
-		private MiddleComponentData addValueToMiddleTable(IValue value, XmlElement xmlMapping,
+		private MiddleComponentData addValueToMiddleTable(IValue value, XElement xmlMapping,
 														  QueryGeneratorBuilder queryGeneratorBuilder,
 														  string prefix, string[] joinColumns) 
 		{
@@ -585,23 +585,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private XmlElement createMiddleEntityXml(string auditMiddleTableName, string auditMiddleEntityName, string where) 
+		//todo - remove
+		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
+
+		private XElement createMiddleEntityXml(string auditMiddleTableName, string auditMiddleEntityName, string where) 
 		{
 			var schema = _mainGenerator.GetSchema(_propertyAuditingData.JoinTable.Schema, _propertyValue.CollectionTable);
 			var catalog = _mainGenerator.GetCatalog(_propertyAuditingData.JoinTable.Catalog, _propertyValue.CollectionTable);
 
 			var middleEntityXml = MetadataTools.CreateEntity(_xmlMappingData.NewAdditionalMapping(),
 					new AuditTableData(auditMiddleEntityName, auditMiddleTableName, schema, catalog), null, false);
-			var middleEntityXmlId = middleEntityXml.OwnerDocument.CreateElement("composite-id");
-			middleEntityXml.AppendChild(middleEntityXmlId);
+			var middleEntityXmlId = new XElement(ns + "composite-id", new XAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName));
+			middleEntityXml.Add(middleEntityXmlId);
 
 			// If there is a where clause on the relation, adding it to the middle entity.
 			if (where != null)
 			{
-				middleEntityXml.SetAttribute("where", where);
+				middleEntityXml.Add(new XAttribute("where", where));
 			}
-
-			middleEntityXmlId.SetAttribute("name", _mainGenerator.VerEntCfg.OriginalIdPropName);
 
 			// Adding the revision number as a foreign key to the revision info entity to the composite id of the
 			// middle table.

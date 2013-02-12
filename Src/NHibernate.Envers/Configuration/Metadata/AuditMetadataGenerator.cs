@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities;
@@ -19,7 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public Cfg.Configuration Cfg { get; private set; }
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
-		private readonly XmlElement revisionInfoRelationMapping;
+		private readonly XElement revisionInfoRelationMapping;
 
 		/*
 		 * Generators for different kinds of property values/types.
@@ -37,12 +38,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public AuditEntityNameRegister AuditEntityNameRegister { get; private set; }
 
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
-		private readonly IDictionary<string, IDictionary<Join, XmlElement>> entitiesJoins;
+		private readonly IDictionary<string, IDictionary<Join, XElement>> entitiesJoins;
 
 		public AuditMetadataGenerator(Cfg.Configuration cfg,
 										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
-										XmlElement revisionInfoRelationMapping,
+										XElement revisionInfoRelationMapping,
 										AuditEntityNameRegister auditEntityNameRegister)
 		{
 			Cfg = cfg;
@@ -56,7 +57,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			AuditEntityNameRegister = auditEntityNameRegister;
 			EntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
 			NotAuditedEntitiesConfigurations = new Dictionary<string, EntityConfiguration>();
-			entitiesJoins = new Dictionary<string, IDictionary<Join, XmlElement>>();
+			entitiesJoins = new Dictionary<string, IDictionary<Join, XElement>>();
 		}
 
 
@@ -64,34 +65,32 @@ namespace NHibernate.Envers.Configuration.Metadata
 		///  Clones the revision info relation mapping, so that it can be added to other mappings. Also, the name of
 		///  the property and the column are set properly.
 		/// </summary>
-		/// <param name="doc">The xml document</param>
 		/// <returns>A revision info mapping, which can be added to other mappings (has no parent).</returns>
-		private XmlElement cloneAndSetupRevisionInfoRelationMapping(XmlDocument doc)
+		private XElement cloneAndSetupRevisionInfoRelationMapping()
 		{
-			var revMapping = (XmlElement)doc.ImportNode(revisionInfoRelationMapping, true);
-			revMapping.SetAttribute("name", VerEntCfg.RevisionFieldName);
+			var revMapping = new XElement(revisionInfoRelationMapping);
+			revMapping.Add(new XAttribute("name", VerEntCfg.RevisionFieldName));
 
 			MetadataTools.AddOrModifyColumn(revMapping, VerEntCfg.RevisionFieldName);
 
 			return revMapping;
 		}
 
-		public void AddRevisionInfoRelation(XmlElement anyMapping)
+		public void AddRevisionInfoRelation(XElement anyMapping)
 		{
-			anyMapping.AppendChild(cloneAndSetupRevisionInfoRelationMapping(anyMapping.OwnerDocument));
+			anyMapping.Add(cloneAndSetupRevisionInfoRelationMapping());
 		}
 
-		public void AddRevisionType(XmlElement anyMapping)
+		public void AddRevisionType(XElement anyMapping)
 		{
 			var revTypeProperty = MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionTypePropName,
-					VerEntCfg.RevisionTypePropType, true, false);
-			revTypeProperty.SetAttribute("type", typeof(RevisionTypeType).AssemblyQualifiedName);
-			revTypeProperty.SetAttribute("not-null", "true");
+					typeof(RevisionTypeType).AssemblyQualifiedName, true, false);
+			revTypeProperty.Add(new XAttribute("not-null", "true"));
 
 			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMapping, revisionInfoRelationMapping);
 		}
 
-		private void addValueInFirstPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+		private void addValueInFirstPass(XElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 					  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
 					  bool insertable, bool processModifiedFlag)
 		{
@@ -127,7 +126,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					 type is CollectionType;
 		}
 
-		private void addValueInSecondPass(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+		private void addValueInSecondPass(XElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 																									  EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
 																									  bool insertable, bool processModifiedFlag)
 		{
@@ -170,7 +169,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			addModifiedFlagIfNeeded(parent, propertyAuditingData, processModifiedFlag);
 		}
 
-		private void addModifiedFlagIfNeeded(XmlElement parent, PropertyAuditingData propertyAuditingData, bool processModifiedFlag)
+		private void addModifiedFlagIfNeeded(XElement parent, PropertyAuditingData propertyAuditingData, bool processModifiedFlag)
 		{
 			if (processModifiedFlag && propertyAuditingData.UsingModifiedFlag)
 			{
@@ -178,7 +177,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		public void AddValue(XmlElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
+		public void AddValue(XElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
 												 EntityXmlMappingData xmlMappingData, PropertyAuditingData propertyAuditingData,
 												 bool insertable, bool firstPass, bool processModifiedFlag)
 		{
@@ -192,7 +191,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private void addProperties(XmlElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
+		private void addProperties(XElement parent, IEnumerable<Property> properties, ICompositeMapperBuilder currentMapper,
 									ClassAuditingData auditingData, string entityName, EntityXmlMappingData xmlMappingData,
 									bool firstPass)
 		{
@@ -259,9 +258,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return catalog;
 		}
 
-		private void createJoins(PersistentClass pc, XmlElement parent, ClassAuditingData auditingData)
+		private void createJoins(PersistentClass pc, XElement parent, ClassAuditingData auditingData)
 		{
-			var JoinElements = new Dictionary<Join, XmlElement>();
+			var JoinElements = new Dictionary<Join, XElement>();
 			entitiesJoins.Add(pc.EntityName, JoinElements);
 
 			foreach (var join in pc.JoinIterator)
@@ -286,8 +285,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 				var joinElement = MetadataTools.CreateJoin(parent, auditTableName, schema, catalog);
 				JoinElements.Add(join, joinElement);
 
-				var joinKey = joinElement.OwnerDocument.CreateElement("key");
-				joinElement.AppendChild(joinKey);
+				var joinKey = new XElement(ns + "key");
+				joinElement.Add(joinKey);
 				MetadataTools.AddColumns(joinKey, join.Key.ColumnIterator.OfType<Column>());
 				MetadataTools.AddColumn(joinKey, VerEntCfg.RevisionFieldName, -1, -1, -1, null, false);
 			}
@@ -299,7 +298,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var entityJoin = entitiesJoins[entityName];
 			foreach (var join in pc.JoinIterator)
 			{
-				XmlElement joinElement;
+				XElement joinElement;
 				if (entityJoin.TryGetValue(join, out joinElement))
 				{
 					addProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName, xmlMappingData, firstPass);
@@ -307,7 +306,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private Tuple<XmlElement, IExtendedPropertyMapper, string> generateMappingData(
+		//todo - remove
+		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
+
+		private Tuple<XElement, IExtendedPropertyMapper, string> generateMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				IdMappingData idMapper)
 		{
@@ -318,26 +320,25 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var propertyMapper = new MultiPropertyMapper();
 
 			// Adding the id mapping
-			var xmlMp = classMapping.OwnerDocument.ImportNode(idMapper.XmlMapping, true);
-			classMapping.AppendChild(xmlMp);
+			classMapping.Add(idMapper.XmlMapping);
 
 			// Checking if there is a discriminator column
 			if (hasDiscriminator)
 			{
-				var discriminatorElement = classMapping.OwnerDocument.CreateElement("discriminator");
-				classMapping.AppendChild(discriminatorElement);
+				var discriminatorElement = new XElement(ns + "discriminator");
+				classMapping.Add(discriminatorElement);
 				// Database column or SQL formula allowed to distinguish entity types
 				MetadataTools.AddColumnsOrFormulas(discriminatorElement, pc.Discriminator.ColumnIterator);
-				discriminatorElement.SetAttribute("type", pc.Discriminator.Type.Name);
+				discriminatorElement.Add(new XAttribute("type", pc.Discriminator.Type.Name));
 			}
 
 			// Adding the "revision type" property
 			AddRevisionType(classMapping);
 
-			return new Tuple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
+			return new Tuple<XElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
 		}
 
-		private Tuple<XmlElement, IExtendedPropertyMapper, string> generateInheritanceMappingData(
+		private Tuple<XElement, IExtendedPropertyMapper, string> generateInheritanceMappingData(
 				PersistentClass pc, EntityXmlMappingData xmlMappingData, AuditTableData auditTableData,
 				string inheritanceMappingType)
 		{
@@ -361,7 +362,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var parentPropertyMapper = parentConfiguration.PropertyMapper;
 			var propertyMapper = new SubclassPropertyMapper(new MultiPropertyMapper(), parentPropertyMapper);
 
-			return new Tuple<XmlElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, parentEntityName);
+			return new Tuple<XElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, parentEntityName);
 		}
 
 		public void GenerateFirstPass(PersistentClass pc, ClassAuditingData auditingData,
@@ -421,7 +422,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// These properties will be read from the mapping data
 
-			Tuple<XmlElement, IExtendedPropertyMapper, string> mappingData;
+			Tuple<XElement, IExtendedPropertyMapper, string> mappingData;
 
 			// Reading the mapping data depending on inheritance type (if any)
 			switch (inheritanceType)
@@ -439,12 +440,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 					mappingData = generateInheritanceMappingData(pc, xmlMappingData, auditTableData, "joined-subclass");
 
 					// Adding the "key" element with all id columns...
-					var keyMapping = mappingData.Item1.OwnerDocument.CreateElement("key");
-					mappingData.Item1.AppendChild(keyMapping);
+					var keyMapping = new XElement(ns + "key");
+					mappingData.Item1.Add(keyMapping);
 					MetadataTools.AddColumns(keyMapping, pc.Table.PrimaryKey.ColumnIterator);
 
 					// ... and the revision number column, read from the revision info relation mapping.
-					keyMapping.AppendChild(cloneAndSetupRevisionInfoRelationMapping(keyMapping.OwnerDocument).GetElementsByTagName("column")[0].Clone());
+					keyMapping.Add(cloneAndSetupRevisionInfoRelationMapping().Elements(ns + "column").First());
 					break;
 
 				case InheritanceType.TablePerClass:

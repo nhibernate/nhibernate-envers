@@ -1,4 +1,5 @@
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -97,6 +98,6 @@ namespace NHibernate.Envers.Strategy
 		/// </summary>
 		/// <param name="classMapping">The audited class mapping where the extra info should be added.</param>
 		/// <param name="revisionInfoRelationMapping"><![CDATA[<many-to-one>]]> mapping to the revision entity.</param>
-		void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping);
+		void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping);
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper;
@@ -123,15 +124,11 @@ namespace NHibernate.Envers.Strategy
 		/// Adds a <![CDATA[<many-to-one>]]> mapping to the revision entity as an endrevision.
 		/// Also, if <see cref="AuditEntitiesConfiguration.IsRevisionEndTimestampEnabled"/> set, adds a timestamp when the revision is no longer valid.
 		/// </summary>
-		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		public void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping)
 		{
 			var verEntCfg = _auditConfiguration.AuditEntCfg;
 			var manyToOne = MetadataTools.AddManyToOne(classMapping, verEntCfg.RevisionEndFieldName, verEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
-			foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes
-												select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
-			{
-				manyToOne.AppendChild(clonedNode);
-			}
+			manyToOne.Add(revisionInfoRelationMapping.Elements());
 			MetadataTools.AddOrModifyColumn(manyToOne, verEntCfg.RevisionEndFieldName);
 
 			if (verEntCfg.IsRevisionEndTimestampEnabled)

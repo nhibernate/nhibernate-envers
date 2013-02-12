@@ -1,5 +1,6 @@
 using System;
 using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -89,7 +90,7 @@ namespace NHibernate.Envers.Strategy
 			rootParameters.AddWhere(revisionProperty, addAlias, "=", maxEeRevQb);
 		}
 
-		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		public void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping)
 		{
 		}
 	}

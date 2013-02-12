@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Configuration.Store;
@@ -15,8 +15,8 @@ namespace NHibernate.Envers.Configuration
 												IMetaDataStore metaDataStore,
 												GlobalConfiguration globalCfg, 
 												AuditEntitiesConfiguration verEntCfg,
-												XmlDocument revisionInfoXmlMapping, 
-												XmlElement revisionInfoRelationMapping) 
+												XDocument revisionInfoXmlMapping, 
+												XElement revisionInfoRelationMapping) 
 		{
 			// Creating a name register to capture all audit entity names created.
 			var auditEntityNameRegister = new AuditEntityNameRegister();
@@ -75,11 +75,11 @@ namespace NHibernate.Envers.Configuration
 				{
 					auditMetaGen.GenerateSecondPass(pcDatasEntry.Key, pcDatasEntry.Value, xmlMappingData);
 
-					cfg.AddDocument(xmlMappingData.MainXmlMapping);
+					cfg.AddXml(xmlMappingData.MainXmlMapping.ToString());
 
 					foreach (var additionalMapping in xmlMappingData.AdditionalXmlMappings) 
 					{
-						cfg.AddDocument(additionalMapping);
+						cfg.AddXml(additionalMapping.ToString());
 					}
 				}
 			}
@@ -89,7 +89,7 @@ namespace NHibernate.Envers.Configuration
 			{
 				if (revisionInfoXmlMapping !=  null) 
 				{
-					cfg.AddDocument(revisionInfoXmlMapping);
+					cfg.AddXml(revisionInfoXmlMapping.ToString());
 				}
 			}
 

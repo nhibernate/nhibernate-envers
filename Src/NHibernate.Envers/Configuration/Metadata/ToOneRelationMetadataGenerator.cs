@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			_mainGenerator = auditMetadataGenerator;
 		}
 
-		public void AddToOne(XmlElement parent, PropertyAuditingData propertyAuditingData, IValue value,
+		public void AddToOne(XElement parent, PropertyAuditingData propertyAuditingData, IValue value,
 					  ICompositeMapperBuilder mapper, string entityName, bool insertable) 
 		{
 			var referencedEntityName = ((ToOne)value).ReferencedEntityName;
@@ -57,24 +57,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 			
 			// Adding an element to the mapping corresponding to the references entity id's
 			// Use OwnerDocument.ImportNode() instead of XmlNode.Clone();
-			var properties = (XmlElement)parent.OwnerDocument.ImportNode(idMapping.XmlRelationMapping,true);
-			properties.SetAttribute("name",propertyAuditingData.Name);
+			var properties = new XElement(idMapping.XmlRelationMapping);
+			properties.Add(new XAttribute("name",propertyAuditingData.Name));
 
 			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
 			                                           MetadataTools.GetColumnNameEnumerator(value.ColumnIterator)
 																	 ,false, insertable);
 
 			// Extracting related id properties from properties tag
-			foreach (XmlElement element in properties.ChildNodes)
+			var firstJoin = firstJoinElement(parent);
+			foreach (var element in properties.Elements())
 			{
-				var firstJoin = firstJoinElement(parent);
 				if(firstJoin==null)
 				{
-					parent.AppendChild(element.Clone());					
+					parent.Add(element);
 				}
 				else
 				{
-					parent.InsertBefore(element.Clone(), firstJoin);
+					firstJoin.AddBeforeSelf(element);
 				}
 			}
 
@@ -83,10 +83,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 			mapper.AddComposite(propertyData, new ToOneIdMapper(_mainGenerator.GlobalCfg.EnversProxyFactory, relMapper, propertyData, referencedEntityName, nonInsertableFake));
 		}
 
-		private static XmlElement firstJoinElement(XmlElement classElement)
+		private static readonly XNamespace ns = "urn:nhibernate-mapping-2.2";
+
+		private static XElement firstJoinElement(XElement classElement)
 		{
 			//do we have to check for other elements than join here?
-			return classElement.GetElementsByTagName("join").OfType<XmlElement>().FirstOrDefault();
+			return classElement.Element(ns + "join");
 		}
 
 		public void AddOneToOneNotOwning(PropertyAuditingData propertyAuditingData, IValue value, ICompositeMapperBuilder mapper, string entityName)

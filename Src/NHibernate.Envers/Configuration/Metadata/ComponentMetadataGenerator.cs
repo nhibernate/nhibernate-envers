@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Mapping;
@@ -17,7 +18,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			mainGenerator = auditMetadataGenerator;
 		}
 
-		public void AddComponent(XmlElement parent, PropertyAuditingData propertyAuditingData,
+		public void AddComponent(XElement parent, PropertyAuditingData propertyAuditingData,
 								 IValue value, ICompositeMapperBuilder mapper, string entityName,
 								 EntityXmlMappingData xmlMappingData, bool firstPass, bool insertable) 
 		{
