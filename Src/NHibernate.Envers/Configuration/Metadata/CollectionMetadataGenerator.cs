@@ -416,7 +416,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					addRelatedToXmlMapping(xmlMapping, prefixRelated,
 							joinColumns != null && joinColumns.Length > 0
-									? joinColumns.ToList()
+									? joinColumns
 									: MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
 							referencedIdMapping);
 				}
