@@ -442,7 +442,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private static readonly AuditJoinTableAttribute DEFAULT_AUDIT_JOIN_TABLE = new AuditJoinTableAttribute();
 
-		private class ComponentPropertiesSource : IPersistentPropertiesSource
+		internal class ComponentPropertiesSource : IPersistentPropertiesSource
 		{
 			public ComponentPropertiesSource(Component component)
 			{

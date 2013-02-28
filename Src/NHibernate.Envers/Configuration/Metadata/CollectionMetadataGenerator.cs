@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -21,6 +22,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(CollectionMetadataGenerator));
 
+		private readonly IMetaDataStore _metaDataStore;
 		private readonly AuditMetadataGenerator _mainGenerator;
 		private readonly string _propertyName;
 		private readonly Mapping.Collection _propertyValue;
@@ -38,6 +40,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <summary>
 		/// Ctor
 		/// </summary>
+		/// <param name="metaDataStore"></param>
 		/// <param name="mainGenerator">Main generator, giving access to configuration and the basic mapper.</param>
 		/// <param name="propertyValue">Value of the collection, as mapped by Hibernate.</param>
 		/// <param name="currentMapper">Mapper, to which the appropriate {@link org.hibernate.envers.entities.mapper.PropertyMapper} will be added.</param>
@@ -48,13 +51,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// property that references the collection in the referencing entity, the user data for middle (join)
 		/// table and the value of the <code>@MapKey</code> annotation, if there was one.
 		/// </param>
-		public CollectionMetadataGenerator(AuditMetadataGenerator mainGenerator,
+		public CollectionMetadataGenerator(IMetaDataStore metaDataStore,
+											AuditMetadataGenerator mainGenerator,
 											Mapping.Collection propertyValue, 
 											ICompositeMapperBuilder currentMapper,
 											string referencingEntityName, 
 											EntityXmlMappingData xmlMappingData,
 											PropertyAuditingData propertyAuditingData) 
 		{
+			_metaDataStore = metaDataStore;
 			_mainGenerator = mainGenerator;
 			_propertyValue = propertyValue;
 			_currentMapper = currentMapper;
@@ -132,7 +137,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Generating the query generator - it should read directly from the related entity.
 			var queryGenerator = new OneAuditEntityQueryGenerator(_mainGenerator.VerEntCfg,
-					_mainGenerator.GlobalCfg.AuditStrategy, referencingIdData, _referencedEntityName, referencedIdData);
+					_mainGenerator.GlobalCfg.AuditStrategy, referencingIdData, _referencedEntityName, referencedIdData, isEmbeddableElementType());
 
 			// Creating common mapper data.
 			var commonCollectionMapperData = new CommonCollectionMapperData(
@@ -296,7 +301,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Creating a query generator builder, to which additional id data will be added, in case this collection
 			// references some entities (either from the element or index). At the end, this will be used to build
 			// a query generator to read the raw data collection from the middle table.
-			var queryGeneratorBuilder = new QueryGeneratorBuilder(_mainGenerator.VerEntCfg, _mainGenerator.GlobalCfg.AuditStrategy, referencingIdData, auditMiddleEntityName);
+			var queryGeneratorBuilder = new QueryGeneratorBuilder(_mainGenerator.VerEntCfg, _mainGenerator.GlobalCfg.AuditStrategy, referencingIdData, auditMiddleEntityName, isEmbeddableElementType());
 
 			// Adding the XML mapping for the referencing entity, if the relation isn't inverse.
 			if (middleEntityXml != null)
@@ -431,6 +436,34 @@ namespace NHibernate.Envers.Configuration.Metadata
 				return new MiddleComponentData(new MiddleRelatedComponentMapper(referencedIdData),
 						queryGeneratorBuilder.CurrentIndex);
 			}
+			else if(type is ComponentType)
+			{
+				//collection of embaddable elements
+				var component = (Component) value;
+				var componentMapper = new MiddleEmbeddableComponentMapper(new MultiPropertyMapper(), component.ComponentClassName);
+				var parentXmlMapping = (XmlElement)xmlMapping.ParentNode;
+
+				var auditData = new ComponentAuditingData();
+
+				new ComponentAuditedPropertiesReader(_metaDataStore, 
+																					new AuditedPropertiesReader.ComponentPropertiesSource(component),
+																					auditData, _mainGenerator.GlobalCfg,"").Read();
+
+				// Emulating first pass.
+				foreach (var auditedPropertyName in auditData.PropertyNames)
+				{
+					var nestedAuditingData = auditData.GetPropertyAuditingData(auditedPropertyName);
+					_mainGenerator.AddValue(parentXmlMapping, component.GetProperty(auditedPropertyName).Value, componentMapper, prefix, _xmlMappingData, nestedAuditingData, true, true, true);
+				}
+
+				// Emulating second pass so that the relations can be mapped too.
+				foreach (var auditedPropertyName in auditData.PropertyNames)
+				{
+					var nestedAuditingData = auditData.GetPropertyAuditingData(auditedPropertyName);
+					_mainGenerator.AddValue(parentXmlMapping, component.GetProperty(auditedPropertyName).Value, componentMapper, _referencingEntityName, _xmlMappingData, nestedAuditingData, true, false, true);
+				}
+				return new MiddleComponentData(componentMapper, 0);
+			}
 			// Last but one parameter: collection components are always insertable
 			var mapped = _mainGenerator.BasicMetadataGenerator.AddBasic(xmlMapping,
 																		new PropertyAuditingData(prefix, "field"),
@@ -450,13 +483,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 							   MiddleComponentData indexComponentData)
 		{
 			var type = _propertyValue.Type;
+			var embeddableElementType = isEmbeddableElementType();
+
 
 			IPropertyMapper collectionMapper;
 			var collectionProxyMapperFactory = _mainGenerator.GlobalCfg.CollectionMapperFactory;
 
 			if(_propertyAuditingData.CustomCollectionMapperFactory!=null)
 			{
-				collectionMapper = _propertyAuditingData.CustomCollectionMapperFactory.Create(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+				collectionMapper = _propertyAuditingData.CustomCollectionMapperFactory.Create(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, embeddableElementType);
 			}
 			else if (type is SetType)
 			{
@@ -467,24 +502,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 						var comparerType = createGenericComparerType(type);
 						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("SortedSet",
 							type.ReturnedClass.GetGenericArguments(),
-							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType });
+							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), comparerType, typeof(bool) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-							new[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, _propertyValue.Comparer });
+							new[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, _propertyValue.Comparer, embeddableElementType });
 					}
 					else
 					{
 						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Set",
 							type.ReturnedClass.GetGenericArguments(),
-							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(bool) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-							new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData });											
+							new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType });											
 					}
 				}
 				else
 				{
 					collectionMapper = _propertyValue.IsSorted ?
-						collectionProxyMapperFactory.SortedSet(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, (IComparer)_propertyValue.Comparer) :
-						collectionProxyMapperFactory.Set(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData);
+						collectionProxyMapperFactory.SortedSet(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, (IComparer)_propertyValue.Comparer, embeddableElementType) :
+						collectionProxyMapperFactory.Set(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType);
 				}
 			}
 			else if (type is ListType)
@@ -493,13 +528,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("List", 
 						type.ReturnedClass.GetGenericArguments(),
-						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), typeof(bool) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData });
+						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, embeddableElementType });
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.List(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+					collectionMapper = collectionProxyMapperFactory.List(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, embeddableElementType);
 				}
 			}
 			else if (type is MapType)
@@ -511,24 +546,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 						var comparerType = createGenericComparerType(type);
 						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("SortedMap",
 							type.ReturnedClass.GetGenericArguments(),
-							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType });
+							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), comparerType, typeof(bool) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-							new[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, _propertyValue.Comparer });	
+							new[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, _propertyValue.Comparer, embeddableElementType });	
 					}
 					else
 					{
 						var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Map",
 							type.ReturnedClass.GetGenericArguments(),
-							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData) });
+							new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(MiddleComponentData), typeof(bool) });
 						collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-							new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData });		
+							new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, embeddableElementType });		
 					}
 				}
 				else
 				{
-					collectionMapper = _propertyValue.IsSorted ? 
-						collectionProxyMapperFactory.SortedMap(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)_propertyValue.Comparer) :
-						collectionProxyMapperFactory.Map(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData);
+					collectionMapper = _propertyValue.IsSorted ?
+						collectionProxyMapperFactory.SortedMap(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, (IComparer)_propertyValue.Comparer, embeddableElementType) :
+						collectionProxyMapperFactory.Map(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, indexComponentData, embeddableElementType);
 				}
 			}
 			else if (type is BagType)
@@ -537,13 +572,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("Bag",
 						type.ReturnedClass.GetGenericArguments(),
-						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(bool) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData });
+						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType });
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.Bag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData);
+					collectionMapper = collectionProxyMapperFactory.Bag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType);
 				}
 			}
 			else if (type is IdentifierBagType)
@@ -552,13 +587,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("IdBag",
 						type.ReturnedClass.GetGenericArguments(),
-						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData) });
+						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(bool) });
 					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData });
+						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType });
 				}
 				else
 				{
-					collectionMapper = collectionProxyMapperFactory.IdBag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData);
+					collectionMapper = collectionProxyMapperFactory.IdBag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType);
 				}
 			}
 			else
@@ -617,10 +652,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 			_mainGenerator.AddRevisionInfoRelation(middleEntityXmlId);
 
 			// Adding the revision type property to the entity xml.
-			_mainGenerator.AddRevisionType(middleEntityXml);
+			_mainGenerator.AddRevisionType(isEmbeddableElementType() ? middleEntityXmlId : middleEntityXml, middleEntityXml);
 
 			// All other properties should also be part of the primary key of the middle entity.
 			return middleEntityXmlId;
+		}
+
+		private bool isEmbeddableElementType()
+		{
+			return _propertyValue.Element.Type is ComponentType;
 		}
 
 		private string getMappedBy(Mapping.Collection collectionValue) 

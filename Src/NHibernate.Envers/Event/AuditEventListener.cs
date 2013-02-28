@@ -223,7 +223,7 @@ namespace NHibernate.Envers.Event
 		{
 			// First computing the relation changes
 			var collectionChanges = VerCfg.EntCfg[collectionEntityName].PropertyMapper
-					.MapCollectionChanges(referencingPropertyName, newColl, oldColl, evt.AffectedOwnerIdOrNull);
+					.MapCollectionChanges(evt.Session, referencingPropertyName, newColl, oldColl, evt.AffectedOwnerIdOrNull);
 
 			// Getting the id mapper for the related entity, as the work units generated will corrspond to the related
 			// entities.

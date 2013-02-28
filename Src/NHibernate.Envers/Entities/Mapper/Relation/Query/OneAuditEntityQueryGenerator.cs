@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Text;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Reader;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools.Query;
-using NHibernate.Transform;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
@@ -12,19 +10,18 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// Selects data from an audit entity.
 	/// </summary>
 	[Serializable]
-	public sealed class OneAuditEntityQueryGenerator: IRelationQueryGenerator 
+	public sealed class OneAuditEntityQueryGenerator: AbstractRelationQueryGenerator 
 	{
 		private readonly string _queryString;
-		private readonly MiddleIdData _referencingIdData;
 
 		public OneAuditEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 											IAuditStrategy auditStrategy,
 											MiddleIdData referencingIdData, 
 											string referencedEntityName,
-											MiddleIdData referencedIdData) 
+											MiddleIdData referencedIdData,
+											bool revisionTypeInId) 
+			:base(verEntCfg, referencingIdData, revisionTypeInId)
 		{
-			_referencingIdData = referencingIdData;
-
 			/*
 			 * The query that we need to create:
 			 *   SELECT new list(e) FROM versionsReferencedEntity e
@@ -61,24 +58,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 
 			// e.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
+			rootParameters.AddWhereWithNamedParam(RevisionTypePath(), false, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
 			_queryString = sb.ToString();
 		}
 
-		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision) 
+		protected override string QueryString()
 		{
-			var query = versionsReader.Session.CreateQuery(_queryString);
-			query.SetParameter(QueryConstants.RevisionParameter, revision);
-			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
-			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey)) 
-			{
-				paramData.SetParameterValue(query);
-			}
-			query.SetResultTransformer(Transformers.ToList);
-			return query;
+			return _queryString;
 		}
 	}
 }

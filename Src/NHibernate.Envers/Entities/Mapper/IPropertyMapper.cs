@@ -34,12 +34,14 @@ namespace NHibernate.Envers.Entities.Mapper
 		/// <summary>
 		/// Maps collection changes
 		/// </summary>
+		/// <param name="session">The current session</param>
 		/// <param name="referencingPropertyName">Name of the field, which holds the collection in the entity.</param>
 		/// <param name="newColl">New collection, after updates.</param>
 		/// <param name="oldColl">Old collection, before updates.</param>
 		/// <param name="id">Id of the object owning the collection.</param>
 		/// <returns>List of changes that need to be performed on the persistent store.</returns>
-		IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session,
+																	string referencingPropertyName,
 																  IPersistentCollection newColl,
 																  object oldColl, object id);
 
