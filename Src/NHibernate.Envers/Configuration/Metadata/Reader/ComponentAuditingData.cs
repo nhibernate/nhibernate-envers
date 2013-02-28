@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -31,6 +32,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public bool Contains(string propertyName)
 		{
 			return properties.ContainsKey(propertyName);
+		}
+
+		public IEnumerable<string> PropertyNames
+		{
+			get { return properties.Keys; }
 		}
 	}
 }

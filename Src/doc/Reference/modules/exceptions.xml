@@ -40,11 +40,6 @@
         <title>What is not but <emphasis>will</emphasis> be supported</title>
 
         <orderedlist>
-            <listitem>
-                <para>
-                    Collections of components
-                </para>
-            </listitem>
 			  <listitem>
 				  <para>
 					  ManyToAny reference

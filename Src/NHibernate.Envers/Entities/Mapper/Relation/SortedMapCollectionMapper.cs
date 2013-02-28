@@ -14,8 +14,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 													System.Type proxyType, 
 													MiddleComponentData elementComponentData, 
 													MiddleComponentData indexComponentData,
-													IComparer<TKey> comparer) 
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, elementComponentData, indexComponentData)
+													IComparer<TKey> comparer,
+													bool revisionTypeInId) 
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType, elementComponentData, indexComponentData, revisionTypeInId)
 		{
 			_comparer = comparer;
 		}

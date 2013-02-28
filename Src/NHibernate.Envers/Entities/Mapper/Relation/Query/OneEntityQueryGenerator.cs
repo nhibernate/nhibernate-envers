@@ -13,19 +13,18 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// Selects data from a relation middle-table only.
 	/// </summary>
 	[Serializable]
-	public sealed class OneEntityQueryGenerator : IRelationQueryGenerator 
+	public sealed class OneEntityQueryGenerator : AbstractRelationQueryGenerator 
 	{
 		private readonly string _queryString;
-		private readonly MiddleIdData _referencingIdData;
 
 		public OneEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
 										string versionsMiddleEntityName,
 										MiddleIdData referencingIdData,
+										bool revisionTypeInId,
 										IEnumerable<MiddleComponentData> componentDatas) 
+			: base(verEntCfg, referencingIdData, revisionTypeInId)
 		{
-			_referencingIdData = referencingIdData;
-
 			/*
 			 * The query that we need to create:
 			 *   SELECT new list(ee) FROM middleEntity ee WHERE
@@ -59,27 +58,19 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
 				verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName, 
-				eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
+				eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, QueryConstants.MiddleEntityAlias, componentDatas.ToArray());
 
 			// ee.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
+			rootParameters.AddWhereWithNamedParam(RevisionTypePath(), "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
 			_queryString = sb.ToString();
 		}
 
-		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision) 
+		protected override string QueryString()
 		{
-			var query = versionsReader.Session.CreateQuery(_queryString);
-			query.SetParameter(QueryConstants.RevisionParameter, revision);
-			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
-			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
-			{
-				paramData.SetParameterValue(query);
-			}
-
-			return query;
+			return _queryString;
 		}
 	}
 }

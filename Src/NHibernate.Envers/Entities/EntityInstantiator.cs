@@ -86,5 +86,15 @@ namespace NHibernate.Envers.Entities
 				addTo.Add(CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision));
 			}
 		}
+
+		public AuditConfiguration AuditConfiguration
+		{
+			get { return verCfg; }
+		}
+
+		public IAuditReaderImplementor AuditReaderImplementor
+		{
+			get { return versionsReader; }
+		}
 	}
 }

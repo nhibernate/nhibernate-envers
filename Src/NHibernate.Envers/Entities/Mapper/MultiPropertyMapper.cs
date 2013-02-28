@@ -201,7 +201,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, 
+																		string referencingPropertyName,
 																		IPersistentCollection newColl,
 																		object oldColl,
 																		object id)
@@ -209,7 +210,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			var pair = mapperAndDelegatePropertyName(referencingPropertyName);
 			return pair == null ? 
 								null :
-								pair.First.MapCollectionChanges(pair.Second, newColl, oldColl, id);
+								pair.First.MapCollectionChanges(session, pair.Second, newColl, oldColl, id);
 		}
 	}
 }
