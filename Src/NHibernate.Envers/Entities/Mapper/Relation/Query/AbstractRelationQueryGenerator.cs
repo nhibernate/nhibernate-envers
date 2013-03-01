@@ -1,6 +1,7 @@
 ﻿using System;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
+using NHibernate.Transform;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
@@ -22,14 +23,25 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 		protected abstract string QueryString();
 
+		protected virtual bool TransformResultToList()
+		{
+			return false;
+		}
+
 		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
 		{
 			var query = versionsReader.Session.CreateQuery(QueryString())
 			                          .SetParameter(QueryConstants.RevisionParameter, revision)
 			                          .SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
+
 			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);
+			}
+
+			if(TransformResultToList())
+			{
+				query.SetResultTransformer(Transformers.ToList);
 			}
 			return query;
 		}
