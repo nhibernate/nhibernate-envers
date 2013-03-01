@@ -39,11 +39,4 @@
 		</id>
 		<property name="Str"/>
 	</class>
-
-	<class name="StrTestNoProxyEntity" lazy="false" table="STR_TEST_NP">
-		<id name="Id">
-			<generator class="native"/>
-		</id>
-		<property name="Str"/>
-	</class>
 </hibernate-mapping>
