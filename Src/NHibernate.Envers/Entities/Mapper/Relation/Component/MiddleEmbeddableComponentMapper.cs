@@ -43,17 +43,23 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			{
 				var propertyName = keyValue.Key.Name;
 				var nestedMapper = keyValue.Value;
-				if (nestedMapper is ICompositeMapperBuilder)
+
+				var nestedCompositeMapper = nestedMapper as ICompositeMapperBuilder;
+				if (nestedCompositeMapper != null)
 				{
-					AddMiddleEqualToQuery((ICompositeMapperBuilder)nestedMapper, parameters, idPrefix1, prefix1, idPrefix2, prefix2);
-				}
-				else if (nestedMapper is ToOneIdMapper)
-				{
-					((ToOneIdMapper) nestedMapper).AddMiddleEqualToQuery(parameters, idPrefix1, prefix1, idPrefix2, prefix2);
+					AddMiddleEqualToQuery(nestedCompositeMapper, parameters, idPrefix1, prefix1, idPrefix2, prefix2);
 				}
 				else
 				{
-					parameters.AddWhere(prefix1 + '.' + propertyName, false, "=", prefix2 + '.' + propertyName, false);
+					var nestedToOneIdMapper = nestedMapper as ToOneIdMapper;
+					if (nestedToOneIdMapper != null)
+					{
+						nestedToOneIdMapper.AddMiddleEqualToQuery(parameters, idPrefix1, prefix1, idPrefix2, prefix2);
+					}
+					else
+					{
+						parameters.AddWhere(prefix1 + '.' + propertyName, false, "=", prefix2 + '.' + propertyName, false);
+					}
 				}
 			}
 		}
