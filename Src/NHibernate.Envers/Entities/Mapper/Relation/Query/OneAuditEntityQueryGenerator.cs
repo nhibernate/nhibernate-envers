@@ -65,6 +65,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			_queryString = sb.ToString();
 		}
 
+		protected override bool TransformResultToList()
+		{
+			return true;
+		}
+
 		protected override string QueryString()
 		{
 			return _queryString;
