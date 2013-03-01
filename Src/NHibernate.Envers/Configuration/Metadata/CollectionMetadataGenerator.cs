@@ -440,7 +440,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				//collection of embaddable elements
 				var component = (Component) value;
 				var componentMapper = new MiddleEmbeddableComponentMapper(new MultiPropertyMapper(), component.ComponentClassName);
-				var parentXmlMapping = (XmlElement)xmlMapping.ParentNode;
+				var parentXmlMapping = xmlMapping.Parent;
 
 				var auditData = new ComponentAuditingData();
 

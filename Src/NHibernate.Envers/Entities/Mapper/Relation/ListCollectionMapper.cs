@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			var indexValuePair = (Tuple<int, object>)changed;
 			_elementComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, indexValuePair.Item2);
-			_indexComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, indexValuePair.Item);
+			_indexComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, indexValuePair.Item1);
 		}
 
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)

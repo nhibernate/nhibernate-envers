@@ -88,11 +88,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var partOfId = anyMapping != anyMappingEnd;
 			var revTypeProperty = MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionTypePropName,
-					VerEntCfg.RevisionTypePropType, true, partOfId);
-			revTypeProperty.Add(new XAttribute("not-null", "true"));
+					typeof(RevisionTypeType).AssemblyQualifiedName, true, partOfId);
 			if (!partOfId)
 			{
-				revTypeProperty.SetAttribute("not-null", "true");
+				revTypeProperty.Add(new XAttribute("not-null", "true"));
 			}
 			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMappingEnd, revisionInfoRelationMapping);
 		}
