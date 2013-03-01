@@ -92,7 +92,6 @@ namespace NHibernate.Envers.Entities.Mapper
 			main.AddComposite(propertyData, propertyMapper);
 		}
 
-		//todo: make a method instead
 		public IDictionary<PropertyData, IPropertyMapper> Properties
 		{
 			get
