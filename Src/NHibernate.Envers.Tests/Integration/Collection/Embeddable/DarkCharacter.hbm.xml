@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Collection.Embeddable">
+	<class name="DarkCharacter">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Kills" />
+		<set name="Names">
+			<key column="setKey" />
+			<composite-element class="Name">
+				<property name="FirstName"/>
+				<property name="LastName"/>
+			</composite-element>
+		</set>
+	</class>
+</hibernate-mapping>

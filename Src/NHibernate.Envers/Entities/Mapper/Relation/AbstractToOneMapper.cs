@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName, IPersistentCollection newColl, object oldColl, object id)
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, string referencingPropertyName, IPersistentCollection newColl, object oldColl, object id)
 		{
 			return null;
 		}

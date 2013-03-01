@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
+using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
@@ -14,9 +15,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public MapCollectionMapper(IEnversProxyFactory enversProxyFactory,
 											CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType,
-											MiddleComponentData elementComponentData, 
-											MiddleComponentData indexComponentData) 
-					: base(enversProxyFactory, commonCollectionMapperData, proxyType)
+											MiddleComponentData elementComponentData,
+											MiddleComponentData indexComponentData,
+											bool revisionTypeInId) 
+					: base(enversProxyFactory, commonCollectionMapperData, proxyType, revisionTypeInId)
 		{
 			ElementComponentData = elementComponentData;
 			IndexComponentData = indexComponentData;
@@ -35,11 +37,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return oldCollection == null ? null : (IEnumerable) oldCollection;
 		}
 
-		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed)
+		protected override void MapToMapFromObject(ISessionImplementor session, IDictionary<String, Object> idData, IDictionary<string, object> data, object changed)
 		{
 			var keyValue = (KeyValuePair<TKey, TValue>) changed;
-			ElementComponentData.ComponentMapper.MapToMapFromObject(data, keyValue.Value);
-			IndexComponentData.ComponentMapper.MapToMapFromObject(data, keyValue.Key);
+			ElementComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, keyValue.Value);
+			IndexComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, keyValue.Key);
 		}
 
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)

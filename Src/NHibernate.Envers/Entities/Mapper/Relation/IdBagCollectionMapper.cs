@@ -10,8 +10,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public IdBagCollectionMapper(IEnversProxyFactory enversProxyFactory,
 		                             CommonCollectionMapperData commonCollectionMapperData,
 		                             System.Type proxyType,
-		                             MiddleComponentData elementComponentData)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, elementComponentData)
+																 MiddleComponentData elementComponentData,
+																bool revisionTypeInId)
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType, elementComponentData, revisionTypeInId)
 		{
 		}
 

@@ -17,14 +17,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly System.Type _proxyType;
+		private readonly bool _revisionTypeInId;
 
 		protected AbstractCollectionMapper(IEnversProxyFactory enversProxyFactory, 
 											CommonCollectionMapperData commonCollectionMapperData,
-											System.Type proxyType) 
+											System.Type proxyType, bool revisionTypeInId) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
 			_enversProxyFactory = enversProxyFactory;
 			_proxyType = proxyType;
+			_revisionTypeInId = revisionTypeInId;
 		}
 
 		protected CommonCollectionMapperData CommonCollectionMapperData { get; private set; }
@@ -35,11 +37,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		/// <summary>
 		/// Maps the changed collection element to the given map.
 		/// </summary>
+		/// <param name="session"></param>
+		/// <param name="idData">Map to which composite-id data should be added</param>
 		/// <param name="data">Where to map the data.</param>
 		/// <param name="changed">The changed collection element to map.</param>
-		protected abstract void MapToMapFromObject(IDictionary<string, object> data, object changed);
+		protected abstract void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object changed);
 
-		private void addCollectionChanges(ICollection<PersistentCollectionChangeData> collectionChanges, 
+		private void addCollectionChanges(ISessionImplementor session, ICollection<PersistentCollectionChangeData> collectionChanges, 
 											IEnumerable changed, 
 											RevisionType revisionType, 
 											object id) 
@@ -56,13 +60,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				CommonCollectionMapperData.ReferencingIdData.PrefixedMapper.MapToMapFromId(originalId, id);
 
 				// Mapping collection element and index (if present).
-				MapToMapFromObject(originalId, changedObj);
+				MapToMapFromObject(session, originalId, entityData, changedObj);
 
-				entityData.Add(CommonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType);
+				(_revisionTypeInId ? originalId : entityData).Add(CommonCollectionMapperData.VerEntCfg.RevisionTypePropName, revisionType);
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, string referencingPropertyName,
 																			IPersistentCollection newColl,
 																			object oldColl, 
 																			object id) 
@@ -98,7 +102,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				added.ExceptWith(itemsToRemove);
 			}
 
-			addCollectionChanges(collectionChanges, added, RevisionType.Added, id);
+			addCollectionChanges(session, collectionChanges, added, RevisionType.Added, id);
 
 			var deleted = new HashSet<object>();
 			if (oldColl != null)
@@ -119,7 +123,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				deleted.ExceptWith(itemsToRemove);
 			}
 
-			addCollectionChanges(collectionChanges, deleted, RevisionType.Deleted, id);
+			addCollectionChanges(session, collectionChanges, deleted, RevisionType.Deleted, id);
 
 			return collectionChanges;
 		}
@@ -143,7 +147,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 					}
 					else
 					{
-						var changes = MapCollectionChanges(propertyData.Name, newObjAsPersistentCollection, oldObj, null);
+						var changes = MapCollectionChanges(session, propertyData.Name, newObjAsPersistentCollection, oldObj, null);
 						data[propertyData.ModifiedFlagPropertyName] = changes.Any();
 					}					
 				}
