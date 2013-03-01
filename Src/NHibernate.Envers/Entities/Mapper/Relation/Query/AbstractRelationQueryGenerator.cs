@@ -1,8 +1,10 @@
-﻿using NHibernate.Envers.Configuration;
+﻿using System;
+using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
+	[Serializable]
 	public abstract class AbstractRelationQueryGenerator : IRelationQueryGenerator
 	{
 		private readonly AuditEntitiesConfiguration _verEntCfg;
