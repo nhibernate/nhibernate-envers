@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components.Collections
 {
-	[Ignore("Collection of components not working right now")]
 	public class CollectionOfComponentsTest : TestBase
 	{
 		private int id1;

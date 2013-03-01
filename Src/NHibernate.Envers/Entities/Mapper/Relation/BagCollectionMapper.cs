@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Collection;
+using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
@@ -16,8 +17,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public BagCollectionMapper(IEnversProxyFactory enversProxyFactory, 
 									CommonCollectionMapperData commonCollectionMapperData,
 									System.Type proxyType,
-									MiddleComponentData elementComponentData)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType)
+									MiddleComponentData elementComponentData, 
+									bool revisionTypeInId)
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType, revisionTypeInId)
 		{    
 			_elementComponentData = elementComponentData;
 		}
@@ -54,9 +56,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return (IEnumerable) oldCollection;
 		}
 
-		protected override void MapToMapFromObject(IDictionary<string, object> data, object changed) 
+		protected override void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object changed)
 		{
-			_elementComponentData.ComponentMapper.MapToMapFromObject(data, changed);
+			_elementComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, changed);
 		}
 	}
 }

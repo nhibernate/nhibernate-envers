@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using NHibernate.Collection;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -30,10 +31,13 @@ namespace NHibernate.Envers.Strategy
 		/// Perform the persistence of audited data for collection ("middle") entities.
 		/// </summary>
 		/// <param name="session">Session, which can be used to persist the data.</param>
+		/// <param name="auditCfg">Audit configuration</param>
 		/// <param name="persistentCollectionChangeData">Collection change data to be persisted.</param>
 		/// <param name="revision">Current revision data</param>
-		void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
-
+		/// <param name="entityName">Name of the entity, in which the audited change happens.</param>
+		/// <param name="propertyName">The name of the property holding the <see cref="IPersistentCollection"/></param>
+		void PerformCollectionChange(ISession session, string entityName, string propertyName, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
+	
 		/// <summary>
 		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a two-entity relation.
 		/// This WHERE clause depends on the AuditStrategy, as follows:
@@ -82,6 +86,7 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="eeOriginalIdPropertyPath">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="revisionPropertyPath">path of the revision property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
+		/// <param name="alias1">An alias used for subqueries (only used for <see cref="DefaultAuditStrategy"/>)</param>
 		/// <param name="componentDatas">information about the middle-entity relation
 		/// <remarks>
 		/// <code>null</code> is accepted.
@@ -89,7 +94,8 @@ namespace NHibernate.Envers.Strategy
 		/// </param>
 		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty,
 									bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName,
-									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas);
+									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, 
+									string alias1, params MiddleComponentData[] componentDatas);
 
 		/// <summary>
 		/// Adds extra revision mapping for audited entities.

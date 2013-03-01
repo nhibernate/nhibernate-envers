@@ -16,15 +16,17 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		private readonly IAuditStrategy _auditStrategy;
 		private readonly MiddleIdData _referencingIdData;
 		private readonly string _auditMiddleEntityName;
+		private readonly bool _revisionTypeInId;
 		private readonly IList<MiddleIdData> _idDatas;
 
 		public QueryGeneratorBuilder(AuditEntitiesConfiguration verEntCfg, IAuditStrategy auditStrategy,
-							  MiddleIdData referencingIdData, string auditMiddleEntityName) 
+							  MiddleIdData referencingIdData, string auditMiddleEntityName, bool revisionTypeInId) 
 		{
 			_verEntCfg = verEntCfg;
 			_auditStrategy = auditStrategy;
 			_referencingIdData = referencingIdData;
 			_auditMiddleEntityName = auditMiddleEntityName;
+			_revisionTypeInId = revisionTypeInId;
 
 			_idDatas = new List<MiddleIdData>();
 		}
@@ -38,17 +40,17 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		{
 			if (_idDatas.Count == 0) 
 			{
-				return new OneEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData, componentDatas);
+				return new OneEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData, _revisionTypeInId, componentDatas);
 			}
 			if (_idDatas.Count == 1)
 			{
 				if (_idDatas[0].IsAudited()) 
 				{
 					return new TwoEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
-													   _idDatas[0], componentDatas);
+														 _idDatas[0], _revisionTypeInId, componentDatas);
 				}
 				return new TwoEntityOneAuditedQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
-															 _idDatas[0], componentDatas);
+															 _idDatas[0], _revisionTypeInId, componentDatas);
 			}
 			if (_idDatas.Count == 2) 
 			{
@@ -59,7 +61,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				}
 
 				return new ThreeEntityQueryGenerator(_verEntCfg, _auditStrategy, _auditMiddleEntityName, _referencingIdData,
-													 _idDatas[0], _idDatas[1], componentDatas);
+													 _idDatas[0], _idDatas[1], _revisionTypeInId, componentDatas);
 			}
 			throw new NotSupportedException("Illegal number of related entities.");
 		}

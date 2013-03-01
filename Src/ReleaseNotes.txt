@@ -7,7 +7,8 @@
 
 === vNext ===
 * IAuditStrategy.Initialize(AuditConfiguration) added. AuditConfiguration and GlobalConfiguration removed from interface methods.
-
+* All factory methods on ICollectionMapperFactory has one extra parameter - embeddableElementType saying if it's a collection of components or not
+* ...and the same goes for ICustomCollectionMapperFactory
 
 
 === 1.5 GA (v 1.5.0), 2012-12-05, NH 3.3.2 GA ====

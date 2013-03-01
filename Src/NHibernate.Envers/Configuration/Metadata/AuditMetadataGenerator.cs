@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata.Reader;
+using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Exceptions;
@@ -20,6 +21,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public GlobalConfiguration GlobalCfg { get; private set; }
 		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
 		private readonly XElement revisionInfoRelationMapping;
+		private readonly IMetaDataStore _metaDataStore;
 
 		/*
 		 * Generators for different kinds of property values/types.
@@ -39,7 +41,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
 		private readonly IDictionary<string, IDictionary<Join, XElement>> entitiesJoins;
 
-		public AuditMetadataGenerator(Cfg.Configuration cfg,
+		public AuditMetadataGenerator(IMetaDataStore metaDataStore, 
+										Cfg.Configuration cfg,
 										GlobalConfiguration globalCfg,
 										AuditEntitiesConfiguration verEntCfg,
 										XElement revisionInfoRelationMapping,
@@ -48,6 +51,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			Cfg = cfg;
 			GlobalCfg = globalCfg;
 			VerEntCfg = verEntCfg;
+			_metaDataStore = metaDataStore;
 			this.revisionInfoRelationMapping = revisionInfoRelationMapping;
 			BasicMetadataGenerator = new BasicMetadataGenerator();
 			componentMetadataGenerator = new ComponentMetadataGenerator(this);
@@ -80,13 +84,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 			anyMapping.Add(cloneAndSetupRevisionInfoRelationMapping());
 		}
 
-		public void AddRevisionType(XElement anyMapping)
+		public void AddRevisionType(XElement anyMapping, XElement anyMappingEnd)
 		{
+			var partOfId = anyMapping != anyMappingEnd;
 			var revTypeProperty = MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionTypePropName,
-					typeof(RevisionTypeType).AssemblyQualifiedName, true, false);
+					VerEntCfg.RevisionTypePropType, true, partOfId);
 			revTypeProperty.Add(new XAttribute("not-null", "true"));
-
-			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMapping, revisionInfoRelationMapping);
+			if (!partOfId)
+			{
+				revTypeProperty.SetAttribute("not-null", "true");
+			}
+			GlobalCfg.AuditStrategy.AddExtraRevisionMapping(anyMappingEnd, revisionInfoRelationMapping);
 		}
 
 		private void addValueInFirstPass(XElement parent, IValue value, ICompositeMapperBuilder currentMapper, string entityName,
@@ -157,7 +165,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else if (type is CollectionType)
 			{
-				var collectionMetadataGenerator = new CollectionMetadataGenerator(this, (Mapping.Collection) value, currentMapper, entityName,
+				
+				var collectionMetadataGenerator = new CollectionMetadataGenerator(_metaDataStore, this, (Mapping.Collection) value, currentMapper, entityName,
 																										xmlMappingData, propertyAuditingData);
 				collectionMetadataGenerator.AddCollection();
 			}
@@ -329,7 +338,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			// Adding the "revision type" property
-			AddRevisionType(classMapping);
+			AddRevisionType(classMapping, classMapping);
 
 			return new Tuple<XElement, IExtendedPropertyMapper, string>(classMapping, propertyMapper, null);
 		}
