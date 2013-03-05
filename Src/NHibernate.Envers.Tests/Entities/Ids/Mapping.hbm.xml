@@ -32,4 +32,11 @@
 		</id>
 		<property name="Str1"/>
 	</class>
+
+	<class name="UnusualIdNamingEntity">
+		<id name="UniqueField">
+			<generator class="assigned" />
+		</id>
+		<property name="VariousData" />
+	</class>
 </hibernate-mapping>

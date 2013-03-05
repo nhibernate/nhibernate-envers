@@ -203,12 +203,12 @@ namespace NHibernate.Envers.Query.Criteria
 			return new PropertyAuditOrder(_propertyNameGetter, false);
 		}
 
-		public IAuditCriterion HasChanged()
+		public virtual IAuditCriterion HasChanged()
 		{
 			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), true, "=");
 		}
 
-		public IAuditCriterion HasNotChanged()
+		public virtual IAuditCriterion HasNotChanged()
 		{
 			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), false, "=");
 		}
