@@ -49,7 +49,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 					.ForEntitiesAtRevision(typeof(StrIntTestEntity), 1).AddProjection(AuditEntity.Id().Count("Id")).GetResultList()[0]);
 			Assert.AreEqual(1,
 				AuditReader().CreateQuery()
-					.ForEntitiesAtRevision(typeof(StrIntTestEntity), 2).AddProjection(AuditEntity.Id().Count("Id")).GetResultList()[0]);
+					.ForEntitiesAtRevision(typeof(StrIntTestEntity), 2).AddProjection(AuditEntity.Id().Count()).GetResultList()[0]);
 		}
 
 		[Test]

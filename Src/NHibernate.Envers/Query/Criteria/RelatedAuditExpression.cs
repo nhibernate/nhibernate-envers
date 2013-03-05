@@ -1,7 +1,7 @@
-﻿using System;
-using NHibernate.Envers.Configuration;
+﻿using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Property;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
@@ -19,10 +19,9 @@ namespace NHibernate.Envers.Query.Criteria
 			this.equals = equals;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, String entityName, QueryBuilder qb, Parameters parameters) 
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters) 
 		{
-			var propertyName = propertyNameGetter.Get(auditCfg);
-			
+			var propertyName = CriteriaTools.DeterminePropertyName(auditCfg, versionsReader, entityName, propertyNameGetter);
 			var relatedEntity = CriteriaTools.GetRelatedEntity(auditCfg, entityName, propertyName);
 
 			if (relatedEntity == null) 

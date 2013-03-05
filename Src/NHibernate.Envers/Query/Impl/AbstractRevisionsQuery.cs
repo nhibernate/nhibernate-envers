@@ -116,7 +116,8 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			hasOrder = true;
 			var orderData = order.GetData(auditConfiguration);
-			queryBuilder.AddOrder(orderData.Item1, orderData.Item2);
+			var propertyName = CriteriaTools.DeterminePropertyName(AuditConfiguration, versionsReader, entityName, orderData.Item1);
+			queryBuilder.AddOrder(propertyName, orderData.Item2);
 			return this;
 		}
 
@@ -191,7 +192,7 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions, transformed
 			foreach (var criterion in criterions)
 			{
-				criterion.AddToQuery(auditConfiguration, entityName, queryBuilder, queryBuilder.RootParameters);
+				criterion.AddToQuery(auditConfiguration, versionsReader, entityName, queryBuilder, queryBuilder.RootParameters);
 			}
 		}
 
