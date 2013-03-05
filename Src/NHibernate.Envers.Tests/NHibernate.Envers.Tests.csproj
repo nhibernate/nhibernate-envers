@@ -80,6 +80,7 @@
     <Compile Include="Entities\Ids\DateIdTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneIdNotAuditedTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
+    <Compile Include="Entities\Ids\UnusualIdNamingEntity.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefEdPK.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefIngPK.cs" />
     <Compile Include="Entities\Collection\StrTestNoProxyEntity.cs" />

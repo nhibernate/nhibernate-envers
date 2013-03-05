@@ -1,4 +1,5 @@
 ﻿using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
@@ -17,7 +18,7 @@ namespace NHibernate.Envers.Query.Criteria
 			this.equals = equals;
 		}
 
-		public void AddToQuery(AuditConfiguration verCfg, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
 		{
 			verCfg.EntCfg[entityName].IdMapper
 					  .AddIdEqualsToQuery(parameters, id, verCfg.AuditEntCfg.OriginalIdPropName, equals);

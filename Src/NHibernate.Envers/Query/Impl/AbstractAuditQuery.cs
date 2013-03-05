@@ -14,8 +14,6 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public abstract class AbstractAuditQuery : IAuditQuery 
 	{
-		private readonly IAuditReaderImplementor _versionsReader;
-
 		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls)
 				: this(verCfg, versionsReader, cls.FullName)
 		{
@@ -25,7 +23,7 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			VerCfg = verCfg;
 			EntityName = entityName;
-			_versionsReader = versionsReader;
+			VersionsReader = versionsReader;
 			Criterions = new List<IAuditCriterion>();
 			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
 			EntityName = entityName;
@@ -38,6 +36,7 @@ namespace NHibernate.Envers.Query.Impl
 			}
 		}
 
+		protected IAuditReaderImplementor VersionsReader { get; private set; }
 		protected EntityInstantiator EntityInstantiator { get; private set; }
 		protected IList<IAuditCriterion> Criterions { get; private set; }
 		protected string EntityName { get; private set; }
@@ -55,7 +54,7 @@ namespace NHibernate.Envers.Query.Impl
 
 		protected IQuery BuildQuery()
 		{
-			var query = QueryBuilder.ToQuery(_versionsReader.Session);
+			var query = QueryBuilder.ToQuery(VersionsReader.Session);
 			SetQueryProperties(query);
 			return query;
 		}
@@ -107,7 +106,8 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			var projectionData = projection.GetData(VerCfg);
 			HasProjection = true;
-			QueryBuilder.AddProjection(projectionData.First, projectionData.Second, projectionData.Third);
+			var propertyName = CriteriaTools.DeterminePropertyName(VerCfg, VersionsReader, EntityName, projectionData.Second);
+			QueryBuilder.AddProjection(projectionData.First, propertyName, projectionData.Third);
 			return this;
 		}
 
@@ -115,7 +115,8 @@ namespace NHibernate.Envers.Query.Impl
 		{
 			HasOrder = true;
 			var orderData = order.GetData(VerCfg);
-			QueryBuilder.AddOrder(orderData.First, orderData.Second);
+			var propertyName = CriteriaTools.DeterminePropertyName(VerCfg, VersionsReader, EntityName, orderData.First);
+			QueryBuilder.AddOrder(propertyName, orderData.Second);
 			return this;
 		}
 
