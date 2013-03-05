@@ -21,12 +21,12 @@ namespace NHibernate.Envers.Query.Criteria
 			_propertyNameGetter = propertyNameGetter;
 		}
 
-		public IAuditCriterion Eq(object value)
+		public virtual IAuditCriterion Eq(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "=");
 		}
 
-		public IAuditCriterion Ne(object value)
+		public virtual IAuditCriterion Ne(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "<>");
 		}

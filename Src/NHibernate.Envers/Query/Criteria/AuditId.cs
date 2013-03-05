@@ -16,12 +16,12 @@ namespace NHibernate.Envers.Query.Criteria
 		{
 		}
 
-		public IAuditCriterion Eq(object id) 
+		public override IAuditCriterion Eq(object id) 
 		{
 			return new IdentifierEqAuditExpression(id, true);
 		}
 
-		public IAuditCriterion Ne(object id) 
+		public override IAuditCriterion Ne(object id) 
 		{
 			return new IdentifierEqAuditExpression(id, false);
 		}
