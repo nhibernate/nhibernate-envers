@@ -26,11 +26,6 @@ namespace NHibernate.Envers.Query.Criteria
 			return new IdentifierEqAuditExpression(id, false);
 		}
 
-		public IAuditProjection Count(string idPropertyName) 
-		{
-			return new PropertyAuditProjection(new OriginalIdPropertyName(idPropertyName), "count", false);
-		}
-
 		public override IAuditCriterion HasChanged()
 		{
 			throw new NotSupportedException();

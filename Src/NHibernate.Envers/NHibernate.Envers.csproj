@@ -268,7 +268,6 @@
     <Compile Include="Query\Projection\PropertyAuditProjection.cs" />
     <Compile Include="Query\Property\EntityPropertyName.cs" />
     <Compile Include="Query\Property\IPropertyNameGetter.cs" />
-    <Compile Include="Query\Property\OriginalIdPropertyName.cs" />
     <Compile Include="Query\Property\RevisionNumberPropertyName.cs" />
     <Compile Include="Query\Property\RevisionPropertyPropertyName.cs" />
     <Compile Include="Query\Property\RevisionTypePropertyName.cs" />
