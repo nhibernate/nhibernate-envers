@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -19,10 +20,10 @@ namespace NHibernate.Envers.Tools.Query
 		private readonly Incrementor _paramCounter;
 
 		// A list of pairs (from entity name, alias name).
-		private readonly ICollection<Pair<string, string>> _froms;
+		private readonly ICollection<Tuple<string, string>> _froms;
 
 		// A list of pairs (property name, order ascending?).
-		private readonly ICollection<Pair<string, bool>> _orders;
+		private readonly ICollection<Tuple<string, bool>> _orders;
 
 		// A list of complete projection definitions: either a sole property name, or a function(property name).
 		private readonly ICollection<string> _projections;
@@ -43,8 +44,8 @@ namespace NHibernate.Envers.Tools.Query
 
 			RootParameters = new Parameters(alias, "and", paramCounter);
 
-			_froms = new List<Pair<string, string>>();
-			_orders = new List<Pair<string, bool>>();
+			_froms = new List<Tuple<string, string>>();
+			_orders = new List<Tuple<string, bool>>();
 			_projections = new List<string>();
 
 			AddFrom(entityName, alias);
@@ -62,7 +63,7 @@ namespace NHibernate.Envers.Tools.Query
 		/// <param name="als">Alias of the entity. Should be different than all other aliases.</param>
 		public void AddFrom(string entName, string als)
 		{
-			_froms.Add(new Pair<string, string>(entName, als));
+			_froms.Add(new Tuple<string, string>(entName, als));
 		}
 
 		private string GenerateAlias()
@@ -92,7 +93,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void AddOrder(string propertyName, bool ascending)
 		{
-			_orders.Add(new Pair<string, bool>(propertyName, ascending));
+			_orders.Add(new Tuple<string, bool>(propertyName, ascending));
 		}
 
 		public void AddProjection(string function, string propertyName, bool distinct)
@@ -146,19 +147,19 @@ namespace NHibernate.Envers.Tools.Query
 
 		private IEnumerable<string> GetAliasList()
 		{
-			return _froms.Select(theFrom => theFrom.Second).ToList();
+			return _froms.Select(theFrom => theFrom.Item2).ToList();
 		}
 
 		public string RootAlias { get; private set; }
 
 		private IEnumerable<string> GetFromList()
 		{
-			return _froms.Select(theFrom => theFrom.First + " " + theFrom.Second).ToList();
+			return _froms.Select(theFrom => theFrom.Item1 + " " + theFrom.Item2).ToList();
 		}
 
 		private IEnumerable<string> GetOrderList()
 		{
-			return _orders.Select(theOrder => RootAlias + "." + theOrder.First + " " + (theOrder.Second ? "asc" : "desc")).ToList();
+			return _orders.Select(theOrder => RootAlias + "." + theOrder.Item1 + " " + (theOrder.Item2 ? "asc" : "desc")).ToList();
 		}
 
 		public IQuery ToQuery(ISession session)

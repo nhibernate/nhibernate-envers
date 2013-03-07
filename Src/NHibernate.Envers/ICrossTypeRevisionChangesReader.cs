@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Iesi.Collections.Generic;
-using NHibernate.Envers.Tools;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers
 {
@@ -16,7 +15,7 @@ namespace NHibernate.Envers
 		/// </summary>
 		/// <param name="revision">Revision number.</param>
 		/// <returns>Set of classes modified in a given revision.</returns>
-		ISet<Pair<string, System.Type>> FindEntityTypes(long revision);
+		ISet<Tuple<string, System.Type>> FindEntityTypes(long revision);
 
 		/// <summary>
 		/// Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,

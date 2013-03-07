@@ -1,5 +1,5 @@
 using System;
-using System.Xml;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Strategy
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		public void PerformCollectionChange(ISession session, string entityName, string propertyName, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
 			var data = persistentCollectionChangeData.Data;
 			session.Save(persistentCollectionChangeData.EntityName, data);
@@ -65,6 +65,7 @@ namespace NHibernate.Envers.Strategy
 														string eeOriginalIdPropertyPath,
 														string revisionPropertyPath,
 														string originalIdPropertyName,
+														string alias1,
 														params MiddleComponentData[] componentDatas)
 		{
 			var rootParameters = rootQueryBuilder.RootParameters;
@@ -82,14 +83,14 @@ namespace NHibernate.Envers.Strategy
 
 			foreach (var componentData in componentDatas)
 			{
-				componentData.ComponentMapper.AddMiddleEqualToQuery(maxEeRevQbParameters, eeOriginalIdPropertyPath, ee2OriginalIdPropertyPath);
+				componentData.ComponentMapper.AddMiddleEqualToQuery(maxEeRevQbParameters, eeOriginalIdPropertyPath, alias1, ee2OriginalIdPropertyPath, QueryConstants.MiddleEntityAliasDefAudStr);
 			}
 
 			// add subquery to rootParameters
 			rootParameters.AddWhere(revisionProperty, addAlias, "=", maxEeRevQb);
 		}
 
-		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		public void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping)
 		{
 		}
 	}

@@ -10,6 +10,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		IPropertyMapper Create(IEnversProxyFactory enversProxyFactory, 
 						CommonCollectionMapperData commonCollectionMapperData,
 						MiddleComponentData elementComponentData, 
-						MiddleComponentData indexComponentData);
+						MiddleComponentData indexComponentData,
+						bool embeddableElementType);
 	}
 }

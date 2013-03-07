@@ -1,50 +1,140 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
-                   assembly="NHibernate.Envers.Tests"
-                   namespace="NHibernate.Envers.Tests.Entities.Collection">
-  <class name="StringSetEntity">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <set name="Strings" table="StringSetStrings">
-      <key column ="StringSetEntityId" />
-      <element column="string" type="string" />
-    </set>
-  </class>
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.Entities.Collection">
+	<class name="StringSetEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<set name="Strings" table="StringSetStrings">
+			<key column ="StringSetEntityId" />
+			<element column="string" type="string" />
+		</set>
+	</class>
 
-  <class name="StringListEntity">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <list name="Strings" table="StringListStrings">
-      <key column ="StringListEntityId" />
-      <index type="Byte" column="stringIndex"/>
-      <element column="string" type="string" />
-    </list>
-  </class>
+	<class name="StringListEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<list name="Strings" table="StringListStrings">
+			<key column ="StringListEntityId" />
+			<index type="Byte" column="stringIndex"/>
+			<element column="string" type="string" />
+		</list>
+	</class>
 
-  <class name="StringMapEntity">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <map name="Strings" table="StringMapStrings">
-      <key column ="StringListEntityId" />
-      <index type="string" column="stringKey"/>
-      <element column="string" type="string" />
-    </map>
-  </class>
+	<class name="StringMapEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="Strings" table="StringMapStrings">
+			<key column ="StringListEntityId" />
+			<index type="string" column="stringKey"/>
+			<element column="string" type="string" />
+		</map>
+	</class>
 
-  <class name="EnumSetEntity">
-    <id name="Id">
-      <generator class="identity"/>
-    </id>
-    <set name="Enums1">
-      <key column="enums1" />
-      <element column="enum1" />
-    </set>
-    <set name="Enums2">
-      <key column="enums2" />
-      <element column="enum2" />
-    </set>
-  </class>
+	<class name="EnumSetEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<set name="Enums1">
+			<key column="enums1" />
+			<element column="enum1" />
+		</set>
+		<set name="Enums2">
+			<key column="enums2" />
+			<element column="enum2" />
+		</set>
+	</class>
+
+	<class name="EmbeddableSetEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<set name="ComponentSet" table="EmbSetEnt_set">
+			<key column="setColumn"/>
+			<composite-element class="NHibernate.Envers.Tests.Entities.Components.Component3">
+				<property name="Str1" />
+				<nested-composite-element name="AuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="audComp_key"/>
+					<property name="Value" column="audComp_value"/>
+					<property name="Description" column="audComp_description"/>
+				</nested-composite-element>
+				<nested-composite-element name="NonAuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="notaudComp_key"/>
+					<property name="Value" column="notaudComp_value"/>
+					<property name="Description" column="notaudComp_description"/>
+				</nested-composite-element>
+			</composite-element>
+		</set>
+	</class>
+
+	<class name="EmbeddableMapEntity">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<map name="ComponentMap" table="EmbMapEnt_map">
+			<key column="mapColumn"/>
+			<index type="string" column="mapIndex" />
+			<composite-element class="NHibernate.Envers.Tests.Entities.Components.Component3">
+				<property name="Str1" />
+				<nested-composite-element name="AuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="audComp_key"/>
+					<property name="Value" column="audComp_value"/>
+					<property name="Description" column="audComp_description"/>
+				</nested-composite-element>
+				<nested-composite-element name="NonAuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="notaudComp_key"/>
+					<property name="Value" column="notaudComp_value"/>
+					<property name="Description" column="notaudComp_description"/>
+				</nested-composite-element>
+			</composite-element>
+		</map>
+	</class>
+
+	<class name="EmbeddableListEntity1" table="EmbListEnt1">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="OtherData" />
+		<list name="ComponentList" table="EmbListEnt1_list">
+			<key column="listColumn"/>
+			<index column="listIndex" />
+			<composite-element class="NHibernate.Envers.Tests.Entities.Components.Component3">
+				<property name="Str1" />
+				<nested-composite-element name="AuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="audComp_key"/>
+					<property name="Value" column="audComp_value"/>
+					<property name="Description" column="audComp_description"/>
+				</nested-composite-element>
+				<nested-composite-element name="NonAuditedComponent" class="NHibernate.Envers.Tests.Entities.Components.Component4">
+					<property name="Key" column="notaudComp_key"/>
+					<property name="Value" column="notaudComp_value"/>
+					<property name="Description" column="notaudComp_description"/>
+				</nested-composite-element>
+			</composite-element>
+		</list>
+	</class>
+	
+	<class name="EmbeddableListEntity2" table="EmbListEnt2">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<list name="ComponentList" table="EmbListEnt2_list">
+			<key column="listColumn"/>
+			<index column="listIndex" />
+			<composite-element class="NHibernate.Envers.Tests.Entities.Components.Relations.ManyToOneEagerComponent">
+				<property name="Data" />
+				<many-to-one name="Entity" class="StrTestNoProxyEntity" fetch="join" />
+			</composite-element>
+		</list>
+	</class>
+
+	<class name="StrTestNoProxyEntity" lazy="false" table="STR_TEST_NP">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Str"/>
+	</class>
 </hibernate-mapping>

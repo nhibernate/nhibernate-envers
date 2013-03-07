@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NHibernate.Envers.Tests</RootNamespace>
     <AssemblyName>NHibernate.Envers.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -18,6 +18,7 @@
     <UpgradeBackupLocation />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Src\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +48,7 @@
       <HintPath>..\packages\log4net.2.0.0\lib\net35-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.3.3.3-CR1\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,19 +66,36 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Collection\EmbeddableListEntity1.cs" />
+    <Compile Include="Entities\Collection\EmbeddableListEntity2.cs" />
+    <Compile Include="Entities\Collection\EmbeddableMapEntity.cs" />
+    <Compile Include="Entities\Collection\EmbeddableSetEntity.cs" />
+    <Compile Include="Entities\Components\Component3.cs" />
+    <Compile Include="Entities\Components\Component4.cs" />
     <Compile Include="Entities\Components\DefaultValueComponent1.cs" />
     <Compile Include="Entities\Components\DefaultValueComponent2.cs" />
     <Compile Include="Entities\Components\DefaultValueComponentTestEntity.cs" />
+    <Compile Include="Entities\Components\Relations\ManyToOneEagerComponent.cs" />
     <Compile Include="Entities\Ids\CompositeDateIdTestEntity.cs" />
     <Compile Include="Entities\Ids\DateEmbId.cs" />
     <Compile Include="Entities\Ids\DateIdTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneIdNotAuditedTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
+    <Compile Include="Entities\Ids\UnusualIdNamingEntity.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefEdPK.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefIngPK.cs" />
+    <Compile Include="Entities\Collection\StrTestNoProxyEntity.cs" />
     <Compile Include="Integration\Basic\EmptyStringTest.cs" />
     <Compile Include="Integration\Basic\OutsideTransactionTest.cs" />
     <Compile Include="Integration\Basic\TransactionRollbackBehaviourTest.cs" />
+    <Compile Include="Integration\Collection\Embeddable\BasicEmbeddableCollectionTest.cs" />
+    <Compile Include="Integration\Collection\Embeddable\DarkCharacter.cs" />
+    <Compile Include="Integration\Collection\Embeddable\EmbeddableList1Test.cs" />
+    <Compile Include="Integration\Collection\Embeddable\EmbeddableList2Test.cs" />
+    <Compile Include="Integration\Collection\Embeddable\EmbeddableMapTest.cs" />
+    <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
+    <Compile Include="Integration\Collection\Embeddable\Name.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedMergeTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\FactoryTest.cs" />
@@ -873,6 +891,7 @@
     <EmbeddedResource Include="Integration\Ids\EmbeddedId\Mapping.hbm.xml" />
     <EmbeddedResource Include="Entities\OneToOne\EagerLoading.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\EntityInstantiation\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Collection\Embeddable\DarkCharacter.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

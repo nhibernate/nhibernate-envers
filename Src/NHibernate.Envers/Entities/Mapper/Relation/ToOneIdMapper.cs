@@ -6,6 +6,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Id;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools;
+using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
@@ -101,6 +102,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			}
 			// Not audited relation, look up entity with Hibernate.
 			return versionsReader.SessionImplementor.ImmediateLoad(entityName, entityId);
+		}
+
+		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
+		{
+			_delegat.AddIdsEqualToQuery( parameters, prefix1, _delegat, prefix2 );
 		}
 	}
 }

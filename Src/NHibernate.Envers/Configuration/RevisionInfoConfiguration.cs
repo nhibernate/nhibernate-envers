@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
-using Iesi.Collections.Generic;
+using System.Xml.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Configuration.Metadata.Reader;
@@ -39,23 +38,17 @@ namespace NHibernate.Envers.Configuration
 			revisionPropType = typeof(int);
 		}
 
-		private XmlDocument generateDefaultRevisionInfoXmlMapping()
+		private XDocument generateDefaultRevisionInfoXmlMapping()
 		{
-			var document = new XmlDocument();
+			var document = new XDocument();
 
 			var classMapping = MetadataTools.CreateEntity(document,
 									new AuditTableData(null, null, _globalCfg.DefaultSchemaName, _globalCfg.DefaultCatalogName),
 									null, false);
 
-			classMapping.SetAttribute("name", revisionInfoEntityName);
-			classMapping.SetAttribute("table", "REVINFO");
+			classMapping.Add(new XAttribute("name", revisionInfoEntityName), new XAttribute("table", "REVINFO"));
 
-			var idProperty = MetadataTools.AddNativelyGeneratedId(document, classMapping, revisionInfoIdData.Name, revisionPropType);
-
-			var col = idProperty.OwnerDocument.CreateElement("column");
-			col.SetAttribute("name", "REV");
-			//idProperty should have a "generator" node otherwise sth. is wrong.
-			idProperty.InsertBefore(col, idProperty.GetElementsByTagName("generator")[0]);
+			MetadataTools.AddNativelyGeneratedId(classMapping, revisionInfoIdData.Name, revisionPropType);
 
 			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false);
 			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, -1, -1, null, false);
@@ -71,36 +64,31 @@ namespace NHibernate.Envers.Configuration
 			return document;
 		}
 
-		private static void generateEntityNamesTrackingTableMapping(XmlElement classMapping, string propertyName,
+		private static void generateEntityNamesTrackingTableMapping(XElement classMapping, string propertyName,
 																				string joinTableSchema, string joinTableCatalog, 
 																				string joinTableName, string joinTablePrimaryKeyColumnName,
 																				string joinTableValueColumnName, string joinTableValueColumnType)
 		{
-			var set = classMapping.OwnerDocument.CreateElement("set");
-			classMapping.AppendChild(set);
-			set.SetAttribute("name", propertyName);
-			set.SetAttribute("table", joinTableName);
-			set.SetAttribute("schema", joinTableSchema);
-			set.SetAttribute("catalog", joinTableCatalog);
-			set.SetAttribute("cascade", "persist, delete");
-			set.SetAttribute("fetch", "join");
-			set.SetAttribute("lazy", "false");
-			var key = set.OwnerDocument.CreateElement("key");
-			set.AppendChild(key);
-			key.SetAttribute("column", joinTablePrimaryKeyColumnName);
-			var element = set.OwnerDocument.CreateElement("element");
-			set.AppendChild(element);
-			element.SetAttribute("type", joinTableValueColumnType);
-			var column = element.OwnerDocument.CreateElement("column");
-			element.AppendChild(column);
-			column.SetAttribute("name", joinTableValueColumnName);
+			var setMapping = new XElement(MetadataTools.CreateElementName("set"),
+			                              new XAttribute("name", propertyName),
+			                              new XAttribute("table", joinTableName),
+			                              new XAttribute("schema", joinTableSchema),
+			                              new XAttribute("catalog", joinTableCatalog),
+			                              new XAttribute("fetch", "join"),
+			                              new XAttribute("lazy", "false"),
+			                              new XElement(MetadataTools.CreateElementName("key"),
+			                                           new XAttribute("column", joinTablePrimaryKeyColumnName)),
+			                              new XElement(MetadataTools.CreateElementName("element"),
+			                                           new XAttribute("type", joinTableValueColumnType),
+			                                           new XElement(MetadataTools.CreateElementName("column"),
+			                                                        new XAttribute("name", joinTableValueColumnName))));
+			classMapping.Add(setMapping);
 		}
 
-		private XmlElement generateRevisionInfoRelationMapping(string revisionAssQName)
+		private XElement generateRevisionInfoRelationMapping(string revisionAssQName)
 		{
-			var document = new XmlDocument();
-			var revRelMapping = document.CreateElement("key-many-to-one");
-			revRelMapping.SetAttribute("class", revisionAssQName);
+			var revRelMapping = new XElement(MetadataTools.CreateElementName("key-many-to-one"), 
+				new XAttribute("class", revisionAssQName));
 
 			if (revisionPropSqlType != null)
 			{
@@ -154,7 +142,7 @@ namespace NHibernate.Envers.Configuration
 				{
 					if (found)
 						throw new MappingException("Only one property may be annotated with ModifiedEntityNamesAttribute!");
-					if (property.Type.ReturnedClass == typeof(ISet<string>))
+					if (property.Type.ReturnedClass == typeof(Iesi.Collections.Generic.ISet<string>))
 					{
 						modifiedEntityNamesData = new PropertyData(property.Name, property.Name, property.PropertyAccessorName);
 						found = true;
@@ -220,7 +208,7 @@ namespace NHibernate.Envers.Configuration
 		{
 			IRevisionInfoGenerator revisionInfoGenerator;
 			string revisionAssQName;
-			XmlDocument revisionInfoXmlMapping = null;
+			XDocument revisionInfoXmlMapping = null;
 			System.Type revisionInfoClass;
 
 			var revEntityType = nhMappedTypesWithRevisionEntityAttribute(cfg);

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Query.Criteria
 			return this;
 		}
 
-		public void AddToQuery(AuditConfiguration verCfg, String entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
 		{
 			var orParameters = parameters.AddSubParameters(Parameters.OR);
 
@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Query.Criteria
 			{
 				foreach (var criterion in criterions)
 				{
-					criterion.AddToQuery(verCfg, entityName, qb, orParameters);
+					criterion.AddToQuery(verCfg, versionsReader, entityName, qb, orParameters);
 				}
 			}
 		}

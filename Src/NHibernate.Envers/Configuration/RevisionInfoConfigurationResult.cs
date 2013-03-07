@@ -1,4 +1,4 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.RevisionInfo;
 
@@ -7,9 +7,9 @@ namespace NHibernate.Envers.Configuration
 	public class RevisionInfoConfigurationResult 
 	{
 		public RevisionInfoConfigurationResult(IRevisionInfoGenerator revisionInfoGenerator,
-												XmlDocument revisionInfoXmlMapping, 
+												XDocument revisionInfoXmlMapping, 
 												RevisionInfoQueryCreator revisionInfoQueryCreator,
-												XmlElement revisionInfoRelationMapping,
+												XElement revisionInfoRelationMapping,
 												RevisionInfoNumberReader revisionInfoNumberReader,
 												ModifiedEntityNamesReader modifiedEntityNamesReader,
 												string revisionInfoEntityName,
@@ -28,9 +28,9 @@ namespace NHibernate.Envers.Configuration
 		}
 
 		public IRevisionInfoGenerator RevisionInfoGenerator { get; private set; }
-		public XmlDocument RevisionInfoXmlMapping { get; private set; }
+		public XDocument RevisionInfoXmlMapping { get; private set; }
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
-		public XmlElement RevisionInfoRelationMapping { get; private set; }
+		public XElement RevisionInfoRelationMapping { get; private set; }
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
 		public string RevisionInfoEntityName { get; private set; }

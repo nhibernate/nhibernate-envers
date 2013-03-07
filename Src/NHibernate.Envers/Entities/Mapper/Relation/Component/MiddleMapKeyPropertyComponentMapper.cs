@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NHibernate.Engine;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Envers.Tools.Reflection;
 
@@ -32,14 +33,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			return ReflectionTools.GetGetter(dataObject.GetType(), _propertyName, _accessType).Get(dataObject);
 		}
 
-		public void MapToMapFromObject(IDictionary<string, object> data, object obj) 
+		public void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object obj)
 		{
-			// Doing nothing.
 		}
 
-		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2) 
+		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
 		{
-			// Doing nothing.
 		}
 	}
 }

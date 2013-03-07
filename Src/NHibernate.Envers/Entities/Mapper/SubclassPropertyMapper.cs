@@ -47,16 +47,17 @@ namespace NHibernate.Envers.Entities.Mapper
 			main.MapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, 
+																		string referencingPropertyName,
 																		IPersistentCollection newColl, 
 																		object oldColl,
 																		object id) 
 		{
 			var parentCollectionChanges = parentMapper.MapCollectionChanges(
-					referencingPropertyName, newColl, oldColl, id);
+					session, referencingPropertyName, newColl, oldColl, id);
 
 			var mainCollectionChanges = main.MapCollectionChanges(
-					referencingPropertyName, newColl, oldColl, id);
+					session, referencingPropertyName, newColl, oldColl, id);
 
 			if (parentCollectionChanges == null) 
 			{
@@ -89,6 +90,23 @@ namespace NHibernate.Envers.Entities.Mapper
 		public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) 
 		{
 			main.AddComposite(propertyData, propertyMapper);
+		}
+
+		public IDictionary<PropertyData, IPropertyMapper> Properties
+		{
+			get
+			{
+				var joinedProperties = new Dictionary<PropertyData, IPropertyMapper>();
+				foreach (var propertyMapper in parentMapper.Properties)
+				{
+					joinedProperties[propertyMapper.Key] = propertyMapper.Value;
+				}
+				foreach (var propertyMapper in main.Properties)
+				{
+					joinedProperties[propertyMapper.Key] = propertyMapper.Value;
+				}
+				return joinedProperties;
+			}
 		}
 
 		public void Add(PropertyData propertyData) 

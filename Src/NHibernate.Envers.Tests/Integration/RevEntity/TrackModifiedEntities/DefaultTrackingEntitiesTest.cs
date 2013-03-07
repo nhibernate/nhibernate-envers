@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities;
-using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -199,9 +199,9 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 			configuration.SetEnversProperty(ConfigurationKey.TrackEntitiesChangedInRevision, true);
 		}
 
-		private Pair<string, System.Type> createPair(System.Type type)
+		private static Tuple<string, System.Type> createPair(System.Type type)
 		{
-			return new Pair<string, System.Type>(type.FullName, type);
+			return new Tuple<string, System.Type>(type.FullName, type);
 		}
 	}
 }

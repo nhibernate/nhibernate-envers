@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Tools;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -46,12 +46,12 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		public void ShouldFindModifiedEntityTypes()
 		{
 			AuditReader().CrossTypeRevisionChangesReader().FindEntityTypes(1)
-				.Should().Have.SameValuesAs(new Pair<string, System.Type>(typeof(Car).FullName, typeof(Car)),
-													new Pair<string, System.Type>("Personaje", typeof(Person)));
+				.Should().Have.SameValuesAs(new Tuple<string, System.Type>(typeof(Car).FullName, typeof(Car)),
+													new Tuple<string, System.Type>("Personaje", typeof(Person)));
 
 			AuditReader().CrossTypeRevisionChangesReader().FindEntityTypes(2)
-							.Should().Have.SameValuesAs(new Pair<string, System.Type>(typeof(Car).FullName, typeof(Car)),
-													new Pair<string, System.Type>("Personaje", typeof(Person)));
+							.Should().Have.SameValuesAs(new Tuple<string, System.Type>(typeof(Car).FullName, typeof(Car)),
+													new Tuple<string, System.Type>("Personaje", typeof(Person)));
 		}
 
 		protected override void AddToConfiguration(Cfg.Configuration configuration)

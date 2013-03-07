@@ -9,7 +9,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 	{
 		private readonly MiddleComponentData _elementComponentData;
 
-		public SpecialMapper(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData) : base(enversProxyFactory, commonCollectionMapperData, typeof(ISpecialCollection), elementComponentData)
+		public SpecialMapper(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
+			: base(enversProxyFactory, commonCollectionMapperData, typeof(ISpecialCollection), elementComponentData, embeddableElementType)
 		{
 			_elementComponentData = elementComponentData;
 		}

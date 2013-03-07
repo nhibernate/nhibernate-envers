@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers.Configuration.Metadata
 {
@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 	/// </summary>
 	public class AuditEntityNameRegister 
 	{
-		private readonly ISet<string> auditEntityNames = new HashedSet<string>();
+		private readonly ISet<string> auditEntityNames = new HashSet<string>();
 
 		/// <summary>
 		/// </summary>

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NHibernate.Envers</RootNamespace>
     <AssemblyName>NHibernate.Envers</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -18,6 +18,7 @@
     <UpgradeBackupLocation />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Src\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +54,7 @@
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.3.3.2.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.3.3.3-CR1\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -61,6 +62,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\Attributes\AttributeConfigurationWithRevisionListener.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Entities\Mapper\Relation\AbstractCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractOneToOneMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\AbstractToOneMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Component\MiddleEmbeddableComponentMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\IdBagCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\IEnversProxyFactory.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Initializor\SortedMapCollectionInitializor.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\CollectionProxyInterceptor.cs" />
     <Compile Include="Entities\Mapper\Relation\Lazy\Proxy\SessionImplToOneInterceptor.cs" />
     <Compile Include="Entities\Mapper\Relation\OneToOnePrimaryKeyJoinColumnMapper.cs" />
+    <Compile Include="Entities\Mapper\Relation\Query\AbstractRelationQueryGenerator.cs" />
     <Compile Include="Entities\Mapper\Relation\Query\QueryConstants.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedMapCollectionMapper.cs" />
     <Compile Include="Entities\Mapper\Relation\SortedSetCollectionMapper.cs" />
@@ -264,7 +268,6 @@
     <Compile Include="Query\Projection\PropertyAuditProjection.cs" />
     <Compile Include="Query\Property\EntityPropertyName.cs" />
     <Compile Include="Query\Property\IPropertyNameGetter.cs" />
-    <Compile Include="Query\Property\OriginalIdPropertyName.cs" />
     <Compile Include="Query\Property\RevisionNumberPropertyName.cs" />
     <Compile Include="Query\Property\RevisionPropertyPropertyName.cs" />
     <Compile Include="Query\Property\RevisionTypePropertyName.cs" />
@@ -300,15 +303,12 @@
     <Compile Include="Tools\Graph\IGraphDefiner.cs" />
     <Compile Include="Tools\Graph\TopologicalSort.cs" />
     <Compile Include="Tools\Graph\Vertex.cs" />
-    <Compile Include="Tools\IPair.cs" />
     <Compile Include="Tools\MappingTools.cs" />
     <Compile Include="Tools\Incrementor.cs" />
-    <Compile Include="Tools\Pair.cs" />
     <Compile Include="Tools\Query\Parameters.cs" />
     <Compile Include="Tools\Reflection\ReflectionTools.cs" />
     <Compile Include="Tools\StringTools.cs" />
     <Compile Include="Tools\Toolz.cs" />
-    <Compile Include="Tools\Triple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

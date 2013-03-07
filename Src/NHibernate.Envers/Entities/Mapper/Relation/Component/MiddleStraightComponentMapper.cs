@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NHibernate.Engine;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
@@ -24,12 +25,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			return data.Contains(_propertyName) ? data[_propertyName] : null;
 		}
 
-		public void MapToMapFromObject(IDictionary<string, object> data, object obj) 
+		public void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object obj)
 		{
-			data.Add(_propertyName, obj);
+			idData.Add(_propertyName, obj);
 		}
 
-		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2) 
+		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
 		{
 			throw new NotSupportedException("Cannot use this mapper with a middle table!");
 		}

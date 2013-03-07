@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
@@ -22,9 +21,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			_comparer = comparer;
 		}
 
-		protected override ISet<T> InitializeCollection(int size)
+		protected override Iesi.Collections.Generic.ISet<T> InitializeCollection(int size)
 		{
-			return new SortedSet<T>(_comparer);
+			return new Iesi.Collections.Generic.SortedSet<T>(_comparer);
 		}
 	}
 }
