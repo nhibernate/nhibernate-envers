@@ -1,4 +1,5 @@
 ﻿using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
@@ -14,7 +15,7 @@ namespace NHibernate.Envers.Query.Criteria
 			_op = op;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
 		{
 			parameters.AddWhereWithParam(auditCfg.AuditEntCfg.RevisionTypePropName, _op, _value);
 		}

@@ -22,10 +22,7 @@ namespace NHibernate.Envers.Configuration
 			OriginalIdPropName = "originalId";
 			RevisionFieldName = ConfigurationKey.RevisionFieldName.ToString(properties);
 			RevisionTypePropName = ConfigurationKey.RevisionTypeFieldName.ToString(properties);
-			RevisionTypePropType = "byte";
-
 			RevisionEndFieldName = ConfigurationKey.AuditStrategyValidityEndRevFieldName.ToString(properties);
-
 			IsRevisionEndTimestampEnabled = ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp.ToBool(properties);
 			if (IsRevisionEndTimestampEnabled)
 			{
@@ -45,7 +42,6 @@ namespace NHibernate.Envers.Configuration
 		public string RevisionFieldName { get; private set; }
 		public string RevisionNumberPath { get; private set; }
 		public string RevisionTypePropName { get; private set; }
-		public string RevisionTypePropType { get; private set; }
 		public string RevisionEndFieldName { get; private set; }
 		public bool IsRevisionEndTimestampEnabled { get; private set; }
 		public string RevisionEndTimestampFieldName { get; private set; }

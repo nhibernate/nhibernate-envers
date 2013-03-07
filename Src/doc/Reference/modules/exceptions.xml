@@ -8,7 +8,7 @@
 
         <para>
             Bags (the corresponding CLR type is IList&lt;T&gt;) with duplicate elements.
-            The reason is that persisting, for example a bag of String-s, violates a principle
+            The reason is that persisting, for example a bag of string-s, violates a principle
             of relational databases: that each table is a set of tuples. In case of bags,
             however (which require a join table), if there is a duplicate element, the two
             tuples corresponding to the elements will be the same. NHibernate allows this,
@@ -40,11 +40,6 @@
         <title>What is not but <emphasis>will</emphasis> be supported</title>
 
         <orderedlist>
-            <listitem>
-                <para>
-                    Collections of components
-                </para>
-            </listitem>
 			  <listitem>
 				  <para>
 					  ManyToAny reference

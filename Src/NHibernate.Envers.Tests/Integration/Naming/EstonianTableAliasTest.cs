@@ -82,7 +82,7 @@ namespace ee.Estonia.Entities
 	{
 		public virtual long Id { get; set; }
 		public virtual string Data { get; set; }
-		public virtual ISet<Child> Collection { get; set; }
+		public virtual Iesi.Collections.Generic.ISet<Child> Collection { get; set; }
 
 		public override bool Equals(object obj)
 		{

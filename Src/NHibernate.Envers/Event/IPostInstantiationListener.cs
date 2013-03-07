@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NHibernate.Envers.Event
+﻿namespace NHibernate.Envers.Event
 {
 	/// <summary>
 	/// Called after a versioned entity is instantiated

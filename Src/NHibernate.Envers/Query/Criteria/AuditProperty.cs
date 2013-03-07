@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Projection;
 using NHibernate.Envers.Query.Property;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Criteria
 {
@@ -21,12 +21,12 @@ namespace NHibernate.Envers.Query.Criteria
 			_propertyNameGetter = propertyNameGetter;
 		}
 
-		public IAuditCriterion Eq(object value)
+		public virtual IAuditCriterion Eq(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "=");
 		}
 
-		public IAuditCriterion Ne(object value)
+		public virtual IAuditCriterion Ne(object value)
 		{
 			return new SimpleAuditExpression(_propertyNameGetter, value, "<>");
 		}
@@ -188,9 +188,9 @@ namespace NHibernate.Envers.Query.Criteria
 		}
 
 
-		public Triple<string, string, bool> GetData(AuditConfiguration auditCfg)
+		public Tuple<string, string, bool> GetData(AuditConfiguration auditCfg)
 		{
-			return new Triple<string, string, bool>(null, _propertyNameGetter.Get(auditCfg), false);
+			return new Tuple<string, string, bool>(null, _propertyNameGetter.Get(auditCfg), false);
 		}
 
 		public IAuditOrder Asc()
@@ -203,12 +203,12 @@ namespace NHibernate.Envers.Query.Criteria
 			return new PropertyAuditOrder(_propertyNameGetter, false);
 		}
 
-		public IAuditCriterion HasChanged()
+		public virtual IAuditCriterion HasChanged()
 		{
 			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), true, "=");
 		}
 
-		public IAuditCriterion HasNotChanged()
+		public virtual IAuditCriterion HasNotChanged()
 		{
 			return new SimpleAuditExpression(new ModifiedFlagPropertyName(_propertyNameGetter), false, "=");
 		}

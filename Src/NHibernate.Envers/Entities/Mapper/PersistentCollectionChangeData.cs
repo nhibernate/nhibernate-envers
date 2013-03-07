@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NHibernate.Envers.Tools;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NHibernate.Envers.Entities.Mapper
 {
@@ -19,14 +19,14 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public object GetChangedElement()
 		{
-			var elementAsPair = changedElement as IPair;
-			return elementAsPair != null ? elementAsPair.Second : keyValueOrDefault(changedElement, "Value", changedElement);
+			var elementAsPair = changedElement as Tuple<int, object>;
+			return elementAsPair != null ? elementAsPair.Item2 : keyValueOrDefault(changedElement, "Value", changedElement);
 		}
 
 		public object GetChangedElementIndex()
 		{
-			var elementAsPair = changedElement as IPair;
-			return elementAsPair != null ? elementAsPair.First : keyValueOrDefault(changedElement, "Key", null);
+			var elementAsPair = changedElement as Tuple<int, object>;
+			return elementAsPair != null ? elementAsPair.Item1 : keyValueOrDefault(changedElement, "Key", null);
 		}
 
 		private static object keyValueOrDefault(object changedElement, string keyOrValue, object defaultValue)

@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Synchronization.Work;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Synchronization
 		private readonly ISessionImplementor session;
 		private readonly LinkedList<IAuditWorkUnit> workUnits;
 		private readonly Queue<IAuditWorkUnit> undoQueue;
-		private readonly IDictionary<Pair<string, object>, IAuditWorkUnit> usedIds;
+		private readonly IDictionary<Tuple<string, object>, IAuditWorkUnit> usedIds;
 		private readonly EntityChangeNotifier entityChangeNotifier;
 		private object revisionData;
 		private bool revisionInfoPersistedInCurrentTransaction;
@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Synchronization
 
 			workUnits = new LinkedList<IAuditWorkUnit>();
 			undoQueue = new Queue<IAuditWorkUnit>();
-			usedIds = new Dictionary<Pair<string, object>, IAuditWorkUnit>();
+			usedIds = new Dictionary<Tuple<string, object>, IAuditWorkUnit>();
 			entityChangeNotifier = new EntityChangeNotifier(revisionInfoGenerator, session);
 		}
 
@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Synchronization
 			else
 			{
 				var entityName = vwu.EntityName;
-				var usedIdsKey = new Pair<string, object>(entityName, entityId);
+				var usedIdsKey = new Tuple<string, object>(entityName, entityId);
 
 				var other = alreadyScheduledWorkUnit(usedIdsKey);
 				if(other!=null)
@@ -73,16 +73,16 @@ namespace NHibernate.Envers.Synchronization
 		/// </summary>
 		/// <param name="idKey"> Work unit's identifier.</param>
 		/// <returns>Corresponding work unit or <code>null</code> if no satisfying result was found.</returns>
-		private IAuditWorkUnit alreadyScheduledWorkUnit(Pair<string, object> idKey)
+		private IAuditWorkUnit alreadyScheduledWorkUnit(Tuple<string, object> idKey)
 		{
-			var entityMetamodel = session.Factory.GetEntityPersister(idKey.First).EntityMetamodel;
+			var entityMetamodel = session.Factory.GetEntityPersister(idKey.Item1).EntityMetamodel;
 			var rootEntityName = entityMetamodel.RootName;
 			var rootEntityMetamodel = session.Factory.GetEntityPersister(rootEntityName).EntityMetamodel;
 
 			// Checking all possible subtypes, supertypes and the actual class.
 			foreach (var entityName in rootEntityMetamodel.SubclassEntityNames)
 			{
-				var key = new Pair<string, object>(entityName, idKey.Second);
+				var key = new Tuple<string, object>(entityName, idKey.Item2);
 				if (usedIds.ContainsKey(key))
 				{
 					return usedIds[key];

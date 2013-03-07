@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			this.referencingPropertyName = referencingPropertyName;
 
 			collectionChanges = auditCfg.EntCfg[EntityName].PropertyMapper
-					.MapCollectionChanges(referencingPropertyName, collection, snapshot, id);
+					.MapCollectionChanges(sessionImplementor, referencingPropertyName, collection, snapshot, id);
 		}
 
 		private PersistentCollectionChangeWorkUnit(ISessionImplementor sessionImplementor, 
@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Setting the revision number
 				((IDictionary<string, object>) persistentCollectionChangeData.Data[entitiesCfg.OriginalIdPropName])
 						.Add(entitiesCfg.RevisionFieldName, revisionData);
-				VerCfg.GlobalCfg.AuditStrategy.PerformCollectionChange(session, persistentCollectionChangeData, revisionData);
+				VerCfg.GlobalCfg.AuditStrategy.PerformCollectionChange(session, EntityName, referencingPropertyName, VerCfg, persistentCollectionChangeData, revisionData);
 			}
 		}
 

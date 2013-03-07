@@ -36,6 +36,11 @@ namespace NHibernate.Envers.Entities.Mapper
 			_delegate.AddComposite(propertyData, propertyMapper);
 		}
 
+		public IDictionary<PropertyData, IPropertyMapper> Properties 
+		{ 
+			get { return _delegate.Properties; }
+		}
+
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data,
 									   object newObj, object oldObj)
 		{
@@ -89,12 +94,13 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, 
+																		string referencingPropertyName,
 																		IPersistentCollection newColl,
 																		object oldColl,
 																		object id)
 		{
-			return _delegate.MapCollectionChanges(referencingPropertyName, newColl, oldColl, id);
+			return _delegate.MapCollectionChanges(session, referencingPropertyName, newColl, oldColl, id);
 		}
 
 		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)

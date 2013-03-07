@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Entities.Mapper;
@@ -42,10 +41,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			_auditedPropertiesHolder = auditedPropertiesHolder;
 			_globalCfg = globalCfg;
 			_propertyNamePrefix = propertyNamePrefix;
-			_overriddenAuditedProperties = new HashedSet<string>();
-			_overriddenNotAuditedProperties = new HashedSet<string>();
-			_overriddenAuditedClasses = new HashedSet<System.Type>();
-			_overriddenNotAuditedClasses = new HashedSet<System.Type>();
+			_overriddenAuditedProperties = new HashSet<string>();
+			_overriddenNotAuditedProperties = new HashSet<string>();
+			_overriddenAuditedClasses = new HashSet<System.Type>();
+			_overriddenNotAuditedClasses = new HashSet<System.Type>();
 		}
 
 		public void Read()
@@ -442,7 +441,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private static readonly AuditJoinTableAttribute DEFAULT_AUDIT_JOIN_TABLE = new AuditJoinTableAttribute();
 
-		private class ComponentPropertiesSource : IPersistentPropertiesSource
+		internal class ComponentPropertiesSource : IPersistentPropertiesSource
 		{
 			public ComponentPropertiesSource(Component component)
 			{

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Proxy;
@@ -58,13 +59,13 @@ namespace NHibernate.Envers.Tools
 		 * @param list List to transform.
 		 * @return A list of pairs: ((0, element_at_index_0), (1, element_at_index_1), ...)
 		 */
-		public static IList<Pair<int, T>> ListToIndexElementPairList<T>(IList list)
+		public static IList<Tuple<int, object>> ListToIndexElementPairList(IList list)
 		{
-			var ret = new List<Pair<int, T>>();
+			var ret = new List<Tuple<int, object>>();
 
 			for (var i = 0; i < list.Count; i++)
 			{
-				ret.Add(new Pair<int,T>(i, (T)list[i]));
+				ret.Add(new Tuple<int,object>(i, list[i]));
 			}
 
 			return ret;

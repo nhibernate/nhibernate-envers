@@ -1,24 +1,23 @@
 ﻿using System;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Property;
-using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Order
 {
 	public class PropertyAuditOrder : IAuditOrder
 	{
-		private readonly IPropertyNameGetter propertyNameGetter;
-		private readonly bool asc;
+		private readonly IPropertyNameGetter _propertyNameGetter;
+		private readonly bool _asc;
 
 		public PropertyAuditOrder(IPropertyNameGetter propertyNameGetter, bool asc)
 		{
-			this.propertyNameGetter = propertyNameGetter;
-			this.asc = asc;
+			_propertyNameGetter = propertyNameGetter;
+			_asc = asc;
 		}
 
-		public Pair<String, Boolean> GetData(AuditConfiguration auditCfg)
+		public Tuple<string, bool> GetData(AuditConfiguration auditCfg)
 		{
-			return new Pair<String, Boolean>(propertyNameGetter.Get(auditCfg), asc);
+			return new Tuple<String, Boolean>(_propertyNameGetter.Get(auditCfg), _asc);
 		}
 	}
 }

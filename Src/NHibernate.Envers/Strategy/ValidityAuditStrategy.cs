@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
+using System.Xml.Linq;
+using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper;
@@ -10,6 +10,7 @@ using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Synchronization;
 using NHibernate.Envers.Tools.Query;
+using NHibernate.Type;
 
 namespace NHibernate.Envers.Strategy
 {
@@ -71,18 +72,40 @@ namespace NHibernate.Envers.Strategy
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void PerformCollectionChange(ISession session, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
+		public void PerformCollectionChange(ISession session, string entityName, string propertyName, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision)
 		{
 			var qb = new QueryBuilder(persistentCollectionChangeData.EntityName, QueryConstants.MiddleEntityAlias);
 
-			// Adding a parameter for each id component, except the rev number
 			var originalIdPropName = _auditConfiguration.AuditEntCfg.OriginalIdPropName;
 			var originalId = (IDictionary)persistentCollectionChangeData.Data[originalIdPropName];
+			var revisionFieldName = auditCfg.AuditEntCfg.RevisionFieldName;
+			var revisionTypePropName = auditCfg.AuditEntCfg.RevisionTypePropName;
+
+			// Adding a parameter for each id component, except the rev number and type.
 			foreach (DictionaryEntry originalIdKeyValue in originalId)
 			{
-				if (!_auditConfiguration.AuditEntCfg.RevisionFieldName.Equals(originalIdKeyValue.Key))
+				if (!revisionFieldName.Equals(originalIdKeyValue.Key) && !revisionTypePropName.Equals(originalIdKeyValue.Key))
 				{
 					qb.RootParameters.AddWhereWithParam(originalIdPropName + "." + originalIdKeyValue.Key, true, "=", originalIdKeyValue.Value);
+				}
+			}
+
+			var sessionFactory = ((ISessionImplementor)session).Factory;
+			var propertyType = sessionFactory.GetEntityPersister(entityName).GetPropertyType(propertyName);
+			if (propertyType.IsCollectionType)
+			{
+				var collectionPropertyType = (CollectionType)propertyType;
+				// Handling collection of components.
+				if (collectionPropertyType.GetElementType(sessionFactory) is ComponentType)
+				{
+					// Adding restrictions to compare data outside of primary key.
+					foreach (var dataEntry in persistentCollectionChangeData.Data)
+					{
+						if (!originalIdPropName.Equals(dataEntry.Key))
+						{
+							qb.RootParameters.AddWhereWithParam(dataEntry.Key, true, "=", dataEntry.Value);
+						}
+					}
 				}
 			}
 
@@ -113,7 +136,7 @@ namespace NHibernate.Envers.Strategy
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
 		}
 
-		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, params MiddleComponentData[] componentDatas)
+		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, string alias1, params MiddleComponentData[] componentDatas)
 		{
 			var rootParameters = rootQueryBuilder.RootParameters;
 			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
@@ -123,15 +146,11 @@ namespace NHibernate.Envers.Strategy
 		/// Adds a <![CDATA[<many-to-one>]]> mapping to the revision entity as an endrevision.
 		/// Also, if <see cref="AuditEntitiesConfiguration.IsRevisionEndTimestampEnabled"/> set, adds a timestamp when the revision is no longer valid.
 		/// </summary>
-		public void AddExtraRevisionMapping(XmlElement classMapping, XmlElement revisionInfoRelationMapping)
+		public void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping)
 		{
 			var verEntCfg = _auditConfiguration.AuditEntCfg;
 			var manyToOne = MetadataTools.AddManyToOne(classMapping, verEntCfg.RevisionEndFieldName, verEntCfg.RevisionInfoEntityAssemblyQualifiedName, true, true);
-			foreach (var clonedNode in from XmlNode node2Copy in revisionInfoRelationMapping.ChildNodes
-												select manyToOne.OwnerDocument.ImportNode(node2Copy, true))
-			{
-				manyToOne.AppendChild(clonedNode);
-			}
+			manyToOne.Add(revisionInfoRelationMapping.Elements());
 			MetadataTools.AddOrModifyColumn(manyToOne, verEntCfg.RevisionEndFieldName);
 
 			if (verEntCfg.IsRevisionEndTimestampEnabled)

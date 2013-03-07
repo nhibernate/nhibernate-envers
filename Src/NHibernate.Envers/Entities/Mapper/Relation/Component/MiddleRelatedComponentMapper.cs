@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NHibernate.Engine;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Component
@@ -23,14 +24,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			return entityInstantiator.CreateInstanceFromVersionsEntity(_relatedIdData.EntityName, data, revision);
 		}
 
-		public void MapToMapFromObject(IDictionary<string, object> data, object obj)
+		public void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object obj)
 		{
-			_relatedIdData.PrefixedMapper.MapToMapFromEntity(data, obj);
+			_relatedIdData.PrefixedMapper.MapToMapFromEntity(idData, obj);
 		}
 
-		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)
+		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
 		{
-			_relatedIdData.PrefixedMapper.AddIdsEqualToQuery(parameters, prefix1, prefix2);
+			_relatedIdData.PrefixedMapper.AddIdsEqualToQuery(parameters, idPrefix1, idPrefix2);
 		}
 	}
 }

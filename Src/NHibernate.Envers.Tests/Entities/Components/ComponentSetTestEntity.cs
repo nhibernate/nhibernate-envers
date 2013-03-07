@@ -1,4 +1,5 @@
 using Iesi.Collections.Generic;
+using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.Components
 {
@@ -11,7 +12,7 @@ namespace NHibernate.Envers.Tests.Entities.Components
 
 		public virtual int Id { get; set; }
 
-		//[Audited] todo: make test pass later
+		[Audited]
 		public virtual ISet<Component1> Comps { get; set; }
 
 		public override bool Equals(object obj)

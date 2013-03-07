@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 
 namespace NHibernate.Envers.Entities
 {
@@ -22,11 +21,11 @@ namespace NHibernate.Envers.Entities
 			this.entitiesConfigurations = entitiesConfigurations;
 			this.notAuditedEntitiesConfigurations = notAuditedEntitiesConfigurations;
 
-			GenerateBidirectionRelationInfo();
-			GenerateVersionsEntityToEntityNames();
+			generateBidirectionRelationInfo();
+			generateVersionsEntityToEntityNames();
 		}
 
-		private void GenerateVersionsEntityToEntityNames() 
+		private void generateVersionsEntityToEntityNames() 
 		{
 			_entityNamesForVersionsEntityNames = new Dictionary<string, string>();
 
@@ -36,7 +35,7 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-		private void GenerateBidirectionRelationInfo() 
+		private void generateBidirectionRelationInfo() 
 		{
 			// Checking each relation if it is bidirectional. If so, storing that information.
 			foreach (var entityName in entitiesConfigurations.Keys) 
@@ -67,7 +66,7 @@ namespace NHibernate.Envers.Entities
 			}
 		}
 
-		public EntityConfiguration this [string entityName]
+		public EntityConfiguration this[string entityName]
 		{
 			get { return entitiesConfigurations.ContainsKey(entityName)? entitiesConfigurations[entityName]:null; }
 		}
@@ -127,15 +126,15 @@ namespace NHibernate.Envers.Entities
 
 		private ISet<string> entityAndParentsNames(string entityName)
 		{
-			var names = new HashedSet<string>();
+			var names = new HashSet<string>();
 			addWithParentEntityNames(entityName, names);
 			return names;
 		}
 
-		public ISet<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
+		public IEnumerable<string> ToPropertyNames(string fromEntityName, string fromPropertyName, string toEntityName)
 		{
 			var entAndParNames = entityAndParentsNames(fromEntityName);
-			var toPropertyNames = new HashedSet<string>();
+			var toPropertyNames = new HashSet<string>();
 			foreach (var relationDescription in relationDescriptions(toEntityName))
 			{
 				var relToEntityName = relationDescription.ToEntityName;

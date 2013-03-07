@@ -38,8 +38,7 @@ namespace NHibernate.Envers.Query.Impl
 			        let revisionData = (TRevisionEntity) resultRow[1]
 			        let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
 			        let entity = (TEntity) EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision)
-			        select new RevisionEntityInfo<TEntity, TRevisionEntity>(entity, revisionData, (RevisionType) versionsEntity[revisionTypePropertyName]))
-				.Cast<IRevisionEntityInfo<TEntity, TRevisionEntity>>();
+			        select new RevisionEntityInfo<TEntity, TRevisionEntity>(entity, revisionData, (RevisionType) versionsEntity[revisionTypePropertyName]));
 		}
 	}
 }

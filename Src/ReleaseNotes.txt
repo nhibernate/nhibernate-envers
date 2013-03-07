@@ -1,6 +1,15 @@
+=== v2.0 ===
+* NHibernate.Envers now targets .net framework 4.0
+* IAuditProjection.GetData now returns Tuple<string, string, Boolean>
+* ICrossTypeRevisionChangesReader.FindEntityTypes now returns ISet<Tuple<string, System.Type>>
+* Non generic sets no longer part of ICollectionMapperFactory because NH Core no longer supports it.
+* AuditEntity.Id().Count("id") removed. Use AuditEntity.Id().Count() instead.
+
+
 === vNext ===
 * IAuditStrategy.Initialize(AuditConfiguration) added. AuditConfiguration and GlobalConfiguration removed from interface methods.
-
+* All factory methods on ICollectionMapperFactory has one extra parameter - embeddableElementType saying if it's a collection of components or not
+* ...and the same goes for ICustomCollectionMapperFactory
 
 
 === 1.5 GA (v 1.5.0), 2012-12-05, NH 3.3.2 GA ====

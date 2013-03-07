@@ -149,7 +149,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 		}
 
-		private Pair<IPropertyMapper, string> mapperAndDelegatePropertyName(string referencingPropertyName)
+		private Tuple<IPropertyMapper, string> mapperAndDelegatePropertyName(string referencingPropertyName)
 		{
 			// Name of the property, to which we will delegate the mapping.
 			string delegatePropertyName;
@@ -175,7 +175,7 @@ namespace NHibernate.Envers.Entities.Mapper
 				delegatePropertyName = referencingPropertyName;
 			}
 			var propertyMapper = propertyMapperKey(referencingPropertyName);
-			return propertyMapper == null ? null : new Pair<IPropertyMapper, string>(propertyMapper, delegatePropertyName);
+			return propertyMapper == null ? null : new Tuple<IPropertyMapper, string>(propertyMapper, delegatePropertyName);
 		}
 
 		private IPropertyMapper propertyMapperKey(string referencingPropertyName)
@@ -197,11 +197,12 @@ namespace NHibernate.Envers.Entities.Mapper
 			var pair = mapperAndDelegatePropertyName(collectionPropertyName);
 			if (pair != null)
 			{
-				pair.First.MapModifiedFlagsToMapForCollectionChange(pair.Second, data);
+				pair.Item1.MapModifiedFlagsToMapForCollectionChange(pair.Item2, data);
 			}
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, 
+																		string referencingPropertyName,
 																		IPersistentCollection newColl,
 																		object oldColl,
 																		object id)
@@ -209,7 +210,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			var pair = mapperAndDelegatePropertyName(referencingPropertyName);
 			return pair == null ? 
 								null :
-								pair.First.MapCollectionChanges(pair.Second, newColl, oldColl, id);
+								pair.Item1.MapCollectionChanges(session, pair.Item2, newColl, oldColl, id);
 		}
 	}
 }

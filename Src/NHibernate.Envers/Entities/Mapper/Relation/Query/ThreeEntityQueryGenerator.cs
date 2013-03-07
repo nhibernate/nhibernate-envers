@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Reader;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools.Query;
 
@@ -13,10 +12,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// Selects data from a relation middle-table and a two related versions entity.
 	/// </summary>
 	[Serializable]
-	public sealed class ThreeEntityQueryGenerator : IRelationQueryGenerator
+	public sealed class ThreeEntityQueryGenerator : AbstractRelationQueryGenerator
 	{
 		private readonly string _queryString;
-		private readonly MiddleIdData _referencingIdData;
 
 		public ThreeEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
@@ -24,10 +22,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 										MiddleIdData referencingIdData,
 										MiddleIdData referencedIdData,
 										MiddleIdData indexIdData,
+										bool revisionTypeInId,
 										IEnumerable<MiddleComponentData> componentDatas)
+			: base(verEntCfg, referencingIdData, revisionTypeInId)
 		{
-			_referencingIdData = referencingIdData;
-
 			/*
 			 * The query that we need to create:
 			 *   SELECT new list(ee, e, f) FROM versionsReferencedEntity e, versionsIndexEntity f, middleEntity ee
@@ -102,32 +100,25 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
 								 verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName,
-								 eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, componentDatas.ToArray());
+								 eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, QueryConstants.MiddleEntityAlias, componentDatas.ToArray());
 
 
+			var revisionTypePropName = RevisionTypePath();
 			// ee.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(verEntCfg.RevisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
+			rootParameters.AddWhereWithNamedParam(revisionTypePropName, "!=", QueryConstants.DelRevisionTypeParameter);
 			// e.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
+			rootParameters.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + revisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 			// f.revision_type != DEL
-			rootParameters.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + verEntCfg.RevisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
+			rootParameters.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + revisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 
 			var sb = new StringBuilder();
 			qb.Build(sb, null);
 			_queryString = sb.ToString();
 		}
 
-		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override string QueryString()
 		{
-			var query = versionsReader.Session.CreateQuery(_queryString);
-			query.SetParameter(QueryConstants.RevisionParameter, revision);
-			query.SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
-			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
-			{
-				paramData.SetParameterValue(query);
-			}
-
-			return query;
+			return _queryString;
 		}
 	}
 }

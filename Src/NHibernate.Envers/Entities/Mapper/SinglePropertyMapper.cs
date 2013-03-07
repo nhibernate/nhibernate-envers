@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			setter.Set(obj, value);
 		}
 
-		public IList<PersistentCollectionChangeData> MapCollectionChanges(string referencingPropertyName,
+		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, string referencingPropertyName,
 																		 IPersistentCollection newColl,
 																		 object oldColl,
 																		 object id) 

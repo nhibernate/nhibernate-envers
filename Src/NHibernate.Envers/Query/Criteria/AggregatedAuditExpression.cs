@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query.Property;
+using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 
 namespace NHibernate.Envers.Query.Criteria
@@ -31,9 +32,9 @@ namespace NHibernate.Envers.Query.Criteria
 			return this;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
 		{
-			var propertyName = propertyNameGetter.Get(auditCfg);
+			var propertyName = CriteriaTools.DeterminePropertyName(auditCfg, versionsReader, entityName, propertyNameGetter);
 
 			CriteriaTools.CheckPropertyNotARelation(auditCfg, entityName, propertyName);
 
@@ -46,8 +47,8 @@ namespace NHibernate.Envers.Query.Criteria
 			// aggregated one.
 			foreach (var versionsCriteria in criterions)
 			{
-				versionsCriteria.AddToQuery(auditCfg, entityName, qb, subParams);
-				versionsCriteria.AddToQuery(auditCfg, entityName, subQb, subQb.RootParameters);
+				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, qb, subParams);
+				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, subQb, subQb.RootParameters);
 			}
 
 			// Setting the desired projection of the aggregated query

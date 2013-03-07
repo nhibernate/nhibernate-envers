@@ -29,10 +29,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags.Entities
 		[Audited(WithModifiedFlag = false)]
 		public virtual WithModifiedFlagReferencingEntity Referencing2 { get; set; }
 		[Audited(WithModifiedFlag = true)]
-		public virtual ISet<string> StringSet { get; set; }
+		public virtual Iesi.Collections.Generic.ISet<string> StringSet { get; set; }
 		[Audited(WithModifiedFlag = true)]
 		[AuditJoinTable(TableName = "Entitiesset_AUD")]
-		public virtual ISet<StrTestEntity> EntitiesSet { get; set; }
+		public virtual Iesi.Collections.Generic.ISet<StrTestEntity> EntitiesSet { get; set; }
 		[Audited(WithModifiedFlag = true)]
 		public virtual IDictionary<string, string> StringMap { get; set; }
 		[Audited(WithModifiedFlag = true)]
