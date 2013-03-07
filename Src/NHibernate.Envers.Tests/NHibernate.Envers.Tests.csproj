@@ -95,7 +95,7 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableMapTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
-    <Compile Include="Integration\Interfaces\CovariantInterfacesTests.cs" />
+    <Compile Include="NetSpecific\UnitTests\Interfaces\CovariantInterfacesTests.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedMergeTest.cs" />
