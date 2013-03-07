@@ -1,7 +1,7 @@
 ﻿using NHibernate.Envers.Query;
 using NHibernate.Envers.Query.Impl;
 
-namespace NHibernate.Envers.Tests.Integration.Interfaces
+namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Interfaces
 {
     class CovariantInterfacesTests
     {
