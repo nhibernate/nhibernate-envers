@@ -1,0 +1,8 @@
+* We use tabs for code indentation, not spaces. As this is not the default in Visual Studio, you will need to reconfigure Visual Studio to indent with tabs whenever you work on the NHibernate codebase. To make this easier, NHibernate has an editorconfig configuration file to switch Visual Studio automatically between tabs and spaces mode. It is recomended you install editorconfig from the Visual Studio Extension Manager.
+
+* Put your test(s) under NetSpecific folder. Integration folder contains ported (Java) Envers tests.
+
+
+Preferably create your patch with your failing test (with or without the bug fix itself) by creating a pull request on Bitbucket (https://bitbucket.org/RogerKratz/nhibernate.envers).
+1. Create a JIRA ticket describing your issue (http://nhibernate.jira.com/browse/NHE).
+2. Create your pull request. Be sure to link to the JIRA issue in your pull request. Also, go to your JIRA issue and link to your pull request.
