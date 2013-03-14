@@ -1,7 +1,21 @@
-=== vNext ===
+=== 1.6 GA (v 1.6.0), 2013-03-14, NH 3.3.3 CR1 ===
+
+*** Possible breaking change ***
 * IAuditStrategy.Initialize(AuditConfiguration) added. AuditConfiguration and GlobalConfiguration removed from interface methods.
 * All factory methods on ICollectionMapperFactory has one extra parameter - embeddableElementType saying if it's a collection of components or not
 * ...and the same goes for ICustomCollectionMapperFactory
+
+** Bug
+* [NHE-104] - IdBag + WithModifiedFlag throws when inserting
+* [NHE-105] - Detached ManyToMany + WithModifiedFlag throws
+* [NHE-107] - Insert child + update parent misses changed prop for modified flag
+* [NHE-109] - Projections on AuditEntity.Property("id") throws
+
+** Improvement
+* [NHE-38] - Support for collection of Components in envers 
+* [NHE-101] - Add IPostInstantiationListener
+* [NHE-102] - Introducing AuditFactoryAttribute
+
 
 
 === 1.5 GA (v 1.5.0), 2012-12-05, NH 3.3.2 GA ====
