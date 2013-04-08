@@ -15,27 +15,27 @@ using NHibernate.UserTypes;
 
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 {
-	public interface IObservableEnumerable<T> : IEnumerable<T>, INotifyCollectionChanged
+	public interface ICustomEnumerable<T> : IEnumerable<T>, INotifyCollectionChanged
 	{
 	}
 
-	public interface IObservableList<T> : IObservableEnumerable<T>, IList<T>, INotifyPropertyChanged
+	public interface ICustomList<T> : ICustomEnumerable<T>, IList<T>, INotifyPropertyChanged
 	{
 	}
 
-	public class ObservableList<T> : ObservableCollection<T>, IObservableList<T>
+	public class CustomList<T> : ObservableCollection<T>, ICustomList<T>
 	{
-		public ObservableList()
+		public CustomList()
 		{
 		}
 
-		public ObservableList(IEnumerable<T> collection)
+		public CustomList(IEnumerable<T> collection)
 			: base(collection)
 		{
 		}
 	}
 
-	public class ObservableBagType<T> : IUserCollectionType
+	public class CustomBagType<T> : IUserCollectionType
 	{
 		public bool Contains(object collection, object entity)
 		{
@@ -64,29 +64,29 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		// return an instance of the inner collection type
 		public object Instantiate(int anticipatedSize)
 		{
-			return new ObservableList<T>();
+			return new CustomList<T>();
 		}
 
 		public IPersistentCollection Instantiate(ISessionImplementor session, ICollectionPersister persister)
 		{
-			return new PersistentObservableBag<T>(session);
+			return new PersistentCustomBag<T>(session);
 		}
 
 		public IPersistentCollection Wrap(ISessionImplementor session, object collection)
 		{
-			return new PersistentObservableBag<T>(session, (ICollection<T>)collection);
+			return new PersistentCustomBag<T>(session, (ICollection<T>)collection);
 		}
 	}
 
 	[Serializable, DebuggerTypeProxy(typeof(NHibernate.DebugHelpers.CollectionProxy<>))]
-	public class PersistentObservableBag<T> : PersistentGenericBag<T>, IObservableList<T>
+	public class PersistentCustomBag<T> : PersistentGenericBag<T>, ICustomList<T>
 	{
-		public PersistentObservableBag(ISessionImplementor session)
+		public PersistentCustomBag(ISessionImplementor session)
 			: base(session)
 		{
 		}
 
-		public PersistentObservableBag(ISessionImplementor session, ICollection<T> coll)
+		public PersistentCustomBag(ISessionImplementor session, ICollection<T> coll)
 			: base(session, coll)
 		{
 			if (coll != null)
@@ -129,7 +129,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		#endregion
 	}
 
-	public class AutomaticObservableCollection<T> : IObservableList<T>, IList
+	public class AutomaticCustomCollection<T> : ICustomList<T>, IList
 	{
 		public event Action<T> ItemAdded;
 		public event Action<T> ItemRemoved;
@@ -141,7 +141,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		/// </summary>
 		protected bool IgnoreNextCollectionChangedEvent { get; set; }
 
-		public IObservableList<T> List
+		public ICustomList<T> List
 		{
 			get { return _List; }
 			set
@@ -150,7 +150,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 					throw new ArgumentNullException("value");
 
 				if (!(value is IList))
-					throw new ArgumentException("AutomaticObservableCollection can only be used to wrap objects that implement IList.");
+					throw new ArgumentException("AutomaticCustomCollection can only be used to wrap objects that implement IList.");
 
 				if (_List != null)
 				{
@@ -166,9 +166,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 				NotifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 			}
 		}
-		protected IObservableList<T> _List;
+		protected ICustomList<T> _List;
 
-		public AutomaticObservableCollection(IObservableList<T> list)
+		public AutomaticCustomCollection(ICustomList<T> list)
 		{
 			List = list;
 		}

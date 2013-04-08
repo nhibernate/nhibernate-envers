@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		Guid Id { get; set; }
 		string Name { get; set; }
 		string Value { get; set; }
-		IObservableList<IAuditChild> Children { get; }
+		ICustomList<IAuditChild> Children { get; }
 	}
 
 	internal class AuditParent : IAuditParent
@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		private Guid _id;
 		private string _name;
 		private string _value;
-		private AutomaticObservableCollection<IAuditChild> _children;
+		private AutomaticCustomCollection<IAuditChild> _children;
 
 		public Guid Id
 		{
@@ -36,12 +36,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 			set { _value = value; }
 		}
 
-		public IObservableList<IAuditChild> Children
+		public ICustomList<IAuditChild> Children
 		{
 			get { return _children; }
 		}
 
-		private IObservableList<IAuditChild> ChildrenInternal
+		private ICustomList<IAuditChild> ChildrenInternal
 		{
 			get
 			{
