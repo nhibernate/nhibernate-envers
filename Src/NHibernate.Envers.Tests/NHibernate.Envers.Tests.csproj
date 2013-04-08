@@ -95,6 +95,9 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableMapTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
+    <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
+    <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
+    <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />
     <Compile Include="NetSpecific\UnitTests\Interfaces\CovariantInterfacesTests.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
@@ -730,6 +733,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\UnitTests\CustomLists\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\EnumType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\OneToMany\Mapping.hbm.xml" />
