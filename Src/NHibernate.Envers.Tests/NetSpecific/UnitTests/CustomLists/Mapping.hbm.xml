@@ -1,6 +1,6 @@
 ﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 		assembly="NHibernate.Envers.Tests"
-		namespace="NHibernate.Envers.Tests.NetSpecific.UnitTests.Interfaces">
+		namespace="NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists">
 
 	<class name="AuditParent" table="AuditParent" lazy="true">
 		<id name="Id" access="property" column="Id" type="Guid" unsaved-value="00000000-0000-0000-0000-000000000000">
@@ -15,7 +15,7 @@
 		</property>
 		<bag name="Children" table="AuditChild" lazy="true" inverse="true" optimistic-lock="false"
 					access="NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists.InternalPropertyAccessor,NHibernate.Envers.Tests"
-					collection-type="ObservableBagType`1[[IAuditChild]]">
+					collection-type="CustomBagType`1[[IAuditChild]]">
 			<key column="AuditParentId" />
 			<one-to-many class="AuditChild" />
 		</bag>
