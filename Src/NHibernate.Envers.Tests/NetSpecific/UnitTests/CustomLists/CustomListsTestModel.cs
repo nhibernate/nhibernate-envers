@@ -59,6 +59,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		Guid Id { get; set; }
 		string ChildName { get; set; }
 		int ChildValue { get; set; }
+		IAuditParent AuditParent { get; set; }
 	}
 
 	class AuditChild : IAuditChild
@@ -66,6 +67,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		private Guid _id;
 		private string _childName;
 		private int _childValue;
+		private IAuditParent _auditParent;
 
 		public Guid Id
 		{
@@ -83,6 +85,33 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		{
 			get { return _childValue; }
 			set { _childValue = value; }
+		}
+
+		public IAuditParent AuditParent
+		{
+			get { return _auditParent; }
+			set
+			{
+				if ((_auditParent != value))
+				{
+					IAuditParent oldValue = _auditParent;
+					_auditParent = value;
+					if ((oldValue != null))
+					{
+						if (oldValue.Children.Contains(this))
+						{
+							oldValue.Children.Remove(this);
+						}
+					}
+					if ((value != null))
+					{
+						if ((value.Children.Contains(this) == false))
+						{
+							value.Children.Add(this);
+						}
+					}
+				}
+			}
 		}
 	}
 }
