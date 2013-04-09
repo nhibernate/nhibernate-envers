@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var type = _propertyValue.Type;
 			var value = _propertyValue.Element;
 
-			var oneToManyAttachedType = type is BagType || type is SetType || type is MapType || type is ListType;
+			var oneToManyAttachedType = type.IsCollectionType;
 			var inverseOneToMany = (value is OneToMany) && (_propertyValue.IsInverse);
 			var owningManyToOneWithJoinTableBidirectional = value is ManyToOne && _propertyAuditingData.MappedBy != null;
 			var fakeOneToManyBidirectional = (value is OneToMany) && (_propertyAuditingData.MappedBy != null);
