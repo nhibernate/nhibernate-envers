@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 									MiddleComponentData elementComponentData,
 									MiddleComponentData indexComponentData,
 									bool revisionTypeInId)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, revisionTypeInId)
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType, false, revisionTypeInId)
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;

@@ -461,6 +461,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 					var nestedAuditingData = auditData.GetPropertyAuditingData(auditedPropertyName);
 					_mainGenerator.AddValue(parentXmlMapping, component.GetProperty(auditedPropertyName).Value, componentMapper, _referencingEntityName, _xmlMappingData, nestedAuditingData, true, false, true);
 				}
+
+				// Add an additional column holding a number to make each entry unique within the set.
+				// Embeddable properties may contain null values, so cannot be stored within composite primary key.
+				if (_propertyValue.IsSet)
+				{
+					var setOrdinalPropertyName = _mainGenerator.VerEntCfg.EmbeddableSetOrdinalPropertyName;
+					var ordinalProperty = MetadataTools.AddProperty(xmlMapping, setOrdinalPropertyName, "int", true, true);
+					MetadataTools.AddColumn(ordinalProperty, setOrdinalPropertyName, -1, -1, -1, null, false);
+				}
 				return new MiddleComponentData(componentMapper, 0);
 			}
 			// Last but one parameter: collection components are always insertable
