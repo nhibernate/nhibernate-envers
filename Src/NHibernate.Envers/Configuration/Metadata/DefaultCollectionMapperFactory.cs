@@ -25,32 +25,35 @@ namespace NHibernate.Envers.Configuration.Metadata
 			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionMapperFactory");
 		}
 
-		public virtual IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
+		public virtual IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool ordinalInId, bool embeddableElementType)
 		{
 			return new SetCollectionMapper<T>(enversProxyFactory,
-														commonCollectionMapperData, 
-			                                 typeof (ISet<T>),
-			                                 elementComponentData,
-																			embeddableElementType);
+			                                  commonCollectionMapperData,
+			                                  typeof (ISet<T>),
+			                                  elementComponentData,
+			                                  ordinalInId,
+			                                  embeddableElementType);
 		}
 
-		public virtual IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
+		public virtual IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool ordinalInId, bool embeddableElementType)
 		{
 			throw new NotImplementedException("Non generic set is not supported by DefaultCollectionMapperFactory");
 		}
 
-		public virtual IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer, bool embeddableElementType)
+		public virtual IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer, bool ordinalInId, bool embeddableElementType)
 		{
 			throw new NotImplementedException("Non generic sorted set is not supported by DefaultCollectionMapperFactory");
 		}
 
-		public virtual IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer, bool embeddableElementType)
+		public virtual IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer, bool ordinalInId, bool embeddableElementType)
 		{
 			return new SortedSetCollectionMapper<T>(enversProxyFactory,
 											commonCollectionMapperData,
 											typeof(ISet<T>),
 											elementComponentData,
-											comparer, embeddableElementType);
+											comparer,
+											ordinalInId,
+											embeddableElementType);
 		}
 
 		public virtual IPropertyMapper List<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)

@@ -38,6 +38,8 @@ namespace NHibernate.Envers.Configuration
 			_revisionPropBasePath = OriginalIdPropName + "." + RevisionFieldName + ".";
 			_namingStrategy = ConfigurationKey.TableNameStrategy.ToInstance<IEnversNamingStrategy>(properties);
 			_namingStrategy.Initialize(_auditTablePrefix, _auditTableSuffix);
+
+			EmbeddableSetOrdinalPropertyName = ConfigurationKey.EmbeddableSetOrdinalFieldName.ToString(properties);
 		}
 
 
@@ -50,6 +52,7 @@ namespace NHibernate.Envers.Configuration
 		public bool IsRevisionEndTimestampEnabled { get; private set; }
 		public string RevisionEndTimestampFieldName { get; private set; }
 		public string RevisionInfoEntityAssemblyQualifiedName { get; private set; }
+		public string EmbeddableSetOrdinalPropertyName { get; private set; }
 
 		/// <summary>
 		/// Returns the class name without the assembly name. Used for generating querries

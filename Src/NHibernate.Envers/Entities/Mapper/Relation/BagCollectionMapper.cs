@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 									System.Type proxyType,
 									MiddleComponentData elementComponentData, 
 									bool revisionTypeInId)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, revisionTypeInId)
+			: base(enversProxyFactory, commonCollectionMapperData, proxyType, false, revisionTypeInId)
 		{    
 			_elementComponentData = elementComponentData;
 		}

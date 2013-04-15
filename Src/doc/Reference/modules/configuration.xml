@@ -307,6 +307,17 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</row>
 					<row>
 						<entry>
+							nhibernate.envers.embeddable_set_ordinal_field_name
+						</entry>
+						<entry>
+							SETORDINAL
+						</entry>
+						<entry>
+							Name of column used for storing ordinal of the change in sets of embeddable elements.
+						</entry>
+					</row>
+					<row>
+						<entry>
 							nhibernate.envers.collection_mapper_factory
 						</entry>
 						<entry>

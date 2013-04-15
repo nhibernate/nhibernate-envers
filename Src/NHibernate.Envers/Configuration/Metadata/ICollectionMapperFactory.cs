@@ -36,24 +36,24 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.Generic.ISet{T}" />.
 		/// </summary>
-		IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType);
+		IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool ordinalInId, bool embeddableElementType);
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />.
 		/// </summary>
-		IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType);
+		IPropertyMapper Set(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool ordinalInId, bool embeddableElementType);
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
 		/// that is sorted by an <see cref="IComparer"/>.
 		/// </summary>
-		IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer, bool embeddableElementType);
+		IPropertyMapper SortedSet(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer comparer, bool ordinalInId, bool embeddableElementType);
 
 		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="Iesi.Collections.ISet" />
 		/// that is sorted by an <see cref="IComparer{T}"/>.
 		/// </summary>
-		IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer, bool embeddableElementType);
+		IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer, bool ordinalInId, bool embeddableElementType);
 
 
 		/// <summary>
