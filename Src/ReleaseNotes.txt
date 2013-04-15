@@ -1,3 +1,7 @@
+=== vNext ===
+* Set of components now uses an extra db column. You can set the name of this using ConfigurationKey.EmbeddableSetOrdinalFieldName
+
+
 === 1.6 GA (v 1.6.0), 2013-03-14, NH 3.3.3 CR1 ===
 
 *** Possible breaking change ***
