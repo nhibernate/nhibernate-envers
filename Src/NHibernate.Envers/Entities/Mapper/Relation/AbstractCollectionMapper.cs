@@ -17,15 +17,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	{
 		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly System.Type _proxyType;
+		private readonly bool _ordinalInId;
 		private readonly bool _revisionTypeInId;
 
 		protected AbstractCollectionMapper(IEnversProxyFactory enversProxyFactory, 
 											CommonCollectionMapperData commonCollectionMapperData,
-											System.Type proxyType, bool revisionTypeInId) 
+											System.Type proxyType, bool ordinalInId, bool revisionTypeInId) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
 			_enversProxyFactory = enversProxyFactory;
 			_proxyType = proxyType;
+			_ordinalInId = ordinalInId;
 			_revisionTypeInId = revisionTypeInId;
 		}
 
@@ -43,15 +45,32 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		/// <param name="changed">The changed collection element to map.</param>
 		protected abstract void MapToMapFromObject(ISessionImplementor session, IDictionary<string, object> idData, IDictionary<string, object> data, object changed);
 
+		/// <summary>
+		/// Creates map for storing identifier data. Ordinal parameter guarantees uniqueness of primary key.
+		/// Composite primary key cannot contain embeddable properties since they might be nullable.
+		/// </summary>
+		/// <param name="ordinal">Iteration ordinal.</param>
+		/// <returns>Map for holding identifier data.</returns>
+		protected IDictionary<string, object> CreateIdMap(int ordinal)
+		{
+			var idMap = new Dictionary<string, object>();
+			if (_ordinalInId)
+			{
+				idMap.Add(CommonCollectionMapperData.VerEntCfg.EmbeddableSetOrdinalPropertyName, ordinal);
+			}
+			return idMap;
+		}
+
 		private void addCollectionChanges(ISessionImplementor session, ICollection<PersistentCollectionChangeData> collectionChanges, 
 											IEnumerable changed, 
 											RevisionType revisionType, 
-											object id) 
+											object id)
 		{
+			var ordinal = 0;
 			foreach (var changedObj in changed) 
 			{
 				var entityData = new Dictionary<string, object>();
-				var originalId = new Dictionary<string, object>();
+				var originalId = CreateIdMap(ordinal++);
 				entityData.Add(CommonCollectionMapperData.VerEntCfg.OriginalIdPropName, originalId);
 
 				collectionChanges.Add(new PersistentCollectionChangeData(

@@ -27,10 +27,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public virtual IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
 		{
 			return new SetCollectionMapper<T>(enversProxyFactory,
-														commonCollectionMapperData, 
-			                                 typeof (Iesi.Collections.Generic.ISet<T>),
-			                                 elementComponentData,
-																			embeddableElementType);
+			                                  commonCollectionMapperData,
+			                                  typeof (Iesi.Collections.Generic.ISet<T>),
+			                                  elementComponentData,
+			                                  embeddableElementType,
+			                                  embeddableElementType);
 		}
 
 		public virtual IPropertyMapper SortedSet<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, IComparer<T> comparer, bool embeddableElementType)
@@ -39,7 +40,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 											commonCollectionMapperData,
 											typeof(Iesi.Collections.Generic.ISet<T>),
 											elementComponentData,
-											comparer, embeddableElementType);
+											comparer, 
+											embeddableElementType,
+											embeddableElementType);
 		}
 
 		public virtual IPropertyMapper List<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
