@@ -183,5 +183,11 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public static readonly TypeConfigurationEntry TableNameStrategy
 			= new TypeConfigurationEntry("nhibernate.envers.table_name_strategy", typeof(DefaultNamingStrategy).AssemblyQualifiedName);
+
+		/// <summary>
+		/// Name of column used for storing ordinal of the change in sets of embeddable elements.
+		/// </summary>
+		public static readonly StringConfigurationEntry EmbeddableSetOrdinalFieldName
+			= new StringConfigurationEntry("nhibernate.envers.embeddable_set_ordinal_field_name", "SETORDINAL");
 	}
 }
