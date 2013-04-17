@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace NHibernate.Envers.Tools.Query
 	/// <summary>
 	/// Generates metadata for to-one relations (reference-valued properties).
 	/// </summary>
-	public class Parameters 
+	public class Parameters : ICloneable
 	{
 		public const string AND = "and";
 		public const string OR = "or";
@@ -57,6 +58,26 @@ namespace NHibernate.Envers.Tools.Query
 			negatedParameters = new List<Parameters>();
 			expressions = new List<string>();
 			localQueryParamValues = new Dictionary<string, object>(); 
+		}
+
+		//only for clone purpose
+		private Parameters(Parameters other)
+		{
+			alias = other.alias;
+			connective = other.connective;
+			queryParamCounter = (Incrementor) other.queryParamCounter.Clone();
+			subParameters = new List<Parameters>(other.subParameters.Count);
+			foreach (var p in other.subParameters)
+			{
+				subParameters.Add((Parameters) p.Clone());
+			}
+			negatedParameters = new List<Parameters>(other.negatedParameters.Count);
+			foreach (var p in other.negatedParameters)
+			{
+				negatedParameters.Add((Parameters) p.Clone());
+			}
+			expressions = new List<string>(other.expressions);
+			localQueryParamValues = new Dictionary<string, object>(other.localQueryParamValues);
 		}
 
 		private string GenerateQueryParam() 
@@ -261,6 +282,11 @@ namespace NHibernate.Envers.Tools.Query
 				stringBuilder.Append(toAppend);
 				isFirstAppend = false;
 			}
+		}
+
+		public object Clone()
+		{
+			return new Parameters(this);
 		}
 	}
 }

@@ -210,7 +210,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected abstract IInitializor GetInitializor(AuditConfiguration verCfg,
 														IAuditReaderImplementor versionsReader, 
 														object primaryKey,
-														long revision);
+														long revision,
+														bool removed);
 
 		public void MapToEntityFromMap(AuditConfiguration verCfg, 
 										object obj, 
@@ -220,7 +221,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										long revision) 
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(), CommonCollectionMapperData.CollectionReferencingPropertyData);
-			var coll = _enversProxyFactory.CreateCollectionProxy(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision));
+			var coll = _enversProxyFactory.CreateCollectionProxy(_proxyType,
+			                                                     GetInitializor(verCfg, versionsReader, primaryKey, revision,
+			                                                                    data[verCfg.AuditEntCfg.RevisionTypePropName]
+				                                                                    .Equals(RevisionType.Deleted)));
 			setter.Set(obj, coll);
 		}
 	}

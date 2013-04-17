@@ -13,11 +13,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 													IAuditReaderImplementor versionsReader, 
 													IRelationQueryGenerator queryGenerator, 
 													object primaryKey, 
-													long revision, 
+													long revision,
+													bool removed,
 													MiddleComponentData elementComponentData, 
 													MiddleComponentData indexComponentData,
-													IComparer<TKey> comparer) 
-			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, elementComponentData, indexComponentData)
+													IComparer<TKey> comparer)
+			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, removed, elementComponentData, indexComponentData)
 		{
 			_comparer = comparer;
 		}

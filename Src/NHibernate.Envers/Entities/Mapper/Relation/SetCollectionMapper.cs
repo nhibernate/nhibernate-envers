@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	[Serializable]
 	public class SetCollectionMapper<T> : AbstractCollectionMapper
 	{
-		public SetCollectionMapper(IEnversProxyFactory enversProxyFactory, 
+		public SetCollectionMapper(IEnversProxyFactory enversProxyFactory,
 											CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType,
 											MiddleComponentData elementComponentData,
@@ -26,15 +26,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected MiddleComponentData ElementComponentData { get; private set; }
 
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg,
-													 IAuditReaderImplementor versionsReader,
-													 object primaryKey,
-													 long revision)
+														IAuditReaderImplementor versionsReader,
+														object primaryKey,
+														long revision,
+														bool removed)
 		{
 			return new SetCollectionInitializor<T>(verCfg,
 										versionsReader,
 										CommonCollectionMapperData.QueryGenerator,
 										primaryKey,
 										revision,
+										removed,
 										ElementComponentData);
 		}
 

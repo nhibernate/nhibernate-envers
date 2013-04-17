@@ -5,6 +5,8 @@
 * Non generic sets no longer part of ICollectionMapperFactory because NH Core no longer supports it.
 * AuditEntity.Id().Count("id") removed. Use AuditEntity.Id().Count() instead.
 * Set of components now uses an extra db column. You can set the name of this using ConfigurationKey.EmbeddableSetOrdinalFieldName
+* Added removed to IEnversProxyFactory.CreateToOneProxy
+
 
 
 

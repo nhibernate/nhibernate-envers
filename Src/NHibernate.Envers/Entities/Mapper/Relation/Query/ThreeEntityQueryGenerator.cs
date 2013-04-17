@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tools.Query;
@@ -15,6 +14,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	public sealed class ThreeEntityQueryGenerator : AbstractRelationQueryGenerator
 	{
 		private readonly string _queryString;
+		private readonly string _queryRemovedString;
 
 		public ThreeEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 										IAuditStrategy auditStrategy,
@@ -62,16 +62,30 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 *     e.revision_type != DEL AND
 			 *     f.revision_type != DEL
 			 */
-			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
-			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
+			var commonPart = commonQueryPart(referencedIdData, indexIdData, versionsMiddleEntityName, verEntCfg.OriginalIdPropName);
+			var validQuery = (QueryBuilder)commonPart.Clone();
+			var removedQuery = (QueryBuilder)commonPart.Clone();
 
+		  createValidDataRestrictions(auditStrategy, referencedIdData, versionsMiddleEntityName, validQuery,validQuery.RootParameters, true, componentDatas);
+			createValidAndRemovedDataRestrictions(auditStrategy, referencedIdData, versionsMiddleEntityName, removedQuery, componentDatas);
+
+			_queryString = QueryToString(validQuery);
+			_queryRemovedString = QueryToString(removedQuery);
+		}
+
+		/// <summary>
+		/// Compute common part for both queries.
+		/// </summary>
+		private QueryBuilder commonQueryPart(MiddleIdData referencedIdData, MiddleIdData indexIdData,
+										 string versionsMiddleEntityName, string originalIdPropertyName)
+		{
+			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 			// SELECT new list(ee) FROM middleEntity ee
 			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
 			qb.AddFrom(referencedIdData.AuditEntityName, QueryConstants.ReferencedEntityAlias);
 			qb.AddFrom(indexIdData.AuditEntityName, QueryConstants.IndexEntityAlias);
-			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias + ", " 
-												+ QueryConstants.ReferencedEntityAlias + ", " 
+			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias + ", "
+												+ QueryConstants.ReferencedEntityAlias + ", "
 												+ QueryConstants.IndexEntityAlias, false, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
@@ -82,25 +96,40 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			indexIdData.PrefixedMapper.AddIdsEqualToQuery(rootParameters, eeOriginalIdPropertyPath,
 					indexIdData.OriginalMapper, QueryConstants.IndexEntityAlias + "." + originalIdPropertyName);
 			// ee.originalId.id_ref_ing = :id_ref_ing
-			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
+			ReferencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, originalIdPropertyName, true);
+			return qb;
+		}
+
+		/// <summary>
+		/// Creates query restrictions used to retrieve only actual data.
+		/// </summary>
+		private void createValidDataRestrictions(IAuditStrategy auditStrategy,
+																						 MiddleIdData referencedIdData, String versionsMiddleEntityName,
+																						 QueryBuilder qb,
+																						 Parameters rootParameters, bool inclusive,
+																						 IEnumerable<MiddleComponentData> componentData)
+		{
+			var revisionPropertyPath = VerEntCfg.RevisionNumberPath;
+			var originalIdPropertyName = VerEntCfg.OriginalIdPropName;
+			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
-						QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
+			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
+						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, inclusive);
 
 			// (selecting f entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(qb, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
-						QueryConstants.ReferencedEntityAlias + "." + verEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr);
+			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
+						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr, inclusive);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddAssociationAtRevisionRestriction(qb, revisionPropertyPath,
-								 verEntCfg.RevisionEndFieldName, true, referencingIdData, versionsMiddleEntityName,
-								 eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, QueryConstants.MiddleEntityAlias, componentDatas.ToArray());
+			auditStrategy.AddAssociationAtRevisionRestriction(qb, rootParameters, revisionPropertyPath,
+								 VerEntCfg.RevisionEndFieldName, true, ReferencingIdData, versionsMiddleEntityName,
+								 eeOriginalIdPropertyPath, revisionPropertyPath, originalIdPropertyName, QueryConstants.MiddleEntityAlias, inclusive, componentData.ToArray());
 
 
 			var revisionTypePropName = RevisionTypePath();
@@ -110,15 +139,44 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			rootParameters.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + revisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
 			// f.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + revisionTypePropName, false, "!=", QueryConstants.DelRevisionTypeParameter);
+		}
 
-			var sb = new StringBuilder();
-			qb.Build(sb, null);
-			_queryString = sb.ToString();
+		/// <summary>
+		/// Create query restrictions used to retrieve actual data and deletions that took place at exactly given revision.
+		/// </summary>
+		private void createValidAndRemovedDataRestrictions(IAuditStrategy auditStrategy,
+														 MiddleIdData referencedIdData, string versionsMiddleEntityName,
+														 QueryBuilder remQb, IEnumerable<MiddleComponentData> componentData)
+		{
+			var disjoint = remQb.RootParameters.AddSubParameters("or");
+			var valid = disjoint.AddSubParameters("and"); // Restrictions to match all valid rows.
+			var removed = disjoint.AddSubParameters("and"); // Restrictions to match all rows deleted at exactly given revision.
+			var revisionPropertyPath = VerEntCfg.RevisionNumberPath;
+			var revisionTypePropName = RevisionTypePath();
+			// Excluding current revision, because we need to match data valid at the previous one.
+			createValidDataRestrictions(auditStrategy, referencedIdData, versionsMiddleEntityName, remQb, valid, false, componentData);
+			// ee.revision = :revision
+			removed.AddWhereWithNamedParam(revisionPropertyPath, "=", QueryConstants.RevisionParameter);
+			// e.revision = :revision
+			removed.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath, false, "=", QueryConstants.RevisionParameter);
+			// f.revision = :revision
+			removed.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + revisionPropertyPath, false, "=", QueryConstants.RevisionParameter);
+			// ee.revision_type = DEL
+			removed.AddWhereWithNamedParam(revisionTypePropName, "=", QueryConstants.DelRevisionTypeParameter);
+			// e.revision_type = DEL
+			removed.AddWhereWithNamedParam(QueryConstants.ReferencedEntityAlias + "." + revisionTypePropName, false, "=", QueryConstants.DelRevisionTypeParameter);
+			// f.revision_type = DEL
+			removed.AddWhereWithNamedParam(QueryConstants.IndexEntityAlias + "." + revisionTypePropName, false, "=", QueryConstants.DelRevisionTypeParameter);
 		}
 
 		protected override string QueryString()
 		{
 			return _queryString;
+		}
+
+		protected override string QueryRemovedString()
+		{
+			return _queryRemovedString;
 		}
 	}
 }
