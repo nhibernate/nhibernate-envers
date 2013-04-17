@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		{
 			// SELECT e FROM versionsEntity e
 			var qb = new QueryBuilder(versionsReferencedEntityName, QueryConstants.ReferencedEntityAlias);
-			//qb.AddProjection("new list", "e", false, false); //using TransformResultToList instead
+			qb.AddProjection(null, QueryConstants.ReferencedEntityAlias, false, false); 
 			//WHERE
 			// e.id_ref_ed = :id_ref_ed
 			ReferencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(qb.RootParameters, null, true);
@@ -98,7 +98,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 
 		protected override bool TransformResultToList()
 		{
-			//todo: Is this really needed?
 			return true;
 		}
 
