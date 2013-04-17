@@ -21,10 +21,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_comparer = comparer;
 		}
 
-		protected override IInitializor GetInitializor(Configuration.AuditConfiguration verCfg, Reader.IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(Configuration.AuditConfiguration verCfg, Reader.IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
 			return new SortedMapCollectionInitializor<TKey, TValue>(verCfg, versionsReader, CommonCollectionMapperData.QueryGenerator,
-																	primaryKey, revision, ElementComponentData,
+																	primaryKey, revision, removed, ElementComponentData,
 																	IndexComponentData, _comparer);
 		}
 	}

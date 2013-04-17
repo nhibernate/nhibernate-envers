@@ -11,23 +11,28 @@ namespace NHibernate.Envers.Query.Impl
 	public class EntitiesAtRevisionQuery : AbstractAuditQuery
 	{
 		private readonly long _revision;
+		private readonly bool _includeDeletions;
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
 										IAuditReaderImplementor versionsReader,
 										System.Type cls,
-										long revision)
+										long revision,
+										bool includeDeletions)
 			: base(verCfg, versionsReader, cls)
 		{
 			_revision = revision;
+			_includeDeletions = includeDeletions;
 		}
 
 		public EntitiesAtRevisionQuery(AuditConfiguration verCfg,
 										IAuditReaderImplementor versionsReader,
 										string entityName,
-										long revision)
+										long revision,
+										bool includeDeletions)
 			: base(verCfg, versionsReader, entityName)
 		{
 			_revision = revision;
+			_includeDeletions = includeDeletions;
 		}
 
 		protected override void FillResult(IList result)
@@ -58,12 +63,15 @@ namespace NHibernate.Envers.Query.Impl
 
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			VerCfg.GlobalCfg.AuditStrategy.AddEntityAtRevisionRestriction(QueryBuilder, revisionPropertyPath,
+			VerCfg.GlobalCfg.AuditStrategy.AddEntityAtRevisionRestriction(QueryBuilder, QueryBuilder.RootParameters, revisionPropertyPath,
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
-					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
+					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, true);
 
 			// e.revision_type != DEL
-			QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
+			if (!_includeDeletions)
+			{
+				QueryBuilder.RootParameters.AddWhereWithParam(verEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);				
+			}
 
 			// all specified conditions
 			foreach (var criterion in Criterions)

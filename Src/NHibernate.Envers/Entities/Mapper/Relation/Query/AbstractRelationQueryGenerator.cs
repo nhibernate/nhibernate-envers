@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools.Query;
 using NHibernate.Transform;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Query
@@ -8,33 +11,44 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	[Serializable]
 	public abstract class AbstractRelationQueryGenerator : IRelationQueryGenerator
 	{
-		private readonly AuditEntitiesConfiguration _verEntCfg;
-		private readonly MiddleIdData _referencingIdData;
 		private readonly bool _revisionTypeInId;
 
 		protected AbstractRelationQueryGenerator(AuditEntitiesConfiguration verEntCfg, 
 																						MiddleIdData referencingIdData, 
 																						bool revisionTypeInId)
 		{
-			_verEntCfg = verEntCfg;
-			_referencingIdData = referencingIdData;
+			VerEntCfg = verEntCfg;
+			ReferencingIdData = referencingIdData;
 			_revisionTypeInId = revisionTypeInId;
 		}
 
+		protected MiddleIdData ReferencingIdData { get; private set; }
+		protected AuditEntitiesConfiguration VerEntCfg { get; private set; }
+
+		/// <summary>
+		/// Query used to retrieve state of audited entity valid at a given revision.
+		/// </summary>
 		protected abstract string QueryString();
+
+		/// <summary>
+		/// Query executed to retrieve state of audited entity valid at previous revision
+		/// or removed during exactly specified revision number. Used only when traversing deleted
+		/// entities graph.
+		/// </summary>
+		protected abstract string QueryRemovedString();
 
 		protected virtual bool TransformResultToList()
 		{
 			return false;
 		}
 
-		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		public IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
-			var query = versionsReader.Session.CreateQuery(QueryString())
+			var query = versionsReader.Session.CreateQuery(removed ? QueryRemovedString() : QueryString())
 			                          .SetParameter(QueryConstants.RevisionParameter, revision)
 			                          .SetParameter(QueryConstants.DelRevisionTypeParameter, RevisionType.Deleted);
 
-			foreach (var paramData in _referencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
+			foreach (var paramData in ReferencingIdData.PrefixedMapper.MapToQueryParametersFromId(primaryKey))
 			{
 				paramData.SetParameterValue(query);
 			}
@@ -49,8 +63,20 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		protected string RevisionTypePath()
 		{
 			return _revisionTypeInId
-				       ? _verEntCfg.OriginalIdPropName + "." + _verEntCfg.RevisionTypePropName
-				       : _verEntCfg.RevisionTypePropName;
+				       ? VerEntCfg.OriginalIdPropName + "." + VerEntCfg.RevisionTypePropName
+				       : VerEntCfg.RevisionTypePropName;
+		}
+
+		protected string QueryToString(QueryBuilder query)
+		{
+			return QueryToString(query, new Dictionary<string, object>());
+		}
+
+		protected string QueryToString(QueryBuilder query, IDictionary<string, object> queryParamValues)
+		{
+			var sb = new StringBuilder();
+			query.Build(sb, queryParamValues);
+			return sb.ToString();
 		}
 	}
 }

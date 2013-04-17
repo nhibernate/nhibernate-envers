@@ -42,6 +42,11 @@ namespace NHibernate.Envers.Reader
 
 		public object Find(string entityName, object primaryKey, long revision)
 		{
+			return Find(entityName, primaryKey, revision, false);
+		}
+
+		public object Find(string entityName, object primaryKey, long revision, bool includeDeletions)
+		{
 			ArgumentsTools.CheckNotNull(primaryKey, "Primary key");
 			ArgumentsTools.CheckPositive(revision, "Entity revision");
 
@@ -57,7 +62,7 @@ namespace NHibernate.Envers.Reader
 			}
 
 			// The result is put into the cache by the entity instantiator called from the query
-			result = CreateQuery().ForEntitiesAtRevision(entityName, revision)
+			result = CreateQuery().ForEntitiesAtRevision(entityName, revision, includeDeletions)
 				.Add(AuditEntity.Id().Eq(primaryKey)).GetSingleResult();
 
 			return result;

@@ -13,6 +13,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	public sealed class OneAuditEntityQueryGenerator: AbstractRelationQueryGenerator 
 	{
 		private readonly string _queryString;
+		private readonly string _queryRemovedString;
 
 		public OneAuditEntityQueryGenerator(AuditEntitiesConfiguration verEntCfg,
 											IAuditStrategy auditStrategy,
@@ -23,7 +24,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			:base(verEntCfg, referencingIdData, revisionTypeInId)
 		{
 			/*
-			 * The query that we need to create:
+			 * The valid query that we need to create:
 			 *   SELECT new list(e) FROM versionsReferencedEntity e
 			 *   WHERE
 			 * (only entities referenced by the association; id_ref_ing = id of the referencing entity)
@@ -38,41 +39,77 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			 * (only non-deleted entities)
 			 *     e.revision_type != DEL
 			 */
-			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
-			var versionsReferencedEntityName = verEntCfg.GetAuditEntityName(referencedEntityName);
+			var commonPart = commonQueryPart(verEntCfg.GetAuditEntityName(referencedEntityName));
+			var validQuery = (QueryBuilder)commonPart.Clone();
+			var removedQuery = (QueryBuilder)commonPart.Clone();
+			
+			createValidDataRestrictions(auditStrategy, referencedIdData, validQuery, validQuery.RootParameters, true);
+			createValidAndRemovedDataRestrictions(auditStrategy, referencedIdData, removedQuery);
 
-			// SELECT new list(e) FROM versionsEntity e
+			_queryString = QueryToString(validQuery);
+			_queryRemovedString = QueryToString(removedQuery);
+		}
+
+		/// <summary>
+		/// Compute common part for both queries.
+		/// </summary>
+		private QueryBuilder commonQueryPart(string versionsReferencedEntityName)
+		{
+			// SELECT e FROM versionsEntity e
 			var qb = new QueryBuilder(versionsReferencedEntityName, QueryConstants.ReferencedEntityAlias);
-			//qb.AddProjection("new list", "e", false, false);
-			// WHERE
-			var rootParameters = qb.RootParameters;
+			//qb.AddProjection("new list", "e", false, false); //using TransformResultToList instead
+			//WHERE
 			// e.id_ref_ed = :id_ref_ed
-			referencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(rootParameters, null, true);
+			ReferencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(qb.RootParameters, null, true);
+			return qb;
+		}
 
-
+		/// <summary>
+		/// Creates query restrictions used to retrieve only actual data.
+		/// </summary>
+		private void createValidDataRestrictions(IAuditStrategy auditStrategy,
+		                                         MiddleIdData referencedIdData, QueryBuilder qb, Parameters rootParameters,
+		                                         bool inclusive)
+		{
+			var revisionPropertyPath = VerEntCfg.RevisionNumberPath;
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
-			auditStrategy.AddEntityAtRevisionRestriction(qb, revisionPropertyPath, verEntCfg.RevisionEndFieldName, true,
-				referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
-
-
+			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, revisionPropertyPath, VerEntCfg.RevisionEndFieldName, true,
+				referencedIdData, revisionPropertyPath, VerEntCfg.OriginalIdPropName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, inclusive);
 			// e.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(RevisionTypePath(), false, "!=", QueryConstants.DelRevisionTypeParameter);
+		}
 
-			var sb = new StringBuilder();
-			qb.Build(sb, null);
-			_queryString = sb.ToString();
+		/// <summary>
+		/// Create query restrictions used to retrieve actual data and deletions that took place at exactly given revision.
+		/// </summary>
+		private void createValidAndRemovedDataRestrictions(IAuditStrategy auditStrategy, MiddleIdData referencedIdData, QueryBuilder remQb)
+		{
+			var disjoint = remQb.RootParameters.AddSubParameters("or");
+			var valid = disjoint.AddSubParameters("and");// Restrictions to match all valid rows.
+			var removed = disjoint.AddSubParameters("and");// Restrictions to match all rows deleted at exactly given revision.
+			// Excluding current revision, because we need to match data valid at the previous one.
+			createValidDataRestrictions(auditStrategy, referencedIdData, remQb, valid, false);
+			// e.revision = :revision
+			removed.AddWhereWithNamedParam(VerEntCfg.RevisionNumberPath, false, "=", QueryConstants.RevisionParameter);
+			// e.revision_type = DEL
+			removed.AddWhereWithNamedParam(RevisionTypePath(), false, "=", QueryConstants.DelRevisionTypeParameter);
 		}
 
 		protected override bool TransformResultToList()
 		{
+			//todo: Is this really needed?
 			return true;
 		}
 
 		protected override string QueryString()
 		{
 			return _queryString;
+		}
+
+		protected override string QueryRemovedString()
+		{
+			return _queryRemovedString;
 		}
 	}
 }

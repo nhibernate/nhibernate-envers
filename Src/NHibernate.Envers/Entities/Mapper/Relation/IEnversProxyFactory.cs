@@ -21,6 +21,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		/// <summary>
 		/// Creates a proxy for a x-to-one releationship.
 		/// </summary>
-		object CreateToOneProxy(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string referencedEntityName, object entityId, long revision);
+		object CreateToOneProxy(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string referencedEntityName, object entityId, long revision, bool removed);
 	}
 }
