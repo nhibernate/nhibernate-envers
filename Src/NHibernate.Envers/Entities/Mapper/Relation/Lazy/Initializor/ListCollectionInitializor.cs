@@ -40,10 +40,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			var elementData = listRow[_elementComponentData.ComponentIndex];
 			var indexData = listRow[_indexComponentData.ComponentIndex];
 
-			var element = (T)_elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
-																				(IDictionary) elementData, 
-																				null, 
-																				Revision);
+			var elementDataAsDic = elementData as IDictionary;
+			var element = elementDataAsDic == null
+				          ? (T) elementData
+				          : (T) _elementComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
+				                                                                             (IDictionary) elementData,
+				                                                                             null,
+				                                                                             Revision);
 			var index = (int)_indexComponentData.ComponentMapper.MapToObjectFromFullMap(EntityInstantiator,
 																				(IDictionary) indexData, 
 																				element, 
