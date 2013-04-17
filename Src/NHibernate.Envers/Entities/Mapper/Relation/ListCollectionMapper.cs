@@ -45,13 +45,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_indexComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, indexValuePair.Item1);
 		}
 
-		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
 			return new ListCollectionInitializor<T>(verCfg, 
 												versionsReader, 
 												CommonCollectionMapperData.QueryGenerator,
 												primaryKey, 
 												revision, 
+												removed,
 												_elementComponentData, 
 												_indexComponentData);
 		}

@@ -35,10 +35,10 @@ namespace NHibernate.Envers.Strategy
 			SessionCacheCleaner.ScheduleAuditDataRemoval(session, data);
 		}
 
-		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
+		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, 
+																			bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName,
+																			string alias1, string alias2, bool inclusive)
 		{
-			var rootParameters = rootQueryBuilder.RootParameters;
-
 			// create a subquery builder
 			// SELECT max(e.revision) FROM versionsReferencedEntity e2
 			var maxERevQb = rootQueryBuilder.NewSubQueryBuilder(idData.AuditEntityName, alias2);
@@ -46,17 +46,18 @@ namespace NHibernate.Envers.Strategy
 			// WHERE
 			var maxERevQbParameters = maxERevQb.RootParameters;
 			// e2.revision <= :revision
-			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", QueryConstants.RevisionParameter);
+			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, inclusive ? "<=" : "<", QueryConstants.RevisionParameter);
 			// e2.id_ref_ed = e.id_ref_ed
 			idData.OriginalMapper.AddIdsEqualToQuery(maxERevQbParameters,
 					alias1 + "." + originalIdPropertyName, alias2 + "." + originalIdPropertyName);
 
 			// add subquery to rootParameters
 			var subqueryOperator = _auditConfiguration.GlobalCfg.CorrelatedSubqueryOperator;
-			rootParameters.AddWhere(revisionProperty, addAlias, subqueryOperator, maxERevQb);
+			parameters.AddWhere(revisionProperty, addAlias, subqueryOperator, maxERevQb);
 		}
 
 		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder,
+														Parameters parameters,
 														string revisionProperty,
 														string revisionEndProperty,
 														bool addAlias,
@@ -66,17 +67,16 @@ namespace NHibernate.Envers.Strategy
 														string revisionPropertyPath,
 														string originalIdPropertyName,
 														string alias1,
+														bool inclusive,
 														params MiddleComponentData[] componentDatas)
 		{
-			var rootParameters = rootQueryBuilder.RootParameters;
-
 			// SELECT max(ee2.revision) FROM middleEntity ee2
 			var maxEeRevQb = rootQueryBuilder.NewSubQueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAliasDefAudStr);
 			maxEeRevQb.AddProjection("max", revisionPropertyPath, false);
 			// WHERE
 			var maxEeRevQbParameters = maxEeRevQb.RootParameters;
 			// ee2.revision <= :revision
-			maxEeRevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", QueryConstants.RevisionParameter);
+			maxEeRevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, inclusive ? "<=" : "<", QueryConstants.RevisionParameter);
 			// ee2.originalId.* = ee.originalId.*
 			var ee2OriginalIdPropertyPath = QueryConstants.MiddleEntityAliasDefAudStr + "." + originalIdPropertyName;
 			referencingIdData.PrefixedMapper.AddIdsEqualToQuery(maxEeRevQbParameters, eeOriginalIdPropertyPath, ee2OriginalIdPropertyPath);
@@ -87,7 +87,7 @@ namespace NHibernate.Envers.Strategy
 			}
 
 			// add subquery to rootParameters
-			rootParameters.AddWhere(revisionProperty, addAlias, "=", maxEeRevQb);
+			parameters.AddWhere(revisionProperty, addAlias, "=", maxEeRevQb);
 		}
 
 		public void AddExtraRevisionMapping(XElement classMapping, XElement revisionInfoRelationMapping)

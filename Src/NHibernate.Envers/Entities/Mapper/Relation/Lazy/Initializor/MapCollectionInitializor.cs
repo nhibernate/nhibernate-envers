@@ -16,9 +16,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 										IRelationQueryGenerator queryGenerator, 
 										object primaryKey, 
 										long revision,
+										bool removed,
 										MiddleComponentData elementComponentData,
 										MiddleComponentData indexComponentData) 
-						: base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
+						: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, removed)
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;

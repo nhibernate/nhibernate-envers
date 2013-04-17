@@ -46,5 +46,17 @@
 			<many-to-many class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity"/>
 		</bag>
 	</class>
+
+	<class name="M2MIndexedListTargetNotAuditedEntity" table="M2M_IDX_LIST">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<list name="References" table="UniListNotAuditedChildren2">
+			<key column="unvId"/>
+			<index column="sortOrder" />
+			<many-to-many class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity" />
+		</list>
+	</class>
 </hibernate-mapping>
 

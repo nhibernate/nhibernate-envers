@@ -130,16 +130,14 @@ namespace NHibernate.Envers.Strategy
 			qb.RootParameters.AddWhere(auditCfg.AuditEntCfg.RevisionEndFieldName, true, "is", "null", false);
 		}
 
-		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
+		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2, bool inclusive)
 		{
-			var rootParameters = rootQueryBuilder.RootParameters;
-			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
+			addRevisionRestriction(parameters, revisionProperty, revisionEndProperty, addAlias, inclusive);
 		}
 
-		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, string alias1, params MiddleComponentData[] componentDatas)
+		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, string alias1, bool inclusive, params MiddleComponentData[] componentDatas)
 		{
-			var rootParameters = rootQueryBuilder.RootParameters;
-			addRevisionRestriction(rootParameters, revisionProperty, revisionEndProperty, addAlias);
+			addRevisionRestriction(parameters, revisionProperty, revisionEndProperty, addAlias, inclusive);
 		}
 
 		/// <summary>
@@ -160,12 +158,12 @@ namespace NHibernate.Envers.Strategy
 			}
 		}
 
-		private static void addRevisionRestriction(Parameters rootParameters, string revisionProperty, string revisionEndProperty, bool addAlias)
+		private static void addRevisionRestriction(Parameters rootParameters, string revisionProperty, string revisionEndProperty, bool addAlias, bool inclusive)
 		{
 			// e.revision <= _revision and (e.endRevision > _revision or e.endRevision is null)
 			var subParm = rootParameters.AddSubParameters("or");
-			rootParameters.AddWhereWithNamedParam(revisionProperty, addAlias, "<=", QueryConstants.RevisionParameter);
-			subParm.AddWhereWithNamedParam(revisionEndProperty + ".id", addAlias, ">", QueryConstants.RevisionParameter);
+			rootParameters.AddWhereWithNamedParam(revisionProperty, addAlias, inclusive ? "<=" : "<", QueryConstants.RevisionParameter);
+			subParm.AddWhereWithNamedParam(revisionEndProperty + ".id", addAlias, inclusive ? ">" : ">=", QueryConstants.RevisionParameter);
 			subParm.AddWhere(revisionEndProperty, addAlias, "is", "null", false);
 		}
 

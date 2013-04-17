@@ -15,13 +15,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 			_elementComponentData = elementComponentData;
 		}
 
-		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
 			return new SpecialInitializor(verCfg,
 			                              versionsReader,
 			                              CommonCollectionMapperData.QueryGenerator,
 			                              primaryKey,
 			                              revision,
+																		removed,
 			                              _elementComponentData);
 		}
 	}

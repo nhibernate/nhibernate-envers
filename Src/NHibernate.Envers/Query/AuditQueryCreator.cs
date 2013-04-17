@@ -18,6 +18,7 @@ namespace NHibernate.Envers.Query
 
 		/// <summary>
 		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+		/// Deleted entities are not included.
 		/// </summary>
 		/// <param name="c"><see cref="System.Type"/> of the entities for which to query.</param>
 		/// <param name="revision">Revision number at which to execute the query.</param>
@@ -26,11 +27,12 @@ namespace NHibernate.Envers.Query
 		public IAuditQuery ForEntitiesAtRevision(System.Type c, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
-			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision);
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, c, revision, false);
 		}
 
 		/// <summary>
 		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+		/// Deleted entities are not included.
 		/// </summary>
 		/// <param name="entityName">Name of entity</param>
 		/// <param name="revision">Revision number at which to execute the query.</param>
@@ -39,7 +41,22 @@ namespace NHibernate.Envers.Query
 		public IAuditQuery ForEntitiesAtRevision(string entityName, long revision)
 		{
 			ArgumentsTools.CheckPositive(revision, "revision");
-			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, entityName, revision);
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, entityName, revision, false);
+		}
+
+		/// <summary>
+		/// Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+		/// Deleted entities may be optionally included.
+		/// </summary>
+		/// <param name="entityName">Name of entity</param>
+		/// <param name="revision">Revision number at which to execute the query.</param>
+		/// <param name="includeDeletions">Whether to include deleted entities in the search.</param>
+		/// <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+		/// <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
+		public IAuditQuery ForEntitiesAtRevision(string entityName, long revision, bool includeDeletions)
+		{
+			ArgumentsTools.CheckPositive(revision, "revision");
+			return new EntitiesAtRevisionQuery(auditCfg, auditReaderImplementor, entityName, revision, includeDeletions);
 		}
 
 		/// <summary>

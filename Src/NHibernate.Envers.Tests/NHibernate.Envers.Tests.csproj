@@ -82,6 +82,7 @@
     <Compile Include="Entities\Ids\ManyToOneIdNotAuditedTestEntity.cs" />
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
     <Compile Include="Entities\Ids\UnusualIdNamingEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\M2MIndexedListTargetNotAuditedEntity.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefEdPK.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefIngPK.cs" />
     <Compile Include="Entities\Collection\StrTestNoProxyEntity.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableMapTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
+    <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedMergeTest.cs" />
+    <Compile Include="Integration\Proxy\RemovedObjectQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\FactoryTest.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\IExternalContext.cs" />
     <Compile Include="NetSpecific\Integration\EntityInstantiation\PostInstantiationListener.cs" />
