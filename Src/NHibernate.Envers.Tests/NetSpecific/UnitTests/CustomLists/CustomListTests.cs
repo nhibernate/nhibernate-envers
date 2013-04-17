@@ -78,13 +78,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 			_indexComponentData.ComponentMapper.MapToMapFromObject(session, idData, data, indexValuePair.Item1);
 		}
 
-		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
 			return new CustomListCollectionInitializer<TCustomList, TItem>(verCfg,
 												versionsReader,
 												CommonCollectionMapperData.QueryGenerator,
 												primaryKey,
 												revision,
+												removed,
 												_elementComponentData,
 												_indexComponentData);
 		}
@@ -101,9 +102,10 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		                                       IRelationQueryGenerator queryGenerator,
 		                                       object primaryKey,
 		                                       long revision,
+																					bool removed,
 		                                       MiddleComponentData elementComponentData,
 		                                       MiddleComponentData indexComponentData)
-			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision)
+			: base(verCfg, versionsReader, queryGenerator, primaryKey, revision, removed)
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;
