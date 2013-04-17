@@ -59,8 +59,8 @@ namespace NHibernate.Envers.Tools.Query
 			_aliasCounter = (Incrementor) other._aliasCounter.Clone();
 			_paramCounter = (Incrementor) other._paramCounter.Clone();
 			RootParameters = (Parameters) other.RootParameters.Clone();
-			_froms = new List<Pair<string, string>>(other._froms);
-			_orders = new List<Pair<string, bool>>(other._orders);
+			_froms = new List<Tuple<string, string>>(other._froms);
+			_orders = new List<Tuple<string, bool>>(other._orders);
 			_projections = new List<string>(other._projections);
 		}
 
