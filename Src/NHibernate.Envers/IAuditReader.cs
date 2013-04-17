@@ -48,6 +48,21 @@ namespace NHibernate.Envers
 		object Find(string entityName, object primaryKey, long revision);
 
 		/// <summary>
+		/// Find an entity by primary key at the given revision with the specified entityName,
+		/// possibly including deleted entities in the search.
+		/// </summary>
+		/// <param name="entityName">Name of the entity (if can't be guessed basing on the {@code cls}).</param>
+		/// <param name="primaryKey">Primary key of the entity.</param>
+		/// <param name="revision">Revision in which to get the entity</param>
+		/// <param name="includeDeletions">Whether to include deleted entities in the search.</param>
+		/// <returns>
+		/// The found entity instance at the given revision (its properties may be partially filled
+		/// if not all properties are audited) or null, if an entity with that id didn't exist at that
+		/// revision.
+		/// </returns>
+		object Find(string entityName, object primaryKey, long revision, bool includeDeletions);
+
+		/// <summary>
 		/// Get a list of revision numbers, at which an entity was modified.
 		/// </summary>
 		/// <param name="cls">Type of entity</param>

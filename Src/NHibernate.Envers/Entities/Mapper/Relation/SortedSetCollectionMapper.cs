@@ -23,13 +23,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_comparer = comparer;
 		}
 
-		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision)
+		protected override IInitializor GetInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed)
 		{
 			return new SortedSetCollectionInitializor<T>(verCfg, 
 																	versionsReader, 
 																	CommonCollectionMapperData.QueryGenerator,
 																	primaryKey, 
 																	revision,
+																	removed,
 																	ElementComponentData, 
 																	_comparer);
 		}

@@ -78,27 +78,29 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
 					var persister = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName);
+					var removed = RevisionType.Deleted.Equals(data[verCfg.AuditEntCfg.RevisionTypePropName]);
 					if (persister.HasProxy)
 					{
-						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision);	
+						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);	
 					}
 					else
 					{
-						var entityInfo = GetEntityInfo(verCfg, _referencedEntityName);
-						value = loadImmediate(versionsReader, entityInfo.EntityClass, _referencedEntityName, entityId, revision, verCfg);
+						value = loadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg);
 					}
 				}
 			}
 			SetPropertyValue(obj, value);
 		}
 
-		private object loadImmediate(IAuditReaderImplementor versionsReader, System.Type entityClass, string entityName,
-									   object entityId, long revision, AuditConfiguration verCfg)
+		private static object loadImmediate(IAuditReaderImplementor versionsReader, string entityName,
+									   object entityId, long revision, bool removed, AuditConfiguration verCfg)
 		{
 			if (verCfg.EntCfg.GetNotVersionEntityConfiguration(entityName) == null)
 			{
 				// Audited relation, look up entity with Envers.
-				return versionsReader.Find(entityClass, entityId, revision);
+				// When user traverses removed entities graph, do not restrict revision type of referencing objects
+				// to ADD or MOD (DEL possible). See HHH-5845.
+				return versionsReader.Find(entityName, entityId, revision, removed);
 			}
 			// Not audited relation, look up entity with Hibernate.
 			return versionsReader.SessionImplementor.ImmediateLoad(entityName, entityId);
@@ -106,7 +108,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
 		{
-			_delegat.AddIdsEqualToQuery( parameters, prefix1, _delegat, prefix2 );
+			_delegat.AddIdsEqualToQuery(parameters, prefix1, _delegat, prefix2);
 		}
 	}
 }

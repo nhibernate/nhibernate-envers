@@ -15,9 +15,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 														IRelationQueryGenerator queryGenerator, 
 														object primaryKey, 
 														long revision, 
+														bool removed,
 														MiddleComponentData elementComponentData,
 														IComparer<T> comparer) : 
-				base(verCfg, versionsReader, queryGenerator, primaryKey, revision, elementComponentData)
+				base(verCfg, versionsReader, queryGenerator, primaryKey, revision, removed, elementComponentData)
 		{
 			_comparer = comparer;
 		}

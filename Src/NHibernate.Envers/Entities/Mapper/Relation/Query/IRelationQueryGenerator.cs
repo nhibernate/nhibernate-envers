@@ -9,6 +9,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 	/// </summary>
 	public interface IRelationQueryGenerator
 	{
-		IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision);
+		IQuery GetQuery(IAuditReaderImplementor versionsReader, object primaryKey, long revision, bool removed);
 	}
 }

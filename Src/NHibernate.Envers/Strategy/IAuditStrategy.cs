@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="entityName">Name of the entity, in which the audited change happens.</param>
 		/// <param name="propertyName">The name of the property holding the <see cref="IPersistentCollection"/></param>
 		void PerformCollectionChange(ISession session, string entityName, string propertyName, AuditConfiguration auditCfg, PersistentCollectionChangeData persistentCollectionChangeData, object revision);
-	
+
 		/// <summary>
 		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a two-entity relation.
 		/// This WHERE clause depends on the AuditStrategy, as follows:
@@ -53,6 +53,7 @@ namespace NHibernate.Envers.Strategy
 		/// </ul>
 		/// </summary>
 		/// <param name="rootQueryBuilder">The <see cref="QueryBuilder"/> that will be updated</param>
+		/// <param name="parameters">Root parameters to which restrictions shall be added</param>
 		/// <param name="revisionProperty">Property of the revision column</param>
 		/// <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
@@ -61,9 +62,10 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias1">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias2">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
-		void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty,
+		/// <param name="inclusive">Indicates whether revision number shall be treated as inclusive or exclusive</param>
+		void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty,
 										string revisionEndProperty, bool addAlias, MiddleIdData idData,
-										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2);
+										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2, bool inclusive);
 
 		/// <summary>
 		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a middle-entity 
@@ -78,6 +80,7 @@ namespace NHibernate.Envers.Strategy
 		/// </ul>
 		/// </summary>
 		/// <param name="rootQueryBuilder">The <see cref="QueryBuilder"/> that will be updated</param>
+		/// <param name="parameters">root parameters to which restrictions shall be added</param>
 		/// <param name="revisionProperty">Property of the revision column</param>
 		/// <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
@@ -87,15 +90,16 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="revisionPropertyPath">path of the revision property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias1">An alias used for subqueries (only used for <see cref="DefaultAuditStrategy"/>)</param>
+		/// <param name="inclusive">indicates whether revision number shall be treated as inclusive or exclusive</param>
 		/// <param name="componentDatas">information about the middle-entity relation
 		/// <remarks>
 		/// <code>null</code> is accepted.
 		/// </remarks>
 		/// </param>
-		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, string revisionProperty, string revisionEndProperty,
+		void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty,
 									bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName,
 									string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, 
-									string alias1, params MiddleComponentData[] componentDatas);
+									string alias1, bool inclusive, params MiddleComponentData[] componentDatas);
 
 		/// <summary>
 		/// Adds extra revision mapping for audited entities.

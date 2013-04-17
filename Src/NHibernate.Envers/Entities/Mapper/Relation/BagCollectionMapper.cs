@@ -27,13 +27,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg, 
 														IAuditReaderImplementor versionsReader,
 														object primaryKey, 
-														long revision) 
+														long revision,
+														bool removed) 
 		{
 			return new BagCollectionInitializor<T>(verCfg, 
 											versionsReader, 
 											CommonCollectionMapperData.QueryGenerator,
 											primaryKey, 
 											revision,
+											removed,
 											_elementComponentData);
 		}
 

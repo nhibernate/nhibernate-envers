@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 {
 	public class SpecialInitializor : BagCollectionInitializor<Number>
 	{
-		public SpecialInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, IRelationQueryGenerator queryGenerator, object primaryKey, long revision, MiddleComponentData elementComponentData) : base(verCfg, versionsReader, queryGenerator, primaryKey, revision, elementComponentData)
+		public SpecialInitializor(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, IRelationQueryGenerator queryGenerator, object primaryKey, long revision, bool removed, MiddleComponentData elementComponentData) : base(verCfg, versionsReader, queryGenerator, primaryKey, revision, removed, elementComponentData)
 		{
 		}
 

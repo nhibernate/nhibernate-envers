@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace NHibernate.Envers.Tools.Query
 	/// <summary>
 	/// A class for incrementaly building a HQL query.
 	/// </summary>
-	public class QueryBuilder
+	public class QueryBuilder : ICloneable
 	{
 		private readonly string _entityName;
 
@@ -48,6 +49,19 @@ namespace NHibernate.Envers.Tools.Query
 			_projections = new List<string>();
 
 			AddFrom(entityName, alias);
+		}
+
+		//only for clone purpose
+		private QueryBuilder(QueryBuilder other)
+		{
+			_entityName = other._entityName;
+			RootAlias = other.RootAlias;
+			_aliasCounter = (Incrementor) other._aliasCounter.Clone();
+			_paramCounter = (Incrementor) other._paramCounter.Clone();
+			RootParameters = (Parameters) other.RootParameters.Clone();
+			_froms = new List<Pair<string, string>>(other._froms);
+			_orders = new List<Pair<string, bool>>(other._orders);
+			_projections = new List<string>(other._projections);
 		}
 
 		/// <summary>
@@ -174,6 +188,11 @@ namespace NHibernate.Envers.Tools.Query
 				query.SetParameter(queryParamValue.Key, queryParamValue.Value);
 			}
 			return query;
+		}
+
+		public object Clone()
+		{
+			return new QueryBuilder(this);
 		}
 	}
 }
