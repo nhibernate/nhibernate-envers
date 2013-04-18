@@ -11,7 +11,7 @@
 		<OutputDoc>$(DeployFolder)\EnversUserDoc.pdf</OutputDoc>
 		<DeployHtmlFolder>$(DeployFolder)\html</DeployHtmlFolder>
 		<PackageFolder>$(SourceDir)\Packages</PackageFolder>
-		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.1.4.0.45\tools</MSBuildCommunityTasksPath>
+		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
 	</PropertyGroup>
 	<Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
 	
