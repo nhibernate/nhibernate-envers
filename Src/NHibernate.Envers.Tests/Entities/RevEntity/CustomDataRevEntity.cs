@@ -5,11 +5,6 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity
 	[RevisionEntity]
 	public class CustomDataRevEntity
 	{
-		public CustomDataRevEntity()
-		{
-			Data = string.Empty;
-		}
-
 		[RevisionNumber]
 		public virtual long CustomId { get; set; }
 
@@ -23,14 +18,14 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity
 			var casted = obj as CustomDataRevEntity;
 			if (casted == null)
 				return false;
-			return (CustomId == casted.CustomId &&
+			return CustomId == casted.CustomId &&
 					CustomTimestamp.Equals(casted.CustomTimestamp) &&
-					Data.Equals(casted.Data));
+					(Data == null ? casted.Data == null : Data.Equals(casted.Data));
 		}
 
 		public override int GetHashCode()
 		{
-			return CustomId.GetHashCode() ^ CustomTimestamp.GetHashCode() ^ Data.GetHashCode();
+			return CustomId.GetHashCode() ^ CustomTimestamp.GetHashCode() ^ (Data == null ? 0 : Data.GetHashCode());
 		}
 	}
 }
