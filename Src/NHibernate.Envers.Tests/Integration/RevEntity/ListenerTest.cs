@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var te = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.Now.AddSeconds(-1);
+			timestamp1 = DateTime.UtcNow.AddSeconds(-1);
 			using (var tx = Session.BeginTransaction())
 			{
 				TestRevisionListener.Data = "data1";
@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 				tx.Commit();
 			}
 
-			timestamp2 = DateTime.Now;
+			timestamp2 = DateTime.UtcNow;
 			Thread.Sleep(100);
 
 			using (var tx = Session.BeginTransaction())
@@ -49,7 +49,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 				te.Str = "y";
 				tx.Commit();
 			}
-			timestamp3 = DateTime.Now;
+			timestamp3 = DateTime.UtcNow;
 		}
 
 		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]
