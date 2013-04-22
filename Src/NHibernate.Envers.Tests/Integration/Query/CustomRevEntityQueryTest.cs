@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 				tx.Commit();
 			}
 			Thread.Sleep(100);
-			timestamp = DateTime.Now.Ticks;
+			timestamp = DateTime.UtcNow.Ticks;
 			Thread.Sleep(100);
 			using(var tx = Session.BeginTransaction())
 			{

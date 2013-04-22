@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		{
 			var rfd = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.Now.AddSeconds(-1);
+			timestamp1 = DateTime.UtcNow.AddSeconds(-1);
 
 			using (var tx = Session.BeginTransaction())
 			{
@@ -39,21 +39,21 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 				tx.Commit();
 			}
 
-			timestamp2 = DateTime.Now;
+			timestamp2 = DateTime.UtcNow;
 			Thread.Sleep(MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "y";
 				tx.Commit();
 			}
-			timestamp3 = DateTime.Now;
+			timestamp3 = DateTime.UtcNow;
 			Thread.Sleep(MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "z";
 				tx.Commit();
 			}
-			timestamp4 = DateTime.Now;
+			timestamp4 = DateTime.UtcNow;
 		}
 
 		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]
