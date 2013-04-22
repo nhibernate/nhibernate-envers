@@ -97,6 +97,8 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\Time\DateTimeTest.cs" />
+    <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />

@@ -5,6 +5,11 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity
 	[RevisionEntity]
 	public class CustomDataRevEntity
 	{
+		public CustomDataRevEntity()
+		{
+			Data = string.Empty;
+		}
+
 		[RevisionNumber]
 		public virtual long CustomId { get; set; }
 

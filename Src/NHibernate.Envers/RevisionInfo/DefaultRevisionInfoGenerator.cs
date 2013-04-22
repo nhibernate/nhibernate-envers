@@ -38,8 +38,8 @@ namespace NHibernate.Envers.RevisionInfo
 		{
 			var revisionInfo = Activator.CreateInstance(_revisionInfoType);
 
-			var value = _timestampAsDate ? (object)DateTime.Now : DateTime.Now.Ticks;
-
+			var utcNow = DateTime.UtcNow;
+			var value = _timestampAsDate ? (object)utcNow : utcNow.Ticks;
 			_revisionTimestampSetter.Set(revisionInfo, value);
 
 			if (_listener != null)
