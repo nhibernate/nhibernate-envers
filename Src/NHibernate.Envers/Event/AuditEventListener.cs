@@ -127,7 +127,7 @@ namespace NHibernate.Envers.Event
 			checkIfTransactionInProgress(evt.Session);
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
-			var newDbState = postUpdateDBState(evt);
+			var newDbState = postUpdateDbState(evt);
 			var workUnit = new ModWorkUnit(evt.Session, evt.Persister.EntityName, VerCfg,
 																		 evt.Id, evt.Persister, newDbState, evt.OldState);
 			verSync.AddWorkUnit(workUnit);
@@ -138,7 +138,7 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private static object[] postUpdateDBState(PostUpdateEvent evt)
+		private static object[] postUpdateDbState(PostUpdateEvent evt)
 		{
 			var newDbState = (object[])evt.State.Clone();
 			var entityPersister = evt.Persister;
@@ -296,14 +296,14 @@ namespace NHibernate.Envers.Event
 			}
 		}
 
-		private static CollectionEntry GetCollectionEntry(AbstractCollectionEvent evt)
+		private static CollectionEntry getCollectionEntry(AbstractCollectionEvent evt)
 		{
 			return evt.Session.PersistenceContext.GetCollectionEntry(evt.Collection);
 		}
 
 		public virtual void OnPreUpdateCollection(PreCollectionUpdateEvent evt)
 		{
-			var collectionEntry = GetCollectionEntry(evt);
+			var collectionEntry = getCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
 				onCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
@@ -312,7 +312,7 @@ namespace NHibernate.Envers.Event
 
 		public virtual void OnPreRemoveCollection(PreCollectionRemoveEvent evt)
 		{
-			var collectionEntry = GetCollectionEntry(evt);
+			var collectionEntry = getCollectionEntry(evt);
 			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse)
 			{
 				onCollectionAction(evt, null, collectionEntry.Snapshot, collectionEntry);
@@ -321,7 +321,7 @@ namespace NHibernate.Envers.Event
 
 		public virtual void OnPostRecreateCollection(PostCollectionRecreateEvent evt)
 		{
-			var collectionEntry = GetCollectionEntry(evt);
+			var collectionEntry = getCollectionEntry(evt);
 			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
 				onCollectionAction(evt, evt.Collection, null, collectionEntry);

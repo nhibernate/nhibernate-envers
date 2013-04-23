@@ -5,13 +5,13 @@ namespace NHibernate.Envers.Entities.Mapper
 {
 	public class PersistentCollectionChangeData 
 	{
-		private readonly object changedElement;
+		private readonly object _changedElement;
 
 		public PersistentCollectionChangeData(string entityName, IDictionary<string, object> data, object changedElement) 
 		{
 			EntityName = entityName;
 			Data = data;
-			this.changedElement = changedElement;
+			_changedElement = changedElement;
 		}
 
 		public IDictionary<string, object> Data { get; private set; }
@@ -19,14 +19,14 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public object GetChangedElement()
 		{
-			var elementAsPair = changedElement as Tuple<int, object>;
-			return elementAsPair != null ? elementAsPair.Item2 : keyValueOrDefault(changedElement, "Value", changedElement);
+			var elementAsPair = _changedElement as Tuple<int, object>;
+			return elementAsPair != null ? elementAsPair.Item2 : keyValueOrDefault(_changedElement, "Value", _changedElement);
 		}
 
 		public object GetChangedElementIndex()
 		{
-			var elementAsPair = changedElement as Tuple<int, object>;
-			return elementAsPair != null ? elementAsPair.Item1 : keyValueOrDefault(changedElement, "Key", null);
+			var elementAsPair = _changedElement as Tuple<int, object>;
+			return elementAsPair != null ? elementAsPair.Item1 : keyValueOrDefault(_changedElement, "Key", null);
 		}
 
 		private static object keyValueOrDefault(object changedElement, string keyOrValue, object defaultValue)

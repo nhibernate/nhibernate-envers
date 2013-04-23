@@ -23,7 +23,7 @@ namespace NHibernate.Cfg
 		public static Configuration IntegrateWithEnvers(this Configuration configuration, AuditEventListener auditEventListener, IMetaDataProvider metaDataProvider)
 		{
 			AuditConfiguration.SetConfigMetas(configuration, metaDataProvider);
-			AddListeners(configuration, auditEventListener);
+			addListeners(configuration, auditEventListener);
 			AuditConfiguration.GetFor(configuration);
 			return configuration;
 		}
@@ -75,7 +75,7 @@ namespace NHibernate.Cfg
 			return configuration;
 		}
 
-		private static void AddListeners(Configuration cfg, AuditEventListener auditEventListener)
+		private static void addListeners(Configuration cfg, AuditEventListener auditEventListener)
 		{
 			var listeners = new[] { auditEventListener };
 			cfg.AppendListeners(ListenerType.PostInsert, listeners);

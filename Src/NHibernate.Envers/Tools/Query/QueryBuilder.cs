@@ -79,7 +79,7 @@ namespace NHibernate.Envers.Tools.Query
 			_froms.Add(new Tuple<string, string>(entName, als));
 		}
 
-		private string GenerateAlias()
+		private string generateAlias()
 		{
 			return "_e" + _aliasCounter.Get();
 		}
@@ -90,7 +90,7 @@ namespace NHibernate.Envers.Tools.Query
 		/// </returns>
 		public QueryBuilder NewSubQueryBuilder()
 		{
-			return NewSubQueryBuilder(_entityName, GenerateAlias());
+			return NewSubQueryBuilder(_entityName, generateAlias());
 		}
 
 		/// <param name="entityName">Entity name, which will be the main entity for the sub-query.</param>
@@ -140,10 +140,10 @@ namespace NHibernate.Envers.Tools.Query
 			sb.Append("select ");
 			sb.Append(_projections.Count > 0
 							  ? string.Join(", ", _projections.ToArray())
-							  : string.Join(", ", GetAliasList().ToArray()));
+							  : string.Join(", ", aliasList().ToArray()));
 			sb.Append(" from ");
 			// all from entities with aliases, separated with commas
-			sb.Append(string.Join(", ", GetFromList().ToArray()));
+			sb.Append(string.Join(", ", fromList().ToArray()));
 			// where part - rootParameters
 			if (!RootParameters.IsEmpty())
 			{
@@ -154,23 +154,23 @@ namespace NHibernate.Envers.Tools.Query
 			if (_orders.Count > 0)
 			{
 				sb.Append(" order by ");
-				sb.Append(string.Join(", ", GetOrderList().ToArray()));
+				sb.Append(string.Join(", ", orderList().ToArray()));
 			}
 		}
 
-		private IEnumerable<string> GetAliasList()
+		private IEnumerable<string> aliasList()
 		{
 			return _froms.Select(theFrom => theFrom.Item2).ToList();
 		}
 
 		public string RootAlias { get; private set; }
 
-		private IEnumerable<string> GetFromList()
+		private IEnumerable<string> fromList()
 		{
 			return _froms.Select(theFrom => theFrom.Item1 + " " + theFrom.Item2).ToList();
 		}
 
-		private IEnumerable<string> GetOrderList()
+		private IEnumerable<string> orderList()
 		{
 			return _orders.Select(theOrder => RootAlias + "." + theOrder.Item1 + " " + (theOrder.Item2 ? "asc" : "desc")).ToList();
 		}

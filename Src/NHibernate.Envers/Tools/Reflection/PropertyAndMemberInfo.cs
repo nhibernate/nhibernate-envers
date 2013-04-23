@@ -53,7 +53,7 @@ namespace NHibernate.Envers.Tools.Reflection
 					// This part will run for:
 					// 1) query only property (access="none" or access="noop")
 					// 2) a strange case where the element <property> is declared with a "field.xyz" but only a field is used in the class. (Only God may know way)
-					var exactFieldIdx = GetMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
+					var exactFieldIdx = getMemberIdxByFieldNamingStrategies(candidateMembersNames, property);
 					if (exactFieldIdx >= 0)
 					{
 						yield return new DeclaredPersistentProperty(property, candidateMembers[exactFieldIdx]);
@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Tools.Reflection
 			}
 		}
 
-		private static int GetMemberIdxByFieldNamingStrategies(IList<string> candidateMembersNames, Property property)
+		private static int getMemberIdxByFieldNamingStrategies(IList<string> candidateMembersNames, Property property)
 		{
 			var exactFieldIdx = -1;
 			foreach (var ns in DefaultFieldNamningStrategies)

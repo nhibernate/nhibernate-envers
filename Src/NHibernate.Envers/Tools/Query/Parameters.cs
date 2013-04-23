@@ -80,7 +80,7 @@ namespace NHibernate.Envers.Tools.Query
 			localQueryParamValues = new Dictionary<string, object>(other.localQueryParamValues);
 		}
 
-		private string GenerateQueryParam() 
+		private string generateQueryParam() 
 		{
 			return "_p" + queryParamCounter.Get();
 		}
@@ -162,7 +162,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void AddWhereWithParam(string left, bool addAlias, string op, object paramValue) 
 		{
-			var paramName = GenerateQueryParam();
+			var paramName = generateQueryParam();
 			localQueryParamValues.Add(paramName, paramValue);
 
 			AddWhereWithNamedParam(left, addAlias, op, paramName);
@@ -193,7 +193,7 @@ namespace NHibernate.Envers.Tools.Query
 			for (var i = 0; i < paramValuesLength; i++)
 			{
 				var paramValue = paramValues[i];
-				var paramName = GenerateQueryParam();
+				var paramName = generateQueryParam();
 				localQueryParamValues.Add(paramName, paramValue);
 				expression.Append(":").Append(paramName);
 				if (i != paramValues.Length - 1)

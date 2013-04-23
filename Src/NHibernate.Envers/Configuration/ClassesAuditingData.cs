@@ -56,17 +56,17 @@ namespace NHibernate.Envers.Configuration
 
 						var referencedClassAuditingData = entityNameToAuditingData[referencedEntityName];
 
-						ForcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.MappedBy,
+						forcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.MappedBy,
 								pc.EntityName, referencedEntityName);
 
-						ForcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.PositionMappedBy,
+						forcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.PositionMappedBy,
 								pc.EntityName, referencedEntityName);
 					}
 				}
 			}
 		}
 
-		private static void ForcePropertyInsertable(ClassAuditingData classAuditingData, string propertyName,
+		private static void forcePropertyInsertable(ClassAuditingData classAuditingData, string propertyName,
 											 string entityName, string referencedEntityName)
 		{
 			if (propertyName != null) 

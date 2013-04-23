@@ -25,10 +25,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var superclass = source.Superclass;
 			// We assume that every subclass is of the same type.
 			return superclass == null ? 
-				InheritanceType.None : DoGetForSubclass(superclass.SubclassIterator.FirstOrDefault());
+				InheritanceType.None : doGetForSubclass(superclass.SubclassIterator.FirstOrDefault());
 		}
 
-		private static InheritanceType DoGetForSubclass(Subclass subclass)
+		private static InheritanceType doGetForSubclass(Subclass subclass)
 		{
 			if (subclass is SingleTableSubclass)
 			{
