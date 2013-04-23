@@ -112,7 +112,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				foreach (var persistentCollectionChangeData in CollectionChanges) 
 				{
 					newChangesIdMap.Add(
-							OriginalId(persistentCollectionChangeData),
+							originalId(persistentCollectionChangeData),
 							persistentCollectionChangeData);
 				}
 
@@ -122,7 +122,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				// Including only those original changes, which are not overshadowed by new ones.
 				foreach (var originalCollectionChangeData in original.CollectionChanges) 
 				{
-					var originalOriginalId = OriginalId(originalCollectionChangeData);
+					var originalOriginalId = originalId(originalCollectionChangeData);
 
 					if (!newChangesIdMap.ContainsKey(originalOriginalId)) 
 					{
@@ -152,7 +152,7 @@ namespace NHibernate.Envers.Synchronization.Work
 								"This is not really possible.");
 		}
 
-		private IDictionary<string, object> OriginalId(PersistentCollectionChangeData persistentCollectionChangeData) 
+		private IDictionary<string, object> originalId(PersistentCollectionChangeData persistentCollectionChangeData) 
 		{
 			return (IDictionary<string, object>) persistentCollectionChangeData.Data[VerCfg.AuditEntCfg.OriginalIdPropName];
 		}

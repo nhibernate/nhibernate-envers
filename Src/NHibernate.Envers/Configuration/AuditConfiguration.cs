@@ -16,8 +16,8 @@ namespace NHibernate.Envers.Configuration
 	[Serializable]
 	public sealed class AuditConfiguration : IDeserializationCallback
 	{
-		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> Configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>(new ConfigurationComparer());
-		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> ConfigurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
+		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>(new ConfigurationComparer());
+		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> configurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
 
 		private AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
 		{
@@ -58,17 +58,17 @@ namespace NHibernate.Envers.Configuration
 		public static AuditConfiguration GetFor(Cfg.Configuration cfg)
 		{
 			AuditConfiguration verCfg;
-			if (!Configurations.TryGetValue(cfg, out verCfg))
+			if (!configurations.TryGetValue(cfg, out verCfg))
 			{
 				cfg.SetEnversProperty(ConfigurationKey.UniqueConfigurationName, Guid.NewGuid().ToString());
 				cfg.BuildMappings(); // force secondpass for mappings added by users
 				IMetaDataProvider metas;
-				if (!ConfigurationMetadataProvider.TryGetValue(cfg, out metas))
+				if (!configurationMetadataProvider.TryGetValue(cfg, out metas))
 				{
 					metas = new AttributeConfiguration();
 				}
 				verCfg = new AuditConfiguration(cfg, metas);
-				Configurations.Add(cfg, verCfg);
+				configurations.Add(cfg, verCfg);
 			}
 
 			return verCfg;
@@ -77,7 +77,7 @@ namespace NHibernate.Envers.Configuration
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static void SetConfigMetas(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
 		{
-			ConfigurationMetadataProvider[cfg] = metaDataProvider;
+			configurationMetadataProvider[cfg] = metaDataProvider;
 		}
 
 		/// <summary>
@@ -95,13 +95,13 @@ namespace NHibernate.Envers.Configuration
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static void Remove(Cfg.Configuration cfg)
 		{
-			ConfigurationMetadataProvider.Remove(cfg);
-			Configurations.Remove(cfg);
+			configurationMetadataProvider.Remove(cfg);
+			configurations.Remove(cfg);
 		}
 
 		void IDeserializationCallback.OnDeserialization(object sender)
 		{
-			Configurations[Configuration] = this;
+			configurations[Configuration] = this;
 		}
 	}
 }

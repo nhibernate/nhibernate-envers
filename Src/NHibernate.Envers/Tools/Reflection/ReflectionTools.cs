@@ -24,10 +24,10 @@ namespace NHibernate.Envers.Tools.Reflection
 
 		public static ISetter GetSetter(System.Type cls, PropertyData propertyData)
 		{
-			return GetSetter(cls, propertyData.BeanName, propertyData.AccessType);
+			return getSetter(cls, propertyData.BeanName, propertyData.AccessType);
 		}
 
-		private static ISetter GetSetter(System.Type cls, string propertyName, string accessorType)
+		private static ISetter getSetter(System.Type cls, string propertyName, string accessorType)
 		{
 			return accessor(accessorType).GetSetter(cls, propertyName);
 		}

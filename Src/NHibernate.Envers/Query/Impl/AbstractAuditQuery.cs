@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Query.Impl
 		protected IQuery BuildQuery()
 		{
 			var query = QueryBuilder.ToQuery(VersionsReader.Session);
-			SetQueryProperties(query);
+			setQueryProperties(query);
 			return query;
 		}
 
@@ -186,7 +186,7 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
-		private void SetQueryProperties(IQuery query) 
+		private void setQueryProperties(IQuery query) 
 		{
 			if (maxResults != null) query.SetMaxResults((int)maxResults);
 			if (firstResult != null) query.SetFirstResult((int)firstResult);

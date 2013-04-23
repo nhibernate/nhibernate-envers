@@ -1,5 +1,4 @@
 ﻿using System;
-using NHibernate.Envers.Query.Projection;
 using NHibernate.Envers.Query.Property;
 
 namespace NHibernate.Envers.Query.Criteria
