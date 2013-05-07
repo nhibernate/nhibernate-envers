@@ -96,6 +96,7 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\OneToOneRemovedObjectQueryTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedMergeTest.cs" />

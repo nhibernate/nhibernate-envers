@@ -1,5 +1,4 @@
 ﻿using System;
-using NHibernate.Envers.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
@@ -12,14 +11,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 		}
 
-		protected override object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision)
+		protected override object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision, bool removed)
 		{
 			if (referencedEntity.IsAudited)
 			{
-				// Audited relation.
-				return versionsReader.CreateQuery().ForEntitiesAtRevision(referencedEntity.EntityClass, revision)
-					.Add(AuditEntity.Id().Eq(primaryKey))
-					.GetSingleResult();
+				return versionsReader.Find(referencedEntity.EntityName, primaryKey, revision, removed);
 			}
 			//Not audited revision
 			return createNotAuditedEntityReference(versionsReader, referencedEntity.EntityClass,
