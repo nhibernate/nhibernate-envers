@@ -103,6 +103,14 @@
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />
     <Compile Include="NetSpecific\UnitTests\Interfaces\CovariantInterfacesTests.cs" />
+    <Compile Include="NetSpecific\Entities\BagModel.cs" />
+    <Compile Include="NetSpecific\Entities\ListModel.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\BagRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\OneToOneSingleRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\ListRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\MapRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\OneToManyToNotAuditedRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\OneToOneRemovedObjectQueryTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedComponentCollectionTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedManualFlushTest.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedMergeTest.cs" />
@@ -651,6 +659,7 @@
     <Compile Include="NetSpecific\Integration\OneToMany\Parent.cs" />
     <Compile Include="NetSpecific\Integration\OneToMany\UniDirectionalWithBackRefTest.cs" />
     <Compile Include="NetSpecific\Integration\PersistRevisionInfo\FlushGetCurrentRevisionTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\StringCollectionRemovedObjectQueryTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Fluent\EntityInstantiationTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\CompositeIdNoComponentTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Ids\MultipleIdEntity.cs" />
@@ -739,6 +748,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NetSpecific\UnitTests\CustomLists\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Entities\List.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Entities\Bag.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\IdBag\ManyToMany\UniDirectional\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\EnumType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\OneToMany\Mapping.hbm.xml" />

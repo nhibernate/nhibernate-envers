@@ -22,10 +22,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		protected override void NullSafeMapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey, IAuditReaderImplementor versionsReader, long revision)
 		{
 			var referencedEntity = GetEntityInfo(verCfg, _referencedEntityName);
+			var removed = RevisionType.Deleted.Equals(data[verCfg.AuditEntCfg.RevisionTypePropName]);
 			object value;
 			try
 			{
-				value = QueryForReferencedEntity(versionsReader, referencedEntity, primaryKey, revision);
+				value = QueryForReferencedEntity(versionsReader, referencedEntity, primaryKey, revision, removed);
 			}
 			catch (NonUniqueResultException e)
 			{
@@ -35,7 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			SetPropertyValue(obj, value);
 		}
 
-		protected abstract Object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision);
+		protected abstract Object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision, bool removed);
 
 		public override void MapModifiedFlagsToMapFromEntity(Engine.ISessionImplementor session, System.Collections.Generic.IDictionary<string, object> data, object newObj, object oldObj)
 		{

@@ -9,6 +9,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table and a related non-audited entity.
+	///
+	/// Used when a unidirectional onetomany mapping is used and child side is not audited.
 	/// </summary>
 	[Serializable]
 	public sealed class TwoEntityOneAuditedQueryGenerator : AbstractRelationQueryGenerator

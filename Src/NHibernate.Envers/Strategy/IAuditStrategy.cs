@@ -62,10 +62,9 @@ namespace NHibernate.Envers.Strategy
 		/// <param name="originalIdPropertyName">name of the id property (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias1">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
 		/// <param name="alias2">alias1 an alias used for subquery (only used for <see cref="ValidityAuditStrategy"/>)</param>
-		/// <param name="inclusive">Indicates whether revision number shall be treated as inclusive or exclusive</param>
 		void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty,
 										string revisionEndProperty, bool addAlias, MiddleIdData idData,
-										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2, bool inclusive);
+										string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2);
 
 		/// <summary>
 		/// Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a middle-entity 

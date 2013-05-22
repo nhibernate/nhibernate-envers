@@ -9,6 +9,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table and a two related versions entity.
+	/// 
+	/// Used when a map mapping of two entities is used.
 	/// </summary>
 	[Serializable]
 	public sealed class ThreeEntityQueryGenerator : AbstractRelationQueryGenerator
@@ -117,13 +119,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
 						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, inclusive);
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// (selecting f entities at revision :revision)
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
 						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr, inclusive);
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)

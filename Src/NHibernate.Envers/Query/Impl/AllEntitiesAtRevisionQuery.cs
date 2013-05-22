@@ -49,7 +49,7 @@ namespace NHibernate.Envers.Query.Impl
 			// --> based on auditStrategy (see above)
 			AuditConfiguration.GlobalCfg.AuditStrategy.AddEntityAtRevisionRestriction(QueryBuilder, QueryBuilder.RootParameters, revisionPropertyPath,
 					verEntCfg.RevisionEndFieldName, true, referencedIdData,
-					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, true);
+					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 			SetIncludeDeletationClause();
 
 			AddCriterions();
