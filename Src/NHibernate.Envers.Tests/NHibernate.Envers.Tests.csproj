@@ -99,6 +99,7 @@
     <Compile Include="NetSpecific\Entities\BagModel.cs" />
     <Compile Include="NetSpecific\Entities\ListModel.cs" />
     <Compile Include="NetSpecific\Integration\Proxy\BagRemovedObjectQueryTest.cs" />
+    <Compile Include="NetSpecific\Integration\Proxy\OneToOneSingleRemovedObjectQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\Proxy\ListRemovedObjectQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\Proxy\MapRemovedObjectQueryTest.cs" />
     <Compile Include="NetSpecific\Integration\Proxy\OneToManyToNotAuditedRemovedObjectQueryTest.cs" />
