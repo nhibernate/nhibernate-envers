@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Entities">
+	<class name="ListParent">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<list name="Children" cascade="all-delete-orphan">
+			<key column="childKey"/>
+			<index column="childInd"/>
+			<one-to-many class="ListChild"/>
+		</list>
+	</class>
+	<class name="ListChild">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<property name="Name"/>
+	</class>
+</hibernate-mapping>

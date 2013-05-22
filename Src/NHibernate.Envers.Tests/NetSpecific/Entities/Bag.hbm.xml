@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Entities">
+	<class name="BagParent">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<bag name="Children" cascade="all-delete-orphan" inverse="true">
+			<key column="childKey"/>
+			<one-to-many class="BagChild"/>
+		</bag>
+	</class>
+	<class name="BagChild">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<many-to-one name="Parent" column="childKey" />
+		<property name="Name"/>
+	</class>
+</hibernate-mapping>
