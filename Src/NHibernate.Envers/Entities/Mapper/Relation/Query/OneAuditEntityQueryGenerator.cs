@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var validQuery = (QueryBuilder)commonPart.Clone();
 			var removedQuery = (QueryBuilder)commonPart.Clone();
 			
-			createValidDataRestrictions(auditStrategy, referencedIdData, validQuery, validQuery.RootParameters, true);
+			createValidDataRestrictions(auditStrategy, referencedIdData, validQuery, validQuery.RootParameters);
 			createValidAndRemovedDataRestrictions(auditStrategy, referencedIdData, removedQuery);
 
 			_queryString = QueryToString(validQuery);
@@ -67,14 +67,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		/// Creates query restrictions used to retrieve only actual data.
 		/// </summary>
 		private void createValidDataRestrictions(IAuditStrategy auditStrategy,
-		                                         MiddleIdData referencedIdData, QueryBuilder qb, Parameters rootParameters,
-		                                         bool inclusive)
+		                                         MiddleIdData referencedIdData, QueryBuilder qb, Parameters rootParameters)
 		{
 			var revisionPropertyPath = VerEntCfg.RevisionNumberPath;
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, revisionPropertyPath, VerEntCfg.RevisionEndFieldName, true,
-				referencedIdData, revisionPropertyPath, VerEntCfg.OriginalIdPropName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, inclusive);
+				referencedIdData, revisionPropertyPath, VerEntCfg.OriginalIdPropName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, true);
 			// e.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(RevisionTypePath(), false, "!=", QueryConstants.DelRevisionTypeParameter);
 		}
@@ -88,7 +87,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var valid = disjoint.AddSubParameters("and");// Restrictions to match all valid rows.
 			var removed = disjoint.AddSubParameters("and");// Restrictions to match all rows deleted at exactly given revision.
 			// Excluding current revision, because we need to match data valid at the previous one.
-			createValidDataRestrictions(auditStrategy, referencedIdData, remQb, valid, false);
+			createValidDataRestrictions(auditStrategy, referencedIdData, remQb, valid);
 			// e.revision = :revision
 			removed.AddWhereWithNamedParam(VerEntCfg.RevisionNumberPath, false, "=", QueryConstants.RevisionParameter);
 			// e.revision_type = DEL
