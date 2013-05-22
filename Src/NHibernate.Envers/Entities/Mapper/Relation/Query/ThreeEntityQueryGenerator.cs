@@ -9,6 +9,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table and a two related versions entity.
+	/// 
+	/// Used when a map mapping of two entities is used.
 	/// </summary>
 	[Serializable]
 	public sealed class ThreeEntityQueryGenerator : AbstractRelationQueryGenerator

@@ -7,6 +7,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from an audit entity.
+	/// 
+	/// Used when bidirectional onetomany mapping of entities is used.
 	/// </summary>
 	[Serializable]
 	public sealed class OneAuditEntityQueryGenerator: AbstractRelationQueryGenerator 
