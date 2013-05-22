@@ -117,13 +117,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
 						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, true);
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// (selecting f entities at revision :revision)
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, QueryConstants.ReferencedEntityAlias + "." + revisionPropertyPath,
 						QueryConstants.ReferencedEntityAlias + "." + VerEntCfg.RevisionEndFieldName, false,
-						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr, true);
+						referencedIdData, revisionPropertyPath, originalIdPropertyName, QueryConstants.IndexEntityAlias, QueryConstants.IndexEntityAliasDefAudStr);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)

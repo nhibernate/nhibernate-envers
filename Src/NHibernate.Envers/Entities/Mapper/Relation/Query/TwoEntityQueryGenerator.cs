@@ -99,7 +99,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 																									 VerEntCfg.RevisionEndFieldName, false,
 																									 referencedIdData, revisionPropertyPath, originalIdPropertyName,
 																									 QueryConstants.ReferencedEntityAlias,
-																									 QueryConstants.ReferencedEntityAliasDefAudStr, true);
+																									 QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)
