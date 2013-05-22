@@ -73,7 +73,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			// (selecting e entities at revision :revision)
 			// --> based on auditStrategy (see above)
 			auditStrategy.AddEntityAtRevisionRestriction(qb, rootParameters, revisionPropertyPath, VerEntCfg.RevisionEndFieldName, true,
-				referencedIdData, revisionPropertyPath, VerEntCfg.OriginalIdPropName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr, true);
+				referencedIdData, revisionPropertyPath, VerEntCfg.OriginalIdPropName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
 			// e.revision_type != DEL
 			rootParameters.AddWhereWithNamedParam(RevisionTypePath(), false, "!=", QueryConstants.DelRevisionTypeParameter);
 		}
