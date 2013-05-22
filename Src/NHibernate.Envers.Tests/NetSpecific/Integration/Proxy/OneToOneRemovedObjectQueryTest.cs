@@ -9,7 +9,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
-	[Ignore("Not yet fixed (NHE-121")]
 	public class OneToOneRemovedObjectQueryTest : TestBase
 	{
 		private const int id =125;
