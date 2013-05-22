@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_owningReferencePropertyName = owningReferencePropertyName;
 		}
 
-		protected override object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision)
+		protected override object QueryForReferencedEntity(IAuditReaderImplementor versionsReader, EntityInfo referencedEntity, object primaryKey, long revision, bool removed)
 		{
 			return versionsReader.CreateQuery().ForEntitiesAtRevision(referencedEntity.EntityClass, revision)
 				.Add(AuditEntity.RelatedId(_owningReferencePropertyName).Eq(primaryKey))

@@ -9,6 +9,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table only.
+	/// 
+	/// Used when onetomany mapping of components or primitives is used.
 	/// </summary>
 	[Serializable]
 	public sealed class OneEntityQueryGenerator : AbstractRelationQueryGenerator 

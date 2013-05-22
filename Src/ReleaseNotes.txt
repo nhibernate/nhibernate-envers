@@ -7,6 +7,7 @@
 * Set of components now uses an extra db column. You can set the name of this using ConfigurationKey.EmbeddableSetOrdinalFieldName
 * Added removed to IEnversProxyFactory.CreateToOneProxy
 * DefaultRevisionEntity.RevisionDate is set using DateTime.UtcNow
+* Removed inclusive parameter from IAuditStrategy.AddEntityAtRevisionRestriction(...)
 
 
 

@@ -37,7 +37,7 @@ namespace NHibernate.Envers.Strategy
 
 		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, 
 																			bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName,
-																			string alias1, string alias2, bool inclusive)
+																			string alias1, string alias2)
 		{
 			// create a subquery builder
 			// SELECT max(e.revision) FROM versionsReferencedEntity e2
@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Strategy
 			// WHERE
 			var maxERevQbParameters = maxERevQb.RootParameters;
 			// e2.revision <= :revision
-			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, inclusive ? "<=" : "<", QueryConstants.RevisionParameter);
+			maxERevQbParameters.AddWhereWithNamedParam(revisionPropertyPath, "<=", QueryConstants.RevisionParameter);
 			// e2.id_ref_ed = e.id_ref_ed
 			idData.OriginalMapper.AddIdsEqualToQuery(maxERevQbParameters,
 					alias1 + "." + originalIdPropertyName, alias2 + "." + originalIdPropertyName);

@@ -9,6 +9,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 {
 	/// <summary>
 	/// Selects data from a relation middle-table and a related versions entity.
+	/// 
+	/// Used when a unidirectional onetomany mapping is used and child side is audited.
 	/// </summary>
 	[Serializable]
 	public sealed class TwoEntityQueryGenerator : AbstractRelationQueryGenerator
@@ -99,7 +101,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 																									 VerEntCfg.RevisionEndFieldName, false,
 																									 referencedIdData, revisionPropertyPath, originalIdPropertyName,
 																									 QueryConstants.ReferencedEntityAlias,
-																									 QueryConstants.ReferencedEntityAliasDefAudStr, inclusive);
+																									 QueryConstants.ReferencedEntityAliasDefAudStr);
 
 			// (with ee association at revision :revision)
 			// --> based on auditStrategy (see above)

@@ -130,9 +130,9 @@ namespace NHibernate.Envers.Strategy
 			qb.RootParameters.AddWhere(auditCfg.AuditEntCfg.RevisionEndFieldName, true, "is", "null", false);
 		}
 
-		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2, bool inclusive)
+		public void AddEntityAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData idData, string revisionPropertyPath, string originalIdPropertyName, string alias1, string alias2)
 		{
-			addRevisionRestriction(parameters, revisionProperty, revisionEndProperty, addAlias, inclusive);
+			addRevisionRestriction(parameters, revisionProperty, revisionEndProperty, addAlias, true);
 		}
 
 		public void AddAssociationAtRevisionRestriction(QueryBuilder rootQueryBuilder, Parameters parameters, string revisionProperty, string revisionEndProperty, bool addAlias, MiddleIdData referencingIdData, string versionsMiddleEntityName, string eeOriginalIdPropertyPath, string revisionPropertyPath, string originalIdPropertyName, string alias1, bool inclusive, params MiddleComponentData[] componentDatas)
