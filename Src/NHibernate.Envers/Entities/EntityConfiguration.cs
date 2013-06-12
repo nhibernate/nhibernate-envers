@@ -40,37 +40,37 @@ namespace NHibernate.Envers.Entities
 			get { return relations.Values; }
 		}
 
-		public void AddToOneRelation(string fromPropertyName, string toEntityName, IIdMapper idMapper, bool insertable)
+		public void AddToOneRelation(string fromPropertyName, string toEntityName, IIdMapper idMapper, bool insertable, bool ignoreNotFound)
 		{
-			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOne,
-					toEntityName, null, idMapper, null, null, insertable));
+			relations.Add(fromPropertyName, RelationDescription.ToOne(fromPropertyName, RelationType.ToOne,
+					toEntityName, null, idMapper, null, null, insertable, ignoreNotFound));
 		}
 
 		public void AddToOneNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName,
-											  IIdMapper idMapper)
+											  IIdMapper idMapper, bool ignoreNotFound)
 		{
-			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToOneNotOwning,
-					toEntityName, mappedByPropertyName, idMapper, null, null, true));
+			relations.Add(fromPropertyName, RelationDescription.ToOne(fromPropertyName, RelationType.ToOneNotOwning,
+					toEntityName, mappedByPropertyName, idMapper, null, null, true, ignoreNotFound));
 		}
 
 		public void AddToManyNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName,
 											   IIdMapper idMapper, IPropertyMapper fakeBidirectionalRelationMapper,
 											   IPropertyMapper fakeBidirectionalRelationIndexMapper)
 		{
-			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyNotOwning,
+			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyNotOwning,
 					toEntityName, mappedByPropertyName, idMapper, fakeBidirectionalRelationMapper,
 					fakeBidirectionalRelationIndexMapper, true));
 		}
 
 		public void AddToManyMiddleRelation(string fromPropertyName, string toEntityName)
 		{
-			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddle,
+			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyMiddle,
 					toEntityName, null, null, null, null, true));
 		}
 
 		public void AddToManyMiddleNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName)
 		{
-			relations.Add(fromPropertyName, new RelationDescription(fromPropertyName, RelationType.ToManyMiddleNotOwning,
+			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyMiddleNotOwning,
 					toEntityName, mappedByPropertyName, null, null, null, true));
 		}
 

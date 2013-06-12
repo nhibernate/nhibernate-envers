@@ -77,15 +77,23 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				if (!versionsReader.FirstLevelCache.TryGetValue(_referencedEntityName, revision, entityId, out value))
 				{
+					var referencedEntity = GetEntityInfo(verCfg, _referencedEntityName);
+					var ignoreNotFound = false;
+					if (!referencedEntity.IsAudited)
+					{
+						var referencingEntityName = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string) data["$type$"]);
+						ignoreNotFound = verCfg.EntCfg[referencingEntityName].GetRelationDescription(PropertyData.Name).IsIgnoreNotFound;
+					}
 					var persister = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName);
 					var removed = RevisionType.Deleted.Equals(data[verCfg.AuditEntCfg.RevisionTypePropName]);
-					if (persister.HasProxy)
+
+					if (ignoreNotFound || !persister.HasProxy)
 					{
-						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);	
+						value = loadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg);
 					}
 					else
 					{
-						value = loadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg);
+						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);							
 					}
 				}
 			}

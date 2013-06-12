@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Tests.Integration.Serialization
 		{
 			get
 			{
-				return new[] { "Entities.OneToMany.Mapping.hbm.xml" };
+				return new[] { "Entities.OneToMany.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" };
 			}
 		}
 

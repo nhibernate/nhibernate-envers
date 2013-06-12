@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Merge
 
 		protected override IEnumerable<string> Mappings
 		{
-			get { return new[] { "Entities.OneToMany.Mapping.hbm.xml" }; }
+			get { return new[] { "Entities.OneToMany.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" }; }
 		}
 	}
 }

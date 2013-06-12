@@ -442,6 +442,10 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 			<literal>[Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED]</literal>
 			(or use fluent configuration: <literal>ExcludeRelationData()</literal>). Then, when reading historic
 			versions of your entity, the relation will always point to the "current" related entity.
+			By default Envers throws  when "current" entity does not exist in the database. 
+			Apply <literal>not-found="ignore"</literal> in your mapping
+			to silence the exception and assign null value instead. Hereby solution causes implicit eager loading
+			of to-one relations.
 		</para>
 
 		<para>

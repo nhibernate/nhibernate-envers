@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 		{
 			get
 			{
-				return new[] { "Entities.OneToMany.Mapping.hbm.xml" };
+				return new[] { "Entities.OneToMany.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" };
 			}
 		}
 		protected override void Initialize()

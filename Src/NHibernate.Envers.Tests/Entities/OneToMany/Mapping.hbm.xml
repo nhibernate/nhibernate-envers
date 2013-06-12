@@ -42,4 +42,14 @@
                  class="CollectionRefEdEntity" />
   </class>
 
+	<class name="OneToManyNotAuditedNullEntity" table="O2M_N_AUD_NULL">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data"/>
+		<bag name="References">
+			<key column="refKey"/>
+			<one-to-many class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity" not-found="ignore" />
+		</bag>
+	</class>
 </hibernate-mapping>
