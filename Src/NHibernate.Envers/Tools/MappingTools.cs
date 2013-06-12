@@ -19,6 +19,26 @@ namespace NHibernate.Envers.Tools
 		}
 
 		/// <summary>
+		/// Checks if not-found=ignore
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static bool IgnoreNotFound(IValue value)
+		{
+			var mtoValue = value as ManyToOne;
+			if (mtoValue != null)
+			{
+				return mtoValue.IsIgnoreNotFound;
+			}
+			var otmValue = value as OneToMany;
+			if (otmValue != null)
+			{
+				return otmValue.IsIgnoreNotFound;
+			}
+			return false;
+		}
+
+		/// <summary>
 		/// </summary>
 		/// <param name="referencePropertyName">The name of the property that holds the relation to the entity.</param>
 		/// <returns>A prefix which should be used to prefix an id mapper for the related entity.</returns>

@@ -52,7 +52,7 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 		{
 			get
 			{
-				return new[]{"Entities.OneToMany.Mapping.hbm.xml"};
+				return new[] { "Entities.OneToMany.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" };
 			}
 		}
 	}

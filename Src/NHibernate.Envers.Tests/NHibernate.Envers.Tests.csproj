@@ -83,6 +83,9 @@
     <Compile Include="Entities\Ids\ManyToOneNotAuditedEmbId.cs" />
     <Compile Include="Entities\Ids\UnusualIdNamingEntity.cs" />
     <Compile Include="Entities\ManyToMany\UniDirectional\M2MIndexedListTargetNotAuditedEntity.cs" />
+    <Compile Include="Entities\ManyToMany\UniDirectional\ManyToManyNotAuditedNullEntity.cs" />
+    <Compile Include="Entities\ManyToOne\UniDirectional\ManyToOneNotAuditedNullEntity.cs" />
+    <Compile Include="Entities\OneToMany\OneToManyNotAuditedNullEntity.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefEdPK.cs" />
     <Compile Include="Entities\OneToOne\BidirectionalEagerHbmRefIngPK.cs" />
     <Compile Include="Entities\Collection\StrTestNoProxyEntity.cs" />

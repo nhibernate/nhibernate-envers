@@ -57,7 +57,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		{
 			get
 			{
-				return new[] { "Entities.OneToMany.Mapping.hbm.xml" };
+				return new[] { "Entities.OneToMany.Mapping.hbm.xml", "Entities.Mapping.hbm.xml" };
 			}
 		}
 	}

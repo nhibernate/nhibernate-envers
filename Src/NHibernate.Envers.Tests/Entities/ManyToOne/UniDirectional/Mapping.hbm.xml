@@ -9,6 +9,14 @@
 		<property name="Data" />
 		<many-to-one name="Reference" class ="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity" />
 	</class>
+
+	<class name="ManyToOneNotAuditedNullEntity" table="M2O_N_AUD_NULL">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data"/>
+		<many-to-one name="Reference" class="NHibernate.Envers.Tests.Entities.UnversionedStrTestEntity" not-found="ignore" />
+	</class>
 </hibernate-mapping>
 
 

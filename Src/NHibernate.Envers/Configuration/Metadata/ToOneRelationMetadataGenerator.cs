@@ -33,7 +33,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Storing information about this relation
 			_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(
-					propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
+					propertyAuditingData.Name, referencedEntityName, relMapper, insertable, MappingTools.IgnoreNotFound(value));
 
 			// If the property isn't insertable, checking if this is not a "fake" bidirectional many-to-one relationship,
 			// that is, when the one side owns the relation (and is a collection), and the many side is non insertable.
@@ -114,7 +114,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Storing information about this relation
 			_mainGenerator.EntitiesConfigurations[entityName].AddToOneNotOwningRelation(
 					propertyAuditingData.Name, owningReferencePropertyName,
-					referencedEntityName, ownedIdMapper);
+					referencedEntityName, ownedIdMapper, MappingTools.IgnoreNotFound(value));
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
@@ -131,7 +131,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var relMapper = idMapping.IdMapper.PrefixMappedProperties(lastPropertyPrefix);
 
 			// Storing information about this relation
-			_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(propertyAuditingData.Name, referencedEntityName, relMapper, insertable);
+			_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(propertyAuditingData.Name, referencedEntityName, relMapper, insertable, MappingTools.IgnoreNotFound(value));
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
