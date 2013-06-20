@@ -195,8 +195,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				if (_auditedPropertiesHolder.Contains(declaredPersistentProperty.Property.Name))
 					continue;
 
-				//only get the property on specific class, if no <properties>-mapping or dynamic entity
-				if (declaredPersistentProperty.Member.DeclaringType != currentClass &&
+				//only get the property on specific class if not a component
+				if ((declaredPersistentProperty.Member.DeclaringType != currentClass && !_persistentPropertiesSource.IsComponent) &&
 					!declaredPersistentProperty.Member.Equals(DeclaredPersistentProperty.NotAvailableMemberInfo) && 
 					!_overriddenAuditedProperties.Contains(declaredPersistentProperty.Property.Name))
 					continue;
@@ -462,6 +462,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; private set; }
 			public System.Type Class { get; private set; }
+
+			public bool IsComponent
+			{
+				get { return true; }
+			}
 
 			public Property VersionedProperty
 			{

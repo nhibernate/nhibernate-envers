@@ -123,6 +123,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			{
 				get { return parent.pc.Version; }
 			}
+
+			public bool IsComponent
+			{
+				get { return false; }
+			}
 		}
 	}
 }
