@@ -62,6 +62,14 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.86.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.1.0.86.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.86.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.1.0.86.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -100,6 +108,11 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
+    <Compile Include="NetSpecific\Integration\Component\BaseClassComponent.cs" />
+    <Compile Include="NetSpecific\Integration\Component\BaseClassOwner.cs" />
+    <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />
+    <Compile Include="NetSpecific\Integration\Component\DerivedClassOwner.cs" />
+    <Compile Include="NetSpecific\Integration\Component\DerivedComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\DateTimeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
@@ -750,6 +763,12 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="NetSpecific\UnitTests\CustomLists\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Entities\List.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Entities\Bag.hbm.xml" />
