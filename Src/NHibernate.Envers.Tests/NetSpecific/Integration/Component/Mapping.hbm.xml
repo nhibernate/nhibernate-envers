@@ -12,5 +12,21 @@
       </component>
     </component>
   </class>
+  <class name="BaseClassOwner">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <component name="Component">
+      <property name="Data1"/>
+    </component>
+  </class>
+  <class name="DerivedClassOwner">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <component name="Component">
+      <property name="Data1"/>
+    </component>
+  </class>
 </hibernate-mapping>
 
