@@ -2,10 +2,10 @@
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 {
-    [Audited]
-    class BaseClassOwner
-    {
-        public virtual int Id { get; set; }
-        public virtual BaseClassComponent Component { get; set; }
-    }
+	[Audited]
+	public class BaseClassOwner
+	{
+		public virtual int Id { get; set; }
+		public virtual BaseClassComponent Component { get; set; }
+	}
 }
