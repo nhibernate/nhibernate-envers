@@ -47,8 +47,10 @@ namespace NHibernate.Envers.Strategy
 		{
 			var auditedEntityName = _auditConfiguration.AuditEntCfg.GetAuditEntityName(entityName);
 
+			var reuseEntityIdentifier = _auditConfiguration.GlobalCfg.AllowIdentifierReuse;
 			// Update the end date of the previous row if this operation is expected to have a previous row
-			if (revisionType(_auditConfiguration, data) != RevisionType.Added)
+			var revisionTypeIsAdded = revisionType(_auditConfiguration, data) == RevisionType.Added;
+			if (reuseEntityIdentifier || !revisionTypeIsAdded)
 			{
 				/*
 				 Constructing a query:
@@ -64,7 +66,7 @@ namespace NHibernate.Envers.Strategy
 
 				var l = qb.ToQuery(session).SetLockMode(QueryConstants.MiddleEntityAlias, LockMode.Upgrade).List();
 
-				updateLastRevision(session, _auditConfiguration, l, id, auditedEntityName, revision);
+				updateLastRevision(session, _auditConfiguration, l, id, auditedEntityName, revision, (!reuseEntityIdentifier || !revisionTypeIsAdded));
 			}
 
 			// Save the audit data
@@ -115,7 +117,7 @@ namespace NHibernate.Envers.Strategy
 
 			if (l.Count > 0)
 			{
-				updateLastRevision(session, _auditConfiguration, l, originalId, persistentCollectionChangeData.EntityName, revision);
+				updateLastRevision(session, _auditConfiguration, l, originalId, persistentCollectionChangeData.EntityName, revision, true);
 			}
 
 			// Save the audit data
@@ -173,13 +175,13 @@ namespace NHibernate.Envers.Strategy
 		}
 
 		private void updateLastRevision(ISession session, AuditConfiguration auditCfg, IList l,
-									object id, string auditedEntityName, object revision)
+									object id, string auditedEntityName, object revision, bool throwIfNotOneEntry)
 		{
 			// There should be one entry
 			if (l.Count == 1)
 			{
 				// Setting the end revision to be the current rev
-				var previousData = (IDictionary)l[0];
+				var previousData = (IDictionary) l[0];
 				var revisionEndFieldName = auditCfg.AuditEntCfg.RevisionEndFieldName;
 				previousData[revisionEndFieldName] = revision;
 
@@ -193,11 +195,11 @@ namespace NHibernate.Envers.Strategy
 					// convert to a DateTime
 					if (revEndTimestampObj is DateTime)
 					{
-						revisionEndTimestamp = (DateTime)revEndTimestampObj;
+						revisionEndTimestamp = (DateTime) revEndTimestampObj;
 					}
 					else
 					{
-						revisionEndTimestamp = new DateTime((long)revEndTimestampObj);
+						revisionEndTimestamp = new DateTime((long) revEndTimestampObj);
 					}
 
 					// Setting the end revision timestamp
@@ -210,7 +212,10 @@ namespace NHibernate.Envers.Strategy
 			}
 			else
 			{
-				throw new InvalidOperationException("Cannot find previous revision for entity " + auditedEntityName + " and id " + id);
+				if (throwIfNotOneEntry)
+				{
+					throw new InvalidOperationException("Cannot find previous revision for entity " + auditedEntityName + " and id " + id);					
+				}
 			}
 		}
 	}

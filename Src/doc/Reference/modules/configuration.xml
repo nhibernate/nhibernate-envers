@@ -318,6 +318,19 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</row>
 					<row>
 						<entry>
+							nhibernate.envers.allow_identifier_reuse
+						</entry>
+						<entry>
+							false
+						</entry>
+						<entry>
+							Guarantees proper validity audit strategy behavior when application reuses identifiers
+							of deleted entities. Exactly one row with <literal>null</literal> end date exists
+							for each identifier.
+						</entry>
+					</row>
+					<row>
+						<entry>
 							nhibernate.envers.collection_mapper_factory
 						</entry>
 						<entry>
