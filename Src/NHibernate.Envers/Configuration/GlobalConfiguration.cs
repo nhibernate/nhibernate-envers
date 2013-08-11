@@ -26,6 +26,7 @@ namespace NHibernate.Envers.Configuration
 			PostInstantiationListener = ConfigurationKey.PostInstantiationListener.ToInstance<IPostInstantiationListener>(properties);
 			AuditStrategy = ConfigurationKey.AuditStrategy.ToInstance<IAuditStrategy>(properties);
 			AuditStrategy.Initialize(auditConfiguration);
+			AllowIdentifierReuse = ConfigurationKey.AllowIdentifierReuse.ToBool(properties);
 		}
 
 		/// <summary>
@@ -79,5 +80,6 @@ namespace NHibernate.Envers.Configuration
 		public IPostInstantiationListener PostInstantiationListener { get; private set; }
 
 		public IAuditStrategy AuditStrategy { get; private set; }
+		public bool AllowIdentifierReuse { get; private set; }
 	}
 }

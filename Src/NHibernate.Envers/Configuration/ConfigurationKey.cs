@@ -189,5 +189,12 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public static readonly StringConfigurationEntry EmbeddableSetOrdinalFieldName
 			= new StringConfigurationEntry("nhibernate.envers.embeddable_set_ordinal_field_name", "SETORDINAL");
+
+		/// <summary>
+		/// Guarantees proper validity audit strategy behavior when application reuses identifiers of deleted entities.
+		/// Exactly one row with <code>null</code> end date exists for each identifier.
+		/// </summary>
+		public static readonly BoolConfigurationEntry AllowIdentifierReuse
+			= new BoolConfigurationEntry("nhibernate.envers.allow_identifier_reuse", "false");
 	}
 }
