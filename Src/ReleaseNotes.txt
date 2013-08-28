@@ -29,6 +29,7 @@
 * [NHE-38] - Support for collection of Components in envers 
 * [NHE-101] - Add IPostInstantiationListener
 * [NHE-102] - Introducing AuditFactoryAttribute
+* [NHE-103] - Implement default strategy for generating table name for unidirectional OneToMany association
 
 
 
