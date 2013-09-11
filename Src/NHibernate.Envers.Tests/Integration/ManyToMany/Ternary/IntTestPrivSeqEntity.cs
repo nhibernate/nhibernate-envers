@@ -19,6 +19,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 		public override int GetHashCode()
 		{
 			return Id ^ Number;
-		} 
+		}
+
+		public override string ToString()
+		{
+			return "Id:" +Id + ", Number: " + Number;
+		}
 	}
 }
