@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NUnit.Framework;
