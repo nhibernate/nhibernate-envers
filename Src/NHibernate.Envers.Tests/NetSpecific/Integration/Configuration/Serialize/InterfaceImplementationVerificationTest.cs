@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
@@ -8,7 +6,6 @@ using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Strategy;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serialize
 {

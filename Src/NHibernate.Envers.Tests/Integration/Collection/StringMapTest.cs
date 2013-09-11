@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Tests.Entities.Collection;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection
 {
