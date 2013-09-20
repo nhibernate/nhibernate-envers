@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Criterion;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
@@ -41,7 +42,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			}
 			using (var tx = Session.BeginTransaction())
 			{
-				site1.Str = "c";
+				site1.Str = "aBc";
 				site2.Number = 20;
 				tx.Commit();
 			}
@@ -121,12 +122,12 @@ namespace NHibernate.Envers.Tests.Integration.Query
 						}, ver1);
 			CollectionAssert.AreEquivalent(new[]
 						{
-							new StrIntTestEntity {Id = id1, Str = "c", Number = 10},
+							new StrIntTestEntity {Id = id1, Str = "aBc", Number = 10},
 							new StrIntTestEntity {Id = id3, Str = "b", Number = 5}
 						}, ver2);
 			CollectionAssert.AreEquivalent(new[]
 						{
-							new StrIntTestEntity {Id = id1, Str = "c", Number = 10},
+							new StrIntTestEntity {Id = id1, Str = "aBc", Number = 10},
 							new StrIntTestEntity {Id = id3, Str = "a", Number = 5}
 						}, ver3);
 		}
@@ -187,7 +188,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			CollectionAssert.AreEquivalent(new[]
 						{
 							new StrIntTestEntity {Id = id1, Str = "a", Number = 10},
-							new StrIntTestEntity {Id = id1, Str = "c", Number = 10}
+							new StrIntTestEntity {Id = id1, Str = "aBc", Number = 10}
 						}, result);
 		}
 
@@ -200,7 +201,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 				.GetResultList<IList>();
 
 			Assert.AreEqual(new StrIntTestEntity { Id = id1, Str = "a", Number = 10 }, result[0][0]);
-			Assert.AreEqual(new StrIntTestEntity { Id = id1, Str = "c", Number = 10 }, result[1][0]);
+			Assert.AreEqual(new StrIntTestEntity { Id = id1, Str = "aBc", Number = 10 }, result[1][0]);
 			Assert.AreEqual(new StrIntTestEntity { Id = id1 }, result[2][0]);
 
 			Assert.AreEqual(1, ((DefaultRevisionEntity)result[0][1]).Id);
@@ -295,7 +296,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 				.Add(AuditEntity.Id().Eq(id1))
 				.GetSingleResult<RevisionType>();
 
-			result.Should().Have.SameValuesAs(new StrIntTestEntity { Id = id1, Str = "c", Number = 10 },
+			result.Should().Have.SameValuesAs(new StrIntTestEntity { Id = id1, Str = "aBc", Number = 10 },
 															new StrIntTestEntity { Id = id2, Str = "a", Number = 20 });
 
 			revisionType.Should().Be.EqualTo(RevisionType.Modified);
@@ -350,6 +351,28 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			{
 				Assert.That(number, Is.InRange(0, 5).Or.InRange(20, 100));
 			}
+		}
+
+		[Test]
+		public void VerifyInsensitiveLike()
+		{
+			var site1 = new StrIntTestEntity {Id = id1, Number = 10, Str = "aBc"};
+			AuditReader().CreateQuery()
+			             .ForRevisionsOf<StrIntTestEntity>(false)
+			             .Add(AuditEntity.Property("Str").InsensitiveLike("abc"))
+			             .Single()
+			             .Should().Be.EqualTo(site1);
+		}
+
+		[Test]
+		public void VerifyInsensitiveLikeWithMatchMode()
+		{
+			var site1 = new StrIntTestEntity { Id = id1, Number = 10, Str = "aBc" };
+			AuditReader().CreateQuery()
+									 .ForRevisionsOf<StrIntTestEntity>(false)
+									 .Add(AuditEntity.Property("Str").InsensitiveLike("BC", MatchMode.Anywhere))
+									 .Single()
+									 .Should().Be.EqualTo(site1);
 		}
 	}
 }
