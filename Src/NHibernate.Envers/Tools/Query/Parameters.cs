@@ -288,5 +288,18 @@ namespace NHibernate.Envers.Tools.Query
 		{
 			return new Parameters(this);
 		}
+
+		public void AddWhereWithFunction(string left, string leftFunction, string op, object paramValue)
+		{
+			var paramName = generateQueryParam();
+			localQueryParamValues[paramName] = paramValue;
+			var expression = new StringBuilder();
+			expression.Append(leftFunction).Append("(")
+			          .Append(alias).Append(".")
+			          .Append(left).Append(")")
+			          .Append(" ").Append(op).Append(" ")
+			          .Append(":").Append(paramName);
+			expressions.Add(expression.ToString());
+		}
 	}
 }
