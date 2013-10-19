@@ -14,12 +14,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 
 		public IPersistentCollection Instantiate(ISessionImplementor session, ICollectionPersister persister)
 		{
-			return new SpecialPersistentGenericBag(session);
+			return new SpecialPersistentGenericBag(session, limit);
 		}
 
 		public IPersistentCollection Wrap(ISessionImplementor session, object collection)
 		{
-			return new SpecialPersistentGenericBag(session, (ICollection<Number>)collection);
+			return new SpecialPersistentGenericBag(session, (ICollection<Number>)collection, limit);
 		}
 
 		public IEnumerable GetElements(object collection)

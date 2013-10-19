@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Entities
 		public RightsSubject()
 		{
 			Group = string.Empty;
-			Roles = new HashedSet<Role>();
+			Roles = new HashSet<Role>();
 		}
 
 		public virtual long Id { get; set; }

@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 	{
 		public Person()
 		{
-			Names = new HashedSet<Name>();
+			Names = new HashSet<Name>();
 		}
 
 		public virtual int Id { get; set; }

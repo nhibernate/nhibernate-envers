@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached;
 using NUnit.Framework;
@@ -23,7 +22,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			using (var tx = Session.BeginTransaction())
 			{
 				str1_id = (int)Session.Save(str1);
-				coll1.Collection = new HashedSet<StrTestEntity>();
+				coll1.Collection = new HashSet<StrTestEntity>();
 				Session.Save(coll1);
 				tx.Commit();
 			}

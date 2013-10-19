@@ -1,4 +1,5 @@
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.Components.Relations
@@ -7,7 +8,7 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 	{
 		public OneToManyComponent()
 		{
-			Entities = new HashedSet<StrTestEntity>();
+			Entities = new HashSet<StrTestEntity>();
 		}
 
 		[AuditJoinTable(TableName = "OTMComp_StrTestEnt")]
@@ -23,9 +24,7 @@ namespace NHibernate.Envers.Tests.Entities.Components.Relations
 				return false;
 			if (Entities.Count != other.Entities.Count)
 				return false;
-			if (!Entities.ContainsAll(other.Entities))
-				return false;
-			return true;
+			return Entities.All(strTestEntity => other.Entities.Contains(strTestEntity));
 		}
 
 		public override int GetHashCode()

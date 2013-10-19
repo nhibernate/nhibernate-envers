@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 	{
 		public SetOfValuesTestEntity()
 		{
-			ChildValues = new HashedSet<string>();
+			ChildValues = new HashSet<string>();
 		}
 
 		public virtual int Id { get; set; }

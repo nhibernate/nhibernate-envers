@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.OneToMany;
 using NUnit.Framework;
 
@@ -26,7 +25,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.Save(ing1);
-				ed1.Reffering = new HashedSet<SetRefIngEntity> {ing1};
+				ed1.Reffering = new HashSet<SetRefIngEntity> {ing1};
 				tx.Commit();
 			}
 		}

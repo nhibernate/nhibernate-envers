@@ -1,4 +1,4 @@
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidirectional
@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidir
 	{
 		protected AbstractSetEntity()
 		{
-			Entities = new HashedSet<AbstractContainedEntity>();
+			Entities = new HashSet<AbstractContainedEntity>();
 		}
 
 		public virtual int Id { get; set; }

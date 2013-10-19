@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.Components;
@@ -11,8 +10,8 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags.Entities
 	{
 		public PartialModifiedFlagsEntity()
 		{
-			StringSet = new HashedSet<string>();
-			EntitiesSet = new HashedSet<StrTestEntity>();
+			StringSet = new HashSet<string>();
+			EntitiesSet = new HashSet<StrTestEntity>();
 			StringMap = new Dictionary<string, string>();
 			EntitiesMap = new Dictionary<string, StrTestEntity>();
 		}
@@ -29,10 +28,10 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags.Entities
 		[Audited(WithModifiedFlag = false)]
 		public virtual WithModifiedFlagReferencingEntity Referencing2 { get; set; }
 		[Audited(WithModifiedFlag = true)]
-		public virtual Iesi.Collections.Generic.ISet<string> StringSet { get; set; }
+		public virtual ISet<string> StringSet { get; set; }
 		[Audited(WithModifiedFlag = true)]
 		[AuditJoinTable(TableName = "Entitiesset_AUD")]
-		public virtual Iesi.Collections.Generic.ISet<StrTestEntity> EntitiesSet { get; set; }
+		public virtual ISet<StrTestEntity> EntitiesSet { get; set; }
 		[Audited(WithModifiedFlag = true)]
 		public virtual IDictionary<string, string> StringMap { get; set; }
 		[Audited(WithModifiedFlag = true)]

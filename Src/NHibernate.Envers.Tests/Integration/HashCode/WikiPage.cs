@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.HashCode
@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.HashCode
 	{
 		public WikiPage()
 		{
-			Images = new HashedSet<WikiImage>();
+			Images = new HashSet<WikiImage>();
 		}
 		public virtual int Id { get; set; }
 		public virtual string Title { get; set; }

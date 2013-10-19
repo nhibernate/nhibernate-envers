@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Entities.RevEntity.TrackModifiedEntities
 	{
 		public CustomTrackingRevisionEntity()
 		{
-			ModifiedEntityTypes = new HashedSet<ModifiedEntityTypeEntity>();
+			ModifiedEntityTypes = new HashSet<ModifiedEntityTypeEntity>();
 		}
 
 		[RevisionNumber]

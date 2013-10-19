@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Iesi.Collections.Generic;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
@@ -22,7 +21,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 		protected override void Initialize()
 		{
 			ed = new SetOwnedEntity { Id = ingId+1, Data = "data_ed_1" };
-			var ing1 = new SetOwningEntity {Id = ingId, Data = "data_ing_1", References = new HashedSet<SetOwnedEntity> {ed}};
+			var ing1 = new SetOwningEntity {Id = ingId, Data = "data_ing_1", References = new HashSet<SetOwnedEntity> {ed}};
 
 			var serializedCfg = serializeCfg(); //serialize before use
 			using (var sFactory = serializedCfg.BuildSessionFactory())

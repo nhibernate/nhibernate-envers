@@ -42,7 +42,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 
 		protected override IEnumerable GetNewCollectionContent(IPersistentCollection newCollection)
 		{
-			return (ICollection)newCollection;
+			return (IEnumerable)newCollection;
 		}
 
 		protected override IEnumerable GetOldCollectionContent(object oldCollection)

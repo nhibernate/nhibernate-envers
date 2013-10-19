@@ -100,8 +100,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		public override bool AfterInitialize(ICollectionPersister persister)
 		{
 			bool result = base.AfterInitialize(persister);
-			((INotifyCollectionChanged)InternalBag).CollectionChanged += OnCollectionChanged;
-			((INotifyPropertyChanged)InternalBag).PropertyChanged += OnPropertyChanged;
+			throw new NotSupportedException("not yet ported to 2.0");
+			//((INotifyCollectionChanged)InternalBag).CollectionChanged += OnCollectionChanged;
+			//((INotifyPropertyChanged)InternalBag).PropertyChanged += OnPropertyChanged;
 			return result;
 		}
 

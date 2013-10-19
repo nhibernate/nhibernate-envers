@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Iesi.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToMany
 
 		protected override void Initialize()
 		{
-			var parent = new Parent {Children = new HashedSet<Child>(), Data=1};
+			var parent = new Parent {Children = new HashSet<Child>(), Data=1};
 			
 
 			//revision 1

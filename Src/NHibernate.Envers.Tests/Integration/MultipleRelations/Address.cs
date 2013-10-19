@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Integration.MultipleRelations
@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.MultipleRelations
 	{
 		public Address()
 		{
-			Tenants = new HashedSet<Person>();
+			Tenants = new HashSet<Person>();
 		}
 
 		public virtual long Id { get; set; }
