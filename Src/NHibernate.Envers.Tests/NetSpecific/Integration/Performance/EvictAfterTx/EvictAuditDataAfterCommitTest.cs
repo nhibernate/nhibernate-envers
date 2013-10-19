@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Iesi.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.Strategy;
 using NHibernate.Envers.Tests.Entities;
@@ -76,7 +75,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfter
 
 			using (var tx = Session.BeginTransaction())
 			{
-				var reffering = new HashedSet<SetRefIngEntity> { ing1, ing2 };
+				var reffering = new HashSet<SetRefIngEntity> { ing1, ing2 };
 				ed2.Reffering = reffering;
 				tx.Commit();
 			}

@@ -2,10 +2,10 @@
 * NHibernate.Envers now targets .net framework 4.0
 * IAuditProjection.GetData now returns Tuple<string, string, Boolean>
 * ICrossTypeRevisionChangesReader.FindEntityTypes now returns ISet<Tuple<string, System.Type>>
-* Non generic sets no longer part of ICollectionMapperFactory because NH Core no longer supports it.
+* Non generic collections no longer part of ICollectionMapperFactory because NH Core no longer supports it.
 * AuditEntity.Id().Count("id") removed. Use AuditEntity.Id().Count() instead.
 * Set of components now uses an extra db column. You can set the name of this using ConfigurationKey.EmbeddableSetOrdinalFieldName
-* Added removed to IEnversProxyFactory.CreateToOneProxy
+* Added "bool removed" to IEnversProxyFactory.CreateToOneProxy method
 * DefaultRevisionEntity.RevisionDate is set using DateTime.UtcNow
 * Removed inclusive parameter from IAuditStrategy.AddEntityAtRevisionRestriction(...)
 

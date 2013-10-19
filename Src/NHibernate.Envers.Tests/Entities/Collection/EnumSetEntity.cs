@@ -1,4 +1,4 @@
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.Collection
@@ -19,8 +19,8 @@ namespace NHibernate.Envers.Tests.Entities.Collection
 	{
 		public EnumSetEntity()
 		{
-			Enums1 = new HashedSet<E1>();
-			Enums2 = new HashedSet<E2>();
+			Enums1 = new HashSet<E1>();
+			Enums2 = new HashSet<E2>();
 		}
 
 		public virtual int Id { get; set; }

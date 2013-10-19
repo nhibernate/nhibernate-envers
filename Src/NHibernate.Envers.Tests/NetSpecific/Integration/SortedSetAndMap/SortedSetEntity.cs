@@ -10,13 +10,13 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 	{
 		public SortedSetEntity()
 		{
-			SortedSet = new Iesi.Collections.Generic.SortedSet<StrTestEntity>(new StrTestEntityComparer());
+		//	SortedSet = new Iesi.Collections.Generic.SortedSet<StrTestEntity>(new StrTestEntityComparer());
 			SortedMap = new SortedDictionary<StrTestEntity, string>(new StrTestEntityComparer());
 		}
 
 		public virtual Guid Id { get; set; }
 		[AuditJoinTable(TableName = "SSE_SS_AUD")]
-		public virtual Iesi.Collections.Generic.ISet<StrTestEntity> SortedSet { get; set; }
+		public virtual ISet<StrTestEntity> SortedSet { get; set; }
 		public virtual IDictionary<StrTestEntity, string> SortedMap { get; set; }
 
 		public override bool Equals(object obj)

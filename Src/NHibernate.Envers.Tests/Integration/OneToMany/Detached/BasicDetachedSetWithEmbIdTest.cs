@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.Ids;
 using NHibernate.Envers.Tests.Entities.OneToMany.Detached.Ids;
 using NUnit.Framework;
@@ -29,7 +28,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 			{
 				Session.Save(str1);
 				Session.Save(str2);
-				coll1.Collection = new HashedSet<EmbIdTestEntity> {str1};
+				coll1.Collection = new HashSet<EmbIdTestEntity> {str1};
 				Session.Save(coll1);
 				tx.Commit();
 			}

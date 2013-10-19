@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollecti
 
 		protected override void Initialize()
 		{
-			var audited = new Audited {Id = id, Number = 1, XCollection = new HashedSet<NotAudited> {new NotAudited()}};
+			var audited = new Audited {Id = id, Number = 1, XCollection = new HashSet<NotAudited> {new NotAudited()}};
 			//revision1
 			using (var tx = Session.BeginTransaction())
 			{

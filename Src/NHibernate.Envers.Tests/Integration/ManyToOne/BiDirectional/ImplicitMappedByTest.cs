@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional
 		protected override void Initialize()
 		{
 			var owned = new OneToManyOwned {Data = "data"};
-			var referencing = new HashedSet<ManyToOneOwning>();
+			var referencing = new HashSet<ManyToOneOwning>();
 			var owning1 = new ManyToOneOwning { Data = "data1", References = owned };
 			referencing.Add(owning1);
 			var owning2 = new ManyToOneOwning { Data = "data2", References = owned };

@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NHibernate.Envers
 {
@@ -11,7 +11,7 @@ namespace NHibernate.Envers
 	{
 		public DefaultTrackingModifiedEntitiesRevisionEntity()
 		{
-			ModifiedEntityNames = new HashedSet<string>();
+			ModifiedEntityNames = new HashSet<string>();
 		}
 
 		public virtual ISet<string> ModifiedEntityNames { get; protected set; }

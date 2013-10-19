@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedCollecti
 			              	{
 			              		Id = id, 
 									Number = 1, 
-									XCollection = new HashedSet<NotAudited> {new NotAudited()}
+									XCollection = new HashSet<NotAudited> {new NotAudited()}
 			              	};
 			//revision1
 			using (var tx = Session.BeginTransaction())

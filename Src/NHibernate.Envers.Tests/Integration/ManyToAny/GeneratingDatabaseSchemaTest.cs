@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.ManyToAny;
 using NUnit.Framework;
 
@@ -34,7 +33,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToAny
         {
             var purchase = new Purchase
                                     {
-                                        Payments = new HashedSet<IPayment>
+                                        Payments = new HashSet<IPayment>
                                                        {
                                                            new CreditCardPayment{Amount = 500,CardNumber = "12345678",IsSuccessful = true},
                                                            new WirePayment{Amount = 200,CardNumber = "87654321",IsSuccessful = false}

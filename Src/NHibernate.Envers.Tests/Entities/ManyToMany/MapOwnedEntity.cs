@@ -1,4 +1,4 @@
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Tests.Entities.ManyToMany
@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Entities.ManyToMany
 
 		public MapOwnedEntity()
 		{
-			Referencing = new HashedSet<MapOwningEntity>();
+			Referencing = new HashSet<MapOwningEntity>();
 		}
 
 		public override bool Equals(object obj)

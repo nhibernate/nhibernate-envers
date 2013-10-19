@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -28,7 +27,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return new SetCollectionMapper<T>(enversProxyFactory,
 			                                  commonCollectionMapperData,
-			                                  typeof (Iesi.Collections.Generic.ISet<T>),
+			                                  typeof (ISet<T>),
 			                                  elementComponentData,
 			                                  embeddableElementType,
 			                                  embeddableElementType);
@@ -38,7 +37,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return new SortedSetCollectionMapper<T>(enversProxyFactory,
 											commonCollectionMapperData,
-											typeof(Iesi.Collections.Generic.ISet<T>),
+											typeof(ISet<T>),
 											elementComponentData,
 											comparer, 
 											embeddableElementType,
@@ -50,24 +49,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return new ListCollectionMapper<T>(enversProxyFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, indexComponentData, embeddableElementType);
 		}
 
-		public virtual IPropertyMapper List(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
-		{
-			throw new NotImplementedException("Non generic list is not supported by DefaultCollectionMapperFactory");
-		}
-
 		public virtual IPropertyMapper Map<TKey, TValue>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
 		{
 			return new MapCollectionMapper<TKey, TValue>(enversProxyFactory, commonCollectionMapperData, typeof(IDictionary<TKey, TValue>), elementComponentData, indexComponentData, embeddableElementType);
-		}
-
-		public virtual IPropertyMapper Map(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
-		{
-			throw new NotImplementedException("Non generic map is not supported by DefaultCollectionMapperFactory");
-		}
-
-		public virtual IPropertyMapper SortedMap(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer comparer, bool embeddableElementType)
-		{
-			throw new NotImplementedException("Non generic sorted map is not supported by DefaultCollectionMapperFactory");
 		}
 
 		public virtual IPropertyMapper SortedMap<TKey, TValue>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, IComparer<TKey> comparer, bool embeddableElementType)
@@ -78,11 +62,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		public virtual IPropertyMapper Bag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
 		{
 			return new BagCollectionMapper<T>(enversProxyFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, embeddableElementType);
-		}
-
-		public virtual IPropertyMapper Bag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
-		{
-			throw new NotImplementedException("Non generic bag is not supported by DefaultCollectionMapperFactory");
 		}
 	}
 }

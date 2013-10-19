@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.ManyToMany;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -26,7 +25,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			// Revision 2: add child for first time
 			using (var tx = Session.BeginTransaction())
 			{
-				owningEntity.References = new HashedSet<SetOwnedEntity> {ownedEntity};
+				owningEntity.References = new HashSet<SetOwnedEntity> {ownedEntity};
 				tx.Commit();
 			}
 			// Revision 3: remove child

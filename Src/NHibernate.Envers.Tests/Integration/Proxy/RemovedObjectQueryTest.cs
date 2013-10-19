@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
@@ -95,8 +94,8 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 
 			var setOwningEntity1 = new SetOwningEntity { Id = 5, Data = "Demo Data 1" };
 			var setOwnedEntity1 = new SetOwnedEntity { Id = 6, Data = "Example Data 1" };
-			var owning = new HashedSet<SetOwningEntity>();
-			var owned = new HashedSet<SetOwnedEntity>();
+			var owning = new HashSet<SetOwningEntity>();
+			var owned = new HashSet<SetOwnedEntity>();
 			owning.Add(setOwningEntity1);
 			owned.Add(setOwnedEntity1);
 			setOwningEntity1.References = owned;
@@ -120,8 +119,8 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 
 			var setOwningEntity2 = new SetOwningEntity { Id = 7, Data = "Demo Data 2" };
 			var setOwnedEntity2 = new SetOwnedEntity { Id = 8, Data = "Example Data 2" };
-			owning = new HashedSet<SetOwningEntity>();
-			owned = new HashedSet<SetOwnedEntity>();
+			owning = new HashSet<SetOwningEntity>();
+			owned = new HashSet<SetOwnedEntity>();
 			owning.Add(setOwningEntity2);
 			owned.Add(setOwnedEntity2);
 			setOwningEntity2.References = owned;

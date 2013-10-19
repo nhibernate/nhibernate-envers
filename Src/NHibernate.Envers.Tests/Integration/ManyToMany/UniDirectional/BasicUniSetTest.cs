@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.ManyToMany.UniDirectional;
 using NUnit.Framework;
@@ -37,8 +36,8 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 			}
 			using (var tx = Session.BeginTransaction())
 			{
-				ing1.References = new HashedSet<StrTestEntity> { ed1 };
-				ing2.References = new HashedSet<StrTestEntity> { ed1, ed2 };
+				ing1.References = new HashSet<StrTestEntity> { ed1 };
+				ing2.References = new HashSet<StrTestEntity> { ed1, ed2 };
 				tx.Commit();
 			}
 			using (var tx = Session.BeginTransaction())

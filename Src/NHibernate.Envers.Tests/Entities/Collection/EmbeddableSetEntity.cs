@@ -1,4 +1,4 @@
-﻿using Iesi.Collections.Generic;
+﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Tests.Entities.Components;
 
@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Entities.Collection
 	{
 		public EmbeddableSetEntity()
 		{
-			ComponentSet = new HashedSet<Component3>();
+			ComponentSet = new HashSet<Component3>();
 		}
 
 		public virtual int Id { get; set; }

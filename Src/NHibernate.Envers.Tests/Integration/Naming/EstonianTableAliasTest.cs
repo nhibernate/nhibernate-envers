@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ee.Estonia.Entities;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -21,7 +20,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 			//Revision 1
 			using (var tx = Session.BeginTransaction())
 			{
-				var parent = new Parent {Data = "data", Collection = new HashedSet<Child>()};
+				var parent = new Parent {Data = "data", Collection = new HashSet<Child>()};
 				var child = new Child {Data = "child"};
 				parent.Collection.Add(child);
 				childId = (long) Session.Save(child);
@@ -82,7 +81,7 @@ namespace ee.Estonia.Entities
 	{
 		public virtual long Id { get; set; }
 		public virtual string Data { get; set; }
-		public virtual Iesi.Collections.Generic.ISet<Child> Collection { get; set; }
+		public virtual ISet<Child> Collection { get; set; }
 
 		public override bool Equals(object obj)
 		{

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Iesi.Collections.Generic;
 using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
 
@@ -17,7 +16,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		protected override void Initialize()
 		{
 			uni1_id = 427;
-			var uni1 = new VersionsJoinTableTestEntity {Id = uni1_id, Data = "data1", Collection = new HashedSet<StrTestEntity>()};
+			var uni1 = new VersionsJoinTableTestEntity {Id = uni1_id, Data = "data1", Collection = new HashSet<StrTestEntity>()};
 			var str1 = new StrTestEntity {Str = "str1"};
 			using(var tx = Session.BeginTransaction())
 			{

@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		protected override ISet<T> InitializeCollection(int size) 
 		{
-			return new HashedSet<T>();
+			return new HashSet<T>();
 		}
 
 		protected override void AddToCollection(ISet<T> collection, object collectionRow) 

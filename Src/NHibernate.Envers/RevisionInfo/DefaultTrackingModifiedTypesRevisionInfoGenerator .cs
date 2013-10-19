@@ -1,5 +1,5 @@
 ﻿using System;
-using Iesi.Collections.Generic;
+using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Tools.Reflection;
@@ -36,7 +36,7 @@ namespace NHibernate.Envers.RevisionInfo
 			var modifiedEntityNames = (ISet<string>)modifiedEntityTypesGetter.Get(revisionEntity);
 			if (modifiedEntityNames == null)
 			{
-				modifiedEntityNames = new HashedSet<string>();
+				modifiedEntityNames = new HashSet<string>();
 				modifiedEntityTypesSetter.Set(revisionEntity, modifiedEntityNames);
 			}
 			modifiedEntityNames.Add(entityName);
