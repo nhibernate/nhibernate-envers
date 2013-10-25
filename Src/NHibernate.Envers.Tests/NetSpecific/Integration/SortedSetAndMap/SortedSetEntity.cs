@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 	{
 		public SortedSetEntity()
 		{
-		//	SortedSet = new Iesi.Collections.Generic.SortedSet<StrTestEntity>(new StrTestEntityComparer());
+			SortedSet = new SortedSet<StrTestEntity>(new StrTestEntityComparer());
 			SortedMap = new SortedDictionary<StrTestEntity, string>(new StrTestEntityComparer());
 		}
 
