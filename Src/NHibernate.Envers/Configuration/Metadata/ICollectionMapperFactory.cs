@@ -27,12 +27,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 		IPropertyMapper IdBag<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType);
 
 		/// <summary>
-		/// Creates a new <see cref="IPropertyMapper"/> for an 
-		/// <see cref="System.Collections.IList"/> with identifier bag semantics.
-		/// </summary>
-		IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType);
-
-		/// <summary>
 		/// Creates a new <see cref="IPropertyMapper"/> for an <see cref="ISet{T}" />.
 		/// </summary>
 		IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType);
