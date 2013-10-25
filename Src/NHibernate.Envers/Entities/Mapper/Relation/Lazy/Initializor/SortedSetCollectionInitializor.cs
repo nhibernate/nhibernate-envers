@@ -25,8 +25,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 
 		protected override ISet<T> InitializeCollection(int size)
 		{
-			throw new NotSupportedException("Not yet ported to 2.0!");
-			//return new Iesi.Collections.Generic.SortedSet<T>(_comparer);
+			return new SortedSet<T>(_comparer);
 		}
 	}
 }
