@@ -26,7 +26,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			foreach (var item in (IEnumerable) oldCollection)
 			{
 				//hack - need to know if element if of nh core's hidden type SnapshotElement
-				if(item.GetType().FullName.Equals("NHibernate.Collection.PersistentIdentifierBag+SnapshotElement"))
+				var itemTypeName = item.GetType().FullName;
+				if (itemTypeName.Contains("NHibernate.Collection.Generic.PersistentIdentifierBag") && itemTypeName.Contains("SnapshotElement"))
 				{
 					//hack again - can't get the snapshot value without reflection. Needs to be changed inside NH Core
 					var itemValue = item.GetType().GetProperty("Value").GetValue(item, null);
