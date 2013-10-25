@@ -18,11 +18,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return new IdBagCollectionMapper<T>(enversProxyFactory, commonCollectionMapperData, typeof(IList<T>), elementComponentData, embeddableElementType);
 		}
 
-		public virtual IPropertyMapper IdBag(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
-		{
-			throw new NotImplementedException("Non generic idbag is not supported by DefaultCollectionMapperFactory");
-		}
-
 		public virtual IPropertyMapper Set<T>(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, bool embeddableElementType)
 		{
 			return new SetCollectionMapper<T>(enversProxyFactory,

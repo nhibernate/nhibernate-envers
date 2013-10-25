@@ -560,18 +560,11 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else if (genericType == typeof(GenericIdentifierBagType<>))
 			{
-				if (_propertyValue.IsGeneric)
-				{
-					var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("IdBag",
-						type.ReturnedClass.GetGenericArguments(),
-						new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(bool) });
-					collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
-						new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType });
-				}
-				else
-				{
-					collectionMapper = collectionProxyMapperFactory.IdBag(_mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType);
-				}
+				var methodInfo = ReflectHelper.GetGenericMethodFrom<ICollectionMapperFactory>("IdBag",
+					type.ReturnedClass.GetGenericArguments(),
+					new[] { typeof(IEnversProxyFactory), typeof(CommonCollectionMapperData), typeof(MiddleComponentData), typeof(bool) });
+				collectionMapper = (IPropertyMapper)methodInfo.Invoke(collectionProxyMapperFactory,
+					new object[] { _mainGenerator.GlobalCfg.EnversProxyFactory, commonCollectionMapperData, elementComponentData, embeddableElementType });
 			}
 			else
 			{
