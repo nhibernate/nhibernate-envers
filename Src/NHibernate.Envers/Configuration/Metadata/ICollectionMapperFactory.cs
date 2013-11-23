@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using NHibernate.Envers.Entities.Mapper;
+﻿using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Relation;
 using System.Collections.Generic;
 
