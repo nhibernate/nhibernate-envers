@@ -13,12 +13,12 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 			var casted = obj as IntTestPrivSeqEntity;
 			if (casted == null)
 				return false;
-			return (Id == casted.Id && Number == casted.Number);
+			return Id == 0 ? base.Equals(obj) : Id == casted.Id;
 		}
 
 		public override int GetHashCode()
 		{
-			return Id ^ Number;
+			return Id == 0 ? base.GetHashCode() : Id;
 		}
 
 		public override string ToString()
