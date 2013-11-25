@@ -13,7 +13,6 @@
 		<projectUrl>https://bitbucket.org/RogerKratz/nhibernate.envers</projectUrl>
 		<dependencies>
 			<dependency id="NHibernate" version="[4.0.0-Alpha1]" />
-			<dependency id="Iesi.Collections" version="[4,5)" />
 		</dependencies>
 	</metadata>
 	<files>
