@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
 						 assembly="NHibernate.Envers.Tests"
-						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Collection">
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType">
 	<class name="Parent">
 		<id name="Id">
 			<generator class="guid.comb"/>
@@ -18,7 +18,7 @@
 			<generator class="guid.comb"/>
 		</id>
 		<discriminator column="childtype"/>
-		<many-to-one name="Name"/>
+		<many-to-one name="Name" not-found="ignore"/>
 		
 		<subclass name="Boy" discriminator-value="1">
 		</subclass>

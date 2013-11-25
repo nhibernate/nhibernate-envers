@@ -104,10 +104,10 @@
     <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedClassOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedComponentTest.cs" />
-    <Compile Include="NetSpecific\Integration\Inheritance\Collection\Child.cs" />
-    <Compile Include="NetSpecific\Integration\Inheritance\Collection\ChildName.cs" />
-    <Compile Include="NetSpecific\Integration\Inheritance\Collection\CollectionItemWithNoAuditProperty.cs" />
-    <Compile Include="NetSpecific\Integration\Inheritance\Collection\Parent.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\ChildName.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreInBaseTypeTest.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Parent.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\DateTimeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
@@ -758,7 +758,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="NetSpecific\Integration\Inheritance\Collection\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\UnitTests\CustomLists\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Entities\List.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Entities\Bag.hbm.xml" />

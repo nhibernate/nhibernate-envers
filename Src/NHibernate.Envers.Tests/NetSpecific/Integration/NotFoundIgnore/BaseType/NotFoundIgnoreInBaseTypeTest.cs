@@ -4,14 +4,14 @@ using System.Linq;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Collection
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType
 {
 	[TestFixture]
-	public class CollectionItemWithNoAuditProperty : TestBase
+	public class NotFoundIgnoreInBaseTypeTest : TestBase
 	{
 		private Guid parentId;
 
-		public CollectionItemWithNoAuditProperty(string strategyType) : base(strategyType)
+		public NotFoundIgnoreInBaseTypeTest(string strategyType) : base(strategyType)
 		{
 		}
 

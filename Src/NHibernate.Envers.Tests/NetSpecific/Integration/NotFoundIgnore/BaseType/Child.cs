@@ -1,7 +1,7 @@
 ﻿using System;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Collection
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType
 {
 	[Audited]
 	public abstract class Child
