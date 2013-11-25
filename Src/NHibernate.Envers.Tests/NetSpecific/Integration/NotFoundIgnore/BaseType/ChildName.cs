@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Collection
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType
 {
 	public class ChildName
 	{
