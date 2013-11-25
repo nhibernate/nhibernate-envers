@@ -5,6 +5,7 @@ set nugetfolder="%SRCDIR%\.nuget"
 set packageFolder="%SRCDIR%\packages"
 set msbuild="%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
 set configuration=Release
+set msbuildtasksVersion=1.4.0.65
 
 echo Before creating a release, remember to...
 echo * Update release notes
@@ -13,7 +14,7 @@ pause
 echo.
 
 echo Installing msbuildtasks to %PackageFolder%. Please wait...
-%nugetFolder%\NuGet install MsBuildTasks -o %PackageFolder%
+%nugetFolder%\NuGet install MsBuildTasks -o %PackageFolder% -Version %msbuildtasksVersion%
 
 echo.
 set /p Version=Please enter version number, eg 1.2.0.0: 
