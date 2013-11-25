@@ -106,7 +106,8 @@
     <Compile Include="NetSpecific\Integration\Component\DerivedComponentTest.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\ChildName.cs" />
-    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreInBaseTypeTest.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreExistsInBaseTypeTest.cs" />
+    <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreNotExistsInBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Parent.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\DateTimeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />

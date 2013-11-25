@@ -82,10 +82,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 					if (!referencedEntity.IsAudited)
 					{
 						var referencingEntityName = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string) data["$type$"]);
-						//not really correct if property is in base type
-						var relation = verCfg.EntCfg[referencingEntityName].GetRelationDescription(PropertyData.Name);
+						var relation = verCfg.EntCfg.GetRelationDescription(referencingEntityName, PropertyData.Name);
 						ignoreNotFound = relation != null && relation.IsIgnoreNotFound;
-						//
 					}
 					var persister = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName);
 					var removed = RevisionType.Deleted.Equals(data[verCfg.AuditEntCfg.RevisionTypePropName]);
