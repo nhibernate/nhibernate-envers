@@ -7,11 +7,11 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType
 {
 	[TestFixture]
-	public class NotFoundIgnoreInBaseTypeTest : TestBase
+	public class NotFoundIgnoreExistsInBaseTypeTest : TestBase
 	{
 		private Guid parentId;
 
-		public NotFoundIgnoreInBaseTypeTest(string strategyType) : base(strategyType)
+		public NotFoundIgnoreExistsInBaseTypeTest(string strategyType) : base(strategyType)
 		{
 		}
 
