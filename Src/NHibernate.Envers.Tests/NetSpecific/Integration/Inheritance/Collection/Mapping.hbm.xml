@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Collection">
+	<class name="Parent">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<list name="Children" cascade="all-delete-orphan">
+			<key column="Parent" />
+			<index type="byte" column="OrderIndex"/>
+			<one-to-many class="Child"/>
+		</list>
+	</class>
+
+	<class name="Child" abstract="true">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<discriminator column="childtype"/>
+		<many-to-one name="Name"/>
+		
+		<subclass name="Boy" discriminator-value="1">
+		</subclass>
+		<subclass name="Girl" discriminator-value="2">
+		</subclass>
+	</class>
+	
+	<class name="ChildName">
+		<id name="Id">
+			<generator class="guid.comb"/>
+		</id>
+		<property name="Name"/>
+	</class>
+</hibernate-mapping>
