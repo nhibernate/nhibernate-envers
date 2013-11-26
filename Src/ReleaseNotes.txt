@@ -1,4 +1,11 @@
-=== v2.0 Beta 1 (v 2.0.1.0), 2013-11-24, NH 4.0 Alpha 1 ===
+=== v2.0 Beta 2 (v 2.0.0.200), 2013-11-26, NH 4.0 Alpha 1 ===
+
+** Bug
+* [NHE-131] - RelationTargetAuditMode.NotAudited on a relation in base class throws
+
+
+
+=== v2.0 Beta 1 (v 2.0.0.100), 2013-11-24, NH 4.0 Alpha 1 ===
 
 *** Possible breaking change ***
 * NHibernate.Envers now targets .net framework 4.0
@@ -12,22 +19,21 @@
 * Removed inclusive parameter from IAuditStrategy.AddEntityAtRevisionRestriction(...)
 
 ** Bug
-    * [NHE-114] - Bidirectional custom collection throws
-    * [NHE-118] - Collections of components only supporting single element changes
-    * [NHE-120] - many-to-many + list throws if element is non audited entity
-    * [NHE-121] - Lazy Loading of audited entites with revision type 'delete'
-    * [NHE-122] - Use UTC for revision timestamp
-    * [NHE-123] - Traversing deleted entity, onetoone
-    * [NHE-125] - Envers ignores properties in derived components
-    * [NHE-128] - Validity audit strategy with ID reuse
-    * [NHE-129] - Track key changes in maps
-
+* [NHE-114] - Bidirectional custom collection throws
+* [NHE-118] - Collections of components only supporting single element changes
+* [NHE-120] - many-to-many + list throws if element is non audited entity
+* [NHE-121] - Lazy Loading of audited entites with revision type 'delete'
+* [NHE-122] - Use UTC for revision timestamp
+* [NHE-123] - Traversing deleted entity, onetoone
+* [NHE-125] - Envers ignores properties in derived components
+* [NHE-128] - Validity audit strategy with ID reuse
+* [NHE-129] - Track key changes in maps
 
 ** Improvement
-    * [NHE-130] - Support InsensitiveLike
-    * [NHE-110] - Make the gerneric IRevisionEntityInfo interface covariant
-    * [NHE-124] - RelationTargetAuditMode.NotAudited throws if current revision does not exist
-    * [NHE-108] - XmlDocument -> XDocument internally
+* [NHE-130] - Support InsensitiveLike
+* [NHE-110] - Make the gerneric IRevisionEntityInfo interface covariant
+* [NHE-124] - RelationTargetAuditMode.NotAudited throws if current revision does not exist
+* [NHE-108] - XmlDocument -> XDocument internally
 
 
 
