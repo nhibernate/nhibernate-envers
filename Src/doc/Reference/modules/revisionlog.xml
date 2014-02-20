@@ -136,7 +136,7 @@ public class AnnotatedTrackingRevisionEntity
 {
 	...
 	
-	[ModifiedEntityTypes]
+	[ModifiedEntityNames]
 	private Set<String> modifiedEntityNames;
 		 
 	...
