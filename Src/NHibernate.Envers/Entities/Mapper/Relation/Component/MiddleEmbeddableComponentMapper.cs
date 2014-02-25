@@ -33,10 +33,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 
 		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
 		{
-			AddMiddleEqualToQuery(_delegate, parameters, idPrefix1, prefix1, idPrefix2, prefix2 );
+			addMiddleEqualToQuery(_delegate, parameters, idPrefix1, prefix1, idPrefix2, prefix2 );
 		}
 
-		protected void AddMiddleEqualToQuery(ICompositeMapperBuilder compositeMapper, Parameters parameters, string idPrefix1,
+		private static void addMiddleEqualToQuery(ICompositeMapperBuilder compositeMapper, Parameters parameters, string idPrefix1,
 		                                     string prefix1, string idPrefix2, string prefix2)
 		{
 			foreach (var keyValue in compositeMapper.Properties)
@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 				var nestedCompositeMapper = nestedMapper as ICompositeMapperBuilder;
 				if (nestedCompositeMapper != null)
 				{
-					AddMiddleEqualToQuery(nestedCompositeMapper, parameters, idPrefix1, prefix1, idPrefix2, prefix2);
+					addMiddleEqualToQuery(nestedCompositeMapper, parameters, idPrefix1, prefix1, idPrefix2, prefix2);
 				}
 				else
 				{
