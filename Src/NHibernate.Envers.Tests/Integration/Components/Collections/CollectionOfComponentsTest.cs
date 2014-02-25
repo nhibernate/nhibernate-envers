@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.Components;
+using NHibernate.Envers.Tests.Entities.CustomType;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Components.Collections
 {
 	public class CollectionOfComponentsTest : TestBase
 	{
 		private int id1;
+		private int id2;
 
 		public CollectionOfComponentsTest(string strategyType) : base(strategyType)
 		{
@@ -15,9 +18,12 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 		protected override void Initialize()
 		{
 			var cte1 = new ComponentSetTestEntity();
+			var cte2 = new ComponentSetTestEntity();
+			cte2.Comps.Add(new Component1 {Str1 = "string1", Str2 = null});
 			using(var tx = Session.BeginTransaction())
 			{
 				id1 = (int)Session.Save(cte1);
+				id2 = (int) Session.Save(cte2);
 				tx.Commit();
 			}
 			using(var tx = Session.BeginTransaction())
@@ -41,6 +47,15 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 			var comps1 = AuditReader().Find<ComponentSetTestEntity>(id1, 2).Comps;
 			Assert.AreEqual(1, comps1.Count);
 			CollectionAssert.Contains(comps1, new Component1 { Str1 = "a", Str2 = "b" });
+		}
+
+		[Test]
+		public void VerifyCollectionOfEmbeddableWithNullValue()
+		{
+			var componentV1 = new Component1 {Str1 = "string1", Str2 = null};
+			var entityV1 = AuditReader().Find<ComponentSetTestEntity>(id2, 1);
+
+			entityV1.Comps.Should().Have.SameSequenceAs(componentV1);
 		}
 
 		protected override IEnumerable<string> Mappings
