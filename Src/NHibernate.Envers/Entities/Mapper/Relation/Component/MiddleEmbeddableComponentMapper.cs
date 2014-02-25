@@ -58,7 +58,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 					}
 					else
 					{
-						parameters.AddWhere(prefix1 + '.' + propertyName, false, "=", prefix2 + '.' + propertyName, false);
+						// (p1.prop = p2.prop or (p1.prop is null and p2.prop is null))
+						var sub1 = parameters.AddSubParameters("or");
+						sub1.AddWhere(prefix1 + "." + propertyName, false, "=", prefix2 + "." + propertyName, false);
+						var sub2 = sub1.AddSubParameters("and");
+						sub2.AddNullRestriction(prefix1 + '.' + propertyName, false);
+						sub2.AddNullRestriction(prefix2 + '.' + propertyName, false);
 					}
 				}
 			}
