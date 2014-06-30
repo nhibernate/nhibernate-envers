@@ -1,3 +1,10 @@
+=== v2.0 Beta 3 (v 2.0.0.300), 2014-06-30, NH 4.0 Alpha 2 ===
+
+** Bug
+* [NHE-132] - Component with null properties not included in collections
+
+
+
 === v2.0 Beta 2 (v 2.0.0.200), 2013-11-26, NH 4.0 Alpha 1 ===
 
 ** Bug
