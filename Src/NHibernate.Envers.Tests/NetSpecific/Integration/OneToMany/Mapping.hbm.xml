@@ -17,6 +17,7 @@
 			<generator class="guid.comb"/>
 		</id>
 		<property name="Str"/>
+		<property name="SomeFormula" formula="[Str] + ' -TEST'"/>
 	</class>
 </hibernate-mapping>
 

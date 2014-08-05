@@ -66,10 +66,10 @@ namespace NHibernate.Envers.Tools
 
 		public static bool SameColumns(IEnumerable<ISelectable> first, IEnumerable<ISelectable> second)
 		{
-			var firstNames = from f in first
-							 select ((Column)f).Name;
-			var lastNames = from s in second
-							select ((Column)s).Name;
+			var firstNames = from f in first.OfType<Column>()
+							 select f.Name;
+			var lastNames = from s in second.OfType<Column>()
+							select s.Name;
 			return firstNames.Count() == lastNames.Count() && firstNames.All(f => lastNames.Contains(f));
 		}
 
