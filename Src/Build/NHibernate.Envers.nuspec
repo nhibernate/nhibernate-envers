@@ -12,7 +12,7 @@
 		<tags>Audit, NHibernate, Envers, History, Auditing</tags>
 		<projectUrl>https://bitbucket.org/RogerKratz/nhibernate.envers</projectUrl>
 		<dependencies>
-			<dependency id="NHibernate" version="[4.0.0-Alpha2]" />
+			<dependency id="NHibernate" version="[4.0.0-CR1]" />
 		</dependencies>
 	</metadata>
 	<files>
