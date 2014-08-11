@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 {
 	public class ParametrizedTestUserType : IUserType, IParameterizedType
 	{
-		private static readonly SqlType[] TYPES = new[] { new SqlType(DbType.String) };
+		private static readonly SqlType[] TYPES = { new SqlType(DbType.String) };
 		private string param1;
 		private string param2;
 

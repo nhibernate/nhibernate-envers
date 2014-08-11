@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Entities.Ids
 {
 	public class CustomEnumUserType : IUserType
 	{
-		private static readonly SqlType[] TYPES = new[] { new SqlType(DbType.String) };
+		private static readonly SqlType[] TYPES = { new SqlType(DbType.String) };
 
 		public new bool Equals(object x, object y)
 		{

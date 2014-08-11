@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
 	public class CLOBTestUserType : IUserType
 	{
-		private static readonly SqlType[] TYPES = new[] { new StringClobSqlType() };
+		private static readonly SqlType[] TYPES = { new StringClobSqlType() };
 
 		public new bool Equals(object x, object y)
 		{

@@ -12,15 +12,15 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 	[TestFixture]
 	public class InterfaceImplementationVerificationTest
 	{
-		private readonly System.Type[] serializableInterfaces = new[]
-		                                               	{
-		                                               		typeof (ICollectionMapperFactory),
-		                                               		typeof (IEnversProxyFactory),
-		                                               		typeof (IRevisionInfoGenerator),
-		                                               		typeof (IPropertyMapper),
-		                                               		typeof (IIdMapper),
-		                                               		typeof (IAuditStrategy)
-		                                               	};
+		private readonly System.Type[] serializableInterfaces =
+		{
+			typeof (ICollectionMapperFactory),
+			typeof (IEnversProxyFactory),
+			typeof (IRevisionInfoGenerator),
+			typeof (IPropertyMapper),
+			typeof (IIdMapper),
+			typeof (IAuditStrategy)
+		};
 
 		[Test]
 		public void ShouldImplementSerializable()
