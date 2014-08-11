@@ -9,6 +9,7 @@ set msbuildtasksVersion=1.4.0.65
 
 echo Before creating a release, remember to...
 echo * Update release notes
+echo * Update nuspec file to point to correct NH Core version
 echo.
 pause
 echo.
