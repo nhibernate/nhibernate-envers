@@ -70,7 +70,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
 													 Expression<Func<T, object>> revisionTimestamp)
 		{
-			setRevisionEntity(revisionNumber, revisionTimestamp, null, null);
+			SetRevisionEntity(revisionNumber, revisionTimestamp, null, null);
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 													Expression<Func<T, object>> revisionTimestamp,
 													IRevisionListener revisionListener)
 		{
-			setRevisionEntity(revisionNumber, revisionTimestamp, null, revisionListener);
+			SetRevisionEntity(revisionNumber, revisionTimestamp, null, revisionListener);
 		}
 
 		/// <summary>
@@ -101,10 +101,21 @@ namespace NHibernate.Envers.Configuration.Fluent
 													Expression<Func<T, object>> revisionTimestamp,
 													Expression<Func<T, object>> modifiedEntityNames)
 		{
-			setRevisionEntity(revisionNumber, revisionTimestamp, modifiedEntityNames, null);
+			SetRevisionEntity(revisionNumber, revisionTimestamp, modifiedEntityNames, null);
 		}
 
-		private void setRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
+        /// <summary>
+        /// Defines a custom revision entity with a custom <see cref="IRevisionListener"/>.
+        /// </summary>
+        /// <typeparam name="T">The custom revision entity type</typeparam>
+        /// <param name="revisionNumber">Revision number property on custom revision entity</param>
+        /// <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+        /// <param name="modifiedEntityNames">
+        /// Modified entity names property on custom revision entity.
+        /// Must be of type <code>ISet{string}</code>.
+        /// </param>
+        /// <param name="revisionListener">The listener singleton</param>
+        public void SetRevisionEntity<T>(Expression<Func<T, object>> revisionNumber,
 													Expression<Func<T, object>> revisionTimestamp,
 													Expression<Func<T, object>> modifiedEntityNames,
 													IRevisionListener revisionListener)
