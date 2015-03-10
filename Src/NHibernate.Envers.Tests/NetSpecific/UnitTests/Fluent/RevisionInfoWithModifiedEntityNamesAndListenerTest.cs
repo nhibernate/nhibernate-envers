@@ -11,17 +11,17 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 {
 	[TestFixture]
-    public class RevisionInfoWithModifiedEntityNamesAndListenerTest
+	public class RevisionInfoWithModifiedEntityNamesAndListenerTest
 	{
-        private IDictionary<System.Type, IEntityMeta> metas;
-        private IRevisionListener revisionListener;
+		private IDictionary<System.Type, IEntityMeta> metas;
+		private IRevisionListener revisionListener;
 
 		[SetUp]
 		public void Setup()
 		{
-            revisionListener = new RevListener();
+			revisionListener = new RevListener();
 			var cfg = new FluentConfiguration();
-            cfg.SetRevisionEntity<RevisionEntityWithEntityNames>(e => e.Number, e => e.Timestamp, e => e.EntityNames, revisionListener);
+			cfg.SetRevisionEntity<RevisionEntityWithEntityNames>(e => e.Number, e => e.Timestamp, e => e.EntityNames, revisionListener);
 			metas = cfg.CreateMetaData(FakeNHibernateConfiguration.For<RevisionEntityWithEntityNames>());
 		}
 
@@ -38,14 +38,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 			entMeta.ClassMetas.OnlyContains<RevisionEntityAttribute>();
 		}
 
-        [Test]
-        public void RevisionEntityAttributeShouldHaveListenerSet()
-        {
-            var entMeta = metas[typeof(RevisionEntityWithEntityNames)];
-            var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
-            revEntAttr.Listener
-                    .Should().Be.SameInstanceAs(revisionListener);
-        }
+		[Test]
+		public void RevisionEntityAttributeShouldHaveListenerSet()
+		{
+			var entMeta = metas[typeof(RevisionEntityWithEntityNames)];
+			var revEntAttr = (RevisionEntityAttribute)entMeta.ClassMetas.First();
+			revEntAttr.Listener
+							.Should().Be.SameInstanceAs(revisionListener);
+		}
 
 		[Test]
 		public void RevisionPropertiesShouldBeenSet()
