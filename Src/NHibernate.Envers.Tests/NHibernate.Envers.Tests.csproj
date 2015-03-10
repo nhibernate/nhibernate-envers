@@ -118,6 +118,7 @@
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />
+    <Compile Include="NetSpecific\UnitTests\Fluent\RevisionInfoWithModifiedEntityNamesAndListenerTest.cs" />
     <Compile Include="NetSpecific\UnitTests\Interfaces\CovariantInterfacesTests.cs" />
     <Compile Include="NetSpecific\Entities\BagModel.cs" />
     <Compile Include="NetSpecific\Entities\ListModel.cs" />
