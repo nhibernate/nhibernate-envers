@@ -78,14 +78,14 @@ public class ExampleRevEntity : DefaultRevisionEntity
 public class ExampleRevEntity
 {
 	[RevisionNumber]
-	private int id;
+	public virtual int Id { get; set; }
 
 	[RevisionTimestamp]
-	private long timestamp;
+	public virtual long Timestamp { get; set; }
 
-	private string username;
+	public virtual string UserName { get; set; }
 
-	// Getters, setters, Equals, GetHashCode ...
+	// Equals, GetHashCode ...
 }]]></programlisting>
 
 	<para>
