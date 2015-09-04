@@ -68,7 +68,8 @@ nhConf.SetProperty("nhibernate.envers.store_data_at_delete", "true");
 nhConf.SetEnversProperty(ConfigurationKey.StoreDataAtDelete, true);
 
 //Using ConfigurationKey directly with type safe value input
-ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></programlisting>
+ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]>
+		</programlisting>
 
 		<para>
 			In more detail, below are the properties that you can pass to NHibernate.Cfg.Configuration.
@@ -391,7 +392,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 						<entry>
 							A unique name for the configuration object. Used internally by Envers. Must not be set explicitly by user!
 						</entry>
-					</row>		
+					</row>
 				</tbody>
 			</tgroup>
 		</table>
@@ -413,6 +414,9 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 					</listitem>
 				</orderedlist>
 			</para>
+			<para>
+				All envers properties needs to be set before <code>configuration.IntegrateWithEnvers</code> is called!
+			</para>
 		</important>
 	</section>
 
@@ -423,7 +427,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 			To set the value of any of the properties described above, simply add an entry to
 			your NHibernate Core's <literal>Configuration</literal> object.
 		</para>
-		
+
 		<para>
 			To change the name of the revision table and its fields (the table, in which the
 			numbers of revisions and their timestamps are stored), you can use the
@@ -445,7 +449,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 
 		<para>
 			If you'd like to override auditing behaviour of some fields/properties inherited from
-			a non mapped base type or in an embedded component, you can apply the <literal>[AuditOverride]</literal> 
+			a non mapped base type or in an embedded component, you can apply the <literal>[AuditOverride]</literal>
 			attribute on the subtype or usage site of the component.
 		</para>
 
@@ -455,7 +459,7 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]></prog
 			<literal>[Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED]</literal>
 			(or use fluent configuration: <literal>ExcludeRelationData()</literal>). Then, when reading historic
 			versions of your entity, the relation will always point to the "current" related entity.
-			By default Envers throws  when "current" entity does not exist in the database. 
+			By default Envers throws  when "current" entity does not exist in the database.
 			Apply <literal>not-found="ignore"</literal> in your mapping
 			to silence the exception and assign null value instead. Hereby solution causes implicit eager loading
 			of to-one relations.
