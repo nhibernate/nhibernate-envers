@@ -30,7 +30,7 @@
 	</para>
 
 	<para>
-		In the future, queries will be improved both in terms of speed and possibilities, when using the valid-time
+		Queries will be improved both in terms of speed and possibilities, when using the valid-time
 		audit strategy, that is when storing both start and end revisions for entities. See
 		<xref linkend="configuration"/>.
 	</para>
@@ -76,11 +76,11 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
 
 		<programlisting><![CDATA[var personsAtAddress = AuditReader().CreateQuery()
 	 .ForEntitiesAtRevision(typeof(Person), 12)
-	 .AddOrder(AuditEntity.property("surname").desc())
-	 .Add(AuditEntity.relatedId("address").eq(addressId))
+	 .AddOrder(AuditEntity.Property("surname").Desc())
+	 .Add(AuditEntity.RelatedId("address").Eq(addressId))
 	 .SetFirstResult(4)
 	 .SetMaxResults(2)
-	 .ResultList();]]></programlisting>
+	 .GetResultList();]]></programlisting>
 
 	</section>
 
@@ -133,10 +133,10 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
 
 		<programlisting><![CDATA[var revision = AuditReader().CreateQuery()
 	 .ForRevisionsOfEntity(typeof(MyEntity), false, true)
-	 .SetProjection(AuditEntity.RevisionNumber.Min())
-	 .Add(AuditEntity.Id.Eq(entityId))
+	 .SetProjection(AuditEntity.RevisionNumber().Min())
+	 .Add(AuditEntity.Id().Eq(entityId))
 	 .Add(AuditEntity.RevisionNumber().Gt(42))
-	 .SingleResult();]]></programlisting>
+	 .GetSingleResult();]]></programlisting>
 
 		<para>
 			The second additional feature you can use in queries for revisions is the ability
@@ -148,11 +148,11 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
 		<programlisting><![CDATA[var revision = AuditReader().CreateQuery()
 	 .ForRevisionsOfEntity(typeof(MyEntity), false, true)
 	 // We are only interested in the first revision
-	 .SetProjection(AuditEntity.RevisionNumber().Min())
+	 .AddProjection(AuditEntity.RevisionNumber().Min())
 	 .Add(AuditEntity.Property("actualDate").Minimize()
 		  .Add(AuditEntity.Property("actualDate").Ge(givenDate))
 		  .Add(AuditEntity.Id().Eq(givenEntityId)))
-	 .SingleResult();]]></programlisting>
+	 .GetSingleResult();]]></programlisting>
 
 		<para>
 			The <literal>Minimize()</literal> and <literal>Maximize()</literal> methods return a criteria,
@@ -208,8 +208,8 @@ query.Add(AuditEntity.RelatedId("address").Eq(relatedEntityId));]]></programlist
 
 		<programlisting><![CDATA[var query = AuditReader().CreateQuery()
 	.ForRevisionsOfEntity(typeof(MyEntity), false, true)
-	.Add(AuditEntity.Id().Eq(id));
-	.Add(AuditEntity.Property("ActualDate").HasChanged())]]></programlisting>
+	.Add(AuditEntity.Id().Eq(id))
+	.Add(AuditEntity.Property("ActualDate").HasChanged());]]></programlisting>
 
 		<para>
 			This query will return all revisions of MyEntity with given id,
