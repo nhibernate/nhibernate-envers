@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Set">
+  <class name="Casee">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <set cascade="all-delete-orphan" inverse="true" name="CaseTags">
+      <key>
+        <column name="CTT_CAS_PK" />
+      </key>
+      <one-to-many class="CaseToCaseTag" />
+    </set>
+    <property name="LastModifyDate" type="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="CAS_LAST_MODIFY_DATE" />
+    </property>
+    
+  </class>
+  <class name="CaseToCaseTag">
+    <id name="Id">
+      <generator class="native"/>
+    </id>
+    <many-to-one cascade="none" class="Casee" foreign-key="CaseToCaseTag_Right" name="Right">
+      <column name="CTT_CAS_PK" />
+    </many-to-one>
+    
+  </class>
+</hibernate-mapping>

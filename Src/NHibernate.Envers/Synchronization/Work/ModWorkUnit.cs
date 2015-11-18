@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(CollectionChangeWorkUnit second)
 		{
-			return this;
+			return second.Merge(this);
 		}
 
 		public override IAuditWorkUnit Merge(FakeBidirectionalRelationWorkUnit second)
