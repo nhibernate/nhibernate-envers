@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
-using NHibernate.Envers.Tests.Integration.Inheritance.Entities;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags
 {
 	[Audited]
 	public class Casee
