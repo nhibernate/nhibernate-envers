@@ -15,13 +15,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 		{
 		}
 
-
 		protected override void Initialize()
 		{
 			CreateCase1();
 			CreateCase2();
-
 		}
+
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.GlobalWithModifiedFlag, true);
@@ -34,7 +33,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 
 			using (var tx = Session.BeginTransaction())
 			{
-
 				ctc.Right = cas;
 				cas.CaseTags = new HashSet<CaseToCaseTag>();
 				cas.CaseTags.Add(ctc);
@@ -47,11 +45,11 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 			cas.LastModifyDate = DateTime.UtcNow.AddHours(-5);
 			using (var tx = Session.BeginTransaction())
 			{
-
 				Session.Save(cas);
 				tx.Commit();
 			}
 		}
+
 		private void CreateCase2()
 		{
 			Casee cas = new Casee();
@@ -69,20 +67,16 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 			}
 
 			cas.CaseTags.Remove(ctc);
-
 			using (var tx = Session.BeginTransaction())
 			{
-
 				Session.Save(cas);
 				tx.Commit();
 			}
 		}
 
-
 		[Test]
 		public void CheckHistory()
 		{
-
 			var changedRevisions = AuditReader().CreateQuery()
 				.ForHistoryOf<Casee, DefaultRevisionEntity>()
 				.Add(AuditEntity.Property("CaseTags").HasChanged())
