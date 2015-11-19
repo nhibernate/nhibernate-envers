@@ -1,9 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
 using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Query;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
@@ -13,9 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 		public MergeColModTest(string strategyType) : base(strategyType)
 		{
 		}
-		int casId1;
 
-		int casId2;
 
 		protected override void Initialize()
 		{
@@ -40,7 +39,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 				cas.CaseTags = new HashSet<CaseToCaseTag>();
 				cas.CaseTags.Add(ctc);
 
-				casId1 = (int)Session.Save(cas);
+				Session.Save(cas);
 				tx.Commit();
 			}
 
@@ -65,7 +64,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 				cas.CaseTags = new HashSet<CaseToCaseTag>();
 				cas.CaseTags.Add(ctc);
 
-				casId1 = (int)Session.Save(cas);
+				Session.Save(cas);
 				tx.Commit();
 			}
 
@@ -81,35 +80,16 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Set
 
 
 		[Test]
-		public void CheckHistoryWithMerge()
+		public void CheckHistory()
 		{
-			var cmd = Session.Connection.CreateCommand();
-			cmd.CommandText = "select CaseTags_MOD from casee_aud where rev = 2";
 
-			using (IDataReader dr = cmd.ExecuteReader())
-			{
-				while (dr.Read())
-				{
-					var is_mod = dr.GetBoolean(0);
-					Assert.IsTrue(is_mod, "mod flag was false");
-				}
-			}
+			var changedRevisions = AuditReader().CreateQuery()
+				.ForHistoryOf<Casee, DefaultRevisionEntity>()
+				.Add(AuditEntity.Property("CaseTags").HasChanged())
+				.Results();
+			//rev 2 and rev 4 are the revisions where we remove the tag from the case, thus both revisions should have the casetag property marked as being changed
+			Assert.IsTrue(changedRevisions.Count(x => x.RevisionEntity.Id == 2 || x.RevisionEntity.Id == 4) == 2);
 		}
 
-		[Test]
-		public void CheckHistoryWithoutMerge()
-		{
-			var cmd = Session.Connection.CreateCommand();
-			cmd.CommandText = "select CaseTags_MOD from casee_aud where rev = 4";
-
-			using (IDataReader dr = cmd.ExecuteReader())
-			{
-				while (dr.Read())
-				{
-					var is_mod = dr.GetBoolean(0);
-					Assert.IsTrue(is_mod, "mod flag was false");
-				}
-			}
-		}
 	}
 }
