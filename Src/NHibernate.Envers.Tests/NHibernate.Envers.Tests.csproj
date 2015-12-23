@@ -641,8 +641,8 @@
     <Compile Include="NetSpecific\Integration\BidirectionalList\BidirectionalListWithDifferentAccessTest.cs" />
     <Compile Include="NetSpecific\Integration\BidirectionalList\Child.cs" />
     <Compile Include="NetSpecific\Integration\BidirectionalList\Parent.cs" />
-    <Compile Include="NetSpecific\Integration\Access\ReadonlyAccessTest.cs" />
-    <Compile Include="NetSpecific\Integration\Access\ReadonlyEntity.cs" />
+    <Compile Include="NetSpecific\Integration\Access\Readonly\ReadonlyAccessTest.cs" />
+    <Compile Include="NetSpecific\Integration\Access\Readonly\ReadonlyEntity.cs" />
     <Compile Include="NetSpecific\Integration\Component\ComponentOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\SimpleStructTest.cs" />
     <Compile Include="NetSpecific\Integration\Component\StructComponent.cs" />
@@ -798,7 +798,7 @@
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Component\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\Access\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\Access\Readonly\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\JoinAuditTable\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Query\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\DynamicComponent\SingleProperty.hbm.xml" />

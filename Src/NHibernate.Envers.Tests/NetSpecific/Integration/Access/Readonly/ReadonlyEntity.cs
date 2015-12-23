@@ -1,6 +1,6 @@
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.Readonly
 {
 	[Audited]
 	public class ReadonlyEntity

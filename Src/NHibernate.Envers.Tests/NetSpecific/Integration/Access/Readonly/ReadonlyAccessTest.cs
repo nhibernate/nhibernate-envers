@@ -3,7 +3,7 @@ using NHibernate.Envers.Query;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.Readonly
 {
 	public class ReadonlyAccessTest : TestBase
 	{
