@@ -103,6 +103,8 @@
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
     <Compile Include="Integration\Strategy\IdentifierReuseTest.cs" />
+    <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Fixture.cs" />
+    <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Model.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Entity.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassComponent.cs" />
@@ -768,6 +770,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\Access\None\ManyToOne\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\SimpleProperty\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Mapping.hbm.xml" />
