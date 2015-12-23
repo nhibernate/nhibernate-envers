@@ -31,6 +31,17 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.None.ManyToOne
 		}
 
 		[Test]
+		public void VerifyHistoryOfComponent()
+		{
+			var ver1 = AuditReader().Find<Parent>(parentId, 1);
+			var ver2 = AuditReader().Find<Parent>(parentId, 2);
+
+			ver1.Children.Count.Should().Be.EqualTo(1);
+			ver2.Children.Count.Should().Be.EqualTo(2);
+		}
+
+
+		[Test]
 		public void CanQueryOnAccessNoneProperty()
 		{
 			AuditReader().CreateQuery()
