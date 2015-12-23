@@ -1,0 +1,12 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Access.None.SimpleProperty">
+  <class name="Entity">
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Data" />
+    <property name="Data2" column="Data" type="int" access="none" insert="false" update="false"/>
+    <property name="Data3" column="Data" type="int" access="noop" insert="false" update="false"/>
+  </class>
+</hibernate-mapping>
