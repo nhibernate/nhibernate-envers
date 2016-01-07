@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
@@ -44,25 +45,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			if (annotation != null)
 			{
 				var overrideName = annotation.PropertyName;
-				var present = false;
-				foreach (var current in AuditingOverrides)
-				{
-					if (current.PropertyName.Equals(overrideName))
-					{
-						present = true;
-						break;
-					}
-				}
+				var present = AuditingOverrides.Any(current => current.PropertyName.Equals(overrideName));
 				if (!present)
 				{
 					AuditingOverrides.Add(annotation);
 				}
 			}
-		}
-
-		public bool IsNoneAccess()
-		{
-			return MetadataTools.IsNoneAccess(AccessType);
 		}
 	}
 }
