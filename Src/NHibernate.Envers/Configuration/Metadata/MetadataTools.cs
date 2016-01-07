@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 												new XAttribute("name", name),
 												new XAttribute("column", "REV"),
 												new XAttribute("type", type.Name),
-													new XElement(CreateElementName("generator"), 
+													new XElement(CreateElementName("generator"),
 														new XAttribute("class", "native"),
 															new XElement(CreateElementName("param"),
 																new XAttribute("name", "sequence"),
@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			parent.Add(idMapping);
 		}
 
-		public static XElement AddProperty(XElement parent, string name, string type, bool insertable, bool updateable, bool key)
+		public static XElement AddProperty(XElement parent, string name, string type, bool insertable, bool updateable, bool key, string access)
 		{
 			XElement propMapping;
 			if (key)
@@ -37,9 +37,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 			else
 			{
-				propMapping = new XElement(CreateElementName("property"), 
-									new XAttribute("insert", insertable ? "true" : "false"),	
-									new XAttribute("update", updateable ? "true" : "false"));
+				propMapping = new XElement(CreateElementName("property"),
+									new XAttribute("insert", insertable ? "true" : "false"),
+									new XAttribute("update", updateable ? "true" : "false"),
+									new XAttribute("access", IsNoneAccess(access) ? "none" : "property"));
 			}
 			parent.Add(propMapping);
 
@@ -53,9 +54,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 			return propMapping;
 		}
 
-		public static XElement AddProperty(XElement parent, string name, string type, bool insertable, bool key)
+		public static XElement AddProperty(XElement parent, string name, string type, bool insertable, bool key, string access)
 		{
-			return AddProperty(parent, name, type, insertable, false, key);
+			return AddProperty(parent, name, type, insertable, false, key, access);
 		}
 
 		public static XElement AddManyToOne(XElement parent, string name, string type, bool insertable, bool updateable)
@@ -131,16 +132,16 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 		}
 
-		private static XElement createEntityCommon(XDocument document, 
-																	string type, 
-																	AuditTableData auditTableData, 
+		private static XElement createEntityCommon(XDocument document,
+																	string type,
+																	AuditTableData auditTableData,
 																	string discriminatorValue,
 																	bool isAbstract)
 		{
 			var classMapping = new XElement(CreateElementName(type));
 			var nhMapping = new XElement(CreateElementName("hibernate-mapping"),
 															new XAttribute("assembly", "NHibernate.Envers"),
-			                        new XAttribute("auto-import", "false"),
+															new XAttribute("auto-import", "false"),
 																	 classMapping);
 			document.Add(nhMapping);
 
@@ -258,7 +259,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		}
 
 		public static void PrefixNamesInPropertyElement(XElement element, string prefix, IEnumerable<string> columnNames,
-														bool changeToKey, bool insertable)
+														bool changeToKey, bool insertable, string access)
 		{
 			var nodeList = new List<XElement>(element.Elements());
 			//need to reverse names because looping backwards
@@ -285,6 +286,10 @@ namespace NHibernate.Envers.Configuration.Metadata
 						{
 							property.SetAttributeValue("insert", insertable ? "true" : "false");
 						}
+						if (IsNoneAccess(access))
+						{
+							property.SetAttributeValue("access", "none");
+						}
 					}
 				}
 			}
@@ -310,12 +315,17 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static void AddModifiedFlagProperty(XElement parent, string propertyName, string suffix)
 		{
-			AddProperty(parent, ModifiedFlagPropertyName(propertyName, suffix), "bool", true, false, false);
+			AddProperty(parent, ModifiedFlagPropertyName(propertyName, suffix), "bool", true, false, null);
 		}
 
 		public static string ModifiedFlagPropertyName(string propertyName, string suffix)
 		{
 			return propertyName + suffix;
+		}
+
+		public static bool IsNoneAccess(string access)
+		{
+			return access != null && (access.Equals("none") || access.Equals("noop"));
 		}
 	}
 }

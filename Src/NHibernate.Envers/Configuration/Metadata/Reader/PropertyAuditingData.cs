@@ -59,5 +59,10 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				}
 			}
 		}
+
+		public bool IsNoneAccess()
+		{
+			return MetadataTools.IsNoneAccess(AccessType);
+		}
 	}
 }

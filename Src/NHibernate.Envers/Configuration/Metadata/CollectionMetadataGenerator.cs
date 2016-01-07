@@ -205,7 +205,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 											IdMappingData relatedIdMapping)
 		{
 			var properties = new XElement(relatedIdMapping.XmlRelationMapping);
-			MetadataTools.PrefixNamesInPropertyElement(properties, prefix, columnNames, true, true);
+			MetadataTools.PrefixNamesInPropertyElement(properties, prefix, columnNames, true, true, null);
 			foreach (var idProperty in properties.Elements())
 			{
 				xmlMapping.Add(idProperty);
@@ -466,7 +466,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (_propertyValue.IsSet)
 				{
 					var setOrdinalPropertyName = _mainGenerator.VerEntCfg.EmbeddableSetOrdinalPropertyName;
-					var ordinalProperty = MetadataTools.AddProperty(xmlMapping, setOrdinalPropertyName, "int", true, true);
+					var ordinalProperty = MetadataTools.AddProperty(xmlMapping, setOrdinalPropertyName, "int", true, true, null);
 					MetadataTools.AddColumn(ordinalProperty, setOrdinalPropertyName, -1, -1, -1, null, false);
 				}
 				return new MiddleComponentData(componentMapper, 0);
@@ -685,6 +685,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
+				if(MetadataTools.IsNoneAccess(property.PropertyAccessorName))
+					continue;
 				//should probably not care if order is same...
 				if (property.Value.ColumnIterator.SequenceEqual(collectionValue.Key.ColumnIterator))
 				{

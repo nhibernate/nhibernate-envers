@@ -65,7 +65,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (parent != null) 
 			{
 				var propMapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
-						value.Type.Name, propertyAuditingData.ForceInsertable || insertable, key);
+						value.Type.Name, propertyAuditingData.ForceInsertable || insertable, key, propertyAuditingData.AccessType);
 				MetadataTools.AddColumns(propMapping, value.ColumnIterator.OfType<Column>());
 			}
 
@@ -83,7 +83,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			if (parent != null) 
 			{
 				var propMapping = MetadataTools.AddProperty(parent, propertyAuditingData.Name,
-						typeOfUserImplementation.AssemblyQualifiedName, insertable, key);
+						typeOfUserImplementation.AssemblyQualifiedName, insertable, key, propertyAuditingData.AccessType);
 				MetadataTools.AddColumns(propMapping, value.ColumnIterator.OfType<Column>());
 				var typeElement = new XElement(MetadataTools.CreateElementName("type"), 
 											new XAttribute("name", typeOfUserImplementation.AssemblyQualifiedName));

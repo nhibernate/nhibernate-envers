@@ -88,7 +88,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var partOfId = anyMapping != anyMappingEnd;
 			var revTypeProperty = MetadataTools.AddProperty(anyMapping, VerEntCfg.RevisionTypePropName,
-					typeof(RevisionTypeType).AssemblyQualifiedName, true, partOfId);
+					typeof(RevisionTypeType).AssemblyQualifiedName, true, partOfId, null);
 			if (!partOfId)
 			{
 				revTypeProperty.Add(new XAttribute("not-null", "true"));

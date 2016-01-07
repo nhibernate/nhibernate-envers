@@ -50,7 +50,7 @@ namespace NHibernate.Envers.Configuration
 
 			MetadataTools.AddNativelyGeneratedId(classMapping, revisionInfoIdData.Name, revisionPropType);
 
-			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false);
+			var timestampProperty = MetadataTools.AddProperty(classMapping, revisionInfoTimestampData.Name, revisionInfoTimestampType.Name, true, false, null);
 			MetadataTools.AddColumn(timestampProperty, "REVTSTMP", -1, -1, -1, null, false);
 
 			if (_globalCfg.IsTrackEntitiesChangedInRevisionEnabled)

@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.None.SimpleProperty
 {
-	[Ignore("Failing tests for NHE-145")]
 	public class Fixture : TestBase
 	{
 		private int id;
