@@ -156,7 +156,7 @@ namespace NHibernate.Envers.Strategy
 			if (verEntCfg.IsRevisionEndTimestampEnabled)
 			{
 				const string revisionInfoTimestampSqlType = "Timestamp";
-				MetadataTools.AddProperty(classMapping, verEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false);
+				MetadataTools.AddProperty(classMapping, verEntCfg.RevisionEndTimestampFieldName, revisionInfoTimestampSqlType, true, true, false, null);
 			}
 		}
 

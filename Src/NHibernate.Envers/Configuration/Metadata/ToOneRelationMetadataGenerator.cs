@@ -59,8 +59,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			properties.Add(new XAttribute("name",propertyAuditingData.Name));
 
 			MetadataTools.PrefixNamesInPropertyElement(properties, lastPropertyPrefix,
-			                                           MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
-																								 false, insertable);
+						MetadataTools.GetColumnNameEnumerator(value.ColumnIterator),
+						false, insertable, propertyAuditingData.AccessType);
 
 			// Extracting related id properties from properties tag
 			var firstJoin = firstJoinElement(parent);

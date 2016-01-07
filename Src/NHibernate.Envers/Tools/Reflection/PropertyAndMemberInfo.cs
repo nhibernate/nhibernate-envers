@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Configuration.Metadata.Reader;
 using NHibernate.Mapping;
 using NHibernate.Properties;
@@ -38,6 +39,8 @@ namespace NHibernate.Envers.Tools.Reflection
 			foreach (var property in properties)
 			{
 				if(includeEmbedded && property.PropertyAccessorName=="embedded")
+					yield return new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo);
+				if(MetadataTools.IsNoneAccess(property.PropertyAccessorName))
 					yield return new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo);
 				var exactMemberIdx = candidateMembersNames.IndexOf(property.Name);
 				if (exactMemberIdx >= 0)

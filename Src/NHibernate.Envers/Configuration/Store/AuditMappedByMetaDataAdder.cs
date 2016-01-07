@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Tools;
 using NHibernate.Envers.Tools.Reflection;
 using NHibernate.Mapping;
@@ -47,6 +48,8 @@ namespace NHibernate.Envers.Configuration.Store
 					var refPersistentClass = _nhibernateConfiguration.GetClassMapping(referencedEntity);
 					foreach (var refProperty in refPersistentClass.PropertyClosureIterator)
 					{
+						if(MetadataTools.IsNoneAccess(refProperty.PropertyAccessorName))
+							continue;
 						var attr = createAuditMappedByAttributeIfReferenceImmutable(collectionValue, refProperty);
 						if (attr == null) continue;
 						mightAddIndexToAttribute(attr, collectionValue, refPersistentClass.PropertyClosureIterator);
