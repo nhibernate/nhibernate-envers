@@ -12,11 +12,8 @@ namespace NHibernate.Envers.Configuration.Attributes
 	/// </summary>
 	public class AttributeConfiguration : IMetaDataProvider
 	{
-		private IList<System.Type> filledTypes; 
-
 		public IDictionary<System.Type, IEntityMeta> CreateMetaData(Cfg.Configuration nhConfiguration)
 		{
-			filledTypes = new List<System.Type>();
 			var ret = new Dictionary<System.Type, IEntityMeta>();
 			foreach (var persistentClass in nhConfiguration.ClassMappings)
 			{
@@ -70,18 +67,15 @@ namespace NHibernate.Envers.Configuration.Attributes
 
 		private void fillClass(System.Type type, IDictionary<System.Type, IEntityMeta> dicToFill)
 		{
-			if (!filledTypes.Contains(type))
+			foreach (Attribute attr in type.GetCustomAttributes(false))
 			{
-				foreach (Attribute attr in type.GetCustomAttributes(false))
-				{
-					if (!dicToFill.ContainsKey(type))
-						dicToFill[type] = new EntityMeta();
-					var classAttributeToAdd = ClassAttribute(attr, type);
-					((EntityMeta)dicToFill[type]).AddClassMeta(classAttributeToAdd);
-				}	
+				if (!dicToFill.ContainsKey(type))
+					dicToFill[type] = new EntityMeta();
+				var classAttributeToAdd = ClassAttribute(attr, type);
+				((EntityMeta)dicToFill[type]).AddClassMeta(classAttributeToAdd);
 			}
 			var baseType = type.BaseType;
-			if(!type.IsInterface && baseType != typeof(object))
+			if (!type.IsInterface && baseType != typeof(object))
 				fillClass(baseType, dicToFill);
 		}
 
