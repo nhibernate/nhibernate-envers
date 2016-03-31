@@ -112,6 +112,9 @@
     <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedClassOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedComponentTest.cs" />
+    <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Child.cs" />
+    <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Parent.cs" />
+    <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\BiDirOneToOneWithOneSideNotAuditedTests.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\ChildName.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreExistsInBaseTypeTest.cs" />
@@ -770,6 +773,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\ManyToOne\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\SimpleProperty\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\Mapping.hbm.xml" />
