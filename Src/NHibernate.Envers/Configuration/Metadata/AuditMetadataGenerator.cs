@@ -151,7 +151,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			else if (type is OneToOneType)
 			{
 				var oneToOne = (OneToOne)value;
-				if (oneToOne.ReferencedPropertyName != null)
+				if (oneToOne.ReferencedPropertyName != null && propertyAuditingData.RelationTargetAuditMode != RelationTargetAuditMode.NotAudited)
 				{
 					toOneRelationMetadataGenerator.AddOneToOneNotOwning(propertyAuditingData, value, currentMapper, entityName);	
 				}

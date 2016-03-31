@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BiDirOneToOneWithOneSideNotAudited
 {
-	[Ignore("Not yet fixed - NHE-150")]
 	public class BiDirOneToOneWithOneSideNotAuditedTests : TestBase
 	{
 		private Guid parentId;
