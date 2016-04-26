@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Criterion;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Projection;
 using NHibernate.Envers.Query.Property;
@@ -191,6 +192,11 @@ namespace NHibernate.Envers.Query.Criteria
 		public Tuple<string, string, bool> GetData(AuditConfiguration auditCfg)
 		{
 			return new Tuple<string, string, bool>(null, _propertyNameGetter.Get(auditCfg), false);
+		}
+
+		public object ConvertQueryResult(AuditConfiguration auditCfg, EntityInstantiator entityInstantiator, string entityName, long revision, object value)
+		{
+			return value;
 		}
 
 		public IAuditOrder Asc()

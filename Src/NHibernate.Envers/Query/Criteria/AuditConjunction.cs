@@ -20,7 +20,12 @@ namespace NHibernate.Envers.Query.Criteria
 			return this;
 		}
 
-		public void AddToQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration verCfg, 
+												IAuditReaderImplementor versionsReader, 
+												string entityName,
+												string alias,
+												QueryBuilder qb, 
+												Parameters parameters)
 		{
 			var andParameters = parameters.AddSubParameters(Parameters.AND);
 
@@ -32,7 +37,7 @@ namespace NHibernate.Envers.Query.Criteria
 			{
 				foreach (var criterion in criterions)
 				{
-					criterion.AddToQuery(verCfg, versionsReader, entityName, qb, andParameters);
+					criterion.AddToQuery(verCfg, versionsReader, entityName, alias, qb, andParameters);
 				}
 			}
 		}

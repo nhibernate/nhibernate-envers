@@ -59,7 +59,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		{
 			// SELECT ee FROM middleEntity ee
 			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
-			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias, false, false);
+			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias, null, false);
 			// WHERE
 			// ee.originalId.id_ref_ing = :id_ref_ing
 			ReferencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(qb.RootParameters, VerEntCfg.OriginalIdPropName, true);

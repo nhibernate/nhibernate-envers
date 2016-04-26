@@ -28,7 +28,7 @@ namespace NHibernate.Envers.Query.Impl
 			SetIncludeDeletationClause();
 			AddCriterions();
 			AddOrders();
-			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias);
+			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias, true);
 			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", QueryConstants.RevisionAlias + ".id", false);
 
 			var revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;

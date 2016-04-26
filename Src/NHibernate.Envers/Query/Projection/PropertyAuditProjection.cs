@@ -1,5 +1,6 @@
 ﻿using System;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities;
 using NHibernate.Envers.Query.Property;
 
 namespace NHibernate.Envers.Query.Projection
@@ -22,6 +23,12 @@ namespace NHibernate.Envers.Query.Projection
 			var propertyName = _propertyNameGetter.Get(auditCfg);
 
 			return new Tuple<string, string, bool>(_function, propertyName, _distinct);
+		}
+
+		public object ConvertQueryResult(AuditConfiguration auditCfg, EntityInstantiator entityInstantiator, string entityName,
+			long revision, object value)
+		{
+			return value;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using NHibernate.Envers.Configuration;
+using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
@@ -43,20 +43,15 @@ namespace NHibernate.Envers.Query.Impl
 
 			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+			}
+			foreach (var associationQuery in AssociationQueries)
+			{
+				associationQuery.AddCriterionsToQuery(VersionsReader);
 			}
 
 			var query = BuildQuery();
-
-
-			if (HasProjection)
-			{
-				query.List(result);
-				return;
-			}
-			var queryResult = new List<IDictionary>();
-			query.List(queryResult);
-			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result, queryResult, _revision);
+			ApplyProjections(query, result, _revision);
 		}
 	}
 }

@@ -4,6 +4,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Query;
 using NHibernate.Envers.Reader;
 using NHibernate.Proxy;
+using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
@@ -70,22 +71,22 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions, transformed
 			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
-			if (!HasProjection && !HasOrder)
+			if (!HasProjection() && !HasOrder)
 			{
 				var revisionPropertyPath = verEntCfg.RevisionNumberPath;
-				QueryBuilder.AddOrder(revisionPropertyPath, true);
+				QueryBuilder.AddOrder(QueryConstants.ReferencedEntityAlias, revisionPropertyPath, true);
 			}
 
 			if (!_selectEntitiesOnly)
 			{
-				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias);
+				QueryBuilder.AddFrom(VerCfg.AuditEntCfg.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias, true);
 				QueryBuilder.RootParameters.AddWhere(VerCfg.AuditEntCfg.RevisionNumberPath, true, "=", QueryConstants.RevisionAlias + ".id", false);
 			}
 
-			if (HasProjection)
+			if (HasProjection())
 			{
 				BuildAndExecuteQuery(result);
 				return;
@@ -119,6 +120,11 @@ namespace NHibernate.Envers.Query.Impl
 								 ? entity
 								 : new[] {entity, revisionData, versionsEntity[revisionTypePropertyName]});
 			}
+		}
+
+		public override IAuditQuery TraverseRelation(string associationName, JoinType joinType)
+		{
+			throw new NotSupportedException("Not yet implemented for revision of entity queries");
 		}
 	}
 }

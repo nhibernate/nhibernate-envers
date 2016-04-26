@@ -102,6 +102,8 @@
     <Compile Include="Integration\Collection\Embeddable\EmbeddableSetTest.cs" />
     <Compile Include="Integration\Collection\Embeddable\Name.cs" />
     <Compile Include="Integration\ManyToMany\UniDirectional\M2MIndexedListNotAuditedTargetTest.cs" />
+    <Compile Include="Integration\Query\Traverse\AssociationToOneQueryTest.cs" />
+    <Compile Include="Integration\Query\Traverse\Model.cs" />
     <Compile Include="Integration\Strategy\IdentifierReuseTest.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Model.cs" />
@@ -944,6 +946,9 @@
     <EmbeddedResource Include="Entities\OneToOne\EagerLoading.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\EntityInstantiation\Mapping.hbm.xml" />
     <EmbeddedResource Include="Integration\Collection\Embeddable\DarkCharacter.hbm.xml" />
+    <EmbeddedResource Include="Integration\Query\Traverse\Mapping.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
