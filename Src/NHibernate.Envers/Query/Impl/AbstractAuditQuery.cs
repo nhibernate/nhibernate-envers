@@ -9,10 +9,13 @@ using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Projection;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
+using System;
+using System.Linq;
+using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public abstract class AbstractAuditQuery : IAuditQuery 
+	public abstract class AbstractAuditQuery : IAuditQueryImplementor
 	{
 		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls)
 				: this(verCfg, versionsReader, cls.FullName)
@@ -34,6 +37,9 @@ namespace NHibernate.Envers.Query.Impl
 			{
 				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
 			}
+			AssociationQueries=new List<AuditAssociationQuery>();
+			associationQueryMap = new Dictionary<string, AuditAssociationQuery>();
+			projections = new List<Tuple<string, IAuditProjection>>();
 		}
 
 		protected IAuditReaderImplementor VersionsReader { get; private set; }
@@ -42,9 +48,11 @@ namespace NHibernate.Envers.Query.Impl
 		protected string EntityName { get; private set; }
 		protected string VersionsEntityName { get; private set; }
 		protected QueryBuilder QueryBuilder { get; private set; }
-		protected bool HasProjection { get; private set; }
 		protected bool HasOrder { get; private set; }
 		protected AuditConfiguration VerCfg { get; private set; }
+		protected IList<AuditAssociationQuery> AssociationQueries { get; private set; }
+		private IDictionary<string, AuditAssociationQuery> associationQueryMap { get; set; }
+		private IList<Tuple<string, IAuditProjection>> projections { get; set; }
 
 		protected void BuildAndExecuteQuery(IList result) 
 		{
@@ -105,10 +113,20 @@ namespace NHibernate.Envers.Query.Impl
 		public IAuditQuery AddProjection(IAuditProjection projection) 
 		{
 			var projectionData = projection.GetData(VerCfg);
-			HasProjection = true;
+			RegisterProjection(EntityName, projection);
 			var propertyName = CriteriaTools.DeterminePropertyName(VerCfg, VersionsReader, EntityName, projectionData.Item2);
-			QueryBuilder.AddProjection(projectionData.Item1, propertyName, projectionData.Item3);
+			QueryBuilder.AddProjection(projectionData.Item1, QueryConstants.ReferencedEntityAlias, propertyName, projectionData.Item3);
 			return this;
+		}
+
+		public void RegisterProjection(string entityName, IAuditProjection projection)
+		{
+			projections.Add(new Tuple<string, IAuditProjection>(entityName, projection));
+		}
+
+		protected bool HasProjection()
+		{
+			return projections.Any();
 		}
 
 		public IAuditQuery AddOrder(IAuditOrder order) 
@@ -116,7 +134,7 @@ namespace NHibernate.Envers.Query.Impl
 			HasOrder = true;
 			var orderData = order.GetData(VerCfg);
 			var propertyName = CriteriaTools.DeterminePropertyName(VerCfg, VersionsReader, EntityName, orderData.Item1);
-			QueryBuilder.AddOrder(propertyName, orderData.Item2);
+			QueryBuilder.AddOrder(QueryConstants.ReferencedEntityAlias, propertyName, orderData.Item2);
 			return this;
 		}
 
@@ -186,6 +204,23 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
+		public virtual IAuditQuery TraverseRelation(string associationName, JoinType joinType)
+		{
+			AuditAssociationQuery result;
+			if (!associationQueryMap.TryGetValue(associationName, out result))
+			{
+				result = new AuditAssociationQuery(VerCfg, VersionsReader, this, QueryBuilder, EntityName, associationName, joinType, QueryConstants.ReferencedEntityAlias);
+				AssociationQueries.Add(result);
+				associationQueryMap[associationName] = result;
+			}
+			return result;
+		}
+
+		public IAuditQuery Up()
+		{
+			return this;
+		}
+
 		private void setQueryProperties(IQuery query) 
 		{
 			if (maxResults != null) query.SetMaxResults((int)maxResults);
@@ -197,6 +232,40 @@ namespace NHibernate.Envers.Query.Impl
 			query.SetCacheMode(cacheMode);
 			if (timeout != null) query.SetTimeout((int)timeout);
 			if (lockMode != null) query.SetLockMode(QueryConstants.ReferencedEntityAlias, lockMode);
+		}
+
+		protected void ApplyProjections(IQuery query, IList resultToFill, long revision)
+		{
+			if (HasProjection())
+			{
+				foreach (var qr in query.List())
+				{
+					if (projections.Count == 1)
+					{
+						// qr is the value of the projection itself
+						var projection = projections[0];
+						resultToFill.Add(projection.Item2.ConvertQueryResult(VerCfg, EntityInstantiator, projection.Item1, revision, qr));
+					}
+					else
+					{
+						// qr is an array where each of its components holds the value of corresponding projection
+						var qresults = (object[]) qr;
+						var tresults = new object[qresults.Length];
+						for (var i = 0; i < qresults.Length; i++)
+						{
+							var projection = projections[i];
+							tresults[i] = projection.Item2.ConvertQueryResult(VerCfg, EntityInstantiator, projection.Item1, revision, qresults[i]);
+						}
+						resultToFill.Add(tresults);
+					}
+				}
+			}
+			else
+			{
+				var queryResult = new List<IDictionary>();
+				query.List(queryResult);
+				EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, resultToFill, queryResult, revision);
+			}
 		}
 	}
 }

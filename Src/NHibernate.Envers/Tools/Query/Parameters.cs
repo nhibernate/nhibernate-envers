@@ -289,6 +289,12 @@ namespace NHibernate.Envers.Tools.Query
 			return new Parameters(this);
 		}
 
+		//compare properties from two different entities (aliases)
+		public void AddWhere(string aliasLeft, string left, string op, string aliasRight, string right)
+		{
+			expressions.Add(aliasLeft + "." + left + " " + op + " " + aliasRight + "." + right);
+		}
+
 		public void AddWhereWithFunction(string left, string leftFunction, string op, object paramValue)
 		{
 			var paramName = generateQueryParam();

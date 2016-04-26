@@ -58,7 +58,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 		{
 			// SELECT e FROM versionsEntity e
 			var qb = new QueryBuilder(versionsReferencedEntityName, QueryConstants.ReferencedEntityAlias);
-			qb.AddProjection(null, QueryConstants.ReferencedEntityAlias, false, false); 
+			qb.AddProjection(null, QueryConstants.ReferencedEntityAlias, null, false); 
 			//WHERE
 			// e.id_ref_ed = :id_ref_ed
 			ReferencingIdData.PrefixedMapper.AddNamedIdEqualsToQuery(qb.RootParameters, null, true);

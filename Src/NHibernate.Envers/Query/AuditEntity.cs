@@ -1,4 +1,5 @@
 ﻿using NHibernate.Envers.Query.Criteria;
+using NHibernate.Envers.Query.Projection;
 using NHibernate.Envers.Query.Property;
 
 namespace NHibernate.Envers.Query
@@ -107,6 +108,15 @@ namespace NHibernate.Envers.Query
 		public static AuditDisjunction Disjunction() 
 		{
 			return new AuditDisjunction();
+		}
+
+		/// <summary>
+		/// Adds a projection to the current entity itself. 
+		/// Useful for selecting entities which are reached through associations within the query.
+		/// </summary>
+		public static IAuditProjection SelectEntity(bool distinct)
+		{
+			return new EntityAuditProjection(distinct);
 		}
 	}
 }

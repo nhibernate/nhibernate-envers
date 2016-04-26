@@ -19,14 +19,18 @@ namespace NHibernate.Envers.Tools.Query
 		// the same in all parameters and sub-queries of this query.
 		private readonly Incrementor _paramCounter;
 
-		// A list of pairs (from entity name, alias name).
-		private readonly ICollection<Tuple<string, string>> _froms;
+		// A list of pairs (from entity name, alias name, whether to select the entity).
+		private readonly ICollection<Tuple<string, string, bool>> _froms;
 
-		// A list of pairs (property name, order ascending?).
-		private readonly ICollection<Tuple<string, bool>> _orders;
+		// A list of triples (property alias, name, order ascending?).
+		private readonly ICollection<Tuple<string, string, bool>> _orders;
 
 		// A list of complete projection definitions: either a sole property name, or a function(property name).
 		private readonly ICollection<string> _projections;
+
+		// "Where" parameters for this query.Each parameter element of the list for one alias from the "from" part.
+		private readonly IList<Parameters> _parameters = new List<Parameters>();
+
 
 		/// <param name="entityName">Main entity which should be selected.</param>
 		/// <param name="alias">Alias of the entity</param>
@@ -42,13 +46,13 @@ namespace NHibernate.Envers.Tools.Query
 			_aliasCounter = aliasCounter;
 			_paramCounter = paramCounter;
 
-			RootParameters = new Parameters(alias, "and", paramCounter);
+			_parameters.Add(new Parameters(alias, "and", paramCounter));
 
-			_froms = new List<Tuple<string, string>>();
-			_orders = new List<Tuple<string, bool>>();
+			_froms = new List<Tuple<string, string, bool>>();
+			_orders = new List<Tuple<string, string, bool>>();
 			_projections = new List<string>();
 
-			AddFrom(entityName, alias);
+			AddFrom(entityName, alias, true);
 		}
 
 		//only for clone purpose
@@ -58,28 +62,40 @@ namespace NHibernate.Envers.Tools.Query
 			RootAlias = other.RootAlias;
 			_aliasCounter = (Incrementor) other._aliasCounter.Clone();
 			_paramCounter = (Incrementor) other._paramCounter.Clone();
-			RootParameters = (Parameters) other.RootParameters.Clone();
-			_froms = new List<Tuple<string, string>>(other._froms);
-			_orders = new List<Tuple<string, bool>>(other._orders);
+			foreach (var parameter in other._parameters)
+			{
+				_parameters.Add((Parameters) parameter.Clone());
+			}
+			_froms = new List<Tuple<string, string, bool>>(other._froms);
+			_orders = new List<Tuple<string, string, bool>>(other._orders);
 			_projections = new List<string>(other._projections);
 		}
 
-		/// <summary>
-		/// Main "where" parameters for this query.
-		/// </summary>
-		public Parameters RootParameters { get; private set; }
+
+		public Parameters RootParameters
+		{
+			get { return _parameters[0]; }
+		}
+
+		public Parameters AddParameters(string alias)
+		{
+			var result = new Parameters(alias, Parameters.AND, _paramCounter);
+			_parameters.Add(result);
+			return result;
+		}
 
 		/// <summary>
 		/// Add an entity from which to select.
 		/// </summary>
 		/// <param name="entName">Name of the entity from which to select.</param>
 		/// <param name="als">Alias of the entity. Should be different than all other aliases.</param>
-		public void AddFrom(string entName, string als)
+		/// <param name="select">Whether the entity should be selected.</param>
+		public void AddFrom(string entName, string als, bool select)
 		{
-			_froms.Add(new Tuple<string, string>(entName, als));
+			_froms.Add(new Tuple<string, string, bool>(entName, als, select));
 		}
 
-		private string generateAlias()
+		public string GenerateAlias()
 		{
 			return "_e" + _aliasCounter.Get();
 		}
@@ -90,7 +106,7 @@ namespace NHibernate.Envers.Tools.Query
 		/// </returns>
 		public QueryBuilder NewSubQueryBuilder()
 		{
-			return NewSubQueryBuilder(_entityName, generateAlias());
+			return NewSubQueryBuilder(_entityName, GenerateAlias());
 		}
 
 		/// <param name="entityName">Entity name, which will be the main entity for the sub-query.</param>
@@ -104,25 +120,21 @@ namespace NHibernate.Envers.Tools.Query
 			return new QueryBuilder(entityName, alias, _aliasCounter, _paramCounter);
 		}
 
-		public void AddOrder(string propertyName, bool ascending)
+		public void AddOrder(string alias, string propertyName, bool ascending)
 		{
-			_orders.Add(new Tuple<string, bool>(propertyName, ascending));
+			_orders.Add(new Tuple<string, string, bool>(alias, propertyName, ascending));
 		}
 
-		public void AddProjection(string function, string propertyName, bool distinct)
+		public void AddProjection(string function, string alias, string propertyName, bool distinct)
 		{
-			AddProjection(function, propertyName, distinct, true);
-		}
-
-		public void AddProjection(string function, string propertyName, bool distinct, bool addAlias)
-		{
+			var effectivePropertyName = propertyName == null ? string.Empty : "." + propertyName;
 			if (function == null)
 			{
-				_projections.Add((distinct ? "distinct " : string.Empty) + (addAlias ? RootAlias + "." : string.Empty) + propertyName);
+				_projections.Add((distinct ? "distinct " : string.Empty) + alias + effectivePropertyName);
 			}
 			else
 			{
-				_projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + (addAlias ? RootAlias + "." : string.Empty) + propertyName + ")");
+				_projections.Add(function + "(" + (distinct ? "distinct " : string.Empty) + alias + effectivePropertyName + ")");
 			}
 		}
 
@@ -140,15 +152,24 @@ namespace NHibernate.Envers.Tools.Query
 			sb.Append("select ");
 			sb.Append(_projections.Count > 0
 							  ? string.Join(", ", _projections.ToArray())
-							  : string.Join(", ", aliasList().ToArray()));
+							  : string.Join(", ", selectAliasList().ToArray()));
 			sb.Append(" from ");
 			// all from entities with aliases, separated with commas
 			sb.Append(string.Join(", ", fromList().ToArray()));
 			// where part - rootParameters
-			if (!RootParameters.IsEmpty())
+			var first = true;
+			foreach (var prms in _parameters.Where(prms => !prms.IsEmpty()))
 			{
-				sb.Append(" where ");
-				RootParameters.Build(sb, queryParamValues);
+				if (first)
+				{
+					sb.Append(" where ");
+					first = false;
+				}
+				else
+				{
+					sb.Append(" and ");
+				}
+				prms.Build(sb, queryParamValues);
 			}
 			// orders
 			if (_orders.Count > 0)
@@ -158,21 +179,21 @@ namespace NHibernate.Envers.Tools.Query
 			}
 		}
 
-		private IEnumerable<string> aliasList()
+		private IEnumerable<string> selectAliasList()
 		{
-			return _froms.Select(theFrom => theFrom.Item2).ToList();
+			return (from @from in _froms where @from.Item3 select @from.Item2);
 		}
 
 		public string RootAlias { get; private set; }
 
 		private IEnumerable<string> fromList()
 		{
-			return _froms.Select(theFrom => theFrom.Item1 + " " + theFrom.Item2).ToList();
+			return _froms.Select(@from => @from.Item1 + " " + @from.Item2);
 		}
 
 		private IEnumerable<string> orderList()
 		{
-			return _orders.Select(theOrder => RootAlias + "." + theOrder.Item1 + " " + (theOrder.Item2 ? "asc" : "desc")).ToList();
+			return _orders.Select(order => order.Item1 + "." + order.Item2 + " " + (order.Item3 ? "asc" : "desc"));
 		}
 
 		public IQuery ToQuery(ISession session)

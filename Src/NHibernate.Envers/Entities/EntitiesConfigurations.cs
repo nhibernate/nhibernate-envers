@@ -91,7 +91,16 @@ namespace NHibernate.Envers.Entities
 
 		public RelationDescription GetRelationDescription(string entityName, string propertyName)
 		{
-			var entCfg = entitiesConfigurations[entityName];
+			EntityConfiguration entCfg;
+			if (IsVersioned(entityName))
+			{
+				entCfg = entitiesConfigurations[entityName];
+			}
+			else
+			{
+				entCfg = GetNotVersionEntityConfiguration(entityName);
+			}
+
 			var relDesc = entCfg.GetRelationDescription(propertyName);
 			if (relDesc != null)
 			{

@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Query.Criteria
 			return this;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, string alias, QueryBuilder qb, Parameters parameters)
 		{
 			var propertyName = CriteriaTools.DeterminePropertyName(auditCfg, versionsReader, entityName, propertyNameGetter);
 
@@ -47,18 +47,18 @@ namespace NHibernate.Envers.Query.Criteria
 			// aggregated one.
 			foreach (var versionsCriteria in criterions)
 			{
-				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, qb, subParams);
-				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, subQb, subQb.RootParameters);
+				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, qb.RootAlias, qb, subParams);
+				versionsCriteria.AddToQuery(auditCfg, versionsReader, entityName, subQb.RootAlias, subQb, subQb.RootParameters);
 			}
 
 			// Setting the desired projection of the aggregated query
 			switch (mode)
 			{
 				case AggregatedMode.Min:
-					subQb.AddProjection("min", propertyName, false);
+					subQb.AddProjection("min", subQb.RootAlias, propertyName, false);
 					break;
 				case AggregatedMode.Max:
-					subQb.AddProjection("max", propertyName, false);
+					subQb.AddProjection("max", subQb.RootAlias, propertyName, false);
 					break;
 			}
 

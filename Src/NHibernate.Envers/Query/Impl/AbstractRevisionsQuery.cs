@@ -11,6 +11,7 @@ using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Reader;
 using NHibernate.Envers.Tools.Query;
 using NHibernate.Proxy;
+using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
@@ -34,10 +35,13 @@ namespace NHibernate.Envers.Query.Impl
 		private int? maxResults;
 		private readonly QueryBuilder queryBuilder;
 		private int? timeout;
+		protected IList<AuditRevisionsAssociationQuery<TEntity>> AssociationQueries;
+		private readonly IDictionary<string, AuditRevisionsAssociationQuery<TEntity>> _associationQueryMap;
 
 		protected AbstractRevisionsQuery(AuditConfiguration auditConfiguration,
 		                              IAuditReaderImplementor versionsReader,
-		                              bool includesDeletations, string entityName)
+		                              bool includesDeletations, 
+																	string entityName)
 		{
 			this.auditConfiguration = auditConfiguration;
 			this.versionsReader = versionsReader;
@@ -56,6 +60,9 @@ namespace NHibernate.Envers.Query.Impl
 			{
 				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
 			}
+
+			AssociationQueries = new List<AuditRevisionsAssociationQuery<TEntity>>();
+			_associationQueryMap = new Dictionary<string, AuditRevisionsAssociationQuery<TEntity>>();
 		}
 
 		public EntityInstantiator EntityInstantiator
@@ -117,7 +124,7 @@ namespace NHibernate.Envers.Query.Impl
 			hasOrder = true;
 			var orderData = order.GetData(auditConfiguration);
 			var propertyName = CriteriaTools.DeterminePropertyName(AuditConfiguration, versionsReader, entityName, orderData.Item1);
-			queryBuilder.AddOrder(propertyName, orderData.Item2);
+			queryBuilder.AddOrder(QueryConstants.ReferencedEntityAlias, propertyName, orderData.Item2);
 			return this;
 		}
 
@@ -175,6 +182,23 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
+		public IEntityAuditQuery<TEntity> TraverseRelation(string associationName, JoinType joinType)
+		{
+			AuditRevisionsAssociationQuery<TEntity> result;
+			if (!_associationQueryMap.TryGetValue(associationName, out result))
+			{
+				result = new AuditRevisionsAssociationQuery<TEntity>(auditConfiguration, versionsReader, this, QueryBuilder, EntityName, associationName, joinType, QueryConstants.ReferencedEntityAlias);
+				AssociationQueries.Add(result);
+				_associationQueryMap[associationName] = result;
+			}
+			return result;
+		}
+
+		public IEntityAuditQuery<TEntity> Up()
+		{
+			return this;
+		}
+
 		#endregion
 
 		protected void AddOrders()
@@ -184,7 +208,7 @@ namespace NHibernate.Envers.Query.Impl
 				return;
 			}
 			var revisionPropertyPath = auditConfiguration.AuditEntCfg.RevisionNumberPath;
-			queryBuilder.AddOrder(revisionPropertyPath, true);
+			queryBuilder.AddOrder(QueryConstants.ReferencedEntityAlias, revisionPropertyPath, true);
 		}
 
 		protected void AddCriterions()
@@ -192,7 +216,12 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions, transformed
 			foreach (var criterion in criterions)
 			{
-				criterion.AddToQuery(auditConfiguration, versionsReader, entityName, queryBuilder, queryBuilder.RootParameters);
+				criterion.AddToQuery(auditConfiguration, versionsReader, entityName, QueryConstants.ReferencedEntityAlias, queryBuilder, queryBuilder.RootParameters);
+			}
+
+			foreach (var associationQuery in AssociationQueries)
+			{
+				associationQuery.AddCriterionsToQuery(versionsReader);
 			}
 		}
 
@@ -232,6 +261,8 @@ namespace NHibernate.Envers.Query.Impl
 			}
 			AddExtraParameter(query);
 			SetQueryProperties(query);
+
+
 			return query.List<TResult>();
 		}
 

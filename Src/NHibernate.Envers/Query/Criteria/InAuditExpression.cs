@@ -19,7 +19,7 @@ namespace NHibernate.Envers.Query.Criteria
 			parameterValues = values;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, string alias, QueryBuilder qb, Parameters parameters)
 		{
 			if (parameterValues.Length == 0)
 			{
@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Query.Criteria
 			var relEntityDesc = CriteriaTools.GetRelatedEntity(auditCfg, entityName, propertyName);
 			if (relEntityDesc == null)
 			{
-				parameters.AddWhereWithParams(propertyName, "in (", parameterValues, ")");				
+				parameters.AddWhereWithParams(propertyName, "in (", parameterValues, ")");
 			}
 			else
 			{

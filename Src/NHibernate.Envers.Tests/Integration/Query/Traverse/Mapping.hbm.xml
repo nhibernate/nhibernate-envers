@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Query.Traverse">
+	<class name="Person">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Name" />
+		<property name="Age" />
+		<many-to-one name="Address" class="Address" />
+	</class>
+	
+	<class name="Address">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Street" />
+		<property name="Number" />
+	</class>
+
+	<class name="Car">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Make" />
+		<many-to-one name="Owner" class="Person" />
+	</class>
+</hibernate-mapping>

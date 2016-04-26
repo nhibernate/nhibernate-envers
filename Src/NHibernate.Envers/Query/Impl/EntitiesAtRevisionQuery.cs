@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation;
@@ -76,25 +75,20 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions
 			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+			}
+			foreach (var associationQuery in AssociationQueries)
+			{
+				associationQuery.AddCriterionsToQuery(VersionsReader);
 			}
 
-
 			var query = BuildQuery();
-			// add named parameter (only used for ValidAuditTimeStrategy) 
+			// add named parameter (only used for ValidAuditTimeStrategy and association queries) 
 			if (query.NamedParameters.Contains(QueryConstants.RevisionParameter))
 			{
 				query.SetParameter(QueryConstants.RevisionParameter, _revision);
 			}
-
-			if (HasProjection)
-			{
-				query.List(result);
-				return;
-			}
-			var queryResult = new List<IDictionary>();
-			query.List(queryResult);
-			EntityInstantiator.AddInstancesFromVersionsEntities(EntityName, result, queryResult, _revision);
+			ApplyProjections(query, result, _revision);
 		}
 	}
 }

@@ -84,11 +84,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			var eeOriginalIdPropertyPath = QueryConstants.MiddleEntityAlias + "." + originalIdPropertyName;
 			// SELECT new list(ee) FROM middleEntity ee
 			var qb = new QueryBuilder(versionsMiddleEntityName, QueryConstants.MiddleEntityAlias);
-			qb.AddFrom(referencedIdData.AuditEntityName, QueryConstants.ReferencedEntityAlias);
-			qb.AddFrom(indexIdData.AuditEntityName, QueryConstants.IndexEntityAlias);
+			qb.AddFrom(referencedIdData.AuditEntityName, QueryConstants.ReferencedEntityAlias, false);
+			qb.AddFrom(indexIdData.AuditEntityName, QueryConstants.IndexEntityAlias, false);
 			qb.AddProjection("new list", QueryConstants.MiddleEntityAlias + ", "
 												+ QueryConstants.ReferencedEntityAlias + ", "
-												+ QueryConstants.IndexEntityAlias, false, false);
+												+ QueryConstants.IndexEntityAlias, null, false);
 			// WHERE
 			var rootParameters = qb.RootParameters;
 			// ee.id_ref_ed = e.id_ref_ed

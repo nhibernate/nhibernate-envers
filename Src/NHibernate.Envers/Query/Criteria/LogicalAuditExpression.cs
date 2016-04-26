@@ -17,12 +17,12 @@ namespace NHibernate.Envers.Query.Criteria
 			this.op = op;
 		}
 
-		public void AddToQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, string entityName, string alias, QueryBuilder qb, Parameters parameters)
 		{
 			var opParameters = parameters.AddSubParameters(op);
 
-			lhs.AddToQuery(verCfg, versionsReader, entityName, qb, opParameters.AddSubParameters("and"));
-			rhs.AddToQuery(verCfg, versionsReader, entityName, qb, opParameters.AddSubParameters("and"));
+			lhs.AddToQuery(verCfg, versionsReader, entityName, alias, qb, opParameters.AddSubParameters("and"));
+			rhs.AddToQuery(verCfg, versionsReader, entityName, alias, qb, opParameters.AddSubParameters("and"));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
+using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query
 {
@@ -36,5 +37,9 @@ namespace NHibernate.Envers.Query
 		IEntityAuditQuery<T> SetTimeout(int timeout);
 
 		IEntityAuditQuery<T> SetLockMode(LockMode lockMode);
+
+		IEntityAuditQuery<T> TraverseRelation(string associationName, JoinType joinType);
+
+		IEntityAuditQuery<T> Up();
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NHibernate.Envers.Query.Criteria;
 using NHibernate.Envers.Query.Order;
 using NHibernate.Envers.Query.Projection;
+using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query
 {
@@ -38,5 +39,9 @@ namespace NHibernate.Envers.Query
 		IAuditQuery SetTimeout(int timeout);
 
 		IAuditQuery SetLockMode(LockMode lockMode);
+
+		IAuditQuery TraverseRelation(string associationName, JoinType joinType);
+
+		IAuditQuery Up();
 	}
 }
