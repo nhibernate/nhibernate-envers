@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.ModifiedFlags.Entities.ManyToMany">
+	<class name="Professor">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<set name="Students" table="professor_student">
+			<key column ="professorId"/>
+			<many-to-many class="Student" column="studentId"/>
+		</set>
+	</class>
+	<class name="Student">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<set name="Professors" inverse="true" table="professor_student">
+			<key column="studentId"/>
+			<many-to-many class="Professor" column="professorId"/>
+		</set>
+	</class>
+</hibernate-mapping>
