@@ -313,9 +313,22 @@ namespace NHibernate.Envers.Event
 		public virtual void OnPreRemoveCollection(PreCollectionRemoveEvent evt)
 		{
 			var collectionEntry = getCollectionEntry(evt);
-			if (collectionEntry != null && !collectionEntry.LoadedPersister.IsInverse)
+			if (collectionEntry == null)
+				return;
+
+			if (collectionEntry.LoadedPersister.IsInverse)
 			{
-				onCollectionAction(evt, null, collectionEntry.Snapshot, collectionEntry);
+				if (VerCfg.GlobalCfg.IsGlobalWithModifiedFlag)
+				{
+					initializeCollection(evt);
+				}
+			}
+			else
+			{
+				var oldColl = !evt.Collection.WasInitialized && shouldGenerateRevision(evt)
+					? initializeCollection(evt)
+					: collectionEntry.Snapshot;
+				onCollectionAction(evt, null, oldColl, collectionEntry);
 			}
 		}
 
@@ -341,6 +354,19 @@ namespace NHibernate.Envers.Event
 				// (AuditProcess#doBeforeTransactionCompletion(SessionImplementor) not executed).
 				throw new AuditException("Unable to create revision because of non-active transaction");
 			}
+		}
+
+		private bool shouldGenerateRevision(AbstractCollectionEvent evt)
+		{
+			var entityName = evt.GetAffectedOwnerEntityName();
+			return VerCfg.GlobalCfg.GenerateRevisionsForCollections
+			       && VerCfg.EntCfg.IsVersioned(entityName);
+		}
+
+		private static object initializeCollection(AbstractCollectionEvent evt)
+		{
+			evt.Collection.ForceInitialization();
+			return evt.Collection.StoredSnapshot;
 		}
 	}
 }

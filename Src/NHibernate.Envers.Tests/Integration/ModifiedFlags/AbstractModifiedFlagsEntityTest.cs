@@ -21,7 +21,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		{
 			if(ForceModifiedFlags)
 			{
-				configuration.SetEnversProperty(ConfigurationKey.GlobalWithModifiedFlag, true);				
+				configuration.SetEnversProperty(ConfigurationKey.GlobalWithModifiedFlag, true);
 			}
 		}
 
