@@ -18,13 +18,6 @@
 	</para>
 
 	<para>
-		The main limitation of the current queries implementation is that you cannot
-		traverse relations. You can only specify constraints on the ids of the
-		related entities, and only on the "owning" side of the relation. This however
-		will be changed in future releases.
-	</para>
-
-	<para>
 		Please note, that queries on the audited data are usually a lot slower
 		than corresponding queries on "live" data, as they involve correlated subselects.
 	</para>
@@ -33,6 +26,12 @@
 		Queries will be improved both in terms of speed and possibilities, when using the valid-time
 		audit strategy, that is when storing both start and end revisions for entities. See
 		<xref linkend="configuration"/>.
+	</para>
+
+	<para>
+		Experimental:
+		You can traverse relations when querying using <code>TraverseRelation()</code> and <code>Up()</code>. Currently however,
+		you can only traverse relations using inner joins.
 	</para>
 
 	<section id="entities-at-revision">
