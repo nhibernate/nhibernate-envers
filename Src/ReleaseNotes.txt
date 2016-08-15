@@ -1,3 +1,21 @@
+=== v2.1 GA (v 2.1.0.100), 2016-08-15, NH 4.0 GA ===
+
+** Bug
+* [NHE-144] - Querys in documentation do not compile - Syntax errors
+* [NHE-145] - Error with access="none" mapping
+* [NHE-146] - Modifying both collection and property doesn't set collection changed flag
+* [NHE-150] - ExcludeRelationalData in a bidirectional onetoone relationship
+* [NHE-152] - Querying on components throws
+
+** New Feature
+* [NHE-151] - Make it possible to put restrictions on traversed associations
+* [NHE-154] - LazyInitiatlizationExeception when deleting entity with global_with_modified_flag turned on
+
+** Task
+* [NHE-138] - FluentConfiguration make setRevisionEntity public
+
+
+
 === v2.0 GA (v 2.0.0.500), 2014-08-18, NH 4.0 GA ===
 
 
