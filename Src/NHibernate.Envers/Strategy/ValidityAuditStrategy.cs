@@ -101,11 +101,19 @@ namespace NHibernate.Envers.Strategy
 				if (collectionPropertyType.GetElementType(sessionFactory) is ComponentType)
 				{
 					// Adding restrictions to compare data outside of primary key.
+					// todo: is it necessary that non-primary key attributes be compared?
 					foreach (var dataEntry in persistentCollectionChangeData.Data)
 					{
 						if (!originalIdPropName.Equals(dataEntry.Key))
 						{
-							qb.RootParameters.AddWhereWithParam(dataEntry.Key, true, "=", dataEntry.Value);
+							if (dataEntry.Value != null)
+							{
+								qb.RootParameters.AddWhereWithParam(dataEntry.Key, true, "=", dataEntry.Value);
+							}
+							else
+							{
+								qb.RootParameters.AddNullRestriction(dataEntry.Key, true);
+							}
 						}
 					}
 				}

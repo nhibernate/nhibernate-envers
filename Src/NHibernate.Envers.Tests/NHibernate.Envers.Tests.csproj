@@ -108,6 +108,8 @@
     <Compile Include="Integration\Query\Traverse\AssociationToOneQueryTest.cs" />
     <Compile Include="Integration\Query\Traverse\Model.cs" />
     <Compile Include="Integration\Strategy\IdentifierReuseTest.cs" />
+    <Compile Include="Integration\Strategy\Model\Model.cs" />
+    <Compile Include="Integration\Strategy\ValidityAuditStrategyComponentCollectionRevEndTest .cs" />
     <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Model.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Fixture.cs" />
@@ -953,6 +955,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Integration\ModifiedFlags\Entities\ManyToMany\Mapping.hbm.xml" />
+    <EmbeddedResource Include="Integration\Strategy\Model\Mapping.hbm.xml" />
     <Content Include="log4net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
