@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 assembly="NHibernate.Envers.Tests"
+									 namespace="NHibernate.Envers.Tests.Integration.Strategy.Model">
+
+	<class name="Product">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Name" />
+		<bag name="Items">
+			<key column="itemId"/>
+			<composite-element class="Item">
+				<property name="Name"/>
+				<property name="Value"/>
+			</composite-element>
+		</bag>
+	</class>
+</hibernate-mapping>
