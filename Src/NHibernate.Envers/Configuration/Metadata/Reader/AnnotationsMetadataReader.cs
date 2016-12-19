@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			}
 
 			var ar = new AuditedPropertiesReader(_metaDataStore, 
-													new PersistentClassPropertiesSource(typ, this), _auditData,
+													new persistentClassPropertiesSource(typ, this), _auditData,
 													globalCfg, string.Empty);
 			ar.Read();
 
@@ -105,11 +105,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return defaultAuditTable;
 		}
 
-		private class PersistentClassPropertiesSource : IPersistentPropertiesSource 
+		private class persistentClassPropertiesSource : IPersistentPropertiesSource 
 		{
 			private readonly AnnotationsMetadataReader parent;
 
-			public PersistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
+			public persistentClassPropertiesSource(System.Type typ, AnnotationsMetadataReader parent) 
 			{ 
 				this.parent = parent;
 				DeclaredPersistentProperties = PropertyAndMemberInfo.PersistentInfo(typ, parent.pc.PropertyIterator, true);
