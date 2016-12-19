@@ -18,6 +18,7 @@ namespace NHibernate.Envers.Configuration
 	{
 		private static readonly IDictionary<Cfg.Configuration, AuditConfiguration> configurations = new Dictionary<Cfg.Configuration, AuditConfiguration>(new ConfigurationComparer());
 		private static readonly IDictionary<Cfg.Configuration, IMetaDataProvider> configurationMetadataProvider = new Dictionary<Cfg.Configuration, IMetaDataProvider>();
+		private readonly Cfg.Configuration _configuration; //for serialization
 
 		private AuditConfiguration(Cfg.Configuration cfg, IMetaDataProvider metaDataProvider)
 		{
@@ -40,7 +41,7 @@ namespace NHibernate.Envers.Configuration
 			ModifiedEntityNamesReader = revInfoCfgResult.ModifiedEntityNamesReader;
 			EntCfg = new EntitiesConfigurator()
 				.Configure(cfg, mds, GlobalCfg, AuditEntCfg, revInfoCfgResult.RevisionInfoXmlMapping, revInfoCfgResult.RevisionInfoRelationMapping);
-			Configuration = cfg;
+			_configuration = cfg;
 		}
 
 		public GlobalConfiguration GlobalCfg { get; private set; }
@@ -51,7 +52,6 @@ namespace NHibernate.Envers.Configuration
 		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
 		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
 		public IGetter RevisionTimestampGetter { get; private set; }
-		private Cfg.Configuration Configuration { get; set; } //for serialization
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
@@ -101,7 +101,7 @@ namespace NHibernate.Envers.Configuration
 
 		void IDeserializationCallback.OnDeserialization(object sender)
 		{
-			configurations[Configuration] = this;
+			configurations[_configuration] = this;
 		}
 	}
 }
