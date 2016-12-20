@@ -114,9 +114,9 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFo
 				.Should().Be.EqualTo(childVer1);
 
 			AuditReader().CreateQuery().ForRevisionsOfEntity(typeof (ChildEntity), true, false).GetResultList<ChildEntity>()
-				.Should().Have.SameValuesAs(new[] {childVer1, childVer2});
+				.Should().Have.SameValuesAs(childVer1, childVer2);
 			AuditReader().CreateQuery().ForRevisionsOfEntity(typeof(ParentEntity), true, false).GetResultList<ParentEntity>()
-				.Should().Have.SameValuesAs(new[] { childVer1, childVer2, parentVer1, parentVer2 });
+				.Should().Have.SameValuesAs(childVer1, childVer2, parentVer1, parentVer2);
 		}
 	}
 }

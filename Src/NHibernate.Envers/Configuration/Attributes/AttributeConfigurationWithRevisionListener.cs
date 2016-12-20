@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 
 		protected override Attribute ClassAttribute(Attribute attribute, System.Type type)
 		{
-			return attribute.GetType() == typeof(RevisionEntityAttribute) ? 
+			return attribute is RevisionEntityAttribute ? 
 				new RevisionEntityAttribute {Listener = _revisionListener} : attribute;
 		}
 	}

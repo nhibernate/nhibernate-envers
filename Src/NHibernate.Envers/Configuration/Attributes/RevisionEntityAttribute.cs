@@ -48,7 +48,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			}
 			catch (MissingMethodException)
 			{
-				throw new MappingException(string.Format("Revision listener must be of type IRevisionListener (but is: {0})", _listenerType));
+				throw new MappingException($"Revision listener must be of type IRevisionListener (but is: {_listenerType})");
 			}
 		}
 	}

@@ -144,7 +144,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 						addClassMetaAndLog(type, memberInfoAndAttribute.Attribute, entMeta);
 					else
 						addMemberMetaAndLog(type, memberInfoAndAttribute, entMeta);
-					if (memberInfoAndAttribute.Attribute.GetType() == typeof(AuditedAttribute))
+					if (memberInfoAndAttribute.Attribute is AuditedAttribute)
 						auditedTypes.Add(type);
 				}
 			}
@@ -206,7 +206,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static bool entityMetaIsAuditedClass(IEntityMeta entMetaForBaseType)
 		{
-			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta.GetType() == typeof(AuditedAttribute));
+			return entMetaForBaseType.ClassMetas.Any(classMeta => classMeta is AuditedAttribute);
 		}
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)

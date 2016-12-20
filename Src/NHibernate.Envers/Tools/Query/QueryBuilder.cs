@@ -184,11 +184,11 @@ namespace NHibernate.Envers.Tools.Query
 			return (from @from in _froms where @from.Item3 select @from.Item2);
 		}
 
-		public string RootAlias { get; private set; }
+		public string RootAlias { get; }
 
 		private IEnumerable<string> fromList()
 		{
-			return _froms.Select(@from => @from.Item1 + " " + @from.Item2);
+			return _froms.Select(from => from.Item1 + " " + from.Item2);
 		}
 
 		private IEnumerable<string> orderList()

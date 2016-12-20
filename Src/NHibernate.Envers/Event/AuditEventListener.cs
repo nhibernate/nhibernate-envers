@@ -273,7 +273,7 @@ namespace NHibernate.Envers.Event
 			// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
 			// null in case of collections of non-entities.
 			var rd = VerCfg.EntCfg[entityName].GetRelationDescription(referencingPropertyName);
-			if (rd != null && rd.MappedByPropertyName != null)
+			if (rd?.MappedByPropertyName != null)
 			{
 				generateFakeBidirecationalRelationWorkUnits(verSync, newColl, oldColl, entityName,
 															referencingPropertyName, evt, rd);

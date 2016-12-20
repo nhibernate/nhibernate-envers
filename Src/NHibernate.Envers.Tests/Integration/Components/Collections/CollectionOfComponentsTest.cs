@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Tests.Entities.Components;
-using NHibernate.Envers.Tests.Entities.CustomType;
 using NUnit.Framework;
 using SharpTestsEx;
 
