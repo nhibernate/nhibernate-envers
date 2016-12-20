@@ -78,7 +78,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		}
 	}
 
-	[Serializable, DebuggerTypeProxy(typeof(NHibernate.DebugHelpers.CollectionProxy<>))]
+	[Serializable, DebuggerTypeProxy(typeof(DebugHelpers.CollectionProxy<>))]
 	public class PersistentCustomBag<T> : PersistentGenericBag<T>, ICustomList<T>
 	{
 		public PersistentCustomBag(ISessionImplementor session)

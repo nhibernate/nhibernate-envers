@@ -18,11 +18,11 @@ namespace NHibernate.Envers.Configuration.Fluent
 		{
 			if (entityType == null)
 			{
-				throw new ArgumentNullException("entityType");
+				throw new ArgumentNullException(nameof(entityType));
 			}
 			if (entityType.IsValueType)
 			{
-				throw new ArgumentOutOfRangeException("entityType", "Expected class type found:" + entityType);
+				throw new ArgumentOutOfRangeException(nameof(entityType), "Expected class type found:" + entityType);
 			}
 
 			_entityType = entityType;

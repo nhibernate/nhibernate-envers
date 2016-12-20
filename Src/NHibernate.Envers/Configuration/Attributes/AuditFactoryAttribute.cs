@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Configuration.Attributes
 			}
 			catch (MissingMethodException)
 			{
-				throw new MappingException(string.Format("Factory must be of type IEntityFactory (but is: {0})", _factoryType));
+				throw new MappingException($"Factory must be of type IEntityFactory (but is: {_factoryType})");
 			}
 		}
 	}

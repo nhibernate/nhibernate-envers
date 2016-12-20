@@ -35,7 +35,7 @@ namespace NHibernate.Envers.Query.Impl
 		private int? maxResults;
 		private readonly QueryBuilder queryBuilder;
 		private int? timeout;
-		protected IList<AuditRevisionsAssociationQuery<TEntity>> AssociationQueries;
+		protected readonly IList<AuditRevisionsAssociationQuery<TEntity>> AssociationQueries;
 		private readonly IDictionary<string, AuditRevisionsAssociationQuery<TEntity>> _associationQueryMap;
 
 		protected AbstractRevisionsQuery(AuditConfiguration auditConfiguration,

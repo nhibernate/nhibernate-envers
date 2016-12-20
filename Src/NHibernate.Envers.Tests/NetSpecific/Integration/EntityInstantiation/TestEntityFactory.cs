@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 
 		public object Instantiate(System.Type type)
 		{
-			if (type == null) throw new ArgumentNullException("type");
+			if (type == null) throw new ArgumentNullException(nameof(type));
 			if(!type.Equals(typeof(FactoryCreatedTestEntity))) throw new InvalidOperationException("Invalid type supplied to entity factory");
 
 			return Instantiate();

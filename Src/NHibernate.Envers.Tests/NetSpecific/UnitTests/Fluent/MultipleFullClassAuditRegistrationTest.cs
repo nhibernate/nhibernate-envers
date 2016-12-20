@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent
 		{
 			var cfg = new FluentConfiguration();
 			cfg.Audit(new[] { typeof(Dog), typeof(Cat) });
-			cfg.CreateMetaData(null).Keys.Should().Have.SameValuesAs(new[] { typeof(Animal), typeof(Cat), typeof(Dog) });
+			cfg.CreateMetaData(null).Keys.Should().Have.SameValuesAs(typeof(Animal), typeof(Cat), typeof(Dog));
 		}
 
 		[Test]

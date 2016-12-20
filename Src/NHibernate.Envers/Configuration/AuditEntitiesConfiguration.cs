@@ -55,7 +55,7 @@ namespace NHibernate.Envers.Configuration
 		/// </summary>
 		public string RevisionInfoEntityFullClassName()
 		{
-			return RevisionInfoEntityAssemblyQualifiedName.Split(new[] {','})[0];
+			return RevisionInfoEntityAssemblyQualifiedName.Split(',')[0];
 		}
 
 		/// <summary>
