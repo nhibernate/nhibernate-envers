@@ -12,23 +12,24 @@ using NHibernate.Properties;
 namespace NHibernate.Envers.Entities.Mapper
 {
 	[Serializable]
-	public class MultiPropertyMapper : IExtendedPropertyMapper 
+	public class MultiPropertyMapper : IExtendedPropertyMapper
 	{
+		private readonly IDictionary<string, PropertyData> _propertyDatas;
+
 		public MultiPropertyMapper() 
 		{
 			Properties = new Dictionary<PropertyData, IPropertyMapper>();
-			PropertyDatas = new Dictionary<string, PropertyData>();
+			_propertyDatas = new Dictionary<string, PropertyData>();
 		}
 
 		public IDictionary<PropertyData, IPropertyMapper> Properties { get; }
-		private IDictionary<string, PropertyData> PropertyDatas { get; }
 
 		public void Add(PropertyData propertyData) 
 		{
 			var single = new SinglePropertyMapper();
 			single.Add(propertyData);
 			Properties.Add(propertyData, single);
-			PropertyDatas.Add(propertyData.Name, propertyData);
+			_propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
 		public ICompositeMapperBuilder AddComponent(PropertyData propertyData, string componentClassName) 
@@ -58,7 +59,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		public void AddComposite(PropertyData propertyData, IPropertyMapper propertyMapper) 
 		{
 			Properties.Add(propertyData, propertyMapper);
-			PropertyDatas.Add(propertyData.Name, propertyData);
+			_propertyDatas.Add(propertyData.Name, propertyData);
 		}
 
 		private static object getAtIndexOrNull(IList<object> array, int index)
@@ -74,9 +75,9 @@ namespace NHibernate.Envers.Entities.Mapper
 			{
 				var propertyName = propertyNames[i];
 
-				if (PropertyDatas.ContainsKey(propertyName)) 
+				if (_propertyDatas.ContainsKey(propertyName)) 
 				{
-					var propertyMapper = Properties[PropertyDatas[propertyName]];
+					var propertyMapper = Properties[_propertyDatas[propertyName]];
 					var newObj = getAtIndexOrNull(newState, i);
 					var oldObj = getAtIndexOrNull(oldState, i);
 					ret |= propertyMapper.MapToMapFromEntity(session, data, newObj, oldObj);
@@ -181,7 +182,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		private IPropertyMapper propertyMapperKey(string referencingPropertyName)
 		{
 			PropertyData propertyData;
-			if (PropertyDatas.TryGetValue(referencingPropertyName, out propertyData))
+			if (_propertyDatas.TryGetValue(referencingPropertyName, out propertyData))
 			{
 				IPropertyMapper propertyMapper;
 				if (Properties.TryGetValue(propertyData, out propertyMapper))
