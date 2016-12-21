@@ -236,7 +236,7 @@ namespace NHibernate.Envers.Tools.Query
 
 		public void Build(StringBuilder sb, IDictionary<string, object> queryParamValues)
 		{
-			var pp = new ClauseAppender(sb, connective);
+			var pp = new clauseAppender(sb, connective);
 			foreach (var expression in expressions)
 			{
 				pp.Append(expression);
@@ -261,12 +261,12 @@ namespace NHibernate.Envers.Tools.Query
 			}
 		}
 
-		private class ClauseAppender
+		private class clauseAppender
 		{
 			private readonly StringBuilder stringBuilder;
 			private readonly string connective;
 			private bool isFirstAppend = true;
-			public ClauseAppender(StringBuilder stringBuilder, string connective)
+			public clauseAppender(StringBuilder stringBuilder, string connective)
 			{
 				this.stringBuilder = stringBuilder;
 				this.connective = connective;
@@ -287,12 +287,6 @@ namespace NHibernate.Envers.Tools.Query
 		public object Clone()
 		{
 			return new Parameters(this);
-		}
-
-		//compare properties from two different entities (aliases)
-		public void AddWhere(string aliasLeft, string left, string op, string aliasRight, string right)
-		{
-			expressions.Add(aliasLeft + "." + left + " " + op + " " + aliasRight + "." + right);
 		}
 
 		public void AddWhereWithFunction(string left, string leftFunction, string op, object paramValue)
