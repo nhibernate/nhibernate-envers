@@ -23,10 +23,9 @@ namespace NHibernate.Envers.Synchronization
 		/// Notifies <see cref="IRevisionInfoGenerator"/> about changes made in the current revision. Provides information
 		/// about modified entity class, entity name and its id, as well as <see cref="RevisionType"/> and revision log entity.
 		/// </summary>
-		/// <param name="session">Active session.</param>
 		/// <param name="currentRevisionData">Revision log entity.</param>
 		/// <param name="vwu">Performed work unit.</param>
-		public void EntityChanged(ISession session, object currentRevisionData, IAuditWorkUnit vwu)
+		public void EntityChanged(object currentRevisionData, IAuditWorkUnit vwu)
 		{
 			var entityId = vwu.EntityId;
 			var idAsPersistentColl = entityId as PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId;

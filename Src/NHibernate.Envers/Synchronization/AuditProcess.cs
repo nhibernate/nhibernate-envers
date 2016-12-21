@@ -119,7 +119,7 @@ namespace NHibernate.Envers.Synchronization
 				var vwu = workUnits.First.Value;
 				workUnits.RemoveFirst();
 				vwu.Perform(executeSession, revisionData);
-				entityChangeNotifier.EntityChanged(executeSession, currentRevisionData, vwu);
+				entityChangeNotifier.EntityChanged(currentRevisionData, vwu);
 			}
 		}
 
