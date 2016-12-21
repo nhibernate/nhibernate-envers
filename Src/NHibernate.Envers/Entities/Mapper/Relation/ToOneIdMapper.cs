@@ -45,14 +45,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				data[entry.Key] = entry.Value;
 			}
 
-			return CheckModified(session, newObj, oldObj);
+			return checkModified(session, newObj, oldObj);
 		}
 
 		public override void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
 			if (PropertyData.UsingModifiedFlag)
 			{
-				data[PropertyData.ModifiedFlagPropertyName] = CheckModified(session, newObj, oldObj);
+				data[PropertyData.ModifiedFlagPropertyName] = checkModified(session, newObj, oldObj);
 			}
 		}
 
@@ -64,7 +64,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			}
 		}
 
-		protected bool CheckModified(ISessionImplementor session, object newObj, object oldObj)
+		private bool checkModified(ISessionImplementor session, object newObj, object oldObj)
 		{
 			return !_nonInsertableFake && !Toolz.EntitiesEqual(session, newObj, oldObj);
 		}
@@ -94,7 +94,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 					}
 					else
 					{
-						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);							
+						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);
 					}
 				}
 			}
@@ -115,7 +115,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			return versionsReader.SessionImplementor.ImmediateLoad(entityName, entityId);
 		}
 
-		public void AddMiddleEqualToQuery(Parameters parameters, string idPrefix1, string prefix1, string idPrefix2, string prefix2)
+		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)
 		{
 			_delegat.AddIdsEqualToQuery(parameters, prefix1, _delegat, prefix2);
 		}
