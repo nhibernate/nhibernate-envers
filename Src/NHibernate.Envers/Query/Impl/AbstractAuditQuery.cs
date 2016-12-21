@@ -17,6 +17,16 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public abstract class AbstractAuditQuery : IAuditQueryImplementor
 	{
+		private int? _maxResults;
+		private int? _firstResult;
+		private bool? _cacheable;
+		private string _cacheRegion;
+		private string _comment;
+		private FlushMode _flushMode;
+		private CacheMode _cacheMode;
+		private int? _timeout;
+		private LockMode _lockMode;
+
 		protected AbstractAuditQuery(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, System.Type cls)
 				: this(verCfg, versionsReader, cls.FullName)
 		{
@@ -138,69 +148,58 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
-		// Query properties
-
-		private int? maxResults;
-		private int? firstResult;
-		private bool? cacheable;
-		private string cacheRegion;
-		private string comment;
-		private FlushMode flushMode;
-		private CacheMode cacheMode;
-		private int? timeout;
-		private LockMode lockMode;
 
 		public IAuditQuery SetMaxResults(int maxResults) 
 		{
-			this.maxResults = maxResults;
+			_maxResults = maxResults;
 			return this;
 		}
 
 		public IAuditQuery SetFirstResult(int firstResult) 
 		{
-			this.firstResult = firstResult;
+			_firstResult = firstResult;
 			return this;
 		}
 
 		public IAuditQuery SetCacheable(bool cacheable) 
 		{
-			this.cacheable = cacheable;
+			_cacheable = cacheable;
 			return this;
 		}
 
 		public IAuditQuery SetCacheRegion(string cacheRegion) 
 		{
-			this.cacheRegion = cacheRegion;
+			_cacheRegion = cacheRegion;
 			return this;
 		}
 
 		public IAuditQuery SetComment(string comment) 
 		{
-			this.comment = comment;
+			_comment = comment;
 			return this;
 		}
 
 		public IAuditQuery SetFlushMode(FlushMode flushMode) 
 		{
-			this.flushMode = flushMode;
+			_flushMode = flushMode;
 			return this;
 		}
 
 		public IAuditQuery SetCacheMode(CacheMode cacheMode) 
 		{
-			this.cacheMode = cacheMode;
+			_cacheMode = cacheMode;
 			return this;
 		}
 
 		public IAuditQuery SetTimeout(int timeout) 
 		{
-			this.timeout = timeout;
+			_timeout = timeout;
 			return this;
 		}
 
 		public IAuditQuery SetLockMode(LockMode lockMode) 
 		{
-			this.lockMode = lockMode;
+			_lockMode = lockMode;
 			return this;
 		}
 
@@ -223,15 +222,15 @@ namespace NHibernate.Envers.Query.Impl
 
 		private void setQueryProperties(IQuery query) 
 		{
-			if (maxResults != null) query.SetMaxResults((int)maxResults);
-			if (firstResult != null) query.SetFirstResult((int)firstResult);
-			if (cacheable != null) query.SetCacheable((bool)cacheable);
-			if (cacheRegion != null) query.SetCacheRegion(cacheRegion);
-			if (comment != null) query.SetComment(comment);
-			query.SetFlushMode(flushMode);
-			query.SetCacheMode(cacheMode);
-			if (timeout != null) query.SetTimeout((int)timeout);
-			if (lockMode != null) query.SetLockMode(QueryConstants.ReferencedEntityAlias, lockMode);
+			if (_maxResults != null) query.SetMaxResults((int)_maxResults);
+			if (_firstResult != null) query.SetFirstResult((int)_firstResult);
+			if (_cacheable != null) query.SetCacheable((bool)_cacheable);
+			if (_cacheRegion != null) query.SetCacheRegion(_cacheRegion);
+			if (_comment != null) query.SetComment(_comment);
+			query.SetFlushMode(_flushMode);
+			query.SetCacheMode(_cacheMode);
+			if (_timeout != null) query.SetTimeout((int)_timeout);
+			if (_lockMode != null) query.SetLockMode(QueryConstants.ReferencedEntityAlias, _lockMode);
 		}
 
 		protected void ApplyProjections(IQuery query, IList resultToFill, long revision)

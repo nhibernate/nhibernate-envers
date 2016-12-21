@@ -17,21 +17,20 @@ namespace NHibernate.Envers.Query.Impl
 {
 	public abstract class AbstractRevisionsQuery<TEntity> : IEntityAuditQuery<TEntity> where TEntity : class
 	{
-		private readonly string versionsEntityName;
-		private readonly IAuditReaderImplementor versionsReader;
-		private CacheMode cacheMode;
-		private string cacheRegion;
-		private bool? cacheable;
-		private string comment;
-		private readonly List<IAuditCriterion> criterions;
-		private int? firstResult;
-		private FlushMode flushMode;
-		private bool hasOrder;
-		private readonly bool includesDeletations;
-		private LockMode lockMode;
-		private int? maxResults;
-		private int? timeout;
-		protected readonly IList<AuditRevisionsAssociationQuery<TEntity>> AssociationQueries;
+		private readonly IAuditReaderImplementor _versionsReader;
+		private CacheMode _cacheMode;
+		private string _cacheRegion;
+		private bool? _cacheable;
+		private string _comment;
+		private readonly List<IAuditCriterion> _criterions;
+		private int? _firstResult;
+		private FlushMode _flushMode;
+		private bool _hasOrder;
+		private readonly bool _includesDeletations;
+		private LockMode _lockMode;
+		private int? _maxResults;
+		private int? _timeout;
+		private readonly IList<AuditRevisionsAssociationQuery<TEntity>> _associationQueries;
 		private readonly IDictionary<string, AuditRevisionsAssociationQuery<TEntity>> _associationQueryMap;
 
 		protected AbstractRevisionsQuery(AuditConfiguration auditConfiguration,
@@ -39,42 +38,33 @@ namespace NHibernate.Envers.Query.Impl
 		                              bool includesDeletations, 
 																	string entityName)
 		{
-			this.AuditConfiguration = auditConfiguration;
-			this.versionsReader = versionsReader;
+			AuditConfiguration = auditConfiguration;
+			_versionsReader = versionsReader;
 
-			criterions = new List<IAuditCriterion>();
+			_criterions = new List<IAuditCriterion>();
 			EntityInstantiator = new EntityInstantiator(auditConfiguration, versionsReader);
 
-			this.EntityName = entityName;
+			EntityName = entityName;
 
-			versionsEntityName = auditConfiguration.AuditEntCfg.GetAuditEntityName(this.EntityName);
+			VersionsEntityName = auditConfiguration.AuditEntCfg.GetAuditEntityName(EntityName);
 
-			QueryBuilder = new QueryBuilder(versionsEntityName, QueryConstants.ReferencedEntityAlias);
-			this.includesDeletations = includesDeletations;
+			QueryBuilder = new QueryBuilder(VersionsEntityName, QueryConstants.ReferencedEntityAlias);
+			_includesDeletations = includesDeletations;
 
 			if (!auditConfiguration.EntCfg.IsVersioned(EntityName))
 			{
 				throw new NotAuditedException(EntityName, EntityName + " is not versioned!");
 			}
 
-			AssociationQueries = new List<AuditRevisionsAssociationQuery<TEntity>>();
+			_associationQueries = new List<AuditRevisionsAssociationQuery<TEntity>>();
 			_associationQueryMap = new Dictionary<string, AuditRevisionsAssociationQuery<TEntity>>();
 		}
 
-		public EntityInstantiator EntityInstantiator { get; }
-
-		public AuditConfiguration AuditConfiguration { get; }
-
-		public QueryBuilder QueryBuilder { get; }
-
-		public string EntityName { get; }
-
-		public string VersionsEntityName
-		{
-			get { return versionsEntityName; }
-		}
-
-		#region IEntityAuditQuery<TEntity> Members
+		protected EntityInstantiator EntityInstantiator { get; }
+		protected AuditConfiguration AuditConfiguration { get; }
+		protected QueryBuilder QueryBuilder { get; }
+		protected string EntityName { get; }
+		protected string VersionsEntityName { get; }
 
 		public abstract IEnumerable<TEntity> Results();
 
@@ -99,70 +89,70 @@ namespace NHibernate.Envers.Query.Impl
 
 		public IEntityAuditQuery<TEntity> Add(IAuditCriterion criterion)
 		{
-			criterions.Add(criterion);
+			_criterions.Add(criterion);
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> AddOrder(IAuditOrder order)
 		{
-			hasOrder = true;
+			_hasOrder = true;
 			var orderData = order.GetData(AuditConfiguration);
-			var propertyName = CriteriaTools.DeterminePropertyName(AuditConfiguration, versionsReader, EntityName, orderData.Item1);
+			var propertyName = CriteriaTools.DeterminePropertyName(AuditConfiguration, _versionsReader, EntityName, orderData.Item1);
 			QueryBuilder.AddOrder(QueryConstants.ReferencedEntityAlias, propertyName, orderData.Item2);
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetMaxResults(int maxResults)
 		{
-			this.maxResults = maxResults;
+			_maxResults = maxResults;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetFirstResult(int firstResult)
 		{
-			this.firstResult = firstResult;
+			_firstResult = firstResult;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetCacheable(bool cacheable)
 		{
-			this.cacheable = cacheable;
+			_cacheable = cacheable;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetCacheRegion(string cacheRegion)
 		{
-			this.cacheRegion = cacheRegion;
+			_cacheRegion = cacheRegion;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetComment(string comment)
 		{
-			this.comment = comment;
+			_comment = comment;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetFlushMode(FlushMode flushMode)
 		{
-			this.flushMode = flushMode;
+			_flushMode = flushMode;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetCacheMode(CacheMode cacheMode)
 		{
-			this.cacheMode = cacheMode;
+			_cacheMode = cacheMode;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetTimeout(int timeout)
 		{
-			this.timeout = timeout;
+			_timeout = timeout;
 			return this;
 		}
 
 		public IEntityAuditQuery<TEntity> SetLockMode(LockMode lockMode)
 		{
-			this.lockMode = lockMode;
+			_lockMode = lockMode;
 			return this;
 		}
 
@@ -171,8 +161,8 @@ namespace NHibernate.Envers.Query.Impl
 			AuditRevisionsAssociationQuery<TEntity> result;
 			if (!_associationQueryMap.TryGetValue(associationName, out result))
 			{
-				result = new AuditRevisionsAssociationQuery<TEntity>(AuditConfiguration, versionsReader, this, QueryBuilder, EntityName, associationName, joinType, QueryConstants.ReferencedEntityAlias);
-				AssociationQueries.Add(result);
+				result = new AuditRevisionsAssociationQuery<TEntity>(AuditConfiguration, _versionsReader, this, QueryBuilder, EntityName, associationName, joinType, QueryConstants.ReferencedEntityAlias);
+				_associationQueries.Add(result);
 				_associationQueryMap[associationName] = result;
 			}
 			return result;
@@ -183,11 +173,9 @@ namespace NHibernate.Envers.Query.Impl
 			return this;
 		}
 
-		#endregion
-
 		protected void AddOrders()
 		{
-			if (hasOrder)
+			if (_hasOrder)
 			{
 				return;
 			}
@@ -198,20 +186,20 @@ namespace NHibernate.Envers.Query.Impl
 		protected void AddCriterions()
 		{
 			// all specified conditions, transformed
-			foreach (var criterion in criterions)
+			foreach (var criterion in _criterions)
 			{
-				criterion.AddToQuery(AuditConfiguration, versionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(AuditConfiguration, _versionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
-			foreach (var associationQuery in AssociationQueries)
+			foreach (var associationQuery in _associationQueries)
 			{
-				associationQuery.AddCriterionsToQuery(versionsReader);
+				associationQuery.AddCriterionsToQuery(_versionsReader);
 			}
 		}
 
 		protected void SetIncludeDeletationClause()
 		{
-			if (!includesDeletations)
+			if (!_includesDeletations)
 			{
 				// e.revision_type != DEL AND
 				QueryBuilder.RootParameters.AddWhereWithParam(AuditConfiguration.AuditEntCfg.RevisionTypePropName, "<>", RevisionType.Deleted);
@@ -238,13 +226,13 @@ namespace NHibernate.Envers.Query.Impl
 
 			QueryBuilder.Build(querySb, queryParamValues);
 
-			var query = versionsReader.Session.CreateQuery(querySb.ToString());
+			var query = _versionsReader.Session.CreateQuery(querySb.ToString());
 			foreach (var paramValue in queryParamValues)
 			{
 				query.SetParameter(paramValue.Key, paramValue.Value);
 			}
 			AddExtraParameter(query);
-			SetQueryProperties(query);
+			setQueryProperties(query);
 
 
 			return query.List<TResult>();
@@ -254,37 +242,37 @@ namespace NHibernate.Envers.Query.Impl
 		{
 		}
 
-		private void SetQueryProperties(IQuery query)
+		private void setQueryProperties(IQuery query)
 		{
-			if (maxResults.HasValue)
+			if (_maxResults.HasValue)
 			{
-				query.SetMaxResults(maxResults.Value);
+				query.SetMaxResults(_maxResults.Value);
 			}
-			if (firstResult.HasValue)
+			if (_firstResult.HasValue)
 			{
-				query.SetFirstResult(firstResult.Value);
+				query.SetFirstResult(_firstResult.Value);
 			}
-			if (cacheable.HasValue)
+			if (_cacheable.HasValue)
 			{
-				query.SetCacheable(cacheable.Value);
+				query.SetCacheable(_cacheable.Value);
 			}
-			if (cacheRegion != null)
+			if (_cacheRegion != null)
 			{
-				query.SetCacheRegion(cacheRegion);
+				query.SetCacheRegion(_cacheRegion);
 			}
-			if (comment != null)
+			if (_comment != null)
 			{
-				query.SetComment(comment);
+				query.SetComment(_comment);
 			}
-			query.SetFlushMode(flushMode);
-			query.SetCacheMode(cacheMode);
-			if (timeout.HasValue)
+			query.SetFlushMode(_flushMode);
+			query.SetCacheMode(_cacheMode);
+			if (_timeout.HasValue)
 			{
-				query.SetTimeout(timeout.Value);
+				query.SetTimeout(_timeout.Value);
 			}
-			if (lockMode != null)
+			if (_lockMode != null)
 			{
-				query.SetLockMode(QueryConstants.ReferencedEntityAlias, lockMode);
+				query.SetLockMode(QueryConstants.ReferencedEntityAlias, _lockMode);
 			}
 		}
 	}
