@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Configuration.Store
 			EntityMetas = initializeMetas(metaDataProvider, metaDataAdders);
 		}
 
-		public IDictionary<System.Type, IEntityMeta> EntityMetas { get; private set; }
+		public IDictionary<System.Type, IEntityMeta> EntityMetas { get; }
 
 		private IDictionary<System.Type, IEntityMeta> initializeMetas(IMetaDataProvider metaDataProvider,
 																				IEnumerable<IMetaDataAdder> metaDataAdders)

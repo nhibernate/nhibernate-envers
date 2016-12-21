@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public string BeanName { get; set; }
 		public AuditJoinTableAttribute JoinTable { get; set; }
 		public string AccessType { get; set; }
-		public IList<AuditOverrideAttribute> AuditingOverrides { get; private set; }
+		public IList<AuditOverrideAttribute> AuditingOverrides { get; }
 		public string MappedBy { get; set; }
 		public string PositionMappedBy { get; set; }
 		public bool ForceInsertable { get; set; }

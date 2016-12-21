@@ -45,10 +45,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return _properties.ContainsKey(propertyName);
 		}
 
-		public IEnumerable<string> PropertyNames
-		{
-			get { return _properties.Keys; }
-		}
+		public IEnumerable<string> PropertyNames => _properties.Keys;
 
 		public void SetDefaultAudited(bool defaultAudited) 
 		{

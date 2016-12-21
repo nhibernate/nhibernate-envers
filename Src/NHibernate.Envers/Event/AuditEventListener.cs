@@ -55,8 +55,8 @@ namespace NHibernate.Envers.Event
 					relDesc.Insertable)
 				{
 					// Checking for changes
-					var oldValue = oldState == null ? null : oldState[i];
-					var newValue = newState == null ? null : newState[i];
+					var oldValue = oldState?[i];
+					var newValue = newState?[i];
 
 					if (!Toolz.EntitiesEqual(session, oldValue, newValue))
 					{

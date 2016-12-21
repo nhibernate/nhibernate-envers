@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			_revisionListener = revisionListener;
 		}
 
-		public System.Type RevisionEntityType { get; private set; }
+		public System.Type RevisionEntityType { get; }
 
 		public IEnumerable<MemberInfoAndAttribute> Attributes(Cfg.Configuration nhConfiguration)
 		{

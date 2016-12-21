@@ -9,8 +9,8 @@ namespace NHibernate.Envers.Query.Impl
 			Operation = operation;
 		}
 
-		public TEntity Entity { get; private set; }
-		public TRevisionEntity RevisionEntity { get; private set; }
-		public RevisionType Operation { get; private set; }
+		public TEntity Entity { get; }
+		public TRevisionEntity RevisionEntity { get; }
+		public RevisionType Operation { get; }
 	}
 }

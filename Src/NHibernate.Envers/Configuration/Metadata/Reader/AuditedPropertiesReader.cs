@@ -460,18 +460,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 					.Select(property => new DeclaredPersistentProperty(property, DeclaredPersistentProperty.NotAvailableMemberInfo)).ToList();
 			}
 
-			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; private set; }
-			public System.Type Class { get; private set; }
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
+			public System.Type Class { get; }
 
-			public bool IsComponent
-			{
-				get { return true; }
-			}
+			public bool IsComponent => true;
 
-			public Property VersionedProperty
-			{
-				get { return null; }
-			}
+			public Property VersionedProperty => null;
 		}
 
 		private class markerClassForDynamicEntity

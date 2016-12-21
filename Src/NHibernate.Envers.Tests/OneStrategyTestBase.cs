@@ -50,10 +50,7 @@ namespace NHibernate.Envers.Tests
 		{
 			closeSessionAndAuditReader();
 			AuditConfiguration.Remove(Cfg);
-			if (SessionFactory != null)
-			{
-				SessionFactory.Close();
-			}
+			SessionFactory?.Close();
 		}
 
 		protected virtual string TestShouldNotRunMessage()
@@ -61,10 +58,7 @@ namespace NHibernate.Envers.Tests
 			return null;
 		}
 
-		protected Dialect.Dialect Dialect
-		{
-			get { return ((ISessionFactoryImplementor)SessionFactory).Dialect; }
-		}
+		protected Dialect.Dialect Dialect => ((ISessionFactoryImplementor)SessionFactory).Dialect;
 
 		protected virtual IMetaDataProvider EnversConfiguration()
 		{
@@ -78,29 +72,17 @@ namespace NHibernate.Envers.Tests
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
 
-		protected int MillisecondPrecision
-		{
-			get { return Dialect is MySQLDialect ? 1000 : 100; }
-		}
+		protected int MillisecondPrecision => Dialect is MySQLDialect ? 1000 : 100;
 
-		protected virtual FlushMode FlushMode
-		{
-			get { return FlushMode.Auto; }
-		}
+		protected virtual FlushMode FlushMode => FlushMode.Auto;
 
 		protected abstract void Initialize();
 
 
-		protected virtual IEnumerable<string> Mappings
+		protected virtual IEnumerable<string> Mappings => new[]
 		{
-			get
-			{
-				return new[]
-				       	{
-				       		nameSpaceAssemblyExtracted() + ".Mapping.hbm.xml"
-				       	};
-			}
-		}
+			nameSpaceAssemblyExtracted() + ".Mapping.hbm.xml"
+		};
 
 		private ISession openSession(ISessionFactory sessionFactory)
 		{
@@ -133,8 +115,7 @@ namespace NHibernate.Envers.Tests
 
 		private void closeSessionAndAuditReader()
 		{
-			if (Session != null)
-				Session.Dispose();
+			Session?.Dispose();
 			_auditReader = null;
 		}
 	}

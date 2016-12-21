@@ -22,8 +22,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Query
 			_revisionTypeInId = revisionTypeInId;
 		}
 
-		protected MiddleIdData ReferencingIdData { get; private set; }
-		protected AuditEntitiesConfiguration VerEntCfg { get; private set; }
+		protected MiddleIdData ReferencingIdData { get; }
+		protected AuditEntitiesConfiguration VerEntCfg { get; }
 
 		/// <summary>
 		/// Query used to retrieve state of audited entity valid at a given revision.

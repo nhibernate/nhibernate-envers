@@ -29,10 +29,7 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// A collection of all auditing meta-data for persistent classes.
 		/// </summary>
-		public IEnumerable<KeyValuePair<PersistentClass, ClassAuditingData>> AllClassAuditedData
-		{
-			get { return persistentClassToAuditingData; }
-		}
+		public IEnumerable<KeyValuePair<PersistentClass, ClassAuditingData>> AllClassAuditedData => persistentClassToAuditingData;
 
 		/// <summary>
 		/// After all meta-data is read, updates calculated fields. This includes:

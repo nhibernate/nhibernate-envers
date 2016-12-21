@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			_revisionTypeInId = revisionTypeInId;
 		}
 
-		protected CommonCollectionMapperData CommonCollectionMapperData { get; private set; }
+		protected CommonCollectionMapperData CommonCollectionMapperData { get; }
 
 		protected abstract IEnumerable GetNewCollectionContent(IPersistentCollection newCollection);
 		protected abstract IEnumerable GetOldCollectionContent(object oldCollection);

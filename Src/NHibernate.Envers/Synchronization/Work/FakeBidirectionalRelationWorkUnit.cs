@@ -62,7 +62,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			fakeRelationChanges = new Dictionary<string, FakeRelationChange>(original.fakeRelationChanges);
 		}
 
-		public IAuditWorkUnit NestedWorkUnit { get; private set; }
+		public IAuditWorkUnit NestedWorkUnit { get; }
 
 		public override bool ContainsWork()
 		{

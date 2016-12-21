@@ -40,14 +40,14 @@ namespace NHibernate.Envers.Configuration
 		}
 
 
-		public string OriginalIdPropName { get; private set; }
-		public string RevisionFieldName { get; private set; }
+		public string OriginalIdPropName { get; }
+		public string RevisionFieldName { get; }
 		public string RevisionNumberPath { get; private set; }
 		public string RevisionTypePropName { get; private set; }
 		public string RevisionEndFieldName { get; private set; }
-		public bool IsRevisionEndTimestampEnabled { get; private set; }
+		public bool IsRevisionEndTimestampEnabled { get; }
 		public string RevisionEndTimestampFieldName { get; private set; }
-		public string RevisionInfoEntityAssemblyQualifiedName { get; private set; }
+		public string RevisionInfoEntityAssemblyQualifiedName { get; }
 		public string EmbeddableSetOrdinalPropertyName { get; private set; }
 
 		/// <summary>

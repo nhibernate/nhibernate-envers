@@ -26,9 +26,9 @@ namespace NHibernate.Envers.Reader
 			FirstLevelCache = new FirstLevelCache();
 		}
 
-		public ISessionImplementor SessionImplementor { get; private set; }
-		public ISession Session { get; private set; }
-		public FirstLevelCache FirstLevelCache { get; private set; }
+		public ISessionImplementor SessionImplementor { get; }
+		public ISession Session { get; }
+		public FirstLevelCache FirstLevelCache { get; }
 
 		public T Find<T>(object primaryKey, long revision)
 		{

@@ -70,10 +70,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			}
 
 			// A null mapper means that we only want to add xml mappings
-			if (mapper != null) 
-			{
-				mapper.Add(propertyAuditingData.GetPropertyData());
-			}
+			mapper?.Add(propertyAuditingData.GetPropertyData());
 		}
 
 		private static void addCustomValue(XElement parent, PropertyAuditingData propertyAuditingData,
@@ -89,26 +86,20 @@ namespace NHibernate.Envers.Configuration.Metadata
 											new XAttribute("name", typeOfUserImplementation.AssemblyQualifiedName));
 
 				var simpleValue = value as SimpleValue;
-				if (simpleValue != null) 
+				var typeParameters = simpleValue?.TypeParameters;
+				if (typeParameters != null) 
 				{
-					var typeParameters = simpleValue.TypeParameters;
-					if (typeParameters != null) 
+					foreach (var paramKeyValue in typeParameters) 
 					{
-						foreach (var paramKeyValue in typeParameters) 
-						{
-							var typeParam = new XElement(MetadataTools.CreateElementName("param"),
-								new XAttribute("name", paramKeyValue.Key), paramKeyValue.Value);
-							typeElement.Add(typeParam);
-						}
+						var typeParam = new XElement(MetadataTools.CreateElementName("param"),
+							new XAttribute("name", paramKeyValue.Key), paramKeyValue.Value);
+						typeElement.Add(typeParam);
 					}
 				}
 				propMapping.Add(typeElement);
 			}
 
-			if (mapper != null) 
-			{
-				mapper.Add(propertyAuditingData.GetPropertyData());
-			}
+			mapper?.Add(propertyAuditingData.GetPropertyData());
 		}
 
 		public void AddKeyManyToOne(XElement parent, PropertyAuditingData propertyAuditingData, IValue value, ISimpleMapperBuilder mapper)
@@ -119,10 +110,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				  MetadataTools.AddManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName, true, false);
 			MetadataTools.AddColumns(element, value.ColumnIterator.OfType<Column>());
 			// A null mapper occurs when adding to composite-id element
-			if (mapper != null)
-			{
-				mapper.Add(propertyAuditingData.GetPropertyData());
-			}
+			mapper?.Add(propertyAuditingData.GetPropertyData());
 		}
 	}
 }

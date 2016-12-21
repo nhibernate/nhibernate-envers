@@ -21,11 +21,11 @@ namespace NHibernate.Envers.Synchronization.Work
 			EntityName = entityName;
 		}
 
-		public object EntityId { get; private set; }
-		public string EntityName { get; private set; }
-		public RevisionType RevisionType { get; private set; }
+		public object EntityId { get; }
+		public string EntityName { get; }
+		public RevisionType RevisionType { get; }
 		protected ISessionImplementor SessionImplementor { get; private set; }
-		protected AuditConfiguration VerCfg { get; private set; }
+		protected AuditConfiguration VerCfg { get; }
 
 		protected void FillDataWithId(IDictionary<string, object> data, object revision) 
 		{

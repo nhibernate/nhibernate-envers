@@ -33,9 +33,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			return properties.ContainsKey(propertyName);
 		}
 
-		public IEnumerable<string> PropertyNames
-		{
-			get { return properties.Keys; }
-		}
+		public IEnumerable<string> PropertyNames => properties.Keys;
 	}
 }

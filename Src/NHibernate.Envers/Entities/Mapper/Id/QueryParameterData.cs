@@ -8,8 +8,8 @@
 			Value = value;
 		}
 
-		public string QueryParameterName { get; private set; }
-		public object Value { get; private set; }
+		public string QueryParameterName { get; }
+		public object Value { get; }
 
 		public string GetProperty(string prefix)
 		{
@@ -31,14 +31,12 @@
 			var casted = obj as QueryParameterData;
 			if (casted == null) return false;
 
-			return QueryParameterName == null ? 
-					casted.QueryParameterName == null : 
-					QueryParameterName.Equals(casted.QueryParameterName);
+			return QueryParameterName?.Equals(casted.QueryParameterName) ?? casted.QueryParameterName == null;
 		}
 
 		public override int GetHashCode()
 		{
-			return (QueryParameterName != null ? QueryParameterName.GetHashCode() : 0);
+			return QueryParameterName?.GetHashCode() ?? 0;
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 	public class EntityXmlMappingData
 	{
 		public XDocument MainXmlMapping { get; private set; }
-		public IList<XDocument> AdditionalXmlMappings { get; private set; }
+		public IList<XDocument> AdditionalXmlMappings { get; }
 
 		/// <summary>
 		/// The xml element that maps the class. The root can be one of the folowing elements:

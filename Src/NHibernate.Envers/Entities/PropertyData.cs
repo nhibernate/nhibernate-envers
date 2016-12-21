@@ -41,10 +41,10 @@ namespace NHibernate.Envers.Entities
 			ModifiedFlagPropertyName = modifiedFlagName;
 		}
 
-		public string Name { get; private set; }
-		public string BeanName { get; private set; }
-		public string AccessType { get; private set; }
-		public bool UsingModifiedFlag { get; private set;}
+		public string Name { get; }
+		public string BeanName { get; }
+		public string AccessType { get; }
+		public bool UsingModifiedFlag { get; }
 		public string ModifiedFlagPropertyName { get; private set; }
 
 
@@ -55,18 +55,18 @@ namespace NHibernate.Envers.Entities
 
 			var that = (PropertyData) obj;
 
-			if (AccessType != null ? !AccessType.Equals(that.AccessType) : that.AccessType != null) return false;
-			if (BeanName != null ? !BeanName.Equals(that.BeanName) : that.BeanName != null) return false;
-			if (Name != null ? !Name.Equals(that.Name) : that.Name != null) return false;
+			if (!AccessType?.Equals(that.AccessType) ?? that.AccessType != null) return false;
+			if (!BeanName?.Equals(that.BeanName) ?? that.BeanName != null) return false;
+			if (!Name?.Equals(that.Name) ?? that.Name != null) return false;
 			if (UsingModifiedFlag != that.UsingModifiedFlag) return false;
 			return true;
 		}
 
 		public override int GetHashCode() 
 		{
-			var result = Name != null ? Name.GetHashCode() : 0;
-			result = 31 * result + (BeanName != null ? BeanName.GetHashCode() : 0);
-			result = 31 * result + (AccessType != null ? AccessType.GetHashCode() : 0);
+			var result = Name?.GetHashCode() ?? 0;
+			result = 31 * result + (BeanName?.GetHashCode() ?? 0);
+			result = 31 * result + (AccessType?.GetHashCode() ?? 0);
 			result = 31*result + (UsingModifiedFlag ? 1 : 0);
 			return result;
 		}

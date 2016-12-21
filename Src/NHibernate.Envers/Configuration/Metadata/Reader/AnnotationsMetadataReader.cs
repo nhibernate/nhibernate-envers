@@ -116,18 +116,12 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 				Class = typ;
 			}
 
-			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; private set; }
-			public System.Type Class { get; private set; }
+			public IEnumerable<DeclaredPersistentProperty> DeclaredPersistentProperties { get; }
+			public System.Type Class { get; }
 
-			public Property VersionedProperty
-			{
-				get { return parent.pc.Version; }
-			}
+			public Property VersionedProperty => parent.pc.Version;
 
-			public bool IsComponent
-			{
-				get { return false; }
-			}
+			public bool IsComponent => false;
 		}
 	}
 }

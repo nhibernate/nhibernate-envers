@@ -39,10 +39,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			_delegate.AddComposite(propertyData, propertyMapper);
 		}
 
-		public IDictionary<PropertyData, IPropertyMapper> Properties
-		{
-			get { return _delegate.Properties; }
-		}
+		public IDictionary<PropertyData, IPropertyMapper> Properties => _delegate.Properties;
 
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data,
 										object newObj, object oldObj)

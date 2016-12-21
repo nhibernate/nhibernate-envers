@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			PropertyData = propertyData;
 		}
 
-		protected PropertyData PropertyData { get; private set; }
+		protected PropertyData PropertyData { get; }
 
 		public virtual bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
@@ -29,7 +29,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		{
 			if (obj != null)
 			{
-				NullSafeMapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);				
+				NullSafeMapToEntityFromMap(verCfg, obj, data, primaryKey, versionsReader, revision);
 			}
 		}
 

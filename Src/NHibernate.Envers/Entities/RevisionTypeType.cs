@@ -10,21 +10,9 @@ namespace NHibernate.Envers.Entities
 	{
 		private static readonly SqlType[] SQL_TYPES = { new SqlType(DbType.Byte) };
 
-		public SqlType[] SqlTypes 
-		{ 
-			get 
-			{
-				return SQL_TYPES;
-			}
-		}
+		public SqlType[] SqlTypes => SQL_TYPES;
 
-		public System.Type ReturnedType 
-		{
-			get
-			{
-				return typeof(RevisionType);
-			}
-		}
+		public System.Type ReturnedType => typeof(RevisionType);
 
 		public object NullSafeGet(IDataReader rs, string[] names, object owner)
 		{
@@ -49,10 +37,7 @@ namespace NHibernate.Envers.Entities
 			return value;
 		}
 
-		public bool IsMutable
-		{
-			get { return false; }
-		}
+		public bool IsMutable => false;
 
 		public object Assemble(object cached, object owner)
 		{
