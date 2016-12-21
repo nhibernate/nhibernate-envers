@@ -54,7 +54,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 					var nestedToOneIdMapper = nestedMapper as ToOneIdMapper;
 					if (nestedToOneIdMapper != null)
 					{
-						nestedToOneIdMapper.AddMiddleEqualToQuery(parameters, idPrefix1, prefix1, idPrefix2, prefix2);
+						nestedToOneIdMapper.AddMiddleEqualToQuery(parameters, prefix1, prefix2);
 					}
 					else
 					{
