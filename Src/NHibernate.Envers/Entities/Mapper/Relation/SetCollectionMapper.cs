@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			ElementComponentData = elementComponentData;
 		}
 
-		protected MiddleComponentData ElementComponentData { get; private set; }
+		protected MiddleComponentData ElementComponentData { get; }
 
 		protected override IInitializor GetInitializor(AuditConfiguration verCfg,
 														IAuditReaderImplementor versionsReader,

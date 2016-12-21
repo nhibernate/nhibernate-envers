@@ -84,9 +84,6 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 			_delegate.AddComposite(propertyData, propertyMapper);
 		}
 
-		public IDictionary<PropertyData, IPropertyMapper> Properties
-		{
-			get { return _delegate.Properties; }
-		}
+		public IDictionary<PropertyData, IPropertyMapper> Properties => _delegate.Properties;
 	}
 }

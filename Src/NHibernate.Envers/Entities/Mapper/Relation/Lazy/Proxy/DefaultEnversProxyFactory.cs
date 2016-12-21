@@ -13,10 +13,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 		[NonSerialized]
 		private ProxyFactory _proxyFactory;
 
-		private ProxyFactory proxyFactory
-		{
-			get { return _proxyFactory ?? (_proxyFactory = new ProxyFactory()); }
-		}
+		private ProxyFactory proxyFactory => _proxyFactory ?? (_proxyFactory = new ProxyFactory());
 
 		public object CreateCollectionProxy(System.Type collectionInterface, IInitializor collectionInitializor)
 		{

@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Synchronization.Work
 					entityPersister.PropertyNames, newState, oldState);
 		}
 
-		public IDictionary<string, object> Data { get; private set; }
+		public IDictionary<string, object> Data { get; }
 
 		public override bool ContainsWork() 
 		{

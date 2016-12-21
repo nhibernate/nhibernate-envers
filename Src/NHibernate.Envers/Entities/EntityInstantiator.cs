@@ -10,14 +10,14 @@ namespace NHibernate.Envers.Entities
 {
 	public class EntityInstantiator 
 	{
-		private readonly AuditConfiguration verCfg;
-		private readonly IAuditReaderImplementor versionsReader;
-
 		public EntityInstantiator(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader) 
 		{
-			this.verCfg = verCfg;
-			this.versionsReader = versionsReader;
+			AuditConfiguration = verCfg;
+			AuditReaderImplementor = versionsReader;
 		}
+
+		public AuditConfiguration AuditConfiguration { get; }
+		public IAuditReaderImplementor AuditReaderImplementor { get; }
 
 		/// <summary>
 		/// Creates an entity instance based on an entry from the versions table.
@@ -37,18 +37,18 @@ namespace NHibernate.Envers.Entities
 
 			if(versionsEntity.Contains(typeKey))
 			{
-				entityName = verCfg.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
+				entityName = AuditConfiguration.EntCfg.GetEntityNameForVersionsEntityName((string)versionsEntity[typeKey]);
 			}
 
 			// First mapping the primary key
-			var idMapper = verCfg.EntCfg[entityName].IdMapper;
-			var originalId = (IDictionary)versionsEntity[verCfg.AuditEntCfg.OriginalIdPropName];
+			var idMapper = AuditConfiguration.EntCfg[entityName].IdMapper;
+			var originalId = (IDictionary)versionsEntity[AuditConfiguration.AuditEntCfg.OriginalIdPropName];
 
 			var primaryKey = idMapper.MapToIdFromMap(originalId);
 
 			object ret;
 			// Checking if the entity is in cache
-			if (versionsReader.FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out ret)) 
+			if (AuditReaderImplementor.FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out ret)) 
 			{
 				return ret;
 			}
@@ -56,8 +56,8 @@ namespace NHibernate.Envers.Entities
 			// If it is not in the cache, creating a new entity instance
 			try 
 			{
-				var cls = Toolz.ResolveEntityClass(versionsReader.SessionImplementor, entityName);
-				ret = verCfg.EntCfg[entityName].Factory(cls);
+				var cls = Toolz.ResolveEntityClass(AuditReaderImplementor.SessionImplementor, entityName);
+				ret = AuditConfiguration.EntCfg[entityName].Factory(cls);
 			} 
 			catch (Exception e) 
 			{
@@ -66,15 +66,15 @@ namespace NHibernate.Envers.Entities
 
 			// Putting the newly created entity instance into the first level cache, in case a one-to-one bidirectional
 			// relation is present (which is eagerly loaded).
-			versionsReader.FirstLevelCache.Add(entityName, revision, primaryKey, ret);
+			AuditReaderImplementor.FirstLevelCache.Add(entityName, revision, primaryKey, ret);
 
-			verCfg.EntCfg[entityName].PropertyMapper.MapToEntityFromMap(verCfg, ret, versionsEntity, primaryKey, versionsReader, revision);
+			AuditConfiguration.EntCfg[entityName].PropertyMapper.MapToEntityFromMap(AuditConfiguration, ret, versionsEntity, primaryKey, AuditReaderImplementor, revision);
 			idMapper.MapToEntityFromMap(ret, originalId);
 
-			verCfg.GlobalCfg.PostInstantiationListener.PostInstantiate(ret);
+			AuditConfiguration.GlobalCfg.PostInstantiationListener.PostInstantiate(ret);
 
 			// Put entity on entityName cache after mapping it from the map representation
-			versionsReader.FirstLevelCache.AddEntityName(primaryKey, revision, ret, entityName);
+			AuditReaderImplementor.FirstLevelCache.AddEntityName(primaryKey, revision, ret, entityName);
 
 			return ret;
 		}
@@ -85,16 +85,6 @@ namespace NHibernate.Envers.Entities
 			{
 				addTo.Add(CreateInstanceFromVersionsEntity(entityName, versionsEntity, revision));
 			}
-		}
-
-		public AuditConfiguration AuditConfiguration
-		{
-			get { return verCfg; }
-		}
-
-		public IAuditReaderImplementor AuditReaderImplementor
-		{
-			get { return versionsReader; }
 		}
 	}
 }

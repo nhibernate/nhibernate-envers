@@ -44,8 +44,8 @@ namespace NHibernate.Envers.Configuration
 			_configuration = cfg;
 		}
 
-		public GlobalConfiguration GlobalCfg { get; private set; }
-		public AuditEntitiesConfiguration AuditEntCfg { get; private set; }
+		public GlobalConfiguration GlobalCfg { get; }
+		public AuditEntitiesConfiguration AuditEntCfg { get; }
 		public AuditProcessManager AuditProcessManager { get; private set; }
 		public EntitiesConfigurations EntCfg { get; private set; }
 		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }

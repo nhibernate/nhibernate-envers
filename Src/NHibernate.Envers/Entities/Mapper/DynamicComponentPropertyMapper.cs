@@ -36,10 +36,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			_delegate.AddComposite(propertyData, propertyMapper);
 		}
 
-		public IDictionary<PropertyData, IPropertyMapper> Properties 
-		{ 
-			get { return _delegate.Properties; }
-		}
+		public IDictionary<PropertyData, IPropertyMapper> Properties => _delegate.Properties;
 
 		public bool MapToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data,
 									   object newObj, object oldObj)
@@ -48,8 +45,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			var properties = _delegate.Properties;
 			foreach (var propertyData in properties.Keys)
 			{
-				var newValue = newObj == null ? null : ((IDictionary)newObj)[propertyData.BeanName];
-				var oldValue = oldObj == null ? null : ((IDictionary)oldObj)[propertyData.BeanName];
+				var newValue = ((IDictionary) newObj)?[propertyData.BeanName];
+				var oldValue = ((IDictionary) oldObj)?[propertyData.BeanName];
 
 				ret |= properties[propertyData].MapToMapFromEntity(session, data, newValue, oldValue);
 			}

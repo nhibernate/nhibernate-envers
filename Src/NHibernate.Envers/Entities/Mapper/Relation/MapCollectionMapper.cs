@@ -24,17 +24,17 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			IndexComponentData = indexComponentData;
 		}
 
-		protected MiddleComponentData ElementComponentData { get; private set; }
-		protected MiddleComponentData IndexComponentData { get; private set; }
+		protected MiddleComponentData ElementComponentData { get; }
+		protected MiddleComponentData IndexComponentData { get; }
 
 		protected override IEnumerable GetNewCollectionContent(IPersistentCollection newCollection)
 		{
-			return newCollection == null ? null : (IEnumerable) newCollection;
+			return (IEnumerable) newCollection;
 		}
 
 		protected override IEnumerable GetOldCollectionContent(object oldCollection)
 		{
-			return oldCollection == null ? null : (IEnumerable) oldCollection;
+			return (IEnumerable) oldCollection;
 		}
 
 		protected override void MapToMapFromObject(ISessionImplementor session, IDictionary<String, Object> idData, IDictionary<string, object> data, object changed)

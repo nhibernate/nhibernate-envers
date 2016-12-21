@@ -18,15 +18,15 @@ namespace NHibernate.Envers.Configuration.Metadata
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditMetadataGenerator));
 
 		public Cfg.Configuration Cfg { get; private set; }
-		public GlobalConfiguration GlobalCfg { get; private set; }
-		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
+		public GlobalConfiguration GlobalCfg { get; }
+		public AuditEntitiesConfiguration VerEntCfg { get; }
 		private readonly XElement revisionInfoRelationMapping;
 		private readonly IMetaDataStore _metaDataStore;
 
 		/*
 		 * Generators for different kinds of property values/types.
 		 */
-		public BasicMetadataGenerator BasicMetadataGenerator { get; private set; }
+		public BasicMetadataGenerator BasicMetadataGenerator { get; }
 		private readonly ComponentMetadataGenerator componentMetadataGenerator;
 		private readonly IdMetadataGenerator idMetadataGenerator;
 		private readonly ToOneRelationMetadataGenerator toOneRelationMetadataGenerator;
@@ -34,9 +34,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 		/*
 		 * Here information about already generated mappings will be accumulated.
 		 */
-		public IDictionary<string, EntityConfiguration> EntitiesConfigurations { get; private set; }
-		public IDictionary<string, EntityConfiguration> NotAuditedEntitiesConfigurations { get; private set; }
-		public AuditEntityNameRegister AuditEntityNameRegister { get; private set; }
+		public IDictionary<string, EntityConfiguration> EntitiesConfigurations { get; }
+		public IDictionary<string, EntityConfiguration> NotAuditedEntitiesConfigurations { get; }
+		public AuditEntityNameRegister AuditEntityNameRegister { get; }
 
 		// Map entity name -> (join descriptor -> element describing the "versioned" join)
 		private readonly IDictionary<string, IDictionary<Join, XElement>> entitiesJoins;

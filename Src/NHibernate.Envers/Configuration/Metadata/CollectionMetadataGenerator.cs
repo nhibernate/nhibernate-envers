@@ -370,7 +370,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 					return addValueToMiddleTable(indexedValue.Index, middleEntityXml,
 							queryGeneratorBuilder, "mapkey", null);
 				}
-				var currentIndex = queryGeneratorBuilder == null ? 0 : queryGeneratorBuilder.CurrentIndex;
+				var currentIndex = queryGeneratorBuilder?.CurrentIndex ?? 0;
 				if (idMatch)
 				{
 					// The key of the map is the id of the entity.

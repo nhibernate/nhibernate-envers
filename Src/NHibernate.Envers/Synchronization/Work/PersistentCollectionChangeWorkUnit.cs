@@ -66,10 +66,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			}
 		}
 
-		public IEnumerable<PersistentCollectionChangeData> CollectionChanges
-		{
-			get { return collectionChanges; }
-		}
+		public IEnumerable<PersistentCollectionChangeData> CollectionChanges => collectionChanges;
 
 		public override IAuditWorkUnit Merge(AddWorkUnit second)
 		{
@@ -173,7 +170,7 @@ namespace NHibernate.Envers.Synchronization.Work
 				this.role = role;
 			}
 
-			public object OwnerId { get; private set; }
+			public object OwnerId { get; }
 			
 			public override bool Equals(object o) 
 			{
@@ -182,16 +179,16 @@ namespace NHibernate.Envers.Synchronization.Work
 
 				var that = (PersistentCollectionChangeWorkUnitId) o;
 
-				if (OwnerId != null ? !OwnerId.Equals(that.OwnerId) : that.OwnerId != null) return false;
-				if (role != null ? !role.Equals(that.role) : that.role != null) return false;
+				if (!OwnerId?.Equals(that.OwnerId) ?? that.OwnerId != null) return false;
+				if (!role?.Equals(that.role) ?? that.role != null) return false;
 
 				return true;
 			}
 
 			public override int GetHashCode() 
 			{
-				var result = OwnerId != null ? OwnerId.GetHashCode() : 0;
-				result = 31 * result + (role != null ? role.GetHashCode() : 0);
+				var result = OwnerId?.GetHashCode() ?? 0;
+				result = 31 * result + (role?.GetHashCode() ?? 0);
 				return result;
 			}
 		}

@@ -79,7 +79,7 @@ namespace NHibernate.Envers.Configuration
 
 		public IPostInstantiationListener PostInstantiationListener { get; private set; }
 
-		public IAuditStrategy AuditStrategy { get; private set; }
+		public IAuditStrategy AuditStrategy { get; }
 		public bool AllowIdentifierReuse { get; private set; }
 	}
 }

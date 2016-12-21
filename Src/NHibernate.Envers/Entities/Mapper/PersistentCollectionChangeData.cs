@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		public object GetChangedElementIndex()
 		{
 			var elementAsPair = _changedElement as Tuple<int, object>;
-			return elementAsPair != null ? elementAsPair.Item1 : keyValueOrDefault(_changedElement, "Key", null);
+			return elementAsPair?.Item1 ?? keyValueOrDefault(_changedElement, "Key", null);
 		}
 
 		private static object keyValueOrDefault(object changedElement, string keyOrValue, object defaultValue)

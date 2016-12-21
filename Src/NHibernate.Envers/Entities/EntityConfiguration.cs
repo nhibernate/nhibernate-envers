@@ -23,22 +23,15 @@ namespace NHibernate.Envers.Entities
 	
 		public string VersionsEntityName { get; private set; }
 		public string EntityClassName { get; private set; }
-		public IdMappingData IdMappingData { get; private set; }
+		public IdMappingData IdMappingData { get; }
 		public IExtendedPropertyMapper PropertyMapper { get; private set; }
 		// Maps from property name
 		private readonly IDictionary<string, RelationDescription> relations;
 		public string ParentEntityName { get; private set; }
 
-		public IIdMapper IdMapper
-		{
-			get { return IdMappingData.IdMapper; }
-		}
+		public IIdMapper IdMapper => IdMappingData.IdMapper;
 
-
-		public IEnumerable<RelationDescription> RelationsIterator
-		{
-			get { return relations.Values; }
-		}
+		public IEnumerable<RelationDescription> RelationsIterator => relations.Values;
 
 		public void AddToOneRelation(string fromPropertyName, string toEntityName, IIdMapper idMapper, bool insertable, bool ignoreNotFound)
 		{

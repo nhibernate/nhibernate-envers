@@ -42,17 +42,17 @@ namespace NHibernate.Envers.Query.Impl
 			projections = new List<Tuple<string, IAuditProjection>>();
 		}
 
-		protected IAuditReaderImplementor VersionsReader { get; private set; }
-		protected EntityInstantiator EntityInstantiator { get; private set; }
-		protected IList<IAuditCriterion> Criterions { get; private set; }
-		protected string EntityName { get; private set; }
-		protected string VersionsEntityName { get; private set; }
-		protected QueryBuilder QueryBuilder { get; private set; }
+		protected IAuditReaderImplementor VersionsReader { get; }
+		protected EntityInstantiator EntityInstantiator { get; }
+		protected IList<IAuditCriterion> Criterions { get; }
+		protected string EntityName { get; }
+		protected string VersionsEntityName { get; }
+		protected QueryBuilder QueryBuilder { get; }
 		protected bool HasOrder { get; private set; }
-		protected AuditConfiguration VerCfg { get; private set; }
-		protected IList<AuditAssociationQuery> AssociationQueries { get; private set; }
-		private IDictionary<string, AuditAssociationQuery> associationQueryMap { get; set; }
-		private IList<Tuple<string, IAuditProjection>> projections { get; set; }
+		protected AuditConfiguration VerCfg { get; }
+		protected IList<AuditAssociationQuery> AssociationQueries { get; }
+		private IDictionary<string, AuditAssociationQuery> associationQueryMap { get; }
+		private IList<Tuple<string, IAuditProjection>> projections { get; }
 
 		protected void BuildAndExecuteQuery(IList result) 
 		{

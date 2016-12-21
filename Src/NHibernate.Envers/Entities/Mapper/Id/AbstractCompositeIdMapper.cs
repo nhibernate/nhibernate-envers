@@ -15,8 +15,8 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			CompositeIdClass = compositeIdClass;
 		}
 
-		protected IDictionary<PropertyData, SingleIdMapper> Ids { get; private set; }
-		protected System.Type CompositeIdClass { get; private set; }
+		protected IDictionary<PropertyData, SingleIdMapper> Ids { get; }
+		protected System.Type CompositeIdClass { get; }
 
 		public void Add(PropertyData propertyData)
 		{

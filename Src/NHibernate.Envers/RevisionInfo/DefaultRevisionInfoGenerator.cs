@@ -42,10 +42,7 @@ namespace NHibernate.Envers.RevisionInfo
 			var value = _timestampAsDate ? (object)utcNow : utcNow.Ticks;
 			_revisionTimestampSetter.Set(revisionInfo, value);
 
-			if (_listener != null)
-			{
-				_listener.NewRevision(revisionInfo);
-			}
+			_listener?.NewRevision(revisionInfo);
 
 			return revisionInfo;
 		}
@@ -53,10 +50,7 @@ namespace NHibernate.Envers.RevisionInfo
 		public virtual void EntityChanged(System.Type entityClass, string entityName, object entityId, RevisionType revisionType, object revisionEntity)
 		{
 			var castedListener = _listener as IEntityTrackingRevisionListener;
-			if (castedListener != null)
-			{
-				castedListener.EntityChanged(entityClass, entityName, entityId, revisionType, revisionEntity);
-			}
+			castedListener?.EntityChanged(entityClass, entityName, entityId, revisionType, revisionEntity);
 		}
 	}
 }

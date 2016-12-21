@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 		public IIdMapper OriginalMapper { get; private set; }
 		public IIdMapper PrefixedMapper { get; private set; }
 		public string EntityName { get; private set; }
-		public string AuditEntityName { get; private set; }
+		public string AuditEntityName { get; }
 
 		/// <summary>
 		/// Is the entity, to which this middle id data correspond, audited.

@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 		}
 
 		protected EntityInstantiator EntityInstantiator { get; private set; }
-		protected long Revision { get; private set; }
+		protected long Revision { get; }
 
 		protected abstract T InitializeCollection(int size);
 

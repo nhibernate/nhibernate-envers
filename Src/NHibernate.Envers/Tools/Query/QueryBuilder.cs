@@ -72,10 +72,7 @@ namespace NHibernate.Envers.Tools.Query
 		}
 
 
-		public Parameters RootParameters
-		{
-			get { return _parameters[0]; }
-		}
+		public Parameters RootParameters => _parameters[0];
 
 		public Parameters AddParameters(string alias)
 		{

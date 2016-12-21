@@ -120,9 +120,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 											Expression<Func<T, object>> modifiedEntityNames,
 											IRevisionListener revisionListener)
 		{
-			var modEntNames = modifiedEntityNames == null ?
-									null :
-									modifiedEntityNames.MethodInfo();
+			var modEntNames = modifiedEntityNames?.MethodInfo();
 			attributeFactories.Add(new FluentRevision(typeof(T),
 									revisionNumber.MethodInfo(),
 									revisionTimestamp.MethodInfo(),

@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override object MapToIdFromMap(IDictionary data)
 		{
-			return data == null ? null : data[_propertyData.Name];
+			return data?[_propertyData.Name];
 		}
 
 		public override object MapToIdFromEntity(object data)
@@ -66,10 +66,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 
 		public override void MapToMapFromId(IDictionary<string, object> data, object obj)
 		{
-			if (data != null)
-			{
-				data.Add(_propertyData.Name, obj);
-			}
+			data?.Add(_propertyData.Name, obj);
 		}
 
 		public override void MapToMapFromEntity(IDictionary<string, object> data, object obj)

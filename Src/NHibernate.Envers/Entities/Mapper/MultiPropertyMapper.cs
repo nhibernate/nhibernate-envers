@@ -20,8 +20,8 @@ namespace NHibernate.Envers.Entities.Mapper
 			PropertyDatas = new Dictionary<string, PropertyData>();
 		}
 
-		public IDictionary<PropertyData, IPropertyMapper> Properties { get; private set; }
-		private IDictionary<string, PropertyData> PropertyDatas { get; set; }
+		public IDictionary<PropertyData, IPropertyMapper> Properties { get; }
+		private IDictionary<string, PropertyData> PropertyDatas { get; }
 
 		public void Add(PropertyData propertyData) 
 		{
@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Entities.Mapper
 			}
 			else
 			{
-				componentMapperBuilder = new ComponentPropertyMapper(propertyData, componentClassName);				
+				componentMapperBuilder = new ComponentPropertyMapper(propertyData, componentClassName);
 			}
 
 			AddComposite(propertyData, (IPropertyMapper) componentMapperBuilder);
@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		private static object getAtIndexOrNull(IList<object> array, int index)
 		{
-			return array == null ? null : array[index];
+			return array?[index];
 		}
 
 		public bool Map(ISessionImplementor session, IDictionary<string, object> data, string[] propertyNames, 
@@ -195,10 +195,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		public void MapModifiedFlagsToMapForCollectionChange(string collectionPropertyName, IDictionary<string, object> data)
 		{
 			var pair = mapperAndDelegatePropertyName(collectionPropertyName);
-			if (pair != null)
-			{
-				pair.Item1.MapModifiedFlagsToMapForCollectionChange(pair.Item2, data);
-			}
+			pair?.Item1.MapModifiedFlagsToMapForCollectionChange(pair.Item2, data);
 		}
 
 		public IList<PersistentCollectionChangeData> MapCollectionChanges(ISessionImplementor session, 
@@ -208,9 +205,7 @@ namespace NHibernate.Envers.Entities.Mapper
 																		object id)
 		{
 			var pair = mapperAndDelegatePropertyName(referencingPropertyName);
-			return pair == null ? 
-								null :
-								pair.Item1.MapCollectionChanges(session, pair.Item2, newColl, oldColl, id);
+			return pair?.Item1.MapCollectionChanges(session, pair.Item2, newColl, oldColl, id);
 		}
 	}
 }
