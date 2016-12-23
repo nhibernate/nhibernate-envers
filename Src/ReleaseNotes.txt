@@ -1,3 +1,10 @@
+=== v2.2 GA (v 2.2.0.0), 2016-12-23, NH 4.1 GA ===
+
+** Bug
+* [NHE-155] - ValidityAuditStrategy not audit properly nested collection with nulls
+
+
+
 === v2.1 GA (v 2.1.0.100), 2016-08-15, NH 4.0 GA ===
 
 ** Bug
