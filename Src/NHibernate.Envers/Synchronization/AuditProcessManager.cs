@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Event;
-using NHibernate.Util;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Synchronization
 
 		public AuditProcessManager(IRevisionInfoGenerator revisionInfoGenerator)
 		{
-			_auditProcesses = new ThreadSafeDictionary<ITransaction, AuditProcess>(new Dictionary<ITransaction, AuditProcess>());
+			_auditProcesses = new ConcurrentDictionary<ITransaction, AuditProcess>();
 			_revisionInfoGenerator = revisionInfoGenerator;
 		}
 
