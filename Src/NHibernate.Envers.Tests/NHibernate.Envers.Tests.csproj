@@ -122,6 +122,9 @@
     <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Child.cs" />
     <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Parent.cs" />
     <Compile Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\BiDirOneToOneWithOneSideNotAuditedTests.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\ChildCollectionType.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Fixture.cs" />
+    <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Model.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\ChildName.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreExistsInBaseTypeTest.cs" />
@@ -780,6 +783,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\ManyToOne\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\SimpleProperty\Mapping.hbm.xml" />
