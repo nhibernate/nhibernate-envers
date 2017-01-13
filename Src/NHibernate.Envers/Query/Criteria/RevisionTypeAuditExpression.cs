@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Query.Criteria
 			_op = op;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string alias, string entityName, QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string alias, QueryBuilder qb, Parameters parameters)
 		{
 			parameters.AddWhereWithParam(auditCfg.AuditEntCfg.RevisionTypePropName, _op, _value);
 		}

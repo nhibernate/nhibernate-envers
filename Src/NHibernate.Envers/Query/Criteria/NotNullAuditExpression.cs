@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Query.Criteria
 			this.propertyNameGetter = propertyNameGetter;
 		}
 
-		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName, string alias,  QueryBuilder qb, Parameters parameters)
+		public void AddToQuery(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader, string entityName,  QueryBuilder qb, Parameters parameters)
 		{
 			var propertyName = CriteriaTools.DeterminePropertyName(auditCfg, versionsReader, entityName, propertyNameGetter);
 			var relatedEntity = CriteriaTools.GetRelatedEntity(auditCfg, entityName, propertyName);
