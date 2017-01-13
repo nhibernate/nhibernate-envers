@@ -230,7 +230,7 @@ namespace NHibernate.Envers.Query.Impl
 
 				foreach (var criterion in _criterions)
 				{
-					criterion.AddToQuery(_auditConfiguration, versionsReader, _entityName, _alias, _queryBuilder, _parameters);
+					criterion.AddToQuery(_auditConfiguration, versionsReader, _entityName, _queryBuilder, _parameters);
 				}
 				foreach (var sub in _associationQueries)
 				{

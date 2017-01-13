@@ -75,7 +75,7 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions
 			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 			foreach (var associationQuery in AssociationQueries)
 			{

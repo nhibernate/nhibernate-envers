@@ -71,7 +71,7 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions, transformed
 			foreach (var criterion in Criterions)
 			{
-				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(VerCfg, VersionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
 			if (!HasProjection() && !HasOrder)

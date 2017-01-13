@@ -188,7 +188,7 @@ namespace NHibernate.Envers.Query.Impl
 			// all specified conditions, transformed
 			foreach (var criterion in _criterions)
 			{
-				criterion.AddToQuery(AuditConfiguration, _versionsReader, EntityName, QueryConstants.ReferencedEntityAlias, QueryBuilder, QueryBuilder.RootParameters);
+				criterion.AddToQuery(AuditConfiguration, _versionsReader, EntityName, QueryBuilder, QueryBuilder.RootParameters);
 			}
 
 			foreach (var associationQuery in _associationQueries)
