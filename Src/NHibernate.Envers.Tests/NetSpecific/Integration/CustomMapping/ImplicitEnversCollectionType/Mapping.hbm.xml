@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="NHibernate.Envers.Tests"
+						 namespace="NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.ImplicitEnversCollectionType">
+	<class name="Parent">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<bag name="Children" collection-type="ChildCollectionType" cascade="all">
+			<key column="entityId"/>
+			<one-to-many class="Child"/>
+		</bag>
+	</class>
+
+	<class name="Child">
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+	</class>
+</hibernate-mapping>
