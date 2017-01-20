@@ -9,12 +9,7 @@
     <orderedlist>
         <listitem>
             <para>
-                <ulink url="http://nhforge.org">NHibernate home page</ulink>
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                <ulink url="http://groups.google.com/group/nhusers">User mailing list (ask questions here)</ulink>
+                <ulink url="http://stackoverflow.com/questions/tagged/nhibernate-envers">User questions</ulink>
             </para>
         </listitem>
         <listitem>
@@ -32,6 +27,11 @@
                 <ulink url="http://nuget.org/packages/NHibernate.Envers">Nuget package</ulink>
             </para>
         </listitem>
+		<listitem>
+			<para>
+				<ulink url="https://envers.bitbucket.io">Latest documentation</ulink>
+			</para>
+		</listitem>
     </orderedlist>
 
 </chapter>
