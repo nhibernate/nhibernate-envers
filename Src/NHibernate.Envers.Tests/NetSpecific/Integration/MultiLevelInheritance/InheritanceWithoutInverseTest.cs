@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.MultiLevelInheritance
 		{
 		}
 
-		[Test, Ignore("NHE-139")]
+		[Test]
 		public void Test()
 		{
 			var parent = new InheritedParent {Childs = new HashSet<Child>()};
