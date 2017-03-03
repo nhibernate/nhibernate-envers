@@ -125,11 +125,15 @@
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\ChildCollectionType.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Model.cs" />
+    <Compile Include="NetSpecific\Integration\MultiLevelInheritance\Child.cs" />
+    <Compile Include="NetSpecific\Integration\MultiLevelInheritance\Parent.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\ChildName.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreExistsInBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\NotFoundIgnoreNotExistsInBaseTypeTest.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Parent.cs" />
+    <Compile Include="NetSpecific\Integration\MultiLevelInheritance\InheritedParent.cs" />
+    <Compile Include="NetSpecific\Integration\MultiLevelInheritance\InheritanceWithoutInverseTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\DateTimeTest.cs" />
     <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />
     <Compile Include="NetSpecific\Integration\ModifiedFlags\Casee.cs" />
@@ -783,6 +787,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\MultiLevelInheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BiDirOneToOneWithOneSideNotAudited\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\None\ManyToOne\Mapping.hbm.xml" />

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true"
+assembly="NHibernate.Envers.Tests"
+namespace="NHibernate.Envers.Tests.NetSpecific.Integration.MultiLevelInheritance">
+  <class name="Parent">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <property name="Property" />
+    <set name="Childs" cascade="all" inverse="false">
+      <key column="Parent_Id" />
+      <one-to-many class="Child" />
+    </set>
+    <joined-subclass name="InheritedParent">
+      <key column="Base_Id" />
+      <property name="InheritedProperty" />
+    </joined-subclass>
+  </class>
+  <class name="Child">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <many-to-one name="Parent" column="Parent_Id" />
+  </class>
+</hibernate-mapping>
