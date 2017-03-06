@@ -74,7 +74,7 @@ namespace NHibernate.Envers.Configuration.Store
 		
 			//check if bidrectional
 			//TODO: backref check here is wrong! But if it's fixed it will be a big breaking change I guess.. For now, an extra table will be created.
-			if (!referencedProperty.BackRef && MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator))
+			if (!referencedProperty.BackRef && isRelation(collectionValue, referencedProperty))
 			{
 				attr = new AuditMappedByAttribute {MappedBy = referencedProperty.Name};
 				if (!referencedProperty.IsUpdateable && 
@@ -86,6 +86,12 @@ namespace NHibernate.Envers.Configuration.Store
 				}
 			}
 			return attr;
+		}
+
+		private static bool isRelation(Mapping.Collection collectionValue, Property referencedProperty)
+		{
+			return MappingTools.SameColumns(referencedProperty.ColumnIterator, collectionValue.Key.ColumnIterator)
+				&& collectionValue.Owner.MappedClass.IsAssignableFrom(referencedProperty.Type.ReturnedClass);
 		}
 
 		private static void mightAddIndexToAttribute(AuditMappedByAttribute auditMappedByAttribute, Mapping.Collection collectionValue, IEnumerable<Property> referencedProperties)

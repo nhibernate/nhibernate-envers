@@ -5,7 +5,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Bidirectional
 {
 	public class TwoRelationEndsSameColumnTest
 	{
-		[Test, Ignore("NHE-158")]
+		[Test]
 		public void ShouldNotThrowMappingException()
 		{
 			var cfg = new Cfg.Configuration();
