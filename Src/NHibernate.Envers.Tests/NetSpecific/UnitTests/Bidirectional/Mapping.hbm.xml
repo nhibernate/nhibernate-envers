@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true"
+assembly="NHibernate.Envers.Tests"
+namespace="NHibernate.Envers.Tests.NetSpecific.UnitTests.Bidirectional">
+  <class name="Model">
+    <id name="Id">
+      <generator class="assigned" />
+    </id>
+    <set name="ModelConfigurations" cascade="none">
+      <key column="Model_Id" />
+      <one-to-many class="ModelConfigurationShared" />
+    </set>
+  </class>
+  <class name="ModelShared">
+    <id name="Id">
+      <generator class="assigned" />
+    </id>
+    <set name="ModelConfigurations" cascade="none">
+      <key column="Model_Id" />
+      <one-to-many class="ModelConfigurationShared" />
+    </set>
+  </class>
+  <class name="ModelConfigurationShared">
+    <id name="Id">
+      <generator class="assigned" />
+    </id>
+    <many-to-one name="Model" class="ModelShared" column="Model_Id" />
+  </class>
+</hibernate-mapping>
