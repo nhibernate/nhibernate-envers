@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Bidirectional
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalSameColumn
 {
 	public class Model
 	{

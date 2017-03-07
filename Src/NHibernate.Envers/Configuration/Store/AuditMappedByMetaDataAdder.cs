@@ -82,7 +82,7 @@ namespace NHibernate.Envers.Configuration.Store
 					//check that non update/insert properties are not also part of id!
 					!MappingTools.AnyColumnMatches(referencedProperty.ColumnIterator, referencedProperty.PersistentClass.Identifier.ColumnIterator))
 				{
-					attr.ForceInsertOverride = true;									
+					attr.ForceInsertOverride = true;
 				}
 			}
 			return attr;
