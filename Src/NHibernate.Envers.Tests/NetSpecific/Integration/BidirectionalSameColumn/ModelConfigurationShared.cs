@@ -1,4 +1,4 @@
-﻿namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.Bidirectional
+﻿namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalSameColumn
 {
 	public class ModelConfigurationShared
 	{
