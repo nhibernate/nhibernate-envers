@@ -46,7 +46,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Merge(ModWorkUnit second)
 		{
-			return new AddWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, second.Data);
+			return new AddWorkUnit(SessionImplementor, EntityName, VerCfg, EntityId, mergeModifiedFlags(data, second.Data));
 		}
 
 		public override IAuditWorkUnit Merge(DelWorkUnit second)
@@ -68,6 +68,27 @@ namespace NHibernate.Envers.Synchronization.Work
 		public override IAuditWorkUnit Dispatch(IWorkUnitMergeVisitor first)
 		{
 			return first.Merge(this);
+		}
+
+		private IDictionary<string, object> mergeModifiedFlags(IDictionary<string, object> lhs, IDictionary<string, object> rhs)
+		{
+			var mapper = VerCfg.EntCfg[EntityName].PropertyMapper;
+			foreach (var propertyData in mapper.Properties.Keys)
+			{
+				if (propertyData.UsingModifiedFlag)
+				{
+					var lhsValue = (bool)lhs[propertyData.ModifiedFlagPropertyName];
+					if (lhsValue)
+					{
+						var rhsValue = (bool) rhs[propertyData.ModifiedFlagPropertyName];
+						if (!rhsValue)
+						{
+							rhs[propertyData.ModifiedFlagPropertyName] = true;
+						}
+					}
+				}
+			}
+			return rhs;
 		}
 	}
 }

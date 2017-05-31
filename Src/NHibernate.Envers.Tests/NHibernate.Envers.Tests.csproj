@@ -105,6 +105,7 @@
     <Compile Include="Integration\ModifiedFlags\Entities\ManyToMany\Professor.cs" />
     <Compile Include="Integration\ModifiedFlags\Entities\ManyToMany\Student.cs" />
     <Compile Include="Integration\ModifiedFlags\HasChangedAuditedManyToManyRemovalTest.cs" />
+    <Compile Include="Integration\ModifiedFlags\HasChangedInsertUpdateSameTransactionTest.cs" />
     <Compile Include="Integration\Query\Traverse\AssociationToOneQueryTest.cs" />
     <Compile Include="Integration\Query\Traverse\Model.cs" />
     <Compile Include="Integration\Strategy\IdentifierReuseTest.cs" />
