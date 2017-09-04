@@ -17,8 +17,7 @@ namespace NHibernate.Envers.Configuration.Store
 
 		public void AddMemberMeta(MemberInfo member, Attribute envAttr)
 		{
-			IEnumerable<Attribute> attributes;
-			if (!MemberMetas.TryGetValue(member, out attributes))
+			if (!MemberMetas.TryGetValue(member, out _))
 			{
 				MemberMetas[member] = new List<Attribute>();
 			}

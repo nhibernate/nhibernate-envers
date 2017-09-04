@@ -19,8 +19,8 @@ namespace NHibernate.Envers.Configuration.Fluent
 			Type = type;
 		}
 
-		public MemberInfo MemberInfo { get; private set; }
-		public Attribute Attribute { get; private set; }
-		public System.Type Type { get; private set; }
+		public MemberInfo MemberInfo { get; }
+		public Attribute Attribute { get; }
+		public System.Type Type { get; }
 	}
 }

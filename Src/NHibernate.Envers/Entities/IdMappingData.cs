@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Entities
 			XmlRelationMapping = xmlRelationMapping;
 		}
 
-		public IIdMapper IdMapper { get; private set; }
+		public IIdMapper IdMapper { get; }
 		// Mapping which will be used to generate the entity
 		[NonSerialized]
 		private XElement _xmlMapping;

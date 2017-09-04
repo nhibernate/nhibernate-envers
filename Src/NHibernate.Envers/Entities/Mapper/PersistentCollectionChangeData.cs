@@ -14,13 +14,14 @@ namespace NHibernate.Envers.Entities.Mapper
 			_changedElement = changedElement;
 		}
 
-		public IDictionary<string, object> Data { get; private set; }
-		public string EntityName { get; private set; }
+		public IDictionary<string, object> Data { get; }
+		public string EntityName { get; }
 
 		public object GetChangedElement()
 		{
-			var elementAsPair = _changedElement as Tuple<int, object>;
-			return elementAsPair != null ? elementAsPair.Item2 : keyValueOrDefault(_changedElement, "Value", _changedElement);
+			return _changedElement is Tuple<int, object> elementAsPair ? 
+				elementAsPair.Item2 : 
+				keyValueOrDefault(_changedElement, "Value", _changedElement);
 		}
 
 		public object GetChangedElementIndex()
@@ -31,7 +32,6 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		private static object keyValueOrDefault(object changedElement, string keyOrValue, object defaultValue)
 		{
-			//rk hack - fix later
 			var type = changedElement.GetType();
 			if (type.IsGenericType)
 			{

@@ -27,14 +27,14 @@ namespace NHibernate.Envers.Configuration
 			RevisionInfoTimestampData = revisionInfoTimestampData;
 		}
 
-		public IRevisionInfoGenerator RevisionInfoGenerator { get; private set; }
-		public XDocument RevisionInfoXmlMapping { get; private set; }
-		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
-		public XElement RevisionInfoRelationMapping { get; private set; }
-		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
-		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
-		public string RevisionInfoEntityName { get; private set; }
-		public System.Type RevisionInfoClass { get; private set; }
-		public PropertyData RevisionInfoTimestampData { get; private set; }
+		public IRevisionInfoGenerator RevisionInfoGenerator { get; }
+		public XDocument RevisionInfoXmlMapping { get; }
+		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; }
+		public XElement RevisionInfoRelationMapping { get; }
+		public RevisionInfoNumberReader RevisionInfoNumberReader { get; }
+		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; }
+		public string RevisionInfoEntityName { get; }
+		public System.Type RevisionInfoClass { get; }
+		public PropertyData RevisionInfoTimestampData { get; }
 	}
 }

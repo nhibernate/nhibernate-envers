@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			ComponentIndex = componentIndex;
 		}
 
-		public IMiddleComponentMapper ComponentMapper { get; private set; }
-		public int ComponentIndex { get; private set; }
+		public IMiddleComponentMapper ComponentMapper { get; }
+		public int ComponentIndex { get; }
 	}
 }

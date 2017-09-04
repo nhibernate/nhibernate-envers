@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 			Property = property;
 		}
 
-		public MemberInfo Member { get; private set; }
-		public Property Property { get; private set; }
+		public MemberInfo Member { get; }
+		public Property Property { get; }
 	}
 }

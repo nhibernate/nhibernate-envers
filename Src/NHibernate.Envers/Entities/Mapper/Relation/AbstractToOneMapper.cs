@@ -74,9 +74,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 				IsAudited = isAudited;
 			}
 
-			public System.Type EntityClass { get; private set; }
-			public string EntityName { get; private set; }
-			public bool IsAudited { get; private set; }
+			public System.Type EntityClass { get; }
+			public string EntityName { get; }
+			public bool IsAudited { get; }
 
 		}
 	}

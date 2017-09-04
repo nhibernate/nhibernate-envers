@@ -188,8 +188,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 			if (baseType == typeof(object))
 				return;
 
-			IEntityMeta entMetaForBaseTypeTemp;
-			if (!ret.TryGetValue(baseType, out entMetaForBaseTypeTemp))
+			if (!ret.TryGetValue(baseType, out var entMetaForBaseTypeTemp))
 			{
 				entMetaForBaseTypeTemp = new EntityMeta();
 			}
@@ -209,8 +208,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static EntityMeta createOrGetEntityMeta(IDictionary<System.Type, IEntityMeta> metas, System.Type type)
 		{
-			IEntityMeta ret;
-			if (!metas.TryGetValue(type, out ret))
+			if (!metas.TryGetValue(type, out var ret))
 			{
 				ret = new EntityMeta();
 				metas[type] = ret;

@@ -234,11 +234,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			foreach (var selectable in columnIterator)
 			{
-				var column = selectable as Column;
-				if (column != null)
+				if (selectable is Column column)
+				{
 					addColumn(element, column);
+				}
 				else
+				{
 					addFormula(element, (Formula)selectable);
+				}
 			}
 		}
 

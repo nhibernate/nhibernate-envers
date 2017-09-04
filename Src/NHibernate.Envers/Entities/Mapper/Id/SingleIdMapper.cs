@@ -54,9 +54,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 				return null;
 			}
 
-			var proxy = data as INHibernateProxy;
-
-			if (proxy != null)
+			if (data is INHibernateProxy proxy)
 			{
 				return proxy.HibernateLazyInitializer.Identifier;
 			}
@@ -77,8 +75,7 @@ namespace NHibernate.Envers.Entities.Mapper.Id
 			}
 			else
 			{
-				var proxy = obj as INHibernateProxy;
-				if (proxy != null)
+				if (obj is INHibernateProxy proxy)
 				{
 					data.Add(_propertyData.Name, proxy.HibernateLazyInitializer.Identifier);
 				}

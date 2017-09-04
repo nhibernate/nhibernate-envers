@@ -43,15 +43,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Component
 				var propertyName = keyValue.Key.Name;
 				var nestedMapper = keyValue.Value;
 
-				var nestedCompositeMapper = nestedMapper as ICompositeMapperBuilder;
-				if (nestedCompositeMapper != null)
+				if (nestedMapper is ICompositeMapperBuilder nestedCompositeMapper)
 				{
 					addMiddleEqualToQuery(nestedCompositeMapper, parameters, prefix1, prefix2);
 				}
 				else
 				{
-					var nestedToOneIdMapper = nestedMapper as ToOneIdMapper;
-					if (nestedToOneIdMapper != null)
+					if (nestedMapper is ToOneIdMapper nestedToOneIdMapper)
 					{
 						nestedToOneIdMapper.AddMiddleEqualToQuery(parameters, prefix1, prefix2);
 					}

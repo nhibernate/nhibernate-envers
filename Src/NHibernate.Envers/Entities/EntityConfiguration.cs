@@ -21,13 +21,13 @@ namespace NHibernate.Envers.Entities
 			relations = new Dictionary<string, RelationDescription>();
 		}
 	
-		public string VersionsEntityName { get; private set; }
-		public string EntityClassName { get; private set; }
+		public string VersionsEntityName { get; }
+		public string EntityClassName { get; }
 		public IdMappingData IdMappingData { get; }
-		public IExtendedPropertyMapper PropertyMapper { get; private set; }
+		public IExtendedPropertyMapper PropertyMapper { get; }
 		// Maps from property name
 		private readonly IDictionary<string, RelationDescription> relations;
-		public string ParentEntityName { get; private set; }
+		public string ParentEntityName { get; }
 
 		public IIdMapper IdMapper => IdMappingData.IdMapper;
 
@@ -77,6 +77,6 @@ namespace NHibernate.Envers.Entities
 			return relations.ContainsKey(propertyName)? relations[propertyName]: null;
 		}
 
-		public Func<System.Type, object> Factory { get; private set; }
+		public Func<System.Type, object> Factory { get; }
 	}
 }

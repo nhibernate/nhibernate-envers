@@ -5,7 +5,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public class EntityXmlMappingData
 	{
-		public XDocument MainXmlMapping { get; private set; }
+		public XDocument MainXmlMapping { get; }
 		public IList<XDocument> AdditionalXmlMappings { get; }
 
 		/// <summary>

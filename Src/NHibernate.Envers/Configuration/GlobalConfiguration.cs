@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// Should a revision be generated when a not-owned relation field changes
 		/// </summary>
-		public bool GenerateRevisionsForCollections { get; private set; }
+		public bool GenerateRevisionsForCollections { get; }
 
 		public bool IsTrackEntitiesChangedInRevisionEnabled { get; private set; }
 
@@ -44,7 +44,7 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// Should the optimistic locking property of an entity be considered unversioned
 		/// </summary>
-		public bool DoNotAuditOptimisticLockingField { get; private set; }
+		public bool DoNotAuditOptimisticLockingField { get; }
 
 		/// <summary>
 		/// Which operator to use in correlated subqueries (when we want a property to be equal to the result of
@@ -54,32 +54,32 @@ namespace NHibernate.Envers.Configuration
 		/// By default the value is "=". However, HSQLDB has an issue related to that, so as a workaround,
 		/// "in" is used.
 		/// </remarks>
-		public string CorrelatedSubqueryOperator { get; private set; }
+		public string CorrelatedSubqueryOperator { get; }
 
 		/// <summary>
 		/// Should entity data be stored when it is deleted
 		/// </summary>
-		public bool StoreDataAtDelete { get; private set; }
+		public bool StoreDataAtDelete { get; }
 
 		/// <summary>
 		/// The default name of the schema of audit tables.
 		/// </summary>
-		public string DefaultSchemaName { get; private set; }
+		public string DefaultSchemaName { get; }
 
 		/// <summary>
 		/// The default name of the catalog of the audit tables.
 		/// </summary>
-		public string DefaultCatalogName { get; private set; }
+		public string DefaultCatalogName { get; }
 
-		public ICollectionMapperFactory CollectionMapperFactory { get; private set; }
-		public IEnversProxyFactory EnversProxyFactory { get; private set; }
+		public ICollectionMapperFactory CollectionMapperFactory { get; }
+		public IEnversProxyFactory EnversProxyFactory { get; }
 
-		public bool IsGlobalWithModifiedFlag { get; private set; }
-		public string ModifiedFlagSuffix { get; private set; }
+		public bool IsGlobalWithModifiedFlag { get; }
+		public string ModifiedFlagSuffix { get; }
 
-		public IPostInstantiationListener PostInstantiationListener { get; private set; }
+		public IPostInstantiationListener PostInstantiationListener { get; }
 
 		public IAuditStrategy AuditStrategy { get; }
-		public bool AllowIdentifierReuse { get; private set; }
+		public bool AllowIdentifierReuse { get; }
 	}
 }

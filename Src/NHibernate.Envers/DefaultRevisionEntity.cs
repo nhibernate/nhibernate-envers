@@ -15,8 +15,7 @@ namespace NHibernate.Envers
 		public override bool Equals(object obj)
 		{
 			if (this == obj) return true;
-			var revisionEntity = obj as DefaultRevisionEntity;
-			if (revisionEntity == null) return false;
+			if (!(obj is DefaultRevisionEntity revisionEntity)) return false;
 
 			var that = revisionEntity;
 

@@ -50,8 +50,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			{
 				return null;
 			}
-			var oldCollAsDic = oldCollection as IDictionary;
-			if (oldCollAsDic != null)
+			if (oldCollection is IDictionary oldCollAsDic)
 			{
 				return oldCollAsDic.Keys;
 			}

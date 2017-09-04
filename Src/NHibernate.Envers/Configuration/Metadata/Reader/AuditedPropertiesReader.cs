@@ -124,8 +124,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private IEnumerable<AuditOverrideAttribute> computeAuditOverrides(System.Type clazz)
 		{
-			IEntityMeta entityMeta;
-			return _metaDataStore.EntityMetas.TryGetValue(clazz, out entityMeta) ? 
+			return _metaDataStore.EntityMetas.TryGetValue(clazz, out var entityMeta) ? 
 				entityMeta.ClassMetas.OfType<AuditOverrideAttribute>().ToList() : 
 				Enumerable.Empty<AuditOverrideAttribute>();
 		}
@@ -203,8 +202,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 				var propertyValue = declaredPersistentProperty.Property.Value;
 
-				var componentValue = propertyValue as Component;
-				if (componentValue != null)
+				if (propertyValue is Component componentValue)
 				{
 					if (declaredPersistentProperty.Member.Equals(DeclaredPersistentProperty.NotAvailableMemberInfo))
 					{
@@ -418,9 +416,8 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		 */
 		private bool processPropertyAuditingOverrides(MemberInfo property, PropertyAuditingData propertyData)
 		{
-			var audPropHolderAsComponentAudData = _auditedPropertiesHolder as ComponentAuditingData;
 			// if this property is part of a component, process all override annotations
-			if (audPropHolderAsComponentAudData != null)
+			if (_auditedPropertiesHolder is ComponentAuditingData audPropHolderAsComponentAudData)
 			{
 				var overrides = audPropHolderAsComponentAudData.AuditingOverrides;
 				foreach (var ovr in overrides)

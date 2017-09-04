@@ -22,8 +22,7 @@ namespace NHibernate.Envers.Synchronization
 		{
 			var transaction = session.Transaction;
 
-			AuditProcess auditProcess;
-			if (!_auditProcesses.TryGetValue(transaction, out auditProcess))
+			if (!_auditProcesses.TryGetValue(transaction, out var auditProcess))
 			{
 				// No worries about registering a transaction twice - a transaction is single thread
 				auditProcess = new AuditProcess(_revisionInfoGenerator, session);
@@ -31,8 +30,7 @@ namespace NHibernate.Envers.Synchronization
 
 				session.ActionQueue.RegisterProcess(() =>
 				                                    	{
-				                                    		AuditProcess currentProcess;
-																		if(_auditProcesses.TryGetValue(transaction, out currentProcess))
+						                                    if(_auditProcesses.TryGetValue(transaction, out var currentProcess))
 																		{
 																			currentProcess.DoBeforeTransactionCompletion();
 																		}

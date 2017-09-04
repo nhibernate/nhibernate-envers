@@ -32,21 +32,18 @@ namespace NHibernate.Envers.Configuration.Store
 
 		public T ClassMeta<T>(System.Type entityType) where T : Attribute
 		{
-			IEntityMeta entityMeta;
 			var attrType = typeof (T);
-			if (!EntityMetas.TryGetValue(entityType, out entityMeta))
+			if (!EntityMetas.TryGetValue(entityType, out var entityMeta))
 				return null;
 			return entityMeta.ClassMetas.Where(enversAttribute => enversAttribute.GetType() == attrType).Cast<T>().FirstOrDefault();
 		}
 
 		public T MemberMeta<T>(MemberInfo member) where T : Attribute
 		{
-			IEntityMeta entityMeta;
 			var attrType = typeof(T);
-			if (!EntityMetas.TryGetValue(member.ReflectedType, out entityMeta))
+			if (!EntityMetas.TryGetValue(member.ReflectedType, out var entityMeta))
 				return null;
-			IEnumerable<Attribute> attributes;
-			if (!entityMeta.MemberMetas.TryGetValue(member, out attributes))
+			if (!entityMeta.MemberMetas.TryGetValue(member, out var attributes))
 				return null;
 
 			foreach (var enversAttribute in attributes)

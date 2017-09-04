@@ -42,13 +42,13 @@ namespace NHibernate.Envers.Configuration
 
 		public string OriginalIdPropName { get; }
 		public string RevisionFieldName { get; }
-		public string RevisionNumberPath { get; private set; }
-		public string RevisionTypePropName { get; private set; }
-		public string RevisionEndFieldName { get; private set; }
+		public string RevisionNumberPath { get; }
+		public string RevisionTypePropName { get; }
+		public string RevisionEndFieldName { get; }
 		public bool IsRevisionEndTimestampEnabled { get; }
-		public string RevisionEndTimestampFieldName { get; private set; }
+		public string RevisionEndTimestampFieldName { get; }
 		public string RevisionInfoEntityAssemblyQualifiedName { get; }
-		public string EmbeddableSetOrdinalPropertyName { get; private set; }
+		public string EmbeddableSetOrdinalPropertyName { get; }
 
 		/// <summary>
 		/// Returns the class name without the assembly name. Used for generating querries
@@ -93,8 +93,7 @@ namespace NHibernate.Envers.Configuration
 
 		public string AuditTableName(string entityName, PersistentClass persistentClass)
 		{
-			string dicValue;
-			return _customAuditTablesNames.TryGetValue(entityName, out dicValue) ? 
+			return _customAuditTablesNames.TryGetValue(entityName, out var dicValue) ? 
 						dicValue : 
 						_namingStrategy.AuditTableName(persistentClass);
 		}

@@ -11,8 +11,7 @@ namespace NHibernate.Envers.Tools
 				return false;
 			foreach (var xKeyValue in x)
 			{
-				V yValue;
-				if (y.TryGetValue(xKeyValue.Key, out yValue))
+				if (y.TryGetValue(xKeyValue.Key, out var yValue))
 				{
 					if (!xKeyValue.Value.Equals(yValue))
 						return false;

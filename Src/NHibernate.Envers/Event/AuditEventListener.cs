@@ -82,8 +82,7 @@ namespace NHibernate.Envers.Event
 			string toEntityName;
 			object id;
 
-			var newValueAsProxy = value as INHibernateProxy;
-			if (newValueAsProxy != null)
+			if (value is INHibernateProxy newValueAsProxy)
 			{
 				toEntityName = session.BestGuessEntityName(value);
 				id = newValueAsProxy.HibernateLazyInitializer.Identifier;

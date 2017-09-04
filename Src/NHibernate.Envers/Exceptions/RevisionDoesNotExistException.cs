@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Exceptions
 			DateTime = date;
 		}
 
-		public long Revision { get; private set; }
-		public DateTime DateTime { get; private set; }
+		public long Revision { get; }
+		public DateTime DateTime { get; }
 	}
 }

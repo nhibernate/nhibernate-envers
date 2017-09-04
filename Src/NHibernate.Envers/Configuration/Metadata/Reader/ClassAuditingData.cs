@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		}
 
 		//called SecondaryTableDictionary in Hibernate Envers
-		public IDictionary<string, string> JoinTableDictionary { get; private set; }
+		public IDictionary<string, string> JoinTableDictionary { get; }
 		public AuditTableAttribute AuditTable { get; set; }
 		public AuditFactoryAttribute Factory { get; set; }
 
@@ -31,8 +31,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public PropertyAuditingData GetPropertyAuditingData(string propertyName)
 		{
-			PropertyAuditingData ret;
-			return _properties.TryGetValue(propertyName, out ret) ? ret : null;
+			return _properties.TryGetValue(propertyName, out var ret) ? ret : null;
 		}
 
 		public bool IsEmpty()

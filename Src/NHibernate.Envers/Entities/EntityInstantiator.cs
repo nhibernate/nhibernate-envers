@@ -46,9 +46,8 @@ namespace NHibernate.Envers.Entities
 
 			var primaryKey = idMapper.MapToIdFromMap(originalId);
 
-			object ret;
 			// Checking if the entity is in cache
-			if (AuditReaderImplementor.FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out ret)) 
+			if (AuditReaderImplementor.FirstLevelCache.TryGetValue(entityName, revision, primaryKey, out var ret)) 
 			{
 				return ret;
 			}

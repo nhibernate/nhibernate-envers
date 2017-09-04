@@ -11,6 +11,6 @@ namespace NHibernate.Envers.Exceptions
 			EntityName = entityName;
 		}
 
-		public string EntityName { get; private set; }
+		public string EntityName { get; }
 	}
 }

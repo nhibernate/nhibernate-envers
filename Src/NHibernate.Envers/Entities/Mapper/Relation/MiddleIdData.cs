@@ -20,9 +20,9 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			AuditEntityName = audited ? verEntCfg.GetAuditEntityName(entityName) : null;
 		}
 
-		public IIdMapper OriginalMapper { get; private set; }
-		public IIdMapper PrefixedMapper { get; private set; }
-		public string EntityName { get; private set; }
+		public IIdMapper OriginalMapper { get; }
+		public IIdMapper PrefixedMapper { get; }
+		public string EntityName { get; }
 		public string AuditEntityName { get; }
 
 		/// <summary>

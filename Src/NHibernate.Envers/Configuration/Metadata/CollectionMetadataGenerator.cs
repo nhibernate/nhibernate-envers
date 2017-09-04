@@ -344,8 +344,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private MiddleComponentData addIndex(XElement middleEntityXml, QueryGeneratorBuilder queryGeneratorBuilder)
 		{
-			var indexedValue = _propertyValue as IndexedCollection;
-			if (indexedValue != null)
+			if (_propertyValue is IndexedCollection indexedValue)
 			{
 				var idMatch = false;
 				Property referencedProperty = null;
@@ -695,8 +694,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			foreach (var property in referencedClass.PropertyIterator)
 			{
-				var propValueAsColl = property.Value as Mapping.Collection;
-				if (propValueAsColl != null)
+				if (property.Value is Mapping.Collection propValueAsColl)
 				{
 					// The equality is intentional. We want to find a collection property with the same collection table.
 					if (propValueAsColl.CollectionTable == collectionTable)

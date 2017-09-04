@@ -46,24 +46,22 @@ namespace NHibernate.Envers.Configuration
 
 		public GlobalConfiguration GlobalCfg { get; }
 		public AuditEntitiesConfiguration AuditEntCfg { get; }
-		public AuditProcessManager AuditProcessManager { get; private set; }
-		public EntitiesConfigurations EntCfg { get; private set; }
-		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; private set; }
-		public RevisionInfoNumberReader RevisionInfoNumberReader { get; private set; }
-		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; private set; }
-		public IGetter RevisionTimestampGetter { get; private set; }
+		public AuditProcessManager AuditProcessManager { get; }
+		public EntitiesConfigurations EntCfg { get; }
+		public RevisionInfoQueryCreator RevisionInfoQueryCreator { get; }
+		public RevisionInfoNumberReader RevisionInfoNumberReader { get; }
+		public ModifiedEntityNamesReader ModifiedEntityNamesReader { get; }
+		public IGetter RevisionTimestampGetter { get; }
 
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public static AuditConfiguration GetFor(Cfg.Configuration cfg)
 		{
-			AuditConfiguration verCfg;
-			if (!configurations.TryGetValue(cfg, out verCfg))
+			if (!configurations.TryGetValue(cfg, out var verCfg))
 			{
 				cfg.SetEnversProperty(ConfigurationKey.UniqueConfigurationName, Guid.NewGuid().ToString());
 				cfg.BuildMappings(); // force secondpass for mappings added by users
-				IMetaDataProvider metas;
-				if (!configurationMetadataProvider.TryGetValue(cfg, out metas))
+				if (!configurationMetadataProvider.TryGetValue(cfg, out var metas))
 				{
 					metas = new AttributeConfiguration();
 				}

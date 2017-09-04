@@ -80,8 +80,7 @@ namespace NHibernate.Envers.Entities
 		{
 			if (versionsEntityName == null)
 				return null;
-			string ret;
-			return _entityNamesForVersionsEntityNames.TryGetValue(versionsEntityName, out ret) ? ret : null;
+			return _entityNamesForVersionsEntityNames.TryGetValue(versionsEntityName, out var ret) ? ret : null;
 		}
 
 		public bool IsVersioned(string entityName)

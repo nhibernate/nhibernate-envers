@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 	{
 		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditMetadataGenerator));
 
-		public Cfg.Configuration Cfg { get; private set; }
+		public Cfg.Configuration Cfg { get; }
 		public GlobalConfiguration GlobalCfg { get; }
 		public AuditEntitiesConfiguration VerEntCfg { get; }
 		private readonly XElement revisionInfoRelationMapping;
@@ -280,14 +280,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 				// Determining the table name. If there is no entry in the dictionary, just constructing the table name
 				// as if it was an entity (by appending/prepending configured strings).
-				string auditTableName;
-				if (!auditingData.JoinTableDictionary.TryGetValue(join.Table.Name, out auditTableName))
+				if (!auditingData.JoinTableDictionary.TryGetValue(join.Table.Name, out var auditTableName))
 				{
 					auditTableName = VerEntCfg.JoinTableName(join);
 				}
 
 				var schema = GetSchema(auditingData.AuditTable.Schema, join.Table);
-				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);				
+				var catalog = GetCatalog(auditingData.AuditTable.Catalog, join.Table);
 
 				var joinElement = MetadataTools.CreateJoin(parent, auditTableName, schema, catalog);
 				joinElements.Add(join, joinElement);
@@ -305,8 +304,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var entityJoin = entitiesJoins[entityName];
 			foreach (var join in pc.JoinIterator)
 			{
-				XElement joinElement;
-				if (entityJoin.TryGetValue(join, out joinElement))
+				if (entityJoin.TryGetValue(join, out var joinElement))
 				{
 					addProperties(joinElement, join.PropertyIterator, currentMapper, auditingData, entityName, xmlMappingData, firstPass);
 				}
@@ -357,8 +355,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Getting the property mapper of the parent - when mapping properties, they need to be included
 			var parentEntityName = pc.Superclass.EntityName;
 
-			EntityConfiguration parentConfiguration;
-			if (!EntitiesConfigurations.TryGetValue(parentEntityName, out parentConfiguration))
+			if (!EntitiesConfigurations.TryGetValue(parentEntityName, out var parentConfiguration))
 			{
 				throw new MappingException("Entity '" + pc.EntityName + "' is audited, but its superclass: '" + parentEntityName + "' is not.");
 			}
