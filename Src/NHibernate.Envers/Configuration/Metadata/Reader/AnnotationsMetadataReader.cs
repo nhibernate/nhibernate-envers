@@ -74,8 +74,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		private void addAuditSecondaryTables(System.Type typ)
 		{
-			IEntityMeta entityMeta;
-			if (_metaDataStore.EntityMetas.TryGetValue(typ, out entityMeta))
+			if (_metaDataStore.EntityMetas.TryGetValue(typ, out var entityMeta))
 			{
 				var joinAuditTableAttributes = entityMeta.ClassMetas.OfType<JoinAuditTableAttribute>().ToList();
 				foreach (var joinAuditTableAttribute in joinAuditTableAttributes)

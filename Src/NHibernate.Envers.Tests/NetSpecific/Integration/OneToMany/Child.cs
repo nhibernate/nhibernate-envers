@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToMany
 	{
 		public virtual Guid Id { get; set; }
 		public virtual string Str { get; set; }
-		public virtual string SomeFormula { get; protected set; } //NHE-135
+		public virtual string SomeFormula { get; protected set; }
 
 		public override bool Equals(object obj)
 		{

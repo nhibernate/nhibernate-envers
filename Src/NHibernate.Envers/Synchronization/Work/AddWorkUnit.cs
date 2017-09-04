@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Synchronization.Work
 			this.data = data;
 		}
 
-		internal object[] State { get; private set; }
+		internal object[] State { get; }
 
 		public override bool ContainsWork()
 		{

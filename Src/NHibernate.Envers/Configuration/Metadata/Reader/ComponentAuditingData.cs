@@ -18,8 +18,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public PropertyAuditingData GetPropertyAuditingData(string propertyName)
 		{
-			PropertyAuditingData ret;
-			properties.TryGetValue(propertyName, out ret);
+			properties.TryGetValue(propertyName, out var ret);
 			return ret;
 		}
 

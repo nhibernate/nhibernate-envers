@@ -10,9 +10,9 @@
 			Catalog = catalog;
 		}
 
-		public string AuditEntityName { get; private set; }
-		public string AuditTableName { get; private set; }
-		public string Schema { get; private set; }
-		public string Catalog { get; private set; }
+		public string AuditEntityName { get; }
+		public string AuditTableName { get; }
+		public string Schema { get; }
+		public string Catalog { get; }
 	}
 }

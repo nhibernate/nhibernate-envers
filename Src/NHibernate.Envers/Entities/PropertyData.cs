@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Entities
 		public string BeanName { get; }
 		public string AccessType { get; }
 		public bool UsingModifiedFlag { get; }
-		public string ModifiedFlagPropertyName { get; private set; }
+		public string ModifiedFlagPropertyName { get; }
 
 
 		public override bool Equals(object obj) 

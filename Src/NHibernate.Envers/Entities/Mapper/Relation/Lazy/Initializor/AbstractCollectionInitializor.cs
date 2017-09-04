@@ -26,7 +26,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 			EntityInstantiator = new EntityInstantiator(verCfg, versionsReader);
 		}
 
-		protected EntityInstantiator EntityInstantiator { get; private set; }
+		protected EntityInstantiator EntityInstantiator { get; }
 		protected long Revision { get; }
 
 		protected abstract T InitializeCollection(int size);

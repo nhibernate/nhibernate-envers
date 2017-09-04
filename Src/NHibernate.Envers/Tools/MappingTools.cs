@@ -25,13 +25,11 @@ namespace NHibernate.Envers.Tools
 		/// <returns></returns>
 		public static bool IgnoreNotFound(IValue value)
 		{
-			var mtoValue = value as ManyToOne;
-			if (mtoValue != null)
+			if (value is ManyToOne mtoValue)
 			{
 				return mtoValue.IsIgnoreNotFound;
 			}
-			var otmValue = value as OneToMany;
-			if (otmValue != null)
+			if (value is OneToMany otmValue)
 			{
 				return otmValue.IsIgnoreNotFound;
 			}
@@ -49,17 +47,15 @@ namespace NHibernate.Envers.Tools
 
 		public static string ReferencedEntityName(IValue value)
 		{
-			var valueToOne = value as ToOne;
-			if (valueToOne!=null) 
-				return valueToOne.ReferencedEntityName;
-
-			var valueOneToMany = value as OneToMany;
-			if (valueOneToMany != null)
-				return valueOneToMany.ReferencedEntityName;
-
-			var valueCollection = value as Mapping.Collection;
-			if (valueCollection != null)
-				return ReferencedEntityName(valueCollection.Element);
+			switch (value)
+			{
+				case ToOne valueToOne:
+					return valueToOne.ReferencedEntityName;
+				case OneToMany valueOneToMany:
+					return valueOneToMany.ReferencedEntityName;
+				case Mapping.Collection valueCollection:
+					return ReferencedEntityName(valueCollection.Element);
+			}
 
 			return null;
 		}

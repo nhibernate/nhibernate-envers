@@ -24,7 +24,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		public object EntityId { get; }
 		public string EntityName { get; }
 		public RevisionType RevisionType { get; }
-		protected ISessionImplementor SessionImplementor { get; private set; }
+		protected ISessionImplementor SessionImplementor { get; }
 		protected AuditConfiguration VerCfg { get; }
 
 		protected void FillDataWithId(IDictionary<string, object> data, object revision) 

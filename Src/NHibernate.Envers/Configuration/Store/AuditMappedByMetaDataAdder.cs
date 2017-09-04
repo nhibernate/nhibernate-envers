@@ -97,8 +97,7 @@ namespace NHibernate.Envers.Configuration.Store
 		private static void mightAddIndexToAttribute(AuditMappedByAttribute auditMappedByAttribute, Mapping.Collection collectionValue, IEnumerable<Property> referencedProperties)
 		{
 			//check index value
-			var indexValue = collectionValue as IndexedCollection;
-			if (indexValue == null) return;
+			if (!(collectionValue is IndexedCollection indexValue)) return;
 			foreach (var referencedProperty in referencedProperties)
 			{
 				if (MappingTools.SameColumns(referencedProperty.ColumnIterator, indexValue.Index.ColumnIterator) &&

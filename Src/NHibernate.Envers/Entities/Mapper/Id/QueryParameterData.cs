@@ -28,8 +28,7 @@
 		public override bool Equals(object obj)
 		{
 			if (this == obj) return true;
-			var casted = obj as QueryParameterData;
-			if (casted == null) return false;
+			if (!(obj is QueryParameterData casted)) return false;
 
 			return QueryParameterName?.Equals(casted.QueryParameterName) ?? casted.QueryParameterName == null;
 		}

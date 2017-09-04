@@ -181,11 +181,9 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		private IPropertyMapper propertyMapperKey(string referencingPropertyName)
 		{
-			PropertyData propertyData;
-			if (_propertyDatas.TryGetValue(referencingPropertyName, out propertyData))
+			if (_propertyDatas.TryGetValue(referencingPropertyName, out var propertyData))
 			{
-				IPropertyMapper propertyMapper;
-				if (Properties.TryGetValue(propertyData, out propertyMapper))
+				if (Properties.TryGetValue(propertyData, out var propertyMapper))
 				{
 					return propertyMapper;
 				}

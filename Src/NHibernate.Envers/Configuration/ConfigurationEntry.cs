@@ -15,8 +15,7 @@ namespace NHibernate.Envers.Configuration
 
 		protected string PropertyValue(IDictionary<string, string> nhibernateProperties)
 		{
-			string stringValue;
-			if (!nhibernateProperties.TryGetValue(_key, out stringValue))
+			if (!nhibernateProperties.TryGetValue(_key, out var stringValue))
 			{
 				stringValue = _defaultValueAsString;
 			}

@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent.JoinWithDynamicComponent
 {
-	//NHE-73
 	public class BasicJoinWithDynamicComponentTest : TestBase
 	{
 		private long id_car1;

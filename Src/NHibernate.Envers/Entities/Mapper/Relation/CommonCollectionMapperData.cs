@@ -21,10 +21,10 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 			QueryGenerator = queryGenerator;
 		}
 
-		public AuditEntitiesConfiguration VerEntCfg { get; private set; }
-		public string VersionsMiddleEntityName { get; private set; }
-		public PropertyData CollectionReferencingPropertyData { get; private set; }
-		public MiddleIdData ReferencingIdData { get; private set; }
-		public IRelationQueryGenerator QueryGenerator { get; private set; }
+		public AuditEntitiesConfiguration VerEntCfg { get; }
+		public string VersionsMiddleEntityName { get; }
+		public PropertyData CollectionReferencingPropertyData { get; }
+		public MiddleIdData ReferencingIdData { get; }
+		public IRelationQueryGenerator QueryGenerator { get; }
 	}
 }

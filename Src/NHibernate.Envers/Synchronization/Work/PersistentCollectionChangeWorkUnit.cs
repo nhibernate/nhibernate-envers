@@ -95,9 +95,7 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		public override IAuditWorkUnit Dispatch(IWorkUnitMergeVisitor first)
 		{
-			var original = first as PersistentCollectionChangeWorkUnit;
-
-			if (original != null) 
+			if (first is PersistentCollectionChangeWorkUnit original) 
 			{
 			
 				// Merging the collection changes in both work units.

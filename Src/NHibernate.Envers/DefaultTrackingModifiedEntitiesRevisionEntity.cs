@@ -20,8 +20,7 @@ namespace NHibernate.Envers
 		{
 			if (this == obj)
 				return true;
-			var casted = obj as DefaultTrackingModifiedEntitiesRevisionEntity;
-			if (casted == null)
+			if (!(obj is DefaultTrackingModifiedEntitiesRevisionEntity casted))
 				return false;
 			if (!base.Equals(obj))
 				return false;

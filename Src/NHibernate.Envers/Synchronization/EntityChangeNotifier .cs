@@ -28,8 +28,7 @@ namespace NHibernate.Envers.Synchronization
 		public void EntityChanged(object currentRevisionData, IAuditWorkUnit vwu)
 		{
 			var entityId = vwu.EntityId;
-			var idAsPersistentColl = entityId as PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId;
-			if (idAsPersistentColl != null)
+			if (entityId is PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId idAsPersistentColl)
 			{
 				entityId = idAsPersistentColl.OwnerId;
 			}

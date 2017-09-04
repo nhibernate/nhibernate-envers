@@ -49,15 +49,15 @@ namespace NHibernate.Envers.Entities
 			Bidirectional = false;
 		}
 
-		public string FromPropertyName { get; private set;}
-		public RelationType RelationType { get; private set; }
-		public string ToEntityName { get; private set; }
-		public string MappedByPropertyName { get; private set; }
-		public IIdMapper IdMapper { get; private set; }
-		public IPropertyMapper FakeBidirectionalRelationMapper { get; private set; }
-		public IPropertyMapper FakeBidirectionalRelationIndexMapper { get; private set; }
-		public bool Insertable { get; private set; }
-		public bool IsIgnoreNotFound { get; private set; }
+		public string FromPropertyName { get; }
+		public RelationType RelationType { get; }
+		public string ToEntityName { get; }
+		public string MappedByPropertyName { get; }
+		public IIdMapper IdMapper { get; }
+		public IPropertyMapper FakeBidirectionalRelationMapper { get; }
+		public IPropertyMapper FakeBidirectionalRelationIndexMapper { get; }
+		public bool Insertable { get; }
+		public bool IsIgnoreNotFound { get; }
 		public bool Bidirectional { get; set; }
 	}
 }

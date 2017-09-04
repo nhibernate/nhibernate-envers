@@ -2,7 +2,6 @@
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
-	//NHE-32
 	public class SetOfValuesTest : ValidityTestBase
 	{
 		private int id;

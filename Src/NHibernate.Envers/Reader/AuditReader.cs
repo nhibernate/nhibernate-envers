@@ -174,8 +174,7 @@ namespace NHibernate.Envers.Reader
 
 		public object GetCurrentRevision(bool persist)
 		{
-			var sessionAsEventSource = Session as IEventSource;
-			if (sessionAsEventSource == null)
+			if (!(Session is IEventSource sessionAsEventSource))
 			{
 				throw new NotSupportedException("The provided session is not an EventSource!");
 			}
@@ -211,13 +210,11 @@ namespace NHibernate.Envers.Reader
 
 		public string GetEntityName(object primaryKey, long revision, object entity)
 		{
-			string ret;
-			var proxy = entity as INHibernateProxy;
-			if (proxy!=null)
+			if (entity is INHibernateProxy proxy)
 			{
 				entity = proxy.HibernateLazyInitializer.GetImplementation();
 			}
-			if (FirstLevelCache.TryGetEntityName(primaryKey, revision, entity, out ret))
+			if (FirstLevelCache.TryGetEntityName(primaryKey, revision, entity, out var ret))
 			{
 				return ret;
 			}
