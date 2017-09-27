@@ -1,3 +1,18 @@
+=== v2.3 GA (v 2.3.0.0), 2017-09-27, NH 4.1 GA ===
+
+** Bug
+* [NHE-139] - Error when auditing child collection in subclass
+* [NHE-158] - Envers mistakenly associate two relation ends with the same db column
+* [NHE-159] - Problems with modified flag when entity both persisted and merged in same transaction
+
+** Task
+* [NHE-156] - Remove dep to NHs ThreadSafeDictionary
+
+** Improvement
+* [NHE-157] - Don't force user to create ICustomCollectionMapperFactory if using custom NH user collection type
+
+
+
 === v2.2 GA (v 2.2.0.0), 2016-12-23, NH 4.1 GA ===
 
 ** Bug
