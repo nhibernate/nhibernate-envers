@@ -3,7 +3,7 @@ SET SRCDIR=%~dp0
 set SRCDIR=%SRCDIR:~0,-7%
 set nugetfolder="%SRCDIR%\.nuget"
 set packageFolder="%SRCDIR%\packages"
-set msbuild="%PROGRAMFILES(X86)%\MSBuild\14.0\bin\msbuild.exe"
+set msbuild="%PROGRAMFILES(X86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\MSBuild.exe"
 set configuration=Release
 set msbuildtasksVersion=1.4.0.65
 
