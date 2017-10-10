@@ -12,13 +12,13 @@
 		<tags>Audit, NHibernate, Envers, History, Auditing</tags>
 		<projectUrl>https://bitbucket.org/RogerKratz/nhibernate.envers</projectUrl>
 		<dependencies>
-			<dependency id="NHibernate" version="[4.1, 4.2)" />
+			<dependency id="NHibernate" version="[5.0, 5.1)" />
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.dll" target="lib\Net40" />
-		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.pdb" target="lib\Net40" />
-		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.xml" target="lib\Net40" />
+		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.dll" target="lib\net461" />
+		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.pdb" target="lib\net461" />
+		<file src="..\nhibernate.envers\bin\release\NHibernate.Envers.xml" target="lib\net461" />
 		<file src="..\nhibernate.envers\**\*.cs" target="src"/>
 		<file src="..\releasenotes.txt" target="readme.txt"/>
 	</files>
