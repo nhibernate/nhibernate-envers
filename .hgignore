@@ -38,3 +38,4 @@ glob:Src/lint.db
 Src/Envers.sln.docstates
 Src/packages*/
 .idea
+.vs
