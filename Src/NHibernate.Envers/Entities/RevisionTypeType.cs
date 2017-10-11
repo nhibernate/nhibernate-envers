@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
+using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 
@@ -14,13 +16,13 @@ namespace NHibernate.Envers.Entities
 
 		public System.Type ReturnedType => typeof(RevisionType);
 
-		public object NullSafeGet(IDataReader rs, string[] names, object owner)
+		public object NullSafeGet(DbDataReader rs, string[] names, ISessionImplementor session, object owner)
 		{
-			var enumAsInt = Convert.ToByte(NHibernateUtil.Int16.NullSafeGet(rs, names));
+			var enumAsInt = Convert.ToByte(NHibernateUtil.Int16.NullSafeGet(rs, names, session));
 			return Enum.ToObject(typeof (RevisionType), enumAsInt);
 		}
 
-		public void NullSafeSet(IDbCommand cmd, object value, int index)
+		public void NullSafeSet(DbCommand cmd, object value, int index, ISessionImplementor session)
 		{
 			if (null == value) 
 			{
@@ -28,7 +30,7 @@ namespace NHibernate.Envers.Entities
 			} 
 			else 
 			{
-				((IDbDataParameter)cmd.Parameters[index]).Value = value;
+				cmd.Parameters[index].Value = value;
 			}
 		}
 

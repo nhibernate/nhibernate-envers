@@ -1,5 +1,5 @@
 using System;
-using System.Data;
+using System.Data.Common;
 using NHibernate.Engine;
 using NHibernate.Type;
 using NHibernate.UserTypes;
@@ -52,30 +52,30 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 			return x.GetHashCode();
 		}
 
-		public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
+		public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
 		{
 			var prop1 = dr.GetString(dr.GetOrdinal(names[0]));
-			if (prop1 == null) {
+			if (prop1 == null)
+			{
 				return null;
 			}
-
-			var prop2 = (int)NHibernateUtil.Int32.NullSafeGet(dr, names[1]);
+			var prop2 = (int)NHibernateUtil.Int32.NullSafeGet(dr, names[1], session);
 
 			return new Component {Prop1 = prop1, Prop2 = prop2};
 		}
 
-		public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+		public void NullSafeSet(DbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
 		{
 			if(value==null)
 			{
-				((IDataParameter)cmd.Parameters[index]).Value = DBNull.Value;
-				((IDataParameter)cmd.Parameters[index+1]).Value = DBNull.Value;
+				cmd.Parameters[index].Value = DBNull.Value;
+				cmd.Parameters[index + 1].Value = DBNull.Value;
 			}
 			else
 			{
 				var cmp = (Component) value;
-				((IDataParameter)cmd.Parameters[index]).Value = cmp.Prop1;
-				((IDataParameter)cmd.Parameters[index + 1]).Value = cmp.Prop2;
+				cmd.Parameters[index].Value = cmp.Prop1;
+				cmd.Parameters[index + 1].Value = cmp.Prop2;
 			}
 		}
 
