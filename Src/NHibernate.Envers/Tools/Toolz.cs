@@ -17,15 +17,13 @@ namespace NHibernate.Envers.Tools
 			return ObjectsEqual(id1, id2);
 		}
 
-		private static object getIdentifier(ISessionImplementor session, object obj) 
+		private static object getIdentifier(ISessionImplementor session, object obj)
 		{
-			if (obj == null) 
-			{
-				return null;
-			}
-			return obj is INHibernateProxy objAsProxy ? 
-				objAsProxy.HibernateLazyInitializer.Identifier : 
-				session.GetEntityPersister(null, obj).GetIdentifier(obj, session.EntityMode);
+			return obj == null
+				? null
+				: (obj is INHibernateProxy objAsProxy
+					? objAsProxy.HibernateLazyInitializer.Identifier
+					: session.GetEntityPersister(null, obj).GetIdentifier(obj));
 		}
 
 		public static object GetTargetFromProxy(ISessionImplementor session, INHibernateProxy proxy) 
@@ -78,7 +76,7 @@ namespace NHibernate.Envers.Tools
 		public static System.Type ResolveEntityClass(ISessionImplementor sessionImplementor, string entityName)
 		{
 			var entityPersister = sessionImplementor.Factory.GetEntityPersister(entityName);
-			return entityPersister.GetMappedClass(sessionImplementor.EntityMode);
+			return entityPersister.MappedClass;
 		}
 
 		public static bool ArraysEqual(object[] array1, object[] array2)

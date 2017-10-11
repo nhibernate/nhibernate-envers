@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 
@@ -32,12 +34,12 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 			return x.GetHashCode();
 		}
 
-		public object NullSafeGet(IDataReader rs, string[] names, object owner)
+		public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
 		{
-			return NHibernateUtil.String.NullSafeGet(rs, names[0]);
+			return NHibernateUtil.String.NullSafeGet(dr, names[0], session);
 		}
 
-		public void NullSafeSet(IDbCommand cmd, object value, int index)
+		public void NullSafeSet(DbCommand cmd, object value, int index, ISessionImplementor session)
 		{
 			if (value != null)
 			{
@@ -50,11 +52,11 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 				{
 					v = v + param2;
 				}
-				NHibernateUtil.String.NullSafeSet(cmd, v, index);
+				NHibernateUtil.String.NullSafeSet(cmd, v, index, session);
 			}
 			else
 			{
-				NHibernateUtil.String.NullSafeSet(cmd, value, index);
+				NHibernateUtil.String.NullSafeSet(cmd, value, index, session);
 			}
 		}
 

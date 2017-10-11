@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
@@ -102,6 +104,11 @@ namespace NHibernate.Envers.Event
 			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, toPropertyName, VerCfg, id, value));
 		}
 
+		public Task OnPostInsertAsync(PostInsertEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+
 		public virtual void OnPostInsert(PostInsertEvent evt)
 		{
 			var entityName = evt.Persister.EntityName;
@@ -117,6 +124,11 @@ namespace NHibernate.Envers.Event
 				generateBidirectionalCollectionChangeWorkUnits(auditProcess, evt.Persister, entityName, evt.State,
 																		null, evt.Session);
 			}
+		}
+
+		public Task OnPostUpdateAsync(PostUpdateEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
 		}
 
 		public virtual void OnPostUpdate(PostUpdateEvent evt)
@@ -158,6 +170,11 @@ namespace NHibernate.Envers.Event
 				}
 			}
 			return newDbState;
+		}
+
+		public Task OnPostDeleteAsync(PostDeleteEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
 		}
 
 		public virtual void OnPostDelete(PostDeleteEvent evt)
@@ -315,6 +332,11 @@ namespace NHibernate.Envers.Event
 			return evt.Session.PersistenceContext.GetCollectionEntry(evt.Collection);
 		}
 
+		public Task OnPreUpdateCollectionAsync(PreCollectionUpdateEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+
 		public virtual void OnPreUpdateCollection(PreCollectionUpdateEvent evt)
 		{
 			var collectionEntry = getCollectionEntry(evt);
@@ -322,6 +344,11 @@ namespace NHibernate.Envers.Event
 			{
 				onCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
 			}
+		}
+
+		public Task OnPreRemoveCollectionAsync(PreCollectionRemoveEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
 		}
 
 		public virtual void OnPreRemoveCollection(PreCollectionRemoveEvent evt)
@@ -344,6 +371,11 @@ namespace NHibernate.Envers.Event
 					: collectionEntry.Snapshot;
 				onCollectionAction(evt, null, oldColl, collectionEntry);
 			}
+		}
+
+		public Task OnPostRecreateCollectionAsync(PostCollectionRecreateEvent @event, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
 		}
 
 		public virtual void OnPostRecreateCollection(PostCollectionRecreateEvent evt)

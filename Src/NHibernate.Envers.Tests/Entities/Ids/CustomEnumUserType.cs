@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Data.Common;
+using NHibernate.Engine;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
 
@@ -14,7 +16,7 @@ namespace NHibernate.Envers.Tests.Entities.Ids
 			{
 				return true;
 			}
-			if ((x == null) || (y == null))
+			if (x == null || y == null)
 			{
 				return false;
 			}
@@ -23,19 +25,19 @@ namespace NHibernate.Envers.Tests.Entities.Ids
 
 		public int GetHashCode(object x)
 		{
-			return (x == null) ? 0 : x.GetHashCode();
+			return x == null ? 0 : x.GetHashCode();
 		}
 
-		public object NullSafeGet(IDataReader rs, string[] names, object owner)
+		public object NullSafeGet(DbDataReader rs, string[] names, ISessionImplementor session, object owner)
 		{
-			var dbString = NHibernateUtil.String.NullSafeGet(rs, names[0]);
+			var dbString = NHibernateUtil.String.NullSafeGet(rs, names[0], session);
 			return dbString.Equals("Yes") ? CustomEnum.Yes : CustomEnum.No;
 		}
 
-		public void NullSafeSet(IDbCommand cmd, object value, int index)
+		public void NullSafeSet(DbCommand cmd, object value, int index, ISessionImplementor session)
 		{
-			var dbString = ((CustomEnum)value) == CustomEnum.Yes ? "Yes" : "No";
-			NHibernateUtil.String.NullSafeSet(cmd, dbString, index);
+			var dbString = (CustomEnum)value == CustomEnum.Yes ? "Yes" : "No";
+			NHibernateUtil.String.NullSafeSet(cmd, dbString, index, session);
 		}
 
 		public object DeepCopy(object value)
@@ -58,19 +60,10 @@ namespace NHibernate.Envers.Tests.Entities.Ids
 			return value;
 		}
 
-		public SqlType[] SqlTypes
-		{
-			get { return TYPES; }
-		}
+		public SqlType[] SqlTypes => TYPES;
 
-		public System.Type ReturnedType
-		{
-			get { return typeof(CustomEnum); }
-		}
+		public System.Type ReturnedType => typeof(CustomEnum);
 
-		public bool IsMutable
-		{
-			get { return false; }
-		}
+		public bool IsMutable => false;
 	}
 }
