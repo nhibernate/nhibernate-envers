@@ -1,3 +1,10 @@
+=== vNext ===
+
+* Targets .net 4.6.1
+* Targets NHibernate Core 5.0
+
+
+
 === v2.3 GA (v 2.3.0.0), 2017-09-27, NH 4.1 GA ===
 
 ** Bug
