@@ -34,7 +34,7 @@ namespace NHibernate.Envers.Configuration
 			revisionInfoIdData = new PropertyData("Id", "Id", "property");
 			revisionInfoTimestampData = new PropertyData("RevisionDate", "RevisionDate", "property");
 			modifiedEntityNamesData = new PropertyData("ModifiedEntityNames", "ModifiedEntityNames", "property");
-			revisionInfoTimestampType = new TimestampType(); //ORIG: LongType();
+			revisionInfoTimestampType = new DateTimeType();
 			revisionPropType = typeof(int);
 		}
 
