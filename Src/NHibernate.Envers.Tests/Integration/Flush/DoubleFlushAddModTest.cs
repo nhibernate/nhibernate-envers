@@ -14,15 +14,9 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 		{
 		}
 
-		protected override IEnumerable<string> Mappings
-		{
-			get { return new[] { "Entities.Mapping.hbm.xml" }; }
-		}
+		protected override IEnumerable<string> Mappings => new[] { "Entities.Mapping.hbm.xml" };
 
-		protected override FlushMode FlushMode
-		{
-			get { return FlushMode.Never; }
-		}
+		protected override FlushMode FlushMode => FlushMode.Manual;
 
 		protected override void Initialize()
 		{

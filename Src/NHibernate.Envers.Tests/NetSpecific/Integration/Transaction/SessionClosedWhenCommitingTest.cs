@@ -22,7 +22,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			{
 				using (var newSession = Session.SessionFactory.OpenSession())
 				{
-					newSession.FlushMode = FlushMode.Never;
+					newSession.FlushMode = FlushMode.Manual;
 					newSession.Save(entity);
 					newSession.Flush();
 				}

@@ -35,7 +35,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			int intId;
 			var willCrash = new NoSchemaEntity();
 			var intEntity = new IntTestEntity();
-			Session.FlushMode = FlushMode.Never;
+			Session.FlushMode = FlushMode.Manual;
 
 			using (Session.BeginTransaction())
 			{

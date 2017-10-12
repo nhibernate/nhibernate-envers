@@ -150,7 +150,7 @@ namespace NHibernate.Envers.Synchronization
 			}
 			var castedSession = (ISession)session;
 
-			if (castedSession.FlushMode == FlushMode.Never)
+			if (castedSession.FlushMode == FlushMode.Manual)
 			{
 				//need a "Envers session", as a user might have non flushed data in its session
 				//that shouldn't be persisted
