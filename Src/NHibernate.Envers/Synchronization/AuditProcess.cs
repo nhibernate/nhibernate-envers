@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NHibernate.Engine;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Synchronization.Work;
+using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -152,11 +153,11 @@ namespace NHibernate.Envers.Synchronization
 
 			if (castedSession.FlushMode == FlushMode.Manual)
 			{
-				//need a "Envers session", as a user might have non flushed data in its session
-				//that shouldn't be persisted
-				var tempSession = castedSession.GetSession(EntityMode.Poco);
-				executeInSession(tempSession);
-				tempSession.Flush();
+				using (var tempSession = Toolz.CreateChildSession(castedSession))
+				{
+					executeInSession(tempSession);
+					tempSession.Flush();
+				}
 			}
 			else
 			{
