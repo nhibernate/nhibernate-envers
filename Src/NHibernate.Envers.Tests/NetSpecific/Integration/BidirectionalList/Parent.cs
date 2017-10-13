@@ -18,6 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
 		{
 			get { return _children; }
 		}
+		public virtual string Name { get; set; }
 
 		public override bool Equals(object obj)
 		{

@@ -106,7 +106,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPostInsertAsync(PostInsertEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPostInsert(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPostInsert(PostInsertEvent evt)
@@ -128,7 +129,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPostUpdateAsync(PostUpdateEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPostUpdate(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPostUpdate(PostUpdateEvent evt)
@@ -174,7 +176,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPostDeleteAsync(PostDeleteEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPostDelete(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPostDelete(PostDeleteEvent evt)
@@ -334,7 +337,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPreUpdateCollectionAsync(PreCollectionUpdateEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPreUpdateCollection(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPreUpdateCollection(PreCollectionUpdateEvent evt)
@@ -348,7 +352,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPreRemoveCollectionAsync(PreCollectionRemoveEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPreRemoveCollection(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPreRemoveCollection(PreCollectionRemoveEvent evt)
@@ -375,7 +380,8 @@ namespace NHibernate.Envers.Event
 
 		public Task OnPostRecreateCollectionAsync(PostCollectionRecreateEvent @event, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			OnPostRecreateCollection(@event);
+			return Task.CompletedTask;
 		}
 
 		public virtual void OnPostRecreateCollection(PostCollectionRecreateEvent evt)
