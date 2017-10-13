@@ -124,6 +124,7 @@
     <Compile Include="NetSpecific\Integration\Access\None\ManyToOne\Model.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Entity.cs" />
+    <Compile Include="NetSpecific\Integration\Async\AuditEventListenerAsyncTest.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />

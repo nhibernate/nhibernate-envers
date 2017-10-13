@@ -14,6 +14,7 @@
       <index column ="IndexOrder" />
       <one-to-many class="Child"/>
     </list>
+	  <property name="Name"/>
   </class>
   <class name="Child">
     <id name="Id">
