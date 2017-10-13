@@ -1,7 +1,7 @@
-=== vNext ===
+=== v5.0 GA (v 5.0.0.0), 2017-10-13, NH 5.0 GA ===
 
 * Targets .net 4.6.1
-* Targets NHibernate Core 5.0
+* Version now follows NHibernate version
 
 
 
