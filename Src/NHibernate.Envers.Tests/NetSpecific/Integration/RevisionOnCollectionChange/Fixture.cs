@@ -17,8 +17,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevisionOnCollectionCh
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
 		{
 			configuration.SetEnversProperty(ConfigurationKey.GlobalWithModifiedFlag, true);
-			configuration.SetEnversProperty(ConfigurationKey.RevisionOnCollectionChange, true);
-			base.AddToConfiguration(configuration);
 		}
 
 		protected override void Initialize()

@@ -17,7 +17,7 @@
       <column name="Id" />
       <generator class="guid.comb"/>
     </id>
-    <bag name="Cars">
+    <bag name="Cars" inverse="true">
       <key>
         <column name="Owner_Id" />
       </key>
