@@ -2,7 +2,7 @@
 using NHibernate.Envers.Configuration;
 using NUnit.Framework;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevisionOnCollectionChange
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags.CollectionItemChangingParent
 {
 	[TestFixture]
 	public class Fixture : TestBase
