@@ -149,8 +149,8 @@
     <Compile Include="NetSpecific\Integration\RevInfo\Time\LongTest.cs" />
     <Compile Include="NetSpecific\Integration\ModifiedFlags\Casee.cs" />
     <Compile Include="NetSpecific\Integration\ModifiedFlags\MergeColModTest.cs" />
-    <Compile Include="NetSpecific\Integration\RevisionOnCollectionChange\Domain.cs" />
-    <Compile Include="NetSpecific\Integration\RevisionOnCollectionChange\Fixture.cs" />
+    <Compile Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Domain.cs" />
+    <Compile Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Fixture.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListClasses.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListsTestModel.cs" />
     <Compile Include="NetSpecific\UnitTests\CustomLists\CustomListTests.cs" />
@@ -804,7 +804,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="NetSpecific\Integration\RevisionOnCollectionChange\Mapping.hbm.xml" />
+    <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\MultiLevelInheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalSameColumn\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Mapping.hbm.xml" />
