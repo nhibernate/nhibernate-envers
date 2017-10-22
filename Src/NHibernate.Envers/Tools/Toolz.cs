@@ -34,12 +34,10 @@ namespace NHibernate.Envers.Tools
 			var lazyInitializer = proxy.HibernateLazyInitializer;
 			var proxySession = (ISession)lazyInitializer.Session;
 
-			using (var tempSession = proxySession == null
+			var tempSession = proxySession == null
 				? CreateChildSession((ISession) session)
-				: CreateChildSession(proxySession))
-			{
-				return tempSession.Get(lazyInitializer.EntityName, lazyInitializer.Identifier);
-			}
+				: CreateChildSession(proxySession);
+			return tempSession.Get(lazyInitializer.EntityName, lazyInitializer.Identifier);
 		}
 
 		public static bool ObjectsEqual(object obj1, object obj2)
@@ -98,7 +96,7 @@ namespace NHibernate.Envers.Tools
 
 		public static ISession CreateChildSession(ISession session)
 		{
-			return session.SessionWithOptions().Connection().Interceptor().OpenSession();
+			return session.SessionWithOptions().Connection().ConnectionReleaseMode().FlushMode().Interceptor().OpenSession();
 		}
 	}
 }
