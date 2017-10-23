@@ -1,3 +1,10 @@
+=== v5.0.1 GA (v 5.0.1.0), 2017-10-23, NH 5.0 GA ===
+
+** Bug
+* [NHE-161] - Exception on commit when RevisionOnCollectionChange property is set
+
+
+
 === v5.0 GA (v 5.0.0.0), 2017-10-13, NH 5.0 GA ===
 
 * Targets .net 4.6.1
