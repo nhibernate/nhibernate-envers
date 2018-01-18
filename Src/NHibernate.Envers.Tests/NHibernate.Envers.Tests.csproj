@@ -128,6 +128,8 @@
     <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\BidirectionalListWithDifferentAccessTest.cs" />
     <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Child.cs" />
     <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Parent.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\InverseFalse\Fixture.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\InverseFalse\Model.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />
@@ -804,6 +806,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\InverseFalse\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\MultiLevelInheritance\Mapping.hbm.xml" />
