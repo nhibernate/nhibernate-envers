@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList;
+using NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.DifferentAccessTest;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -46,6 +46,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Async
 				.Should().Be.EqualTo(4);
 		}
 
-		protected override IEnumerable<string> Mappings { get; } = new[]{ "NetSpecific.Integration.BidirectionalList.Mapping.hbm.xml" };
+		protected override IEnumerable<string> Mappings { get; } = new[]{ "NetSpecific.Integration.BidirectionalList.DifferentAccessTest.Mapping.hbm.xml" };
 	}
 }

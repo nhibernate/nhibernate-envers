@@ -125,6 +125,9 @@
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\Access\None\SimpleProperty\Entity.cs" />
     <Compile Include="NetSpecific\Integration\Async\AuditEventListenerAsyncTest.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\BidirectionalListWithDifferentAccessTest.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Child.cs" />
+    <Compile Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Parent.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassComponent.cs" />
     <Compile Include="NetSpecific\Integration\Component\BaseClassOwner.cs" />
     <Compile Include="NetSpecific\Integration\Component\DerivedClassComponent.cs" />
@@ -672,9 +675,6 @@
     <Compile Include="Integration\Versioning\NoOptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockAuditingTest.cs" />
     <Compile Include="Integration\Versioning\OptimisticLockEntity.cs" />
-    <Compile Include="NetSpecific\Integration\BidirectionalList\BidirectionalListWithDifferentAccessTest.cs" />
-    <Compile Include="NetSpecific\Integration\BidirectionalList\Child.cs" />
-    <Compile Include="NetSpecific\Integration\BidirectionalList\Parent.cs" />
     <Compile Include="NetSpecific\Integration\Access\Readonly\ReadonlyAccessTest.cs" />
     <Compile Include="NetSpecific\Integration\Access\Readonly\ReadonlyEntity.cs" />
     <Compile Include="NetSpecific\Integration\Component\ComponentOwner.cs" />
@@ -804,6 +804,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\MultiLevelInheritance\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalSameColumn\Mapping.hbm.xml" />
@@ -841,7 +842,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NetSpecific\Integration\OneToOne\Mapping.hbm.xml" />
-    <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Component\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\Access\Readonly\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\JoinAuditTable\Mapping.hbm.xml" />
@@ -1002,7 +1002,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
