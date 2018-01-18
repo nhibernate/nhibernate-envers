@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.DifferentAccessTest
 {
 	[Audited]
 	public class Parent

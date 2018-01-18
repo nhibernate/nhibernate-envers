@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.DifferentAccessTest
 {
 	public class BidirectionalListWithDifferentAccessTest : TestBase
 	{
