@@ -1,0 +1,21 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Integration.OneToMany">
+    <class name="IndexColumnListTestParent">
+        <id name="Id">
+            <generator class="assigned"/>
+        </id>
+        <list name="Children" inverse="true">
+            <key column ="parentId" />
+            <index column="childIndex"/>
+            <one-to-many class="IndexColumnListTestChild" />
+        </list>
+    </class>
+
+    <class name="IndexColumnListTestChild">
+        <id name="Id">
+            <generator class="assigned"/>
+        </id>
+        <many-to-one name="Parent" column="parentId" />
+    </class>
+</hibernate-mapping>

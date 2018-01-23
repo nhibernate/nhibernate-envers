@@ -19,7 +19,12 @@
 		/// A collection-of-references-valued relation. The entity doesn't own the relation. It is directly mapped in the related entity.
 		/// </summary>
 		ToManyNotOwning,
-
+		
+		/// <summary>
+		/// A collection-of-references-valued indexed relation. The entity partly owns the relation (either index or parent). It is directly mapped in the related entity.
+		/// </summary>
+		ToManySemiOwning,
+		
 		/// <summary>
 		/// A collection-of-references-valued relation. The entity owns the relation. It is mapped using a middle table.
 		/// </summary>

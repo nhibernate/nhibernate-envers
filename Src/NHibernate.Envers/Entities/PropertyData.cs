@@ -29,16 +29,12 @@ namespace NHibernate.Envers.Entities
 			AccessType = accessType;
 		}
 
-		/// <param name="name">Name of the property.</param>
-		/// <param name="beanName">Name of the property in the bean.</param>
-		/// <param name="accessType">Accessor type for this property.</param>
-		/// <param name="usingModifiedFlag">Defines if field changes should be tracked</param>
-		/// <param name="modifiedFlagName"></param>
-		public PropertyData(string name, string beanName, string accessType, bool usingModifiedFlag, string modifiedFlagName)
+		public PropertyData(string name, string beanName, string accessType, bool usingModifiedFlag, string modifiedFlagName, bool isSynthentic)
 			: this(name, beanName, accessType)
 		{
 			UsingModifiedFlag = usingModifiedFlag;
 			ModifiedFlagPropertyName = modifiedFlagName;
+			IsSynthentic = isSynthentic;
 		}
 
 		public string Name { get; }
@@ -46,6 +42,7 @@ namespace NHibernate.Envers.Entities
 		public string AccessType { get; }
 		public bool UsingModifiedFlag { get; }
 		public string ModifiedFlagPropertyName { get; }
+		public bool IsSynthentic { get; }
 
 
 		public override bool Equals(object obj) 
@@ -59,6 +56,7 @@ namespace NHibernate.Envers.Entities
 			if (!BeanName?.Equals(that.BeanName) ?? that.BeanName != null) return false;
 			if (!Name?.Equals(that.Name) ?? that.Name != null) return false;
 			if (UsingModifiedFlag != that.UsingModifiedFlag) return false;
+			if (IsSynthentic != that.IsSynthentic) return false;
 			return true;
 		}
 
@@ -68,6 +66,7 @@ namespace NHibernate.Envers.Entities
 			result = 31 * result + (BeanName?.GetHashCode() ?? 0);
 			result = 31 * result + (AccessType?.GetHashCode() ?? 0);
 			result = 31*result + (UsingModifiedFlag ? 1 : 0);
+			result = 31 * result + (IsSynthentic ? 1 : 0);
 			return result;
 		}
 	}
