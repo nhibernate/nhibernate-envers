@@ -100,10 +100,9 @@ namespace NHibernate.Envers.Configuration.Store
 			if (!(collectionValue is IndexedCollection indexValue)) return;
 			foreach (var referencedProperty in referencedProperties)
 			{
-				if (referencedProperty is IndexBackref)
-					continue;
-				
-				if (MappingTools.SameColumns(referencedProperty.ColumnIterator, indexValue.Index.ColumnIterator))
+				if (MappingTools.SameColumns(referencedProperty.ColumnIterator, indexValue.Index.ColumnIterator) &&
+												   !referencedProperty.IsUpdateable &&
+												   !referencedProperty.IsInsertable)
 				{
 					auditMappedByAttribute.PositionMappedBy = referencedProperty.Name;
 				}

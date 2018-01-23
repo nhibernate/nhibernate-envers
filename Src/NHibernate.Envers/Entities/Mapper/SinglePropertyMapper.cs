@@ -63,8 +63,7 @@ namespace NHibernate.Envers.Entities.Mapper
 		public void MapToEntityFromMap(AuditConfiguration verCfg, object obj, IDictionary data, object primaryKey,
 									   IAuditReaderImplementor versionsReader, long revision) 
 		{
-			// synthetic properties are not part of the entity model; therefore they should be ignored.
-			if (data == null || obj == null || _propertyData.IsSynthentic) 
+			if (data == null || obj == null) 
 			{
 				return;
 			}
@@ -85,8 +84,7 @@ namespace NHibernate.Envers.Entities.Mapper
 
 		public void MapModifiedFlagsToMapFromEntity(ISessionImplementor session, IDictionary<string, object> data, object newObj, object oldObj)
 		{
-			// Synthetic properties are not subject to withModifiedFlag analysis
-			if (_propertyData.UsingModifiedFlag && !_propertyData.IsSynthentic)
+			if (_propertyData.UsingModifiedFlag)
 			{
 				data[_propertyData.ModifiedFlagPropertyName] = !Toolz.ObjectsEqual(newObj, oldObj);
 			}

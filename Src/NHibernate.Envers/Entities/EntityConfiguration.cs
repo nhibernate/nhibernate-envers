@@ -48,24 +48,23 @@ namespace NHibernate.Envers.Entities
 
 		public void AddToManyNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName,
 											   IIdMapper idMapper, IPropertyMapper fakeBidirectionalRelationMapper,
-											   IPropertyMapper fakeBidirectionalRelationIndexMapper, RelationType relationType,
-												bool indexed)
+											   IPropertyMapper fakeBidirectionalRelationIndexMapper)
 		{
-			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, relationType,
+			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyNotOwning,
 					toEntityName, mappedByPropertyName, idMapper, fakeBidirectionalRelationMapper,
-					fakeBidirectionalRelationIndexMapper, true, indexed));
+					fakeBidirectionalRelationIndexMapper, true));
 		}
 
 		public void AddToManyMiddleRelation(string fromPropertyName, string toEntityName)
 		{
 			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyMiddle,
-					toEntityName, null, null, null, null, true, false));
+					toEntityName, null, null, null, null, true));
 		}
 
 		public void AddToManyMiddleNotOwningRelation(string fromPropertyName, string mappedByPropertyName, string toEntityName)
 		{
 			relations.Add(fromPropertyName, RelationDescription.ToMany(fromPropertyName, RelationType.ToManyMiddleNotOwning,
-					toEntityName, mappedByPropertyName, null, null, null, true, false));
+					toEntityName, mappedByPropertyName, null, null, null, true));
 		}
 
 		public bool IsRelation(string propertyName)

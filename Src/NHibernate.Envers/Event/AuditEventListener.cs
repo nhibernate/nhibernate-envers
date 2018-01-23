@@ -287,7 +287,7 @@ namespace NHibernate.Envers.Event
 
 			var verSync = VerCfg.AuditProcessManager.Get(evt.Session);
 			var ownerEntityName = ((AbstractCollectionPersister)collectionEntry.LoadedPersister).OwnerEntityName;
-			var referencingPropertyName = getReferencingPropertyName(collectionEntry, ownerEntityName);
+			var referencingPropertyName = collectionEntry.Role.Substring(ownerEntityName.Length + 1);
 
 			// Checking if this is not a "fake" many-to-one bidirectional relation. The relation description may be
 			// null in case of collections of non-entities.
@@ -344,11 +344,7 @@ namespace NHibernate.Envers.Event
 		public virtual void OnPreUpdateCollection(PreCollectionUpdateEvent evt)
 		{
 			var collectionEntry = getCollectionEntry(evt);
-			if (collectionEntry.LoadedPersister.IsInverse)
-			{
-				onCollectionActionInversed(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
-			}
-			else
+			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
 				onCollectionAction(evt, evt.Collection, collectionEntry.Snapshot, collectionEntry);
 			}
@@ -391,11 +387,7 @@ namespace NHibernate.Envers.Event
 		public virtual void OnPostRecreateCollection(PostCollectionRecreateEvent evt)
 		{
 			var collectionEntry = getCollectionEntry(evt);
-			if (collectionEntry.LoadedPersister.IsInverse)
-			{
-				onCollectionActionInversed(evt, evt.Collection, null, collectionEntry);
-			}
-			else
+			if (!collectionEntry.LoadedPersister.IsInverse)
 			{
 				onCollectionAction(evt, evt.Collection, null, collectionEntry);
 			}
@@ -427,31 +419,6 @@ namespace NHibernate.Envers.Event
 		{
 			evt.Collection.ForceInitialization();
 			return evt.Collection.StoredSnapshot;
-		}
-
-		private void onCollectionActionInversed(AbstractCollectionEvent evt, 
-							IPersistentCollection newColl, 
-							object oldColl, 
-							CollectionEntry collectionEntry)
-		{
-			if (shouldGenerateRevision(evt))
-			{
-				var entityName = evt.GetAffectedOwnerEntityName();
-				var ownerEntityName = ((AbstractCollectionPersister) collectionEntry.LoadedPersister).OwnerEntityName;
-				var referencingPropertyName = getReferencingPropertyName(collectionEntry, ownerEntityName);
-
-				var rd = getRelationDescriptionWithInheritedRelations(entityName, referencingPropertyName);
-				if (rd?.RelationType == RelationType.ToManySemiOwning && rd.IsIndexed)
-				{
-					onCollectionAction(evt, newColl, oldColl, collectionEntry);
-				}
-			}
-		}
-
-		private static string getReferencingPropertyName(CollectionEntry collectionEntry, string ownerEntityName)
-		{
-			//hack - try to make this safer later
-			return collectionEntry.Role.Substring(ownerEntityName.Length + 1);
 		}
 	}
 }

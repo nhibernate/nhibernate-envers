@@ -34,8 +34,7 @@ namespace NHibernate.Envers.Configuration
 		/// <summary>
 		/// After all meta-data is read, updates calculated fields. This includes:
 		/// <ul>
-		/// <li>setting {@code forceInsertable} to {@code true} for properties specified by {@code @AuditMappedBy}</li>
-		///  <li>adding {@code synthetic} properties to mappedBy relations which have {@code IndexColumn} or {@code OrderColumn}.</li>
+		/// <li>setting {@code forceInsertable} to {@code true} for properties specified by {@code @AuditMappedBy}</li> 
 		/// </ul>
 		/// </summary>
 		public void UpdateCalculatedFields() 
@@ -46,31 +45,24 @@ namespace NHibernate.Envers.Configuration
 				var classAuditingData = classAuditingDataEntry.Value;
 				foreach (var propertyName in classAuditingData.PropertyNames) 
 				{
-					updateCalculatedProperty(pc, classAuditingData, propertyName);
+					var propertyAuditingData = classAuditingData.GetPropertyAuditingData(propertyName);
+					// If a property had the @AuditMappedBy annotation, setting the referenced fields to be always insertable.
+					if (propertyAuditingData.ForceInsertable) 
+					{
+						var referencedEntityName = MappingTools.ReferencedEntityName(pc.GetProperty(propertyName).Value);
+
+						var referencedClassAuditingData = entityNameToAuditingData[referencedEntityName];
+
+						forcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.MappedBy,
+								pc.EntityName, referencedEntityName);
+
+						forcePropertyInsertable(referencedClassAuditingData, propertyAuditingData.PositionMappedBy,
+								pc.EntityName, referencedEntityName);
+					}
 				}
 			}
 		}
 
-		private void updateCalculatedProperty(PersistentClass pc, ClassAuditingData classAuditingData, string propertyName)
-		{
-			var property = pc.GetProperty(propertyName);
-			var propertyAuditingData = classAuditingData.GetPropertyAuditingData(propertyName);
-			var referencedEntityName = MappingTools.ReferencedEntityName(property.Value);
-			if (propertyAuditingData.ForceInsertable)
-			{
-				// If a property had the @AuditMappedBy annotation, setting the referenced fields to be always insertable.
-				setAuditMappedByInsertable(referencedEntityName, pc.EntityName, entityNameToAuditingData[referencedEntityName], propertyAuditingData);
-			}
-
-			if(property.Value is List propertyValueAsList 
-			   && propertyAuditingData.MappedBy != null 
-			   && propertyAuditingData.PositionMappedBy == null)
-			{
-				// If a property has mappedBy= and @Indexed and isn't @AuditMappedBy, add synthetic support.
-				addSyntheticIndexProperty(propertyValueAsList, property.PropertyAccessorName, entityNameToAuditingData[referencedEntityName]);
-			}
-		}
-		
 		private static void forcePropertyInsertable(ClassAuditingData classAuditingData, string propertyName,
 											 string entityName, string referencedEntityName)
 		{
@@ -87,32 +79,6 @@ namespace NHibernate.Envers.Configuration
 				classAuditingData
 						.GetPropertyAuditingData(propertyName)
 						.ForceInsertable = true;
-			}
-		}
-		
-		private static void setAuditMappedByInsertable(string referencedEntityName,
-			string entityName,
-			ClassAuditingData referencedAuditData,
-			PropertyAuditingData propertyAuditingData)
-		{
-			forcePropertyInsertable(referencedAuditData, propertyAuditingData.MappedBy, entityName, referencedEntityName);
-			forcePropertyInsertable(referencedAuditData, propertyAuditingData.PositionMappedBy, entityName, referencedEntityName);
-		}
-		
-		private static void addSyntheticIndexProperty(List value, string propertyAccessorName, ClassAuditingData classAuditingData)
-		{
-			var indexValue = value.Index;
-			if (indexValue != null)
-			{
-				foreach (var column in indexValue.ColumnIterator)
-				{
-					var indexColumnName = column.Text;
-					if (indexColumnName != null)
-					{
-						var auditingData = new PropertyAuditingData(indexColumnName, propertyAccessorName, true, indexValue);
-						classAuditingData.AddPropertyAuditingData(indexColumnName, auditingData);
-					}
-				}
 			}
 		}
 	}

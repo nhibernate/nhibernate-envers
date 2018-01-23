@@ -3,7 +3,6 @@ using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Entities;
 using NHibernate.Envers.Entities.Mapper;
-using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
 {
@@ -15,18 +14,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		}
 
 		public PropertyAuditingData(string name, string accessType)
-			: this(name, accessType, false, null)
-		{
-		}
-		
-		public PropertyAuditingData(string name, string accessType, bool isSynthetic, SimpleValue value)
 		{
 			AuditingOverrides = new List<AuditOverrideAttribute>(0);
 			Name = name;
 			BeanName = name;
 			AccessType = accessType;
-			IsSynthetic = isSynthetic;
-			Value = value;
 			RelationTargetAuditMode = RelationTargetAuditMode.Audited;
 		}
 
@@ -34,8 +26,6 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public string BeanName { get; set; }
 		public AuditJoinTableAttribute JoinTable { get; set; }
 		public string AccessType { get; set; }
-		public bool IsSynthetic { get; }
-		public SimpleValue Value { get; }
 		public IList<AuditOverrideAttribute> AuditingOverrides { get; }
 		public string MappedBy { get; set; }
 		public string PositionMappedBy { get; set; }
@@ -47,7 +37,7 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 
 		public PropertyData GetPropertyData()
 		{
-			return new PropertyData(Name, BeanName, AccessType, UsingModifiedFlag, ModifiedFlagName, IsSynthetic);
+			return new PropertyData(Name, BeanName, AccessType, UsingModifiedFlag, ModifiedFlagName);
 		}
 
 		public void AddAuditingOverride(AuditOverrideAttribute annotation)
