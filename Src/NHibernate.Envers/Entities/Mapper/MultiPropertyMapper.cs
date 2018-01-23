@@ -96,6 +96,9 @@ namespace NHibernate.Envers.Entities.Mapper
 			var ret = false;
 			foreach (var propertyData in Properties.Keys) 
 			{
+				//synthetic properties are not part of the entity model; therefore they should be ignored.
+				if (propertyData.IsSynthentic)
+					continue;
 				IGetter getter;
 				if (newObj != null) 
 				{
@@ -122,6 +125,9 @@ namespace NHibernate.Envers.Entities.Mapper
 		{
 			foreach (var propertyData in Properties.Keys)
 			{
+				//synthetic properties are not part of the entity model; therefore they should be ignored.
+				if (propertyData.IsSynthentic)
+					continue;
 				IGetter getter;
 				if (newObj != null)
 				{

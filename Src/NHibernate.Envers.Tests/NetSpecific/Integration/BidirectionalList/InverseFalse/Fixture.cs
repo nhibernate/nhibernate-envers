@@ -3,7 +3,6 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.InverseFalse
 {
-	[Ignore("NHE-164")]
 	public class Fixture : TestBase
 	{
 		private int parent_id;

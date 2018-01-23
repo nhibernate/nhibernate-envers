@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Envers.Configuration.Attributes;
 
 namespace NHibernate.Envers.Configuration.Metadata.Reader
@@ -54,6 +55,11 @@ namespace NHibernate.Envers.Configuration.Metadata.Reader
 		public bool IsAudited() 
 		{
 			return _defaultAudited || _properties.Count > 0;
+		}
+
+		public IEnumerable<PropertyAuditingData> SynthenticProperties()
+		{
+			return _properties.Values.Where(x => x.IsSynthetic);
 		}
 	}
 }

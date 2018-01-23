@@ -1,0 +1,14 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.Integration.Collection">
+    <class name="IndexColumnListTestParent">
+        <id name="Id">
+            <generator class="assigned"/>
+        </id>
+        <list name="Children">
+            <key column ="parentId" />
+            <index column="stringIndex"/>
+            <element column="string" type="string" />
+        </list>
+    </class>
+</hibernate-mapping>
