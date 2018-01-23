@@ -88,13 +88,23 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public void AddCollection()
 		{
-			if (_propertyAuditingData.MappedBy == null)
+			var type = _propertyValue.Type;
+			var value = _propertyValue.Element;
+
+			var oneToManyAttachedType = type.IsCollectionType;
+			var inverseOneToMany = (value is OneToMany) && (_propertyValue.IsInverse);
+			var owningManyToOneWithJoinTableBidirectional = value is ManyToOne && _propertyAuditingData.MappedBy != null;
+			var fakeOneToManyBidirectional = (value is OneToMany) && (_propertyAuditingData.MappedBy != null);
+
+			if (oneToManyAttachedType && (inverseOneToMany || fakeOneToManyBidirectional || owningManyToOneWithJoinTableBidirectional))
 			{
-				addWithMiddleTable();				
+				// A one-to-many relation mapped using @ManyToOne and @OneToMany(mappedBy="...")
+				addOneToManyAttached(fakeOneToManyBidirectional);
 			}
 			else
 			{
-				addOneToManyAttached(_propertyValue.Element is OneToMany); //can also be manytoone with join table				
+				// All other kinds of relations require a middle (join) table.
+				addWithMiddleTable();
 			}
 		}
 
@@ -109,10 +119,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			log.DebugFormat("Adding audit mapping for property {0}. {1}" +
 					": one-to-many collection, using a join column on the referenced entity.", _referencingEntityName, _propertyName);
 
-			var indexed = (_propertyValue as IndexedCollection)?.Index != null;
-			
 			var mappedBy = getMappedBy(_propertyValue);
-			
+
 			var referencedIdMapping = _mainGenerator.GetReferencedIdMappingData(_referencingEntityName,
 						_referencedEntityName, _propertyAuditingData, false);
 			var referencingIdMapping = _referencingEntityConfiguration.IdMappingData;
@@ -145,9 +153,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 					_propertyAuditingData.GetPropertyData(),
 					referencingIdData, queryGenerator);
 
-			IPropertyMapper fakeBidirectionalRelationMapper = null;
-			IPropertyMapper fakeBidirectionalRelationIndexMapper = null;
-
+			IPropertyMapper fakeBidirectionalRelationMapper;
+			IPropertyMapper fakeBidirectionalRelationIndexMapper;
 			if (fakeOneToManyBidirectional)
 			{
 				// In case of a fake many-to-one bidirectional relation, we have to generate a mapper which maps
@@ -166,33 +173,33 @@ namespace NHibernate.Envers.Configuration.Metadata
 						new PropertyData(auditMappedBy, null, null),
 						_referencedEntityName, false);
 
-				var positionMappedBy = _propertyAuditingData.PositionMappedBy;
-				if (indexed && positionMappedBy == null)
-				{
-					var indexValue = ((IndexedCollection) _propertyValue).Index;
-					positionMappedBy = indexValue.ColumnIterator.Single().Text;
-				}
-				
 				// Checking if there's an index defined. If so, adding a mapper for it.
-				if (positionMappedBy != null)
+				if (_propertyAuditingData.PositionMappedBy != null)
 				{
+					var positionMappedBy = _propertyAuditingData.PositionMappedBy;
 					fakeBidirectionalRelationIndexMapper = new SinglePropertyMapper(new PropertyData(positionMappedBy, null, null));
 
 					// Also, overwriting the index component data to properly read the index.
 					indexComponentData = new MiddleComponentData(new MiddleStraightComponentMapper(positionMappedBy), 0);
 				}
+				else
+				{
+					fakeBidirectionalRelationIndexMapper = null;
+				}
+			}
+			else
+			{
+				fakeBidirectionalRelationMapper = null;
+				fakeBidirectionalRelationIndexMapper = null;
 			}
 
 			// Checking the type of the collection and adding an appropriate mapper.
 			addMapper(commonCollectionMapperData, elementComponentData, indexComponentData);
 
-			var fullyOwnedByChild = _propertyAuditingData.MappedBy != null && _propertyAuditingData.PositionMappedBy != null;
-			var relationType = fullyOwnedByChild ? RelationType.ToManyNotOwning : RelationType.ToManySemiOwning;
-	
 			// Storing information about this relation.
 			_referencingEntityConfiguration.AddToManyNotOwningRelation(_propertyName, mappedBy,
 					_referencedEntityName, referencingIdData.PrefixedMapper, fakeBidirectionalRelationMapper,
-					fakeBidirectionalRelationIndexMapper, relationType, indexed);
+					fakeBidirectionalRelationIndexMapper);
 		}
 
 		/// <summary>
@@ -555,6 +562,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 			_currentMapper.AddComposite(_propertyAuditingData.GetPropertyData(), collectionMapper);
 		}
 
+		private static System.Type createGenericComparerType(IType type)
+		{
+			var genericArgs = type.ReturnedClass.GetGenericArguments();
+			var theGenericArg = genericArgs[0];
+			return typeof(IComparer<>).MakeGenericType(theGenericArg);
+		}
+
 		private void storeMiddleEntityRelationInformation(string mappedBy)
 		{
 			// Only if this is a relation (when there is a referenced entity).
@@ -627,6 +641,13 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private string getMappedBy(Table collectionTable, PersistentClass referencedClass)
 		{
+			// If there's an @AuditMappedBy specified, returning it directly.
+			//var auditMappedBy = _propertyAuditingData.AuditMappedBy;
+			//if (auditMappedBy != null)
+			//{
+			//   return auditMappedBy;
+			//}
+
 			var mappedBy = searchMappedBy(referencedClass, collectionTable);
 
 			// not found on referenced class, searching on superclasses

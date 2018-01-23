@@ -14,14 +14,13 @@ namespace NHibernate.Envers.Entities
 		{
 			return new RelationDescription(fromPropertyName, relationType, toEntityName, mappedByPropertyName, idMapper,
 			                               fakeBidirectionalRelationMapper, fakeBidirectionalRelationIndexMapper, insertable,
-			                               ignoreNotFound, false);
+			                               ignoreNotFound);
 		}
 
 		public static RelationDescription ToMany(string fromPropertyName, RelationType relationType, string toEntityName,
 		                                         string mappedByPropertyName, IIdMapper idMapper,
 		                                         IPropertyMapper fakeBidirectionalRelationMapper,
-		                                         IPropertyMapper fakeBidirectionalRelationIndexMapper, 
-												bool insertable, bool indexed)
+		                                         IPropertyMapper fakeBidirectionalRelationIndexMapper, bool insertable)
 		{
 			// Envers populates collections by executing dedicated queries. Special handling of
 			// @NotFound(action = NotFoundAction.IGNORE) can be omitted in such case as exceptions
@@ -29,14 +28,13 @@ namespace NHibernate.Envers.Entities
 			// Therefore assigning false to ignoreNotFound.
 			return new RelationDescription(fromPropertyName, relationType, toEntityName, mappedByPropertyName, idMapper,
 															 fakeBidirectionalRelationMapper, fakeBidirectionalRelationIndexMapper, insertable,
-															 false, indexed);
+															 false);
 		}
 
 		private RelationDescription(string fromPropertyName, RelationType relationType, string toEntityName,
 						   string mappedByPropertyName, IIdMapper idMapper,
 						   IPropertyMapper fakeBidirectionalRelationMapper,
-						   IPropertyMapper fakeBidirectionalRelationIndexMapper, bool insertable, 
-							bool ignoreNotFound, bool indexed)
+						   IPropertyMapper fakeBidirectionalRelationIndexMapper, bool insertable, bool ignoreNotFound)
 		{
 			FromPropertyName = fromPropertyName;
 			RelationType = relationType;
@@ -47,7 +45,7 @@ namespace NHibernate.Envers.Entities
 			FakeBidirectionalRelationIndexMapper = fakeBidirectionalRelationIndexMapper;
 			Insertable = insertable;
 			IsIgnoreNotFound = ignoreNotFound;
-			IsIndexed = indexed;
+
 			Bidirectional = false;
 		}
 
@@ -61,6 +59,5 @@ namespace NHibernate.Envers.Entities
 		public bool Insertable { get; }
 		public bool IsIgnoreNotFound { get; }
 		public bool Bidirectional { get; set; }
-		public bool IsIndexed { get; }
 	}
 }

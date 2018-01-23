@@ -472,8 +472,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Creating and mapping joins (first pass)
 			createJoins(pc, classMapping, auditingData);
 			addJoins(pc, propertyMapper, auditingData, pc.EntityName, xmlMappingData, true);
-			
-			addSynthetics(classMapping, auditingData, propertyMapper, xmlMappingData, pc.EntityName);
 
 			// Storing the generated configuration
 			var entityCfg = new EntityConfiguration(auditEntityName, pc.ClassName, idMapper,
@@ -481,15 +479,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			EntitiesConfigurations.Add(pc.EntityName, entityCfg);
 		}
 
-		private void addSynthetics(XElement classMapping, ClassAuditingData auditingData, ICompositeMapperBuilder currentMapper, EntityXmlMappingData xmlMappingData, string entityName)
-		{
-			foreach (var propertyAuditingData in auditingData.SynthenticProperties())
-			{
-				AddValue(classMapping, propertyAuditingData.Value, currentMapper, entityName, xmlMappingData, propertyAuditingData, true, true, false);
-			}
-		}
-
-		public void GenerateSecondPass(PersistentClass pc, ClassAuditingData auditingData, EntityXmlMappingData xmlMappingData)
+		public void GenerateSecondPass(PersistentClass pc, ClassAuditingData auditingData,
+										EntityXmlMappingData xmlMappingData)
 		{
 			var entityName = pc.EntityName;
 			if (log.IsDebugEnabled)
