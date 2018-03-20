@@ -139,6 +139,10 @@
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\ChildCollectionType.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Fixture.cs" />
     <Compile Include="NetSpecific\Integration\CustomMapping\ImplicitEnversCollectionType\Model.cs" />
+    <Compile Include="NetSpecific\Integration\ForceInitialize\Related.cs" />
+    <Compile Include="NetSpecific\Integration\ForceInitialize\Child.cs" />
+    <Compile Include="NetSpecific\Integration\ForceInitialize\ForceInitializeTest.cs" />
+    <Compile Include="NetSpecific\Integration\ForceInitialize\Parent.cs" />
     <Compile Include="NetSpecific\Integration\MultiLevelInheritance\Child.cs" />
     <Compile Include="NetSpecific\Integration\MultiLevelInheritance\Parent.cs" />
     <Compile Include="NetSpecific\Integration\NotFoundIgnore\BaseType\Child.cs" />
@@ -804,6 +808,7 @@
     <Compile Include="ValidityTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NetSpecific\Integration\ForceInitialize\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\BidirectionalList\DifferentAccessTest\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\ModifiedFlags\CollectionItemChangingParent\Mapping.hbm.xml" />
     <EmbeddedResource Include="NetSpecific\Integration\MultiLevelInheritance\Mapping.hbm.xml" />
