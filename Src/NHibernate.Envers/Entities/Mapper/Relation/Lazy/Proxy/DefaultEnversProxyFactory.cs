@@ -1,8 +1,10 @@
 ﻿using System;
+using NHibernate.Collection;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
+using NHibernate.Proxy;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
@@ -17,7 +19,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 
 		public object CreateCollectionProxy(System.Type collectionInterface, IInitializor collectionInitializor)
 		{
-			return proxyFactory.CreateProxy(collectionInterface, new CollectionProxyInterceptor(collectionInitializor));
+			return proxyFactory.CreateProxy(collectionInterface, new CollectionProxyInterceptor(collectionInitializor), typeof(ILazyInitializedCollection));
 		}
 
 		public object CreateToOneProxy(AuditConfiguration verCfg, IAuditReaderImplementor versionsReader, 
