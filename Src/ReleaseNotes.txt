@@ -1,7 +1,15 @@
 === vNext ===
 
+
+
+=== v5.1.0 (v 5.1.0.0), 2018-03-21, NH 5.1 GA ===
+
 *** Possible breaking change ***
 * NHibernateUtil.IsInitialized/Initialize now also affects Envers proxies
+
+** Improvement
+* [NHE-163] - Collection Proxies can't be initialized with NHIbernateUtil.Initialize
+
 
 
 === v5.0.3 GA (v 5.0.3.0), 2018-01-23, NH 5.0 GA ===
