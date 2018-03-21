@@ -1,3 +1,9 @@
+=== vNext ===
+
+*** Possible breaking change ***
+* NHibernateUtil.IsInitialized/Initialize now also affects Envers proxies
+
+
 === v5.0.3 GA (v 5.0.3.0), 2018-01-23, NH 5.0 GA ===
 
 Rolled back [NHE-164]
