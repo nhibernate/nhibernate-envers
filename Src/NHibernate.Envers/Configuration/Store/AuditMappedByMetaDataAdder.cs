@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Configuration.Store
 	/// </summary>
 	public class AuditMappedByMetaDataAdder : IMetaDataAdder
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditMappedByMetaDataAdder));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(AuditMappedByMetaDataAdder));
 		private readonly Cfg.Configuration _nhibernateConfiguration;
 
 		public AuditMappedByMetaDataAdder(Cfg.Configuration nhibernateConfiguration)
@@ -63,7 +63,7 @@ namespace NHibernate.Envers.Configuration.Store
 
 		private static void addToEntityMeta(AuditMappedByAttribute attribute, EntityMeta entityMeta, MemberInfo memberInfo)
 		{
-			log.DebugFormat("Adding AuditMappedByAttribute [MappedBy={0}, PositionMappedBy={1}] to member {2}",
+			log.Debug("Adding AuditMappedByAttribute [MappedBy={0}, PositionMappedBy={1}] to member {2}",
 												 attribute.MappedBy, attribute.PositionMappedBy, memberInfo);
 			entityMeta.AddMemberMeta(memberInfo, attribute);
 		}

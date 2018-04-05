@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Reader
 	/// </summary>
 	public class FirstLevelCache
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(FirstLevelCache));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(FirstLevelCache));
 		private const string logAdd =
 			"Adding entity to first level cache (Primary key: {0}, Revision: {1}, Entity name: {2})";
 		private const string logHit =
@@ -33,8 +33,8 @@ namespace NHibernate.Envers.Reader
 
 		public void Add(string entityName, long revision, object id, object entity)
 		{
-			if(log.IsDebugEnabled)
-				log.DebugFormat(logAdd, id, revision, entityName);
+			if(log.IsDebugEnabled())
+				log.Debug(logAdd, id, revision, entityName);
 			cache.Add(new Tuple<string, long, object>(entityName, revision, id), entity);
 		}
 
@@ -42,8 +42,8 @@ namespace NHibernate.Envers.Reader
 		{
 			if (cache.TryGetValue(new Tuple<string, long, object>(entityName, revision, id), out value))
 			{
-				if(log.IsDebugEnabled)
-					log.DebugFormat(logHit, id, revision, entityName);
+				if(log.IsDebugEnabled())
+					log.Debug(logHit, id, revision, entityName);
 				return true;
 			}
 			return false;
@@ -51,8 +51,8 @@ namespace NHibernate.Envers.Reader
 
 		public void AddEntityName(object id, long revision, object entity, string entityName)
 		{
-			if (log.IsDebugEnabled)
-				log.DebugFormat(logAddEntityName, id, revision, entity.GetType().FullName, entityName);
+			if (log.IsDebugEnabled())
+				log.Debug(logAddEntityName, id, revision, entity.GetType().FullName, entityName);
 			entityNameCache.Add(new Tuple<object, long, object>(id, revision, entity), entityName);
 		}
 
@@ -60,8 +60,8 @@ namespace NHibernate.Envers.Reader
 		{
 			if (entityNameCache.TryGetValue(new Tuple<object, long, object>(id, revision, entity), out entityName))
 			{
-				if(log.IsDebugEnabled)
-					log.DebugFormat(logHitEntityName, id, revision, entity.GetType().FullName);
+				if(log.IsDebugEnabled())
+					log.Debug(logHitEntityName, id, revision, entity.GetType().FullName);
 				return true;
 			}
 			return false;

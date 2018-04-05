@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Tests.NetSpecific.UnitTests.Fluent.Model;
 using NHibernate.Envers.Tests.Tools;
-using NHibernate.Util;
 using NUnit.Framework;
 using SharpTestsEx;
 
