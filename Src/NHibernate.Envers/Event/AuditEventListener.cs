@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NHibernate.Collection;
@@ -14,7 +15,6 @@ using NHibernate.Event;
 using NHibernate.Persister.Collection;
 using NHibernate.Persister.Entity;
 using NHibernate.Proxy;
-using NHibernate.Util;
 
 namespace NHibernate.Envers.Event
 {
@@ -27,7 +27,7 @@ namespace NHibernate.Envers.Event
 									IPostCollectionRecreateEventListener,
 									IInitializable
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditEventListener));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(AuditEventListener));
 
 		public AuditConfiguration VerCfg { get; private set; }
 
@@ -158,7 +158,7 @@ namespace NHibernate.Envers.Event
 			var oldState = evt.OldState;
 			if (oldState == null)
 			{
-				log.InfoFormat("Using current state when persisting detached {0}. This can result in incorrect audit data if non updatable property(ies) are used.", entityPersister.EntityName);
+				log.Info("Using current state when persisting detached {0}. This can result in incorrect audit data if non updatable property(ies) are used.", entityPersister.EntityName);
 				return newDbState;
 			}
 			for (var i = 0; i < entityPersister.PropertyNames.Length; i++)

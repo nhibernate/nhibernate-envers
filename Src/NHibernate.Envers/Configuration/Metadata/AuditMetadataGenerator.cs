@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public sealed class AuditMetadataGenerator
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(AuditMetadataGenerator));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(AuditMetadataGenerator));
 
 		public Cfg.Configuration Cfg { get; }
 		public GlobalConfiguration GlobalCfg { get; }
@@ -382,9 +382,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 				{
 					// Unsupported id mapping, e.g. key-many-to-one. If the entity is used in auditing, an exception
 					// will be thrown later on.
-					if (log.IsDebugEnabled)
+					if (log.IsDebugEnabled())
 					{
-						log.DebugFormat("Unable to create auditing id mapping for entity {0}" +
+						log.Debug("Unable to create auditing id mapping for entity {0}" +
 							", because of an unsupported Hibernate id mapping (e.g. key-many-to-one).", entityName);
 					}
 					return;
@@ -398,9 +398,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 				return;
 			}
 
-			if (log.IsDebugEnabled)
+			if (log.IsDebugEnabled())
 			{
-				log.DebugFormat("Generating first-pass auditing mapping for entity {0}.", entityName);
+				log.Debug("Generating first-pass auditing mapping for entity {0}.", entityName);
 			}
 
 			var auditEntityName = VerEntCfg.GetAuditEntityName(entityName);
@@ -483,9 +483,9 @@ namespace NHibernate.Envers.Configuration.Metadata
 										EntityXmlMappingData xmlMappingData)
 		{
 			var entityName = pc.EntityName;
-			if (log.IsDebugEnabled)
+			if (log.IsDebugEnabled())
 			{
-				log.DebugFormat("Generating second-pass auditing mapping for entity {0}.", entityName);
+				log.Debug("Generating second-pass auditing mapping for entity {0}.", entityName);
 			}
 
 			var propertyMapper = EntitiesConfigurations[entityName].PropertyMapper;

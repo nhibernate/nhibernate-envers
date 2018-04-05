@@ -99,11 +99,8 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		// We used to do this in BeforeInitialize, but CollectionChanged events were getting fired while NHibernate was loading the collection.
 		public override bool AfterInitialize(ICollectionPersister persister)
 		{
-			bool result = base.AfterInitialize(persister);
+			base.AfterInitialize(persister);
 			throw new NotSupportedException("not yet ported to 2.0");
-			//((INotifyCollectionChanged)InternalBag).CollectionChanged += OnCollectionChanged;
-			//((INotifyPropertyChanged)InternalBag).PropertyChanged += OnPropertyChanged;
-			return result;
 		}
 
 		#region INotifyCollectionChanged Members

@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 	/// </summary>
 	public class FluentConfiguration : IMetaDataProvider
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(FluentConfiguration));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(FluentConfiguration));
 		private readonly IList<IAttributeProvider> attributeFactories;
 
 		public FluentConfiguration()
@@ -162,7 +162,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static void addMemberMetaAndLog(System.Type type, MemberInfoAndAttribute memberInfoAndAttribute, EntityMeta entMeta)
 		{
-			log.DebugFormat("Adding {0} to member {1} on type {2}.",
+			log.Debug("Adding {0} to member {1} on type {2}.",
 							memberInfoAndAttribute.Attribute.GetType().Name,
 							memberInfoAndAttribute.MemberInfo.Name,
 							type.FullName);
@@ -171,7 +171,7 @@ namespace NHibernate.Envers.Configuration.Fluent
 
 		private static void addClassMetaAndLog(System.Type type, Attribute classAttribute, EntityMeta entMeta)
 		{
-			log.DebugFormat("Adding {0} to type {1}.", classAttribute.GetType().Name, type.FullName);
+			log.Debug("Adding {0} to type {1}.", classAttribute.GetType().Name, type.FullName);
 			entMeta.AddClassMeta(classAttribute);
 		}
 

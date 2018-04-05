@@ -20,7 +20,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 {
 	public sealed class CollectionMetadataGenerator
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(CollectionMetadataGenerator));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(CollectionMetadataGenerator));
 
 		private readonly IMetaDataStore _metaDataStore;
 		private readonly AuditMetadataGenerator _mainGenerator;
@@ -116,7 +116,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void addOneToManyAttached(bool fakeOneToManyBidirectional)
 		{
-			log.DebugFormat("Adding audit mapping for property {0}. {1}" +
+			log.Debug("Adding audit mapping for property {0}. {1}" +
 					": one-to-many collection, using a join column on the referenced entity.", _referencingEntityName, _propertyName);
 
 			var mappedBy = getMappedBy(_propertyValue);
@@ -223,7 +223,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		private void addWithMiddleTable()
 		{
-			log.DebugFormat("Adding audit mapping for property {0}. {1}" +
+			log.Debug("Adding audit mapping for property {0}. {1}" +
 					": collection with a join table.", _referencingEntityName, _propertyName);
 
 			// Generating the name of the middle table
@@ -253,7 +253,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 				}
 			}
 
-			log.DebugFormat("Using join table name: {0}", auditMiddleTableName);
+			log.Debug("Using join table name: {0}", auditMiddleTableName);
 
 			// Generating the XML mapping for the middle entity, only if the relation isn't inverse.
 			// If the relation is inverse, will be later checked by comparing middleEntityXml with null.

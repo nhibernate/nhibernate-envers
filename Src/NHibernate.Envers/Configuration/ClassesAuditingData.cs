@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Configuration
 	/// </summary>
 	public class ClassesAuditingData 
 	{
-		private static readonly IInternalLogger log = LoggerProvider.LoggerFor(typeof(ClassesAuditingData));
+		private static readonly INHibernateLogger log = NHibernateLogger.For(typeof(ClassesAuditingData));
 
 		private readonly IDictionary<string, ClassAuditingData> entityNameToAuditingData = new Dictionary<string, ClassAuditingData>();
 		private readonly IDictionary<PersistentClass, ClassAuditingData> persistentClassToAuditingData = new Dictionary<PersistentClass, ClassAuditingData>();
@@ -73,7 +73,7 @@ namespace NHibernate.Envers.Configuration
 					throw new MappingException("@AuditMappedBy points to a property that doesn't exist: " +
 						referencedEntityName + "." + propertyName);
 				}
-				log.DebugFormat("Non-insertable property {0}, {1} will be made insertable because a matching @AuditMappedBy was found in the {2} entity.",
+				log.Debug("Non-insertable property {0}, {1} will be made insertable because a matching @AuditMappedBy was found in the {2} entity.",
 					referencedEntityName, propertyName, entityName);
 
 				classAuditingData

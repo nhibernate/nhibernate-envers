@@ -36,10 +36,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 			set { _value = value; }
 		}
 
-		public ICustomList<IAuditChild> Children
-		{
-			get { return _children; }
-		}
+		public ICustomList<IAuditChild> Children => _children;
 
 		private ICustomList<IAuditChild> ChildrenInternal
 		{
