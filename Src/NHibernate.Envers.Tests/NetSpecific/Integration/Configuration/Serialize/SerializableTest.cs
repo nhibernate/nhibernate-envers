@@ -9,6 +9,9 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serialize
 {
+#if NETCOREAPP2_0	
+	[Ignore("System.Type is not serialable in Core.")]
+#endif	
 	public class SerializableTest : TestBase
 	{
 		private const int ingId = 567;

@@ -6,6 +6,9 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
+#if NETCOREAPP2_0
+	[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
+#endif	
 	public class SessionClosedWhenCommitingTest : TestBase
 	{
 		private StrTestEntity entity;

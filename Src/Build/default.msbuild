@@ -11,32 +11,7 @@
 		<OutputDoc>$(DeployFolder)\EnversUserDoc.pdf</OutputDoc>
 		<DeployHtmlFolder>$(DeployFolder)\html</DeployHtmlFolder>
 		<PackageFolder>$(SourceDir)\Packages</PackageFolder>
-		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.$(msbuildtasksVersion)\tools</MSBuildCommunityTasksPath>
 	</PropertyGroup>
-	<Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
-	
-	<ItemGroup>
-		<AssemblyVersionFiles Include="$(SourceDir)\NHibernate.Envers\Properties\AssemblyInfo.cs"/>
-	</ItemGroup>
-
-	<Target Name="BuildRelease" DependsOnTargets="RunBuild;nuget;CopyNuget">
-		<RemoveDir Directories="$(TempDirectory)"/>
-	</Target>
-	
-	<Target Name="nuget" DependsOnTargets="MakeBuildDirectory;RunBuild">
-		<Exec Command="$(NugetFolder)\NuGet pack NHibernate.Envers.nuspec -o $(DeployFolder) -symbols -Prop Configuration=Release -Version $(NugetVersion)"
-				  WorkingDirectory="$(MSBuildProjectDirectory)"/>
-	</Target>
-	
-	<Target Name="CopyNuget">
-		<!-- copying nuget.exe to deplayfolder - to make easier manual push to nuget server -->
-		<Copy SourceFiles="$(NugetFolder)\NuGet.exe"
-				DestinationFolder="$(DeployFolder)"/>
-	</Target>
-
-	<Target Name="RunBuild" DependsOnTargets="UpdateAssemblyInfos">
-		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" />
-	</Target>
 
 	<Target Name="MakeBuildDirectory">
 		<RemoveDir Directories="$(DeployHtmlFolder)"/>
@@ -44,13 +19,26 @@
 		<MakeDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(TempDirectory)"/>
 	</Target>
+
+	<Target Name="BuildRelease" DependsOnTargets="RunBuild;nuget;CopyNuget">
+		<RemoveDir Directories="$(TempDirectory)"/>
+	</Target>
 	
-	<Target Name="UpdateAssemblyInfos">
-		<FileUpdate Files="%(AssemblyVersionFiles.FullPath)"
-			Regex="(\d+)\.(\d+)\.(\d+)\.(\d+)"
-			ReplacementText="$(Version)"/>
+	<Target Name="nuget" DependsOnTargets="MakeBuildDirectory;RunBuild">
+		<Exec Command="dotnet pack $(SourceDir)/NHibernate.Envers/NHibernate.Envers.csproj --no-build -c Release -o $(DeployFolder) /p:Version=$(Version)" />
+	</Target>
+	
+	<Target Name="CopyNuget" DependsOnTargets="MakeBuildDirectory">
+		<!-- copying nuget.exe to deployfolder - to make easier manual push to nuget server -->
+		<Copy SourceFiles="$(NugetFolder)\NuGet.exe"
+				DestinationFolder="$(DeployFolder)"/>
 	</Target>
 
+	<Target Name="RunBuild" DependsOnTargets="MakeBuildDirectory">
+		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" />
+	</Target>
+
+	<!-- Documentation build steps/targets-->
 	<Target Name="BuildDocs" DependsOnTargets="RunPdfBuild;RunHtmlBuild">
 		<Copy SourceFiles="$(OutputDoc)" DestinationFolder="$(DeployFolder)" />
 		<RemoveDir Directories="$(TempDirectory)" />
