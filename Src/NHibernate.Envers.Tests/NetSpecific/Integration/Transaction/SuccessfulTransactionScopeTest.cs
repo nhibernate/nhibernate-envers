@@ -16,6 +16,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 
 		protected override void Initialize()
 		{
+			
 			var entity = new IntTestEntity { Number = 10 };
 			using (var tx = new TransactionScope())
 			{
@@ -29,12 +30,18 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 			}
 		}
 
+#if NETCOREAPP2_0
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
+#endif		
 		[Test]
 		public void VerifyRevisionCount()
 		{
 			CollectionAssert.AreEquivalent(new[] { 1, 2 }, AuditReader().GetRevisions(typeof(IntTestEntity),id));
 		}
 
+#if NETCOREAPP2_0
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
+#endif		
 		[Test]
 		public void VerifyHistory()
 		{

@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Async
 		}
 
 		[Test]
-		public async void AsyncImplementationOfAuditEventListenerWorks()
+		public async System.Threading.Tasks.Task AsyncImplementationOfAuditEventListenerWorks()
 		{
 			var parent = new Parent();
 			var child = new Child { Parent = parent };

@@ -56,10 +56,10 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			timestamp4 = DateTime.UtcNow;
 		}
 
-		[Test, ExpectedException(typeof(RevisionDoesNotExistException))]
+		[Test]
 		public void TooEarlyTimeStampShouldFireException()
 		{
-			AuditReader().GetRevisionNumberForDate(timestamp1);
+			Assert.That(() => AuditReader().GetRevisionNumberForDate(timestamp1), Throws.TypeOf<RevisionDoesNotExistException>());
 		}
 
 		[Test]

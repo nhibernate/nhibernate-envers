@@ -100,6 +100,9 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			                              	});
 		}
 
+#if NETCOREAPP2_0
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
+#endif	
 		[Test]
 		public void ShouldThrowIfOutsideDistributedTransaction()
 		{
