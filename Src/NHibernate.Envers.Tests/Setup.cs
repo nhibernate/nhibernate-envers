@@ -14,8 +14,12 @@ namespace NHibernate.Envers.Tests
 		public void RunOnce()
 		{
 			var log4netConf = new FileInfo(Environment.CurrentDirectory + @"\log4net.xml");
-			var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-			XmlConfigurator.Configure(logRepository, log4netConf);
+			var entryAssembly = Assembly.GetEntryAssembly();
+			if (entryAssembly != null)
+			{
+				var logRepository = LogManager.GetRepository(entryAssembly);
+				XmlConfigurator.Configure(logRepository, log4netConf);
+			}
 		}
 	}
 }
