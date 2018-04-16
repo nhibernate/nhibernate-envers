@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags.CollectionItemChangingParent
 {
-	[TestFixture]
 	public class Fixture : TestBase
 	{
 		private object _newOwnerId;
