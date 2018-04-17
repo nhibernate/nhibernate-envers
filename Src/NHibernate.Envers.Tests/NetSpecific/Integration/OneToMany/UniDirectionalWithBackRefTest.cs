@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToMany
 		private Guid child1Id;
 		private Guid child2Id;
 
-		public UniDirectionalWithBackRefTest(string strategyType) : base(strategyType)
+		public UniDirectionalWithBackRefTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

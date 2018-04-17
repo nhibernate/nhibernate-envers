@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		private long auditedId;
 		private long notAuditedId;
 
-		public PropertiesGroupTest(string strategyType) : base(strategyType)
+		public PropertiesGroupTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

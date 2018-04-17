@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int professorId;
 		private int studentId;
 
-		public HasChangedAuditedManyToManyRemovalTest(string strategyType) : base(strategyType)
+		public HasChangedAuditedManyToManyRemovalTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

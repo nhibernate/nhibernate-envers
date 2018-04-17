@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedProperti
 	{
 		private const int id = 44;
 
-		public NoAuditedCollectionTest(string strategyType) : base(strategyType)
+		public NoAuditedCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

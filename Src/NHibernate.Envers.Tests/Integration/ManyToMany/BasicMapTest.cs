@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		private int ing1_id;
 		private int ing2_id;
 
-		public BasicMapTest(string strategyType) : base(strategyType)
+		public BasicMapTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Properties
 	{
 		private int id;
 
-		public VersionsPropertiesTest(string strategyType) : base(strategyType)
+		public VersionsPropertiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

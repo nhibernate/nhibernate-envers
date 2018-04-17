@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
-		public HasChangedManualFlushTest(string strategyType) : base(strategyType)
+		public HasChangedManualFlushTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

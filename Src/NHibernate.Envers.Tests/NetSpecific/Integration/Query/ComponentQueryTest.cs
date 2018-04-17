@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 		private const int id = 1345;
 		private const int personWeight = 80;
 
-		public ComponentQueryTest(string strategyType) : base(strategyType)
+		public ComponentQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

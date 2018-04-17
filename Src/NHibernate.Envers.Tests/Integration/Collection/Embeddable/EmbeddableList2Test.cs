@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.Embeddable
 		private StrTestNoProxyEntity entity4;
 		private StrTestNoProxyEntity entity4Copy;
 
-		public EmbeddableList2Test(string strategyType) : base(strategyType)
+		public EmbeddableList2Test(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

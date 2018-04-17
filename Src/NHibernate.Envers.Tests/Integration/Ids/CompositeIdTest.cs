@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 		private EmbIdWithCustomType id5;
 		private EmbIdWithCustomType id6;
 
-		public CompositeIdTest(string strategyType) : base(strategyType)
+		public CompositeIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

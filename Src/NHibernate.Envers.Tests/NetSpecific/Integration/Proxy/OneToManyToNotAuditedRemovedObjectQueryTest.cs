@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 	{
 		private long parentId;
 
-		public OneToManyToNotAuditedRemovedObjectQueryTest(string strategyType) : base(strategyType)
+		public OneToManyToNotAuditedRemovedObjectQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

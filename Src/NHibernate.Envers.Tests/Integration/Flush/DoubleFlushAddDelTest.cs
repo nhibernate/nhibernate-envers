@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 	{
 		private int id1;
 
-		public DoubleFlushAddDelTest(string strategyType) : base(strategyType)
+		public DoubleFlushAddDelTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

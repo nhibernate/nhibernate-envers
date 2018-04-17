@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.ManyToManyAudited
 		private Person person1_1;
 		private Car car1_2;
 
-		public ReadEntityWithAuditedManyToManyTest(string strategyType) : base(strategyType)
+		public ReadEntityWithAuditedManyToManyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

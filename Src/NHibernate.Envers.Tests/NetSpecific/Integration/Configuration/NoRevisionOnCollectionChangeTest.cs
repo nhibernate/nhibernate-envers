@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 	{
 		private int parentId;
 
-		public NoRevisionOnCollectionChangeTest(string strategyType) : base(strategyType)
+		public NoRevisionOnCollectionChangeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

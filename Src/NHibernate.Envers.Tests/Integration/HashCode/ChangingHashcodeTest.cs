@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.HashCode
 		private int pageId;
 		private int imageId;
 
-		public ChangingHashcodeTest(string strategyType) : base(strategyType)
+		public ChangingHashcodeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

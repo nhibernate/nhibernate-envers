@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.Readonly
 	{
 		private int id;
 
-		public ReadonlyAccessTest(string strategyType) : base(strategyType)
+		public ReadonlyAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

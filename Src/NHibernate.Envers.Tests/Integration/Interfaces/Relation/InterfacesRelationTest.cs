@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Relation
 		private int ed2_id;
 		private int ing1_id;
 
-		public InterfacesRelationTest(string strategyType) : base(strategyType)
+		public InterfacesRelationTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 	{
 		private DateEmbId id;
 
-		public CompositeDateIdTest(string strategyType) : base(strategyType)
+		public CompositeDateIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

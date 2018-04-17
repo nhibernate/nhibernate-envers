@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 	{
 		private Country country;
 
-		public ImmutableClassAccessTest(string strategyType) : base(strategyType)
+		public ImmutableClassAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

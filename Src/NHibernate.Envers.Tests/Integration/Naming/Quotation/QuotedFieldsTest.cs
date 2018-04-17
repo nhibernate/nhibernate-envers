@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Quotation
 		private long qfeId1;
 		private long qfeId2;
 
-		public QuotedFieldsTest(string strategyType) : base(strategyType)
+		public QuotedFieldsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.MultipleRelations
 		private long warsawId;
 		private long cracowId;
 
-		public MultipleAssociationsTest(string strategyType) : base(strategyType)
+		public MultipleAssociationsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

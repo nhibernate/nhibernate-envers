@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		private int steId;
 		private int siteId;
 
-		public DefaultTrackingEntitiesTest(string strategyType) : base(strategyType)
+		public DefaultTrackingEntitiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

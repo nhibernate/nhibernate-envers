@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 		private int transitiveEntityId;
 		private int auditedEntityId;
 
-		public AuditPropertyOverrideTest(string strategyType) : base(strategyType)
+		public AuditPropertyOverrideTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

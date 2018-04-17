@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 	{
 		private int id1;
 
-		public NoSetterTest(string strategyType) : base(strategyType)
+		public NoSetterTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo
 	{
 		private testListener listener;
 
-		public ChangeListenerInstanceTest(string strategyType) : base(strategyType)
+		public ChangeListenerInstanceTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

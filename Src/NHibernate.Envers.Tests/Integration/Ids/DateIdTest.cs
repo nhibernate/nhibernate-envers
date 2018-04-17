@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 	{
 		private DateTime id;
 
-		public DateIdTest(string strategyType) : base(strategyType)
+		public DateIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

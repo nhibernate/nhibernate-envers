@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.Versioning
 	{
 		private const int id = 17;
 
-		public NoOptimisticLockAuditingTest(string strategyType) : base(strategyType)
+		public NoOptimisticLockAuditingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

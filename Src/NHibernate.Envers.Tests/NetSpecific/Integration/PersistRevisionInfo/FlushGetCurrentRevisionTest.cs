@@ -7,8 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.PersistRevisionInfo
 {
 	public class FlushGetCurrentRevisionTest : TestBase
 	{
-		public FlushGetCurrentRevisionTest(string strategyType)
-			: base(strategyType)
+		public FlushGetCurrentRevisionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

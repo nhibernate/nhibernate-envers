@@ -8,8 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
 		private int type_id1;
 		private int type_id2;
 
-		public ManyToOneNotInsertableTest(string strategyType)
-			: base(strategyType)
+		public ManyToOneNotInsertableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

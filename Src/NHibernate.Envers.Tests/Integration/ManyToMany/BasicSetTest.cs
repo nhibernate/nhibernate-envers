@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 		private int ing1_id;
 		private int ing2_id;
 
-		public BasicSetTest(string strategyType) : base(strategyType)
+		public BasicSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

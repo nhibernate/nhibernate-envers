@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id2;
 		private long timestamp;
 
-		public CustomRevEntityQueryTest(string strategyType) : base(strategyType)
+		public CustomRevEntityQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

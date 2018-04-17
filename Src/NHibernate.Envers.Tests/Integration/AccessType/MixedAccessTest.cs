@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 	{
 		private int id1;
 
-		public MixedAccessTest(string strategyType) : base(strategyType)
+		public MixedAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

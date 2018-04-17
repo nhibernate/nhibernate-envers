@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		private DateTime timestamp2;
 		private DateTime timestamp3;
 
-		public InheritedTest(string strategyType) : base(strategyType)
+		public InheritedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

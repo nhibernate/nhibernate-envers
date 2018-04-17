@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 	{
 		private int sse1_id;
 
-		public EnumSetTest(string strategyType) : base(strategyType)
+		public EnumSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

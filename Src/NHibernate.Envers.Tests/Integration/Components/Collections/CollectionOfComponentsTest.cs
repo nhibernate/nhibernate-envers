@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Collections
 		private int id1;
 		private int id2;
 
-		public CollectionOfComponentsTest(string strategyType) : base(strategyType)
+		public CollectionOfComponentsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

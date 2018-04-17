@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo.Time
 {
 	public class DateTimeTest : TestBase
 	{
-		public DateTimeTest(string strategyType) : base(strategyType)
+		public DateTimeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

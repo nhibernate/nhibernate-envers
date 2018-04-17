@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private const int ing3_id =100;
 		private const int ing4_id =200;
 
-		public BasicSetWithNullsDeleteTest(string strategyType) : base(strategyType)
+		public BasicSetWithNullsDeleteTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

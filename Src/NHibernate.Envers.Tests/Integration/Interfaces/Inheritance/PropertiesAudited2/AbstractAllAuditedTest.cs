@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesA
 
 		private const int NUMBER = 555;
 
-		protected AbstractAllAuditedTest(string strategyType) : base(strategyType)
+		protected AbstractAllAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 	{
 		private const int reusedId = 11;
 
-		public IdentifierReuseTest(string strategyType) : base(strategyType)
+		public IdentifierReuseTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

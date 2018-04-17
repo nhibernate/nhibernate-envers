@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
-		public HasChangedOneToManyInComponentTest(string strategyType) : base(strategyType)
+		public HasChangedOneToManyInComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

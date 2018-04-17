@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 	{
 		private int id;
 
-		public MapRemovedObjectQueryTest(string strategyType) : base(strategyType)
+		public MapRemovedObjectQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

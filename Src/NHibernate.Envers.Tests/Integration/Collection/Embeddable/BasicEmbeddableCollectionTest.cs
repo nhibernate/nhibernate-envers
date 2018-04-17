@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.Embeddable
 	{
 		private const int id = 11;
 
-		public BasicEmbeddableCollectionTest(string strategyType) : base(strategyType)
+		public BasicEmbeddableCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

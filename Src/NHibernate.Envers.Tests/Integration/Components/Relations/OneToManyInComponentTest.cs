@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 		private int ste_id1;
 		private int ste_id2;
 
-		public OneToManyInComponentTest(string strategyType) : base(strategyType)
+		public OneToManyInComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

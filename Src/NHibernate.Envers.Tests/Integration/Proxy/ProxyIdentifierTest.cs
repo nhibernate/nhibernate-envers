@@ -18,8 +18,7 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 		private UnversionedStrTestEntity uste1;
 		private UnversionedStrTestEntity uste2;
 
-		public ProxyIdentifierTest(string strategyType)
-			: base(strategyType)
+		public ProxyIdentifierTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

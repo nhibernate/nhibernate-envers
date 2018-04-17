@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 {
 	public class AuditReaderAPITest : TestBase
 	{
-		public AuditReaderAPITest(string strategyType) : base(strategyType)
+		public AuditReaderAPITest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
 	public abstract class AbstractModifiedFlagsEntityTest : TestBase
 	{
-		protected AbstractModifiedFlagsEntityTest(string strategyType) : base(strategyType)
+		protected AbstractModifiedFlagsEntityTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -4,7 +4,7 @@ namespace NHibernate.Envers.Tests.Integration.SameIds
 {
 	public class SameIdsTest : TestBase
 	{
-		public SameIdsTest(string strategyType) : base(strategyType)
+		public SameIdsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

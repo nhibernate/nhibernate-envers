@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Properties
 	{
 		private int id;
 
-		public UnversionedOptimisticLockingFieldTest(string strategyType) : base(strategyType)
+		public UnversionedOptimisticLockingFieldTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

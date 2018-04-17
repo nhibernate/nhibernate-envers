@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudite
 		private Person currentPerson1;
 		private Person person1;
 
-		public ReadEntityAssociatedAuditedTest(string strategyType) : base(strategyType)
+		public ReadEntityAssociatedAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 	{
 		private const int id = 425;
 
-		public MultipleJoinAuditTableTest(string strategyType) : base(strategyType)
+		public MultipleJoinAuditTableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

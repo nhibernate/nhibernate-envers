@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 {
 	public class RollbackAuditExceptionTest : TestBase
 	{
-		public RollbackAuditExceptionTest(string strategyType) : base(strategyType)
+		public RollbackAuditExceptionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

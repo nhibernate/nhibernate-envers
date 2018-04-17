@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseTyp
 	{
 		private Guid parentId;
 
-		public NotFoundIgnoreNotExistsInBaseTypeTest(string strategyType) : base(strategyType)
+		public NotFoundIgnoreNotExistsInBaseTypeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

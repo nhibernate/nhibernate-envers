@@ -9,8 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotUpdatable
 	{
 		private long id;
 
-		public DetachedUpdateTest(string strategyType)
-			: base(strategyType)
+		public DetachedUpdateTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

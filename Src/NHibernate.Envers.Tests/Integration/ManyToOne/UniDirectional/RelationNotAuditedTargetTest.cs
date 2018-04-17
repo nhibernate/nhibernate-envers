@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 		private int uste1_id;
 		private int uste2_id;
 
-		public RelationNotAuditedTargetTest(string strategyType) : base(strategyType)
+		public RelationNotAuditedTargetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

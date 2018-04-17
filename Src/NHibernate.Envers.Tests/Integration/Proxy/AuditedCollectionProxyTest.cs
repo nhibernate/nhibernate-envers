@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 {
 	public class AuditedCollectionProxyTest : TestBase
 	{
-		public AuditedCollectionProxyTest(string strategyType) : base(strategyType)
+		public AuditedCollectionProxyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

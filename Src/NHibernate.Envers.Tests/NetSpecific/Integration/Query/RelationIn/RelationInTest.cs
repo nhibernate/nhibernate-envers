@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 		private SetRefEdEntity ed;
 		private SetRefEdEntity edNotReferenced;
 
-		public RelationInTest(string strategyType) : base(strategyType)
+		public RelationInTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 	{
 		private EmbId ei;
 
-		public UnidirectionalMulIdWithNullsTest(string strategyType) : base(strategyType)
+		public UnidirectionalMulIdWithNullsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

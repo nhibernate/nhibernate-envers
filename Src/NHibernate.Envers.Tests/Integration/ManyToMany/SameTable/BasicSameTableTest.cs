@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 		private int c2_1_id;
 		private int c2_2_id;
 
-		public BasicSameTableTest(string strategyType) : base(strategyType)
+		public BasicSameTableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

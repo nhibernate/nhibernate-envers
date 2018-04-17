@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.PropertyNull
 	{
 		private int id;
 
-		public PrimitiveNullTest(string strategyType) : base(strategyType)
+		public PrimitiveNullTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

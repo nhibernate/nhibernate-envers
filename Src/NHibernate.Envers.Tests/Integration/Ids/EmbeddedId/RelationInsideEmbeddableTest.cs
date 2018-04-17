@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Ids.EmbeddedId
 		private int orderId;
 		private ItemId itemId;
 
-		public RelationInsideEmbeddableTest(string strategyType) : base(strategyType)
+		public RelationInsideEmbeddableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

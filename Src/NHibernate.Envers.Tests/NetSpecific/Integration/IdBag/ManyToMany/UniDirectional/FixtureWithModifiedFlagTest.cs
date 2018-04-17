@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.IdBag.ManyToMany.UniDi
 		private Guid owningId;
 		private Guid ownedId;
 
-		public FixtureWithModifiedFlagTest(string strategyType) : base(strategyType)
+		public FixtureWithModifiedFlagTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

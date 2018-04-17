@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFo
 		private ParentEntity parentVer1;
 		private ParentEntity parentVer2;
 
-		public DiscriminatorFormulaTest(string strategyType) : base(strategyType)
+		public DiscriminatorFormulaTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

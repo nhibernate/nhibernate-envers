@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.AccessType
 	{
 		private int id;
 
-		public PropertyAccessTest(string strategyType) : base(strategyType)
+		public PropertyAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

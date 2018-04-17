@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 	{
 		private int id1;
 
-		public ChildPrimaryKeyJoinAuditingTest(string strategyType) : base(strategyType)
+		public ChildPrimaryKeyJoinAuditingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

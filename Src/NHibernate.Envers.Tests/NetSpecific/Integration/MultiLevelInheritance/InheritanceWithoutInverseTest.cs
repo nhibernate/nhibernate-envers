@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.MultiLevelInheritance
 {
 	public class InheritanceWithoutInverseTest : TestBase
 	{
-		public InheritanceWithoutInverseTest(string strategyType) : base(strategyType)
+		public InheritanceWithoutInverseTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

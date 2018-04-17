@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 		private int ing1_id;
 		private int ed2_id;
 
-		public OneToOneCacheTest(string strategyType) : base(strategyType)
+		public OneToOneCacheTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private Component3 c3_2;
 
 
-		public HasChangedComponentCollectionTest(string strategyType) : base(strategyType)
+		public HasChangedComponentCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

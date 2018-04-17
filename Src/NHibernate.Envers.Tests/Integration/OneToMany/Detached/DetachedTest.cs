@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private const int parentId = 132;
 		private int childId;
 
-		public DetachedTest(string strategyType) : base(strategyType)
+		public DetachedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

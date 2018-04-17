@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
-		public HasChangedCompositeCustomTest(string strategyType) : base(strategyType)
+		public HasChangedCompositeCustomTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

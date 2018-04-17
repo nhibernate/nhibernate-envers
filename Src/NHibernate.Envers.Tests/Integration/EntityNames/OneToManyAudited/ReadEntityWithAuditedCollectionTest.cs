@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyAudited
 		private Person person1_1;
 		private Car car1_1;
 
-		public ReadEntityWithAuditedCollectionTest(string strategyType) : base(strategyType)
+		public ReadEntityWithAuditedCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

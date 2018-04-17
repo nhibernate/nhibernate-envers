@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional
 		private long owning1Id;
 		private long owning2Id;
 
-		public ImplicitMappedByTest(string strategyType) : base(strategyType)
+		public ImplicitMappedByTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

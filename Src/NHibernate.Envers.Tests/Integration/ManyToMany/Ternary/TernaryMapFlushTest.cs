@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 		private int int2_id;
 		private int map1_id;
 
-		public TernaryMapFlushTest(string strategyType) : base(strategyType)
+		public TernaryMapFlushTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 	{
 		private int mixedEntityId;
 
-		public MixedOverrideTest(string strategyType) : base(strategyType)
+		public MixedOverrideTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

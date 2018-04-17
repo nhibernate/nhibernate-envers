@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 	{
 		private long id;
 
-		public ColumnScalePrecisionTest(string strategyType) : base(strategyType)
+		public ColumnScalePrecisionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		private int sme1_id;
 		private int sme2_id;
 
-		public StringMapTest(string strategyType) : base(strategyType)
+		public StringMapTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

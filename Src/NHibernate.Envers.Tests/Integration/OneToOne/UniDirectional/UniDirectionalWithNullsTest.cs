@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 		private const int ing1_id = 5;
 		private const int ing2_id = 6;
 
-		public UniDirectionalWithNullsTest(string strategyType) : base(strategyType)
+		public UniDirectionalWithNullsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

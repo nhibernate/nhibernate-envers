@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
     {
     	private const int id = 13;
 
-    	public FindRevisionsTest(string strategyType) : base(strategyType)
+    	public FindRevisionsTest(AuditStrategyForTest strategyType) : base(strategyType)
     	{
     	}
 

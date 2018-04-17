@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int uni1_id;
 		private int str1_id;
 
-		public OneToManyUniDirectionalNamingTest(string strategyType) : base(strategyType)
+		public OneToManyUniDirectionalNamingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent.JoinW
 		private Person currentPerson1;
 		private Person person1;
 
-		public BasicJoinWithDynamicComponentTest(string strategyType) : base(strategyType)
+		public BasicJoinWithDynamicComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

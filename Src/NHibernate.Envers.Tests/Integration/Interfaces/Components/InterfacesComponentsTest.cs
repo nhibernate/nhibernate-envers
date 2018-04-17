@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 	{
 		private int id1;
 
-		public InterfacesComponentsTest(string strategyType) : base(strategyType)
+		public InterfacesComponentsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 	{
 		private const int id = 123;
 
-		public ParameterizedUserCollectionTest(string strategyType) : base(strategyType)
+		public ParameterizedUserCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private int id1;
 		private int id2;
 
-		public BasicNamingTest(string strategyType) : base(strategyType)
+		public BasicNamingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

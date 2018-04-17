@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		private int id;
 
 
-		public CustomNoListenerTest(string strategyType) : base(strategyType)
+		public CustomNoListenerTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

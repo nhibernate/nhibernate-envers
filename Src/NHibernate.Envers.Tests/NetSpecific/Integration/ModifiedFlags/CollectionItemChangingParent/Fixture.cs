@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags.Collecti
 		private object _newOwnerId;
 		private object _carId;
 
-		public Fixture(string strategyType) : base(strategyType)
+		public Fixture(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

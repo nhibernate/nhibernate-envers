@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 		private int ing1_id;
 		private int ing2_id;
 
-		public BasicUniListTest(string strategyType) : base(strategyType)
+		public BasicUniListTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

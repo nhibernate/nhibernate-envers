@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.AllAudited
 		private long aiId;
 		private long naiId;
 
-		protected AbstractAllAuditedTest(string strategyType) : base(strategyType)
+		protected AbstractAllAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

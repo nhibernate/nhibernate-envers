@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
 	public class ExceptionListenerTest : TestBase
 	{
-		public ExceptionListenerTest(string strategyType) : base(strategyType)
+		public ExceptionListenerTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

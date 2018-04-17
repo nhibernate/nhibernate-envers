@@ -18,7 +18,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedNotAud
 		private Person currentPerson1;
 		private Car currentCar1;
 
-		public ReadEntityAssociatedNotAuditedTest(string strategyType) : base(strategyType)
+		public ReadEntityAssociatedNotAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 
