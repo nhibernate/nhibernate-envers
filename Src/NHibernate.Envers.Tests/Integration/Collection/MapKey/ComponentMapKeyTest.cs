@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 		private int cte1_id;
 		private int cte2_id;
 
-		public ComponentMapKeyTest(string strategyType) : base(strategyType)
+		public ComponentMapKeyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

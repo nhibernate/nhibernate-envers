@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 		int id2;
 
 
-		public FactoryTest(string strategyType)	: base(strategyType)
+		public FactoryTest(AuditStrategyForTest strategyType)	: base(strategyType)
 		{
 		}
 

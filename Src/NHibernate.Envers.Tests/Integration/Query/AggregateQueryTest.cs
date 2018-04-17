@@ -10,8 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 {
 	public class AggregateQueryTest : TestBase
 	{
-		public AggregateQueryTest(string strategyType)
-			: base(strategyType)
+		public AggregateQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

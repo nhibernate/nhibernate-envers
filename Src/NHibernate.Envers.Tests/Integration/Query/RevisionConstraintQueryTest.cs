@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 	{
 		private int id1;
 
-		public RevisionConstraintQueryTest(string strategyType) : base(strategyType)
+		public RevisionConstraintQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

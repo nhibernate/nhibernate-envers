@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 {
 	public class NoneAuditedTest : TestBase
 	{
-		public NoneAuditedTest(string strategyType) : base(strategyType)
+		public NoneAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

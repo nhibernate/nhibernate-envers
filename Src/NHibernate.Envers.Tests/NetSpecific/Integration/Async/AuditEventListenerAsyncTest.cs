@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Async
 {
 	public class AuditEventListenerAsyncTest : TestBase
 	{
-		public AuditEventListenerAsyncTest(string strategyType) : base(strategyType)
+		public AuditEventListenerAsyncTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

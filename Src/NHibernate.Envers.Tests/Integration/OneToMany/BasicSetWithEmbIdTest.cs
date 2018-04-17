@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private EmbId ing1_id;
 		private EmbId ing2_id;
 
-		public BasicSetWithEmbIdTest(string strategyType) : base(strategyType)
+		public BasicSetWithEmbIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

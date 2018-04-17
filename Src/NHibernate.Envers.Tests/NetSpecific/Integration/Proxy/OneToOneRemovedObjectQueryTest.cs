@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 	{
 		private const int id =125;
 
-		public OneToOneRemovedObjectQueryTest(string strategyType) : base(strategyType)
+		public OneToOneRemovedObjectQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

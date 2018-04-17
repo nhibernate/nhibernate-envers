@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 		private EmbIdTestEntity embEntNoRef2;
 		private EntityReferingEmbEntity ent;
 
-		public RelationEmbInTest(string strategyType) : base(strategyType)
+		public RelationEmbInTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

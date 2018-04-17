@@ -10,8 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BiDirOneToOneWithOneSi
 		private Guid parentId;
 		private string childLatestStr;
 
-		public BiDirOneToOneWithOneSideNotAuditedTests(string strategyType)
-			: base(strategyType)
+		public BiDirOneToOneWithOneSideNotAuditedTests(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

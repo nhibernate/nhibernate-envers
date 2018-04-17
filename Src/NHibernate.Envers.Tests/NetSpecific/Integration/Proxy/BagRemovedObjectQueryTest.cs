@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 	{
 		private Guid parentId;
 
-		public BagRemovedObjectQueryTest(string strategyType) : base(strategyType)
+		public BagRemovedObjectQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

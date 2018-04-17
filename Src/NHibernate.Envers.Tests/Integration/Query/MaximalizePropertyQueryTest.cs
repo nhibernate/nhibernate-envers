@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id3;
 		private int id4;
 
-		public MaximalizePropertyQueryTest(string strategyType) : base(strategyType)
+		public MaximalizePropertyQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

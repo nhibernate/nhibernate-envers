@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToOne
 	{
 		private const int id = 47;
 
-		public OneToOnePrimaryKeyTest(string strategyType) : base(strategyType)
+		public OneToOnePrimaryKeyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

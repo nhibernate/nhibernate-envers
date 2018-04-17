@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfter
 {
 	public class EvictAuditDataAfterCommitTest : TestBase
 	{
-		public EvictAuditDataAfterCommitTest(string strategyType) : base(strategyType)
+		public EvictAuditDataAfterCommitTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

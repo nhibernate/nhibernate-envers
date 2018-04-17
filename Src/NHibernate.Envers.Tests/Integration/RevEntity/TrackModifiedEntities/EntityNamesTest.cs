@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 {
 	public class EntityNamesTest : TestBase
 	{
-		public EntityNamesTest(string strategyType) : base(strategyType)
+		public EntityNamesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

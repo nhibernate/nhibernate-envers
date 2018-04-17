@@ -11,8 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int emptyId;
 		private int nullId;
 
-		public EmptyStringTest(string strategyType)
-			: base(strategyType)
+		public EmptyStringTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

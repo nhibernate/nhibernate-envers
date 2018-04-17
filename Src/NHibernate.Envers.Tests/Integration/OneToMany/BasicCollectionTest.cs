@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private int ing1_id;
 		private int ing2_id;
 
-		public BasicCollectionTest(string strategyType) : base(strategyType)
+		public BasicCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

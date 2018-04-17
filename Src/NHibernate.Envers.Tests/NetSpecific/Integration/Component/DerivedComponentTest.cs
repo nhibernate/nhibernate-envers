@@ -6,8 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 	{
 		private const int id = 111;
 
-		public DerivedComponentTest(string strategyType)
-			: base(strategyType)
+		public DerivedComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

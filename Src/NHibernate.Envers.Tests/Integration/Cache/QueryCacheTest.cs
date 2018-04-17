@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Cache
 	{
 		private int id1;
 
-		public QueryCacheTest(string strategyType) : base(strategyType)
+		public QueryCacheTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

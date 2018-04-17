@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidir
 		private long cce1_id;
 		private int cse1_id;
 
-		public UnidirectionalDoubleAbstractTest(string strategyType) : base(strategyType)
+		public UnidirectionalDoubleAbstractTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

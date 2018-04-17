@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.NotOwnedRelatio
 		private long a1_id;
 		private long a2_id;
 
-		public NotOwnBidirectionalTest(string strategyType) : base(strategyType)
+		public NotOwnBidirectionalTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

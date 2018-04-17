@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.None.ManyToOne
 	{
 		private int parentId;
 
-		public Fixture(string strategyType) : base(strategyType)
+		public Fixture(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

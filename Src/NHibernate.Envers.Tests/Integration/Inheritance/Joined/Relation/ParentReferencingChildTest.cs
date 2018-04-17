@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 		private Role expAdminRev2;
 		private Role expAdminRev1;
 
-		public ParentReferencingChildTest(string strategyType) : base(strategyType)
+		public ParentReferencingChildTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

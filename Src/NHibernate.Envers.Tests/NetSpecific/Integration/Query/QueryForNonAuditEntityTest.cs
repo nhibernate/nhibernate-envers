@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 {
 	public class QueryForNonAuditEntityTest : TestBase
 	{
-		public QueryForNonAuditEntityTest(string strategyType) : base(strategyType)
+		public QueryForNonAuditEntityTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

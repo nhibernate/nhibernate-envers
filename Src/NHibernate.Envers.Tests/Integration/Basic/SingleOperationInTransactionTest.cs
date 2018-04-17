@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int id2;
 		private int id3;
 
-		public SingleOperationInTransactionTest(string strategyType) : base(strategyType)
+		public SingleOperationInTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

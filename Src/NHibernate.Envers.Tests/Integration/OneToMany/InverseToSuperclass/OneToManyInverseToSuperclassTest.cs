@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.InverseToSuperclass
 	{
 		private long masterId;
 
-		public OneToManyInverseToSuperclassTest(string strategyType) : base(strategyType)
+		public OneToManyInverseToSuperclassTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

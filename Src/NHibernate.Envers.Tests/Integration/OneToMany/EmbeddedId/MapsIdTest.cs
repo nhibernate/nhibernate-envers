@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.EmbeddedId
 		private Person personCVer1;
 		private Person personCVer2;
 
-		public MapsIdTest(string strategyType) : base(strategyType)
+		public MapsIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

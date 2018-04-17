@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int id3;
 		private int id4;
 
-		public HasChangedComponentsTest(string strategyType) : base(strategyType)
+		public HasChangedComponentsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

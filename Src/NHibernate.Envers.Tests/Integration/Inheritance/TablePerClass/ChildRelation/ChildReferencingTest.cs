@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.ChildRel
 		private int re_id2;
 		private int c_id;
 
-		public ChildReferencingTest(string strategyType) : base(strategyType)
+		public ChildReferencingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

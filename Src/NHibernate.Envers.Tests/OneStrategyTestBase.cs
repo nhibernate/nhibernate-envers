@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using NHibernate.Cfg;
@@ -7,6 +8,7 @@ using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
+using NHibernate.Envers.Strategy;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests
@@ -20,9 +22,24 @@ namespace NHibernate.Envers.Tests
 		private ISessionFactory SessionFactory { get; set; }
 		private IAuditReader _auditReader;
 
-		protected OneStrategyTestBase(string strategyType)
+		protected OneStrategyTestBase(AuditStrategyForTest strategyType)
 		{
-			StrategyType = System.Type.GetType(strategyType);
+			setStrategyType(strategyType);
+		}
+
+		private void setStrategyType(AuditStrategyForTest strategyType)
+		{
+			switch (strategyType)
+			{
+				case AuditStrategyForTest.DefaultAuditStrategy:
+					StrategyType = typeof(DefaultAuditStrategy);
+					break;
+				case AuditStrategyForTest.ValidityAuditStrategy:
+					StrategyType = typeof(ValidityAuditStrategy);
+					break;
+				default:
+					throw new ArgumentException();
+			}
 		}
 
 		[SetUp]

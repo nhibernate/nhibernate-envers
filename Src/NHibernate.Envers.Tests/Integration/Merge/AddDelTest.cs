@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Merge
 	{
 		private const int id = 17;
 
-		public AddDelTest(string strategyType) : base(strategyType)
+		public AddDelTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

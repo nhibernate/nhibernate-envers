@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int cte1_id;
 		private int cte2_id;
 
-		public HasChangedComponentMapKeyTest(string strategyType) : base(strategyType)
+		public HasChangedComponentMapKeyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

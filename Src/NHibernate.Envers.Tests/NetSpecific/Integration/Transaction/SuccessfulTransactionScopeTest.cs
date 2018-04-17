@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Transaction
 	{
 		private int id;
 
-		public SuccessfulTransactionScopeTest(string strategyType) : base(strategyType)
+		public SuccessfulTransactionScopeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

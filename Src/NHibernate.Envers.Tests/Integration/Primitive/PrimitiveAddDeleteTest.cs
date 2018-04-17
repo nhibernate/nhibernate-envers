@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Primitive
 	{
 		private int id1;
 
-		public PrimitiveAddDeleteTest(string strategyType) : base(strategyType)
+		public PrimitiveAddDeleteTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

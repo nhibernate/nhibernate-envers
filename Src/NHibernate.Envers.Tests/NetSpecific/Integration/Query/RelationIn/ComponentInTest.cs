@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
 	public class ComponentInTest : TestBase
 	{
-		public ComponentInTest(string strategyType) : base(strategyType)
+		public ComponentInTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

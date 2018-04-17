@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Join
 	{
 		private int id;
 
-		public BasicJoinTest(string strategyType) : base(strategyType)
+		public BasicJoinTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

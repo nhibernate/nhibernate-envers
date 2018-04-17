@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.EnumType
 	{
 		private int id;
 
-		public CustomEnumTypeTest(string strategyType) : base(strategyType)
+		public CustomEnumTypeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

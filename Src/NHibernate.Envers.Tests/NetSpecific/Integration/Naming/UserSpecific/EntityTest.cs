@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Naming.UserSpecific
 {
 	public class EntityTest : TestBase
 	{
-		public EntityTest(string strategyType) : base(strategyType)
+		public EntityTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

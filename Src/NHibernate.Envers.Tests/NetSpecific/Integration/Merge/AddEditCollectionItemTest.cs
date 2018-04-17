@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Merge
 		private const int entityId = 342;
 		private const int childId = 1000;
 
-		public AddEditCollectionItemTest(string strategyType) : base(strategyType)
+		public AddEditCollectionItemTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int id1;
 		private int id2;
 
-		public NullPropertiesTest(string strategyType) : base(strategyType)
+		public NullPropertiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

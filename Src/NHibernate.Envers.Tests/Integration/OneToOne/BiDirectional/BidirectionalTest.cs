@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 		private int ed2_id;
 		private int ing1_id;
 
-		public BidirectionalTest(string strategyType) : base(strategyType)
+		public BidirectionalTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

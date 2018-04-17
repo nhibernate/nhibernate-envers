@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Serialization
 		private const int ed1_id = 15;
 		private const int ing1_id =21;
 
-		public SerializingCollectionTest(string strategyType) : base(strategyType)
+		public SerializingCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

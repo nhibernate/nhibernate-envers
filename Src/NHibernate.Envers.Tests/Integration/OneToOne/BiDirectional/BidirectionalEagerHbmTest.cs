@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 	{
 		private long refIngId1;
 
-		public BidirectionalEagerHbmTest(string strategyType) : base(strategyType)
+		public BidirectionalEagerHbmTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

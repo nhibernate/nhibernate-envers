@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	/// </summary>
 	public class AnnotatedTrackingEntitiesTest : DefaultTrackingEntitiesTest
 	{
-		public AnnotatedTrackingEntitiesTest(string strategyType) : base(strategyType)
+		public AnnotatedTrackingEntitiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

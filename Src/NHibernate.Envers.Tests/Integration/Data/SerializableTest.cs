@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.Data
 	{
 		private int id1;
 
-		public SerializableTest(string strategyType) : base(strategyType)
+		public SerializableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

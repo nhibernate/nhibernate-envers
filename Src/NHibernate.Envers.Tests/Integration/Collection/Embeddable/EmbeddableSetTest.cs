@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.Embeddable
 		private Component3 c3_3;
 		private Component3 c3_4;
 
-		public EmbeddableSetTest(string strategyType) : base(strategyType)
+		public EmbeddableSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

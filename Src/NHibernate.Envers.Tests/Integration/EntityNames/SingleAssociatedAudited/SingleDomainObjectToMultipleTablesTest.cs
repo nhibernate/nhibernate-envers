@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudite
 		private long ownerId;
 		private long driverId;
 
-		public SingleDomainObjectToMultipleTablesTest(string strategyType) : base(strategyType)
+		public SingleDomainObjectToMultipleTablesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

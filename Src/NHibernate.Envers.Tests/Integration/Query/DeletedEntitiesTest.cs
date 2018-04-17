@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 	{
 		private int id2;
 
-		public DeletedEntitiesTest(string strategyType) : base(strategyType)
+		public DeletedEntitiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

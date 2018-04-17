@@ -2,7 +2,7 @@
 {
 	public class UnionAllAuditedTest : AbstractAllAuditedTest
 	{
-		public UnionAllAuditedTest(string strategyType) : base(strategyType)
+		public UnionAllAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 	}

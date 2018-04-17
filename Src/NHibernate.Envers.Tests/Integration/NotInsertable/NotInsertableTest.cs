@@ -6,8 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.NotInsertable
 	{
 		private int id1;
 
-		public NotInsertableTest(string strategyType)
-			: base(strategyType)
+		public NotInsertableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

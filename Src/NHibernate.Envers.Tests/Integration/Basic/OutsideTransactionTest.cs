@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 {
 	public class OutsideTransactionTest : TestBase
 	{
-		public OutsideTransactionTest(string strategyType) : base(strategyType)
+		public OutsideTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.Data
 	{
 		private int id1;
 
-		public DateTest(string strategyType) : base(strategyType)
+		public DateTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

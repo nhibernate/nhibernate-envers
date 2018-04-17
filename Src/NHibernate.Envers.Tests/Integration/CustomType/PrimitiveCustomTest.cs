@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.CustomType
 	{
 		private int pctec_id;
 
-		public PrimitiveCustomTest(string strategyType) : base(strategyType)
+		public PrimitiveCustomTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

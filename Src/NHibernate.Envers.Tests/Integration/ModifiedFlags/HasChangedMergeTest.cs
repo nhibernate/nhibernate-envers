@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private const int parentId = 11;
 		private const int childId = 12;
 
-		public HasChangedMergeTest(string strategyType) : base(strategyType)
+		public HasChangedMergeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

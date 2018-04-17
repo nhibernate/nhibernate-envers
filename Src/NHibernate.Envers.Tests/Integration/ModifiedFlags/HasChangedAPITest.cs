@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
 	public class HasChangedAPITest : AbstractModifiedFlagsEntityTest
 	{
-		public HasChangedAPITest(string strategyType) : base(strategyType)
+		public HasChangedAPITest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

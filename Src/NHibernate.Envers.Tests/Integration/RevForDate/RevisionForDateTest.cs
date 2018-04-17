@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		private DateTime timestamp3;
 		private DateTime timestamp4;
 
-		public RevisionForDateTest(string strategyType) : base(strategyType)
+		public RevisionForDateTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

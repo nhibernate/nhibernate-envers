@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int ed1Id;
 		private int ed2Id;
 
-		public HasChangedBidirectional2Test(string strategyType) : base(strategyType)
+		public HasChangedBidirectional2Test(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 		private int steId1;
 		private int steId2;
 
-		public TrackingEntitiesMultipleChangesTest(string strategyType) : base(strategyType)
+		public TrackingEntitiesMultipleChangesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Components.Relations
 	{
 		private int mtocte_id1;
 
-		public NotAuditedManyToOneInComponentTest(string strategyType) : base(strategyType)
+		public NotAuditedManyToOneInComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

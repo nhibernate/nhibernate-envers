@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 		private Guid child1Id;
 		private Guid relatedId;
 
-		public ForceInitializeTest(string strategyType) : base(strategyType)
+		public ForceInitializeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

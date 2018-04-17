@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
 	public class CustomColumnInheritanceTest : TestBase
 	{
-		public CustomColumnInheritanceTest(string strategyType) : base(strategyType)
+		public CustomColumnInheritanceTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

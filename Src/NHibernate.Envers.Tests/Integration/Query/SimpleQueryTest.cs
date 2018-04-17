@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id2;
 		private int id3;
 
-		public SimpleQueryTest(string strategyType) : base(strategyType)
+		public SimpleQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

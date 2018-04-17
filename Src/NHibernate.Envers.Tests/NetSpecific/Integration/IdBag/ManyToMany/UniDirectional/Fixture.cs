@@ -12,8 +12,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.IdBag.ManyToMany.UniDi
 		private Guid ownedId1;
 		private Guid ownedId2;
 
-		public Fixture(string strategyType)
-			: base(strategyType)
+		public Fixture(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

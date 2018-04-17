@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
 	public class HasChangedInsertUpdateSameTransactionTest : AbstractModifiedFlagsEntityTest
 	{
-		public HasChangedInsertUpdateSameTransactionTest(string strategyType) : base(strategyType)
+		public HasChangedInsertUpdateSameTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

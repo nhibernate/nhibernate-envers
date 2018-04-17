@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags
 {
 	public class MergeColModTest : TestBase
 	{
-		public MergeColModTest(string strategyType) : base(strategyType)
+		public MergeColModTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

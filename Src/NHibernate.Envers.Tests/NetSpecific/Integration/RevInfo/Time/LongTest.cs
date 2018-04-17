@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo.Time
 {
 	public class LongTest : TestBase
 	{
-		public LongTest(string strategyType) : base(strategyType)
+		public LongTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

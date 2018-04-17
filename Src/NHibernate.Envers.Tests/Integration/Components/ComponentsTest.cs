@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Components
 		private int id3;
 		private int id4;
 
-		public ComponentsTest(string strategyType) : base(strategyType)
+		public ComponentsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

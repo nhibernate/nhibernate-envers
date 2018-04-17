@@ -2,7 +2,7 @@
 {
 	public class SubclassAllAuditedTest : AbstractAllAuditedTest
 	{
-		public SubclassAllAuditedTest(string strategyType) : base(strategyType)
+		public SubclassAllAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 	}

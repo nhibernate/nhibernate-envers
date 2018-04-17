@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int rollbackId;
 		private int committedId;
 
-		public TransactionRollbackBehaviourTest(string strategyType) : base(strategyType)
+		public TransactionRollbackBehaviourTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

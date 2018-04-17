@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.Data
 	{
 		private int id1;
 
-		public LobsTest(string strategyType) : base(strategyType)
+		public LobsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Naming.Default
 {
 	public class CollectionTest : TestBase
 	{
-		public CollectionTest(string strategyType) : base(strategyType)
+		public CollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

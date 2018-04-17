@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 	{
 		private int id1;
 
-		public StoreDeletedDataTest(string strategyType) : base(strategyType)
+		public StoreDeletedDataTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

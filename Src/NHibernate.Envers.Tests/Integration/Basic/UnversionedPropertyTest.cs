@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 	{
 		private int id1;
 
-		public UnversionedPropertyTest(string strategyType) : base(strategyType)
+		public UnversionedPropertyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

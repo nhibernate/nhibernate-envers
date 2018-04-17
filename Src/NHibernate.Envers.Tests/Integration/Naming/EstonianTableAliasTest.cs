@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming
 		private long parentId;
 		private long childId;
 
-		public EstonianTableAliasTest(string strategyType) : base(strategyType)
+		public EstonianTableAliasTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -9,8 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Naming.UserSpecific
 {
 	public class JoinTest : TestBase
 	{
-		public JoinTest(string strategyType)
-			: base(strategyType)
+		public JoinTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

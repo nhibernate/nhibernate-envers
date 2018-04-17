@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int str2_id;
 		private const int coll1_id = 13;
 
-		public BasicDetachedSetTest(string strategyType) : base(strategyType)
+		public BasicDetachedSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection
 		private int sse1_id;
 		private int sse2_id;
 
-		public StringSetTest(string strategyType) : base(strategyType)
+		public StringSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

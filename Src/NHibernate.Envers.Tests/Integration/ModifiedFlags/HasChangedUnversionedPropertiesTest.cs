@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 	{
 		private int id;
 
-		public HasChangedUnversionedPropertiesTest(string strategyType) : base(strategyType)
+		public HasChangedUnversionedPropertiesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

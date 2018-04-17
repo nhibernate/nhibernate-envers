@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 		private const int ingId = 567;
 		private SetOwnedEntity ed;
 
-		public SerializableTest(string strategyType) : base(strategyType)
+		public SerializableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

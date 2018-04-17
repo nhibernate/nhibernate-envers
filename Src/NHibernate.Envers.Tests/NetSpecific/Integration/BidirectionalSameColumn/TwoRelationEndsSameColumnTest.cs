@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalSameColum
 		private const int modelId = 112;
 		private const int modelConfigurationId = 2987;
 
-		public TwoRelationEndsSameColumnTest(string strategyType) : base(strategyType)
+		public TwoRelationEndsSameColumnTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

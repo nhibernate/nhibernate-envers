@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.Implicit
 	{
 		private int parentId;
 
-		public Fixture(string strategyType) : base(strategyType)
+		public Fixture(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int str2_id;
 		private int coll1_id;
 
-		public DoubleDetachedSetTest(string strategyType) : base(strategyType)
+		public DoubleDetachedSetTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

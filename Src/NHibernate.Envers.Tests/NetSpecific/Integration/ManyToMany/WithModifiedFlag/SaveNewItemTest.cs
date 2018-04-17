@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToMany.WithModifie
 	{
 		private long id;
 
-		public SaveNewItemTest(string strategyType) : base(strategyType)
+		public SaveNewItemTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

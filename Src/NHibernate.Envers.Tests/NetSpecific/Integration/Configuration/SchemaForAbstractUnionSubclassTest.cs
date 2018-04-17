@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 	{
 		private long id;
 
-		public SchemaForAbstractUnionSubclassTest(string strategyType) : base(strategyType)
+		public SchemaForAbstractUnionSubclassTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

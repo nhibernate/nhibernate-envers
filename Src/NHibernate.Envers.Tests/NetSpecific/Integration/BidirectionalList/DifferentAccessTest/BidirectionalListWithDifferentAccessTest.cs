@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.Diff
 		private int child1_id;
 		private int child2_id;
 
-		public BidirectionalListWithDifferentAccessTest(string strategyType) : base(strategyType)
+		public BidirectionalListWithDifferentAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditedAtSuperclassLeve
 		private int id1_1;
 		private int id2_1;
 
-		public MappedSubclassingAllAuditedTest(string strategyType) : base(strategyType)
+		public MappedSubclassingAllAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

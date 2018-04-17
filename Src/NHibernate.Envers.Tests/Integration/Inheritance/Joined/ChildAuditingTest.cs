@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined
 	{
 		private int id1;
 
-		public ChildAuditingTest(string strategyType) : base(strategyType)
+		public ChildAuditingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

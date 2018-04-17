@@ -17,7 +17,7 @@ namespace NHibernate.Envers.Tests.Integration.Query.Traverse
 		private int addressId1;
 		private int addressId2;
 
-		public AssociationToOneQueryTest(string strategyType) : base(strategyType)
+		public AssociationToOneQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

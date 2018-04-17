@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 	{
 		private int id;
 
-		public HasChangedDynamicComponentTest(string strategyType) : base(strategyType)
+		public HasChangedDynamicComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

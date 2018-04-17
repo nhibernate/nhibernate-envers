@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.EntityNames.AuditedEntity
 		private long id_pers2;
 		private long id_pers3;
 
-		public ReadEntityWithEntityNameTest(string strategyType) : base(strategyType)
+		public ReadEntityWithEntityNameTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

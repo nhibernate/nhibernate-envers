@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.Flush
 	{
 		private int id;
 
-		public DoubleFlushAddModTest(string strategyType) : base(strategyType)
+		public DoubleFlushAddModTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id4;
 		private int id5;
 
-		public OrderByLimitQueryTest(string strategyType) : base(strategyType)
+		public OrderByLimitQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

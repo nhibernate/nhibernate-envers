@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.NotUpdatable
 	{
 		private long id;
 
-		public PropertyNotUpdatableTest(string strategyType) : base(strategyType)
+		public PropertyNotUpdatableTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

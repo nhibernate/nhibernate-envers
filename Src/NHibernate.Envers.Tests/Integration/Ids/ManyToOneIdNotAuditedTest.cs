@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.Ids
 	{
 		private ManyToOneNotAuditedEmbId id;
 
-		public ManyToOneIdNotAuditedTest(string strategyType) : base(strategyType)
+		public ManyToOneIdNotAuditedTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

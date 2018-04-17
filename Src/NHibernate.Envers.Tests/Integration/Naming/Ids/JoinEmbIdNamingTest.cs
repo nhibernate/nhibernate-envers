@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.Naming.Ids
 		private EmbIdNaming ed_id2;
 		private EmbIdNaming ing_id1;
 
-		public JoinEmbIdNamingTest(string strategyType) : base(strategyType)
+		public JoinEmbIdNamingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

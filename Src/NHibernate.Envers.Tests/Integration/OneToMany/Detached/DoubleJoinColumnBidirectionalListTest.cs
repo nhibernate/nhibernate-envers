@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 		private int ing1_id;
 		private int ing2_id;
 
-		public DoubleJoinColumnBidirectionalListTest(string strategyType) : base(strategyType)
+		public DoubleJoinColumnBidirectionalListTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

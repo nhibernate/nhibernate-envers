@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private int ing1_id;
 		private int ing2_id;
 
-		public BidirectionalMapKeyTest(string strategyType) : base(strategyType)
+		public BidirectionalMapKeyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

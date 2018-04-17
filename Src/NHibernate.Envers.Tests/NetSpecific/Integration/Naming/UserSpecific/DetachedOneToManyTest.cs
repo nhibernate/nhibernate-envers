@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Naming.UserSpecific
 {
 	public class DetachedOneToManyTest : TestBase
 	{
-		public DetachedOneToManyTest(string strategyType) : base(strategyType)
+		public DetachedOneToManyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

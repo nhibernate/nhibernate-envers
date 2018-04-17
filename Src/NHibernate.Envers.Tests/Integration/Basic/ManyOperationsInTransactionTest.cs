@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		private int id2;
 		private int id3;
 
-		public ManyOperationsInTransactionTest(string strategyType) : base(strategyType)
+		public ManyOperationsInTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

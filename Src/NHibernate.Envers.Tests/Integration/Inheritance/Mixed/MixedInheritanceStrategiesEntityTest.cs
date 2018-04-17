@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Mixed
 		private ActivityId id2;
 		private ActivityId id3;
 
-		public MixedInheritanceStrategiesEntityTest(string strategyType) : base(strategyType)
+		public MixedInheritanceStrategiesEntityTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

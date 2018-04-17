@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int sme1_id;
 		private int sme2_id;
 
-		public HasChangedStringMapTest(string strategyType) : base(strategyType)
+		public HasChangedStringMapTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

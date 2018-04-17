@@ -4,7 +4,7 @@ namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 {
 	public class CollectionChangeRevisionTest : AbstractCollectionChangeTest
 	{
-		public CollectionChangeRevisionTest(string strategyType) : base(strategyType)
+		public CollectionChangeRevisionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

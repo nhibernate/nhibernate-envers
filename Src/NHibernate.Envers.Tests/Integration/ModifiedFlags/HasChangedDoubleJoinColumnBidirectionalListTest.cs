@@ -15,7 +15,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int ing1_id;
 		private int ing2_id;
 
-		public HasChangedDoubleJoinColumnBidirectionalListTest(string strategyType) : base(strategyType)
+		public HasChangedDoubleJoinColumnBidirectionalListTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

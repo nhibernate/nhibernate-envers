@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 	{
 		private int id;
 
-		public AddAndRemovePropertyTest(string strategyType) : base(strategyType)
+		public AddAndRemovePropertyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

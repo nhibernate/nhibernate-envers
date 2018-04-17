@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToMany
 		private const int ed1_id =123123;
 		private const int ing1_id = 33;
 
-		public InverseSideChangesTest(string strategyType) : base(strategyType)
+		public InverseSideChangesTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

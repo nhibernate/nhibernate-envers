@@ -2,11 +2,11 @@
 
 namespace NHibernate.Envers.Tests
 {
-	[TestFixture("NHibernate.Envers.Strategy.DefaultAuditStrategy, NHibernate.Envers")]
-	[TestFixture("NHibernate.Envers.Strategy.ValidityAuditStrategy, NHibernate.Envers")]
+	[TestFixture(AuditStrategyForTest.DefaultAuditStrategy)]
+	[TestFixture(AuditStrategyForTest.ValidityAuditStrategy)]
 	public abstract class TestBase : OneStrategyTestBase
 	{
-		protected TestBase(string strategyType) : base(strategyType)
+		protected TestBase(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 	}

@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private int id1;
 		private int id2;
 
-		public HasChangedChildReferencingTest(string strategyType) : base(strategyType)
+		public HasChangedChildReferencingTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

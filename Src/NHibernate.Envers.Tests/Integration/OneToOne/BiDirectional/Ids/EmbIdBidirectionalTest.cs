@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.Ids
 		private EmbId ed2_id;
 		private EmbId ing1_id;
 
-		public EmbIdBidirectionalTest(string strategyType) : base(strategyType)
+		public EmbIdBidirectionalTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

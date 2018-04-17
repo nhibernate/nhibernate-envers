@@ -16,7 +16,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		private DateTime timestamp2;
 		private DateTime timestamp3;
 
-		public CustomFieldAccessTest(string strategyType) : base(strategyType)
+		public CustomFieldAccessTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

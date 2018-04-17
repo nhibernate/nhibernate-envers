@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 	{
 		private int id;
 
-		public InsertUpdateFalseComponentTest(string strategyType) : base(strategyType)
+		public InsertUpdateFalseComponentTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

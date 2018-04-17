@@ -9,7 +9,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 		private int c_id;
 		private int p_id;
 
-		public PolymorphicCollectionTest(string strategyType) : base(strategyType)
+		public PolymorphicCollectionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

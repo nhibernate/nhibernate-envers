@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Ctor
 	{
 		private int id;
 
-		public NonPublicCtorTest(string strategyType) : base(strategyType)
+		public NonPublicCtorTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

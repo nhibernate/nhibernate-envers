@@ -14,7 +14,7 @@ namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 		private long idPers1;
 		private long idPers2;
 
-		public HasChangedAuditedManyToManyTest(string strategyType) : base(strategyType)
+		public HasChangedAuditedManyToManyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

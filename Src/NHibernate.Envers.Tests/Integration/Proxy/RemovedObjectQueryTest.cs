@@ -24,8 +24,7 @@ namespace NHibernate.Envers.Tests.Integration.Proxy
 		private IntTestPrivSeqEntity intEntity2;
 		private int ternaryMapId;
 
-		public RemovedObjectQueryTest(string strategyType)
-			: base(strategyType)
+		public RemovedObjectQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 

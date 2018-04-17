@@ -7,7 +7,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 	{
 		private int id;
 
-		public MultiplePropertyTest(string strategyType) : base(strategyType)
+		public MultiplePropertyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 
