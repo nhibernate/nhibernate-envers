@@ -7,7 +7,7 @@
     <Description>Audit trail integrated with NHibernate.</Description>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <PackageTags>Audit, NHibernate, Envers, History, Auditing</PackageTags>
-    <PackageProjectUrl>https://bitbucket.org/RogerKratz/nhibernate.envers</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/nhibernate/nhibernate-envers</PackageProjectUrl>
     <AssemblyOriginatorKeyFile>Envers.snk</AssemblyOriginatorKeyFile>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
