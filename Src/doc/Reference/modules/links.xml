@@ -14,12 +14,7 @@
         </listitem>
         <listitem>
             <para>
-                <ulink url="https://bitbucket.org/RogerKratz/nhibernate.envers">Source code</ulink>
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                <ulink url="https://nhibernate.jira.com/browse/NHE">JIRA issue tracker</ulink>
+                <ulink url="https://github.com/nhibernate/nhibernate-envers">Source code</ulink>
             </para>
         </listitem>
 		<listitem>
