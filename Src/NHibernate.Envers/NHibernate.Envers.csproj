@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <PackageId>NHibernate.Envers</PackageId>
-    <Version>1.0.0</Version>
     <Authors>Roger Kratz, NHibernate community, Hibernate community</Authors>
     <Description>Audit trail integrated with NHibernate.</Description>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
