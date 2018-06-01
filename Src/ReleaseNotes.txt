@@ -1,7 +1,10 @@
-=== vNext ===
+=== v5.1.2 (v 5.1.2.0), 2018-06-01, NH 5.1 GA ===
 
 ** Tasks
 * [NHE-162] Moved source code to github
+
+** Bug
+* File version was incorrectly set to 1.0.0.0
 
 
 
