@@ -19,10 +19,4 @@
   <ItemGroup>
     <PackageReference Include="NHibernate" Version="[5.1.0,5.2.0)" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="../ReleaseNotes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
 </Project>
