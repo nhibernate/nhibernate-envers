@@ -1,3 +1,10 @@
+=== v5.1.3 (v 5.1.3.0), 2018-06-01, NH 5.1 GA ===
+
+** Bug
+* Make sure end user's project don't get additional file about release notes.
+
+
+
 === v5.1.2 (v 5.1.2.0), 2018-06-01, NH 5.1 GA ===
 
 ** Tasks
