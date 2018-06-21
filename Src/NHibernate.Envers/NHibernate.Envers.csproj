@@ -8,6 +8,7 @@
     <PackageTags>Audit, NHibernate, Envers, History, Auditing</PackageTags>
     <PackageProjectUrl>https://github.com/nhibernate/nhibernate-envers</PackageProjectUrl>
     <AssemblyOriginatorKeyFile>Envers.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
