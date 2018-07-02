@@ -1,4 +1,4 @@
-=== vNext ===
+=== v5.1.4 (v 5.1.4.0), 2018-07-02, NH 5.1 GA  ===
 
 ** Bug
 * [Issue #1] Dll should be signed with a strong name
