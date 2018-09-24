@@ -30,7 +30,7 @@ namespace NHibernate.Envers.Entities
 			} 
 			else 
 			{
-				cmd.Parameters[index].Value = value;
+				cmd.Parameters[index].Value = Convert.ToByte(value);
 			}
 		}
 
