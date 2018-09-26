@@ -1,3 +1,10 @@
+=== vNext ===
+
+** Bug
+* #2 Make conversion of RevisionType explicit to avoid failure using Npgsql
+
+
+
 === v5.1.4 (v 5.1.4.0), 2018-07-02, NH 5.1 GA  ===
 
 ** Bug
