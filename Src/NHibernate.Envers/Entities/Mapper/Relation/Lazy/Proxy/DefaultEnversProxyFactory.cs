@@ -4,7 +4,6 @@ using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Reader;
-using NHibernate.Proxy;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
