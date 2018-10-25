@@ -562,13 +562,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 			_currentMapper.AddComposite(_propertyAuditingData.GetPropertyData(), collectionMapper);
 		}
 
-		private static System.Type createGenericComparerType(IType type)
-		{
-			var genericArgs = type.ReturnedClass.GetGenericArguments();
-			var theGenericArg = genericArgs[0];
-			return typeof(IComparer<>).MakeGenericType(theGenericArg);
-		}
-
 		private void storeMiddleEntityRelationInformation(string mappedBy)
 		{
 			// Only if this is a relation (when there is a referenced entity).
