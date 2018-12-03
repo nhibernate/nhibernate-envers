@@ -16,7 +16,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		private Guid _id;
 		private string _name;
 		private string _value;
+#pragma warning disable 649
 		private AutomaticCustomCollection<IAuditChild> _children;
+#pragma warning restore 649
 
 		public Guid Id
 		{
