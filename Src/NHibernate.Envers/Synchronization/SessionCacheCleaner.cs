@@ -1,4 +1,7 @@
-﻿using NHibernate.Event;
+﻿﻿using System.Threading;
+using System.Threading.Tasks;
+using NHibernate.Action;
+using NHibernate.Event;
 
 namespace NHibernate.Envers.Synchronization
 {
@@ -16,13 +19,33 @@ namespace NHibernate.Envers.Synchronization
 		/// <param name="data">Audit data that shall be evicted (e.g. revision data or entity snapshot)</param>
 		public static void ScheduleAuditDataRemoval(ISession session, object data)
 		{
-			((IEventSource)session).ActionQueue.RegisterProcess(success =>
-			                                                    	{
-																						if(session.IsOpen)
-																						{
-																							session.Evict(data);
-																						}
-			                                                    	});
+			((IEventSource)session).ActionQueue.RegisterProcess(new cleanupAfterTranProcess(session, data));
+		}
+
+		private class cleanupAfterTranProcess : IAfterTransactionCompletionProcess
+		{
+			private readonly ISession _session;
+			private readonly object _data;
+
+			public cleanupAfterTranProcess(ISession session, object data)
+			{
+				_session = session;
+				_data = data;
+			}
+			
+			public void ExecuteAfterTransactionCompletion(bool success)
+			{
+				if(_session.IsOpen)
+				{
+					_session.Evict(_data);
+				}
+			}
+
+			public Task ExecuteAfterTransactionCompletionAsync(bool success, CancellationToken cancellationToken)
+			{
+				ExecuteAfterTransactionCompletion(success);
+				return Task.CompletedTask;
+			}
 		}
 	}
 }
