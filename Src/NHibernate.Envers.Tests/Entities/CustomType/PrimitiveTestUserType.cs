@@ -39,11 +39,6 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 			return Get(rs, ordinal, session);
 		}
 
-		public override object FromStringValue(string xml)
-		{
-			return int.Parse(xml);
-		}
-
 		public override string Name => "PrimitiveImmutableType";
 
 		public override System.Type ReturnedClass => typeof(PrimitiveImmutableType);
