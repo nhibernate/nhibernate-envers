@@ -1,4 +1,3 @@
-using System;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy;
 
@@ -6,18 +5,15 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserColl
 {
 	public class SpecialProxyCollectionType : ListProxy<Number>, ISpecialCollection
 	{
-		private Lazy<ISpecialCollection> _delegate;
-
 		public SpecialProxyCollectionType(IInitializor initializor) : base(initializor)
 		{
-			_delegate = new Lazy<ISpecialCollection>(() => (ISpecialCollection) initializor.Initialize());
 		}
 
 		public int ItemsOverLimit()
 		{
-			return _delegate.Value.ItemsOverLimit();
+			return GetCollection<ISpecialCollection>().ItemsOverLimit();
 		}
 
-		public int Limit => _delegate.Value.Limit;
+		public int Limit => GetCollection<ISpecialCollection>().Limit;
 	}
 }
