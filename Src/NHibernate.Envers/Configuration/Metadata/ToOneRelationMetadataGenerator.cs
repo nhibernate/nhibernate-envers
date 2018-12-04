@@ -78,7 +78,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Adding mapper for the id
 			var propertyData = propertyAuditingData.GetPropertyData();
-			mapper.AddComposite(propertyData, new ToOneIdMapper(_mainGenerator.GlobalCfg.EnversProxyFactory, relMapper, propertyData, referencedEntityName, nonInsertableFake));
+			mapper.AddComposite(propertyData, new ToOneIdMapper(relMapper, propertyData, referencedEntityName, nonInsertableFake));
 		}
 
 		private static XElement firstJoinElement(XElement classElement)

@@ -13,19 +13,16 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	[Serializable]
 	public class ToOneIdMapper : AbstractToOneMapper 
 	{
-		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly IIdMapper _delegat;
 		private readonly string _referencedEntityName;
 		private readonly bool _nonInsertableFake;
 
-		public ToOneIdMapper(IEnversProxyFactory enversProxyFactory, 
-									IIdMapper delegat, 
-									PropertyData propertyData, 
-									string referencedEntityName, 
-									bool nonInsertableFake)
+		public ToOneIdMapper(IIdMapper delegat, 
+							PropertyData propertyData, 
+							string referencedEntityName, 
+							bool nonInsertableFake)
 			: base(propertyData)
 		{
-			_enversProxyFactory = enversProxyFactory;
 			_delegat = delegat;
 			_referencedEntityName = referencedEntityName;
 			_nonInsertableFake = nonInsertableFake;
@@ -85,34 +82,14 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 						var relation = verCfg.EntCfg.GetRelationDescription(referencingEntityName, PropertyData.Name);
 						ignoreNotFound = relation != null && relation.IsIgnoreNotFound;
 					}
-					var persister = versionsReader.SessionImplementor.Factory.GetEntityPersister(_referencedEntityName);
 					var removed = RevisionType.Deleted.Equals(data[verCfg.AuditEntCfg.RevisionTypePropName]);
 
-					if (ignoreNotFound || !persister.HasProxy)
-					{
-						value = loadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg);
-					}
-					else
-					{
-						value = _enversProxyFactory.CreateToOneProxy(verCfg, versionsReader, _referencedEntityName, entityId, revision, removed);
-					}
+					value = ignoreNotFound ? 
+						ToOneEntityLoader.LoadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg) : 
+						ToOneEntityLoader.CreateProxyOrLoadImmediate(versionsReader, _referencedEntityName, entityId, revision, removed, verCfg);
 				}
 			}
 			SetPropertyValue(obj, value);
-		}
-
-		private static object loadImmediate(IAuditReaderImplementor versionsReader, string entityName,
-									   object entityId, long revision, bool removed, AuditConfiguration verCfg)
-		{
-			if (verCfg.EntCfg.GetNotVersionEntityConfiguration(entityName) == null)
-			{
-				// Audited relation, look up entity with Envers.
-				// When user traverses removed entities graph, do not restrict revision type of referencing objects
-				// to ADD or MOD (DEL possible). See HHH-5845.
-				return versionsReader.Find(entityName, entityId, revision, removed);
-			}
-			// Not audited relation, look up entity with Hibernate.
-			return versionsReader.SessionImplementor.ImmediateLoad(entityName, entityId);
 		}
 
 		public void AddMiddleEqualToQuery(Parameters parameters, string prefix1, string prefix2)

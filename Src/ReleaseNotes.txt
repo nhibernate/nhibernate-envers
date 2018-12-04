@@ -1,5 +1,8 @@
 === vNext ===
 
+*** Possible breaking change ***
+* IEnversProxyFactory.CreateToOneProxy removed
+
 ** Bug
 * #2 Make conversion of RevisionType explicit to avoid failure using Npgsql
 
