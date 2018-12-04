@@ -384,28 +384,6 @@ ConfigurationKey.StoreDataAtDelete.SetUserValue(nhConfiguration, true);]]>
 				</tbody>
 			</tgroup>
 		</table>
-		<important>
-			<para>
-				The following configuration options have been added recently and should be regarded as experimental:
-				<orderedlist>
-					<listitem>
-						nhibernate.envers.track_entities_changed_in_revision
-					</listitem>
-					<listitem>
-						nhibernate.envers.global_with_modified_flag
-					</listitem>
-					<listitem>
-						nhibernate.envers.modified_flag_suffix
-					</listitem>
-					<listitem>
-						nhibernate.envers.post_instantiation_listener
-					</listitem>
-				</orderedlist>
-			</para>
-			<para>
-				All envers properties needs to be set before <code>configuration.IntegrateWithEnvers</code> is called!
-			</para>
-		</important>
 	</section>
 
 	<section>
