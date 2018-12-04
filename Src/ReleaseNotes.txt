@@ -1,7 +1,10 @@
 === vNext ===
 
 *** Possible breaking change ***
-* IEnversProxyFactory.CreateToOneProxy removed
+* IEnversProxyFactory removed 
+*   ...nhibernate.envers.proxy_factory from configuration
+*   ...removed from all ICollectionMapperFactory methods
+*   ...removed from ICustomCollectionMapperFactory.Create method
 
 ** Bug
 * #2 Make conversion of RevisionType explicit to avoid failure using Npgsql

@@ -75,12 +75,6 @@ namespace NHibernate.Envers.Configuration
 			= new TypeConfigurationEntry("nhibernate.envers.collection_mapper_factory", typeof(DefaultCollectionMapperFactory).AssemblyQualifiedName);
 
 		/// <summary>
-		/// Resposible to create envers proxies.
-		/// </summary>
-		public static readonly TypeConfigurationEntry ProxyFactory
-			= new TypeConfigurationEntry("nhibernate.envers.proxy_factory", typeof(DefaultEnversProxyFactory).AssemblyQualifiedName);
-
-		/// <summary>
 		/// String that will be appended to the name of an audited
 		/// entity to create the name of the entity, that will hold
 		/// audit information. If you audit an entity with a table

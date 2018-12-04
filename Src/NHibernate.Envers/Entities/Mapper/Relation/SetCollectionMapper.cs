@@ -12,13 +12,12 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	[Serializable]
 	public class SetCollectionMapper<T> : AbstractCollectionMapper
 	{
-		public SetCollectionMapper(IEnversProxyFactory enversProxyFactory,
-											CommonCollectionMapperData commonCollectionMapperData,
-											System.Type proxyType,
-											MiddleComponentData elementComponentData,
-											bool ordinalInId,
-											bool revisionTypeInId)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, ordinalInId, revisionTypeInId)
+		public SetCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
+									System.Type proxyType,
+									MiddleComponentData elementComponentData,
+									bool ordinalInId,
+									bool revisionTypeInId)
+			: base(commonCollectionMapperData, proxyType, ordinalInId, revisionTypeInId)
 		{
 			ElementComponentData = elementComponentData;
 		}

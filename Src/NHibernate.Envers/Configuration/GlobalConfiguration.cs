@@ -18,7 +18,6 @@ namespace NHibernate.Envers.Configuration
 			IsTrackEntitiesChangedInRevisionEnabled = ConfigurationKey.TrackEntitiesChangedInRevision.ToBool(properties);
 			DefaultSchemaName = ConfigurationKey.DefaultSchema.ToString(properties);
 			DefaultCatalogName = ConfigurationKey.DefaultCatalog.ToString(properties);
-			EnversProxyFactory = ConfigurationKey.ProxyFactory.ToInstance<IEnversProxyFactory>(properties);
 			CollectionMapperFactory = ConfigurationKey.CollectionMapperFactory.ToInstance<ICollectionMapperFactory>(properties);
 			CorrelatedSubqueryOperator = "=";
 			IsGlobalWithModifiedFlag = ConfigurationKey.GlobalWithModifiedFlag.ToBool(properties);
@@ -72,7 +71,6 @@ namespace NHibernate.Envers.Configuration
 		public string DefaultCatalogName { get; }
 
 		public ICollectionMapperFactory CollectionMapperFactory { get; }
-		public IEnversProxyFactory EnversProxyFactory { get; }
 
 		public bool IsGlobalWithModifiedFlag { get; }
 		public string ModifiedFlagSuffix { get; }

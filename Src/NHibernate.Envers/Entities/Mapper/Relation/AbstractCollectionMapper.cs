@@ -15,17 +15,15 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	[Serializable]
 	public abstract class AbstractCollectionMapper : IPropertyMapper
 	{
-		private readonly IEnversProxyFactory _enversProxyFactory;
 		private readonly System.Type _proxyType;
+		
 		private readonly bool _ordinalInId;
 		private readonly bool _revisionTypeInId;
 
-		protected AbstractCollectionMapper(IEnversProxyFactory enversProxyFactory, 
-											CommonCollectionMapperData commonCollectionMapperData,
+		protected AbstractCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 											System.Type proxyType, bool ordinalInId, bool revisionTypeInId) 
 		{
 			CommonCollectionMapperData = commonCollectionMapperData;
-			_enversProxyFactory = enversProxyFactory;
 			_proxyType = proxyType;
 			_ordinalInId = ordinalInId;
 			_revisionTypeInId = revisionTypeInId;
@@ -221,10 +219,13 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										long revision) 
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(), CommonCollectionMapperData.CollectionReferencingPropertyData);
-			var coll = _enversProxyFactory.CreateCollectionProxy(_proxyType,
+			/*var coll = _enversProxyFactory.CreateCollectionProxy(_proxyType,
 			                                                     GetInitializor(verCfg, versionsReader, primaryKey, revision,
 			                                                                    data[verCfg.AuditEntCfg.RevisionTypePropName]
-				                                                                    .Equals(RevisionType.Deleted)));
+				                                                                    .Equals(RevisionType.Deleted)));*/
+			var coll = Activator.CreateInstance(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision,
+				data[verCfg.AuditEntCfg.RevisionTypePropName]
+					.Equals(RevisionType.Deleted)));
 			setter.Set(obj, coll);
 		}
 	}

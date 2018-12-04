@@ -36,9 +36,9 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 
 	internal class CustomCollectionMapperFactory<TItem> : ICustomCollectionMapperFactory
 	{
-		public IPropertyMapper Create(IEnversProxyFactory enversProxyFactory, CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
+		public IPropertyMapper Create(CommonCollectionMapperData commonCollectionMapperData, MiddleComponentData elementComponentData, MiddleComponentData indexComponentData, bool embeddableElementType)
 		{
-			return new CustomListCollectionMapper<CustomList<TItem>, TItem>(enversProxyFactory, commonCollectionMapperData, typeof(CustomList<TItem>), elementComponentData, indexComponentData, embeddableElementType);
+			return new CustomListCollectionMapper<CustomList<TItem>, TItem>(commonCollectionMapperData, typeof(CustomList<TItem>), elementComponentData, indexComponentData, embeddableElementType);
 		}
 	}
 
@@ -49,13 +49,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.UnitTests.CustomLists
 		private readonly MiddleComponentData _elementComponentData;
 		private readonly MiddleComponentData _indexComponentData;
 
-		public CustomListCollectionMapper(IEnversProxyFactory enversProxyFactory,
-									CommonCollectionMapperData commonCollectionMapperData,
+		public CustomListCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 									System.Type proxyType,
 									MiddleComponentData elementComponentData,
 									MiddleComponentData indexComponentData,
 									bool revisionTypeInId)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, false, revisionTypeInId)
+			: base(commonCollectionMapperData, proxyType, false, revisionTypeInId)
 		{
 			_elementComponentData = elementComponentData;
 			_indexComponentData = indexComponentData;

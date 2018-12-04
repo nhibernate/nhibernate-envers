@@ -15,7 +15,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration.Serializ
 		private readonly System.Type[] serializableInterfaces =
 		{
 			typeof (ICollectionMapperFactory),
-			typeof (IEnversProxyFactory),
 			typeof (IRevisionInfoGenerator),
 			typeof (IPropertyMapper),
 			typeof (IIdMapper),

@@ -7,12 +7,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 	[Serializable]
 	public class IdBagCollectionMapper<T> : BagCollectionMapper<T>
 	{
-		public IdBagCollectionMapper(IEnversProxyFactory enversProxyFactory,
-		                             CommonCollectionMapperData commonCollectionMapperData,
+		public IdBagCollectionMapper(CommonCollectionMapperData commonCollectionMapperData,
 		                             System.Type proxyType,
 																 MiddleComponentData elementComponentData,
 																bool revisionTypeInId)
-			: base(enversProxyFactory, commonCollectionMapperData, proxyType, elementComponentData, revisionTypeInId)
+			: base(commonCollectionMapperData, proxyType, elementComponentData, revisionTypeInId)
 		{
 		}
 
