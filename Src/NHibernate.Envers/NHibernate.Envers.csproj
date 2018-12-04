@@ -10,7 +10,6 @@
     <AssemblyOriginatorKeyFile>Envers.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <RepositoryUrl>https://github.com/nhibernate/nhibernate-envers</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
     <DebugType>Full</DebugType>
