@@ -47,7 +47,7 @@ namespace NHibernate.Envers.Tests.Integration.Serialization
 			// Now serializing and de-serializing the object
 			rev1 = serializeObject(rev1);
 
-			// And checking the colleciton again
+			// And checking the collection again
 			CollectionAssert.AreEqual(new[]{ing1}, rev1.Reffering);
 		}
 

@@ -5,73 +5,116 @@ using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public class ListProxy<T> : IList<T>
 	{
-		private readonly Lazy<IList<T>> _delegate;
+		[NonSerialized]
+		private readonly IInitializor _initializor;
+		private IList<T> _delegate;
 		
 		public ListProxy(IInitializor initializor)
 		{
-			_delegate = new Lazy<IList<T>>(() => (IList<T>) initializor.Initialize());
+			_initializor = initializor;
+		}
+
+		private void checkInit()
+		{
+			if (_delegate == null)
+			{
+				_delegate = (IList<T>) _initializor.Initialize();
+			}
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return _delegate.Value.GetEnumerator();
+			checkInit();
+			return _delegate.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
+			checkInit();
 			return GetEnumerator();
 		}
 
 		public void Add(T item)
 		{
-			_delegate.Value.Add(item);
+			checkInit();
+			_delegate.Add(item);
 		}
 
 		public void Clear()
 		{
-			_delegate.Value.Clear();
+			checkInit();
+			_delegate.Clear();
 		}
 
 		public bool Contains(T item)
 		{
-			return _delegate.Value.Contains(item);
+			checkInit();
+			return _delegate.Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			_delegate.Value.CopyTo(array, arrayIndex);
+			checkInit();
+			_delegate.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(T item)
 		{
-			return _delegate.Value.Remove(item);
+			checkInit();
+			return _delegate.Remove(item);
 		}
 
-		public int Count => _delegate.Value.Count;
+		public int Count
+		{
+			get
+			{
+				checkInit();
+				return _delegate.Count;
+			}
+		}
 
-		public bool IsReadOnly => _delegate.Value.IsReadOnly;
+		public bool IsReadOnly
+		{
+			get
+			{
+				checkInit();
+				return _delegate.IsReadOnly;
+			}
+		}
 
 		public int IndexOf(T item)
 		{
-			return _delegate.Value.IndexOf(item);
+			checkInit();
+			return _delegate.IndexOf(item);
 		}
 
 		public void Insert(int index, T item)
 		{
-			_delegate.Value.Insert(index, item);
+			checkInit();
+			_delegate.Insert(index, item);
 		}
 
 		public void RemoveAt(int index)
 		{
-			_delegate.Value.RemoveAt(index);
+			checkInit();
+			_delegate.RemoveAt(index);
 		}
 
 		public T this[int index]
 		{
-			get => _delegate.Value[index];
-			set => _delegate.Value[index] = value;
+			get 
+			{ 				
+				checkInit();
+				return _delegate[index]; 
+			}
+			set
+			{
+				checkInit();
+				_delegate[index] = value;
+			}
 		}
 	}
 }

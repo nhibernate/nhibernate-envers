@@ -5,82 +5,140 @@ using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public class DictionaryProxy<K, V> : IDictionary<K, V>
 	{
-		private readonly Lazy<IDictionary<K, V>> _delegate;
+		[NonSerialized]
+		private readonly IInitializor _initializor;
+		private IDictionary<K, V> _delegate;
 		
 		public DictionaryProxy(IInitializor initializor)
 		{
-			_delegate = new Lazy<IDictionary<K, V>>(() => (IDictionary<K, V>) initializor.Initialize());
+			_initializor = initializor;
+		}
+		
+		private void checkInit()
+		{
+			if (_delegate == null)
+			{
+				_delegate = (IDictionary<K, V>) _initializor.Initialize();
+			}
 		}
 
 		public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
 		{
-			return _delegate.Value.GetEnumerator();
+			checkInit();
+			return _delegate.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
+			checkInit();
 			return GetEnumerator();
 		}
 
 		public void Add(KeyValuePair<K, V> item)
 		{
-			_delegate.Value.Add(item);
+			checkInit();
+			_delegate.Add(item);
 		}
 
 		public void Clear()
 		{
-			_delegate.Value.Clear();
+			checkInit();
+			_delegate.Clear();
 		}
 
 		public bool Contains(KeyValuePair<K, V> item)
 		{
-			return _delegate.Value.Contains(item);
+			checkInit();
+			return _delegate.Contains(item);
 		}
 
 		public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex)
 		{
-			_delegate.Value.CopyTo(array, arrayIndex);
+			checkInit();
+			_delegate.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(KeyValuePair<K, V> item)
 		{
-			return _delegate.Value.Remove(item);
+			checkInit();
+			return _delegate.Remove(item);
 		}
 
-		public int Count => _delegate.Value.Count;
-
-		public bool IsReadOnly => _delegate.Value.IsReadOnly;
-
-		public bool ContainsKey(K key)
+		public int Count
 		{
-			return _delegate.Value.ContainsKey(key);
+			get
+			{
+				checkInit();
+				return _delegate.Count;
+			}
+		}
+
+		public bool IsReadOnly
+		{
+			get
+			{
+				checkInit();
+				return _delegate.IsReadOnly;
+			}
 		}
 
 		public void Add(K key, V value)
 		{
-			_delegate.Value.Add(key, value);
+			checkInit();
+			_delegate.Add(key, value);
+		}
+
+		public bool ContainsKey(K key)
+		{
+			checkInit();
+			return _delegate.ContainsKey(key);
 		}
 
 		public bool Remove(K key)
 		{
-			return _delegate.Value.Remove(key);
+			checkInit();
+			return _delegate.Remove(key);
 		}
 
 		public bool TryGetValue(K key, out V value)
 		{
-			return _delegate.Value.TryGetValue(key, out value);
+			checkInit();
+			return _delegate.TryGetValue(key, out value);
 		}
 
 		public V this[K key]
 		{
-			get => _delegate.Value[key];
-			set => _delegate.Value[key] = value;
+			get
+			{
+				checkInit();
+				return _delegate[key];
+			}
+			set
+			{
+				checkInit();
+				_delegate[key] = value;
+			}
 		}
 
-		public ICollection<K> Keys => _delegate.Value.Keys;
+		public ICollection<K> Keys
+		{
+			get
+			{
+				checkInit();
+				return _delegate.Keys;
+			}
+		}
 
-		public ICollection<V> Values => _delegate.Value.Values;
+		public ICollection<V> Values
+		{
+			get
+			{
+				checkInit();
+				return _delegate.Values;
+			}
+		}
 	}
 }

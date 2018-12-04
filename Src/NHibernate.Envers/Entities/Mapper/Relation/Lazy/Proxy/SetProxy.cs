@@ -5,107 +5,150 @@ using NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Proxy
 {
+	[Serializable]
 	public class SetProxy<T> : ISet<T>
 	{
-		private readonly Lazy<ISet<T>> _delegate;
+		[NonSerialized]
+		private readonly IInitializor _initializor;
+		private ISet<T> _delegate;
 		
 		public SetProxy(IInitializor initializor)
 		{
-			_delegate = new Lazy<ISet<T>>(() => (ISet<T>) initializor.Initialize());
+			_initializor = initializor;
+		}
+		
+		private void checkInit()
+		{
+			if (_delegate == null)
+			{
+				_delegate = (ISet<T>) _initializor.Initialize();
+			}
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return _delegate.Value.GetEnumerator();
+			checkInit();
+			return _delegate.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
+			checkInit();
 			return GetEnumerator();
 		}
 
 		void ICollection<T>.Add(T item)
 		{
-			_delegate.Value.Add(item);
-		}
-
-		public void UnionWith(IEnumerable<T> other)
-		{
-			_delegate.Value.UnionWith(other);
-		}
-
-		public void IntersectWith(IEnumerable<T> other)
-		{
-			_delegate.Value.IntersectWith(other);
+			checkInit();
+			_delegate.Add(item);
 		}
 
 		public void ExceptWith(IEnumerable<T> other)
 		{
-			_delegate.Value.ExceptWith(other);
+			checkInit();
+			_delegate.ExceptWith(other);
 		}
 
-		public void SymmetricExceptWith(IEnumerable<T> other)
+		public void IntersectWith(IEnumerable<T> other)
 		{
-			_delegate.Value.SymmetricExceptWith(other);
-		}
-
-		public bool IsSubsetOf(IEnumerable<T> other)
-		{
-			return _delegate.Value.IsSubsetOf(other);
-		}
-
-		public bool IsSupersetOf(IEnumerable<T> other)
-		{
-			return _delegate.Value.IsSupersetOf(other);
-		}
-
-		public bool IsProperSupersetOf(IEnumerable<T> other)
-		{
-			return _delegate.Value.IsProperSupersetOf(other);
+			checkInit();
+			_delegate.IntersectWith(other);
 		}
 
 		public bool IsProperSubsetOf(IEnumerable<T> other)
 		{
-			return _delegate.Value.IsProperSubsetOf(other);
+			checkInit();
+			return _delegate.IsProperSubsetOf(other);
+		}
+
+		public bool IsProperSupersetOf(IEnumerable<T> other)
+		{
+			checkInit();
+			return _delegate.IsProperSupersetOf(other);
+		}
+
+		public bool IsSubsetOf(IEnumerable<T> other)
+		{
+			checkInit();
+			return _delegate.IsSubsetOf(other);
+		}
+
+		public bool IsSupersetOf(IEnumerable<T> other)
+		{
+			checkInit();
+			return _delegate.IsSupersetOf(other);
 		}
 
 		public bool Overlaps(IEnumerable<T> other)
 		{
-			return _delegate.Value.Overlaps(other);
+			checkInit();
+			return _delegate.Overlaps(other);
 		}
 
 		public bool SetEquals(IEnumerable<T> other)
 		{
-			return _delegate.Value.SetEquals(other);
+			checkInit();
+			return _delegate.SetEquals(other);
+		}
+
+		public void SymmetricExceptWith(IEnumerable<T> other)
+		{
+			checkInit();
+			_delegate.SymmetricExceptWith(other);
+		}
+
+		public void UnionWith(IEnumerable<T> other)
+		{
+			checkInit();
+			_delegate.UnionWith(other);
 		}
 
 		bool ISet<T>.Add(T item)
 		{
-			return _delegate.Value.Add(item);
+			checkInit();
+			return _delegate.Add(item);
 		}
 
 		public void Clear()
 		{
-			_delegate.Value.Clear();
+			checkInit();
+			_delegate.Clear();
 		}
 
 		public bool Contains(T item)
 		{
-			return _delegate.Value.Contains(item);
+			checkInit();
+			return _delegate.Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			_delegate.Value.CopyTo(array, arrayIndex);
+			checkInit();
+			_delegate.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(T item)
 		{
-			return _delegate.Value.Remove(item);
+			checkInit();
+			return _delegate.Remove(item);
 		}
 
-		public int Count => _delegate.Value.Count;
+		public int Count
+		{
+			get
+			{
+				checkInit();
+				return _delegate.Count;
+			}
+		}
 
-		public bool IsReadOnly => _delegate.Value.IsReadOnly;
+		public bool IsReadOnly
+		{
+			get
+			{
+				checkInit();
+				return _delegate.IsReadOnly;
+			}
+		}
 	}
 }
