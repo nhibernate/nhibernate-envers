@@ -219,13 +219,8 @@ namespace NHibernate.Envers.Entities.Mapper.Relation
 										long revision) 
 		{
 			var setter = ReflectionTools.GetSetter(obj.GetType(), CommonCollectionMapperData.CollectionReferencingPropertyData);
-			/*var coll = _enversProxyFactory.CreateCollectionProxy(_proxyType,
-			                                                     GetInitializor(verCfg, versionsReader, primaryKey, revision,
-			                                                                    data[verCfg.AuditEntCfg.RevisionTypePropName]
-				                                                                    .Equals(RevisionType.Deleted)));*/
-			var coll = Activator.CreateInstance(_proxyType, GetInitializor(verCfg, versionsReader, primaryKey, revision,
-				data[verCfg.AuditEntCfg.RevisionTypePropName]
-					.Equals(RevisionType.Deleted)));
+			var coll = Activator.CreateInstance(_proxyType, 
+				GetInitializor(verCfg, versionsReader, primaryKey, revision, data[verCfg.AuditEntCfg.RevisionTypePropName].Equals(RevisionType.Deleted)));
 			setter.Set(obj, coll);
 		}
 	}
