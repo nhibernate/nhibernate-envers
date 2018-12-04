@@ -1,8 +1,8 @@
-=== vNext ===
+=== v5.2.0 (v 5.2.0.0), 2018-12-04, NH 5.2 GA ===
 
 *** Possible breaking change ***
 * IEnversProxyFactory removed 
-*   ...nhibernate.envers.proxy_factory from configuration
+*   ...nhibernate.envers.proxy_factory removed from configuration
 *   ...removed from all ICollectionMapperFactory methods
 *   ...removed from ICustomCollectionMapperFactory.Create method
 
