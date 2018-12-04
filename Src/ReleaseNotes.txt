@@ -6,7 +6,7 @@
 *   ...removed from all ICollectionMapperFactory methods
 *   ...removed from ICustomCollectionMapperFactory.Create method
 * If using custom collections, AbstractCollectionMapper now expects a concrete type for proxyType. 
-    See ParameterizedUserCollectionTest.
+    See ParameterizedUserCollectionTest and changes made in 08ff4ad41990083f87bf3ab62f5f6945ec23ebff.
 
 ** Bug
 * #2 Make conversion of RevisionType explicit to avoid failure using Npgsql
