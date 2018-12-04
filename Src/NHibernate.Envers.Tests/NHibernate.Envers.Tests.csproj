@@ -36,6 +36,6 @@
   </ItemGroup>
 
   <Target Name="PreBuild" AfterTargets="PreBuildEvent">
-    <Exec Command='if not exist "$(ProjectDir)\hibernate.cfg.xml" copy "$(ProjectDir)\hibernate.cfg.xml.template" "$(ProjectDir)\hibernate.cfg.xml"' />
+    <Exec Command="if not exist &quot;$(ProjectDir)\hibernate.cfg.xml&quot; copy &quot;$(ProjectDir)\hibernate.cfg.xml.template&quot; &quot;$(ProjectDir)\hibernate.cfg.xml&quot;" />
   </Target>
 </Project>
