@@ -9,6 +9,7 @@
 
 ** Bug
 * #2 Make conversion of RevisionType explicit to avoid failure using Npgsql
+* #6 Support async proxy initialization
 
 
 

@@ -39,7 +39,7 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 			return _session.InternalLoadAsync(entityName, id, eager, isNullable, cancellationToken);
 		}
 
-		public Task<object> ImmediateLoadAsync(string entityName, object id, CancellationToken cancellationToken)
+		public virtual Task<object> ImmediateLoadAsync(string entityName, object id, CancellationToken cancellationToken)
 		{
 			return _session.ImmediateLoadAsync(entityName, id, cancellationToken);
 		}

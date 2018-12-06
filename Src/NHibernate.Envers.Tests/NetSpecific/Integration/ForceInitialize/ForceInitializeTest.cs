@@ -56,6 +56,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
 			parent.RelatedEntity.Should().Be.Null();
 		}
+		
+		[Test]
+		public void InitializeManyToOneNullAsync()
+		{
+			var parent = AuditReader().Find<Parent>(parentId, 1);
+			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
+			parent.RelatedEntity.Should().Be.Null();
+		}
 
 		[Test]
 		public void InitializeManyToOneNotNull()
@@ -63,6 +71,17 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 			var parent = AuditReader().Find<Parent>(parentId, 2);
 			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.False();
 			NHibernateUtil.Initialize(parent.RelatedEntity);
+			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
+			parent.RelatedEntity.Id.Should().Be.EqualTo(relatedId);
+			parent.RelatedEntity.Str.Should().Be.EqualTo("R_1_1");
+		}
+		
+		[Test]
+		public void InitializeManyToOneNotNullAsync()
+		{
+			var parent = AuditReader().Find<Parent>(parentId, 2);
+			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.False();
+			NHibernateUtil.InitializeAsync(parent.RelatedEntity);
 			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
 			parent.RelatedEntity.Id.Should().Be.EqualTo(relatedId);
 			parent.RelatedEntity.Str.Should().Be.EqualTo("R_1_1");
@@ -136,6 +155,5 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 		{
 			configuration.Properties[NHibernate.Cfg.Environment.GenerateStatistics] = "true";
 		}
-
 	}
 }

@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Reader;
 
@@ -26,6 +28,11 @@ namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy
 		public override object ImmediateLoad(string entityName, object id)
 		{
 			return ToOneEntityLoader.LoadImmediate(_versionsReader, _entityName, _entityId, _revision, _removed, _verCfg);
+		}
+
+		public override Task<object> ImmediateLoadAsync(string entityName, object id, CancellationToken cancellationToken)
+		{
+			return Task.FromResult(ImmediateLoad(entityName, id));
 		}
 	}
 }
