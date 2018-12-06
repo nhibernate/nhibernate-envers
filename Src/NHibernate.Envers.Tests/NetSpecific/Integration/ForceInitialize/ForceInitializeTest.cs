@@ -56,14 +56,6 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
 			parent.RelatedEntity.Should().Be.Null();
 		}
-		
-		[Test]
-		public void InitializeManyToOneNullAsync()
-		{
-			var parent = AuditReader().Find<Parent>(parentId, 1);
-			NHibernateUtil.IsInitialized(parent.RelatedEntity).Should().Be.True();
-			parent.RelatedEntity.Should().Be.Null();
-		}
 
 		[Test]
 		public void InitializeManyToOneNotNull()
