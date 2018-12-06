@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netCoreApp2.0;net461</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
