@@ -1,3 +1,10 @@
+=== v5.2.1 (v 5.2.1.0), 2018-12-10, NH 5.2.1 ===
+
+** Bug
+* #6 Support async proxy initialization
+
+
+
 === v5.2.0 (v 5.2.0.0), 2018-12-04, NH 5.2 GA ===
 
 *** Possible breaking change ***
@@ -9,7 +16,6 @@
 
 ** Bug
 * #2 Make conversion of RevisionType explicit to avoid failure using Npgsql
-* #6 Support async proxy initialization
 
 
 
