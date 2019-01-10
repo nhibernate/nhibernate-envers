@@ -2,7 +2,6 @@
 using NHibernate.Envers.Configuration.Metadata;
 using NHibernate.Envers.Entities.Mapper;
 using NHibernate.Envers.Entities.Mapper.Id;
-using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.RevisionInfo;
 using NHibernate.Envers.Strategy;
 using NUnit.Framework;

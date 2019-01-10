@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NHibernate.Envers.Configuration.Metadata;
-using NHibernate.Envers.Entities.Mapper.Relation;
 using NHibernate.Envers.Event;
 using NHibernate.Envers.Strategy;
 
