@@ -7,16 +7,16 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class TransactionScopeDistributed : TestBase
+	public class TransactionScopeWithUseConnectionOnPrepare : TestBase
 	{
-		public TransactionScopeDistributed(AuditStrategyForTest strategyType) : base(strategyType)
+		public TransactionScopeWithUseConnectionOnPrepare(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 
 #if NETCOREAPP2_0
-		[Ignore("Distributed transaction is not supported in Core.")]
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
 #endif
-	   [Test]
+		[Test]
 		public void ShouldNotThrowWhenDistributedTransaction()
 		{
 			var entity = new StrTestEntity { Str = "data" };
@@ -45,7 +45,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		}
 
 #if NETCOREAPP2_0
-		[Ignore("Distributed transaction is not supported in Core.")]
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
 #endif
 		[Test]
 		public void ShouldNotThrowWhenDistributedTransactionWithAutoFlushMode()
@@ -75,7 +75,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		}
 
 #if NETCOREAPP2_0
-		[Ignore("Distributed transaction is not supported in Core.")]
+		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
 #endif
 		[Test]
 		public void ShouldNotThrowWhenDistributedTransactionWithNhTransaction()
@@ -97,6 +97,9 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 						{
 							newSession2.Save(entity);
 							newSession2.Flush();
+
+							// There is no problem in this case, 
+							// because BeforeTransactionCompletion is called right after this line (before 1st commit phase of distributed transaction)
 							nhTx.Commit();
 						}
 					}

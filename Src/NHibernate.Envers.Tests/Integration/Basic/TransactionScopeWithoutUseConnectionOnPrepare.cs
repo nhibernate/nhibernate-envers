@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using NHibernate.Envers.Configuration;
-using NHibernate.Envers.Tests.Entities;
+﻿using NHibernate.Envers.Tests.Entities;
 using NUnit.Framework;
+using System.Transactions;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class TransactionScopeTest : TestBase
+	public class TransactionScopeWithoutUseConnectionOnPrepare : TransactionScopeWithUseConnectionOnPrepare
 	{
-		public TransactionScopeTest(AuditStrategyForTest strategyType) : base(strategyType)
+		public TransactionScopeWithoutUseConnectionOnPrepare(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 
@@ -17,7 +14,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
 #endif
 		[Test]
-		public void ShouldNotThrowIfUseConnectionOnSystemTransactionPrepareIsFalse()
+		public void ShouldNotThrow()
 		{
 			var entity = new StrTestEntity { Str = "data" };
 
@@ -31,26 +28,18 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 						newSession.Save(entity);
 						newSession.Flush();
 					}
+
 					distrTx.Complete();
 				}
 			});
 		}
 
-		protected override void Initialize()
-		{
-		}
-
 		protected override void AddToConfiguration(Cfg.Configuration configuration)
-		{
-			ConfigurationKey.StoreDataAtDelete.SetUserValue(configuration, true);
-
+		{ 
 			// It is recommended since NH 5
 			configuration.SetProperty(NHibernate.Cfg.Environment.UseConnectionOnSystemTransactionPrepare, "false");
-		}
 
-		protected override IEnumerable<string> Mappings
-		{
-			get { return new[] {"Entities.Mapping.hbm.xml", "Integration.Collection.NoRevision.Mapping.hbm.xml"}; }
+			base.AddToConfiguration(configuration);
 		}
 	}
 }
