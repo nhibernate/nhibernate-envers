@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Synchronization.Work
 		private readonly IDictionary<string, object> data;
 
 		public AddWorkUnit(ISessionImplementor sessionImplementor, string entityName, AuditConfiguration verCfg,
-						   object id, IEntityPersister entityPersister, object[] state) 
+						   object id, IEntityPersister entityPersister, object[] state)
 			: base(sessionImplementor, entityName, verCfg, id, RevisionType.Added)
 		{
 			State = state;
@@ -72,16 +72,16 @@ namespace NHibernate.Envers.Synchronization.Work
 
 		private IDictionary<string, object> mergeModifiedFlags(IDictionary<string, object> lhs, IDictionary<string, object> rhs)
 		{
-			var mapper = VerCfg.EntCfg[EntityName].PropertyMapper;
+			var mapper = this.VerCfg.EntCfg[this.EntityName].PropertyMapper;
 			foreach (var propertyData in mapper.Properties.Keys)
 			{
 				if (propertyData.UsingModifiedFlag)
 				{
-					var lhsValue = (bool)lhs[propertyData.ModifiedFlagPropertyName];
-					if (lhsValue)
+					object lhsUntypedValue;
+					if (lhs.TryGetValue(propertyData.ModifiedFlagPropertyName, out lhsUntypedValue))
 					{
-						var rhsValue = (bool) rhs[propertyData.ModifiedFlagPropertyName];
-						if (!rhsValue)
+						var lhsValue = (bool)lhsUntypedValue;
+						if (lhsValue)
 						{
 							rhs[propertyData.ModifiedFlagPropertyName] = true;
 						}
