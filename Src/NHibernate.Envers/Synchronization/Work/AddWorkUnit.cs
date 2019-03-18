@@ -77,11 +77,10 @@ namespace NHibernate.Envers.Synchronization.Work
 			{
 				if (propertyData.UsingModifiedFlag)
 				{
-					var lhsValue = (bool)lhs[propertyData.ModifiedFlagPropertyName];
-					if (lhsValue)
+					if (lhs.TryGetValue(propertyData.ModifiedFlagPropertyName, out var lhsUntypedValue))
 					{
-						var rhsValue = (bool) rhs[propertyData.ModifiedFlagPropertyName];
-						if (!rhsValue)
+						var lhsValue = (bool)lhsUntypedValue;
+						if (lhsValue)
 						{
 							rhs[propertyData.ModifiedFlagPropertyName] = true;
 						}
