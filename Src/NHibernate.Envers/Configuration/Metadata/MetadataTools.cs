@@ -313,7 +313,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 		public static IEnumerable<string> GetColumnNameEnumerator(IEnumerable<ISelectable> columns)
 		{
-			return (from Column column in columns select column.Name);
+			return columns.OfType<Column>().Select(x => x.Name);
 		}
 
 		public static void AddModifiedFlagProperty(XElement parent, string propertyName, string suffix)
