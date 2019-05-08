@@ -109,7 +109,6 @@ namespace NHibernate.Envers.Configuration.Metadata
 				  MetadataTools.AddKeyManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName) : 
 				  MetadataTools.AddManyToOne(parent, propertyAuditingData.Name, type.ReturnedClass.AssemblyQualifiedName, true, false);
 			MetadataTools.AddColumns(element, value.ColumnIterator.OfType<Column>());
-			// A null mapper occurs when adding to composite-id element
 			mapper?.Add(propertyAuditingData.GetPropertyData());
 		}
 	}

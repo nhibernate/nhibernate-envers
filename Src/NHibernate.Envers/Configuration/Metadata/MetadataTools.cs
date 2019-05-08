@@ -74,6 +74,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			var manyToOneMapping = new XElement(CreateElementName("key-many-to-one"),
 				new XAttribute("name", name),
+				new XAttribute("foreign-key", "none"),
 				new XAttribute("class", type));
 			parent.Add(manyToOneMapping);
 			return manyToOneMapping;

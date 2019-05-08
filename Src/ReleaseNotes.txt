@@ -2,6 +2,7 @@
 
 ** Bug
 * #9 More then one save in transaction with one-to-one relations throw exception
+* #11 Avoid creating a foreign key when a composite-id contains many-to-one association
 
 
 
