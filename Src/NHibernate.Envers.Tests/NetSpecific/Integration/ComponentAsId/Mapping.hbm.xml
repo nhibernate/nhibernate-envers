@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" namespace="NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId" assembly="NHibernate.Envers.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" xmlns="urn:nhibernate-mapping-2.2">
+<hibernate-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId" 
+                   assembly="NHibernate.Envers.Tests" 
+                   xmlns="urn:nhibernate-mapping-2.2">
   <class name="Entity1">
     <id name="Id" type="Int32" />
   </class>
