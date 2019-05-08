@@ -1,21 +1,18 @@
-﻿using NHibernate.Mapping.ByCode.Conformist;
+﻿using NHibernate.Envers.Configuration.Attributes;
+using NHibernate.Mapping.ByCode.Conformist;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 {
-	public interface IComponentAsIdFlag
-	{
-
-	}
-	public class Entity<TId> : IComponentAsIdFlag
+	public class Entity<TId>
 	{
 		public virtual TId Id { get; set; }
 	}
 
 	[Serializable]
-	public class UdfId<TId1, TId2> : IComponentAsIdFlag
+	public class UdfId<TId1, TId2>
 	{
 		public UdfId()
 		{
@@ -87,20 +84,13 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 		}
 	}
 
+	[Audited]
 	public class UDFDef : Entity<int>
 	{
 		public virtual string SomeCol0 { get; set; }
 	}
 
-	public class UDFDefNhibMap : ClassMapping<UDFDef>, IComponentAsIdFlag
-	{
-		public UDFDefNhibMap()
-		{
-			Id(x => x.Id);
-		}
-	}
-
-	public class EntityUDF<TTypeToExtend, TId>
+	public abstract class EntityUDF<TTypeToExtend, TId>
 		: Entity<UdfId<UDFDef, TTypeToExtend>>
 	{
 		public virtual UDFDef Def { get => Id.UDFDef; set => Id.UDFDef = value; }
@@ -108,35 +98,13 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 		public virtual string SomeCol1 { get; set; }
 	}
 
-	public class EntityUDFNhibMap<TUDF, TTypeToExtend, TId> : ClassMapping<TUDF>, IComponentAsIdFlag
-		where TUDF : EntityUDF<TTypeToExtend, TId>
-	{
-		protected EntityUDFNhibMap()
-		{
-			this.ComponentAsId(x => x.Id);
-
-			this.NotMapped(x => x.Owner);
-			this.NotMapped(x => x.Def);
-		}
-	}
-
+	[Audited]
 	public class SomeEntity : Entity<int>
 	{
 		public virtual string SomeCol2 { get; set; }
 	}
 
-	public class SomeEntNhimMap : ClassMapping<SomeEntity>, IComponentAsIdFlag
-	{
-		public SomeEntNhimMap()
-		{
-			Id(x => x.Id);
-		}
-	}
-
-	/// <summary>
-	/// Look at audit table
-	/// </summary>
+	[Audited]
 	public class SomeEntUDF : EntityUDF<SomeEntity, int> { }
 
-	public class SomeEntUdfMap : EntityUDFNhibMap<SomeEntUDF, SomeEntity, int> { }
 }
