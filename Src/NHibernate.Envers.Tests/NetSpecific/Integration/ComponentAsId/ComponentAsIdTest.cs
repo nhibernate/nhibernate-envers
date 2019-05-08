@@ -22,36 +22,33 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 		{
 			Assert.DoesNotThrow(() =>
 			{
-				var udfDef = new UDFDef
+				var ent1 = new Entity1
 				{
-					Id = 1,
-					SomeCol0 = "EEE"
+					Id = 1
 				};
 
-				Save(udfDef);
+				Save(ent1);
 
-				var someEnt = new SomeEntity()
+				var ent2 = new Entity2()
 				{
-					Id = 1,
-					SomeCol2 = "RRR"
+					Id = 1
 				};
 
-				Save(someEnt);
+				Save(ent2);
 
 				var udf = new SomeEntUDF
 				{
-					Id = new UdfId<UDFDef, SomeEntity>
+					Id = new ComponentAsId
 					{
-						UDFDef = udfDef,
-						UDFOwnr = someEnt
-					},
-					SomeCol1 = "TTT"
+						Key1 = ent1,
+						Key2 = ent2
+					}
 				};
 
 				Save(udf);
 
 				Del(udf);
-				Del(udfDef);
+				Del(ent1);
 			});
 		}
 
