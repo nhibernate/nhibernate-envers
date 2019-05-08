@@ -6,7 +6,6 @@ using System.Text;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 {
-	[Serializable]
 	public class ComponentAsId
 	{
 		public Entity2 Key2 { get; set; }
