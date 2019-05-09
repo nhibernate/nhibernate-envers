@@ -1,4 +1,4 @@
-=== vNext ===
+=== v5.2.2 (v 5.2.2.0), 2019-05-09, NH 5.2.1 ===
 
 ** Bug
 * #9 More then one save in transaction with one-to-one relations throw exception
