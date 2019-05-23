@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
@@ -81,7 +82,7 @@ namespace NHibernate.Envers.Configuration
 		{
 			return string.Concat(_auditTablePrefix,
 							referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1),
-							"_",
+							MappingTools.RelationCharacter,
 							referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
 							_auditTableSuffix);
 		}

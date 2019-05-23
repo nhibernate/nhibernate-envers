@@ -1,4 +1,5 @@
 using System;
+using NHibernate.Envers.Tools;
 using NHibernate.Mapping;
 
 namespace NHibernate.Envers.Configuration
@@ -31,9 +32,9 @@ namespace NHibernate.Envers.Configuration
 			var referencingEntityName = referencingPersistentClass.EntityName;
 			return string.Concat(DefaultPrefix,
 										referencingEntityName.Substring(referencingEntityName.LastIndexOf(".") + 1),
-			                     "_",
+										MappingTools.RelationCharacter,
 										referencedEntityName.Substring(referencedEntityName.LastIndexOf(".") + 1),
-			                     DefaultSuffix);
+										DefaultSuffix);
 		}
 
 		public virtual string CollectionTableName(Mapping.Collection originalCollection)

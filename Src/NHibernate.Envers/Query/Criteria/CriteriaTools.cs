@@ -3,6 +3,7 @@ using NHibernate.Envers.Entities;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Query.Property;
 using NHibernate.Envers.Reader;
+using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Query.Criteria
 {
@@ -58,7 +59,7 @@ namespace NHibernate.Envers.Query.Criteria
 			{
 				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName;
 			}
-			if (propertyName.StartsWith(idPropertyName + "_"))
+			if (propertyName.StartsWith(idPropertyName + MappingTools.RelationCharacter))
 			{
 				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName.Substring(idPropertyName.Length + 1);
 			}

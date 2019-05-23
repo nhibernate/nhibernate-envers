@@ -127,7 +127,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 
 			// Generating the id mappers data for the referencing side of the relation.
 			var referencingIdData = createMiddleIdData(referencingIdMapping,
-					mappedBy + "_", _referencingEntityName);
+					mappedBy + MappingTools.RelationCharacter, _referencingEntityName);
 
 			// And for the referenced side. The prefixed mapper won't be used (as this collection isn't persisted
 			// in a join table, so the prefix value is arbitrary).
@@ -290,14 +290,14 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// If the relation is inverse, then referencedEntityName is not null.
 				mappedBy = getMappedBy(_propertyValue.CollectionTable, _mainGenerator.Cfg.GetClassMapping(_referencedEntityName));
 
-				referencingPrefixRelated = mappedBy + "_";
+				referencingPrefixRelated = mappedBy + MappingTools.RelationCharacter;
 				referencedPrefix = StringTools.GetLastComponent(_referencedEntityName);
 			}
 			else
 			{
 				mappedBy = null;
 
-				referencingPrefixRelated = StringTools.GetLastComponent(_referencingEntityName) + "_";
+				referencingPrefixRelated = StringTools.GetLastComponent(_referencingEntityName) + MappingTools.RelationCharacter;
 				referencedPrefix = _referencedEntityName == null ? "element" : _propertyName;
 			}
 
@@ -415,7 +415,7 @@ namespace NHibernate.Envers.Configuration.Metadata
 			var type = value.Type;
 			if (type is ManyToOneType)
 			{
-				var prefixRelated = prefix + "_";
+				var prefixRelated = prefix + MappingTools.RelationCharacter;
 				var referencedEntityName = MappingTools.ReferencedEntityName(value);
 
 				var referencedIdMapping = _mainGenerator.GetReferencedIdMappingData(_referencingEntityName,
