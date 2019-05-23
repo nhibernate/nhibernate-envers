@@ -46,12 +46,23 @@ namespace NHibernate.Envers.Query.Criteria
 		public static string DeterminePropertyName(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader,
 		                                           string entityName, string propertyName)
 		{
+			var sessionFactory = versionsReader.SessionImplementor.Factory;
 			if (AuditId.IdentifierPlaceholder.Equals(propertyName))
 			{
-				var identifierPropertyName =
-					versionsReader.SessionImplementor.Factory.GetEntityPersister(entityName).IdentifierPropertyName;
-				propertyName = auditCfg.AuditEntCfg.OriginalIdPropName + "." + identifierPropertyName;
+				var identifierPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
+				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + identifierPropertyName;
 			}
+
+			var idPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
+			if (propertyName.Equals(idPropertyName))
+			{
+				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName;
+			}
+			if (propertyName.StartsWith(idPropertyName + "_"))
+			{
+				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName.Substring(idPropertyName.Length + 1);
+			}
+
 			return propertyName;
 		}
 	}

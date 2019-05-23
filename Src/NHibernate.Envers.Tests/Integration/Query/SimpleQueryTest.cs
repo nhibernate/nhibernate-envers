@@ -4,6 +4,7 @@ using System.Linq;
 using NHibernate.Criterion;
 using NHibernate.Envers.Query;
 using NHibernate.Envers.Tests.Entities;
+using NHibernate.Envers.Tests.Entities.Ids;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -14,25 +15,22 @@ namespace NHibernate.Envers.Tests.Integration.Query
 		private int id1;
 		private int id2;
 		private int id3;
+		private EmbId embId;
 
 		public SimpleQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{
 		}
 
-		protected override IEnumerable<string> Mappings
-		{
-			get
-			{
-				return new[] { "Entities.Mapping.hbm.xml" };
-			}
-		}
+		protected override IEnumerable<string> Mappings =>
+			new[] {"Entities.Mapping.hbm.xml", "Entities.Ids.Mapping.hbm.xml"};
 
 		protected override void Initialize()
 		{
 			var site1 = new StrIntTestEntity { Str = "a", Number = 10 };
 			var site2 = new StrIntTestEntity { Str = "a", Number = 10 };
 			var site3 = new StrIntTestEntity { Str = "b", Number = 5 };
-
+			embId = new EmbId{X = 3, Y = 4};
+			
 			using (var tx = Session.BeginTransaction())
 			{
 				id1 = (int) Session.Save(site1);
@@ -42,6 +40,7 @@ namespace NHibernate.Envers.Tests.Integration.Query
 			}
 			using (var tx = Session.BeginTransaction())
 			{
+				Session.Save(new EmbIdTestEntity{Id = embId, Str1 = "something"});
 				site1.Str = "aBc";
 				site2.Number = 20;
 				tx.Commit();
@@ -373,6 +372,28 @@ namespace NHibernate.Envers.Tests.Integration.Query
 									 .Add(AuditEntity.Property("Str").InsensitiveLike("BC", MatchMode.Anywhere))
 									 .Single()
 									 .Should().Be.EqualTo(site1);
+		}
+
+		[Test]
+		public void VerifyIdPropertyRestriction()
+		{
+			var ver2 = AuditReader().CreateQuery()
+				.ForEntitiesAtRevision<StrIntTestEntity>(2)
+				.Add(AuditEntity.Property("Id").Eq(id2))
+				.Single();
+			ver2.Number.Should().Be.EqualTo(20);
+			ver2.Str.Should().Be.EqualTo("a");
+		}
+
+		[Test]
+		public void VerifyEmbeddedIdPropertyRestriction()
+		{
+			var ver2 = AuditReader().CreateQuery()
+				.ForEntitiesAtRevision<EmbIdTestEntity>(2)
+				.Add(AuditEntity.Property("Id.X").Eq(embId.X))
+				.Add(AuditEntity.Property("Id.Y").Eq(embId.Y))
+				.Single();
+			ver2.Str1.Should().Be.EqualTo("something");
 		}
 	}
 }
