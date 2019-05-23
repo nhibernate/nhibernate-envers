@@ -47,21 +47,25 @@ namespace NHibernate.Envers.Query.Criteria
 		public static string DeterminePropertyName(AuditConfiguration auditCfg, IAuditReaderImplementor versionsReader,
 		                                           string entityName, string propertyName)
 		{
-			var sessionFactory = versionsReader.SessionImplementor.Factory;
-			if (AuditId.IdentifierPlaceholder.Equals(propertyName))
+			if (propertyName != null)
 			{
-				var identifierPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
-				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + identifierPropertyName;
-			}
+				var sessionFactory = versionsReader.SessionImplementor.Factory;
+				if (AuditId.IdentifierPlaceholder.Equals(propertyName))
+				{
+					var identifierPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
+					return auditCfg.AuditEntCfg.OriginalIdPropName + "." + identifierPropertyName;
+				}
 
-			var idPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
-			if (propertyName.Equals(idPropertyName))
-			{
-				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName;
-			}
-			if (propertyName.StartsWith(idPropertyName + MappingTools.RelationCharacter))
-			{
-				return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName.Substring(idPropertyName.Length + 1);
+				var idPropertyName = sessionFactory.GetEntityPersister(entityName).IdentifierPropertyName;
+				if (propertyName.Equals(idPropertyName))
+				{
+					return auditCfg.AuditEntCfg.OriginalIdPropName + "." + propertyName;
+				}
+				if (propertyName.StartsWith(idPropertyName + MappingTools.RelationCharacter))
+				{
+					propertyName = propertyName.Replace(MappingTools.RelationCharacter, ".");
+					return auditCfg.AuditEntCfg.OriginalIdPropName + propertyName.Substring(idPropertyName.Length);
+				}
 			}
 
 			return propertyName;

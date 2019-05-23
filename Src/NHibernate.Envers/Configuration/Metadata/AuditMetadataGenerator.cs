@@ -493,6 +493,8 @@ namespace NHibernate.Envers.Configuration.Metadata
 			// Mapping unjoined properties
 			var parent = xmlMappingData.ClassMapping;
 
+			idMetadataGenerator.GenerateSecondPass(entityName, pc);
+
 			addProperties(parent, pc.UnjoinedPropertyIterator,
 					propertyMapper, auditingData, entityName, xmlMappingData, false);
 

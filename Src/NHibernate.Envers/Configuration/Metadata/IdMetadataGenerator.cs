@@ -113,5 +113,37 @@ namespace NHibernate.Envers.Configuration.Metadata
 		{
 			return new PropertyAuditingData(property.Name, property.PropertyAccessorName);
 		}
+
+		public void GenerateSecondPass(string entityName, PersistentClass persistentClass)
+		{
+			var identifierMapper = persistentClass.IdentifierMapper;
+			var identifierProperty = persistentClass.IdentifierProperty;
+			if (identifierMapper != null)
+			{
+				generateSecondPass(entityName, identifierMapper);
+			}
+			else if (identifierProperty != null && identifierProperty.IsComposite)
+			{
+				var component = (Component)identifierProperty.Value;
+				generateSecondPass(entityName, component);
+			}
+		}
+
+		private void generateSecondPass(string entityName, Component component)
+		{
+			foreach (var property in component.PropertyIterator)
+			{
+				if (property.Value is ToOne toOneValue)
+				{
+					var propertyData = getIdPersistentPropertyAuditingData(property);
+					var referencedEntityName = toOneValue.ReferencedEntityName;
+					var prefix = _mainGenerator.VerEntCfg.OriginalIdPropName + "." + propertyData.Name;
+					var relMapper = _mainGenerator.EntitiesConfigurations[referencedEntityName].IdMapper;
+					var prefixedMapper = relMapper.PrefixMappedProperties(prefix + ".");
+					
+					_mainGenerator.EntitiesConfigurations[entityName].AddToOneRelation(prefix, referencedEntityName, prefixedMapper, true, false);
+				}	
+			}
+		}
 	}
 }
