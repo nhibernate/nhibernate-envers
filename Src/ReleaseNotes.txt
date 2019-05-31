@@ -1,4 +1,4 @@
-=== vNext ===
+=== v5.2.3 (v 5.2.3.0), 2019-05-31, NH 5.2.1 ===
 
 ** Bug
 * #16 Querying on a subset of a composite-id
