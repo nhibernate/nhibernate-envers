@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="**/*.hbm.xml" Exclude="bin/**" />
-    <None Remove="NetSpecific\Integration\TransactionUnexpectedFlush\Mapping.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
