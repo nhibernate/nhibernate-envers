@@ -57,6 +57,7 @@ namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.Discrimi
             using (var tx = Session.BeginTransaction())
             {
                 child.Data = "child data modified";
+                otherChild.Data = "other-child data modified";
                 tx.Commit();
             }
             //rev 4
