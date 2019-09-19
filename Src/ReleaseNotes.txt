@@ -2,6 +2,7 @@
 
 ** Bug
 * #16 Querying on a subset of a composite-id
+* #24 Discriminator's insert attribute is not respected
 
 
 
