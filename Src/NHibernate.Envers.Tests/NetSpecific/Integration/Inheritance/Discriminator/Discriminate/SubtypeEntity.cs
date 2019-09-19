@@ -1,6 +1,6 @@
 ﻿using NHibernate.Envers.Configuration.Attributes;
 
-namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.Discriminate
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Discriminator.Discriminate
 {
 	[Audited]
 	public class SubtypeEntity : BaseEntity

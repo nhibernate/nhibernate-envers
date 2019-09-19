@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using NHibernate.Mapping;
+﻿using System.Linq;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.Discriminate
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Discriminator.Discriminate
 {
 	/// <summary>
 	/// Provides a basic set of tests to verify when the insert attribute of the discriminator element is set
