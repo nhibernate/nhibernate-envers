@@ -1,8 +1,14 @@
+=== vNext ===
+
+** Bug
+* #24 Discriminator's insert attribute is not respected
+
+
+
 === v5.2.3 (v 5.2.3.0), 2019-05-31, NH 5.2.1 ===
 
 ** Bug
 * #16 Querying on a subset of a composite-id
-* #24 Discriminator's insert attribute is not respected
 
 
 
