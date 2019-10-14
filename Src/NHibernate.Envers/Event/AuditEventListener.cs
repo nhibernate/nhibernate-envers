@@ -100,7 +100,7 @@ namespace NHibernate.Envers.Event
 			}
 
 			var toPropertyNames = VerCfg.EntCfg.ToPropertyNames(fromEntityName, relDesc.FromPropertyName, toEntityName);
-			var toPropertyName = (string)toPropertyNames.First();
+			var toPropertyName = toPropertyNames.First();
 			auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(session, toEntityName, toPropertyName, VerCfg, id, value));
 		}
 
@@ -220,7 +220,7 @@ namespace NHibernate.Envers.Event
 					var relatedId = relatedIdMapper.MapToIdFromEntity(relatedObj);
 
 					var toPropertyNames = VerCfg.EntCfg.ToPropertyNames(evt.GetAffectedOwnerEntityName(), rd.FromPropertyName, relatedEntityName);
-					var toPropertyName = (string)toPropertyNames.First();
+					var toPropertyName = toPropertyNames.First();
 
 					auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session,
 																							evt.Session.BestGuessEntityName(relatedObj), 
