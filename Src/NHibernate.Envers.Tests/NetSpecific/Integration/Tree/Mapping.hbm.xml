@@ -8,7 +8,7 @@
         </id>
         <property name="Name" not-null="true"/>
         <many-to-one name="Parent" class="TreeEntity" column="parentKey"/>
-        <list name="Children" cascade="all-delete-orphan">
+        <list name="Children" cascade="none" inverse="true">
             <key column="parentKey"/>
             <index column="parentInd"/>
             <one-to-many class="TreeEntity"/>
