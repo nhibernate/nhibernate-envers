@@ -23,7 +23,7 @@ namespace NHibernate.Envers.Tools
 				? null
 				: (obj is INHibernateProxy objAsProxy
 					? objAsProxy.HibernateLazyInitializer.Identifier
-					: session.GetEntityPersister(null, obj).GetIdentifier(obj));
+					: session.GetEntityPersister(session.BestGuessEntityName(obj), obj).GetIdentifier(obj));
 		}
 
 		public static object GetTargetFromProxy(ISessionImplementor session, INHibernateProxy proxy) 
