@@ -12,18 +12,18 @@ namespace NHibernate.Envers.Synchronization
 	[Serializable]
 	public class AuditProcessManager
 	{
-		private readonly IDictionary<ITransaction, AuditProcess> _auditProcesses;
+		private readonly IDictionary<object, AuditProcess> _auditProcesses;
 		private readonly IRevisionInfoGenerator _revisionInfoGenerator;
 
 		public AuditProcessManager(IRevisionInfoGenerator revisionInfoGenerator)
 		{
-			_auditProcesses = new ConcurrentDictionary<ITransaction, AuditProcess>();
+			_auditProcesses = new ConcurrentDictionary<object, AuditProcess>();
 			_revisionInfoGenerator = revisionInfoGenerator;
 		}
 
 		public AuditProcess Get(IEventSource session)
 		{
-			var transaction = session.Transaction;
+			var transaction = (object)session.GetCurrentTransaction() ?? System.Transactions.Transaction.Current;
 
 			if (!_auditProcesses.TryGetValue(transaction, out var auditProcess))
 			{
@@ -40,10 +40,10 @@ namespace NHibernate.Envers.Synchronization
 
 		private class transactionCompletionProcess : IBeforeTransactionCompletionProcess, IAfterTransactionCompletionProcess
 		{
-			private readonly IDictionary<ITransaction, AuditProcess> _auditProcesses;
-			private readonly ITransaction _transaction;
+			private readonly IDictionary<object, AuditProcess> _auditProcesses;
+			private readonly object _transaction;
 
-			public transactionCompletionProcess(IDictionary<ITransaction, AuditProcess> auditProcesses, ITransaction transaction)
+			public transactionCompletionProcess(IDictionary<object, AuditProcess> auditProcesses, object transaction)
 			{
 				_auditProcesses = auditProcesses;
 				_transaction = transaction;
