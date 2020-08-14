@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
@@ -51,7 +50,7 @@ namespace NHibernate.Envers.Tests
 			Cfg = new Cfg.Configuration();
 			Cfg.SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
 			AddToConfiguration(Cfg);
-			Cfg.Configure(configurationFile());
+			Cfg.Configure();
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
 			_sessionFactory = Cfg.BuildSessionFactory();
@@ -136,15 +135,6 @@ namespace NHibernate.Envers.Tests
 		{
 			Session?.Dispose();
 			_auditReader = null;
-		}
-		
-		private static string configurationFile()
-		{
-			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-			var relativeSearchPath = AppDomain.CurrentDomain.RelativeSearchPath;
-			var folder = relativeSearchPath == null ? baseDir : Path.Combine(baseDir, relativeSearchPath);
-
-			return Path.Combine(folder, "hibernate.cfg.xml");
 		}
 	}
 }
