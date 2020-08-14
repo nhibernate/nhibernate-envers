@@ -16,12 +16,13 @@ namespace NHibernate.Envers.Tests
 {
 	public abstract class OneStrategyTestBase
 	{
+		private ISessionFactory _sessionFactory;
+		private IAuditReader _auditReader;
+
 		protected string TestAssembly { get; private set; }
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; private set; }
 		protected System.Type StrategyType { get; private set; }
-		private ISessionFactory SessionFactory { get; set; }
-		private IAuditReader _auditReader;
 
 		protected OneStrategyTestBase(AuditStrategyForTest strategyType)
 		{
@@ -53,14 +54,14 @@ namespace NHibernate.Envers.Tests
 			Cfg.Configure(configurationFile());
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
-			SessionFactory = Cfg.BuildSessionFactory();
+			_sessionFactory = Cfg.BuildSessionFactory();
 			var notRun = TestShouldNotRunMessage();
 			if (!string.IsNullOrEmpty(notRun))
 				Assert.Ignore(notRun);
-			Session = openSession(SessionFactory);
+			Session = openSession(_sessionFactory);
 			Initialize();
 			closeSessionAndAuditReader();
-			Session = openSession(SessionFactory);
+			Session = openSession(_sessionFactory);
 		}
 
 		[TearDown]
@@ -68,7 +69,7 @@ namespace NHibernate.Envers.Tests
 		{
 			closeSessionAndAuditReader();
 			AuditConfiguration.Remove(Cfg);
-			SessionFactory?.Close();
+			_sessionFactory?.Close();
 		}
 
 		protected virtual string TestShouldNotRunMessage()
@@ -76,7 +77,7 @@ namespace NHibernate.Envers.Tests
 			return null;
 		}
 
-		protected Dialect.Dialect Dialect => ((ISessionFactoryImplementor)SessionFactory).Dialect;
+		protected Dialect.Dialect Dialect => ((ISessionFactoryImplementor)_sessionFactory).Dialect;
 
 		protected virtual IMetaDataProvider EnversConfiguration()
 		{
@@ -118,7 +119,7 @@ namespace NHibernate.Envers.Tests
 		protected void ForceNewSession()
 		{
 			Session.Close();
-			Session = SessionFactory.OpenSession();
+			Session = _sessionFactory.OpenSession();
 			_auditReader = null;
 		}
 
