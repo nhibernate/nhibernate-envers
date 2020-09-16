@@ -1,3 +1,13 @@
+=== vNext ===
+
+** Bug
+* #30 Invalid cast, Db2
+
+*** Possible breaking change ***
+* If nhib's schema generator is used, audit tables' REVTYPE column now has increased in size. However, values still only can be 0, 1 and 2. 
+
+
+
 === v5.3.0 (v 5.3.2.0), 2020-07-22, NH 5.3.0 ===
 
 ** Bug
