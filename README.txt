@@ -1,8 +1,5 @@
 The Envers project aims to enable easy auditing of persistent classes.
 
-Docs are available here
-http://envers.bitbucket.io
-
 Send user questions to NH user group list
 http://groups.google.com/group/nhusers
 
