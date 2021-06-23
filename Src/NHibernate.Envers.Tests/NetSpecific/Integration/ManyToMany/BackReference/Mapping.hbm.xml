@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.ManyToMany.BackReference">
+    <class name="OwningEntity">
+        <id name="Id" column="owning_id">
+            <generator class="native"/>
+        </id>
+        <bag name="Items" table="owning_item">
+            <key column="owning_id" />
+            <many-to-many class="BackReferenceEntity" column="item_id" />
+        </bag>
+    </class>
+    <class name="BackReferenceEntity">
+        <id name="Id" column="item_id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="Owning" class="OwningEntity" column="owning_id"/>
+    </class>
+</hibernate-mapping>
