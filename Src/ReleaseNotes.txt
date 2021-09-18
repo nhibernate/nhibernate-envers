@@ -1,3 +1,9 @@
+=== vNext ===
+
+** Bug
+* #37 NHibernate.MappingException: No persister for: ProxyForFieldInterceptor
+
+
 === v5.3.1 (v 5.3.1.0), 2020-09-16, NH 5.3.0 ===
 
 ** Bug
