@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty
 {
@@ -25,6 +26,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty
 		[Test]
 		public void SavePersonProxyForFieldInterceptor()
 		{
+			long carId;
 			using (var tx = Session.BeginTransaction())
 			{
 				var pers = Session.Query<Person>().Single(x => x.Id == id_pers1);
@@ -32,9 +34,12 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty
 				{
 					Owner = pers
 				};
-				id_pers1 = (long) Session.Save(car);
+				carId = (long) Session.Save(car);
 				tx.Commit();
 			}
+
+			AuditReader().Find<Car>(carId, 2).Owner.Name
+				.Should().Be.EqualTo("Hernan");
 		}
 	}
 }
