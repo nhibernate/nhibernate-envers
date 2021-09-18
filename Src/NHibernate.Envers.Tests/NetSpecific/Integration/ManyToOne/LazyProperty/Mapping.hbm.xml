@@ -1,6 +1,6 @@
 ﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="NHibernate.Envers.Tests"
-                   namespace="NHibernate.Envers.Tests.Integration.LazyProperty">
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty">
     <class name="Person" table="DRIVERS">
         <id name="Id" column="ID_PERSON" type="long">
             <generator class="native"/>

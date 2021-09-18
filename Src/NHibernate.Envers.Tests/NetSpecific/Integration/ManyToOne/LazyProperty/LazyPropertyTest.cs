@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using System.Linq;
+﻿using System.Linq;
+using NUnit.Framework;
 
-namespace NHibernate.Envers.Tests.Integration.LazyProperty
+namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty
 {
 	public class LazyPropertyTest : TestBase
 	{
