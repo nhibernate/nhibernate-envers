@@ -48,10 +48,14 @@ jobs:
       run: |
         docker run -d -p 1521:1521 -e APP_USER=nhibernate -e APP_USER_PASSWORD=nhibernate -e ORACLE_PASSWORD=nhibernate gvenzl/oracle-xe:18-slim
     - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1.8.0
+    - name: Setup .NET 5.0.x
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.1.x
+        dotnet-version: 5.0.x
+    - name: Setup .NET Core 2.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.0.x
     - name: Restore dependencies
       run: dotnet restore Src\\Envers.sln
     - name: Build
