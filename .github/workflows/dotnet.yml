@@ -53,8 +53,8 @@ jobs:
       with:
         dotnet-version: 2.1.x
     - name: Restore dependencies
-      run: dotnet restore src\\envers.sln
+      run: dotnet restore Src\\Envers.sln
     - name: Build
-      run: dotnet build --no-restore src\\envers.sln
+      run: dotnet build --no-restore Src\\Envers.sln
     - name: Test
-      run: dotnet test --no-build src\\envers.sln
+      run: dotnet test --no-build Src\\Envers.sln
