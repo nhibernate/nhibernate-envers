@@ -1,21 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FirebirdSql.Data.FirebirdClient;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
+using NHibernate.Driver;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
 using NHibernate.Envers.Strategy;
+using NHibernate.Envers.Tests.Tools;
+using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests
 {
 	public abstract class OneStrategyTestBase
 	{
-		private ISessionFactory _sessionFactory;
+		private ISessionFactoryImplementor _sessionFactory;
 		private IAuditReader _auditReader;
 
 		protected string TestAssembly { get; private set; }
@@ -47,20 +51,45 @@ namespace NHibernate.Envers.Tests
 		public void BaseSetup()
 		{
 			TestAssembly = GetType().Assembly.GetName().Name;
-			Cfg = new Cfg.Configuration();
-			Cfg.SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
+			Cfg = new Cfg.Configuration().SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
 			AddToConfiguration(Cfg);
-			Cfg.Configure();
+			Cfg.Configure().OverrideSettingsFromEnvironmentVariables();
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
-			_sessionFactory = Cfg.BuildSessionFactory();
-			var notRun = TestShouldNotRunMessage();
-			if (!string.IsNullOrEmpty(notRun))
-				Assert.Ignore(notRun);
+			createDb();
+			_sessionFactory = (ISessionFactoryImplementor)Cfg.BuildSessionFactory();
+			if (!testShouldRun())
+				Assert.Ignore(TestShouldNotRunMessage());
+			createDbSchema();
 			Session = openSession(_sessionFactory);
 			Initialize();
 			closeSessionAndAuditReader();
 			Session = openSession(_sessionFactory);
+		}
+
+		private void createDbSchema()
+		{
+			new SchemaExport(Cfg).Create(false, true);
+		}
+		
+		
+		private void dropDbSchema()
+		{
+			if (_sessionFactory.ConnectionProvider.Driver is FirebirdClientDriver)
+			{
+				// necessary firebird hack to be able to drop used tables
+				FbConnection.ClearAllPools();
+			}
+			new SchemaExport(Cfg).Drop(false, true);
+		}
+
+		private static bool hasCreatedDatabase;
+		private void createDb()
+		{
+			if (hasCreatedDatabase)
+				return;
+			hasCreatedDatabase = true;
+			DatabaseSetup.CreateEmptyDatabase(Cfg);
 		}
 
 		[TearDown]
@@ -68,15 +97,22 @@ namespace NHibernate.Envers.Tests
 		{
 			closeSessionAndAuditReader();
 			AuditConfiguration.Remove(Cfg);
+			if(testShouldRun())
+				dropDbSchema();
 			_sessionFactory?.Close();
 		}
 
+		private bool testShouldRun()
+		{
+			return TestShouldNotRunMessage() == null;
+		}
+		
 		protected virtual string TestShouldNotRunMessage()
 		{
 			return null;
 		}
 
-		protected Dialect.Dialect Dialect => ((ISessionFactoryImplementor)_sessionFactory).Dialect;
+		protected Dialect.Dialect Dialect => _sessionFactory.Dialect;
 
 		protected virtual IMetaDataProvider EnversConfiguration()
 		{

@@ -3,6 +3,7 @@ using NHibernate.Cfg;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Event;
+using NHibernate.Envers.Tests.Tools;
 using NHibernate.Event;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -26,7 +27,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 		public void WhenGetAuditConfMultipleTimesThenDoesNotThrowsForDupicatedMappings()
 		{
 			var cfg = new Cfg.Configuration();
-			cfg.Configure();
+			cfg.Configure().OverrideSettingsFromEnvironmentVariables();
 
 			cfg.AddXml(SimpleMapping);
 			AuditConfiguration.GetFor(cfg); //<< external call
@@ -65,8 +66,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 		public void WhenIntegrateThenBuildSessionFactoryDoesNotThrows()
 		{
 			var cfg = new Cfg.Configuration();
-			cfg.Configure();
-
+			cfg.Configure().OverrideSettingsFromEnvironmentVariables();
 			cfg.AddXml(SimpleMapping);
 			cfg.IntegrateWithEnvers();
 
