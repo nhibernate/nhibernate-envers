@@ -1,7 +1,6 @@
-1. Create an empty database
-2. Build NHibernate.Envers.Test
-3. Modify hibernate.cfg.xml to point to your database
-4. Run the tests
+1. Build NHibernate.Envers.Test
+2. Modify hibernate.cfg.xml to point to your database (if there's been modification of hibernate.cfg.xml.template after you pulled latest, your hibernate.cfg.xml need to reflect these changes)
+3. Run the tests
 
 
 NHibernate Envers' tests are using Parameterized Test Fixtures
