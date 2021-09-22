@@ -1,0 +1,25 @@
+name: .NET
+
+on:
+  push:
+    branches: [ setupbuild ]
+  #pull_request:
+  #  branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore src\\envers.sln
+    - name: Build
+      run: dotnet build --no-restore src\\envers.sln
+    - name: Test
+      run: dotnet test --no-build src\\envers.sln
