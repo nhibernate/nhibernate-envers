@@ -28,10 +28,8 @@ jobs:
             connectionstring: "User ID=envers;Password=envers;Metadata Pooling=false;Self Tuning=false;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XEPDB1)))"
             dialect: "NHibernate.Dialect.Oracle10gDialect"
             driverclass: "NHibernate.Driver.OracleManagedDataClientDriver"
-            allow_failure: true
     
     runs-on: ubuntu-latest
-    continue-on-error: ${{matrix.allow_failure == true}}
     env: 
       connection.connection_string: ${{matrix.connectionstring}}
       dialect: ${{matrix.dialect}}
