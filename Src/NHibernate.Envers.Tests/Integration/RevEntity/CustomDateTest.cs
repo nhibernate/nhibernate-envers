@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using NHibernate.Dialect;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Entities.RevEntity;
@@ -32,7 +33,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var te = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision);
+			timestamp1 = DateTime.UtcNow.AddMilliseconds(-100);
 			using (var tx = Session.BeginTransaction())
 			{
 				id = (int)Session.Save(te);
@@ -40,7 +41,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			}
 
 			timestamp2 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision);
+			Thread.Sleep(100);
 			using (var tx = Session.BeginTransaction())
 			{
 				te.Str = "y";
@@ -85,11 +86,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var rev1timestamp = AuditReader().FindRevision<CustomDateRevEntity>(1).DateTimestamp;
 			rev1timestamp.GreaterThan(timestamp1);
-			rev1timestamp.LessOrEqualTo(timestamp2.AddMilliseconds(MillisecondPrecision));
+			rev1timestamp.LessOrEqualTo(timestamp2);
 
 			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(2)).DateTimestamp;
 			rev2timestamp.GreaterThan(timestamp2);
-			rev2timestamp.LessOrEqualTo(timestamp3.AddMilliseconds(MillisecondPrecision));
+			rev2timestamp.LessOrEqualTo(timestamp3);
 		}
 
 		[Test]
@@ -106,6 +107,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 
 			Assert.AreEqual(ver1, AuditReader().Find<StrTestEntity>(id, 1));
 			Assert.AreEqual(ver2, AuditReader().Find<StrTestEntity>(id, 2));
+		}
+		
+		protected override string TestShouldNotRunMessage()
+		{
+			return Dialect is MySQLDialect ? "Not applicable for MySQL due to low datetime precision" : null;
 		}
 	}
 }

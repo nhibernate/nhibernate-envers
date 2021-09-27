@@ -126,8 +126,6 @@ namespace NHibernate.Envers.Tests
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
 
-		protected int MillisecondPrecision => Dialect is MySQLDialect ? 1000 : 100;
-
 		protected virtual FlushMode FlushMode => FlushMode.Auto;
 
 		protected abstract void Initialize();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NHibernate.Cfg;
+using NHibernate.Dialect;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
@@ -313,9 +314,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 				}
 				else
 				{
+					var dateTimePrecision = Dialect is MySQLDialect ? 1000 : 100;
 					var exactDate = new DateTime(revEnd.CustomTimestamp);
 					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-MillisecondPrecision), exactDate.AddMilliseconds(MillisecondPrecision));
+					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-dateTimePrecision), exactDate.AddMilliseconds(dateTimePrecision));
 				}
 			}
 		}
