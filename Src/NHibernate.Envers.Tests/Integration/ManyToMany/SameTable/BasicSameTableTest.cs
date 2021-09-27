@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NHibernate.Dialect;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.SqlTypes;
 using NUnit.Framework;
@@ -29,10 +28,10 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_AUD").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV " + intType + " NOT NULL, REVEND " + intType + ", REVTYPE " + tinyIntType + ", " +
-						"parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+						"parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				tx.Commit();
 			}
 
@@ -251,11 +250,6 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			{
 				return new[]{"Entities.ManyToMany.SameTable.Mapping.hbm.xml"};
 			}
-		}
-
-		protected override string TestShouldNotRunMessage()
-		{
-			return Dialect is FirebirdDialect ? "Not applicable for Firebird due to manual non compatible scripts in setup. Should probably be fixed in the future...." : null;
 		}
 	}
 }
