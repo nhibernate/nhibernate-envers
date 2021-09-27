@@ -16,7 +16,7 @@
 			<generator class="identity"/>
 		</id>
 		<property name="Street" />
-		<property name="Number" />
+		<property name="Number" column="thenumber" />
 	</class>
 
 	<class name="Car">
