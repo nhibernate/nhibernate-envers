@@ -25,7 +25,6 @@ jobs:
             connectionstring: "Server=localhost;Uid=root;Password=envers;Database=envers;Old Guids=True;"
             dialect: "NHibernate.Dialect.MySQL5Dialect"
             driverclass: "NHibernate.Driver.MySqlDataDriver"
-            allow_failure: true
           - db: Oracle
             connectionstring: "User ID=envers;Password=envers;Metadata Pooling=false;Self Tuning=false;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XEPDB1)))"
             dialect: "NHibernate.Dialect.Oracle10gDialect"
