@@ -12,7 +12,7 @@
 			<key column="itemId"/>
 			<composite-element class="Item">
 				<property name="Name"/>
-				<property name="Value"/>
+				<property column="thevalue" name="Value"/>
 			</composite-element>
 		</bag>
 	</class>

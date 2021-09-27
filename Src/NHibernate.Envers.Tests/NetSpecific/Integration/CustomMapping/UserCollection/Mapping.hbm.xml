@@ -19,6 +19,6 @@
 		<id name="Id">
 			<generator class="identity"/>
 		</id>
-		<property name="Value"/>
+		<property column="thevalue" name="Value"/>
 	</class>
 </hibernate-mapping>

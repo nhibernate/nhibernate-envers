@@ -86,6 +86,6 @@
 			<generator class="identity"/>
 		</id>
 		<property name="GenericValue" />
-		<property name="Value" />
+		<property column="thevalue" name="Value" />
 	</class>
 </hibernate-mapping>
