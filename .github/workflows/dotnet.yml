@@ -20,7 +20,6 @@ jobs:
             connectionstring: "DataSource=localhost;Database=envers;User=SYSDBA;Password=envers;charset=utf8;"
             dialect: "NHibernate.Dialect.FirebirdDialect"
             driverclass: "NHibernate.Driver.FirebirdClientDriver"
-            allow_failure: true
           - db: MySQL
             connectionstring: "Server=localhost;Uid=root;Password=envers;Database=envers;Old Guids=True;"
             dialect: "NHibernate.Dialect.MySQL5Dialect"
