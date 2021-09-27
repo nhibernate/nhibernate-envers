@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using FirebirdSql.Data.FirebirdClient;
 using NHibernate.Cfg;
-using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
