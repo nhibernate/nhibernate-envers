@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var te = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision);
+			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision * 2);
 			using (var tx = Session.BeginTransaction())
 			{
 				id = (int)Session.Save(te);
@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			}
 
 			timestamp2 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision);
+			Thread.Sleep(MillisecondPrecision * 2);
 			using (var tx = Session.BeginTransaction())
 			{
 				te.Str = "y";
