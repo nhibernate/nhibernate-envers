@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NHibernate.Dialect;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.SqlTypes;
 using NUnit.Framework;
@@ -250,6 +251,11 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 			{
 				return new[]{"Entities.ManyToMany.SameTable.Mapping.hbm.xml"};
 			}
+		}
+
+		protected override string TestShouldNotRunMessage()
+		{
+			return Dialect is FirebirdDialect ? "Not applicable for Firebird due to manual non compatible scripts in setup. Should probably be fixed in the future...." : null;
 		}
 	}
 }
