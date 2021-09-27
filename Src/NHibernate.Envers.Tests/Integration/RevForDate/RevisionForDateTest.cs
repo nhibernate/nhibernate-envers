@@ -31,7 +31,7 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		{
 			var rfd = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision * 2);
+			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision);
 
 			using (var tx = Session.BeginTransaction())
 			{
@@ -40,14 +40,14 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			}
 
 			timestamp2 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision * 2);
+			Thread.Sleep(MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "y";
 				tx.Commit();
 			}
 			timestamp3 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision * 2);
+			Thread.Sleep(MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "z";

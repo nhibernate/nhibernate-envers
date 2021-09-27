@@ -32,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var te = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision * 2);
+			timestamp1 = DateTime.UtcNow.AddMilliseconds(-MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				id = (int)Session.Save(te);
@@ -40,7 +40,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 			}
 
 			timestamp2 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision * 2);
+			Thread.Sleep(MillisecondPrecision);
 			using (var tx = Session.BeginTransaction())
 			{
 				te.Str = "y";
@@ -85,11 +85,11 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity
 		{
 			var rev1timestamp = AuditReader().FindRevision<CustomDateRevEntity>(1).DateTimestamp;
 			rev1timestamp.GreaterThan(timestamp1);
-			rev1timestamp.LessOrEqualTo(timestamp2);
+			rev1timestamp.LessOrEqualTo(timestamp2.AddMilliseconds(MillisecondPrecision));
 
 			var rev2timestamp = ((CustomDateRevEntity)AuditReader().FindRevision(2)).DateTimestamp;
 			rev2timestamp.GreaterThan(timestamp2);
-			rev2timestamp.LessOrEqualTo(timestamp3);
+			rev2timestamp.LessOrEqualTo(timestamp3.AddMilliseconds(MillisecondPrecision));
 		}
 
 		[Test]
