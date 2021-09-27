@@ -38,7 +38,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 
 		protected override string TestShouldNotRunMessage()
 		{
-			return Dialect.GetType() == typeof(MySQLDialect) ? "Not applicable for MySQL" : null;
+			return Dialect is MySQLDialect ? "Not applicable for MySQL" : null;
 		}
 
 
