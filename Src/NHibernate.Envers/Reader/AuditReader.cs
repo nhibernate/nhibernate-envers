@@ -85,6 +85,7 @@ namespace NHibernate.Envers.Reader
 
 			var resultList = CreateQuery().ForRevisionsOfEntity(entityName, false, true)
 				.AddProjection(AuditEntity.RevisionNumber())
+				.AddOrder(AuditEntity.RevisionNumber().Asc())
 				.Add(AuditEntity.Id().Eq(primaryKey))
 				.GetResultList();
 			return from object revision in resultList select Convert.ToInt64(revision);
