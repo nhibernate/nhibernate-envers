@@ -1,3 +1,10 @@
+=== vNext ===
+
+** Bug
+* #43 Field marked as Generated.Insert not being audited
+
+
+
 === v5.3.2 (v 5.3.2.0), 2021-09-28, NH 5.3.0 ===
 
 ** Bug
