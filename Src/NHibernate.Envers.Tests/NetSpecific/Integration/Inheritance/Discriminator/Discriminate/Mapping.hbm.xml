@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	assembly="NHibernate.Envers.Tests"
+	namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Discriminator.Discriminate">
+
+	<class name="ClassTypeEntity">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Type"/>
+	</class>
+
+	<class name="BaseEntity" discriminator-value="1">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		
+		<discriminator type="Int32" insert="false">
+			<column name="TypeId" not-null="true" sql-type="int" />
+		</discriminator>  
+	
+		<property name="Data"/>
+		<many-to-one name="TypeId" column="TypeId" class="ClassTypeEntity" />
+	</class>
+	
+	<subclass name="SubtypeEntity" extends="BaseEntity" discriminator-value="2">
+		<property name="SubtypeData" />
+	</subclass>
+	
+
+</hibernate-mapping>

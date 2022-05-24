@@ -107,12 +107,12 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_aud").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV " + intType + " NOT NULL, REVEND " + intType + ", "
 										+ revendTimestampColumName
 										+ " " + dateTimeType + ", REVTYPE " + tinyIntType + ", "
-										+ "parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+										+ "parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				tx.Commit();
 			}
 		}

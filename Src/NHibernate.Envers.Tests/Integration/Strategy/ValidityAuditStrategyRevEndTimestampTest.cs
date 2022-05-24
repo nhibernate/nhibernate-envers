@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NHibernate.Cfg;
+using NHibernate.Dialect;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Tests.Entities.ManyToMany.SameTable;
 using NHibernate.Envers.Tests.Entities.RevEntity;
@@ -108,12 +109,12 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 			using (var tx = Session.BeginTransaction())
 			{
 				Session.CreateSQLQuery("DROP TABLE children").ExecuteUpdate();
-				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+				Session.CreateSQLQuery("CREATE TABLE children(parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				Session.CreateSQLQuery("DROP TABLE children_aud").ExecuteUpdate();
 				Session.CreateSQLQuery("CREATE TABLE children_AUD(REV " + intType + " NOT NULL, REVEND " + intType + ", "
 										+ revendTimestampColumName
 										+ " " + dateTimeType + ", REVTYPE " + tinyIntType + ", "
-										+ "parent_id " + intType + ", child1_id " + intType + " NULL, child2_id " + intType + " NULL)").ExecuteUpdate();
+										+ "parent_id " + intType + ", child1_id " + intType + ", child2_id " + intType + ")").ExecuteUpdate();
 				tx.Commit();
 			}
 		}
@@ -313,9 +314,10 @@ namespace NHibernate.Envers.Tests.Integration.Strategy
 				}
 				else
 				{
+					var dateTimePrecision = Dialect is MySQLDialect ? 1000 : 100;
 					var exactDate = new DateTime(revEnd.CustomTimestamp);
 					var revendDate = (DateTime) revendTimestamp;
-					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-MillisecondPrecision), exactDate.AddMilliseconds(MillisecondPrecision));
+					revendDate.Should().Be.IncludedIn(exactDate.AddMilliseconds(-dateTimePrecision), exactDate.AddMilliseconds(dateTimePrecision));
 				}
 			}
 		}

@@ -1,0 +1,77 @@
+name: .NET
+
+on: [push, pull_request]
+
+jobs:
+  db:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - db: SqlServer2008
+            connectionstring: "Server=localhost;initial catalog=envers;User Id=sa;Password=P@ssw0rd"
+            dialect: "NHibernate.Dialect.MsSql2008Dialect"
+            driverclass: "NHibernate.Driver.SqlClientDriver"
+          - db: PostgreSQL
+            connectionstring: "Host=localhost;Username=envers;Password=envers;Database=envers;Enlist=true;"
+            dialect: "NHibernate.Dialect.PostgreSQL83Dialect"
+            driverclass: "NHibernate.Driver.NpgsqlDriver"
+          - db: Firebird
+            connectionstring: "DataSource=localhost;Database=envers;User=SYSDBA;Password=envers;charset=utf8;"
+            dialect: "NHibernate.Dialect.FirebirdDialect"
+            driverclass: "NHibernate.Driver.FirebirdClientDriver"
+          - db: MySQL
+            connectionstring: "Server=localhost;Uid=root;Password=envers;Database=envers;Old Guids=True;"
+            dialect: "NHibernate.Dialect.MySQL5Dialect"
+            driverclass: "NHibernate.Driver.MySqlDataDriver"
+          - db: Oracle
+            connectionstring: "User ID=envers;Password=envers;Metadata Pooling=false;Self Tuning=false;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XEPDB1)))"
+            dialect: "NHibernate.Dialect.Oracle10gDialect"
+            driverclass: "NHibernate.Driver.OracleManagedDataClientDriver"
+    
+    runs-on: ubuntu-latest
+    env: 
+      connection.connection_string: ${{matrix.connectionstring}}
+      dialect: ${{matrix.dialect}}
+      connection.driver_class: ${{matrix.driverclass}}
+      LANG: en-US.UTF-8
+
+    name: ${{matrix.db}}
+
+    steps:
+    - name: Set up SqlServer
+      if: matrix.db == 'SqlServer2008'
+      run: |
+        docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssw0rd" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest;
+    - name: Set up MySQL
+      if: matrix.db == 'MySQL'
+      run: |
+        sudo service mysql stop
+        docker run --name mysql -e MYSQL_ROOT_PASSWORD=envers -e MYSQL_USER=envers -e MYSQL_PASSWORD=envers -e MYSQL_DATABASE=envers -p 3306:3306 --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -d mysql:5.7 mysqld --lower_case_table_names=1 --character-set-server=utf8 --collation-server=utf8_general_ci
+    - name: Set up Oracle
+      if: matrix.db == 'Oracle'
+      run: |
+        docker run -d -p 1521:1521 -e APP_USER=envers -e APP_USER_PASSWORD=envers -e ORACLE_PASSWORD=envers gvenzl/oracle-xe:18-slim
+    - name: Set up PostgreSQL
+      if: matrix.db == 'PostgreSQL'
+      run: |
+       docker run -d -e POSTGRES_USER=envers  -e POSTGRES_PASSWORD=envers -e POSTGRES_DB=envers -p 5432:5432 postgres:13
+    - name: Set up Firebird
+      if: matrix.db == 'Firebird'
+      run: |
+        docker run --name firebird -e EnableWireCrypt=true -e FIREBIRD_USER=envers -e FIREBIRD_PASSWORD=envers -e ISC_PASSWORD=envers -e FIREBIRD_DATABASE=envers -p 3050:3050 -d jacobalberty/firebird:v3.0
+
+        
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1.8.0
+      with:
+        dotnet-version: 2.1.x
+
+    - name: Restore dependencies
+      run: dotnet restore Src\\Envers.sln
+    - name: Build
+      run: dotnet build --no-restore Src\\Envers.sln -f netcoreapp2.0
+    - name: Test
+      run: dotnet test --no-build Src\\Envers.sln -f netcoreapp2.0

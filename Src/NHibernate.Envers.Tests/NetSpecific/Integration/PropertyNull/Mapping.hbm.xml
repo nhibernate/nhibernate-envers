@@ -5,6 +5,6 @@
 		<id name="Id">
 			<generator class="assigned"/>
 		</id>
-		<property name="Value" access="field.camelcase-underscore"/>
+		<property name="Value" column="TheValue" access="field.camelcase-underscore"/>
 	</class>
 </hibernate-mapping>

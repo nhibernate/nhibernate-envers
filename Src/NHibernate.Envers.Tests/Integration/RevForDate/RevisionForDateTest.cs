@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using NHibernate.Dialect;
 using NHibernate.Envers.Exceptions;
 using NHibernate.Envers.Tests.Entities;
 using NHibernate.Envers.Tests.Tools;
@@ -31,7 +32,7 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 		{
 			var rfd = new StrTestEntity { Str = "x" };
 
-			timestamp1 = DateTime.UtcNow.AddSeconds(-1);
+			timestamp1 = DateTime.UtcNow.AddMilliseconds(-100);
 
 			using (var tx = Session.BeginTransaction())
 			{
@@ -40,14 +41,14 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			}
 
 			timestamp2 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision);
+			Thread.Sleep(100);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "y";
 				tx.Commit();
 			}
 			timestamp3 = DateTime.UtcNow;
-			Thread.Sleep(MillisecondPrecision);
+			Thread.Sleep(100);
 			using (var tx = Session.BeginTransaction())
 			{
 				rfd.Str = "z";
@@ -89,6 +90,11 @@ namespace NHibernate.Envers.Tests.Integration.RevForDate
 			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp3)).LessOrEqualTo(timestamp3);
 			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp3) + 1).GreaterThan(timestamp3);
 			ar.GetRevisionDate(ar.GetRevisionNumberForDate(timestamp4)).LessOrEqualTo(timestamp4);
+		}
+
+		protected override string TestShouldNotRunMessage()
+		{
+			return Dialect is MySQLDialect ? "Not applicable for MySQL due to low datetime precision" : null;
 		}
 	}
 }

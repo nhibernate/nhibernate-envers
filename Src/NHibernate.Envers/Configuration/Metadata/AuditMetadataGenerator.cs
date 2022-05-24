@@ -332,6 +332,12 @@ namespace NHibernate.Envers.Configuration.Metadata
 				// Database column or SQL formula allowed to distinguish entity types
 				MetadataTools.AddColumnsOrFormulas(discriminatorElement, pc.Discriminator.ColumnIterator);
 				discriminatorElement.Add(new XAttribute("type", pc.Discriminator.Type.Name));
+
+				// check if the origin discriminator is not insertable and maintain setting for audit class
+				if (!pc.IsDiscriminatorInsertable)
+				{
+					discriminatorElement.Add(new XAttribute("insert", "false"));
+				}
 			}
 
 			// Adding the "revision type" property

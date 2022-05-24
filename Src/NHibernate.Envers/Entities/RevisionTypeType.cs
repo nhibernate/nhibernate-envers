@@ -10,7 +10,8 @@ namespace NHibernate.Envers.Entities
 	[Serializable]
 	public class RevisionTypeType: IUserType 
 	{
-		private static readonly SqlType[] SQL_TYPES = { new SqlType(DbType.Byte) };
+		//unnecessary "large" due to https://github.com/nhibernate/nhibernate-envers/issues/30
+		private static readonly SqlType[] SQL_TYPES = { new SqlType(DbType.Int16) };
 
 		public SqlType[] SqlTypes => SQL_TYPES;
 

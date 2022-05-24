@@ -1,26 +1,30 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FirebirdSql.Data.FirebirdClient;
 using NHibernate.Cfg;
-using NHibernate.Dialect;
+using NHibernate.Driver;
 using NHibernate.Engine;
 using NHibernate.Envers.Configuration;
 using NHibernate.Envers.Configuration.Attributes;
 using NHibernate.Envers.Configuration.Store;
 using NHibernate.Envers.Event;
 using NHibernate.Envers.Strategy;
+using NHibernate.Envers.Tests.Tools;
+using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests
 {
 	public abstract class OneStrategyTestBase
 	{
+		private ISessionFactoryImplementor _sessionFactory;
+		private IAuditReader _auditReader;
+
 		protected string TestAssembly { get; private set; }
 		protected Cfg.Configuration Cfg { get; private set; }
 		protected ISession Session { get; private set; }
 		protected System.Type StrategyType { get; private set; }
-		private ISessionFactory SessionFactory { get; set; }
-		private IAuditReader _auditReader;
 
 		protected OneStrategyTestBase(AuditStrategyForTest strategyType)
 		{
@@ -46,20 +50,45 @@ namespace NHibernate.Envers.Tests
 		public void BaseSetup()
 		{
 			TestAssembly = GetType().Assembly.GetName().Name;
-			Cfg = new Cfg.Configuration();
-			Cfg.SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
+			Cfg = new Cfg.Configuration().SetEnversProperty(ConfigurationKey.AuditStrategy, StrategyType);
 			AddToConfiguration(Cfg);
-			Cfg.Configure();
+			Cfg.Configure().OverrideSettingsFromEnvironmentVariables();
 			addMappings();
 			Cfg.IntegrateWithEnvers(new AuditEventListener(), EnversConfiguration());
-			SessionFactory = Cfg.BuildSessionFactory();
-			var notRun = TestShouldNotRunMessage();
-			if (!string.IsNullOrEmpty(notRun))
-				Assert.Ignore(notRun);
-			Session = openSession(SessionFactory);
+			createDb();
+			_sessionFactory = (ISessionFactoryImplementor)Cfg.BuildSessionFactory();
+			if (!testShouldRun())
+				Assert.Ignore(TestShouldNotRunMessage());
+			createDbSchema();
+			Session = openSession(_sessionFactory);
 			Initialize();
 			closeSessionAndAuditReader();
-			Session = openSession(SessionFactory);
+			Session = openSession(_sessionFactory);
+		}
+
+		private void createDbSchema()
+		{
+			new SchemaExport(Cfg).Create(false, true);
+		}
+		
+		
+		private void dropDbSchema()
+		{
+			if (_sessionFactory.ConnectionProvider.Driver is FirebirdClientDriver)
+			{
+				// necessary firebird hack to be able to drop used tables
+				FbConnection.ClearAllPools();
+			}
+			new SchemaExport(Cfg).Drop(false, true);
+		}
+
+		private static bool hasCreatedDatabase;
+		private void createDb()
+		{
+			if (hasCreatedDatabase)
+				return;
+			hasCreatedDatabase = true;
+			DatabaseSetup.CreateEmptyDatabase(Cfg);
 		}
 
 		[TearDown]
@@ -67,15 +96,22 @@ namespace NHibernate.Envers.Tests
 		{
 			closeSessionAndAuditReader();
 			AuditConfiguration.Remove(Cfg);
-			SessionFactory?.Close();
+			if(testShouldRun())
+				dropDbSchema();
+			_sessionFactory?.Close();
 		}
 
+		private bool testShouldRun()
+		{
+			return TestShouldNotRunMessage() == null;
+		}
+		
 		protected virtual string TestShouldNotRunMessage()
 		{
 			return null;
 		}
 
-		protected Dialect.Dialect Dialect => ((ISessionFactoryImplementor)SessionFactory).Dialect;
+		protected Dialect.Dialect Dialect => _sessionFactory.Dialect;
 
 		protected virtual IMetaDataProvider EnversConfiguration()
 		{
@@ -88,8 +124,6 @@ namespace NHibernate.Envers.Tests
 		}
 
 		protected virtual void AddToConfiguration(Cfg.Configuration configuration){}
-
-		protected int MillisecondPrecision => Dialect is MySQLDialect ? 1000 : 100;
 
 		protected virtual FlushMode FlushMode => FlushMode.Auto;
 
@@ -117,7 +151,7 @@ namespace NHibernate.Envers.Tests
 		protected void ForceNewSession()
 		{
 			Session.Close();
-			Session = SessionFactory.OpenSession();
+			Session = _sessionFactory.OpenSession();
 			_auditReader = null;
 		}
 

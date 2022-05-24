@@ -8,7 +8,7 @@
 		</id>
 		<set name="ChildValues" table="ChildValues">
 			<key column="ParentId"/>
-			<element column="Value" type="string"/>
+			<element column="TheValue" type="string"/>
 		</set>
 	</class>
 </hibernate-mapping>

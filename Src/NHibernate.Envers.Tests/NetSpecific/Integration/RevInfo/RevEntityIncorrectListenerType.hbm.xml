@@ -6,6 +6,6 @@
 		<id name="Id">
 			<generator class="identity" />
 		</id>
-		<property name="Timestamp" />
+		<property name="Timestamp" column="TheTimestamp" />
 	</class>
 </hibernate-mapping>

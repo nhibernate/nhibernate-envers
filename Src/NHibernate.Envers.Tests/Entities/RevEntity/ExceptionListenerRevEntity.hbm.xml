@@ -8,6 +8,6 @@
 				<param name="sequence">cre_sequence</param>
 			</generator>
 		</id>
-		<property name="Timestamp"/>
+		<property name="Timestamp" column="theTimestamp"/>
 	</class>
 </hibernate-mapping>

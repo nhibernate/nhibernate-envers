@@ -9,7 +9,7 @@
 			<property name="Name"/>
 		</component>
 		<component name="StructComponent">
-			<property name="Value" access="field.camelcase-underscore"/>
+			<property name="Value" column="TheValue" access="field.camelcase-underscore"/>
 		</component>
 	</class>
 </hibernate-mapping>
