@@ -209,9 +209,19 @@ namespace NHibernate.Envers.Configuration.Metadata
 				if (propertyAuditingData != null)
 				{
 					AddValue(parent, property.Value, currentMapper, entityName, xmlMappingData, propertyAuditingData,
-							property.IsInsertable, firstPass, true);
+						isPropertyInsertable(property), firstPass, true);
 				}
 			}
+		}
+
+		private bool isPropertyInsertable(Property property) {
+			if (!property.IsInsertable &&
+			    (property.Generation == PropertyGeneration.Insert || property.Generation == PropertyGeneration.Always))
+			{
+				return true;
+			}
+
+			return property.IsInsertable;
 		}
 
 		private static bool checkAnyPropertyAudited(IEnumerable<Property> properties, ClassAuditingData auditingData)

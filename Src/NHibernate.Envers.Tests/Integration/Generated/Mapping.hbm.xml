@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+				   assembly="NHibernate.Envers.Tests"
+				   namespace="NHibernate.Envers.Tests.Integration.Generated">
+	<class name="SimpleEntity">
+		<id name="Id">
+			<generator class="assigned"/>
+		</id>
+		<property name="Data" />
+		<property name="CaseNumberInsert" generated="insert">
+			<column name="CaseNumberInsert" default="1" not-null="true"/>
+		</property>
+	</class>
+</hibernate-mapping>
