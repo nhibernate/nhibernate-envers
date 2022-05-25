@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net6.0</TargetFrameworks>
+    <TargetFrameworks>netCoreApp2.0;net461</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
