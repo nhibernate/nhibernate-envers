@@ -100,7 +100,7 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			                              	});
 		}
 
-#if NETCOREAPP2_0
+#if NETCOREAPP2_0_OR_GREATER
 		[Ignore("System.Transactions is not supported in Core. See https://github.com/dotnet/corefx/issues/19894")]
 #endif	
 		[Test]
