@@ -65,9 +65,9 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1.8.0
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.1.x
+        dotnet-version: 6.0.x
 
     - name: Restore dependencies
       run: dotnet restore Src\\Envers.sln
