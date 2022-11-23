@@ -21,7 +21,7 @@ jobs:
             dialect: "NHibernate.Dialect.FirebirdDialect"
             driverclass: "NHibernate.Driver.FirebirdClientDriver"
           - db: MySQL
-            connectionstring: "Server=localhost;Uid=root;Password=envers;Database=envers;Old Guids=True;"
+            connectionstring: "Server=localhost;Uid=root;Password=envers;Database=envers;Old Guids=True;SslMode=none;"
             dialect: "NHibernate.Dialect.MySQL5Dialect"
             driverclass: "NHibernate.Driver.MySqlDataDriver"
           - db: Oracle
