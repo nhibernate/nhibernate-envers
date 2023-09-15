@@ -1,0 +1,73 @@
+projects:
+- filePath: NHibernate.Envers\NHibernate.Envers.csproj
+  targetFramework: netcoreapp2.0
+  concurrentRun: true
+  applyChanges: true
+  analyzation:
+    methodConversion:
+    - conversion: ToAsync
+      name: Results
+      containingTypeName: IEntityAuditQuery
+    - conversion: ToAsync  
+      name: BuildAndExecuteQuery
+      containingTypeName: AbstractRevisionsQuery
+    - conversion: ToAsync  
+      name: Results
+      containingTypeName: AllEntitiesAtRevisionQuery
+    - conversion: Ignore
+      containingTypeName: IPropertyMapper
+    - conversion: Ignore
+      containingTypeName: CollectionProxy
+    typeConversion:
+    - conversion: Ignore
+      name: Toolz
+    callForwarding: true
+    cancellationTokens:
+      guards: true
+      methodParameter:
+      - parameter: Optional
+      requiresCancellationToken:
+      - containingTypeName: IEntityAuditQuery
+    scanMethodBody: true
+    searchAsyncCounterpartsInInheritedTypes: true
+    scanForMissingAsyncMembers:
+    - all: true
+    alwaysAwait:
+    - all: true
+  transformation:
+    configureAwaitArgument: false
+    localFunctions: true
+  registerPlugin:
+  - type: AsyncGenerator.Core.Plugins.EmptyRegionRemover
+    assemblyName: AsyncGenerator.Core
+- filePath: NHibernate.Envers.Tests\NHibernate.Envers.Tests.csproj
+  targetFramework: net6.0
+  concurrentRun: true
+  applyChanges: true
+  analyzation:
+    callForwarding: true
+    cancellationTokens:
+      enabled: true
+    scanMethodBody: true
+    searchAsyncCounterpartsInInheritedTypes: true
+    scanForMissingAsyncMembers:
+    - all: true
+    methodConversion:
+    - conversion: Ignore
+      name: Initialize
+      containingTypeName: OneStrategyTestBase
+  transformation:
+    configureAwaitArgument: false
+    localFunctions: true
+  registerPlugin:
+  - type: AsyncGenerator.Core.Plugins.NUnitPlugin
+    parameters:
+    - name: createNewTypes
+      value: false
+    assemblyName: AsyncGenerator.Core
+  - type: AsyncGenerator.Core.Plugins.TransactionScopeAsyncFlowAdder
+    assemblyName: AsyncGenerator.Core
+methodRules:
+    - filters:
+        - containingType: NHibernate.Envers.Synchronization.transactionCompletionProcess    
+      name: TransactionCompletion

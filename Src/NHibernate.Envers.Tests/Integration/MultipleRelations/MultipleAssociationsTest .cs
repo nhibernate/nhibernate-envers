@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.MultipleRelations
 {
-	public class MultipleAssociationsTest : TestBase
+	public partial class MultipleAssociationsTest : TestBase
 	{
 		private long lukaszId;
 		private long kingaId;

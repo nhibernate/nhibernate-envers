@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class DeleteTest : TestBase
+	public partial class DeleteTest : TestBase
 	{
 		private int id1;
 		private int id2;

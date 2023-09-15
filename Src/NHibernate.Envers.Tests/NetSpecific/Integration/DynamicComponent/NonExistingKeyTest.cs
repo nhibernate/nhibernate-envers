@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
-	public class NonExistingKeyTest : TestBase
+	public partial class NonExistingKeyTest : TestBase
 	{
 		private int id;
 

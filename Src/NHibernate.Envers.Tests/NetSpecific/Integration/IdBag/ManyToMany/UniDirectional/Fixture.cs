@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.IdBag.ManyToMany.UniDirectional
 {
-	public class Fixture : TestBase
+	public partial class Fixture : TestBase
 	{
 		private Guid owningId1;
 		private Guid owningId2;

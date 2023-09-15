@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedAPITest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedAPITest : AbstractModifiedFlagsEntityTest
 	{
 		public HasChangedAPITest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

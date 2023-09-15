@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.CustomType
 {
-	public class CompositeCustomTest : TestBase
+	public partial class CompositeCustomTest : TestBase
 	{
 		private int ccte_id;
 

@@ -4,7 +4,7 @@ using NHibernate.Cfg;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.EntityInstantiation
 {
-	public class FactoryTest : TestBase
+	public partial class FactoryTest : TestBase
 	{
 		int id1;
 		int id2;

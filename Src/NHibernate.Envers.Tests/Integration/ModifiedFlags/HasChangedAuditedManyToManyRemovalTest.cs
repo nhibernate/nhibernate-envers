@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedAuditedManyToManyRemovalTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedAuditedManyToManyRemovalTest : AbstractModifiedFlagsEntityTest
 	{
 		private int professorId;
 		private int studentId;

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.InverseToSuperclass
 {
-	public class OneToManyInverseToSuperclassTest : TestBase
+	public partial class OneToManyInverseToSuperclassTest : TestBase
 	{
 		private long masterId;
 

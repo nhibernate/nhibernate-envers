@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Proxy
 {
-	public class ProxyIdentifierTest : TestBase
+	public partial class ProxyIdentifierTest : TestBase
 	{
 		private TargetNotAuditedEntity tnae1;
 		private ManyToOneNotAuditedNullEntity mtonane1;

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.Embeddable
 {
-	public class EmbeddableList1Test : TestBase
+	public partial class EmbeddableList1Test : TestBase
 	{
 		private int ele1Id;
 		private Component4 c4_1;

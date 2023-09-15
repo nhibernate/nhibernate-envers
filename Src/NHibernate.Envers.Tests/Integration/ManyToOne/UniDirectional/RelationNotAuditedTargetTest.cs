@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToOne.UniDirectional
 {
-	public class RelationNotAuditedTargetTest : TestBase
+	public partial class RelationNotAuditedTargetTest : TestBase
 	{
 		private int tnae1_id;
 		private int tnae2_id;

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.MultiLevelInheritance
 {
-	public class InheritanceWithoutInverseTest : TestBase
+	public partial class InheritanceWithoutInverseTest : TestBase
 	{
 		public InheritanceWithoutInverseTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

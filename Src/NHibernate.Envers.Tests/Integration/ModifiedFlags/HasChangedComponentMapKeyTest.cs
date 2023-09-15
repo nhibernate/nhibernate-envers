@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedComponentMapKeyTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedComponentMapKeyTest : AbstractModifiedFlagsEntityTest
 	{
 		private int cmke_id;
 

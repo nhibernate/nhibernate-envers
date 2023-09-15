@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Cache
 {
-	public class QueryCacheTest : TestBase
+	public partial class QueryCacheTest : TestBase
 	{
 		private int id1;
 

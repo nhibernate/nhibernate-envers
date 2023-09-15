@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Versioning
 {
-	public class NoOptimisticLockAuditingTest : TestBase
+	public partial class NoOptimisticLockAuditingTest : TestBase
 	{
 		private const int id = 17;
 

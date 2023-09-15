@@ -8,7 +8,7 @@ namespace NHibernate.Envers
 	/// revision. Note that this API can be legally used only when default mechanism of tracking modified entity names
 	/// is enabled.
 	/// </summary>
-	public interface ICrossTypeRevisionChangesReader
+	public partial interface ICrossTypeRevisionChangesReader
 	{
 		/// <summary>
 		/// Returns set of entity classes modified in a given revision.

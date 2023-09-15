@@ -8,7 +8,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class AggregateQueryTest : TestBase
+	public partial class AggregateQueryTest : TestBase
 	{
 		public AggregateQueryTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

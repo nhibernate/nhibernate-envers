@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedDoubleJoinColumnBidirectionalListTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedDoubleJoinColumnBidirectionalListTest : AbstractModifiedFlagsEntityTest
 	{
 		private int ed1_1_id;
 		private int ed2_1_id;

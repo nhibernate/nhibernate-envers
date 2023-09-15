@@ -3,7 +3,7 @@ using NHibernate.Envers.Query;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ComponentAsId
 {
-	public class ComponentAsIdTest : TestBase
+	public partial class ComponentAsIdTest : TestBase
 	{
 		public ComponentAsIdTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

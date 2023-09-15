@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 {
-	public class BidirectionalSaveTest : TestBase
+	public partial class BidirectionalSaveTest : TestBase
 	{
 		private const int id = 18;
 

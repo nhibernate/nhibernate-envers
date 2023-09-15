@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Interfaces.Relation
 {
-	public class InterfacesRelationTest : TestBase
+	public partial class InterfacesRelationTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

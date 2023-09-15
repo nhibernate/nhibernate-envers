@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotFoundIgnore.BaseType
 {
-	public class NotFoundIgnoreNotExistsInBaseTypeTest : TestBase
+	public partial class NotFoundIgnoreNotExistsInBaseTypeTest : TestBase
 	{
 		private Guid parentId;
 

@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class RevisionConstraintQueryTest : TestBase
+	public partial class RevisionConstraintQueryTest : TestBase
 	{
 		private int id1;
 

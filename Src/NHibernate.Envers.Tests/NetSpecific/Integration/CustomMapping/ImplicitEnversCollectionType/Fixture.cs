@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.ImplicitEnversCollectionType
 {
-	public class Fixture : TestBase
+	public partial class Fixture : TestBase
 	{
 		private int parentId;
 

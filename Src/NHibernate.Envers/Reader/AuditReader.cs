@@ -11,7 +11,7 @@ using NHibernate.Proxy;
 
 namespace NHibernate.Envers.Reader
 {
-	public class AuditReader : IAuditReaderImplementor
+	public partial class AuditReader : IAuditReaderImplementor
 	{
 		private readonly AuditConfiguration verCfg;
 		private readonly ICrossTypeRevisionChangesReader _crossTypeRevisionChangesReader;

@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class ValidityAuditStrategyManyToManyTest : ValidityTestBase
+	public partial class ValidityAuditStrategyManyToManyTest : ValidityTestBase
 	{
 		private const int ingId = 1;
 		private const int edId = 2;

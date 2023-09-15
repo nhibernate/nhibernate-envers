@@ -8,7 +8,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo.Time
 {
-	public class LongTest : TestBase
+	public partial class LongTest : TestBase
 	{
 		public LongTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

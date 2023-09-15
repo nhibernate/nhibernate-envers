@@ -7,7 +7,7 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Synchronization
 {
-	public class AuditProcess
+	public partial class AuditProcess
 	{
 		private readonly IRevisionInfoGenerator revisionInfoGenerator;
 		private readonly ISessionImplementor session;

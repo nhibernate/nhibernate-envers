@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components
 {
-	public class ComponentsTest : TestBase
+	public partial class ComponentsTest : TestBase
 	{
 		private int id1;
 		private int id2;

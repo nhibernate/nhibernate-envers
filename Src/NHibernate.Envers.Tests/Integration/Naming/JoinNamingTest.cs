@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	public class JoinNamingTest : TestBase
+	public partial class JoinNamingTest : TestBase
 	{
 		private int ed_id1;
 		private int ed_id2;

@@ -6,7 +6,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class RevisionsQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
+	public partial class RevisionsQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
 	{
 		public RevisionsQuery(AuditConfiguration auditConfiguration,
 		                      IAuditReaderImplementor versionsReader,
@@ -29,7 +29,8 @@ namespace NHibernate.Envers.Query.Impl
 			AddOrders();
 
 			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
-			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
+			var result = BuildAndExecuteQuery<IDictionary>();
+			return from versionsEntity in result
 			       let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
 			       select (TEntity) EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision);
 		}

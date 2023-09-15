@@ -13,7 +13,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Proxy
 {
-	public class RemovedObjectQueryTest : TestBase
+	public partial class RemovedObjectQueryTest : TestBase
 	{
 		private int stringSetId;
 		private UnversionedStrTestEntity unversionedEntity1;

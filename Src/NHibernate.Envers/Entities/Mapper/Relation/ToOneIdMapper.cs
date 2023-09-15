@@ -11,7 +11,7 @@ using NHibernate.Envers.Tools.Query;
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	[Serializable]
-	public class ToOneIdMapper : AbstractToOneMapper 
+	public partial class ToOneIdMapper : AbstractToOneMapper 
 	{
 		private readonly IIdMapper _delegat;
 		private readonly string _referencedEntityName;

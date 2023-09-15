@@ -11,7 +11,7 @@ using NHibernate.Envers.Tools.Reflection;
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	[Serializable]
-	public abstract class AbstractToOneMapper : IPropertyMapper
+	public abstract partial class AbstractToOneMapper : IPropertyMapper
 	{
 		protected AbstractToOneMapper(PropertyData propertyData)
 		{

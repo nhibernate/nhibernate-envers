@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.SingleAssociatedAudited
 {
-	public class SingleDomainObjectToMultipleTablesTest : TestBase
+	public partial class SingleDomainObjectToMultipleTablesTest : TestBase
 	{
 		private long carId;
 		private long ownerId;

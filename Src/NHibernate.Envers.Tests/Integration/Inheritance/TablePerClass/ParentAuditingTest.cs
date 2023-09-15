@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass
 {
-	public class ParentAuditingTest : TestBase
+	public partial class ParentAuditingTest : TestBase
 	{
 		private int id1;
 

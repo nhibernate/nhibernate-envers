@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.PrimaryKeyJoinColumn
 {
-	public class OneToOneWithPrimaryKeyJoinTest : TestBase
+	public partial class OneToOneWithPrimaryKeyJoinTest : TestBase
 	{
 		private long personId;
 		private long accountId;

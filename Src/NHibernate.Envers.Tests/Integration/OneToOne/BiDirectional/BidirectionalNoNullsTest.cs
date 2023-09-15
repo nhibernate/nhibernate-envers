@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 {
-	public class BidirectionalNoNullsTest : TestBase
+	public partial class BidirectionalNoNullsTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

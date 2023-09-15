@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Merge
 {
-	public class AddEditCollectionItemTest : TestBase
+	public partial class AddEditCollectionItemTest : TestBase
 	{
 		private const int entityId = 342;
 		private const int childId = 1000;

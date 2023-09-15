@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	public class DetachedTest : TestBase
+	public partial class DetachedTest : TestBase
 	{
 		private const int parentId = 132;
 		private int childId;

@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class DeletedEntitiesTest : TestBase
+	public partial class DeletedEntitiesTest : TestBase
 	{
 		private int id2;
 

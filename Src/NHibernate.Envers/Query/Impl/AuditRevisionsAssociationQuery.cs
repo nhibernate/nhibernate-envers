@@ -12,7 +12,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class AuditRevisionsAssociationQuery<TEntity> : IEntityAuditQuery<TEntity> where TEntity : class
+	public partial class AuditRevisionsAssociationQuery<TEntity> : IEntityAuditQuery<TEntity> where TEntity : class
 	{
 		private readonly AuditConfiguration _auditConfiguration;
 		private readonly IAuditReaderImplementor _auditReader;

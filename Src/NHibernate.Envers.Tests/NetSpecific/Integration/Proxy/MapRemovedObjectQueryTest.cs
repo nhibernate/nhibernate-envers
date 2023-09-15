@@ -10,7 +10,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
 	//tests ThreeEntityQueryGenerator
-	public class MapRemovedObjectQueryTest : TestBase
+	public partial class MapRemovedObjectQueryTest : TestBase
 	{
 		private int id;
 

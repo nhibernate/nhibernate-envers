@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Ids.EmbeddedId
 {
-	public class RelationInsideEmbeddableTest : TestBase
+	public partial class RelationInsideEmbeddableTest : TestBase
 	{
 		private int orderId;
 		private ItemId itemId;

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 {
-	public class ParentReferencingChildTest : TestBase
+	public partial class ParentReferencingChildTest : TestBase
 	{
 		private Person expLukaszRev1;
 		private Person expLukaszRev2;

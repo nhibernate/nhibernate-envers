@@ -11,7 +11,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
 	//tests TwoEntityQueryGenerator
-	public class ListRemovedObjectQueryTest : TestBase
+	public partial class ListRemovedObjectQueryTest : TestBase
 	{
 		private Guid parentId;
 

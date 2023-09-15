@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	public class InheritedTest : TestBase
+	public partial class InheritedTest : TestBase
 	{
 		private int id;
 		private DateTime timestamp1;

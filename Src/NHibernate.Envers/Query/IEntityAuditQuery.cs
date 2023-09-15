@@ -11,7 +11,7 @@ namespace NHibernate.Envers.Query
 	/// <typeparam name="T">The entity type.</typeparam>
 	/// <remarks>No projection are allowed.</remarks>
 	/// <seealso cref="IAuditQuery"/>
-	public interface IEntityAuditQuery<T> where T: class
+	public partial interface IEntityAuditQuery<T> where T: class
 	{
 		IEnumerable<T> Results();
 		T Single();

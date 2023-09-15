@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class GlobalVersionedTest : TestBase
+	public partial class GlobalVersionedTest : TestBase
 	{
 		private int id1;
 

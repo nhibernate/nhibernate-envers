@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Ids
 {
-	public class CompositeDateIdTest : TestBase
+	public partial class CompositeDateIdTest : TestBase
 	{
 		private DateEmbId id;
 

@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Serialization
 {
-	public class SerializingCollectionTest : TestBase
+	public partial class SerializingCollectionTest : TestBase
 	{
 		private const int ed1_id = 15;
 		private const int ing1_id =21;

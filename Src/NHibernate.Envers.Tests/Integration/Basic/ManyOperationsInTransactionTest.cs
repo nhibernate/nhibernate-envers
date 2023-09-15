@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class ManyOperationsInTransactionTest : TestBase
+	public partial class ManyOperationsInTransactionTest : TestBase
 	{
 		private int id1;
 		private int id2;

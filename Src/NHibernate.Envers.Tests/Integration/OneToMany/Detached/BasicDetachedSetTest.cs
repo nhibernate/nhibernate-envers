@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	public class BasicDetachedSetTest : TestBase
+	public partial class BasicDetachedSetTest : TestBase
 	{
 		private int str1_id;
 		private int str2_id;

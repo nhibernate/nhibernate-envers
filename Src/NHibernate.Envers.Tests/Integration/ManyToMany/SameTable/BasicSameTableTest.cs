@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.SameTable
 {
-	public class BasicSameTableTest : TestBase
+	public partial class BasicSameTableTest : TestBase
 	{
 		private int p1_id;
 		private int p2_id;

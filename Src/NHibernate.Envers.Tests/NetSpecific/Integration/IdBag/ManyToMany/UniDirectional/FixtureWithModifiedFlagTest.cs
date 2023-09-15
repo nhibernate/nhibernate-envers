@@ -6,7 +6,7 @@ using NHibernate.Cfg;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.IdBag.ManyToMany.UniDirectional
 {
-	public class FixtureWithModifiedFlagTest : TestBase
+	public partial class FixtureWithModifiedFlagTest : TestBase
 	{
 		private Guid owningId;
 		private Guid ownedId;

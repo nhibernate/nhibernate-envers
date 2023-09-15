@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional.Ids
 {
-	public class EmbIdBidirectionalTest : TestBase
+	public partial class EmbIdBidirectionalTest : TestBase
 	{
 		private EmbId ed1_id;
 		private EmbId ed2_id;

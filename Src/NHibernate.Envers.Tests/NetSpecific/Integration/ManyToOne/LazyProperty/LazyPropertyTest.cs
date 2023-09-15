@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty
 {
-	public class LazyPropertyTest : TestBase
+	public partial class LazyPropertyTest : TestBase
 	{
 		private long id_pers1;
 

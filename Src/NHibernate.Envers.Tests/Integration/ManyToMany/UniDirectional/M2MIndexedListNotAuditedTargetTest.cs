@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 {
-	public class M2MIndexedListNotAuditedTargetTest :TestBase
+	public partial class M2MIndexedListNotAuditedTargetTest :TestBase
 	{
 		private UnversionedStrTestEntity uste1;
 		private UnversionedStrTestEntity uste2;

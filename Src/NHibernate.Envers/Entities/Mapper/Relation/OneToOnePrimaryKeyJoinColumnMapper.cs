@@ -4,7 +4,7 @@ using NHibernate.Envers.Reader;
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	[Serializable]
-	public class OneToOnePrimaryKeyJoinColumnMapper : AbstractOneToOneMapper
+	public partial class OneToOnePrimaryKeyJoinColumnMapper : AbstractOneToOneMapper
 	{
 		public OneToOnePrimaryKeyJoinColumnMapper(string entityName, string referencedEntityName, PropertyData propertyData)
 			: base(entityName, referencedEntityName, propertyData)

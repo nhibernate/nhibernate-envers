@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.SameIds
 {
-	public class SameIdsTest : TestBase
+	public partial class SameIdsTest : TestBase
 	{
 		public SameIdsTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

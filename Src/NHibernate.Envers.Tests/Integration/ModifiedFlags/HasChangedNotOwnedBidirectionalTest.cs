@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedNotOwnedBidirectionalTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedNotOwnedBidirectionalTest : AbstractModifiedFlagsEntityTest
 	{
 		private long pc_id;
 		private long a1_id;

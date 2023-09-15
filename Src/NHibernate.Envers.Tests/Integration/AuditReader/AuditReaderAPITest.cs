@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.AuditReader
 {
-	public class AuditReaderAPITest : TestBase
+	public partial class AuditReaderAPITest : TestBase
 	{
 		public AuditReaderAPITest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

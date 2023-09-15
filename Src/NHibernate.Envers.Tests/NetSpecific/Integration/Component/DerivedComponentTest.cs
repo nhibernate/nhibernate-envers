@@ -2,7 +2,7 @@
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 {
-	public class DerivedComponentTest : TestBase
+	public partial class DerivedComponentTest : TestBase
 	{
 		private const int id = 111;
 

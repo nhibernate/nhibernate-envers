@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.CustomType
 {
-	public class PrimitiveCustomTest : TestBase
+	public partial class PrimitiveCustomTest : TestBase
 	{
 		private int pctec_id;
 

@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Join
 {
-	public class BasicJoinTest : TestBase
+	public partial class BasicJoinTest : TestBase
 	{
 		private int id;
 

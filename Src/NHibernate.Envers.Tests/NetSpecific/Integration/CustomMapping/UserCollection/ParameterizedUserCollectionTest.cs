@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomMapping.UserCollection
 {
-	public class ParameterizedUserCollectionTest : TestBase
+	public partial class ParameterizedUserCollectionTest : TestBase
 	{
 		private const int id = 123;
 

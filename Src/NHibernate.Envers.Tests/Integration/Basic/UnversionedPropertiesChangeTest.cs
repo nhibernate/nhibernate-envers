@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class UnversionedPropertiesChangeTest : TestBase
+	public partial class UnversionedPropertiesChangeTest : TestBase
 	{
 		private int id1;
 

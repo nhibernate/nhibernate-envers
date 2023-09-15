@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Data
 {
-	public class EnumTest : TestBase
+	public partial class EnumTest : TestBase
 	{
 		private int id1;
 

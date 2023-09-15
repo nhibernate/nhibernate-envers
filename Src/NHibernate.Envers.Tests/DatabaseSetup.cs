@@ -12,7 +12,7 @@ namespace NHibernate.Envers.Tests
 		private static readonly IDictionary<string, Action<Cfg.Configuration>> setupMethods = new Dictionary<string, Action<Cfg.Configuration>>
 			{
 				{"NHibernate.Driver.SqlClientDriver", setupSqlServer},
-				{"NHibernate.Driver.MySqlDataDriver", setupMySql},
+				{"NHibernate.Driver.MySqlConnector.MySqlConnectorDriver, NHibernate.Driver.MySqlConnector", setupMySql},
 				{"NHibernate.Driver.FirebirdClientDriver", setupFirebird},
 				{"NHibernate.Driver.NpgsqlDriver", setupNpgsql},
 				{"NHibernate.Driver.OracleManagedDataClientDriver", setupOracle}

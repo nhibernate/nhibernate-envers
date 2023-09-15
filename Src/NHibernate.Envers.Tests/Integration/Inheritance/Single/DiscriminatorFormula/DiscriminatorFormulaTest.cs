@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Single.DiscriminatorFormula
 {
-	public class DiscriminatorFormulaTest : TestBase
+	public partial class DiscriminatorFormulaTest : TestBase
 	{
 		private PersistentClass parentAudit;
 		private ChildEntity childVer1;

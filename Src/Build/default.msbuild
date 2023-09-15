@@ -20,7 +20,7 @@
 		<MakeDir Directories="$(TempDirectory)"/>
 	</Target>
 
-	<Target Name="BuildRelease" DependsOnTargets="RunBuild;nuget;CopyNuget">
+	<Target Name="BuildRelease" DependsOnTargets="RunBuild;GenerateAsyncCode;nuget;CopyNuget">
 		<RemoveDir Directories="$(TempDirectory)"/>
 	</Target>
 	
@@ -36,6 +36,10 @@
 
 	<Target Name="RunBuild" DependsOnTargets="MakeBuildDirectory">
 		<MSBuild Projects="$(SourceDir)\NHibernate.Envers\NHibernate.Envers.csproj" Targets="Clean;Build" />
+	</Target>
+    
+    <Target Name="GenerateAsyncCode" DependsOnTargets="RunBuild">
+		<Exec Command="dotnet async-generator" WorkingDirectory="$(SourceDir)" />
 	</Target>
 
 	<!-- Documentation build steps/targets-->

@@ -14,7 +14,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class AuditAssociationQuery : IAuditQueryImplementor
+	public partial class AuditAssociationQuery : IAuditQueryImplementor
 	{
 		private readonly AuditConfiguration _auditConfiguration;
 		private readonly IAuditReaderImplementor _auditReader;

@@ -34,7 +34,7 @@ namespace NHibernate.Envers.Strategy
 	/// </p>
 	/// </summary>
 	[Serializable]
-	public class ValidityAuditStrategy : IAuditStrategy
+	public partial class ValidityAuditStrategy : IAuditStrategy
 	{
 		private AuditConfiguration _auditConfiguration;
 

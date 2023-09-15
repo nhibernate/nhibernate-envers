@@ -4,7 +4,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
-	public static class ToOneEntityLoader
+	public static partial class ToOneEntityLoader
 	{
 		public static object LoadImmediate(IAuditReaderImplementor versionsReader, string entityName,
 			object entityId, long revision, bool removed, AuditConfiguration verCfg)

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Naming.Quotation
 {
-	public class QuotedFieldsTest : TestBase
+	public partial class QuotedFieldsTest : TestBase
 	{
 		private long qfeId1;
 		private long qfeId2;

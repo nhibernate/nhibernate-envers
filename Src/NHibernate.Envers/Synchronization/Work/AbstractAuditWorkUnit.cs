@@ -4,7 +4,7 @@ using NHibernate.Envers.Configuration;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public abstract class AbstractAuditWorkUnit : IAuditWorkUnit 
+	public abstract partial class AbstractAuditWorkUnit : IAuditWorkUnit 
 	{
 		private object _performedData;
 

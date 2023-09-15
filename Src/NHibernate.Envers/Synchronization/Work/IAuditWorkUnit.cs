@@ -2,7 +2,7 @@
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher 
+	public partial interface IAuditWorkUnit: IWorkUnitMergeVisitor, IWorkUnitMergeDispatcher 
 	{
 		object EntityId { get; }
 		string EntityName { get; }

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany
 {
-	public class BasicWhereJoinTableTest : TestBase
+	public partial class BasicWhereJoinTableTest : TestBase
 	{
 		private int ite1_1_id;
 		private int ite1_2_id;

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.JoinAuditTable
 {
-	public class MultipleJoinAuditTableTest : TestBase
+	public partial class MultipleJoinAuditTableTest : TestBase
 	{
 		private const int id = 425;
 

@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Tests.Integration.RevEntity.TrackModifiedEntities
 	/// Tests proper behavior of tracking modified entity types when <code>nhibernate.envers.track_entities_changed_in_revision</code>
 	/// parameter is set to <code>true</code>.
 	/// </summary>
-	public class DefaultTrackingEntitiesTest : TestBase
+	public partial class DefaultTrackingEntitiesTest : TestBase
 	{
 		private int steId;
 		private int siteId;

@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.PropertyNull
 {
-	public class PrimitiveNullTest : TestBase
+	public partial class PrimitiveNullTest : TestBase
 	{
 		private int id;
 

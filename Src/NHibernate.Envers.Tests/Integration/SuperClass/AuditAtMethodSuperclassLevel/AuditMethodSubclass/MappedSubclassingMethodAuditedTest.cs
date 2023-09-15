@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditAtMethodSuperclassLevel.AuditMethodSubclass
 {
-	public class MappedSubclassingMethodAuditedTest : TestBase
+	public partial class MappedSubclassingMethodAuditedTest : TestBase
 	{
 		private int id1_1;
 		private int id2_1;

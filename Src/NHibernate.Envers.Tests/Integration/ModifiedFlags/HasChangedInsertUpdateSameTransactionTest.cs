@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedInsertUpdateSameTransactionTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedInsertUpdateSameTransactionTest : AbstractModifiedFlagsEntityTest
 	{
 		public HasChangedInsertUpdateSameTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

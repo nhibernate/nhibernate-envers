@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.NotOwnedRelation
 {
-	public class NotOwnBidirectionalTest : TestBase
+	public partial class NotOwnBidirectionalTest : TestBase
 	{
 		private long pc_id;
 		private long a1_id;

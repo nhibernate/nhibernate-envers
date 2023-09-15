@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
-	public class ComponentInTest : TestBase
+	public partial class ComponentInTest : TestBase
 	{
 		public ComponentInTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

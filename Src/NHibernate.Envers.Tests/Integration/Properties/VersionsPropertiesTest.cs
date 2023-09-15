@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Properties
 {
-	public class VersionsPropertiesTest : TestBase
+	public partial class VersionsPropertiesTest : TestBase
 	{
 		private int id;
 

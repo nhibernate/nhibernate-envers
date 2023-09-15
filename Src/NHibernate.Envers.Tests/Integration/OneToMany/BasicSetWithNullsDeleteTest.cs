@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
-	public class BasicSetWithNullsDeleteTest : TestBase
+	public partial class BasicSetWithNullsDeleteTest : TestBase
 	{
 		private const int ed1_id =123;
 		private const int ed2_id =54;

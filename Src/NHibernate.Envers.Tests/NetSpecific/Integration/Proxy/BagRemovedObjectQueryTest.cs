@@ -11,7 +11,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
 	//tests OneAuditEntityQueryGenerator
-	public class BagRemovedObjectQueryTest : TestBase
+	public partial class BagRemovedObjectQueryTest : TestBase
 	{
 		private Guid parentId;
 

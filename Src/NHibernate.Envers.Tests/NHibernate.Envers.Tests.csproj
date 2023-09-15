@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="FirebirdSql.Data.FirebirdClient" Version="8.5.3" />
-    <PackageReference Include="MySql.Data" Version="8.0.26" />
+    <PackageReference Include="NHibernate.Driver.MySqlConnector" Version="2.0.4" />
     <PackageReference Include="Npgsql" Version="5.0.10" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />

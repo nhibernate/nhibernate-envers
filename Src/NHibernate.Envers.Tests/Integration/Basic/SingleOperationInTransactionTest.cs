@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class SingleOperationInTransactionTest : TestBase
+	public partial class SingleOperationInTransactionTest : TestBase
 	{
 		private int id1;
 		private int id2;

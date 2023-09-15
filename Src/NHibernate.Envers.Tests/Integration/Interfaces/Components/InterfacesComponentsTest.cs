@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Interfaces.Components
 {
-	public class InterfacesComponentsTest : TestBase
+	public partial class InterfacesComponentsTest : TestBase
 	{
 		private int id1;
 

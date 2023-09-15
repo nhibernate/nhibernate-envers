@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalSameColumn
 {
-	public class TwoRelationEndsSameColumnTest : TestBase
+	public partial class TwoRelationEndsSameColumnTest : TestBase
 	{
 		private const int modelId = 112;
 		private const int modelConfigurationId = 2987;

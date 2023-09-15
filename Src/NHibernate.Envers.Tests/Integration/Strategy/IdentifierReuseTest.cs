@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class IdentifierReuseTest :TestBase
+	public partial class IdentifierReuseTest :TestBase
 	{
 		private const int reusedId = 11;
 

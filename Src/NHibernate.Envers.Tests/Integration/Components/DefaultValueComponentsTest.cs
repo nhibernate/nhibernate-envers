@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Components
 {
-	public class DefaultValueComponentsTest : TestBase
+	public partial class DefaultValueComponentsTest : TestBase
 	{
 		private int id0;
 		private int id1;

@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	public class CustomFieldCamelcaseAccessTest : TestBase
+	public partial class CustomFieldCamelcaseAccessTest : TestBase
 	{
 		private int id;
 		private DateTime timestamp1;

@@ -6,7 +6,7 @@ using NHibernate.Envers.Query;
 
 namespace NHibernate.Envers
 {
-	public interface IAuditReader
+	public partial interface IAuditReader
 	{
 		/// <summary>
 		/// Find an entity by primary key at the given revision.
