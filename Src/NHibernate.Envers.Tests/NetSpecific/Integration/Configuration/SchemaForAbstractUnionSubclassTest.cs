@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 {
-	public class SchemaForAbstractUnionSubclassTest : TestBase
+	public partial class SchemaForAbstractUnionSubclassTest : TestBase
 	{
 		private long id;
 

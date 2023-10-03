@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.DynamicComponent
 {
-	public class AddAndRemovePropertyTest : TestBase
+	public partial class AddAndRemovePropertyTest : TestBase
 	{
 		private int id;
 

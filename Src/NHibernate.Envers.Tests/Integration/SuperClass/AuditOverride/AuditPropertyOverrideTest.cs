@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditOverride
 {
-	public class AuditPropertyOverrideTest : TestBase
+	public partial class AuditPropertyOverrideTest : TestBase
 	{
 		private int propertyEntityId;
 		private int transitiveEntityId;

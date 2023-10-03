@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Flush
 {
-	public class ManualFlushTest :TestBase
+	public partial class ManualFlushTest :TestBase
 	{
 		private int id;
 

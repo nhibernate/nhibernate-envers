@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class ValidityAuditStrategyComponentCollectionRevEndTest : ValidityTestBase
+	public partial class ValidityAuditStrategyComponentCollectionRevEndTest : ValidityTestBase
 	{
 		private int productId;
 

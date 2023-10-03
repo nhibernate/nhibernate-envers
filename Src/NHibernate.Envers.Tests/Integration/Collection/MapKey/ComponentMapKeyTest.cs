@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.MapKey
 {
-	public class ComponentMapKeyTest : TestBase
+	public partial class ComponentMapKeyTest : TestBase
 	{
 		private int cmke_id;
 		private int cte1_id;

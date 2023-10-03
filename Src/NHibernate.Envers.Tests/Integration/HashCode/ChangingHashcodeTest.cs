@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.HashCode
 {
-	public class ChangingHashcodeTest : TestBase
+	public partial class ChangingHashcodeTest : TestBase
 	{
 		private int pageId;
 		private int imageId;

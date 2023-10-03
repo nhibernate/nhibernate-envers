@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.NoRevision
 {
-	public abstract class AbstractCollectionChangeTest : TestBase
+	public abstract partial class AbstractCollectionChangeTest : TestBase
 	{
 		protected AbstractCollectionChangeTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

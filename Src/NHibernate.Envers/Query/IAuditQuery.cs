@@ -7,7 +7,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query
 {
-	public interface IAuditQuery 
+	public partial interface IAuditQuery 
 	{
 		IList GetResultList();
 		IList<T> GetResultList<T>();

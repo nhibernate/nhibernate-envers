@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BidirectionalList.DifferentAccessTest
 {
-	public class BidirectionalListWithDifferentAccessTest : TestBase
+	public partial class BidirectionalListWithDifferentAccessTest : TestBase
 	{
 		private int parent_id;
 		private int child1_id;

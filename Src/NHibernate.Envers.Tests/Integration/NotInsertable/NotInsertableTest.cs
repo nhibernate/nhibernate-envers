@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.NotInsertable
 {
-	public class NotInsertableTest : TestBase
+	public partial class NotInsertableTest : TestBase
 	{
 		private int id1;
 

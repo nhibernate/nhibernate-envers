@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	public class VersionsJoinTableNamingTest : TestBase
+	public partial class VersionsJoinTableNamingTest : TestBase
 	{
 		private int uni1_id;
 		private int str1_id;

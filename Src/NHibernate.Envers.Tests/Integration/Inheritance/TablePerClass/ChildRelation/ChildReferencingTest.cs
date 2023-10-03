@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.TablePerClass.ChildRelation
 {
-	public class ChildReferencingTest : TestBase
+	public partial class ChildReferencingTest : TestBase
 	{
 		private int re_id1;
 		private int re_id2;

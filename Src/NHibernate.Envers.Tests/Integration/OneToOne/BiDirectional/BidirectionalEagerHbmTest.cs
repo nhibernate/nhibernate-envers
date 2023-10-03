@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.BiDirectional
 {
-	public class BidirectionalEagerHbmTest : TestBase
+	public partial class BidirectionalEagerHbmTest : TestBase
 	{
 		private long refIngId1;
 

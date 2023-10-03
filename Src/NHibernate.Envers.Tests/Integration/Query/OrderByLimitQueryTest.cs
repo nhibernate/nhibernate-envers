@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class OrderByLimitQueryTest : TestBase
+	public partial class OrderByLimitQueryTest : TestBase
 	{
 		private int id1;
 		private int id2;

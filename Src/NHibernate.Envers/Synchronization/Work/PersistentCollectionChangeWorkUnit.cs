@@ -9,7 +9,7 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Synchronization.Work
 {
-	public class PersistentCollectionChangeWorkUnit : AbstractAuditWorkUnit 
+	public partial class PersistentCollectionChangeWorkUnit : AbstractAuditWorkUnit 
 	{
 		private readonly IList<PersistentCollectionChangeData> collectionChanges;
 		private readonly string referencingPropertyName;

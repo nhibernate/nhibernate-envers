@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Access.None.ManyToOne
 {
-	public class Fixture : TestBase
+	public partial class Fixture : TestBase
 	{
 		private int parentId;
 

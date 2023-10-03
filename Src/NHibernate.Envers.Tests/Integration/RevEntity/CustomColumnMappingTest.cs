@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	public class CustomColumnMappingTest : TestBase
+	public partial class CustomColumnMappingTest : TestBase
 	{
 		private int id;
 		private DateTime timestamp1;

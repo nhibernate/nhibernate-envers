@@ -10,7 +10,7 @@ namespace NHibernate.Envers.Strategy
 	/// <summary>
 	/// Behaviours of different audit strategy for populating audit data.
 	/// </summary>
-	public interface IAuditStrategy
+	public partial interface IAuditStrategy
 	{
 		/// <summary>
 		/// Called once at start up.

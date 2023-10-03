@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.NotInsertable.ManyToOne
 {
-	public class ManyToOneNotInsertableTest : TestBase
+	public partial class ManyToOneNotInsertableTest : TestBase
 	{
 		private int mto_id1;
 		private int type_id1;

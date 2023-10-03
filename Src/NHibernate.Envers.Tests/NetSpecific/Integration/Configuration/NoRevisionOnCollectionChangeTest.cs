@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Configuration
 {
-	public class NoRevisionOnCollectionChangeTest : TestBase
+	public partial class NoRevisionOnCollectionChangeTest : TestBase
 	{
 		private int parentId;
 

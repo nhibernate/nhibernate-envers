@@ -6,7 +6,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class RevisionsQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
+	public partial class RevisionsQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
 	{
 		public RevisionsQuery(AuditConfiguration auditConfiguration,
 		                      IAuditReaderImplementor versionsReader,

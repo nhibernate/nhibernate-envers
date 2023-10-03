@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation
 {
-	public class PolymorphicCollectionTest : TestBase
+	public partial class PolymorphicCollectionTest : TestBase
 	{
 		private int ed_id1;
 		private int c_id;

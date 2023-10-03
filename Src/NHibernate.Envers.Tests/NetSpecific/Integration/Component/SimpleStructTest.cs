@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Component
 {
-	public class SimpleStructTest : TestBase
+	public partial class SimpleStructTest : TestBase
 	{
 		private const int id = 111;
 

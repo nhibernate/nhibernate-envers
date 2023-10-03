@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 {
-	public class UnidirectionalMulIdWithNullsTest : TestBase
+	public partial class UnidirectionalMulIdWithNullsTest : TestBase
 	{
 		private EmbId ei;
 

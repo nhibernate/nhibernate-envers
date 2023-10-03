@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.NotUpdatable
 {
-	public class PropertyNotUpdatableTest : TestBase
+	public partial class PropertyNotUpdatableTest : TestBase
 	{
 		private long id;
 

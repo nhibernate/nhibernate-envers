@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Single
 {
-	public class ParentAuditingTest : TestBase
+	public partial class ParentAuditingTest : TestBase
 	{
 		private int id1;
 

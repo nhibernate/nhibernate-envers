@@ -6,7 +6,7 @@ using NHibernate.Envers.Query;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public abstract class AbstractModifiedFlagsEntityTest : TestBase
+	public abstract partial class AbstractModifiedFlagsEntityTest : TestBase
 	{
 		protected AbstractModifiedFlagsEntityTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

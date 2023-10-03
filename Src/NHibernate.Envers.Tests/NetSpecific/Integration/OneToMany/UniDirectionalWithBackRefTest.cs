@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.OneToMany
 {
-	public class UniDirectionalWithBackRefTest : TestBase
+	public partial class UniDirectionalWithBackRefTest : TestBase
 	{
 		private Guid parentId;
 		private Guid child1Id;

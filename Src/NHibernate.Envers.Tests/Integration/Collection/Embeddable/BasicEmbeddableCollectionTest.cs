@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Collection.Embeddable
 {
-	public class BasicEmbeddableCollectionTest : TestBase
+	public partial class BasicEmbeddableCollectionTest : TestBase
 	{
 		private const int id = 11;
 

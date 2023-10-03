@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Ctor
 {
-	public class NonPublicCtorTest : TestBase
+	public partial class NonPublicCtorTest : TestBase
 	{
 		private int id;
 

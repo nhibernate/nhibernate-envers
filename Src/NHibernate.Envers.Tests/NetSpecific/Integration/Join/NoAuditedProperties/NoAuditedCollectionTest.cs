@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Join.NoAuditedProperties
 {
-	public class NoAuditedCollectionTest : TestBase
+	public partial class NoAuditedCollectionTest : TestBase
 	{
 		private const int id = 44;
 

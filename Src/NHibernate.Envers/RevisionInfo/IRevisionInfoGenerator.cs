@@ -1,6 +1,6 @@
 ﻿namespace NHibernate.Envers.RevisionInfo
 {
-	public interface IRevisionInfoGenerator
+	public partial interface IRevisionInfoGenerator
 	{
 		void SaveRevisionData(ISession session, object revisionData);
 		object Generate();

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.AllAudited
 {
-	public abstract class AbstractAllAuditedTest : TestBase
+	public abstract partial class AbstractAllAuditedTest : TestBase
 	{
 		private long aiId;
 		private long naiId;

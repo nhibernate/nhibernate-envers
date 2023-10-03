@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class ModifiedFlagSuffixTest : AbstractModifiedFlagsEntityTest
+	public partial class ModifiedFlagSuffixTest : AbstractModifiedFlagsEntityTest
 	{
 		private int id;
 

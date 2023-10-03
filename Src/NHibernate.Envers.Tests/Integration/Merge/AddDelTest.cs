@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Merge
 {
-	public class AddDelTest : TestBase
+	public partial class AddDelTest : TestBase
 	{
 		private const int id = 17;
 

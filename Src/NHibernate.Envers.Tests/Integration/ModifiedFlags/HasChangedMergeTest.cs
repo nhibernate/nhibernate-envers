@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedMergeTest : AbstractModifiedFlagsEntityTest 
+	public partial class HasChangedMergeTest : AbstractModifiedFlagsEntityTest 
 	{
 		private const int parentId = 11;
 		private const int childId = 12;

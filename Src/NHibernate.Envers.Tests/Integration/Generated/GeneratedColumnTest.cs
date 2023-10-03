@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Generated
 {
-	public class GeneratedColumnTest : TestBase
+	public partial class GeneratedColumnTest : TestBase
 	{
 		private int entityId;
 		

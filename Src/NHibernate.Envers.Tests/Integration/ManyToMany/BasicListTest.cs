@@ -6,7 +6,7 @@ namespace NHibernate.Envers.Tests.Integration.ManyToMany
 {
 	//rk - using bag instead of list. Birefs lists aren't supported in NH Core (?)
 	//and also... AFAIK - even Hibernate tests actually use bags.
-	public class BasicListTest : TestBase
+	public partial class BasicListTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

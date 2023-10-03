@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	public class ImmutableClassAccessTest : TestBase
+	public partial class ImmutableClassAccessTest : TestBase
 	{
 		private Country country;
 

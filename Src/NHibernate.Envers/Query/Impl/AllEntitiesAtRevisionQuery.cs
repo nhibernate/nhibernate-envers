@@ -8,7 +8,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class AllEntitiesAtRevisionQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
+	public partial class AllEntitiesAtRevisionQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
 	{
 		private readonly long _revision;
 

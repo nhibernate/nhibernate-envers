@@ -8,7 +8,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class RevisionsOfEntityQuery : AbstractAuditQuery 
+	public partial class RevisionsOfEntityQuery : AbstractAuditQuery 
 	{
 		private readonly bool _selectEntitiesOnly;
 		private readonly bool _selectDeletedEntities;

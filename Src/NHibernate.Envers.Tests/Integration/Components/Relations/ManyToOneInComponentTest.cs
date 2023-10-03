@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Components.Relations
 {
-	public class ManyToOneInComponentTest : TestBase
+	public partial class ManyToOneInComponentTest : TestBase
 	{
 		private int mtocte_id1;
 		private int ste_id1;

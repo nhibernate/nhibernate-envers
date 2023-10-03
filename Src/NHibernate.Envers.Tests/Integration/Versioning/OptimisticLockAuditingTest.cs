@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Versioning
 {
-	public class OptimisticLockAuditingTest : TestBase
+	public partial class OptimisticLockAuditingTest : TestBase
 	{
 		private const int id =47;
 

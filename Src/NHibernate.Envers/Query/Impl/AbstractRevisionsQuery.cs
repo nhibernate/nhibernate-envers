@@ -15,7 +15,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public abstract class AbstractRevisionsQuery<TEntity> : IEntityAuditQuery<TEntity> where TEntity : class
+	public abstract partial class AbstractRevisionsQuery<TEntity> : IEntityAuditQuery<TEntity> where TEntity : class
 	{
 		private readonly IAuditReaderImplementor _versionsReader;
 		private CacheMode _cacheMode;

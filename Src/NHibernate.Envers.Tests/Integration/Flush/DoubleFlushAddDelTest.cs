@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Flush
 {
-	public class DoubleFlushAddDelTest : TestBase
+	public partial class DoubleFlushAddDelTest : TestBase
 	{
 		private int id1;
 

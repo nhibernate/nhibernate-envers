@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class OutsideTransactionTest : TestBase
+	public partial class OutsideTransactionTest : TestBase
 	{
 		public OutsideTransactionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

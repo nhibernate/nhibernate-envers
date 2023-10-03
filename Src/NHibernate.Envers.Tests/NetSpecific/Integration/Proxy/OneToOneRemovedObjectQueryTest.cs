@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
-	public class OneToOneRemovedObjectQueryTest : TestBase
+	public partial class OneToOneRemovedObjectQueryTest : TestBase
 	{
 		private const int id =125;
 

@@ -7,7 +7,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class EntitiesAtRevisionQuery : AbstractAuditQuery
+	public partial class EntitiesAtRevisionQuery : AbstractAuditQuery
 	{
 		private readonly long _revision;
 		private readonly bool _includeDeletions;

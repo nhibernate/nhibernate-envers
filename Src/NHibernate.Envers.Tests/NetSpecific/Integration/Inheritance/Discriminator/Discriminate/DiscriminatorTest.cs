@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Inheritance.Discrimina
 	/// Provides a basic set of tests to verify when the insert attribute of the discriminator element is set
 	/// to false, that the setting will carry into the audit table settings. 
 	/// </summary>
-	public class DiscriminatorTest : TestBase
+	public partial class DiscriminatorTest : TestBase
 	{
 		private BaseEntity baseEntityVer1;
 		private BaseEntity baseEntityVer2;

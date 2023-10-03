@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.CustomType
 {
-	public class CLOBCustomTest : TestBase
+	public partial class CLOBCustomTest : TestBase
 	{
 		private int ccte_id;
 

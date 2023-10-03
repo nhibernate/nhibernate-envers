@@ -7,7 +7,7 @@ using NHibernate.Envers.Tools;
 
 namespace NHibernate.Envers.Reader
 {
-	public class CrossTypeRevisionChangesReader : ICrossTypeRevisionChangesReader
+	public partial class CrossTypeRevisionChangesReader : ICrossTypeRevisionChangesReader
 	{
 		private readonly IAuditReaderImplementor _auditReaderImplementor;
 		private readonly AuditConfiguration _verCfg;

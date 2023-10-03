@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.Ternary
 {
-	public class TernaryMapFlushTest : TestBase
+	public partial class TernaryMapFlushTest : TestBase
 	{
 		private int str1_id;
 		private int str2_id;

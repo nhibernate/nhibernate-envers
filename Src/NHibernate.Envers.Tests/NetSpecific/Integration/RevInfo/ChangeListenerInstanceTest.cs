@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.RevInfo
 {
-	public class ChangeListenerInstanceTest : TestBase
+	public partial class ChangeListenerInstanceTest : TestBase
 	{
 		private testListener listener;
 

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query
 {
-	public class ComponentQueryTest : TestBase
+	public partial class ComponentQueryTest : TestBase
 	{
 		private const int id = 1345;
 		private const int personWeight = 80;

@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class ColumnScalePrecisionTest : TestBase
+	public partial class ColumnScalePrecisionTest : TestBase
 	{
 		private long id;
 

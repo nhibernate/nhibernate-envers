@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ModifiedFlags
 {
-	public class HasChangedEnumSetTest : AbstractModifiedFlagsEntityTest
+	public partial class HasChangedEnumSetTest : AbstractModifiedFlagsEntityTest
 	{
 		private int id;
 

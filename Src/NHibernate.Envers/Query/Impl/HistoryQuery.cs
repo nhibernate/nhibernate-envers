@@ -7,7 +7,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public class HistoryQuery<TEntity, TRevisionEntity> : AbstractRevisionsQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>>
+	public partial class HistoryQuery<TEntity, TRevisionEntity> : AbstractRevisionsQuery<IRevisionEntityInfo<TEntity, TRevisionEntity>>
 		where TEntity : class
 		where TRevisionEntity : class
 	{

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ForceInitialize
 {
-	public class ForceInitializeTest : TestBase
+	public partial class ForceInitializeTest : TestBase
 	{
 
 		private Guid parentId;

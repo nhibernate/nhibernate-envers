@@ -2,7 +2,7 @@
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Strategy.SetOfValues
 {
-	public class SetOfValuesTest : ValidityTestBase
+	public partial class SetOfValuesTest : ValidityTestBase
 	{
 		private int id;
 

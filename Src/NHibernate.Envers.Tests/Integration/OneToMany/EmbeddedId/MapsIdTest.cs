@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.EmbeddedId
 {
-	public class MapsIdTest : TestBase
+	public partial class MapsIdTest : TestBase
 	{
 		private PersonTuple tuple1Ver1;
 		private PersonTuple tuple2Ver1;

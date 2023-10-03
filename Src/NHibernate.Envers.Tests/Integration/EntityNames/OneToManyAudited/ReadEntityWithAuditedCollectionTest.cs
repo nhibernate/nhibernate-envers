@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.EntityNames.OneToManyAudited
 {
-	public class ReadEntityWithAuditedCollectionTest : TestBase
+	public partial class ReadEntityWithAuditedCollectionTest : TestBase
 	{
 		private long id_car1;
 		private long id_car2;

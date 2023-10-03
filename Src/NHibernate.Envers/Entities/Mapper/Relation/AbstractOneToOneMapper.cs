@@ -7,7 +7,7 @@ using NHibernate.Envers.Reader;
 namespace NHibernate.Envers.Entities.Mapper.Relation
 {
 	[Serializable]
-	public abstract class AbstractOneToOneMapper : AbstractToOneMapper
+	public abstract partial class AbstractOneToOneMapper : AbstractToOneMapper
 	{
 		private readonly string _entityName;
 		private readonly string _referencedEntityName;

@@ -15,7 +15,7 @@ using NHibernate.SqlCommand;
 
 namespace NHibernate.Envers.Query.Impl
 {
-	public abstract class AbstractAuditQuery : IAuditQueryImplementor
+	public abstract partial class AbstractAuditQuery : IAuditQueryImplementor
 	{
 		private int? _maxResults;
 		private int? _firstResult;

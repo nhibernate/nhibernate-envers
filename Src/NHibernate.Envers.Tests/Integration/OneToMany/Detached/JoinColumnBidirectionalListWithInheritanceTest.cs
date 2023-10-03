@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	public class JoinColumnBidirectionalListWithInheritanceTest : TestBase
+	public partial class JoinColumnBidirectionalListWithInheritanceTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

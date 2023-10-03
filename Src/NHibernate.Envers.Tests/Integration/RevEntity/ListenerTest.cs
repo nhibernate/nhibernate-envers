@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	public class ListenerTest : TestBase
+	public partial class ListenerTest : TestBase
 	{
 		private int id;
 		private DateTime timestamp1;

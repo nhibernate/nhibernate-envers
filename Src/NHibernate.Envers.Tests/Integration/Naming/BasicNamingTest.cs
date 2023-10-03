@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	public class BasicNamingTest : TestBase
+	public partial class BasicNamingTest : TestBase
 	{
 		private int id1;
 		private int id2;

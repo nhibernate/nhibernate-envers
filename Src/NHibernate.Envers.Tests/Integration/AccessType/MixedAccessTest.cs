@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	public class MixedAccessTest : TestBase
+	public partial class MixedAccessTest : TestBase
 	{
 		private int id1;
 

@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Performance.EvictAfterTx
 {
-	public class EvictAuditDataAfterCommitTest : TestBase
+	public partial class EvictAuditDataAfterCommitTest : TestBase
 	{
 		public EvictAuditDataAfterCommitTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class MaximalizePropertyQueryTest : TestBase
+	public partial class MaximalizePropertyQueryTest : TestBase
 	{
 		private int id1;
 		private int id2;

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 {
-	public class RelationEmbInTest : TestBase
+	public partial class RelationEmbInTest : TestBase
 	{
 		private EmbIdTestEntity embEnt;
 		private EmbIdTestEntity embEntNoRef1;

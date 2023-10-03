@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.Relation.Unidirectional
 {
-	public class UnidirectionalDoubleAbstractTest : TestBase
+	public partial class UnidirectionalDoubleAbstractTest : TestBase
 	{
 		private long cce1_id;
 		private int cse1_id;

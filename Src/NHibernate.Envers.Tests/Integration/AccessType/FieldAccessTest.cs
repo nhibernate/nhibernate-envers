@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.AccessType
 {
-	public class FieldAccessTest : TestBase
+	public partial class FieldAccessTest : TestBase
 	{
 		private int id;
 

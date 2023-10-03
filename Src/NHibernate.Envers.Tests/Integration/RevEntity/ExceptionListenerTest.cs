@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.RevEntity
 {
-	public class ExceptionListenerTest : TestBase
+	public partial class ExceptionListenerTest : TestBase
 	{
 		public ExceptionListenerTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany.Detached
 {
-	public class JoinColumnBidirectionalListTest :TestBase
+	public partial class JoinColumnBidirectionalListTest :TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

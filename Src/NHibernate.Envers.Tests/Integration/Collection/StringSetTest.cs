@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Collection
 {
-	public class StringSetTest : TestBase
+	public partial class StringSetTest : TestBase
 	{
 		private int sse1_id;
 		private int sse2_id;

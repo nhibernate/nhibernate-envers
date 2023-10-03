@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany
 {
-	public class BasicMapTest : TestBase
+	public partial class BasicMapTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

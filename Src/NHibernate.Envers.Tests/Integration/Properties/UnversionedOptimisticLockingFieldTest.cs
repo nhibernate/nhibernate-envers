@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Properties
 {
-	public class UnversionedOptimisticLockingFieldTest : TestBase
+	public partial class UnversionedOptimisticLockingFieldTest : TestBase
 	{
 		private int id;
 

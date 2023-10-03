@@ -1,6 +1,6 @@
 ﻿namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
-    public interface IInitializor
+    public partial interface IInitializor
     {
         object Initialize();
     }

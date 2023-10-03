@@ -13,7 +13,7 @@ namespace NHibernate.Envers.Strategy
 	/// Default strategy is to simply persist the audit data.
 	/// </summary>
 	[Serializable]
-	public class DefaultAuditStrategy : IAuditStrategy
+	public partial class DefaultAuditStrategy : IAuditStrategy
 	{
 		private AuditConfiguration _auditConfiguration;
 

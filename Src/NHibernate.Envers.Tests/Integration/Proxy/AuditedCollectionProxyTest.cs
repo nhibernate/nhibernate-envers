@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Proxy
 {
-	public class AuditedCollectionProxyTest : TestBase
+	public partial class AuditedCollectionProxyTest : TestBase
 	{
 		public AuditedCollectionProxyTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

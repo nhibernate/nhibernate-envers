@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.InsertUpdateFalse
 {
-	public class InsertUpdateFalseComponentTest : TestBase
+	public partial class InsertUpdateFalseComponentTest : TestBase
 	{
 		private int id;
 

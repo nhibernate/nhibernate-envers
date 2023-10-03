@@ -4,7 +4,7 @@ using NHibernate.Envers.Reader;
 
 namespace NHibernate.Envers.Entities.Mapper.Relation.Lazy.Initializor
 {
-	public abstract class AbstractCollectionInitializor<T> : IInitializor
+	public abstract partial class AbstractCollectionInitializor<T> : IInitializor
 	{
 		private readonly IAuditReaderImplementor _versionsReader;
 		private readonly IRelationQueryGenerator _queryGenerator;

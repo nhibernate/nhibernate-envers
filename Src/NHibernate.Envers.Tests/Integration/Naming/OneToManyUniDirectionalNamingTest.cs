@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	public class OneToManyUniDirectionalNamingTest : TestBase
+	public partial class OneToManyUniDirectionalNamingTest : TestBase
 	{
 		private int uni1_id;
 		private int str1_id;

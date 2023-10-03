@@ -10,7 +10,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.Proxy
 {
 	//TwoEntityOneAuditedQueryGenerator
-	public class OneToManyToNotAuditedRemovedObjectQueryTest : TestBase
+	public partial class OneToManyToNotAuditedRemovedObjectQueryTest : TestBase
 	{
 		private long parentId;
 

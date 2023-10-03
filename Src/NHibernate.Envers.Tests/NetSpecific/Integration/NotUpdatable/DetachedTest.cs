@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.NotUpdatable
 {
-	public class DetachedUpdateTest : TestBase
+	public partial class DetachedUpdateTest : TestBase
 	{
 		private long id;
 

@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ManyToMany.WithModifiedFlag
 {
-	public class SaveNewItemTest : TestBase
+	public partial class SaveNewItemTest : TestBase
 	{
 		private long id;
 

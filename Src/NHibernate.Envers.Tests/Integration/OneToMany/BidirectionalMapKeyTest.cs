@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
 	//rk - mapkeyattribute should (hopefully) go away!
-	public class BidirectionalMapKeyTest : TestBase
+	public partial class BidirectionalMapKeyTest : TestBase
 	{
 		private int ed_id;
 		private int ing1_id;

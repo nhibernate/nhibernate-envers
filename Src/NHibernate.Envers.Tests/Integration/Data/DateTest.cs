@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Data
 {
-	public class DateTest : TestBase
+	public partial class DateTest : TestBase
 	{
 		private int id1;
 

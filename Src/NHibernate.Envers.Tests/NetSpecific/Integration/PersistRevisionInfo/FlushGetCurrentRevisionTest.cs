@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.PersistRevisionInfo
 {
-	public class FlushGetCurrentRevisionTest : TestBase
+	public partial class FlushGetCurrentRevisionTest : TestBase
 	{
 		public FlushGetCurrentRevisionTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

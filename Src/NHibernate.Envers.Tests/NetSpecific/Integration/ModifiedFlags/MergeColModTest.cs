@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.ModifiedFlags
 {
-	public class MergeColModTest : TestBase
+	public partial class MergeColModTest : TestBase
 	{
 		public MergeColModTest(AuditStrategyForTest strategyType) : base(strategyType)
 		{

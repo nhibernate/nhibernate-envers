@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class CustomRevEntityQueryTest : TestBase
+	public partial class CustomRevEntityQueryTest : TestBase
 	{
 		private int id1;
 		private int id2;

@@ -8,7 +8,7 @@ using SharpTestsEx;
 namespace NHibernate.Envers.Tests.Integration.Inheritance.Joined.PrimaryKeyJoin
 {
 	[Audited]
-	public class ChildPrimaryKeyJoinAuditingTest : TestBase
+	public partial class ChildPrimaryKeyJoinAuditingTest : TestBase
 	{
 		private int id1;
 

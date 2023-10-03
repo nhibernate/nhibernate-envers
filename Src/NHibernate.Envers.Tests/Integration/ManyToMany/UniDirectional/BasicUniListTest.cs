@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.UniDirectional
 {
-	public class BasicUniListTest : TestBase
+	public partial class BasicUniListTest : TestBase
 	{
 		private int ed1_id;
 		private int ed2_id;

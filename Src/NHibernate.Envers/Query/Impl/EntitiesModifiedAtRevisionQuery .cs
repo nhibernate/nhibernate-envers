@@ -8,7 +8,7 @@ namespace NHibernate.Envers.Query.Impl
 	/// In comparison to <see cref="EntitiesAtRevisionQuery"/> this query returns an empty collection if an entity
 	/// of a certain type has not been changed in a given revision.
 	/// </summary>
-	public class EntitiesModifiedAtRevisionQuery : AbstractAuditQuery
+	public partial class EntitiesModifiedAtRevisionQuery : AbstractAuditQuery
 	{
 		private readonly long _revision;
 

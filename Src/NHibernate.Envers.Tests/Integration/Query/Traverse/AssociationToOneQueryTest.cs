@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query.Traverse
 {
-	public class AssociationToOneQueryTest : TestBase
+	public partial class AssociationToOneQueryTest : TestBase
 	{
 		private int fordId;
 		private int toyotaId;

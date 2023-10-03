@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToOne.BiDirectional
 {
-	public class ImplicitMappedByTest : TestBase
+	public partial class ImplicitMappedByTest : TestBase
 	{
 		private long ownedId;
 		private long owning1Id;

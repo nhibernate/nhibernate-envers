@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToOne.UniDirectional
 {
-	public class UnidirectionalTest : TestBase
+	public partial class UnidirectionalTest : TestBase
 	{
 		private const int ed1_id = 1;
 		private const int ed2_id = 2;

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Naming
 {
-	public class EstonianTableAliasTest : TestBase
+	public partial class EstonianTableAliasTest : TestBase
 	{
 		private long parentId;
 		private long childId;

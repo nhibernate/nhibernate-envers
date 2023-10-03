@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.SortedSetAndMap
 {
-	public class SortedSetAndMapTest : TestBase
+	public partial class SortedSetAndMapTest : TestBase
 	{
 		private Guid id;
 

@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.BiDirOneToOneWithOneSideNotAudited
 {
-	public class BiDirOneToOneWithOneSideNotAuditedTests : TestBase
+	public partial class BiDirOneToOneWithOneSideNotAuditedTests : TestBase
 	{
 		private Guid parentId;
 		private string childLatestStr;

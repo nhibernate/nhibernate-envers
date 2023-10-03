@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.OneToMany
 {
-	public class InverseSideChangesTest : TestBase
+	public partial class InverseSideChangesTest : TestBase
 	{
 		private const int ed1_id =123123;
 		private const int ing1_id = 33;

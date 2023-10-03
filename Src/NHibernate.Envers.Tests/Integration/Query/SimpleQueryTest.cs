@@ -10,7 +10,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class SimpleQueryTest : TestBase
+	public partial class SimpleQueryTest : TestBase
 	{
 		private int id1;
 		private int id2;

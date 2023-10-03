@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class TransactionRollbackBehaviourTest : TestBase
+	public partial class TransactionRollbackBehaviourTest : TestBase
 	{
 		private int rollbackId;
 		private int committedId;

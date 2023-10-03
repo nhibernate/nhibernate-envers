@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.ManyToMany.BiOwned
 {
-	public class BasicBiOwnedTest : TestBase
+	public partial class BasicBiOwnedTest : TestBase
 	{
 		private int o1_1_id;
 		private int o1_2_id;

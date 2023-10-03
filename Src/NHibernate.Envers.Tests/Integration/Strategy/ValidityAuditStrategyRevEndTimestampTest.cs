@@ -13,7 +13,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Strategy
 {
-	public class ValidityAuditStrategyRevEndTimestampTest : ValidityTestBase
+	public partial class ValidityAuditStrategyRevEndTimestampTest : ValidityTestBase
 	{
 		private const string revendTimestampColumName = "REVEND_TIMESTAMP";
 

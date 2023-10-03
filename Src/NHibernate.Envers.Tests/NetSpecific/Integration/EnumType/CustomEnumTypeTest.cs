@@ -3,7 +3,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.NetSpecific.Integration.EnumType
 {
-	public class CustomEnumTypeTest : TestBase
+	public partial class CustomEnumTypeTest : TestBase
 	{
 		private int id;
 

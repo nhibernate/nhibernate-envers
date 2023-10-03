@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Query
 {
-	public class NullPropertyQueryTest : TestBase
+	public partial class NullPropertyQueryTest : TestBase
 	{
 		private int idSimplePropertyNull;
 		private int idSimplePropertyNotNull;

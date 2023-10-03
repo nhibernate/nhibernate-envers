@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class EmptyStringTest : TestBase
+	public partial class EmptyStringTest : TestBase
 	{
 		private int emptyId;
 		private int nullId;
