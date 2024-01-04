@@ -18,6 +18,6 @@
 		/// <summary>
 		/// Indicates that the entity was deleted (removed) at that revision.
 		/// </summary>
-		Deleted = 2,
+		Deleted = 2
 	}
 }
