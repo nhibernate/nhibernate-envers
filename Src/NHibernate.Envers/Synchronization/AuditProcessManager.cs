@@ -62,10 +62,12 @@ namespace NHibernate.Envers.Synchronization
 				_auditProcesses.Remove(_transaction);
 			}
 
-			public Task ExecuteBeforeTransactionCompletionAsync(CancellationToken cancellationToken)
+			public async Task ExecuteBeforeTransactionCompletionAsync(CancellationToken cancellationToken)
 			{
-				ExecuteBeforeTransactionCompletion();
-				return Task.CompletedTask;
+				if (_auditProcesses.TryGetValue(_transaction, out var currentProcess))
+				{
+					await currentProcess.DoBeforeTransactionCompletionAsync(cancellationToken).ConfigureAwait(false);
+				}
 			}
 
 			public Task ExecuteAfterTransactionCompletionAsync(bool success, CancellationToken cancellationToken)
