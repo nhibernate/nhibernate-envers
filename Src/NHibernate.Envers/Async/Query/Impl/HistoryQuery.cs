@@ -24,20 +24,33 @@ namespace NHibernate.Envers.Query.Impl
 		where TRevisionEntity : class
 	{
 
-		public override Task<IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>>> ResultsAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public override async Task<IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>>> ResultsAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			if (cancellationToken.IsCancellationRequested)
-			{
-				return Task.FromCanceled<IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>>>(cancellationToken);
-			}
-			try
-			{
-				return Task.FromResult<IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>>>(Results());
-			}
-			catch (System.Exception ex)
-			{
-				return Task.FromException<IEnumerable<IRevisionEntityInfo<TEntity, TRevisionEntity>>>(ex);
-			}
+			cancellationToken.ThrowIfCancellationRequested();
+			var auditEntitiesConfiguration = AuditConfiguration.AuditEntCfg;
+			/*
+			The query that should be executed in the versions table:
+			SELECT e FROM ent_ver e, rev_entity r WHERE
+			  e.revision_type != DEL (if selectDeletedEntities == false) AND
+			  e.revision = r.revision AND
+			  (all specified conditions, transformed, on the "e" entity)
+			  ORDER BY e.revision ASC (unless another order is specified)
+			 */
+			SetIncludeDeletationClause();
+			AddCriterions();
+			AddOrders();
+			QueryBuilder.AddFrom(auditEntitiesConfiguration.RevisionInfoEntityFullClassName(), QueryConstants.RevisionAlias, true);
+			QueryBuilder.RootParameters.AddWhere(auditEntitiesConfiguration.RevisionNumberPath, true, "=", QueryConstants.RevisionAlias + ".id", false);
+
+			var revisionTypePropertyName = auditEntitiesConfiguration.RevisionTypePropName;
+
+			var result = await (BuildAndExecuteQueryAsync<object[]>(cancellationToken)).ConfigureAwait(false);
+			return from resultRow in result
+				   let versionsEntity = (IDictionary) resultRow[0]
+				   let revisionData = (TRevisionEntity) resultRow[1]
+				   let revision = GetRevisionNumberFromDynamicEntity(versionsEntity)
+				   let entity = (TEntity) EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, revision)
+				   select new RevisionEntityInfo<TEntity, TRevisionEntity>(entity, revisionData, (RevisionType) versionsEntity[revisionTypePropertyName]);
 		}
 	}
 }

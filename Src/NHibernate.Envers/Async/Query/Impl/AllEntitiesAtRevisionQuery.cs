@@ -23,20 +23,47 @@ namespace NHibernate.Envers.Query.Impl
 	public partial class AllEntitiesAtRevisionQuery<TEntity> : AbstractRevisionsQuery<TEntity> where TEntity : class
 	{
 
-		public override Task<IEnumerable<TEntity>> ResultsAsync(CancellationToken cancellationToken = default(CancellationToken))
+		public override async Task<IEnumerable<TEntity>> ResultsAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			if (cancellationToken.IsCancellationRequested)
-			{
-				return Task.FromCanceled<IEnumerable<TEntity>>(cancellationToken);
-			}
-			try
-			{
-				return Task.FromResult<IEnumerable<TEntity>>(Results());
-			}
-			catch (System.Exception ex)
-			{
-				return Task.FromException<IEnumerable<TEntity>>(ex);
-			}
+			cancellationToken.ThrowIfCancellationRequested();
+			/*
+			 * The query that should be executed in the versions table:
+			 * SELECT e FROM ent_ver e 
+			 *   WHERE
+			 * (all specified conditions, transformed, on the "e" entity) AND
+			 * (selecting e entities at revision :revision)
+			 *   --> for DefaultAuditStrategy:
+			 *     e.revision = (SELECT max(e2.revision) FROM versionsReferencedEntity e2
+			 *       WHERE e2.revision <= :revision AND e2.id = e.id) 
+			 *     
+			 *   --> for ValidityAuditStrategy:
+			 *     e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)
+			 *     
+			 *     AND
+			 * (only non-deleted entities)
+			 *     e.revision_type != DEL
+			 */
+
+			var verEntCfg = AuditConfiguration.AuditEntCfg;
+			var revisionPropertyPath = verEntCfg.RevisionNumberPath;
+			var originalIdPropertyName = verEntCfg.OriginalIdPropName;
+
+			var referencedIdData = new MiddleIdData(verEntCfg, AuditConfiguration.EntCfg[EntityName].IdMappingData,
+					null, EntityName, AuditConfiguration.EntCfg.IsVersioned(EntityName));
+
+			// (selecting e entities at revision :revision)
+			// --> based on auditStrategy (see above)
+			AuditConfiguration.GlobalCfg.AuditStrategy.AddEntityAtRevisionRestriction(QueryBuilder, QueryBuilder.RootParameters, revisionPropertyPath,
+					verEntCfg.RevisionEndFieldName, true, referencedIdData,
+					revisionPropertyPath, originalIdPropertyName, QueryConstants.ReferencedEntityAlias, QueryConstants.ReferencedEntityAliasDefAudStr);
+			SetIncludeDeletationClause();
+
+			AddCriterions();
+
+			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
+			var result = await (BuildAndExecuteQueryAsync<IDictionary>(cancellationToken)).ConfigureAwait(false);
+			return from versionsEntity in result
+						 select (TEntity)EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, _revision);
 		}
 	}
 }

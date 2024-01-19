@@ -55,7 +55,8 @@ namespace NHibernate.Envers.Query.Impl
 			AddCriterions();
 
 			// the result of BuildAndExecuteQuery is always the name-value pair of EntityMode.Map
-			return from versionsEntity in BuildAndExecuteQuery<IDictionary>()
+			var result = BuildAndExecuteQuery<IDictionary>();
+			return from versionsEntity in result
 						 select (TEntity)EntityInstantiator.CreateInstanceFromVersionsEntity(EntityName, versionsEntity, _revision);
 		}
 
