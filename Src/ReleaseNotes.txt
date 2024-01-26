@@ -1,3 +1,9 @@
+=== vNext ===
+
+** Tasks
+* #51 Run tests on MySQL 8 with MySQL8InnoDBDialect
+
+
 === v5.5.0 (v 5.5.0.0), 2024-01-04, NH 5.5.0 ===
 
 
