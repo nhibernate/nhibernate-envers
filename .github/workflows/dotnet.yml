@@ -47,7 +47,7 @@ jobs:
       if: matrix.db == 'MySQL'
       run: |
         sudo service mysql stop
-        docker run --name mysql --tmpfs /var/lib/mysql:rw,noexec,nosuid,size=256m -e MYSQL_ROOT_PASSWORD=envers -e MYSQL_USER=envers -e MYSQL_PASSWORD=envers -e MYSQL_DATABASE=envers -p 3306:3306 --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -d mysql:8.0 mysqld --lower_case_table_names=1 --skip-ssl --default_authentication_plugin=mysql_native_password
+        docker run --name mysql --tmpfs /var/lib/mysql:rw,noexec,nosuid,size=1024m -e MYSQL_ROOT_PASSWORD=envers -e MYSQL_USER=envers -e MYSQL_PASSWORD=envers -e MYSQL_DATABASE=envers -p 3306:3306 --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 -d mysql:8.0 mysqld --lower_case_table_names=1 --skip-ssl --default_authentication_plugin=mysql_native_password
     - name: Set up Oracle
       if: matrix.db == 'Oracle'
       run: |
