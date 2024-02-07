@@ -17,6 +17,8 @@ set /p Version=Please enter nuget version number, eg 1.2.0:
  
 dotnet msbuild default.msbuild /t:BuildRelease
 
+git status --porcelain |findstr . && echo "Repo contains unexpected modifications. Check that before publishing package!" && exit -1
+
 echo -------------------------------
 echo.
 echo Created a new nuget package with version %Version% to output folder.
