@@ -39,6 +39,7 @@
 	</Target>
     
     <Target Name="GenerateAsyncCode" DependsOnTargets="RunBuild">
+		<Exec Command="dotnet tool restore" WorkingDirectory="$(SourceDir)" />
 		<Exec Command="dotnet async-generator" WorkingDirectory="$(SourceDir)" />
 	</Target>
 
