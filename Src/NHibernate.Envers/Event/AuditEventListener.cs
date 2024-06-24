@@ -81,20 +81,17 @@ namespace NHibernate.Envers.Event
 		{
 			// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
 			// of subclasses, this will be root class, no the actual class. So it can't be used here.
-			string toEntityName;
 			object id;
 
+			var toEntityName = session.BestGuessEntityName(value);
 			if (value is INHibernateProxy newValueAsProxy)
 			{
-				toEntityName = session.BestGuessEntityName(value);
 				id = newValueAsProxy.HibernateLazyInitializer.Identifier;
 				// We've got to initialize the object from the proxy to later read its state.
 				value = Toolz.GetTargetFromProxy(session, newValueAsProxy);
 			}
 			else
 			{
-				toEntityName = session.GuessEntityName(value);
-
 				var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
 				id = idMapper.MapToIdFromEntity(value);
 			}
@@ -223,10 +220,10 @@ namespace NHibernate.Envers.Event
 					var toPropertyName = toPropertyNames.First();
 
 					auditProcess.AddWorkUnit(new CollectionChangeWorkUnit(evt.Session,
-																							evt.Session.BestGuessEntityName(relatedObj), 
+																							evt.Session.BestGuessEntityName(relatedObj),
 																							toPropertyName,
-																							VerCfg, 
-																							relatedId, 
+																							VerCfg,
+																							relatedId,
 																							relatedObj));
 				}
 			}
@@ -299,7 +296,7 @@ namespace NHibernate.Envers.Event
 			}
 			else
 			{
-				var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session, entityName, VerCfg, newColl, 
+				var workUnit = new PersistentCollectionChangeWorkUnit(evt.Session, entityName, VerCfg, newColl,
 																collectionEntry, oldColl, evt.AffectedOwnerIdOrNull,
 																referencingPropertyName);
 				verSync.AddWorkUnit(workUnit);
@@ -400,7 +397,7 @@ namespace NHibernate.Envers.Event
 
 		private static void checkIfTransactionInProgress(ISessionImplementor session)
 		{
-			if (!session.TransactionInProgress && session.TransactionContext==null)
+			if (!session.TransactionInProgress && session.TransactionContext == null)
 			{
 				// Historical data would not be flushed to audit tables if outside of active transaction
 				// (AuditProcess#doBeforeTransactionCompletion(SessionImplementor) not executed).
@@ -412,7 +409,7 @@ namespace NHibernate.Envers.Event
 		{
 			var entityName = evt.GetAffectedOwnerEntityName();
 			return VerCfg.GlobalCfg.GenerateRevisionsForCollections
-			       && VerCfg.EntCfg.IsVersioned(entityName);
+				   && VerCfg.EntCfg.IsVersioned(entityName);
 		}
 
 		private static object initializeCollection(AbstractCollectionEvent evt)

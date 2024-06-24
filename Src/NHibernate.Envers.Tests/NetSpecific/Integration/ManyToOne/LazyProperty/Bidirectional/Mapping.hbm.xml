@@ -1,0 +1,24 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.ManyToOne.LazyProperty.Bidirectional">
+    <class name="Person" table="DRIVERS">
+        <id name="Id" column="ID_PERSON" type="long">
+            <generator class="native"/>
+        </id>
+        <property name="Name" type="string" length="255"
+                  column="NAME" not-null="true" lazy="true"/>
+
+		<set name="Cars" inverse="true" cascade="none">
+			<key column="person_id" />
+			<one-to-many class="Car" />
+		</set>
+	</class>
+
+    <class name="Car">
+        <id name="Id" column="ID_CAR" type="long">
+            <generator class="native"/>
+        </id>
+        <property name="Number" type="int" not-null="true" column="numb"/>
+        <many-to-one name="Owner" class="Person" column="person_id"/>
+    </class>
+</hibernate-mapping>
