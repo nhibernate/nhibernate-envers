@@ -1,3 +1,10 @@
+=== vNext ===
+
+** Bug
+* #53 NullReferenceException in lazy bidirectional many-to-one properties
+
+
+
 === v5.5.1 (v 5.5.1.0), 2024-02-07, NH 5.5.0 ===
 
 ** New Feature
