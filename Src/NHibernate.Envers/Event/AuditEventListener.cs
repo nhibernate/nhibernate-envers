@@ -81,20 +81,17 @@ namespace NHibernate.Envers.Event
 		{
 			// relDesc.getToEntityName() doesn't always return the entity name of the value - in case
 			// of subclasses, this will be root class, no the actual class. So it can't be used here.
-			string toEntityName;
 			object id;
 
+			var toEntityName = session.BestGuessEntityName(value);
 			if (value is INHibernateProxy newValueAsProxy)
 			{
-				toEntityName = session.BestGuessEntityName(value);
 				id = newValueAsProxy.HibernateLazyInitializer.Identifier;
 				// We've got to initialize the object from the proxy to later read its state.
 				value = Toolz.GetTargetFromProxy(session, newValueAsProxy);
 			}
 			else
 			{
-				toEntityName = session.GuessEntityName(value);
-
 				var idMapper = VerCfg.EntCfg[toEntityName].IdMapper;
 				id = idMapper.MapToIdFromEntity(value);
 			}
