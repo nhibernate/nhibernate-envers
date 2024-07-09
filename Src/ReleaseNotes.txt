@@ -1,7 +1,10 @@
-=== vNext ===
+=== v5.5.2 (v 5.5.2.0), 2024-07-09, NH 5.5.0 ===
 
 ** Bug
 * #53 NullReferenceException in lazy bidirectional many-to-one properties
+
+** Tasks
+* #55 Remove usage of NHIBERNATE_BOT_TOKEN
 
 
 
