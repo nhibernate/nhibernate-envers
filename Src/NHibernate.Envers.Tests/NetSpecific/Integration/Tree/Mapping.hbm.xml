@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="NHibernate.Envers.Tests"
+                   namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Tree">
+    <class name="TreeEntity">
+        <id name="Id">
+            <generator class="native"/>
+        </id>
+        <property name="Name" not-null="true"/>
+        <many-to-one name="Parent" class="TreeEntity" column="parentKey"/>
+        <list name="Children" cascade="none" inverse="true">
+            <key column="parentKey"/>
+            <index column="parentInd"/>
+            <one-to-many class="TreeEntity"/>
+        </list>
+    </class>
+</hibernate-mapping>
