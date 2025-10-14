@@ -19,10 +19,5 @@ namespace NHibernate.Envers.Exceptions
 						: base(message, innerException)
 		{
 		}
-
-		protected AuditException(SerializationInfo info, StreamingContext context) 
-						: base(info, context)
-	    {
-		}
 	}
 }

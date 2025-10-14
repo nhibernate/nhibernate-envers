@@ -17,9 +17,5 @@ namespace NHibernate.Envers.Configuration.Fluent
 		public FluentException(string message, Exception inner) : base(message, inner)
 		{
 		}
-
-		protected FluentException(SerializationInfo info, StreamingContext context) : base(info, context)
-		{
-		}
 	}
 }
