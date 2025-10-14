@@ -33,12 +33,6 @@ namespace NHibernate.Envers.Tests.Entities.CustomType
 			return PrimitiveImmutableType.Get(value);
 		}
 
-		public override object Get(DbDataReader rs, string name, ISessionImplementor session)
-		{
-			var ordinal = rs.GetOrdinal(name);
-			return Get(rs, ordinal, session);
-		}
-
 		public override string Name => "PrimitiveImmutableType";
 
 		public override System.Type ReturnedClass => typeof(PrimitiveImmutableType);
