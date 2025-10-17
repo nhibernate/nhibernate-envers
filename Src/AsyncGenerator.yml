@@ -1,6 +1,6 @@
 projects:
 - filePath: NHibernate.Envers/NHibernate.Envers.csproj
-  targetFramework: netcoreapp2.0
+  targetFramework: net8.0
   concurrentRun: true
   applyChanges: true
   analyzation:
@@ -41,7 +41,7 @@ projects:
   - type: AsyncGenerator.Core.Plugins.EmptyRegionRemover
     assemblyName: AsyncGenerator.Core
 - filePath: NHibernate.Envers.Tests/NHibernate.Envers.Tests.csproj
-  targetFramework: net6.0
+  targetFramework: net8.0
   concurrentRun: true
   applyChanges: true
   analyzation:

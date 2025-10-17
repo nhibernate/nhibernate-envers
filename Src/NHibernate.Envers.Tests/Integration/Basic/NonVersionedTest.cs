@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NHibernate.Envers.Tests.Integration.Basic
 {
-	public class NonVersionedTest : TestBase
+	public partial class NonVersionedTest : TestBase
 	{
 		private int id1;
 

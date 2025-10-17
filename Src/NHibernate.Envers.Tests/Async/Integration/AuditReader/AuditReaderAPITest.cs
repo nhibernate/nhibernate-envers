@@ -28,5 +28,17 @@ namespace NHibernate.Envers.Tests.Integration.AuditReader
 			(await (AuditReader().GetRevisionsAsync(typeof(AuditedTestEntity),1)).ConfigureAwait(false))
 				.Should().Have.SameSequenceAs(1, 2);
 		}
+
+		[Test]
+		public void ShouldNotAuditAsync()
+		{
+			AuditReader().IsEntityClassAudited(typeof(NotAuditedTestEntity))
+				.Should().Be.False();
+			AuditReader().IsEntityNameAudited(typeof(NotAuditedTestEntity).FullName)
+				.Should().Be.False();
+
+			Assert.ThrowsAsync<NotAuditedException>(() =>
+			   AuditReader().GetRevisionsAsync(typeof(NotAuditedTestEntity), 1));
+		}
 	}
 }
