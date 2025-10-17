@@ -23,6 +23,18 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 	{
 
 		[Test]
+		public void ShouldThrowIfInsertOutsideActiveTransactionAsync()
+		{
+			// Illegal insertion of entity outside of active transaction.
+			var entity = new StrTestEntity {Str = "data"};
+			Assert.ThrowsAsync<AuditException>(async () =>
+			                              	{
+															await (Session.SaveAsync(entity)).ConfigureAwait(false);
+			                              		await (Session.FlushAsync()).ConfigureAwait(false);
+			                              	});
+		}
+
+		[Test]
 		public async Task ShouldThrowIfUpdateOutsideActiveTransactionAsync()
 		{
 			var entity = new StrTestEntity { Str = "data" };
@@ -33,9 +45,9 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			}
 			// Illegal modification of entity state outside of active transaction.
 			entity.Str = "modified data";
-			Assert.Throws<AuditException>(() => {
-																Session.Update(entity);
-																Session.Flush();
+			Assert.ThrowsAsync<AuditException>(async () => {
+																await (Session.UpdateAsync(entity)).ConfigureAwait(false);
+																await (Session.FlushAsync()).ConfigureAwait(false);
 															});
 		}
 
@@ -49,10 +61,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 				await (tx.CommitAsync()).ConfigureAwait(false);
 			}
 			// Illegal modification of entity state outside of active transaction.
-			Assert.Throws<AuditException>(() =>
+			Assert.ThrowsAsync<AuditException>(async () =>
 			                              	{
-			                              		Session.Delete(entity);
-			                              		Session.Flush();
+			                              		await (Session.DeleteAsync(entity)).ConfigureAwait(false);
+			                              		await (Session.FlushAsync()).ConfigureAwait(false);
 			                              	});
 		}
 
@@ -69,10 +81,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			}
 			// Illegal collection update outside of active transaction.
 			person.Names.Remove(name);
-			Assert.Throws<AuditException>(() =>
+			Assert.ThrowsAsync<AuditException>(async () =>
 			                              	{
-			                              		Session.Update(person);
-			                              		Session.Flush();
+			                              		await (Session.UpdateAsync(person)).ConfigureAwait(false);
+			                              		await (Session.FlushAsync()).ConfigureAwait(false);
 			                              	});
 		}
 
@@ -89,10 +101,10 @@ namespace NHibernate.Envers.Tests.Integration.Basic
 			}
 			// Illegal collection update outside of active transaction.
 			person.Names = null;
-			Assert.Throws<AuditException>(() =>
+			Assert.ThrowsAsync<AuditException>(async () =>
 			                              	{
-			                              		Session.Update(person);
-			                              		Session.Flush();
+			                              		await (Session.UpdateAsync(person)).ConfigureAwait(false);
+			                              		await (Session.FlushAsync()).ConfigureAwait(false);
 			                              	});
 		}
 	}

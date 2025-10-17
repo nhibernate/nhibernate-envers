@@ -27,6 +27,13 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditAtMethodSuperclass
 		}
 
 		[Test]
+		public void VerifyRevisionsCountsForNotAuditedAsync()
+		{
+			Assert.ThrowsAsync<NotAuditedException>(() =>
+				AuditReader().GetRevisionsAsync(typeof(NotAuditedSubclassEntity), id2_1));
+		}
+
+		[Test]
 		public async Task VerifyHistoryOfAuditedAsync()
 		{
 			var ver1 = new AuditedMethodSubclassEntity { Id = id1_1, Str = "ae", OtherStr = "super str", SubAuditedStr = "audited str" };
@@ -41,6 +48,13 @@ namespace NHibernate.Envers.Tests.Integration.SuperClass.AuditAtMethodSuperclass
 
 			rev1.Should().Be.EqualTo(ver1);
 			rev2.Should().Be.EqualTo(ver2);
+		}
+
+		[Test]
+		public void VerifyHistoryOfNotAuditedAsync()
+		{
+			Assert.ThrowsAsync<NotAuditedException>(() =>
+				AuditReader().FindAsync(typeof(NotAuditedSubclassEntity), id2_1, 1));
 		}
 	}
 }

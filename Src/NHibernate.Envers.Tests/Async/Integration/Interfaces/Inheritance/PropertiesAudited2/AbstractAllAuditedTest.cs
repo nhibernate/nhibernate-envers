@@ -42,8 +42,8 @@ namespace NHibernate.Envers.Tests.Integration.Interfaces.Inheritance.PropertiesA
 
 			si.Data.Should().Be.EqualTo(nai.Data);
 
-			Assert.Throws<NotAuditedException>(() =>
-			   AuditReader().Find<NonAuditedImplementor>(naiId, 1));
+			Assert.ThrowsAsync<NotAuditedException>(() =>
+			   AuditReader().FindAsync<NonAuditedImplementor>(naiId, 1));
 
 			(await (AuditReader().FindAsync<ISimple>(naiId, 1)).ConfigureAwait(false))
 				.Should().Be.Null();

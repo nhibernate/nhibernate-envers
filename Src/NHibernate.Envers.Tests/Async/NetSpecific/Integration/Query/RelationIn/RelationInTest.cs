@@ -29,5 +29,14 @@ namespace NHibernate.Envers.Tests.NetSpecific.Integration.Query.RelationIn
 				.Add(AuditEntity.Property("Data").Eq("bar"))
 				.ResultsAsync()).ConfigureAwait(false)).Should().Contain(ing);
 		}
+
+		[Test]
+		public void ShouldThrowUsingInOnCollectionAsync()
+		{
+			Assert.ThrowsAsync<AuditException>(() =>
+			               AuditReader().CreateQuery().ForRevisionsOf<SetRefEdEntity>()
+			                  .Add(AuditEntity.Property("Reffering").In(new List<SetRefIngEntity> {ing}))
+			                  .ResultsAsync());
+		}
 	}
 }
