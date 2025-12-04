@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping
+        namespace="NHibernate.Envers.Tests.NetSpecific.Integration.Lazy"
+        assembly="NHibernate.Envers.Tests"
+        xmlns="urn:nhibernate-mapping-2.2">
+  
+  <class name="EntityWithLazyProp" table="LazyPrp" dynamic-update="true">
+    <id name="Id" type="Int32" />
+    <property name="NotLazyProp" length="50" />
+    <property name="LazyProp" lazy="true" length="50"/>
+  </class>
+
+</hibernate-mapping>
